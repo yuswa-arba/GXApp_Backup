@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
     <meta charset="utf-8" />
-    <title>Pages - Admin Dashboard UI Kit</title>
+    <title>GXApp Employee Helpdesk</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     {{--<link rel="apple-touch-icon" href="pages/ico/60.png">--}}
     {{--<link rel="apple-touch-icon" sizes="76x76" href="pages/ico/76.png">--}}
@@ -14,12 +14,18 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta content="" name="description" />
     <meta content="" name="author" />
+
     @include('layouts.partials._header')
 
 </head>
 <body class="fixed-header menu-pin menu-behind">
+
 @include('layouts.partials._sidebar')
+
+
 @yield('content')
+
+
 @include('layouts.partials._footer')
 
 </body>
