@@ -1,5 +1,5 @@
 <li class="m-t-30">
-    <a href="#" class="detailed">
+    <a href="{{route('dashboard')}}" class="detailed">
         <span class="title">Dashboard</span>
         <span class="details">234 notifications</span>
     </a>

@@ -18,6 +18,7 @@
         <!-- BEGIN SIDEBAR MENU ITEMS-->
         <ul class="menu-items">
             @include('layouts.partials.sub_partials.sidebar._dashboard')
+            @include('layouts.partials.sub_partials.sidebar._divisions')
             @include('layouts.partials.sub_partials.sidebar._general')
             @include('layouts.partials.sub_partials.sidebar._attendance')
             @include('layouts.partials.sub_partials.sidebar._payroll')
