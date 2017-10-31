@@ -26,6 +26,7 @@ $backend_path = 'routes/backend/';
 | Init client routes
 |--------------------------------------------------------------------------
 */
+require(base_path($client_path . 'auth.php'));
 require(base_path($client_path . 'dashboard.php'));
 require(base_path($client_path . 'divisions.php'));
 
@@ -35,7 +36,6 @@ require(base_path($client_path . 'divisions.php'));
 | Init backend routes
 |--------------------------------------------------------------------------
 */
-
 
 
 /*

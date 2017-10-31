@@ -11,3 +11,4 @@
 {{--end of theme css--}}
 
 <link rel="stylesheet" href="{{mix('css/app.css')}}">  <!-- app -->
+
