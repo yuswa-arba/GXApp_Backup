@@ -1,0 +1,9 @@
+.dropzone {
+  min-height: 200px;
+}
+
+.tab-content p.form-title {
+  font-weight: bold;
+  color: #3b4247;
+}
+

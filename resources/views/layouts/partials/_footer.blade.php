@@ -14,5 +14,10 @@
 <script src="{{mix('plugins/js/jquery.actual.min.js')}}"></script>
 <script src="{{mix('plugins/js/jquery.scrollbar.min.js')}}"></script>
 
+@stack('child-scripts-plugins')
+
 <script src="{{mix('core/js/core-theme.js')}}" type="text/javascript"></script> <!-- core theme -->
+
+@stack('child-page-controller')
+
 <script src="{{mix('js/app.js')}}" type="text/javascript"></script> <!-- app -->

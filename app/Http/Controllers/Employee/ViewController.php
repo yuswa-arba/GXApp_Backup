@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Division\FiberOptic;
+namespace App\Http\Controllers\Employee;
 
-use Faker\Provider\Uuid;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class ViewController extends Controller
 {
+
     public function __construct()
     {
 
@@ -15,6 +15,11 @@ class ViewController extends Controller
 
     public function index()
     {
-        return view('pages.divisions.fo');
+        return view('pages.employee.list');
+    }
+
+    public function recruitment()
+    {
+        return view('pages.employee.recruitment');
     }
 }

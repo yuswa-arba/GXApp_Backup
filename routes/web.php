@@ -29,7 +29,7 @@ $backend_path = 'routes/backend/';
 require(base_path($client_path . 'auth.php'));
 require(base_path($client_path . 'dashboard.php'));
 require(base_path($client_path . 'divisions.php'));
-
+require(base_path($client_path . 'employee.php'));
 
 /*
 |--------------------------------------------------------------------------
@@ -54,5 +54,11 @@ Route::get('/', function () {
 | Init testing routes
 |--------------------------------------------------------------------------
 */
+
+Route::prefix('testing')->group(function () {
+    Route::get('uuid', function () {
+        echo \Faker\Provider\Uuid::uuid();
+    });
+});
 
 

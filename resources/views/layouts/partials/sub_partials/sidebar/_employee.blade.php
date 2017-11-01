@@ -6,11 +6,11 @@
     <span class="icon-thumbnail"><i data-feather="users"></i></span>
     <ul class="sub-menu">
         <li class="">
-            <a href="#">List</a>
+            <a href="{{route('employeeList')}}">List</a>
             <span class="icon-thumbnail">l</span>
         </li>
         <li class="">
-            <a href="#">Recruitment</a>
+            <a href="{{route('employeeRecruitmentForm')}}">Recruitment</a>
             <span class="icon-thumbnail">r</span>
         </li>
     </ul>
