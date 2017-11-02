@@ -47,6 +47,16 @@ return [
             'driver' => 'token',
             'provider' => 'users',
         ],
+
+        'admin'=>[
+            'driver'=>'session',
+            'provider'=>'admins'
+        ],
+
+        'superAdmin'=>[
+            'driver'=>'session',
+            'provider'=>'superAdmins'
+        ]
     ],
 
     /*
@@ -71,6 +81,18 @@ return [
             'driver' => 'eloquent',
             'model' => User::class,
         ],
+
+
+        'admins'=>[
+            'driver'=>'eloquent.admin',
+            'model'=> User::class
+        ],
+
+        'superAdmins'=>[
+            'driver'=>'eloquent.superAdmin',
+            'model'=>User::class
+        ]
+
 
         // 'users' => [
         //     'driver' => 'database',

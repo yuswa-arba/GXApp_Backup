@@ -1,10 +1,6 @@
 @extends('layouts.main')
 @section('content')
-    <!-- START PAGE-CONTAINER -->
-    <div class="page-container">
-    @include('layouts.partials._navigation')
-    <!-- START PAGE CONTENT WRAPPER -->
-        <div class="page-content-wrapper">
+
             <!-- START PAGE CONTENT -->
             <div class="content">
             @include('pages.divisions._menu_na')
@@ -17,10 +13,5 @@
             </div>
             <!-- END PAGE CONTENT -->
 
-        </div>
-        <!-- END PAGE CONTENT WRAPPER -->
-    </div>
-    <!-- END PAGE CONTAINER -->
-    @include('layouts.partials._quickview')
-    @include('layouts.partials._overlay')
+
 @endsection

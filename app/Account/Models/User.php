@@ -20,7 +20,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'employeeId', 'userLevelId', 'accessStatusId', 'email', 'password',
+        'employeeId',
+        'userLevelId',
+        'accessStatusId',
+        'email',
+        'password',
+        'allowSuperAdminAccess',
+        'allowAdminAccess',
+        'allowUserAccess',
     ];
 
     /**

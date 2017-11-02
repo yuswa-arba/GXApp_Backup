@@ -1,25 +1,16 @@
 @extends('layouts.main')
 @section('content')
-    <!-- START PAGE-CONTAINER -->
-    <div class="page-container">
-    @include('layouts.partials._navigation')
-    <!-- START PAGE CONTENT WRAPPER -->
-        <div class="page-content-wrapper">
-            <!-- START PAGE CONTENT -->
-            <div class="content">
-            @include('pages.divisions._menu_marketing')
-                <!-- START CONTAINER FLUID -->
-                <div class="container-fluid container-fixed-lg">
-                    <!-- BEGIN PlACE PAGE CONTENT HERE -->
-                    <!-- END PLACE PAGE CONTENT HERE -->
-                </div>
-                <!-- END CONTAINER FLUID -->
-            </div>
-            <!-- END PAGE CONTENT -->
+
+    <!-- START PAGE CONTENT -->
+    <div class="content">
+    @include('pages.divisions._menu_marketing')
+    <!-- START CONTAINER FLUID -->
+        <div class="container-fluid container-fixed-lg">
+            <!-- BEGIN PlACE PAGE CONTENT HERE -->
+            <!-- END PLACE PAGE CONTENT HERE -->
         </div>
-        <!-- END PAGE CONTENT WRAPPER -->
+        <!-- END CONTAINER FLUID -->
     </div>
-    <!-- END PAGE CONTAINER -->
-    @include('layouts.partials._quickview')
-    @include('layouts.partials._overlay')
+    <!-- END PAGE CONTENT -->
+
 @endsection

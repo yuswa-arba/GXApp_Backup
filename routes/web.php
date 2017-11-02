@@ -37,19 +37,25 @@ require(base_path($client_path . 'employee.php'));
 | Init backendV1 routes
 |--------------------------------------------------------------------------
 */
-require (base_path($backend_path . 'auth.php'));
+require(base_path($backend_path . 'auth.php'));
 
 /*
 |--------------------------------------------------------------------------
 | Init general routes
 |--------------------------------------------------------------------------
 */
+Route::get('/', 'Client\Dashboard\ViewController@index');
+//Route::get('/', function () {
+//    if (\Illuminate\Support\Facades\Auth::check()) {
+//        echo "login";
+//    } else {
+//        echo "no user";
+//    }
+//});
 
-Route::get('/', function () {
-    return redirect()->route('dashboard');
+Route::get('invalid', function () {
+    echo "invalid";
 });
-
-
 /*
 |--------------------------------------------------------------------------
 | Init testing routes
