@@ -28,7 +28,6 @@
             @include('layouts.partials.sub_partials.sidebar._storage')
             @include('layouts.partials.sub_partials.sidebar._documents')
 
-
             @include('layouts.partials.sub_partials.sidebar._settings')
 
         </ul>

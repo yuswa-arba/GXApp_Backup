@@ -13,13 +13,14 @@
 
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
 | Path Configuration
 |--------------------------------------------------------------------------
 */
 $client_path = 'routes/client/';
-$backend_path = 'routes/backend/';
+$backend_path = 'routes/backendV1/';
 
 /*
 |--------------------------------------------------------------------------
@@ -33,10 +34,10 @@ require(base_path($client_path . 'employee.php'));
 
 /*
 |--------------------------------------------------------------------------
-| Init backend routes
+| Init backendV1 routes
 |--------------------------------------------------------------------------
 */
-
+require (base_path($backend_path . 'auth.php'));
 
 /*
 |--------------------------------------------------------------------------
@@ -57,7 +58,7 @@ Route::get('/', function () {
 
 Route::prefix('testing')->group(function () {
     Route::get('uuid', function () {
-        echo \Faker\Provider\Uuid::uuid();
+
     });
 });
 

@@ -14,6 +14,6 @@
  */
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('dashboard')->group(function () {
+Route::prefix('dashboard')->middleware('auth')->namespace('Client')->group(function () {
     Route::get('/', 'Dashboard\ViewController@index')->name('dashboard');
 });

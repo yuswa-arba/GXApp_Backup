@@ -39,7 +39,7 @@
                         <div class="inner">
                             <!-- START BREADCRUMB -->
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{route('employeeList')}}">Employee</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('employee.list')}}">Employee</a></li>
                                 <li class="breadcrumb-item active">Recruitment</li>
                             </ol>
                             <!-- END BREADCRUMB -->

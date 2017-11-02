@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Route;
  | Divisions Route
  |--------------------------------------------------------------------------
  */
-Route::prefix('divisions')->group(function () {
+Route::prefix('divisions')->namespace('Client')->group(function () {
     /*
     |--------------------------------------------------------------------------
     | CSO
@@ -74,7 +74,7 @@ Route::prefix('divisions')->group(function () {
     |--------------------------------------------------------------------------
     */
     Route::prefix('NA')->group(function () {
-        Route::get('/', 'Division\NA\ViewController@index')->name('na');
+        Route::get('/', 'Division\NetworkAdministrator\ViewController@index')->name('na');
     });
 
     /*

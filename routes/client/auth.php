@@ -9,10 +9,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('login',function (){
-   return view('pages.auth.login');
-})->name('login');
+// Authentication Routes...
+Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
-Route::get('logout',function (){
-   return view('pages.auth.login');
-})->name('logout');
+

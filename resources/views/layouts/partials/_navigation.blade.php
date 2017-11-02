@@ -141,7 +141,7 @@
         <!-- END NOTIFICATIONS LIST -->
         <!-- START User Info-->
         <div class="pull-left p-r-10 fs-14 font-heading hidden-md-down m-l-20">
-            <span class="semi-bold">David</span> <span class="text-master">Nest</span>
+            <span class="semi-bold">{{Auth::user()->email}}</span>
         </div>
         <div class="dropdown pull-right hidden-md-down">
             <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
