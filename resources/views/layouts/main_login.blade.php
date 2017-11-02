@@ -12,6 +12,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="" name="description" />
     <meta content="" name="author" />
 
@@ -19,20 +20,9 @@
 
 </head>
 <body class="fixed-header menu-pin menu-behind">
-<!-- START PAGE-CONTAINER -->
-<div class="page-container">
-@include('layouts.partials._navigation')
-<!-- START PAGE CONTENT WRAPPER -->
-    <div class="page-content-wrapper">
-        <!-- START PAGE CONTENT -->
+
 @yield('content')
-        @include('layouts.partials._footer_in_page')
-    </div>
-    <!-- END PAGE CONTENT WRAPPER -->
-</div>
-<!-- END PAGE CONTAINER -->
-@include('layouts.partials._quickview')
-@include('layouts.partials._overlay')
+
 
 @include('layouts.partials._footer')
 

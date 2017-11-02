@@ -17,7 +17,6 @@
 @stack('child-scripts-plugins')
 
 <script src="{{mix('core/js/core-theme.js')}}" type="text/javascript"></script> <!-- core theme -->
-@include('layouts.partials.snippets._error_notification_1')<!--  Flash notification alert -->
 
 @stack('child-page-controller')
 

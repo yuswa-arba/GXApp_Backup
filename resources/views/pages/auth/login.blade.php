@@ -1,4 +1,4 @@
-@extends('layouts.main_no_sidebar')
+@extends('layouts.main_login')
 @section('content')
     <!-- START PAGE-CONTAINER -->
     <div class="login-wrapper ">
@@ -30,7 +30,7 @@
                 <p class="p-t-35">Sign into your pages account</p>
                 @include('layouts.partials.snippets._error_alert_1')
             <!-- START Login Form -->
-                <form id="form-login" class="p-t-15" role="form" action="{{route('bv1.auth.login')}}" method="post">
+                <form id="form-login" class="p-t-15" role="form" action="{{route('login')}}" method="post">
 
                 {{csrf_field()}}
 

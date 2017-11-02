@@ -9,33 +9,45 @@
 namespace App\Http\Middleware;
 
 
+use App\Account\Traits\LoginAttemptCase;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticateUser
 {
 
+    use LoginAttemptCase;
+
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
+     * @param  string|null $guard
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if (Auth::guard($guard)->guest()
-            || !Auth::guard($guard)->user()->accessStatusId
-            || !Auth::guard($guard)->user()->allowUserAccess
-        ) {
+
+        /* RUN LOGIC TO GET VALUE*/
+        $this->logicCase($guard);
+
+        $logicPassed = ($this->userAccess || $this->adminAccess || $this->superAdminAccess);
+
+        if ($this->guest || $this->noAccess || !$logicPassed) {
 
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);
             } else {
+
+                if (!$this->guest) {
+                    $request->session()->flash('alert-danger', 'You don\'t have permission to access this page');
+                }
+
                 Auth::logout();
-                $request->session()->flash('alert-danger', 'You don\'t have permission to access this page');
                 return redirect()->route('login');
+
+
             }
         }
 

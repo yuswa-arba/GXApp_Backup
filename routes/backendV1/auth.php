@@ -14,11 +14,6 @@ Route::prefix('bv1')->group(function (){
 
     });
 
-    Route::prefix('auth')->middleware('web')->group(function (){
-
-        Route::post('login', 'Auth\LoginController@login')->name('bv1.auth.login');
-
-    });
 
 
 

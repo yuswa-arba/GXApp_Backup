@@ -12,6 +12,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta content="" name="description"/>
     <meta content="" name="author"/>
 
@@ -40,6 +41,7 @@
 @include('layouts.partials._overlay')
 
 @include('layouts.partials._footer')
+@include('layouts.partials.snippets._error_notification_1')<!--  Flash notification alert -->
 
 </body>
 </html>

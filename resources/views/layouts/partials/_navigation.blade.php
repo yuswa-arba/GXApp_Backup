@@ -7,17 +7,20 @@
     <!-- END MOBILE SIDEBAR TOGGLE -->
     <div class="">
         <div class="brand inline">
-            <img src="{{asset('core/img/logo_blue.png')}}" alt="logo" data-src="{{asset('core/img/logo_blue.png')}}" data-src-retina="{{asset('core/img/logo_blue_2x.png')}}" width="78" height="22">
+            <img src="{{asset('core/img/logo_blue.png')}}" alt="logo" data-src="{{asset('core/img/logo_blue.png')}}"
+                 data-src-retina="{{asset('core/img/logo_blue_2x.png')}}" width="78" height="22">
         </div>
         <a href="#" class="btn btn-link text-primary m-l-20 hidden-md-down">Add New Item</a>
-        <a href="#" class="search-link hidden-md-down" data-toggle="search"><i class="pg-search"></i>Type anywhere to <span class="bold">search</span></a>
+        <a href="#" class="search-link hidden-md-down" data-toggle="search"><i class="pg-search"></i>Type anywhere to
+            <span class="bold">search</span></a>
     </div>
     <div class="d-flex align-items-center">
         <!-- START NOTIFICATION LIST -->
         <ul class="hidden-md-down notification-list no-margin hidden-sm-down b-grey b-r no-style p-l-30 p-r-20">
             <li class="p-r-10 inline">
                 <div class="dropdown">
-                    <a href="javascript:;" id="notification-center" class="header-icon pg pg-world" data-toggle="dropdown">
+                    <a href="javascript:;" id="notification-center" class="header-icon pg pg-world"
+                       data-toggle="dropdown">
                         <span class="bubble"></span>
                     </a>
                     <!-- START Notification Dropdown -->
@@ -56,7 +59,8 @@
                                     </div>
                                     <!-- END Notification Item-->
                                     <!-- START Notification Item Right Side-->
-                                    <div class="option" data-toggle="tooltip" data-placement="left" title="mark as read">
+                                    <div class="option" data-toggle="tooltip" data-placement="left"
+                                         title="mark as read">
                                         <a href="#" class="mark"></a>
                                     </div>
                                     <!-- END Notification Item Right Side-->
@@ -100,7 +104,10 @@
                                 <div class="notification-item unread clearfix">
                                     <div class="heading">
                                         <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
-                                            <img width="30" height="30" data-src-retina="{{asset('core/img/profiles/1x.jpg"')}}" data-src="{{asset('core/img/profiles/1.jpg')}}" alt="" src="{{asset('core/img/profiles/1.jpg')}}">
+                                            <img width="30" height="30"
+                                                 data-src-retina="{{asset('core/img/profiles/1x.jpg"')}}"
+                                                 data-src="{{asset('core/img/profiles/1.jpg')}}" alt=""
+                                                 src="{{asset('core/img/profiles/1.jpg')}}">
                                         </div>
                                         <a href="#" class="text-primary pull-left">
                                             <span class="bold">Revox Design Labs</span>
@@ -109,7 +116,8 @@
                                         <span class="pull-right time">11:00pm</span>
                                     </div>
                                     <!-- START Notification Item Right Side-->
-                                    <div class="option" data-toggle="tooltip" data-placement="left" title="mark as read">
+                                    <div class="option" data-toggle="tooltip" data-placement="left"
+                                         title="mark as read">
                                         <a href="#" class="mark"></a>
                                     </div>
                                     <!-- END Notification Item Right Side-->
@@ -144,24 +152,43 @@
             <span class="semi-bold">{{Auth::user()->email}}</span>
         </div>
         <div class="dropdown pull-right hidden-md-down">
-            <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
+                    aria-expanded="false">
               <span class="thumbnail-wrapper d32 circular inline">
-              <img src="{{asset('core/img/profiles/avatar.jpg')}}" alt="" data-src="{{asset('core/img/profiles/avatar.jpg')}}" data-src-retina="{{asset('core/img/profiles/avatar_small2x.jpg')}}" width="32" height="32">
+              <img src="{{asset('core/img/profiles/avatar.jpg')}}" alt=""
+                   data-src="{{asset('core/img/profiles/avatar.jpg')}}"
+                   data-src-retina="{{asset('core/img/profiles/avatar_small2x.jpg')}}" width="32" height="32">
               </span>
             </button>
             <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
                 <a href="#" class="dropdown-item"><i class="pg-settings_small"></i> Settings</a>
                 <a href="#" class="dropdown-item"><i class="pg-outdent"></i> Feedback</a>
                 <a href="#" class="dropdown-item"><i class="pg-signals"></i> Help</a>
-                <a href="{{route('logout')}}" class="clearfix bg-master-lighter dropdown-item">
+                <a href="#" id="logout-btn" class="clearfix bg-master-lighter dropdown-item">
                     <span class="pull-left">Logout</span>
                     <span class="pull-right"><i class="pg-power"></i></span>
                 </a>
             </div>
         </div>
         <!-- END User Info-->
-        <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block" data-toggle="quickview" data-toggle-element="#quickview"></a>
+        <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block"
+           data-toggle="quickview" data-toggle-element="#quickview"></a>
+
+        <form id="logout-form" action="{{route('logout')}}" method="post" style="display: none">
+            {{csrf_field()}}
+        </form>
     </div>
 </div>
 <!-- END HEADER -->
 <!-- END PAGE HEADER WRAPPER -->
+
+@push('child-page-controller')
+<script>
+    (function ($) {
+        $('#logout-btn').on('click', function (e) {
+            e.preventDefault();
+            $('#logout-form').submit();
+        });
+    })(window.jQuery);
+</script>
+@endpush

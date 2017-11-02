@@ -24,6 +24,7 @@
                    data-dismiss="alert"
                    aria-label="close">&times;</a>
             </div>
+            {{Session::forget('alert-' . $msg)}}
         @endif
     @endforeach
 </div>
