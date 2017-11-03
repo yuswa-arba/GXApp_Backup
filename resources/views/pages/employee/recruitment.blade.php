@@ -56,15 +56,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="" data-toggle="tab" href="#tab2" role="tab"><i
-                                            class="fa fa-truck tab-icon"></i> <span>Shipping information</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="" data-toggle="tab" href="#tab3" role="tab"><i
-                                            class="fa fa-credit-card tab-icon"></i> <span>Payment details</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="" data-toggle="tab" href="#tab4" role="tab"><i
-                                            class="fa fa-check tab-icon"></i> <span>Summary</span></a>
+                                            class="fa fa-file-text tab-icon"></i> <span>Employment</span></a>
                             </li>
                         </ul>
                         <!-- Tab panes -->
@@ -81,14 +73,14 @@
 
                                                             <div class="form-group form-group-default required">
                                                                 <label>Surname</label>
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" class="form-control" name="surname" value="{{old('surname')}}" required>
                                                             </div>
 
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group form-group-default required">
                                                                 <label>Given name</label>
-                                                                <input type="text" class="form-control" required>
+                                                                <input type="text" class="form-control" name="givenName" value="{{old('givenName')}}" required>
                                                             </div>
                                                         </div>
 
@@ -97,7 +89,7 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group form-group-default required">
                                                                 <label>Nickname</label>
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" class="form-control" name="nickName" value="{{old('nickName')}}" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
@@ -105,9 +97,11 @@
                                                                 <label class="">Gender</label>
                                                                 <select class="full-width"
                                                                         data-placeholder="Select Country"
-                                                                        data-init-plugin="select2">
-                                                                    <option value="1">Male</option>
-                                                                    <option value="2">Female</option>
+                                                                        data-init-plugin="select2"
+                                                                        name="gender"
+                                                                >
+                                                                    <option value="Male">Male</option>
+                                                                    <option value="Female">Female</option>
                                                                 </select>
                                                             </div>
                                                         </div>
@@ -116,22 +110,25 @@
                                                         <div class="col-md-6">
                                                             <div class="form-group form-group-default required">
                                                                 <label>Birth date</label>
-                                                                <input id="start-date" type="text"
+                                                                <input id="birth-date" type="text"
                                                                        class="form-control date"
-                                                                       name="startDate" required>
+                                                                       name="birthDate" value="{{old('birthDate')}}" required>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6">
                                                             <div class="form-group form-group-default required">
                                                                 <label>Hometown</label>
-                                                                <input type="text" class="form-control">
+                                                                <input type="text" class="form-control" name="city" value="{{old('city')}}" required>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="form-group form-group-default form-group-default-select2 required">
                                                         <label class="">Education Level</label>
                                                         <select class="full-width" data-placeholder="Select Country"
-                                                                data-init-plugin="select2">
+                                                                data-init-plugin="select2"
+                                                                name="educationLevelId"
+                                                                required
+                                                        >
                                                             <option value="1">Elementary School</option>
                                                             <option value="1">Junior High School</option>
                                                             <option value="2">Senior High School</option>
@@ -148,7 +145,10 @@
                                                     <div class="form-group form-group-default form-group-default-select2 required">
                                                         <label class="">Religion</label>
                                                         <select class="full-width" data-placeholder="Select Country"
-                                                                data-init-plugin="select2">
+                                                                data-init-plugin="select2"
+                                                                name="religionId"
+                                                                required
+                                                        >
                                                             <option value="1">Christianity</option>
                                                             <option value="2">Islam</option>
                                                             <option value="2">Catholicism</option>
@@ -163,7 +163,10 @@
                                                     <div class="form-group form-group-default form-group-default-select2 required">
                                                         <label class="">Marital Status</label>
                                                         <select class="full-width" data-placeholder="Select Country"
-                                                                data-init-plugin="select2">
+                                                                data-init-plugin="select2"
+                                                                name="maritalStatusId"
+                                                                required
+                                                        >
                                                             <option value="1">Married</option>
                                                             <option value="1">Remarried</option>
                                                             <option value="2">Divorced</option>
@@ -173,11 +176,11 @@
                                                     </div>
                                                     <div class="form-group form-group-default required">
                                                         <label>Spouse's Name</label>
-                                                        <input type="text" class="form-control" required>
+                                                        <input type="text" class="form-control" name="spousesName" value="{{old('spousesName')}}" required>
                                                     </div>
                                                     <div class="form-group form-group-default required">
                                                         <label>Number of Children</label>
-                                                        <input type="number" class="form-control" required>
+                                                        <input type="number" class="form-control" name="totalChildren" value="{{old('totalChildren')}}" required>
                                                     </div>
 
                                                 </div>
@@ -186,20 +189,23 @@
                                                 <div class="form-group-attached">
                                                     <div class="form-group form-group-default required">
                                                         <label>Father's Name</label>
-                                                        <input type="text" class="form-control" required>
+                                                        <input type="text" class="form-control" name="fatherName" value="{{old('fatherName')}}" required>
                                                     </div>
                                                     <div class="form-group form-group-default required">
                                                         <label>Father's Address</label>
-                                                        <input type="text" class="form-control" required>
+                                                        <input type="text" class="form-control" name="fatherAddress" value="{{old('fatherAddress')}}" required>
                                                     </div>
                                                     <div class="form-group form-group-default required">
                                                         <label>Father's Phone Number</label>
-                                                        <input type="text" class="form-control" required>
+                                                        <input type="text" class="form-control" name="fatherPhoneNo" value="{{old('fatherPhoneNo')}}" required>
                                                     </div>
                                                     <div class="form-group form-group-default form-group-default-select2 required">
                                                         <label class="">Father's Marital Status</label>
                                                         <select class="full-width" data-placeholder="Select Country"
-                                                                data-init-plugin="select2">
+                                                                data-init-plugin="select2"
+                                                                name="fatherMaritalStatusId"
+                                                                required
+                                                        >
                                                             <option value="1">Married</option>
                                                             <option value="1">Remarried</option>
                                                             <option value="2">Divorced</option>
@@ -212,20 +218,23 @@
                                                 <div class="form-group-attached">
                                                     <div class="form-group form-group-default required">
                                                         <label>Mother's Name</label>
-                                                        <input type="text" class="form-control" required>
+                                                        <input type="text" class="form-control" name="motherName" value="{{old('motherName')}}" required>
                                                     </div>
                                                     <div class="form-group form-group-default required">
                                                         <label>Mother's Address</label>
-                                                        <input type="text" class="form-control" required>
+                                                        <input type="text" class="form-control" name="motherAddress" value="{{old('motherAddress')}}" required>
                                                     </div>
                                                     <div class="form-group form-group-default required">
                                                         <label>Mother's Phone Number</label>
-                                                        <input type="text" class="form-control" required>
+                                                        <input type="text" class="form-control" name="motherPhoneNo" value="{{old('motherPhoneNo')}}" required>
                                                     </div>
                                                     <div class="form-group form-group-default form-group-default-select2 required">
                                                         <label class="">Mother's Marital Status</label>
                                                         <select class="full-width" data-placeholder="Select Country"
-                                                                data-init-plugin="select2">
+                                                                data-init-plugin="select2"
+                                                                name="motherMaritalStatusId"
+                                                                required
+                                                        >
                                                             <option value="1">Married</option>
                                                             <option value="1">Remarried</option>
                                                             <option value="2">Divorced</option>
@@ -238,24 +247,26 @@
                                                 <div class="form-group-attached">
                                                     <div class="form-group form-group-default">
                                                         <label>Number of Siblings</label>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" class="form-control" name="siblingPhoneNo" value="{{old('siblingPhoneNo')}}">
                                                     </div>
                                                     <div class="form-group form-group-default">
                                                         <label>Sibling's Name</label>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" class="form-control" name="siblingName" value="{{old('siblingName')}}">
                                                     </div>
                                                     <div class="form-group form-group-default">
                                                         <label>Sibling's Address</label>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" class="form-control" name="siblingAddress" value="{{old('siblingAddress')}}">
                                                     </div>
                                                     <div class="form-group form-group-default">
                                                         <label>Sibling's Phone Number</label>
-                                                        <input type="text" class="form-control">
+                                                        <input type="text" class="form-control" name="siblingPhoneNo" value="{{old('siblingPhoneNo')}}">
                                                     </div>
                                                     <div class="form-group form-group-default form-group-default-select2">
                                                         <label class="">Sibling's Marital Status</label>
                                                         <select class="full-width" data-placeholder="Select Country"
-                                                                data-init-plugin="select2">
+                                                                data-init-plugin="select2"
+                                                                name="siblingMaritalStatusId"
+                                                        >
                                                             <option value="1">Married</option>
                                                             <option value="1">Remarried</option>
                                                             <option value="2">Divorced</option>
@@ -274,19 +285,31 @@
                                             <div class="form-group-attached">
                                                 <div class="form-group form-group-default required">
                                                     <label>Address</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input type="text" class="form-control" name="address" value="{{old('address')}}" required>
                                                 </div>
                                                 <div class="form-group form-group-default required">
                                                     <label>Phone Number</label>
-                                                    <input type="number" class="form-control" required>
+                                                    <input type="number" class="form-control" name="phoneNo" value="{{old('phoneNo')}}" required>
                                                 </div>
                                                 <div class="form-group form-group-default required">
                                                     <label>E-mail Address</label>
-                                                    <input type="email" class="form-control" required>
+                                                    <input type="email" class="form-control" name="email" value="{{old('email')}}" required>
                                                 </div>
                                                 <div class="form-group form-group-default ">
                                                     <label>Alt. E-mail Address</label>
-                                                    <input type="email" class="form-control">
+                                                    <input type="email" class="form-control" name="altEmail" value="{{old('altEmail')}}">
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <p class="form-title">Contact Photo</p>
+                                            <div class="form-group-attached">
+                                                <div class="form-group form-group-default required">
+                                                    <label>Contact Photo</label>
+                                                    <form action="/file-upload" class="dropzone no-margin">
+                                                        <div class="fallback">
+                                                            <input  type="file"  name="employeePhoto" value="{{old('employeePhoto')}}" required/>
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                             <br>
@@ -294,37 +317,70 @@
                                             <div class="form-group-attached">
                                                 <div class="form-group form-group-default required">
                                                     <label>Contact Person Name</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input type="text" class="form-control" name="emergencyContact" value="{{old('emergencyContact')}}" required>
                                                 </div>
                                                 <div class="form-group form-group-default form-group-default-select2 required">
                                                     <label class="">Relationship</label>
                                                     <select class="full-width" data-placeholder="Select Country"
-                                                            data-init-plugin="select2">
+                                                            data-init-plugin="select2"
+                                                            name="emergencyRelationship"
+                                                            required
+                                                    >
                                                         <option value="1">Family</option>
                                                         <option value="1">Friend</option>
                                                     </select>
                                                 </div>
                                                 <div class="form-group form-group-default required">
                                                     <label>Address</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input type="text" class="form-control"  name="emergencyAddress" value="{{old('emergencyAddress')}}" required>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-default required">
                                                             <label>Phone Number</label>
-                                                            <input type="number" class="form-control" required>
+                                                            <input type="number" class="form-control"  name="emergencyPhoneNo" value="{{old('emergencyPhoneNo')}}" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group form-group-default ">
                                                             <label>Alt. Phone Number</label>
-                                                            <input type="number" class="form-control">
+                                                            <input type="number" class="form-control" name="emergencyAltPhoneNo" value="{{old('emergencyAltPhoneNo')}}">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="form-group form-group-default ">
                                                     <label>E-mail Address</label>
-                                                    <input type="number" class="form-control">
+                                                    <input type="email" class="form-control" name="emergencyEmailAddress" value="{{old('emergencyEmailAddress')}}" required>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <p class="form-title">Previous Employment Information</p>
+                                            <div class="form-group-attached">
+                                                <div class="form-group form-group-default ">
+                                                    <label>Company Name</label>
+                                                    <input type="text" class="form-control" name="prevCompanyName" value="{{old('prevCompanyName')}}">
+                                                </div>
+                                                <div class="form-group form-group-default ">
+                                                    <label>Company Address</label>
+                                                    <input type="text" class="form-control" name="prevCompanyAddress" value="{{old('prevCompanyAddress')}}">
+                                                </div>
+                                                <div class="form-group form-group-default ">
+                                                    <label>Company Phone Number</label>
+                                                    <input type="text" class="form-control" name="prevCompanyPhoneNo" value="{{old('prevCompanyPhoneNo')}}">
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default ">
+                                                            <label>Position</label>
+                                                            <input type="text" class="form-control" name="prevPosition" value="{{old('prevPosition')}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group form-group-default ">
+                                                            <label>Length of Employment</label>
+                                                            <input type="text" class="form-control" name="prevLengthEmployment" value="{{old('prevLengthEmployment')}}">
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <br>
@@ -332,13 +388,13 @@
                                             <div class="form-group-attached">
                                                 <div class="form-group form-group-default required">
                                                     <label>ID Card Number</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input type="text" class="form-control"  name="idCardNumber" value="{{old('idCardNumber')}}" required>
                                                 </div>
-                                                <div class="form-group form-group-default ">
+                                                <div class="form-group form-group-default required">
                                                     <label>ID Card Photo</label>
                                                     <form action="/file-upload" class="dropzone no-margin">
                                                         <div class="fallback">
-                                                            <input name="file" type="file" multiple/>
+                                                            <input  type="file"  name="idCardPhoto" value="{{old('idCardPhoto')}}" required/>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -346,25 +402,25 @@
                                             <br>
                                             <p class="form-title">Bank Information</p>
                                             <div class="form-group-attached">
-                                                <div class="form-group form-group-default required">
+                                                <div class="form-group form-group-default ">
                                                     <label>Bank Name</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input type="text" class="form-control" name="bankId">
                                                 </div>
-                                                <div class="form-group form-group-default required">
+                                                <div class="form-group form-group-default ">
                                                     <label>Bank Account Name</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input type="text" class="form-control" name="bankHolderName" value="{{old('bankHolderName')}}">
                                                 </div>
-                                                <div class="form-group form-group-default required">
+                                                <div class="form-group form-group-default ">
                                                     <label>Bank Account Number</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input type="text" class="form-control" name="bankAccNo" value="{{old('bankAccNo')}}">
                                                 </div>
-                                                <div class="form-group form-group-default required">
+                                                <div class="form-group form-group-default ">
                                                     <label>Bank Branch</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input type="text" class="form-control" name="bankBranch" value="{{old('bankBranch')}}">
                                                 </div>
-                                                <div class="form-group form-group-default required">
+                                                <div class="form-group form-group-default ">
                                                     <label>City</label>
-                                                    <input type="text" class="form-control" required>
+                                                    <input type="text" class="form-control" name="bankCity" value="{{old('bankCity')}}">
                                                 </div>
                                             </div>
                                         </div>

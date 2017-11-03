@@ -18,7 +18,7 @@ class CreateMasterEmployeeTable extends Migration
             $table->primary('id');
             $table->string('employeeNo')->unique();
             $table->string('givenName');
-            $table->string('lastName');
+            $table->string('surname');
             $table->string('nickName');
             $table->date('birthDate');
             $table->string('gender');
@@ -50,19 +50,20 @@ class CreateMasterEmployeeTable extends Migration
             $table->tinyInteger('siblingMaritalStatusId');
             $table->string('emergencyContact');
             $table->string('emergencyRelationship');
+            $table->string('emergencyAddress');
             $table->string('emergencyPhoneNo');
-            $table->string('emergencyAltPhoneNo');
+            $table->string('emergencyAltPhoneNo')->nullable();
             $table->string('emergencyEmailAddress');
             $table->string('prevCompanyName')->nullable();
             $table->string('prevCompanyAddress')->nullable();
             $table->string('prevCompanyPhoneNo')->nullable();
             $table->string('prevPosition')->nullable();
             $table->string('prevLengthEmployment')->nullable();
-            $table->string('bankId');
-            $table->string('bankAccNo');
-            $table->string('bankHolderName');
-            $table->string('bankBranch');
-            $table->string('bankCity');
+            $table->tinyInteger('bankId')->nullable();
+            $table->string('bankAccNo')->nullable();
+            $table->string('bankHolderName')->nullable();
+            $table->string('bankBranch')->nullable();
+            $table->string('bankCity')->nullable();
             $table->timestamps();
         });
     }

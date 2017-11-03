@@ -1,19 +1,18 @@
 <?php
-namespace App\Account\Observer;
-use App\Account\Models\User;
+use App\Employee\Models\MasterEmployee;
 use App\Traits\GlobalUtils;
 
 /**
  * Created by PhpStorm.
  * User: kevinpurwono
- * Date: 2/11/17
- * Time: 11:02 AM
+ * Date: 3/11/17
+ * Time: 1:29 PM
  */
-class UserObserver
+class MasterEmployeeObserver
 {
     use GlobalUtils;
 
-    public function creating(User $model)
+    public function creating(MasterEmployee $model)
     {
         /* Insert UUID in id column*/
         $model->{$model->getKeyName()} = $this->generateUUID();

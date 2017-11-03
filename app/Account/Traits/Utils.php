@@ -16,8 +16,5 @@ use Faker\Provider\Uuid;
 
 trait Utils
 {
-    public function generateUUID()
-    {
-        return Uuid::uuid();
-    }
+
 }
