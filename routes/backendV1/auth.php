@@ -15,6 +15,4 @@ Route::prefix('bv1')->group(function (){
     });
 
 
-
-
 });

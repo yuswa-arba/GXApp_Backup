@@ -8,14 +8,16 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('employee')->namespace('Client')->group(function () {
+Route::namespace('Client\Employee')->prefix('employee')->middleware('auth.admin')->group(function () {
 
     Route::get('/', function () {
-        // permission validation can be put here or simply redirect
+
+        // do something here or simply redirect
+
         return redirect()->route('employee.list');
 
     })->name('employee');
 
-    Route::get('list', 'Employee\ViewController@index')->name('employee.list');
-    Route::get('recruitment', 'Employee\ViewController@recruitment')->name('employee.recruitment.form');
+    Route::get('list', 'ViewController@index')->name('employee.list');
+    Route::get('recruitment', 'ViewController@recruitment')->name('employee.recruitment.form');
 });
