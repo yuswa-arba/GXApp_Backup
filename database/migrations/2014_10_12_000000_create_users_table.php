@@ -21,7 +21,6 @@ class CreateUsersTable extends Migration
             $table->tinyInteger('accessStatusId')->default(1);
             $table->string('email')->unique();
             $table->string('password');
-            $table->tinyInteger('allowUserAccess')->default(1);
             $table->tinyInteger('allowAdminAccess')->default(0);
             $table->tinyInteger('allowSuperAdminAccess')->default(0);
             $table->rememberToken();

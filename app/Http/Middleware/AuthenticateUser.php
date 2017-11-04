@@ -32,9 +32,7 @@ class AuthenticateUser
         /* RUN LOGIC TO GET VALUE*/
         $this->logicCase($guard);
 
-        $logicPassed = ($this->userAccess || $this->adminAccess || $this->superAdminAccess);
-
-        if ($this->guest || $this->noAccess || !$logicPassed) {
+        if ($this->guest || $this->noAccess ) {
 
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);

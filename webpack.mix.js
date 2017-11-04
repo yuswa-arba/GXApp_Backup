@@ -89,6 +89,17 @@ mix.copyDirectory('resources/assets/plugins/feather-icons', 'public/plugins/feat
 
 mix.copyDirectory('resources/assets/plugins/dropzone', 'public/plugins/dropzone');
 
+
+/*
+ |--------------------------------------------------------------------------
+ | Jquery Datatable & Datatable Responsive
+ |--------------------------------------------------------------------------
+ | Jquery Datatable & Datatable Responsive plugins
+ */
+
+mix.copyDirectory('resources/assets/plugins/jquery-datatable', 'public/plugins/jquery-datatable')
+    .copyDirectory('resources/assets/plugins/datatables-responsive', 'public/plugins/datatables-responsive');
+
 /*
  |--------------------------------------------------------------------------
  | Core theme

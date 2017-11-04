@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 
@@ -31,7 +33,7 @@ require(base_path($client_path . 'auth.php'));
 require(base_path($client_path . 'dashboard.php'));
 require(base_path($client_path . 'divisions.php'));
 require(base_path($client_path . 'employee.php'));
-
+require(base_path($client_path .'permission.php'));
 /*
 |--------------------------------------------------------------------------
 | Init backendV1 routes
@@ -53,17 +55,15 @@ Route::get('/', 'Client\Dashboard\ViewController@index');
 //    }
 //});
 
-Route::get('invalid', function () {
-    echo "invalid";
-});
 /*
 |--------------------------------------------------------------------------
 | Init testing routes
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('testing')->group(function () {
-    Route::get('uuid', function () {
+Route::prefix('testing')->middleware('auth:admin')->group(function () {
+    Route::get('guardtest', function () {
+        echo "ASdf";
 
     });
 });

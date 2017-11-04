@@ -27,9 +27,8 @@ class User extends Authenticatable
         'accessStatusId',
         'email',
         'password',
-        'allowSuperAdminAccess',
         'allowAdminAccess',
-        'allowUserAccess',
+        'allowSuperAdminAccess',
     ];
 
     /**
@@ -39,6 +38,11 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'password', 'remember_token',
+    ];
+
+    protected $casts = [
+        'allowAdminAccess'=>'boolean',
+        'allowSuperAdminAccess' => 'boolean'
     ];
 
 }

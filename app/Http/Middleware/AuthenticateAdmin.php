@@ -13,6 +13,7 @@ use App\Account\Traits\LoginAttemptCase;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 
 class AuthenticateAdmin
 {
@@ -29,10 +30,14 @@ class AuthenticateAdmin
      */
     public function handle($request, Closure $next, $guard = null)
     {
+
+
+
         /* RUN LOGIC TO GET VALUE*/
         $this->logicCase($guard);
 
         $logicPassed = ($this->adminAccess || $this->superAdminAccess);
+
 
         if ($this->guest || $this->noAccess || !$logicPassed) {
 
@@ -51,5 +56,7 @@ class AuthenticateAdmin
 
         //Admin or Super Admin access is granted
         return $next($request);
+
+
     }
 }
