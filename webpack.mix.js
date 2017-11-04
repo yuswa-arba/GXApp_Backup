@@ -60,6 +60,7 @@ mix.copy([
         'resources/assets/plugins/moment/moment.min.js',
         'resources/assets/plugins/bootstrap-daterangepicker/daterangepicker.js',
         'resources/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js',
+        'resources/assets/plugins/jquery.sieve.min.js'
 ], 'public/plugins/js/');
 
 /*

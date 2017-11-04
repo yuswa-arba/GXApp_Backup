@@ -7,6 +7,10 @@
   color: #3b4247 !important;
 }
 
+.pointer {
+  cursor: pointer !important;
+}
+
 .tab-content p.form-title {
   font-weight: bold;
   color: #3b4247;

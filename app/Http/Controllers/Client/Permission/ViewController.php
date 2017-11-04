@@ -22,6 +22,6 @@ class ViewController extends Controller
             array_push($role_permissions, ['role_id'=>$role->id,'role' => $role->name, 'permission' => $granted_permission]);
         }
 
-        return view('pages.permission.role_permission_table', compact('role_permissions'));
+        return view('pages.permission.role_permission', compact('role_permissions'));
     }
 }

@@ -1,6 +1,6 @@
 {
     "/js/app.js": "/js/app.js?id=17e539acc15cf5f3fd5c",
-    "/css/app.css": "/css/app.css?id=a2347a45090933cbc2a0",
+    "/css/app.css": "/css/app.css?id=a77a7f9c88b8aacd2a35",
     "/core/js/core-theme.js": "/core/js/core-theme.js?id=eec295d6c42fc523d0d5",
     "/plugins/css/pace-theme-flash.css": "/plugins/css/pace-theme-flash.css?id=626bad52d4efb0314b65",
     "/plugins/css/bootstrap.min.css": "/plugins/css/bootstrap.min.css?id=7e923ad223e9f33e54d2",
@@ -34,6 +34,7 @@
     "/plugins/js/moment.min.js": "/plugins/js/moment.min.js?id=f16affba0b3c235f9023",
     "/plugins/js/daterangepicker.js": "/plugins/js/daterangepicker.js?id=a706c9230424d46746e5",
     "/plugins/js/bootstrap-timepicker.min.js": "/plugins/js/bootstrap-timepicker.min.js?id=fc69c5083b8b23da8d5c",
+    "/plugins/js/jquery.sieve.min.js": "/plugins/js/jquery.sieve.min.js?id=b41d7126dd6a8b5d851d",
     "/core/css/core-theme.css": "/core/css/core-theme.css?id=ad09457619a19b6ce429",
     "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537"
 }
