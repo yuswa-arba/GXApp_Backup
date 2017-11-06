@@ -10,3 +10,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('role','Permission\MainController@createRole')->name('bv1.role.create');
 Route::post('permission','Permission\MainController@createPermission')->name('bv1.permission.create');
+Route::get('permission/assigned/{permissionName}','Permission\AjaxController@vdByPermission');

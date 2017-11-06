@@ -57,10 +57,12 @@
                                     Create new
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#" id="btnNewRole" data-toggle="modal"
-                                       data-target="#modalNewRole">New Role</a>
-                                    <a class="dropdown-item" href="#" id="btnNewPermission" data-toggle="modal"
-                                       data-target="#modalNewPermission">New Permission </a>
+                                    <a class="dropdown-item" href="#" id="btn-new-role"
+                                    >
+                                        New Role</a>
+                                    <a class="dropdown-item" href="#" id="btn-new-permission">
+                                        New Permission
+                                    </a>
 
                                 </div>
                             </div>
@@ -133,7 +135,9 @@
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <a href="#" class="btn btn-block">View Details</a>
+                                                    <button class="btn btn-block btn-vd-role" value="{{$role->id}}">View
+                                                        Details
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -190,7 +194,8 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <a href="#" class="btn btn-block">View Details</a>
+                                                    <button class="btn btn-block btn-vd-user" value="">View Details
+                                                    </button>
 
                                                 </div>
                                             </div>
@@ -283,7 +288,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <a href="#" class="btn btn-block">View Details</a>
+                                                    <button class="btn btn-block btn-vd-permission"
+                                                            value="{{$permission->name}}">View Details
+                                                    </button>
 
                                                 </div>
                                             </div>
@@ -305,7 +312,7 @@
     <!-- END PAGE CONTENT -->
 
     <!-- MODAL NEW ROLE -->
-    <div class="modal fade stick-up disable-scroll" id="modalNewRole" tabindex="-1" role="dialog" aria-hidden="false">
+    <div class="modal fade stick-up disable-scroll" id="modal-new-role" tabindex="-1" role="dialog" aria-hidden="false">
         <div class="modal-dialog ">
             <div class="modal-content-wrapper">
                 <div class="modal-content">
@@ -344,7 +351,7 @@
     <!-- EMD MODAL NEW ROLE -->
 
     <!-- MODAL NEW PERMISSION -->
-    <div class="modal fade stick-up disable-scroll" id="modalNewPermission" tabindex="-1" role="dialog"
+    <div class="modal fade stick-up disable-scroll" id="modal-new-permission" tabindex="-1" role="dialog"
          aria-hidden="false">
         <div class="modal-dialog ">
             <div class="modal-content-wrapper">
@@ -356,7 +363,8 @@
                         <h5>Create New Permission</h5>
                     </div>
                     <div class="modal-body">
-                        <form role="form" id="form-create-permission" method="post" action="{{route('bv1.permission.create')}}">
+                        <form role="form" id="form-create-permission" method="post"
+                              action="{{route('bv1.permission.create')}}">
                             {{csrf_field()}}
                             <div class="form-group-attached">
                                 <div class="row">
@@ -381,7 +389,29 @@
             <!-- /.modal-content -->
         </div>
     </div>
-    <!-- EMD MODAL NEW PERMISSION -->
+    <!-- END MODAL NEW PERMISSION -->
+
+    <!-- MODAL VIEW DETAIL ROLE & PERMISSION -->
+    <div class="modal fade stick-up" id="modal-permission-detail" tabindex="-1" role="dialog" aria-hidden="true">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            <i class="pg-close"></i>
+        </button>
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                </div>
+                <div class="modal-body">
+                   <div id="mb-permission-detail"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- END MODAL ROLE & PERMISSION -->
 
 
 
