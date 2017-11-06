@@ -36,10 +36,10 @@ mix.copy([
     .copy([
         'resources/assets/plugins/pace/pace.min.js',
         'resources/assets/plugins/jquery/jquery-1.11.1.min.js',
+        'resources/assets/plugins/bootstrap/js/bootstrap.min.js',
         'resources/assets/plugins/modernizr.custom.js',
         'resources/assets/plugins/jquery-ui/jquery-ui.min.js',
         'resources/assets/plugins/tether/js/tether.min.js',
-        'resources/assets/plugins/bootstrap/js/bootstrap.min.js',
         'resources/assets/plugins/jquery/jquery-easy.js',
         'resources/assets/plugins/jquery-unveil/jquery.unveil.min.js',
         'resources/assets/plugins/jquery-bez/jquery.bez.min.js',
@@ -60,6 +60,7 @@ mix.copy([
         'resources/assets/plugins/moment/moment.min.js',
         'resources/assets/plugins/bootstrap-daterangepicker/daterangepicker.js',
         'resources/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js',
+        'resources/assets/plugins/jquery.sieve.min.js'
 ], 'public/plugins/js/');
 
 /*
@@ -88,6 +89,17 @@ mix.copyDirectory('resources/assets/plugins/feather-icons', 'public/plugins/feat
  */
 
 mix.copyDirectory('resources/assets/plugins/dropzone', 'public/plugins/dropzone');
+
+
+/*
+ |--------------------------------------------------------------------------
+ | Jquery Datatable & Datatable Responsive
+ |--------------------------------------------------------------------------
+ | Jquery Datatable & Datatable Responsive plugins
+ */
+
+mix.copyDirectory('resources/assets/plugins/jquery-datatable', 'public/plugins/jquery-datatable')
+    .copyDirectory('resources/assets/plugins/datatables-responsive', 'public/plugins/datatables-responsive');
 
 /*
  |--------------------------------------------------------------------------

@@ -9,10 +9,12 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Auth\EloquentUserProvider;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
-
+use Illuminate\Contracts\Hashing\Hasher as HasherContract;
 class EloquentAdminUserProvider extends EloquentUserProvider
 {
+
     public function retrieveByCredentials(array $credentials)
     {
         // Of course here, you could perform the query yourself with the isAdmin comparison, but

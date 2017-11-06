@@ -1,6 +1,6 @@
 {
-    "/js/app.js": "/js/app.js?id=17e539acc15cf5f3fd5c",
-    "/css/app.css": "/css/app.css?id=50365cdd6f421deb7c1d",
+    "/js/app.js": "/js/app.js?id=a085fd1d76708cd5b1f5",
+    "/css/app.css": "/css/app.css?id=fa591855a8ec9609d5e8",
     "/core/js/core-theme.js": "/core/js/core-theme.js?id=eec295d6c42fc523d0d5",
     "/plugins/css/pace-theme-flash.css": "/plugins/css/pace-theme-flash.css?id=626bad52d4efb0314b65",
     "/plugins/css/bootstrap.min.css": "/plugins/css/bootstrap.min.css?id=7e923ad223e9f33e54d2",
@@ -10,10 +10,10 @@
     "/plugins/css/datepicker3.css": "/plugins/css/datepicker3.css?id=2f93953b93fe068c6457",
     "/plugins/js/pace.min.js": "/plugins/js/pace.min.js?id=24d2d5e3e331c4efa3cd",
     "/plugins/js/jquery-1.11.1.min.js": "/plugins/js/jquery-1.11.1.min.js?id=8101d596b2b8fa35fe3a",
+    "/plugins/js/bootstrap.min.js": "/plugins/js/bootstrap.min.js?id=0827a0bdcd9a917990ee",
     "/plugins/js/modernizr.custom.js": "/plugins/js/modernizr.custom.js?id=84abc5a8d4fe9cf20cb2",
     "/plugins/js/jquery-ui.min.js": "/plugins/js/jquery-ui.min.js?id=81b8c481fabe7be4194f",
     "/plugins/js/tether.min.js": "/plugins/js/tether.min.js?id=1c4a5999a2b43cdd3aaa",
-    "/plugins/js/bootstrap.min.js": "/plugins/js/bootstrap.min.js?id=0827a0bdcd9a917990ee",
     "/plugins/js/jquery-easy.js": "/plugins/js/jquery-easy.js?id=6516449ed5089677ed3d",
     "/plugins/js/jquery.unveil.min.js": "/plugins/js/jquery.unveil.min.js?id=ac79eb2770936161725e",
     "/plugins/js/jquery.bez.min.js": "/plugins/js/jquery.bez.min.js?id=fe6df77147d18c0d24d8",
@@ -34,6 +34,7 @@
     "/plugins/js/moment.min.js": "/plugins/js/moment.min.js?id=f16affba0b3c235f9023",
     "/plugins/js/daterangepicker.js": "/plugins/js/daterangepicker.js?id=a706c9230424d46746e5",
     "/plugins/js/bootstrap-timepicker.min.js": "/plugins/js/bootstrap-timepicker.min.js?id=fc69c5083b8b23da8d5c",
-    "/core/css/core-theme.css": "/core/css/core-theme.css?id=ad09457619a19b6ce429",
+    "/plugins/js/jquery.sieve.min.js": "/plugins/js/jquery.sieve.min.js?id=b41d7126dd6a8b5d851d",
+    "/core/css/core-theme.css": "/core/css/core-theme.css?id=5a14b843e3e6e5e2d673",
     "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537"
 }

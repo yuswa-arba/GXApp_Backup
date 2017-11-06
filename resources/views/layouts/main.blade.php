@@ -32,7 +32,7 @@
 
         @yield('content')
 
-        @include('layouts.partials._footer_in_page')
+        {{--@include('layouts.partials._footer_in_page')--}}
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
 </div>

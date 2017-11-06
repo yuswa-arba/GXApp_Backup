@@ -9,6 +9,7 @@ use App\Policies\EmployeePolicy;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -35,6 +36,7 @@ class AuthServiceProvider extends ServiceProvider
         Auth::provider('eloquent.admin', function ($app, array $config) {
             return new EloquentAdminUserProvider($app['hash'], $config['model']);
         });
+
 
         // Binding eloquent.superAdmin to our EloquentAdminUserProvider
         Auth::provider('eloquent.superAdmin', function ($app, array $config) {

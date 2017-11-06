@@ -10,7 +10,12 @@
 use Illuminate\Support\Facades\Route;
 
 // Authentication Routes...
+
 Auth::routes();
+
+
+
+
 //Route::get('logout', 'Auth\LoginController@logout')->name('logout');
 
 

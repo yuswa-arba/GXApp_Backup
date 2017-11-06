@@ -12,7 +12,6 @@
 @push('child-scripts-plugins')
 <!-- push needed plugins for this page -->
 <script src="{{mix('plugins/js/select2.full.min.js')}}" type="text/javascript"></script>
-<script src="{{mix('plugins/js/classie.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/autoNumeric.js')}}" type="text/javascript"></script>
 <script src="{{asset('plugins/dropzone/dropzone.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.bootstrap.wizard.min.js')}}" type="text/javascript"></script>

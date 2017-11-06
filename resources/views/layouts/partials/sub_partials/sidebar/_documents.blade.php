@@ -9,9 +9,5 @@
             <a href="#">Forms</a>
             <span class="icon-thumbnail">f</span>
         </li>
-        <li class="">
-            <a href="#">Permissions Settings</a>
-            <span class="icon-thumbnail">ps</span>
-        </li>
     </ul>
 </li>
