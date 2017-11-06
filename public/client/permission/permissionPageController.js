@@ -18,7 +18,7 @@
         }
     });
 
-    $('#card-filter').sieve({
+    $('.card-filter').sieve({
         searchInput:$('#search-box'),
         itemSelector: ".filter-item"
     })

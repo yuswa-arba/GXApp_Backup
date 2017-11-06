@@ -13,6 +13,8 @@
 <script src="{{mix('plugins/js/imagesloaded.pkgd.min.js')}}"></script>
 <script src="{{mix('plugins/js/jquery.actual.min.js')}}"></script>
 <script src="{{mix('plugins/js/jquery.scrollbar.min.js')}}"></script>
+<script src="{{mix('plugins/js/classie.js')}}" type="text/javascript"></script>
+
 
 @stack('child-scripts-plugins')
 

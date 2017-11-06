@@ -16,3 +16,27 @@
   color: #3b4247;
 }
 
+.smaller {
+  font-size: 70% !important;
+}
+
+.scrollable .scroll-h-50 {
+  height: 50px !important;
+}
+
+.scrollable .scroll-h-70 {
+  height: 70px !important;
+}
+
+.scrollable .scroll-h-90 {
+  height: 90px !important;
+}
+
+.scrollable .scroll-h-100 {
+  height: 100px !important;
+}
+
+.scrollable .scroll-h-120 {
+  height: 120px !important;
+}
+

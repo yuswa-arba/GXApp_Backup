@@ -33,13 +33,14 @@ require(base_path($client_path . 'auth.php'));
 require(base_path($client_path . 'dashboard.php'));
 require(base_path($client_path . 'divisions.php'));
 require(base_path($client_path . 'employee.php'));
-require(base_path($client_path .'permission.php'));
+require(base_path($client_path . 'settings/main.php'));
 /*
 |--------------------------------------------------------------------------
 | Init backendV1 routes
 |--------------------------------------------------------------------------
 */
 require(base_path($backend_path . 'auth.php'));
+
 
 /*
 |--------------------------------------------------------------------------
