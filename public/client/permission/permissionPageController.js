@@ -6,12 +6,12 @@
     'use strict';
 
 
-    $('.card-linear').card({
+    $('.card').card({
         progress: 'bar',
         onRefresh: function () {
             setTimeout(function () {
                 // Hides progress indicator
-                $('.card-linear').card({
+                $('.card').card({
                     refresh: false
                 });
             }, 2000);
@@ -21,7 +21,15 @@
     $('.card-filter').sieve({
         searchInput:$('#search-box'),
         itemSelector: ".filter-item"
-    })
+    });
+
+
+    //
+    // $('#btnNewRole').on('click',function () {
+    //     $('#modalSlideUp').modal("show");
+    // });
+
+
 
 
 })(window.jQuery);

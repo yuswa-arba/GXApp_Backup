@@ -36,10 +36,10 @@ mix.copy([
     .copy([
         'resources/assets/plugins/pace/pace.min.js',
         'resources/assets/plugins/jquery/jquery-1.11.1.min.js',
+        'resources/assets/plugins/bootstrap/js/bootstrap.min.js',
         'resources/assets/plugins/modernizr.custom.js',
         'resources/assets/plugins/jquery-ui/jquery-ui.min.js',
         'resources/assets/plugins/tether/js/tether.min.js',
-        'resources/assets/plugins/bootstrap/js/bootstrap.min.js',
         'resources/assets/plugins/jquery/jquery-easy.js',
         'resources/assets/plugins/jquery-unveil/jquery.unveil.min.js',
         'resources/assets/plugins/jquery-bez/jquery.bez.min.js',

@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('permission')->group(function () {
+
     Route::get('/', 'Permission\ViewController@index')->name('setting.permission');
+
 });
 

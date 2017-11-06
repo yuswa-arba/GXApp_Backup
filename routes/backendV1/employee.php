@@ -11,6 +11,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::namespace('BackendV1\Employee')->prefix('bv1/employee')->middleware('auth.admin')->group(function (){
 
-        Route::post('create','RecruitmentController@create')->middleware('can:create')->name('employee.recruitment.create');
+        Route::post('create','RecruitmentController@create')->middleware('can:create')->name('bv1.recruitment.create');
 
 });

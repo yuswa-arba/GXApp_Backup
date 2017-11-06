@@ -40,7 +40,7 @@ require(base_path($client_path . 'settings/main.php'));
 |--------------------------------------------------------------------------
 */
 require(base_path($backend_path . 'auth.php'));
-
+require(base_path($backend_path . 'settings/main.php'));
 
 /*
 |--------------------------------------------------------------------------
@@ -48,13 +48,6 @@ require(base_path($backend_path . 'auth.php'));
 |--------------------------------------------------------------------------
 */
 Route::get('/', 'Client\Dashboard\ViewController@index');
-//Route::get('/', function () {
-//    if (\Illuminate\Support\Facades\Auth::check()) {
-//        echo "login";
-//    } else {
-//        echo "no user";
-//    }
-//});
 
 /*
 |--------------------------------------------------------------------------
