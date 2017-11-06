@@ -360,7 +360,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
                                     class="pg-close fs-14"></i>
                         </button>
-                        <h5>Create New Permission</h5>
+                        <h5>Create New  Permission</h5>
                     </div>
                     <div class="modal-body">
                         <form role="form" id="form-create-permission" method="post"
