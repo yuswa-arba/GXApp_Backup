@@ -2,6 +2,7 @@
 namespace App\Permission\Transformers;
 use League\Fractal\TransformerAbstract;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 /**
  * Created by PhpStorm.
@@ -13,7 +14,8 @@ class AssignedPermissionTransformer extends TransformerAbstract
 {
     protected $defaultIncludes=[
 //        'assignedUsers',
-        'assignedRoles'
+        'assignedRoles',
+        'allRoles'
     ];
 
     public function transform(Permission $permission)
@@ -32,6 +34,12 @@ class AssignedPermissionTransformer extends TransformerAbstract
     public function includeAssignedRoles(Permission $permission)
     {
         $roles = $permission->roles;
+        return $this->collection($roles,new RoleTransformer,'roles');
+    }
+
+    public function includeAllRoles(Permission $permission)
+    {
+        $roles =Role::all();
         return $this->collection($roles,new RoleTransformer,'roles');
     }
 }

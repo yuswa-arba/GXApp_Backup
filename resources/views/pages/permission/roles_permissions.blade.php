@@ -12,6 +12,7 @@
 
 @push('child-page-controller')
 <script src="{{asset('client/permission/permissionPageController.js')}}" type="text/javascript"></script>
+<script src="{{asset('client/permission/vdPermissionController.js')}}" type="text/javascript"></script>
 @endpush
 
 @section('content')
@@ -211,12 +212,10 @@
                                 <div class="row">
                                     @foreach($permissions as $permission)
                                         <div class="col-lg-3  filter-item m-b-20">
-                                            <div class=" card  no-margin widget-loader-circle todolist-widget pending-projects-widget">
+                                            <div class="card card-default ">
                                                 <div class="card-header ">
                                                     <div class="card-title">
-                                                <span class="font-montserrat fs-11 all-caps dark-title">
                                                      #{{$permission->id}} {{$permission->name}}
-                                                  </span>
                                                     </div>
                                                     <div class="card-controls">
                                                         <ul>
@@ -393,13 +392,13 @@
 
     <!-- MODAL VIEW DETAIL ROLE & PERMISSION -->
     <div class="modal fade stick-up" id="modal-permission-detail" tabindex="-1" role="dialog" aria-hidden="true">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-            <i class="pg-close"></i>
-        </button>
-        <div class="modal-dialog modal-lg">
+
+        <div class="modal-dialog modal-lg role-permission-modal">
             <div class="modal-content">
                 <div class="modal-header">
-
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close"></i>
+                    </button>
                 </div>
                 <div class="modal-body">
                    <div id="mb-permission-detail"></div>
