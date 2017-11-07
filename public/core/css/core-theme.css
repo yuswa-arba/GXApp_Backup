@@ -3220,6 +3220,15 @@ hr.dotted {
 /* Font Sizes
 ------------------------------------
 */
+.fs-7 {
+  font-size: 7px !important;
+}
+.fs-8 {
+  font-size: 8px !important;
+}
+.fs-9 {
+  font-size: 9px !important;
+}
 .fs-10 {
   font-size: 10px !important;
 }

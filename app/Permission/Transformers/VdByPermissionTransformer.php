@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Role;
  * Date: 6/11/17
  * Time: 8:35 PM
  */
-class AssignedPermissionTransformer extends TransformerAbstract
+class VdByPermissionTransformer extends TransformerAbstract
 {
     protected $defaultIncludes=[
 //        'assignedUsers',
@@ -26,10 +26,12 @@ class AssignedPermissionTransformer extends TransformerAbstract
         ];
     }
 
-//    public function includeAssignedUsers(Permission $permission)
-//    {
-//
-//    }
+
+    public function includeAllRoles(Permission $permission)
+    {
+        $roles =Role::all();
+        return $this->collection($roles,new RoleTransformer,'roles');
+    }
 
     public function includeAssignedRoles(Permission $permission)
     {
@@ -37,9 +39,11 @@ class AssignedPermissionTransformer extends TransformerAbstract
         return $this->collection($roles,new RoleTransformer,'roles');
     }
 
-    public function includeAllRoles(Permission $permission)
-    {
-        $roles =Role::all();
-        return $this->collection($roles,new RoleTransformer,'roles');
-    }
+
+//    public function includeAssignedUsers(Permission $permission)
+//    {
+//
+//    }
+
+
 }

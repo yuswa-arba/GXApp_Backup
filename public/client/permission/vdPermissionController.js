@@ -3,26 +3,20 @@
  */
 
 
-const backend_route = '/bv1/setting/';
+
 let paramPermissionId = '';
 let paramPermissionName = '';
 
 (function ($) {
 
     'use strict';
-
+    ;
 
     $('.btn-vd-permission').on('click', function () {
 
         let permissionName = $(this).val();
         let container = $('#mb-permission-detail');
         let content = "";
-
-        $.ajaxSetup({
-            error: function (xhr) {
-                alert('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
-            }
-        });
 
         $.ajax({
             url: backend_route + 'permission/assigned/' + permissionName,
@@ -71,13 +65,13 @@ let paramPermissionName = '';
                          ` + rolesContent + ` 
                         <div class="col-lg-12 m-b-15"></div>
                         <div class="col-lg-3 offset-lg-9">
-                          <button class="p-t-5 p-b-5 btn text-primary bold all-caps btn-block" onclick="saveAssign()">Save</button>
+                          <button class="p-t-5 p-b-5 btn text-primary bold all-caps btn-block" onclick="saveAssignByPermission()">Save</button>
                         </div>
                    </div>`;
 
                 container.html(content); // insert content
 
-                _.forEach(assignedRolesArr, function (value, key) { // checked assigned roles
+                _.forEach(assignedRolesArr, function (value, key) { // check assigned roles
                     $('#cbrole' + value.id).prop('checked', true);
                 });
 
@@ -99,7 +93,7 @@ let paramPermissionName = '';
 
 })(window.jQuery);
 
-function saveAssign() {
+function saveAssignByPermission() {
 
     let assignRoleArr = [];
     let assignUserArr = [];
@@ -113,16 +107,6 @@ function saveAssign() {
 
     /* Data param */
     let data = {permissionName: paramPermissionName, assignRoleArr: assignRoleArr, assignUserArr: assignUserArr};
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        error: function (xhr) {
-            alert('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
-        },
-
-    });
 
     $.ajax({
         url: backend_route + 'permission/assign/by_permission',
@@ -140,7 +124,7 @@ function saveAssign() {
                 type: 'info'
             }).show();
 
-            /* TODO : update view in card */
+            /* TODO : update view*/
         }
     });
 

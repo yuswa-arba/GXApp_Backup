@@ -18987,7 +18987,6 @@ module.exports = function(module) {
 /***/ "./resources/assets/js/app.js":
 /***/ (function(module, exports, __webpack_require__) {
 
-
 /**
  * First, we will load all of this project's Javascript utilities and other
  * dependencies. Then, we will be ready to develop a robust and powerful
@@ -18997,6 +18996,27 @@ module.exports = function(module) {
 __webpack_require__("./resources/assets/js/bootstrap.js");
 
 $(document).ready(function () {
+
+    /* AJAX SETUP FOR ALL AJAX REQUEST */
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        error: function error(xhr) {
+            // alert('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
+            var xhrResponse = JSON.parse(xhr.responseText);
+            var errorMsg = 'Request Status: ' + xhr.status + ' Error: ' + xhrResponse.message + ' Exception: ' + xhrResponse.exception;
+
+            $('.page-container').pgNotification({
+                style: 'bar',
+                message: errorMsg,
+                position: 'top',
+                timeout: 0,
+                type: 'error'
+            }).show();
+        }
+    });
+
     // Initializes search overlay plugin.
     // Replace onSearchSubmit() and onKeyEnter() with
     // your logic to perform a search and display results

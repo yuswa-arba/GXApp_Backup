@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\BackendV1\Settings\Permission;
 
-use App\Permission\Transformers\AssignedPermissionTransformer;
+use App\Permission\Transformers\VdByPermissionTransformer;
+use App\Permission\Transformers\VdByRoleTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Role;
@@ -18,7 +19,7 @@ class AjaxController extends Controller
 
         $permission = Permission::findByName($permissionName);
 
-        return fractal($permission, new AssignedPermissionTransformer())->includeAllRoles()->includeAssignedRoles()->respond(200);
+        return fractal($permission, new VdByPermissionTransformer())->includeAllRoles()->includeAssignedRoles()->respond(200);
 
     }
 
@@ -31,27 +32,90 @@ class AjaxController extends Controller
         $assignRoleArr = $request->assignRoleArr;
         $assignUserArr = $request->assignUserArr;
 
-        /* Assign permission to Roles */
-        $assignRoles = Role::whereIn('id', $assignRoleArr)->get();
-        foreach ($assignRoles as $assignRole) {
+        if ($assignRoleArr != null && $assignRoleArr != '') {
+            /* Assign permission to Roles */
+            $assignRoles = Role::whereIn('id', $assignRoleArr)->get();
 
-            if (!$assignRole->hasPermissionTo($permissionName)){
-                $assignRole->givePermissionTo($permissionName);
+            foreach ($assignRoles as $assignRole) {
+
+                if (!$assignRole->hasPermissionTo($permissionName)) {
+                    $assignRole->givePermissionTo($permissionName);
+                }
+
             }
 
+            /* Revoke permission from Roles*/
+            $revokeRoles = Role::whereNotIn('id', $assignRoleArr)->get();
+            foreach ($revokeRoles as $revokeRole) {
+                $revokeRole->revokePermissionTo($permissionName);
+            }
+
+        } else {
+
+            /* If assign roles are empty then revoke all*/
+            $roles = Role::all();
+            foreach ($roles as $role) {
+                $role->revokePermissionTo($permissionName);
+            }
         }
 
-        /* Revoke permission from Roles*/
-        $revokeRoles = Role::whereNotIn('id', $assignRoleArr)->get();
-        foreach ($revokeRoles as $revokeRole) {
-            $revokeRole->revokePermissionTo($permissionName);
-        }
+        /* TODO : assign and revoke by USERS */
 
-        /* TODO: give and revoke permission to/from users */
 
         return response(['message' => 'Assign permission successful', 200]);
 
+
     }
+
+
+    public function vdByRole($roleName)
+    {
+
+        if ($roleName == "" || $roleName == null) {
+            return response()->json(['message' => 'parameter roleName is empty or null'], 500);
+        }
+
+        $role = Role::findByName($roleName);
+        return fractal($role, new VdByRoleTransformer())->includeAllPermission()->includeAssignedPermission()->respond(200);
+
+    }
+
+    public function assignByRole(Request $request)
+    {
+        $request->validate(['roleName' => 'required']);
+
+        $roleName = $request->roleName;
+        $role = Role::findByName($roleName);
+
+        $assignPermissionArr = $request->assignPermissionArr;
+
+        if ($role == null) {
+            return response(['message' => 'Role is empty'], 500);
+        }
+
+        if ($assignPermissionArr != null && $assignPermissionArr != '') {
+
+            /* Assign permission for this Role */
+            $assignPermissions = Permission::whereIn('id', $assignPermissionArr)->get();
+            foreach ($assignPermissions as $assignPermission) {
+                if (!$role->hasPermissionTo($assignPermission->name)) {
+                    $role->givePermissionTo($assignPermission->name);
+                }
+            }
+
+            /* Revoke permission from this Role*/
+            $revokePermissions = Permission::whereNotIn('id', $assignPermissionArr)->get();
+            foreach ($revokePermissions as $revokePermission) {
+                $role->revokePermissionTo($revokePermission->name);
+            }
+        } else {
+
+            $role->syncPermissions(); // revoke all permission
+        }
+
+        return response(['message' => 'Assign permission successful'], 200);
+    }
+
 
 
 }

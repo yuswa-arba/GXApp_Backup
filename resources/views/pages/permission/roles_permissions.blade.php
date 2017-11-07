@@ -11,8 +11,10 @@
 @endpush
 
 @push('child-page-controller')
+<script src="{{asset('client/permission/constPermission.js')}}" type="text/javascript"></script> <!-- constants -->
 <script src="{{asset('client/permission/permissionPageController.js')}}" type="text/javascript"></script>
 <script src="{{asset('client/permission/vdPermissionController.js')}}" type="text/javascript"></script>
+<script src="{{asset('client/permission/vdRoleController.js')}}" type="text/javascript"></script>
 @endpush
 
 @section('content')
@@ -94,7 +96,7 @@
                                 <div class="row">
 
                                     @foreach($roles as $role)
-                                        <div class="col-lg-3   filter-item">
+                                        <div class="col-lg-4  filter-item">
                                             <div class="card card-default ">
                                                 <div class="card-header ">
                                                     <div class="card-title">
@@ -128,15 +130,14 @@
                                                     </div>
                                                     <div class="scrollable">
                                                         <div class="scroll-h-70">
-                                                            <p class="all-caps font-montserrat text-success bold smaller no-margin ">
+                                                            <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
                                                                 @foreach($role->permissions as $permission)
-                                                                    <i class="fa fa-circle small "></i> {{$permission->name}}
-                                                                    &nbsp;
+                                                                    <i class="fa fa-circle smaller"></i> {{$permission->name}} <br>
                                                                 @endforeach
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <button class="btn btn-block btn-vd-role" value="{{$role->id}}">View
+                                                    <button class="btn btn-block btn-vd-role" value="{{$role->name}}">View
                                                         Details
                                                     </button>
                                                 </div>
@@ -153,7 +154,7 @@
                                 <div class="row">
 
                                     @foreach($users as $user)
-                                        <div class="col-lg-3  filter-item">
+                                        <div class="col-lg-4  filter-item">
                                             <div class="card card-default ">
                                                 <div class="card-header ">
                                                     <div class="card-title">
@@ -186,10 +187,10 @@
                                                         <!-- END BOOTSTRAP PROGRESS -->
                                                         <div class="scrollable">
                                                             <div class="scroll-h-70">
-                                                                <p class="all-caps font-montserrat text-success bold smaller no-margin ">
+                                                                <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
                                                                     @foreach($user->permissions as $permission)
-                                                                        <i class="fa fa-circle small "></i> {{$permission->name}}
-                                                                        &nbsp;
+                                                                        <i class="fa fa-circle smaller "></i> {{$permission->name}}
+                                                                        <br>
                                                                     @endforeach
                                                                 </p>
                                                             </div>
@@ -211,7 +212,7 @@
                             <div class="card-block">
                                 <div class="row">
                                     @foreach($permissions as $permission)
-                                        <div class="col-lg-3  filter-item m-b-20">
+                                        <div class="col-lg-4  filter-item m-b-20">
                                             <div class="card card-default ">
                                                 <div class="card-header ">
                                                     <div class="card-title">
@@ -257,9 +258,10 @@
                                                             </div>
                                                             <div class="scrollable">
                                                                 <div class="scroll-h-50">
-                                                                    <p class="all-caps font-montserrat text-success bold smaller no-margin ">
+                                                                    <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
                                                                         @foreach($permission->roles as $role)
-                                                                            <i class="fa fa-circle small "></i> {{$role->name}}
+                                                                            <i class="fa fa-circle smaller "></i> {{$role->name}}
+                                                                            <br>
                                                                         @endforeach
                                                                     </p>
                                                                 </div>
@@ -278,9 +280,10 @@
                                                             </div>
                                                             <div class="scrollable">
                                                                 <div class="scroll-h-50">
-                                                                    <p class="hint-text all-caps font-montserrat  text-warning small no-margin dark-title ">
+                                                                    <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
                                                                         @foreach($permission->users as $user)
-                                                                            <i class="fa fa-circle small "></i> {{$user->name}}
+                                                                            <i class="fa fa-circle smaller"></i> {{$user->name}}
+                                                                            <br>
                                                                         @endforeach
                                                                     </p>
                                                                 </div>
@@ -390,7 +393,7 @@
     </div>
     <!-- END MODAL NEW PERMISSION -->
 
-    <!-- MODAL VIEW DETAIL ROLE & PERMISSION -->
+    <!-- MODAL VIEW DETAIL PERMISSION -->
     <div class="modal fade stick-up" id="modal-permission-detail" tabindex="-1" role="dialog" aria-hidden="true">
 
         <div class="modal-dialog modal-lg role-permission-modal">
@@ -401,7 +404,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                   <div id="mb-permission-detail"></div>
+                    <div id="mb-permission-detail"></div>
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -411,6 +414,30 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- END MODAL ROLE & PERMISSION -->
+
+    <!-- MODAL VIEW DETAIL ROLE -->
+    <div class="modal fade stick-up" id="modal-role-detail" tabindex="-1" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog modal-lg role-permission-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        <i class="pg-close"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div id="mb-role-detail"></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- END MODAL ROLE & PERMISSION -->
+
+
 
 
 

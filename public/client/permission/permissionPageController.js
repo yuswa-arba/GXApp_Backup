@@ -1,11 +1,14 @@
 /**
  * Created by kevinpurwono on 4/11/17.
  */
+
+
+
 (function ($) {
 
     'use strict';
 
-    const backend_route = '/bv1/setting/';
+
 
     $('.card').card({
         progress: 'bar',
@@ -34,10 +37,6 @@
     });
 
 
-
-    $('.btn-vd-role').on('click', function () {
-        $('#modal-permission-detail').modal("show");
-    });
 
     $('.btn-vd-user').on('click', function () {
         $('#modal-permission-detail').modal("show");
