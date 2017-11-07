@@ -37,10 +37,11 @@
     });
 
 
-
     $('.btn-vd-user').on('click', function () {
         $('#modal-permission-detail').modal("show");
     });
 
 
+
 })(window.jQuery);
+

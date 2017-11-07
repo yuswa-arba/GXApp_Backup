@@ -15,8 +15,15 @@ let paramPermissionName = '';
     $('.btn-vd-permission').on('click', function () {
 
         let permissionName = $(this).val();
+
+        let headerContainer = $('#mh-permission');
+        let headerContent = "";
+
         let container = $('#mb-permission-detail');
         let content = "";
+
+        let footerContainer = $('#mf-permission');
+        let footerContent = "";
 
         $.ajax({
             url: backend_route + 'permission/assigned/' + permissionName,
@@ -41,11 +48,9 @@ let paramPermissionName = '';
                          </div>`;
                 });
 
+                headerContent = `<h5 class="text-left dark-title p-b-5">#` + obj.id + ` ` + _.upperCase(obj.name) + `</h5>`;
                 content = `
                    <div class="row">
-                        <div class="col-lg-12">
-                            <h5 class="text-left dark-title p-b-5">#` + obj.id + ` ` + obj.name + `</h5>
-                        </div>
                         <div class="col-lg-12">
                             <h4 class="text-left p-b-5"><span class="label label-success">Given to
                                     users:</span></h4>
@@ -62,14 +67,16 @@ let paramPermissionName = '';
                                     roles:</span></h4>
                         </div>
                         <div class="col-lg-12"> </div>
-                         ` + rolesContent + ` 
+                         ` + rolesContent + `
                         <div class="col-lg-12 m-b-15"></div>
-                        <div class="col-lg-3 offset-lg-9">
-                          <button class="p-t-5 p-b-5 btn text-primary bold all-caps btn-block" onclick="saveAssignByPermission()">Save</button>
-                        </div>
+                        
                    </div>`;
 
+                footerContent = `<button class="p-t-5 p-b-5 btn text-primary bold all-caps btn-block" onclick="saveAssignByPermission()">Save</button>`;
+
+                headerContainer.html(headerContent); // insert header content;
                 container.html(content); // insert content
+                footerContainer.html(footerContent); // insert footer content;
 
                 _.forEach(assignedRolesArr, function (value, key) { // check assigned roles
                     $('#cbrole' + value.id).prop('checked', true);

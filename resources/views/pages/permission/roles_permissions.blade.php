@@ -2,6 +2,16 @@
 
 @push('child-styles')
 <!-- push needed plugins for this page-->
+<style>
+    /* For scrollable modal */
+    .modal-dialog{
+        overflow-y: initial !important
+    }
+    .modal-body{
+        max-height: 400px;
+        overflow-y: auto;
+    }
+</style>
 
 @endpush
 
@@ -402,11 +412,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         <i class="pg-close"></i>
                     </button>
+                    <div id="mh-permission"></div>
                 </div>
                 <div class="modal-body">
                     <div id="mb-permission-detail"></div>
                 </div>
                 <div class="modal-footer">
+                    <div id="mf-permission"></div>
                 </div>
             </div>
             <!-- /.modal-content -->
@@ -424,11 +436,13 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                         <i class="pg-close"></i>
                     </button>
+                    <div id="mh-role"></div>
                 </div>
                 <div class="modal-body">
                     <div id="mb-role-detail"></div>
                 </div>
                 <div class="modal-footer">
+                    <div id="mf-role"></div>
                 </div>
             </div>
             <!-- /.modal-content -->
