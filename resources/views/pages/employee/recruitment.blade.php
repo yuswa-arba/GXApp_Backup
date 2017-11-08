@@ -20,7 +20,7 @@
 @endpush
 
 @push('child-page-controller')
-<script src="{{asset('client/employee/recruitmentPageController.js')}}" type="text/javascript"></script>
+<script src="{{mix('client/employee/all.js')}}" type="text/javascript"></script>
 @endpush
 
 

@@ -36,5 +36,7 @@
     "/plugins/js/bootstrap-timepicker.min.js": "/plugins/js/bootstrap-timepicker.min.js?id=fc69c5083b8b23da8d5c",
     "/plugins/js/jquery.sieve.min.js": "/plugins/js/jquery.sieve.min.js?id=b41d7126dd6a8b5d851d",
     "/core/css/core-theme.css": "/core/css/core-theme.css?id=adac04f10545c56e71bf",
-    "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537"
+    "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537",
+    "/client/permission/all.js": "/client/permission/all.js?id=756d52cd674d605d830e",
+    "/client/employee/all.js": "/client/employee/all.js?id=f1feaa1080c08caf196c"
 }

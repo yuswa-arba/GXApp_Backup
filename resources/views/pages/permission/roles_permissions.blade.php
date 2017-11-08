@@ -21,10 +21,7 @@
 @endpush
 
 @push('child-page-controller')
-<script src="{{asset('client/permission/constPermission.js')}}" type="text/javascript"></script> <!-- constants -->
-<script src="{{asset('client/permission/permissionPageController.js')}}" type="text/javascript"></script>
-<script src="{{asset('client/permission/vdPermissionController.js')}}" type="text/javascript"></script>
-<script src="{{asset('client/permission/vdRoleController.js')}}" type="text/javascript"></script>
+<script src="{{mix('client/permission/all.js')}}"></script>
 @endpush
 
 @section('content')
@@ -90,15 +87,16 @@
                     <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
                         <li class="nav-item">
                             <a href="#" class="active" data-toggle="tab"
-                               data-target="#by-roles"><span>By Roles</span></a>
+                               data-target="#by-roles"><span>Roles</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="" data-toggle="tab" data-target="#by-users"><span>By Users</span></a>
+                            <a href="#" class="" data-toggle="tab" data-target="#by-users"><span>Users</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" data-toggle="tab" data-target="#by-permissions"><span>By Permission</span></a>
+                            <a href="#" data-toggle="tab" data-target="#by-permissions"><span>Permission</span></a>
                         </li>
                     </ul>
+
                     <!-- Tab panes -->
                     <div class="tab-content bg-transparent" id="card-filter">
                         <div class="tab-pane active" id="by-roles">
@@ -119,6 +117,9 @@
                                                                    href="#"><i
                                                                             class="card-icon card-icon-collapse"></i></a>
                                                             </li>
+                                                            <li><a href="javascript:;"><i class="fa fa-trash"></i></a>
+                                                            </li>
+
                                                             <li><a data-toggle="refresh" class="card-refresh"
                                                                    href="#"><i
                                                                             class="card-icon card-icon-refresh"></i></a>
@@ -425,7 +426,7 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-    <!-- END MODAL ROLE & PERMISSION -->
+    <!-- END MODAL PERMISSION -->
 
     <!-- MODAL VIEW DETAIL ROLE -->
     <div class="modal fade stick-up" id="modal-role-detail" tabindex="-1" role="dialog" aria-hidden="true">
@@ -449,11 +450,14 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
+    <!-- END MODAL ROLE-->
+
+    <!-- MODAL VIEW DETAIL USER -->
+    {{--TODO--}}
+    <!-- END MODAL USER -->
+
+    <!-- MODAL DELETE PERMISSION -->
+    {{--TODO--}}
     <!-- END MODAL ROLE & PERMISSION -->
-
-
-
-
-
 
 @endsection

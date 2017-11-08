@@ -61,7 +61,7 @@ mix.copy([
         'resources/assets/plugins/bootstrap-daterangepicker/daterangepicker.js',
         'resources/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js',
         'resources/assets/plugins/jquery.sieve.min.js'
-], 'public/plugins/js/');
+    ], 'public/plugins/js/');
 
 /*
  |--------------------------------------------------------------------------
@@ -136,6 +136,23 @@ mix.copy('resources/assets/core/css/pages-icons.css', 'public/core/css/theme-ico
 
 mix.copyDirectory('resources/assets/core/img', 'public/core/img');
 mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
+
+
+/*
+ |--------------------------------------------------------------------------
+ | Packed all client js
+ |--------------------------------------------------------------------------
+ |
+ */
+
+mix.scripts([
+    'public/client/permission/unpacked/*.js'
+], 'public/client/permission/all.js');
+
+mix.scripts([
+    'public/client/employee/unpacked/*.js'
+], 'public/client/employee/all.js');
+
 
 
 mix.version();
