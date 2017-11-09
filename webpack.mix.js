@@ -140,7 +140,7 @@ mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
 
 /*
  |--------------------------------------------------------------------------
- | Packed all client js
+ | Client JS controllers
  |--------------------------------------------------------------------------
  |
  */
@@ -153,6 +153,11 @@ mix.scripts([
     'public/client/employee/unpacked/*.js'
 ], 'public/client/employee/all.js');
 
+mix.js('resources/assets/js/client/permission/main.js',
+    'public/client/permission/main.js');
+
+mix.js('resources/assets/js/client/passport/main.js',
+    'public/client/passport/main.js')
 
 
 mix.version();

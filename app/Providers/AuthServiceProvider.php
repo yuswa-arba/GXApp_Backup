@@ -6,10 +6,13 @@ use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\Auth\EloquentAdminUserProvider;
 use App\Http\Controllers\Auth\EloquentSuperAdminUserProvider;
 use App\Policies\EmployeePolicy;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Log;
+use Laravel\Passport\Passport;
+
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -31,6 +34,11 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+
+        Passport::routes();
+//        Passport::tokensExpireIn(Carbon::now()->addDays(15));
+//        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
+
 
         // Binding eloquent.admin to our EloquentAdminUserProvider
         Auth::provider('eloquent.admin', function ($app, array $config) {

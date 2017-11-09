@@ -9,5 +9,9 @@
             <a href="{{route('setting.permission')}}">Permission Control</a>
             <span class="icon-thumbnail">pc</span>
         </li>
+        <li class="">
+            <a href="{{route('setting.passport')}}">API Passport</a>
+            <span class="icon-thumbnail">ap</span>
+        </li>
     </ul>
 </li>

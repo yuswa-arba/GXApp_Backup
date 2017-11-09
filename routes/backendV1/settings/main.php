@@ -18,7 +18,7 @@
 use Illuminate\Support\Facades\Route;
 //Route::prefix('bv1/setting')->namespace('BackendV1\Settings')->middleware('auth.admin')->group(function () {
 
-Route::prefix('bv1/setting')->namespace('BackendV1\Settings')->group(function () {
+Route::prefix('v1/setting')->namespace('BackendV1\Settings')->group(function () {
     /*
      |--------------------------------------------------------------------------
      | Path Configuration

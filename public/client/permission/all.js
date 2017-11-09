@@ -1,7 +1,7 @@
 /**
  * Created by kevinpurwono on 7/11/17.
  */
-const backend_route = '/bv1/setting/';
+const backend_route = '/v1/setting/';
 /**
  * Created by kevinpurwono on 4/11/17.
  */

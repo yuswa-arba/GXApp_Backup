@@ -4,10 +4,11 @@
 <!-- push needed plugins for this page-->
 <style>
     /* For scrollable modal */
-    .modal-dialog{
+    .modal-dialog {
         overflow-y: initial !important
     }
-    .modal-body{
+
+    .modal-body {
         max-height: 400px;
         overflow-y: auto;
     }
@@ -21,12 +22,20 @@
 @endpush
 
 @push('child-page-controller')
+<script src="{{mix('client/permission/main.js')}}"></script>
 <script src="{{mix('client/permission/all.js')}}"></script>
+
 @endpush
 
 @section('content')
 
     <div class="content">
+
+        <template>
+            <div v-for="role in roles">
+                <span class="label label-danger">@{{role.name}}</span>
+            </div>
+        </template>
 
         <!-- START JUMBOTRON -->
         <div class="jumbotron" data-pages="parallax">
@@ -143,12 +152,14 @@
                                                         <div class="scroll-h-70">
                                                             <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
                                                                 @foreach($role->permissions as $permission)
-                                                                    <i class="fa fa-circle smaller"></i> {{$permission->name}} <br>
+                                                                    <i class="fa fa-circle smaller"></i> {{$permission->name}}
+                                                                    <br>
                                                                 @endforeach
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <button class="btn btn-block btn-vd-role" value="{{$role->name}}">View
+                                                    <button class="btn btn-block btn-vd-role" value="{{$role->name}}">
+                                                        View
                                                         Details
                                                     </button>
                                                 </div>
@@ -227,7 +238,7 @@
                                             <div class="card card-default ">
                                                 <div class="card-header ">
                                                     <div class="card-title">
-                                                     #{{$permission->id}} {{$permission->name}}
+                                                        #{{$permission->id}} {{$permission->name}}
                                                     </div>
                                                     <div class="card-controls">
                                                         <ul>
@@ -373,7 +384,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
                                     class="pg-close fs-14"></i>
                         </button>
-                        <h5>Create New  Permission</h5>
+                        <h5>Create New Permission</h5>
                     </div>
                     <div class="modal-body">
                         <form role="form" id="form-create-permission" method="post"

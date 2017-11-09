@@ -1,4 +1,6 @@
 {
+    "/client/passport/main.js": "/client/passport/main.js?id=09f6647ec50766dc2a53",
+    "/client/permission/main.js": "/client/permission/main.js?id=8f1028d9cfa236b0162f",
     "/js/app.js": "/js/app.js?id=3539f65905027d2702a9",
     "/css/app.css": "/css/app.css?id=541241796bf32874f79a",
     "/core/js/core-theme.js": "/core/js/core-theme.js?id=eec295d6c42fc523d0d5",
@@ -37,6 +39,6 @@
     "/plugins/js/jquery.sieve.min.js": "/plugins/js/jquery.sieve.min.js?id=b41d7126dd6a8b5d851d",
     "/core/css/core-theme.css": "/core/css/core-theme.css?id=adac04f10545c56e71bf",
     "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537",
-    "/client/permission/all.js": "/client/permission/all.js?id=756d52cd674d605d830e",
-    "/client/employee/all.js": "/client/employee/all.js?id=f1feaa1080c08caf196c"
+    "/client/permission/all.js": "/client/permission/all.js?id=ae02ccdcd1bfdb2a09aa",
+    "/client/employee/all.js": "/client/employee/all.js?id=de2a6ddf2c0749879ef7"
 }

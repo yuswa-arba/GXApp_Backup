@@ -1,17 +1,20 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Init backendV1 routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
 */
+
+$backend_path = 'routes/backendV1/';
+
+
+require(base_path($backend_path . 'auth.php'));
+require(base_path($backend_path . 'settings/main.php'));
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

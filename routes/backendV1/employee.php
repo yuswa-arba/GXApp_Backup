@@ -9,8 +9,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::namespace('BackendV1\Employee')->prefix('bv1/employee')->middleware('auth.admin')->group(function (){
+
+
+Route::prefix('v1')->group(function (){
+
+    Route::namespace('BackendV1\Employee')->prefix('employee')->middleware('auth.admin')->group(function (){
 
         Route::post('create','RecruitmentController@create')->middleware('can:create')->name('bv1.recruitment.create');
+
+    });
 
 });
