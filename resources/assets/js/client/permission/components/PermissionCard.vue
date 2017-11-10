@@ -4,7 +4,8 @@
             <div class="card card-default ">
                 <div class="card-header ">
                     <div class="card-title">
-                        #{{permission.id}} {{permission.name}}
+                        #{{permission.id}} {{permission.name}} <span :id="'newRole'+permission.id"
+                                                                     class="text-alert hide">*</span>
                         &nbsp;
                     </div>
                     <div class="card-controls">
@@ -170,10 +171,16 @@
             }
         },
         created(){
+            let self = this;
             get(api_path() + 'setting/permission/list')
                 .then((res) => {
                     this.permissions = res.data.data;
                 })
+
+            this.$bus.$on('assign:by_role', function (permission) {
+
+                $('#newRole' + permission.id).removeClass('hide'); //show badge
+            })
         },
         methods: {
             percent(number, total){
@@ -183,6 +190,7 @@
                 return _.upperCase(text)
             },
             showModal(permission){
+                let self = this;
 
                 this.permission = permission;
 
@@ -192,6 +200,8 @@
                         this.permissionName = res.data.data.name;
                         this.roles = res.data.data.allRoles.data;
                         this.assignedRoles = res.data.data.assignedRoles.data;
+                        this.permission.roles =  this.assignedRoles; // update card list
+                        $('#newRole'+permission.id).addClass('hide');// hide badge if there is any
                     });
 
                 $('#modal-permission-detail').modal("show"); // show modal

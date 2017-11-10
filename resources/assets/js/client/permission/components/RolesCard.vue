@@ -170,7 +170,10 @@
 
                 post(api_path() + 'setting/role/assign/by_role', data)
                     .then((res) => {
+
                         this.role.permissions = res.data.assigned.data;
+
+                        this.$bus.$emit('assign:by_role',permission)
 
                         $('.page-container').pgNotification({
                             style: 'flip',

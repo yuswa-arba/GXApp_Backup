@@ -1777,6 +1777,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -1796,8 +1797,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
+        var self = this;
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/permission/list').then(function (res) {
             _this.permissions = res.data.data;
+        });
+
+        this.$bus.$on('assign:by_role', function (permission) {
+
+            $('#newRole' + permission.id).removeClass('hide'); //show badge
         });
     },
 
@@ -1811,6 +1818,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         showModal: function showModal(permission) {
             var _this2 = this;
 
+            var self = this;
+
             this.permission = permission;
 
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/permission/assigned/' + permission.name).then(function (res) {
@@ -1818,6 +1827,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.permissionName = res.data.data.name;
                 _this2.roles = res.data.data.allRoles.data;
                 _this2.assignedRoles = res.data.data.assignedRoles.data;
+                _this2.permission.roles = _this2.assignedRoles; // update card list
+                $('#newRole' + permission.id).addClass('hide'); // hide badge if there is any
             });
 
             $('#modal-permission-detail').modal("show"); // show modal
@@ -2052,7 +2063,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var data = { roleName: roleName, assignPermissionIdArr: assignPermissionIdArr };
 
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/assign/by_role', data).then(function (res) {
+
                 _this3.role.permissions = res.data.assigned.data;
+
+                _this3.$bus.$emit('assign:by_role', permission);
 
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -19777,8 +19791,17 @@ var render = function() {
                     _vm._s(permission.id) +
                     " " +
                     _vm._s(permission.name) +
-                    "\n                     \n                "
-                )
+                    " "
+                ),
+                _c(
+                  "span",
+                  {
+                    staticClass: "text-alert hide",
+                    attrs: { id: "newRole" + permission.id }
+                  },
+                  [_vm._v("*")]
+                ),
+                _vm._v("\n                     \n                ")
               ]),
               _vm._v(" "),
               _vm._m(0, true)
