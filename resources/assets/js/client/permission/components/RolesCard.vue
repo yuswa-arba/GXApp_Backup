@@ -4,7 +4,8 @@
             <div class="card card-default ">
                 <div class="card-header ">
                     <div class="card-title">
-                        #{{role.id}} {{role.name}}
+                        #{{role.id}} {{role.name}} <span :id="'newPermission'+role.id"
+                                                         class="text-alert hide">*</span>
                         &nbsp;
                     </div>
                     <div class="card-controls">
@@ -107,21 +108,27 @@
     export default {
         data(){
             return {
-                role :'',
+                role: '',
                 roleId: '',
                 roleName: '',
                 roles: [],
                 permissions: [],
                 assignedPermissions: [],
+
             }
         },
         created(){
+
+            let self = this;
             get(api_path() + 'setting/role/list')
                 .then((res) => {
                     this.roles = res.data.data;
                 })
 
+            this.$bus.$on('assign:by_permission', function (role) {
 
+                $('#newPermission' + role.id).removeClass('hide'); //show badge
+            })
         },
         methods: {
             percent(permission, totalPermission){
@@ -131,6 +138,8 @@
                 return _.upperCase(text)
             },
             showModal(role){
+                let self = this;
+
                 this.role = role;
 
                 get(api_path() + 'setting/role/assigned/' + role.name)
@@ -139,6 +148,8 @@
                         this.roleName = res.data.data.name;
                         this.permissions = res.data.data.allPermissions.data;
                         this.assignedPermissions = res.data.data.assignedPermissions.data;
+                        this.role.permissions = this.assignedPermissions; // update card list
+                        $('#newPermission' + role.id).addClass('hide'); // hide badge if there is any
                     });
 
 
@@ -160,6 +171,7 @@
                 post(api_path() + 'setting/role/assign/by_role', data)
                     .then((res) => {
                         this.role.permissions = res.data.assigned.data;
+
                         $('.page-container').pgNotification({
                             style: 'flip',
                             message: res.data.message,
@@ -167,14 +179,15 @@
                             timeout: 3500,
                             type: 'info'
                         }).show();
+
                     })
                     .catch((err) => {
-                        this.closeModal()
+
                         $('.page-container').pgNotification({
                             style: 'flip',
-                            message: err.response,
+                            message: err.message,
                             position: 'top-right',
-                            timeout: 3500,
+                            timeout: 0,
                             type: 'danger'
                         }).show();
                     })

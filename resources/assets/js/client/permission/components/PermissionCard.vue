@@ -50,7 +50,7 @@
                                 <!-- END BOOTSTRAP PROGRESS -->
                             </div>
                             <div class="scrollable">
-                                <div class="scroll-h-50">
+                                <div class="scroll-h-70">
                                     <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
                                        <span v-for="role in permission.roles">
                                             <i class="fa fa-circle smaller"></i> {{role.name}}
@@ -73,7 +73,7 @@
                                 <!-- END BOOTSTRAP PROGRESS -->
                             </div>
                             <div class="scrollable">
-                                <div class="scroll-h-50">
+                                <div class="scroll-h-70">
                                     <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
                                       <span v-for="user in permission.users">
                                             <i class="fa fa-circle smaller"></i> {{user.name}}
@@ -216,7 +216,9 @@
                 post(api_path() + 'setting/permission/assign/by_permission', data)
                     .then((res) => {
                         /* TODO Create response for User too*/
-                        this.permission.roles = res.data.assigned.data;
+                        this.permission.roles = res.data.assigned.data
+
+                        this.$bus.$emit('assign:by_permission',role)
 
                         $('.page-container').pgNotification({
                             style: 'flip',
@@ -228,13 +230,12 @@
 
                     })
                     .catch((err) => {
-                        this.closeModal()
 
                         $('.page-container').pgNotification({
                             style: 'flip',
-                            message: err.response,
+                            message: err.message,
                             position: 'top-right',
-                            timeout: 3500,
+                            timeout: 0,
                             type: 'danger'
                         }).show();
 

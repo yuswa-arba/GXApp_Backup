@@ -5,12 +5,15 @@
 import Vue from 'vue';
 // import router from './router'
 
+
 Vue.component('roles-card', require('./components/RolesCard.vue'));
 Vue.component('permissions-card',require('./components/PermissionCard.vue'));
 
 const app = new Vue({
     el: '#vc-role-permission',
 })
+
+
 
 
 

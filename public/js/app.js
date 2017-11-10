@@ -1843,6 +1843,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 /* TODO Create response for User too*/
                 _this3.permission.roles = res.data.assigned.data;
 
+                _this3.$bus.$emit('assign:by_permission', role);
+
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: res.data.message,
@@ -1851,13 +1853,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     type: 'info'
                 }).show();
             }).catch(function (err) {
-                _this3.closeModal();
 
                 $('.page-container').pgNotification({
                     style: 'flip',
-                    message: err.response,
+                    message: err.message,
                     position: 'top-right',
-                    timeout: 3500,
+                    timeout: 0,
                     type: 'danger'
                 }).show();
             });
@@ -1979,6 +1980,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -1992,13 +1994,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             roles: [],
             permissions: [],
             assignedPermissions: []
+
         };
     },
     created: function created() {
         var _this = this;
 
+        var self = this;
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/list').then(function (res) {
             _this.roles = res.data.data;
+        });
+
+        this.$bus.$on('assign:by_permission', function (role) {
+
+            $('#newPermission' + role.id).removeClass('hide'); //show badge
         });
     },
 
@@ -2012,6 +2021,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         showModal: function showModal(role) {
             var _this2 = this;
 
+            var self = this;
+
             this.role = role;
 
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/assigned/' + role.name).then(function (res) {
@@ -2019,6 +2030,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.roleName = res.data.data.name;
                 _this2.permissions = res.data.data.allPermissions.data;
                 _this2.assignedPermissions = res.data.data.assignedPermissions.data;
+                _this2.role.permissions = _this2.assignedPermissions; // update card list
+                $('#newPermission' + role.id).addClass('hide'); // hide badge if there is any
             });
 
             $('#modal-role-detail').modal('show');
@@ -2040,6 +2053,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/assign/by_role', data).then(function (res) {
                 _this3.role.permissions = res.data.assigned.data;
+
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: res.data.message,
@@ -2048,12 +2062,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     type: 'info'
                 }).show();
             }).catch(function (err) {
-                _this3.closeModal();
+
                 $('.page-container').pgNotification({
                     style: 'flip',
-                    message: err.response,
+                    message: err.message,
                     position: 'top-right',
-                    timeout: 3500,
+                    timeout: 0,
                     type: 'danger'
                 }).show();
             });
@@ -19852,7 +19866,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "scrollable" }, [
-                      _c("div", { staticClass: "scroll-h-50" }, [
+                      _c("div", { staticClass: "scroll-h-70" }, [
                         _c(
                           "p",
                           {
@@ -19913,7 +19927,7 @@ var render = function() {
                     ),
                     _vm._v(" "),
                     _c("div", { staticClass: "scrollable" }, [
-                      _c("div", { staticClass: "scroll-h-50" }, [
+                      _c("div", { staticClass: "scroll-h-70" }, [
                         _c(
                           "p",
                           {
@@ -20240,8 +20254,17 @@ var render = function() {
                     _vm._s(role.id) +
                     " " +
                     _vm._s(role.name) +
-                    "\n                     \n                "
-                )
+                    " "
+                ),
+                _c(
+                  "span",
+                  {
+                    staticClass: "text-alert hide",
+                    attrs: { id: "newPermission" + role.id }
+                  },
+                  [_vm._v("*")]
+                ),
+                _vm._v("\n                     \n                ")
               ]),
               _vm._v(" "),
               _vm._m(0, true)
@@ -31225,8 +31248,12 @@ module.exports = function(module) {
 /***/ }),
 
 /***/ "./resources/assets/js/app.js":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /**
  * First, we will load all of this project's Javascript utilities and other
  * dependencies. Then, we will be ready to develop a robust and powerful
@@ -31236,6 +31263,22 @@ module.exports = function(module) {
 __webpack_require__("./resources/assets/js/bootstrap.js");
 
 __webpack_require__("./resources/assets/js/global.js");
+
+/* Vue Instances & Components */
+
+
+
+// Create a global Event Bus
+var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+
+// Add to Vue properties by exposing a getter for $bus
+Object.defineProperties(__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype, {
+    $bus: {
+        get: function get() {
+            return EventBus;
+        }
+    }
+});
 
 __webpack_require__("./resources/assets/js/client/permission/main.js");
 
@@ -31482,6 +31525,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 // import router from './router'
+
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('roles-card', __webpack_require__("./resources/assets/js/client/permission/components/RolesCard.vue"));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('permissions-card', __webpack_require__("./resources/assets/js/client/permission/components/PermissionCard.vue"));
