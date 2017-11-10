@@ -29,4 +29,11 @@ trait IssueTokenTrait
 
     }
 
+    public function personalAccessToken()
+    {
+        $proxy = Request::create('/oauth/personal-access-tokens','GET');
+
+        return Route::dispatch($proxy);
+    }
+
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\Settings\Permission;
 
+use App\Permission\Transformers\RoleListTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
@@ -30,6 +31,11 @@ class MainController extends Controller
 
         $request->session()->flash('alert-info','New permission: '. $name . ' has been created successfully ');
         return redirect()->route('setting.permission');
+    }
 
+    public function roleList()
+    {
+        $roles = Role::all();
+        return fractal($roles,new RoleListTransformer())->respond(200);
     }
 }

@@ -23,21 +23,21 @@
 
 @push('child-page-controller')
 <script src="{{mix('client/permission/main.js')}}"></script>
-<script src="{{mix('client/permission/all.js')}}"></script>
+{{--<script src="{{mix('client/permission/all.js')}}"></script>--}}
 
 @endpush
 
 @section('content')
 
-    <div class="content">
+    <div class="content" id="vc-role-permission">
 
-        <template>
-            <div v-for="role in roles">
-                <span class="label label-danger">@{{role.name}}</span>
-            </div>
-        </template>
+    {{--<template>--}}
+    {{--<div v-for="role in roles">--}}
+    {{--<span class="label label-danger">@{{role.name}}</span>--}}
+    {{--</div>--}}
+    {{--</template>--}}
 
-        <!-- START JUMBOTRON -->
+    <!-- START JUMBOTRON -->
         <div class="jumbotron" data-pages="parallax">
             <div class=" container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
                 <div class="inner">
@@ -113,61 +113,62 @@
                                 <div class="row">
 
                                     @foreach($roles as $role)
-                                        <div class="col-lg-4  filter-item">
-                                            <div class="card card-default ">
-                                                <div class="card-header ">
-                                                    <div class="card-title">
-                                                        #{{$role->id}} {{$role->name}}
-                                                        &nbsp;
-                                                    </div>
-                                                    <div class="card-controls">
-                                                        <ul>
-                                                            <li><a data-toggle="collapse" class="card-collapse"
-                                                                   href="#"><i
-                                                                            class="card-icon card-icon-collapse"></i></a>
-                                                            </li>
-                                                            <li><a href="javascript:;"><i class="fa fa-trash"></i></a>
-                                                            </li>
+                                        {{--<div class="col-lg-4  filter-item">--}}
+                                            {{--<div class="card card-default ">--}}
+                                                {{--<div class="card-header ">--}}
+                                                    {{--<div class="card-title">--}}
+                                                        {{--#{{$role->id}} {{$role->name}}--}}
+                                                        {{--&nbsp;--}}
+                                                    {{--</div>--}}
+                                                    {{--<div class="card-controls">--}}
+                                                        {{--<ul>--}}
+                                                            {{--<li><a data-toggle="collapse" class="card-collapse"--}}
+                                                                   {{--href="#"><i--}}
+                                                                            {{--class="card-icon card-icon-collapse"></i></a>--}}
+                                                            {{--</li>--}}
+                                                            {{--<li><a href="javascript:;"><i class="fa fa-trash"></i></a>--}}
+                                                            {{--</li>--}}
 
-                                                            <li><a data-toggle="refresh" class="card-refresh"
-                                                                   href="#"><i
-                                                                            class="card-icon card-icon-refresh"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="card-block">
+                                                            {{--<li><a data-toggle="refresh" class="card-refresh"--}}
+                                                                   {{--href="#"><i--}}
+                                                                            {{--class="card-icon card-icon-refresh"></i></a>--}}
+                                                            {{--</li>--}}
+                                                        {{--</ul>--}}
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
+                                                {{--<div class="card-block">--}}
 
-                                                    <p class="hint-text fade small pull-left">
-                                                        Total : {{count($role->permissions)}}
-                                                        / {{count($permissions)}} Permissions</p>
-                                                    <div class="clearfix"></div>
-                                                    <div class="progress progress-small m-b-15 m-t-10">
-                                                        <!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->
-                                                        <div class="progress-bar progress-bar-primary"
-                                                             style="width:{{round((int)count($role->permissions)/count($permissions) * 100)}}%"></div>
-                                                        <!-- END BOOTSTRAP PROGRESS -->
-                                                    </div>
-                                                    <div class="scrollable">
-                                                        <div class="scroll-h-70">
-                                                            <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
-                                                                @foreach($role->permissions as $permission)
-                                                                    <i class="fa fa-circle smaller"></i> {{$permission->name}}
-                                                                    <br>
-                                                                @endforeach
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <button class="btn btn-block btn-vd-role" value="{{$role->name}}">
-                                                        View
-                                                        Details
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                                    {{--<p class="hint-text fade small pull-left">--}}
+                                                        {{--Total : {{count($role->permissions)}}--}}
+                                                        {{--/ {{count($permissions)}} Permissions</p>--}}
+                                                    {{--<div class="clearfix"></div>--}}
+                                                    {{--<div class="progress progress-small m-b-15 m-t-10">--}}
+                                                        {{--<!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->--}}
+                                                        {{--<div class="progress-bar progress-bar-primary"--}}
+                                                             {{--style="width:{{round((int)count($role->permissions)/count($permissions) * 100)}}%"></div>--}}
+                                                        {{--<!-- END BOOTSTRAP PROGRESS -->--}}
+                                                    {{--</div>--}}
+                                                    {{--<div class="scrollable">--}}
+                                                        {{--<div class="scroll-h-70">--}}
+                                                            {{--<p class="all-caps font-montserrat text-success fs-8 bold no-margin">--}}
+                                                                {{--@foreach($role->permissions as $permission)--}}
+                                                                    {{--<i class="fa fa-circle smaller"></i> {{$permission->name}}--}}
+                                                                    {{--<br>--}}
+                                                                {{--@endforeach--}}
+                                                            {{--</p>--}}
+                                                        {{--</div>--}}
+                                                    {{--</div>--}}
+                                                    {{--<button class="btn btn-block btn-vd-role" value="{{$role->name}}">--}}
+                                                        {{--View--}}
+                                                        {{--Details--}}
+                                                    {{--</button>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
                                     @endforeach
 
                                 </div>
+                                <roles-card></roles-card>
                             </div>
                         </div>
 
@@ -332,143 +333,151 @@
         </div>
         <!-- END CONTAINER FLUID -->
 
-    </div>
-    <!-- END PAGE CONTENT -->
 
-    <!-- MODAL NEW ROLE -->
-    <div class="modal fade stick-up disable-scroll" id="modal-new-role" tabindex="-1" role="dialog" aria-hidden="false">
-        <div class="modal-dialog ">
-            <div class="modal-content-wrapper">
-                <div class="modal-content">
-                    <div class="modal-header clearfix text-left">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
-                                    class="pg-close fs-14"></i>
-                        </button>
-                        <h5>Create New Role</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form" id="form-create-role" method="post" action="{{route('bv1.role.create')}}">
-                            {{csrf_field()}}
-                            <div class="form-group-attached">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group form-group-default">
-                                            <label>Role Name</label>
-                                            <input type="text" name="name" class="form-control" required>
+
+
+        <!-- MODAL NEW ROLE -->
+        <div class="modal fade stick-up disable-scroll" id="modal-new-role" tabindex="-1" role="dialog" aria-hidden="false">
+            <div class="modal-dialog ">
+                <div class="modal-content-wrapper">
+                    <div class="modal-content">
+                        <div class="modal-header clearfix text-left">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+                                        class="pg-close fs-14"></i>
+                            </button>
+                            <h5>Create New Role</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" id="form-create-role" method="post" action="{{route('v1.role.create')}}">
+                                {{csrf_field()}}
+                                <div class="form-group-attached">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group form-group-default">
+                                                <label>Role Name</label>
+                                                <input type="text" name="name" class="form-control" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class=" col-md-4 m-t-10 sm-m-t-10">
-                                    <button type="submit" class="btn btn-primary btn-block m-t-5">Create</button>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class=" col-md-4 m-t-10 sm-m-t-10">
+                                        <button type="submit" class="btn btn-primary btn-block m-t-5">Create</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
         </div>
-    </div>
-    <!-- EMD MODAL NEW ROLE -->
+        <!-- EMD MODAL NEW ROLE -->
 
-    <!-- MODAL NEW PERMISSION -->
-    <div class="modal fade stick-up disable-scroll" id="modal-new-permission" tabindex="-1" role="dialog"
-         aria-hidden="false">
-        <div class="modal-dialog ">
-            <div class="modal-content-wrapper">
-                <div class="modal-content">
-                    <div class="modal-header clearfix text-left">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
-                                    class="pg-close fs-14"></i>
-                        </button>
-                        <h5>Create New Permission</h5>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form" id="form-create-permission" method="post"
-                              action="{{route('bv1.permission.create')}}">
-                            {{csrf_field()}}
-                            <div class="form-group-attached">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="form-group form-group-default">
-                                            <label>Permission Name</label>
-                                            <input type="text" name="name" class="form-control" required>
+        <!-- MODAL NEW PERMISSION -->
+        <div class="modal fade stick-up disable-scroll" id="modal-new-permission" tabindex="-1" role="dialog"
+             aria-hidden="false">
+            <div class="modal-dialog ">
+                <div class="modal-content-wrapper">
+                    <div class="modal-content">
+                        <div class="modal-header clearfix text-left">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
+                                        class="pg-close fs-14"></i>
+                            </button>
+                            <h5>Create New Permission</h5>
+                        </div>
+                        <div class="modal-body">
+                            <form role="form" id="form-create-permission" method="post"
+                                  action="{{route('v1.permission.create')}}">
+                                {{csrf_field()}}
+                                <div class="form-group-attached">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group form-group-default">
+                                                <label>Permission Name</label>
+                                                <input type="text" name="name" class="form-control" required>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8"></div>
-                                <div class=" col-md-4 m-t-10 sm-m-t-10">
-                                    <button type="submit" class="btn btn-primary btn-block m-t-5">Create</button>
+                                <div class="row">
+                                    <div class="col-md-8"></div>
+                                    <div class=" col-md-4 m-t-10 sm-m-t-10">
+                                        <button type="submit" class="btn btn-primary btn-block m-t-5">Create</button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
         </div>
-    </div>
-    <!-- END MODAL NEW PERMISSION -->
+        <!-- END MODAL NEW PERMISSION -->
 
-    <!-- MODAL VIEW DETAIL PERMISSION -->
-    <div class="modal fade stick-up" id="modal-permission-detail" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- MODAL VIEW DETAIL PERMISSION -->
+        <div class="modal fade stick-up" id="modal-permission-detail" tabindex="-1" role="dialog" aria-hidden="true">
 
-        <div class="modal-dialog modal-lg role-permission-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        <i class="pg-close"></i>
-                    </button>
-                    <div id="mh-permission"></div>
+            <div class="modal-dialog modal-lg role-permission-modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                            <i class="pg-close"></i>
+                        </button>
+                        <div id="mh-permission"></div>
+                    </div>
+                    <div class="modal-body">
+                        <div id="mb-permission-detail"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <div id="mf-permission"></div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <div id="mb-permission-detail"></div>
-                </div>
-                <div class="modal-footer">
-                    <div id="mf-permission"></div>
-                </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- END MODAL PERMISSION -->
+        <!-- END MODAL PERMISSION -->
 
-    <!-- MODAL VIEW DETAIL ROLE -->
-    <div class="modal fade stick-up" id="modal-role-detail" tabindex="-1" role="dialog" aria-hidden="true">
+        <!-- MODAL VIEW DETAIL ROLE -->
+        {{--<div class="modal fade stick-up" id="modal-role-detail" tabindex="-1" role="dialog" aria-hidden="true">--}}
 
-        <div class="modal-dialog modal-lg role-permission-modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                        <i class="pg-close"></i>
-                    </button>
-                    <div id="mh-role"></div>
-                </div>
-                <div class="modal-body">
-                    <div id="mb-role-detail"></div>
-                </div>
-                <div class="modal-footer">
-                    <div id="mf-role"></div>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- END MODAL ROLE-->
+            {{--<div class="modal-dialog modal-lg role-permission-modal">--}}
+                {{--<div class="modal-content">--}}
+                    {{--<div class="modal-header">--}}
+                        {{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">--}}
+                            {{--<i class="pg-close"></i>--}}
+                        {{--</button>--}}
+                        {{--<div id="mh-role"></div>--}}
+                    {{--</div>--}}
+                    {{--<div class="modal-body">--}}
+                        {{--<div id="mb-role-detail"></div>--}}
+                    {{--</div>--}}
+                    {{--<div class="modal-footer">--}}
+                        {{--<div id="mf-role"></div>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+                {{--<!-- /.modal-content -->--}}
+            {{--</div>--}}
+            {{--<!-- /.modal-dialog -->--}}
+        {{--</div>--}}
+        <!-- END MODAL ROLE-->
 
-    <!-- MODAL VIEW DETAIL USER -->
+        <!-- MODAL VIEW DETAIL USER -->
     {{--TODO--}}
     <!-- END MODAL USER -->
 
-    <!-- MODAL DELETE PERMISSION -->
+        <!-- MODAL DELETE PERMISSION -->
     {{--TODO--}}
     <!-- END MODAL ROLE & PERMISSION -->
+
+
+
+
+    </div>
+    <!-- END PAGE CONTENT -->
+
+
 
 @endsection

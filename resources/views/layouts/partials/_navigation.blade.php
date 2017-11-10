@@ -105,7 +105,7 @@
                                     <div class="heading">
                                         <div class="thumbnail-wrapper d24 circular b-white m-r-5 b-a b-white m-t-10 m-r-10">
                                             <img width="30" height="30"
-                                                 data-src-retina="{{asset('core/img/profiles/1x.jpg"')}}"
+                                                 data-src-retina="{{asset('core/img/profiles/1x.jpg')}}"
                                                  data-src="{{asset('core/img/profiles/1.jpg')}}" alt=""
                                                  src="{{asset('core/img/profiles/1.jpg')}}">
                                         </div>

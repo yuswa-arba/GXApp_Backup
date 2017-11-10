@@ -16,13 +16,16 @@ Route::prefix('v1')->group(function () {
         Route::post('login', 'LoginController@login');
         Route::post('refresh', 'LoginController@refresh');
 
+
         Route::group(['middleware' => 'auth:api'], function () {
 
             Route::post('logout', 'LoginController@logout');
+            Route::get('get-access-token',function(){
+                return "it worked";
+            });
 
         });
 
     });
-
 
 });

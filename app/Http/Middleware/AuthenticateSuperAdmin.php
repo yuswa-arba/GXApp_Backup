@@ -26,7 +26,7 @@ class AuthenticateSuperAdmin
      * @param  string|null $guard
      * @return mixed
      */
-    public function handle($request, Closure $next, $guard = 'superAdmin')
+    public function handle($request, Closure $next, $guard = null)
     {
         /* RUN LOGIC TO GET VALUE*/
         $this->logicCase($guard);

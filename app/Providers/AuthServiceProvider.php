@@ -36,19 +36,19 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Passport::routes();
-//        Passport::tokensExpireIn(Carbon::now()->addDays(15));
-//        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
+        Passport::tokensExpireIn(Carbon::now()->addDays(15));
+        Passport::refreshTokensExpireIn(Carbon::now()->addDays(30));
 
 
         // Binding eloquent.admin to our EloquentAdminUserProvider
-        Auth::provider('eloquent.admin', function ($app, array $config) {
-            return new EloquentAdminUserProvider($app['hash'], $config['model']);
-        });
+//        Auth::provider('eloquent.admin', function ($app, array $config) {
+//            return new EloquentAdminUserProvider($app['hash'], $config['model']);
+//        });
 
 
         // Binding eloquent.superAdmin to our EloquentAdminUserProvider
-        Auth::provider('eloquent.superAdmin', function ($app, array $config) {
-            return new EloquentSuperAdminUserProvider($app['hash'], $config['model']);
-        });
+//        Auth::provider('eloquent.superAdmin', function ($app, array $config) {
+//            return new EloquentSuperAdminUserProvider($app['hash'], $config['model']);
+//        });
     }
 }

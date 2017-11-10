@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\Client;
-
+use Illuminate\Support\Facades\Route;
 class LoginController extends Controller
 {
     use IssueTokenTrait;

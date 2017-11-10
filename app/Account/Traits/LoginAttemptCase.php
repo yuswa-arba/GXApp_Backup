@@ -29,7 +29,7 @@ trait  LoginAttemptCase
 
             $this->noAccess = !Auth::guard($guard)->user()->accessStatusId;
 
-            $this->adminAccess =  Auth::guard($guard)->user()->allowAdminAccess;
+            $this->adminAccess = Auth::guard($guard)->user()->allowAdminAccess;
 
             $this->superAdminAccess = Auth::guard($guard)->user()->allowSuperAdminAccess;
         }

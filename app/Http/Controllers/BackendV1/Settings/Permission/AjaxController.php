@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\Settings\Permission;
 
+use App\Permission\Transformers\PermissionTransformer;
 use App\Permission\Transformers\VdByPermissionTransformer;
 use App\Permission\Transformers\VdByRoleTransformer;
 use Illuminate\Http\Request;
@@ -63,8 +64,6 @@ class AjaxController extends Controller
 
 
         return response(['message' => 'Assign permission successful', 200]);
-
-
     }
 
 
@@ -87,16 +86,16 @@ class AjaxController extends Controller
         $roleName = $request->roleName;
         $role = Role::findByName($roleName);
 
-        $assignPermissionArr = $request->assignPermissionArr;
+        $assignPermissionIdArr = $request->assignPermissionIdArr;
 
         if ($role == null) {
             return response(['message' => 'Role is empty'], 500);
         }
 
-        if ($assignPermissionArr != null && $assignPermissionArr != '') {
+        if ($assignPermissionIdArr != null && $assignPermissionIdArr != '') {
 
             /* Assign permission for this Role */
-            $assignPermissions = Permission::whereIn('id', $assignPermissionArr)->get();
+            $assignPermissions = Permission::whereIn('id', $assignPermissionIdArr)->get();
             foreach ($assignPermissions as $assignPermission) {
                 if (!$role->hasPermissionTo($assignPermission->name)) {
                     $role->givePermissionTo($assignPermission->name);
@@ -104,7 +103,7 @@ class AjaxController extends Controller
             }
 
             /* Revoke permission from this Role*/
-            $revokePermissions = Permission::whereNotIn('id', $assignPermissionArr)->get();
+            $revokePermissions = Permission::whereNotIn('id', $assignPermissionIdArr)->get();
             foreach ($revokePermissions as $revokePermission) {
                 $role->revokePermissionTo($revokePermission->name);
             }
@@ -113,7 +112,10 @@ class AjaxController extends Controller
             $role->syncPermissions(); // revoke all permission
         }
 
-        return response(['message' => 'Assign permission successful'], 200);
+        return response([
+            'message' => 'Assign permission successful',
+            'assigned' => fractal(Permission::whereIn('id',$assignPermissionIdArr)->get(),new PermissionTransformer())
+        ], 200);
     }
 
 

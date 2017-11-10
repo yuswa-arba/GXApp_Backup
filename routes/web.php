@@ -55,10 +55,14 @@ Route::get('/', 'Client\Dashboard\ViewController@index');
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('testing')->middleware('auth:admin')->group(function () {
+Route::prefix('testing')->middleware('auth.admin')->group(function () {
     Route::get('guardtest', function () {
         echo "ASdf";
 
+    });
+
+    Route::get('mytoken',function(){
+       return Auth::guard('api')->user()->token();
     });
 });
 

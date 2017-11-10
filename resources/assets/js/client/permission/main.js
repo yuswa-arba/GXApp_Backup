@@ -3,17 +3,13 @@
  */
 
 require('../../bootstrap') // axios,lodash,etc
-window.Vue = require('vue');
-window.VueRouter = require('vue-router');
+import Vue from 'vue';
+// import router from './router'
 
+Vue.component('roles-card',require('./components/RolesCard.vue'));
 
 const app = new Vue({
-    el: '.content',
-    data: {
-        roles: [
-            {name: 'asdf'},
-            {name: 'zxcv'}
-        ]
-    }
+    el: '#vc-role-permission',
+
 })
 
