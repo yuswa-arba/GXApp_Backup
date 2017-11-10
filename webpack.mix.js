@@ -1,19 +1,5 @@
 let mix = require('laravel-mix');
 
-/*
- |--------------------------------------------------------------------------
- | Mix Asset Management
- |--------------------------------------------------------------------------
- |
- | Mix provides a clean, fluent API for defining some Webpack build steps
- | for your Laravel application. By default, we are compiling the Sass
- | file for the application as well as bundling up all the JS files.
- |
- */
-
-mix.js('resources/assets/js/app.js', 'public/js')
-    .sass('resources/assets/sass/app.scss', 'public/css');
-
 
 /*
  |--------------------------------------------------------------------------
@@ -137,27 +123,16 @@ mix.copy('resources/assets/core/css/pages-icons.css', 'public/core/css/theme-ico
 mix.copyDirectory('resources/assets/core/img', 'public/core/img');
 mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
 
-
 /*
  |--------------------------------------------------------------------------
- | Client JS controllers
+ | Application JS
  |--------------------------------------------------------------------------
  |
  */
 
-mix.scripts([
-    'public/client/permission/unpacked/*.js'
-], 'public/client/permission/all.js');
+mix.js('resources/assets/js/app.js', 'public/js');
+mix.sass('resources/assets/sass/app.scss', 'public/css');
 
-mix.scripts([
-    'public/client/employee/unpacked/*.js'
-], 'public/client/employee/all.js');
-
-mix.js('resources/assets/js/client/permission/main.js',
-    'public/client/permission/main.js');
-
-mix.js('resources/assets/js/client/passport/main.js',
-    'public/client/passport/main.js')
 
 
 mix.version();

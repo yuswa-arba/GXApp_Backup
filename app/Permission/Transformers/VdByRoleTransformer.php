@@ -15,8 +15,8 @@ class VdByRoleTransformer extends TransformerAbstract
 {
     protected $defaultIncludes = [
 //        'assignedUsers',
-        'assignedPermission',
-        'allPermission'
+        'assignedPermissions',
+        'allPermissions'
     ];
 
     public function transform(Role $role)
@@ -27,13 +27,13 @@ class VdByRoleTransformer extends TransformerAbstract
         ];
     }
 
-    public function includeAllPermission(Role $role)
+    public function includeAllPermissions(Role $role)
     {
         $permissions = Permission::all();
         return $this->collection($permissions, new PermissionTransformer, 'permissions');
     }
 
-    public function includeAssignedPermission(Role $role)
+    public function includeAssignedPermissions(Role $role)
     {
         $permissions = $role->permissions;
         return $this->collection($permissions, new PermissionTransformer, 'permissions');

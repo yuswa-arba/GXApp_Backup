@@ -1,9 +1,7 @@
 {
-    "/client/passport/main.js": "/client/passport/main.js?id=09f6647ec50766dc2a53",
-    "/client/permission/main.js": "/client/permission/main.js?id=a4c8e0e1621bcd2d10a0",
-    "/js/app.js": "/js/app.js?id=3539f65905027d2702a9",
+    "/js/app.js": "/js/app.js?id=549012e4d1549bc909c3",
+    "/core/js/core-theme.js": "/core/js/core-theme.js?id=207dd7649e8e71ef680a",
     "/css/app.css": "/css/app.css?id=541241796bf32874f79a",
-    "/core/js/core-theme.js": "/core/js/core-theme.js?id=eec295d6c42fc523d0d5",
     "/plugins/css/pace-theme-flash.css": "/plugins/css/pace-theme-flash.css?id=626bad52d4efb0314b65",
     "/plugins/css/bootstrap.min.css": "/plugins/css/bootstrap.min.css?id=7e923ad223e9f33e54d2",
     "/plugins/css/jquery.scrollbar.css": "/plugins/css/jquery.scrollbar.css?id=9873d0579300540c4563",
@@ -37,8 +35,6 @@
     "/plugins/js/daterangepicker.js": "/plugins/js/daterangepicker.js?id=a706c9230424d46746e5",
     "/plugins/js/bootstrap-timepicker.min.js": "/plugins/js/bootstrap-timepicker.min.js?id=fc69c5083b8b23da8d5c",
     "/plugins/js/jquery.sieve.min.js": "/plugins/js/jquery.sieve.min.js?id=b41d7126dd6a8b5d851d",
-    "/core/css/core-theme.css": "/core/css/core-theme.css?id=adac04f10545c56e71bf",
-    "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537",
-    "/client/permission/all.js": "/client/permission/all.js?id=ae02ccdcd1bfdb2a09aa",
-    "/client/employee/all.js": "/client/employee/all.js?id=de2a6ddf2c0749879ef7"
+    "/core/css/core-theme.css": "/core/css/core-theme.css?id=31e5170f299082f708f3",
+    "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537"
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackendV1\Settings\Permission;
 
 use App\Permission\Transformers\PermissionTransformer;
+use App\Permission\Transformers\RoleTransformer;
 use App\Permission\Transformers\VdByPermissionTransformer;
 use App\Permission\Transformers\VdByRoleTransformer;
 use Illuminate\Http\Request;
@@ -30,12 +31,12 @@ class AjaxController extends Controller
         $request->validate(['permissionName' => 'required']);
 
         $permissionName = $request->permissionName;
-        $assignRoleArr = $request->assignRoleArr;
+        $assignRoleIdArr = $request->assignRoleIdArr;
         $assignUserArr = $request->assignUserArr;
 
-        if ($assignRoleArr != null && $assignRoleArr != '') {
+        if ($assignRoleIdArr != null && $assignRoleIdArr != '') {
             /* Assign permission to Roles */
-            $assignRoles = Role::whereIn('id', $assignRoleArr)->get();
+            $assignRoles = Role::whereIn('id', $assignRoleIdArr)->get();
 
             foreach ($assignRoles as $assignRole) {
 
@@ -46,7 +47,7 @@ class AjaxController extends Controller
             }
 
             /* Revoke permission from Roles*/
-            $revokeRoles = Role::whereNotIn('id', $assignRoleArr)->get();
+            $revokeRoles = Role::whereNotIn('id', $assignRoleIdArr)->get();
             foreach ($revokeRoles as $revokeRole) {
                 $revokeRole->revokePermissionTo($permissionName);
             }
@@ -63,7 +64,11 @@ class AjaxController extends Controller
         /* TODO : assign and revoke by USERS */
 
 
-        return response(['message' => 'Assign permission successful', 200]);
+        return response([
+            'message' => 'Assign permission successful',
+            'assigned' => fractal(Role::whereIn('id',$assignRoleIdArr)->get(),new RoleTransformer())
+
+        ],200);
     }
 
 
@@ -75,7 +80,7 @@ class AjaxController extends Controller
         }
 
         $role = Role::findByName($roleName);
-        return fractal($role, new VdByRoleTransformer())->includeAllPermission()->includeAssignedPermission()->respond(200);
+        return fractal($role, new VdByRoleTransformer())->includeAllPermissions()->includeAssignedPermissions()->respond(200);
 
     }
 

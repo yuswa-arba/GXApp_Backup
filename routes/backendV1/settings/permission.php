@@ -9,6 +9,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('role/list', 'Permission\MainController@roleList');
+Route::get('permission/list','Permission\MainController@permissionList');
+
 Route::post('role', 'Permission\MainController@createRole')->name('v1.role.create');
 Route::post('permission', 'Permission\MainController@createPermission')->name('v1.permission.create');
 

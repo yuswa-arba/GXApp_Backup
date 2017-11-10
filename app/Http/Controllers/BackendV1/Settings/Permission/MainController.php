@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\Settings\Permission;
 
+use App\Permission\Transformers\PermissionListTransformer;
 use App\Permission\Transformers\RoleListTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -38,4 +39,11 @@ class MainController extends Controller
         $roles = Role::all();
         return fractal($roles,new RoleListTransformer())->respond(200);
     }
+
+    public function permissionList()
+    {
+        $permissions = Permission::all();
+        return fractal($permissions, new PermissionListTransformer())->respond(200);
+    }
+
 }

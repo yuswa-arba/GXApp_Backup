@@ -33,7 +33,6 @@
                         <!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->
                         <div class="progress-bar progress-bar-primary"
                              :style="{width:percent(role.permissions.length,role.totalPermission)+'%'}">
-
                         </div>
                         <!-- END BOOTSTRAP PROGRESS -->
                     </div>
@@ -111,18 +110,18 @@
                 role :'',
                 roleId: '',
                 roleName: '',
+                roles: [],
                 permissions: [],
                 assignedPermissions: [],
-                roles: [],
-                showRoleModal: false
             }
         },
         created(){
             get(api_path() + 'setting/role/list')
                 .then((res) => {
                     this.roles = res.data.data;
-                    console.log(this.roles);
                 })
+
+
         },
         methods: {
             percent(permission, totalPermission){
@@ -133,14 +132,13 @@
             },
             showModal(role){
                 this.role = role;
-                this.roleId = role.id;
-                this.roleName = role.name;
 
                 get(api_path() + 'setting/role/assigned/' + role.name)
                     .then((res) => {
-                        this.permissions = res.data.data.allPermission.data;
-                        this.assignedPermissions = res.data.data.assignedPermission.data;
-                        console.log(res);
+                        this.roleId = res.data.data.id;
+                        this.roleName = res.data.data.name;
+                        this.permissions = res.data.data.allPermissions.data;
+                        this.assignedPermissions = res.data.data.assignedPermissions.data;
                     });
 
 
@@ -162,7 +160,6 @@
                 post(api_path() + 'setting/role/assign/by_role', data)
                     .then((res) => {
                         this.role.permissions = res.data.assigned.data;
-
                         $('.page-container').pgNotification({
                             style: 'flip',
                             message: res.data.message,
@@ -175,7 +172,7 @@
                         this.closeModal()
                         $('.page-container').pgNotification({
                             style: 'flip',
-                            message: err.response.data,
+                            message: err.response,
                             position: 'top-right',
                             timeout: 3500,
                             type: 'danger'
@@ -186,7 +183,7 @@
             }
         },
         mounted(){
-            console.log('Component mounted')
+            console.log('Role Card Component mounted')
         }
     }
 </script>

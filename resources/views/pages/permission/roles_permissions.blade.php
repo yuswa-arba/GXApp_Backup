@@ -18,24 +18,16 @@
 
 @push('child-scripts-plugins')
 <!-- push needed plugins for this page -->
-<script src="{{asset('plugins/js/jquery.sieve.min.js')}}" type="text/javascript"></script>
 @endpush
 
 @push('child-page-controller')
-<script src="{{mix('client/permission/main.js')}}"></script>
-{{--<script src="{{mix('client/permission/all.js')}}"></script>--}}
-
+{{--<script src="{{asset('client/permission/unpacked/vdPermissionController.js')}}"></script>--}}
+{{--<script src="{{asset('client/permission/unpacked/vdRoleController.js')}}"></script>--}}
 @endpush
 
 @section('content')
 
     <div class="content" id="vc-role-permission">
-
-    {{--<template>--}}
-    {{--<div v-for="role in roles">--}}
-    {{--<span class="label label-danger">@{{role.name}}</span>--}}
-    {{--</div>--}}
-    {{--</template>--}}
 
     <!-- START JUMBOTRON -->
         <div class="jumbotron" data-pages="parallax">
@@ -107,67 +99,9 @@
                     </ul>
 
                     <!-- Tab panes -->
-                    <div class="tab-content bg-transparent" id="card-filter">
+                    <div class="tab-content bg-transparent filter-container">
                         <div class="tab-pane active" id="by-roles">
                             <div class="card-block " id="">
-                                <div class="row">
-
-                                    @foreach($roles as $role)
-                                        {{--<div class="col-lg-4  filter-item">--}}
-                                            {{--<div class="card card-default ">--}}
-                                                {{--<div class="card-header ">--}}
-                                                    {{--<div class="card-title">--}}
-                                                        {{--#{{$role->id}} {{$role->name}}--}}
-                                                        {{--&nbsp;--}}
-                                                    {{--</div>--}}
-                                                    {{--<div class="card-controls">--}}
-                                                        {{--<ul>--}}
-                                                            {{--<li><a data-toggle="collapse" class="card-collapse"--}}
-                                                                   {{--href="#"><i--}}
-                                                                            {{--class="card-icon card-icon-collapse"></i></a>--}}
-                                                            {{--</li>--}}
-                                                            {{--<li><a href="javascript:;"><i class="fa fa-trash"></i></a>--}}
-                                                            {{--</li>--}}
-
-                                                            {{--<li><a data-toggle="refresh" class="card-refresh"--}}
-                                                                   {{--href="#"><i--}}
-                                                                            {{--class="card-icon card-icon-refresh"></i></a>--}}
-                                                            {{--</li>--}}
-                                                        {{--</ul>--}}
-                                                    {{--</div>--}}
-                                                {{--</div>--}}
-                                                {{--<div class="card-block">--}}
-
-                                                    {{--<p class="hint-text fade small pull-left">--}}
-                                                        {{--Total : {{count($role->permissions)}}--}}
-                                                        {{--/ {{count($permissions)}} Permissions</p>--}}
-                                                    {{--<div class="clearfix"></div>--}}
-                                                    {{--<div class="progress progress-small m-b-15 m-t-10">--}}
-                                                        {{--<!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->--}}
-                                                        {{--<div class="progress-bar progress-bar-primary"--}}
-                                                             {{--style="width:{{round((int)count($role->permissions)/count($permissions) * 100)}}%"></div>--}}
-                                                        {{--<!-- END BOOTSTRAP PROGRESS -->--}}
-                                                    {{--</div>--}}
-                                                    {{--<div class="scrollable">--}}
-                                                        {{--<div class="scroll-h-70">--}}
-                                                            {{--<p class="all-caps font-montserrat text-success fs-8 bold no-margin">--}}
-                                                                {{--@foreach($role->permissions as $permission)--}}
-                                                                    {{--<i class="fa fa-circle smaller"></i> {{$permission->name}}--}}
-                                                                    {{--<br>--}}
-                                                                {{--@endforeach--}}
-                                                            {{--</p>--}}
-                                                        {{--</div>--}}
-                                                    {{--</div>--}}
-                                                    {{--<button class="btn btn-block btn-vd-role" value="{{$role->name}}">--}}
-                                                        {{--View--}}
-                                                        {{--Details--}}
-                                                    {{--</button>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    @endforeach
-
-                                </div>
                                 <roles-card></roles-card>
                             </div>
                         </div>
@@ -206,7 +140,7 @@
                                                     <div class="progress progress-small m-b-15 m-t-10">
                                                         <!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->
                                                         <div class="progress-bar progress-bar-primary"
-                                                             style="width:{{round((int)count($role->permissions)/count($permissions) * 100)}}%"></div>
+                                                             style="width:{{round((int)count($user->permissions)/count($permissions) * 100)}}%"></div>
                                                         <!-- END BOOTSTRAP PROGRESS -->
                                                         <div class="scrollable">
                                                             <div class="scroll-h-70">
@@ -233,96 +167,7 @@
 
                         <div class="tab-pane" id="by-permissions">
                             <div class="card-block">
-                                <div class="row">
-                                    @foreach($permissions as $permission)
-                                        <div class="col-lg-4  filter-item m-b-20">
-                                            <div class="card card-default ">
-                                                <div class="card-header ">
-                                                    <div class="card-title">
-                                                        #{{$permission->id}} {{$permission->name}}
-                                                    </div>
-                                                    <div class="card-controls">
-                                                        <ul>
-                                                            <li><a data-toggle="collapse" class="card-collapse"
-                                                                   href="#"><i
-                                                                            class="card-icon card-icon-collapse"></i></a>
-                                                            </li>
-                                                            <li><a href="#" class="card-refresh text-black"
-                                                                   data-toggle="refresh"><i
-                                                                            class="card-icon card-icon-refresh"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="card-block">
-                                                    <ul class="nav nav-tabs nav-tabs-simple m-b-20" role="tablist"
-                                                        data-init-reponsive-tabs="collapse">
-                                                        <li class="nav-item"><a href="#role-tab{{$permission->id}}"
-                                                                                class="active" data-toggle="tab"
-                                                                                role="tab"
-                                                                                aria-expanded="true">Role</a>
-                                                        </li>
-                                                        <li class="nav-item"><a href="#user-tab{{$permission->id}}"
-                                                                                data-toggle="tab" role="tab"
-                                                                                aria-expanded="false">User</a>
-                                                        </li>
-                                                    </ul>
-                                                    <div class="tab-content no-padding">
-                                                        <div class="tab-pane active" id="role-tab{{$permission->id}}">
-                                                            <p class="hint-text fade small pull-left">
-                                                                Total : {{count($permission->roles)}}
-                                                                / {{count($roles)}} Roles </p>
-                                                            <div class="clearfix"></div>
-                                                            <div class="progress progress-small m-b-15 m-t-10">
-                                                                <!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->
-                                                                <div class="progress-bar progress-bar-primary"
-                                                                     style="width:{{round((int)count($permission->roles)/count($roles) * 100)}}%"></div>
-                                                                <!-- END BOOTSTRAP PROGRESS -->
-                                                            </div>
-                                                            <div class="scrollable">
-                                                                <div class="scroll-h-50">
-                                                                    <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
-                                                                        @foreach($permission->roles as $role)
-                                                                            <i class="fa fa-circle smaller "></i> {{$role->name}}
-                                                                            <br>
-                                                                        @endforeach
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tab-pane" id="user-tab{{$permission->id}}">
-                                                            <p class="hint-text fade small pull-left">
-                                                                Total : {{count($permission->users)}}
-                                                                / {{count($users)}} Users </p>
-                                                            <div class="clearfix"></div>
-                                                            <div class="progress progress-small m-b-15 m-t-10">
-                                                                <!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->
-                                                                <div class="progress-bar progress-bar-warning"
-                                                                     style="width:{{round((int)count($permission->users)/count($roles) * 100)}}%"></div>
-                                                                <!-- END BOOTSTRAP PROGRESS -->
-                                                            </div>
-                                                            <div class="scrollable">
-                                                                <div class="scroll-h-50">
-                                                                    <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
-                                                                        @foreach($permission->users as $user)
-                                                                            <i class="fa fa-circle smaller"></i> {{$user->name}}
-                                                                            <br>
-                                                                        @endforeach
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <button class="btn btn-block btn-vd-permission"
-                                                            value="{{$permission->name}}">View Details
-                                                    </button>
-
-                                                </div>
-                                            </div>
-                                            <!-- END WIDGET -->
-                                        </div>
-                                    @endforeach
-                                </div>
+                                <permissions-card></permissions-card>
                             </div>
 
                         </div>
@@ -416,55 +261,7 @@
         </div>
         <!-- END MODAL NEW PERMISSION -->
 
-        <!-- MODAL VIEW DETAIL PERMISSION -->
-        <div class="modal fade stick-up" id="modal-permission-detail" tabindex="-1" role="dialog" aria-hidden="true">
 
-            <div class="modal-dialog modal-lg role-permission-modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
-                            <i class="pg-close"></i>
-                        </button>
-                        <div id="mh-permission"></div>
-                    </div>
-                    <div class="modal-body">
-                        <div id="mb-permission-detail"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <div id="mf-permission"></div>
-                    </div>
-                </div>
-                <!-- /.modal-content -->
-            </div>
-            <!-- /.modal-dialog -->
-        </div>
-        <!-- END MODAL PERMISSION -->
-
-        <!-- MODAL VIEW DETAIL ROLE -->
-        {{--<div class="modal fade stick-up" id="modal-role-detail" tabindex="-1" role="dialog" aria-hidden="true">--}}
-
-            {{--<div class="modal-dialog modal-lg role-permission-modal">--}}
-                {{--<div class="modal-content">--}}
-                    {{--<div class="modal-header">--}}
-                        {{--<button type="button" class="close" data-dismiss="modal" aria-hidden="true">--}}
-                            {{--<i class="pg-close"></i>--}}
-                        {{--</button>--}}
-                        {{--<div id="mh-role"></div>--}}
-                    {{--</div>--}}
-                    {{--<div class="modal-body">--}}
-                        {{--<div id="mb-role-detail"></div>--}}
-                    {{--</div>--}}
-                    {{--<div class="modal-footer">--}}
-                        {{--<div id="mf-role"></div>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-                {{--<!-- /.modal-content -->--}}
-            {{--</div>--}}
-            {{--<!-- /.modal-dialog -->--}}
-        {{--</div>--}}
-        <!-- END MODAL ROLE-->
-
-        <!-- MODAL VIEW DETAIL USER -->
     {{--TODO--}}
     <!-- END MODAL USER -->
 
