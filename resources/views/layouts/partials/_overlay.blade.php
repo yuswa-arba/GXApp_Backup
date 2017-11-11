@@ -6,7 +6,7 @@
         <div class="container-fluid">
             <!-- BEGIN Overlay Logo !-->
             <img class="overlay-brand" src="{{asset('core/img/logo.png')}}" alt="logo" data-src="{{asset('core/img/logo.png')}}"
-                 data-src-retina="assets/img/logo_2x.png" width="78" height="22">
+                 data-src-retina="{{asset('core/img/logo_2x.png')}}" width="78" height="22">
             <!-- END Overlay Logo !-->
             <!-- BEGIN Overlay Close !-->
             <a href="#" class="close-icon-light overlay-close text-black fs-16">

@@ -45,7 +45,6 @@ class AuthenticateUser
                 Auth::logout();
                 return redirect()->route('login');
 
-
             }
         }
 

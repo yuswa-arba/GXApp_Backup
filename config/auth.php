@@ -44,19 +44,19 @@ return [
         ],
 
         'api' => [
-            'driver' => 'token',
+            'driver' => 'passport',
             'provider' => 'users',
         ],
 
-        'admin'=>[
-            'driver'=>'session',
-            'provider'=>'admins'
-        ],
-
-        'superAdmin'=>[
-            'driver'=>'session',
-            'provider'=>'superAdmins'
-        ]
+//        'admin'=>[
+//            'driver'=>'session',
+//            'provider'=>'admins'
+//        ],
+//
+//        'superAdmin'=>[
+//            'driver'=>'session',
+//            'provider'=>'superAdmins'
+//        ]
     ],
 
     /*
@@ -83,15 +83,15 @@ return [
         ],
 
 
-        'admins'=>[
-            'driver'=>'eloquent.admin',
-            'model'=> User::class
-        ],
-
-        'superAdmins'=>[
-            'driver'=>'eloquent.superAdmin',
-            'model'=>User::class
-        ]
+//        'admins'=>[
+//            'driver'=>'eloquent.admin',
+//            'model'=> User::class
+//        ],
+//
+//        'superAdmins'=>[
+//            'driver'=>'eloquent.superAdmin',
+//            'model'=>User::class
+//        ]
 
 
         // 'users' => [

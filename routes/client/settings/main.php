@@ -35,4 +35,5 @@ Route::prefix('setting')->namespace('Client\Settings')->middleware('auth.admin')
      |--------------------------------------------------------------------------
      */
     include (base_path($client_setting_path .'permission.php'));
+    include (base_path($client_setting_path .'passport.php'));
 });

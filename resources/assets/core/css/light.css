@@ -12416,8 +12416,8 @@ Main components
 ------------------------------------
 */
 .scrollable {
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow-y: auto!important;
+  -webkit-overflow-scrolling: touch!important;
 }
 /* Overides
 ------------------------------------

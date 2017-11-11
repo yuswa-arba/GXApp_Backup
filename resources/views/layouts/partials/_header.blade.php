@@ -4,7 +4,6 @@
 <link href="{{asset('plugins/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css" /> <!--font awesome-->
 <link href="{{mix('plugins/css/jquery.scrollbar.css')}}" rel="stylesheet" type="text/css" media="screen" />
 
-
 @stack('child-styles')
 
 <link href="{{mix('core/css/theme-icons.css')}}" rel="stylesheet" type="text/css">  <!--icons-->
