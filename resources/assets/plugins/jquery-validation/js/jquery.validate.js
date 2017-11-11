@@ -813,6 +813,9 @@ $.extend( $.validator, {
 				}
 			}
 			this.toShow = this.toShow.add( error );
+            if ( this.settings.errorElement != 'label' ) {
+                selector = selector + ", #" + name.replace( /\s+/g, ", #" ) + '-error';
+            }
 		},
 
 		errorsFor: function( element ) {

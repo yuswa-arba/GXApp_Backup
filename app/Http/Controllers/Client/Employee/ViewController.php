@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Client\Employee;
 
+use App\Components\Models\BranchOffice;
+use App\Components\Models\Division;
 use App\Components\Models\EducationLevel;
+use App\Components\Models\JobPosition;
 use App\Components\Models\MaritalStatus;
 use App\Components\Models\Religion;
+use App\Employee\Models\EmployeeStatus;
+use App\Employee\Models\RecruitmentStatus;
+use App\Http\Controllers\BackendV1\Helpdesk\Employee\RecruitmentController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -21,8 +27,17 @@ class ViewController extends Controller
         $educationLevels = EducationLevel::all();
         $religions = Religion::all();
         $maritalStatuses = MaritalStatus::all();
+        $jobPositions = JobPosition::all();
+        $divisions = Division::all();
+        $branchOffices = BranchOffice::all();
+        $employeeStatuses = EmployeeStatus::all();
+        $recruitmentStatuses = RecruitmentStatus::all();
 
-        return view('pages.employee.recruitment', compact('educationLevels', 'religions', 'maritalStatuses'));
+        return view('pages.employee.recruitment', compact(
+            'educationLevels', 'religions', 'maritalStatuses',
+            'jobPositions', 'divisions','branchOffices',
+            'employeeStatuses', 'recruitmentStatuses')
+        );
     }
 
 
