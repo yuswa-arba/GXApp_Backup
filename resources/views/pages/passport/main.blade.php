@@ -8,6 +8,7 @@
 @endpush
 
 @push('child-page-controller')
+<script src="{{mix('js/client/passport/main.js')}}"></script>
 
 @endpush
 @section('content')

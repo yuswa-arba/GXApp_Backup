@@ -21,8 +21,7 @@
 @endpush
 
 @push('child-page-controller')
-{{--<script src="{{asset('client/permission/unpacked/vdPermissionController.js')}}"></script>--}}
-{{--<script src="{{asset('client/permission/unpacked/vdRoleController.js')}}"></script>--}}
+<script src="{{mix('js/client/permission/main.js')}}"></script>
 @endpush
 
 @section('content')
@@ -67,9 +66,9 @@
                                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Create new
                                 </button>
-                                <div class="dropdown-menu">
-                                    <create-new-menus></create-new-menus>
-                                </div>
+
+                                <create-new-menus></create-new-menus>
+
                             </div>
                         </div>
                     </div>

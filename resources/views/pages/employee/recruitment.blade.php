@@ -19,6 +19,10 @@
 
 @endpush
 
+@push('child-page-controller')
+<script src="{{mix('js/client/employee/main.js')}}"></script>
+@endpush
+
 @section('content')
 
     <!-- START PAGE CONTENT -->

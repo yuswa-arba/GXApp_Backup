@@ -123,11 +123,22 @@ mix.copy('resources/assets/core/css/pages-icons.css', 'public/core/css/theme-ico
 mix.copyDirectory('resources/assets/core/img', 'public/core/img');
 mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
 
+
+/*
+ |--------------------------------------------------------------------------
+ | Client Compiled JS
+ |--------------------------------------------------------------------------
+ */
+
+mix.js('resources/assets/js/client/employee/main','public/js/client/employee');
+mix.js('resources/assets/js/client/passport/main','public/js/client/passport');
+mix.js('resources/assets/js/client/permission/main','public/js/client/permission');
+
+
 /*
  |--------------------------------------------------------------------------
  | Application JS
  |--------------------------------------------------------------------------
- |
  */
 
 mix.js('resources/assets/js/app.js', 'public/js');
