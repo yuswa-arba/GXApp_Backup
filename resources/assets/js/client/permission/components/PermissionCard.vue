@@ -255,7 +255,7 @@
             }
         },
         mounted(){
-            console.log('Permission Card Component mounted')
+//            console.log('Permission Card Component mounted')
         }
     }
 </script>

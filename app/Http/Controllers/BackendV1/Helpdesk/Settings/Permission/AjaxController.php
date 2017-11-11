@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BackendV1\Settings\Permission;
+namespace App\Http\Controllers\BackendV1\Helpdesk\Settings\Permission;
 
 use App\Permission\Transformers\PermissionTransformer;
 use App\Permission\Transformers\RoleTransformer;

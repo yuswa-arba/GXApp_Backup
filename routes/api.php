@@ -10,7 +10,28 @@ use Illuminate\Support\Facades\Route;
 */
 
 $backend_path = 'routes/backendV1/';
+$type_android = 'android/';
+$type_helpdesk = 'helpdesk/';
 
 
-require(base_path($backend_path . 'auth.php'));
-require(base_path($backend_path . 'settings/main.php'));
+/*
+|--------------------------------------------------------------------------
+| Init Helpdesk API routes
+|--------------------------------------------------------------------------
+*/
+
+require(base_path($backend_path . $type_helpdesk . 'settings/main.php'));
+require(base_path($backend_path . $type_helpdesk . 'employee.php'));
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Init Android API routes
+|--------------------------------------------------------------------------
+*/
+require(base_path($backend_path . $type_android . 'auth.php'));
+
+
+
+

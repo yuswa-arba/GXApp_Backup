@@ -199,7 +199,7 @@
             }
         },
         mounted(){
-            console.log('Role Card Component mounted')
+//            console.log('Role Card Component mounted')
         }
     }
 </script>

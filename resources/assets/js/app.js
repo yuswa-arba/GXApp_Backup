@@ -27,8 +27,9 @@ Object.defineProperties(Vue.prototype, {
     }
 })
 
-require('./client/permission/main');
-
+require('./client/permission/main')
+require('./client/passport/main')
+require('./client/employee/main')
 
 
 

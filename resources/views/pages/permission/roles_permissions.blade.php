@@ -29,7 +29,7 @@
 
     <div class="content" id="vc-role-permission">
 
-    <!-- START JUMBOTRON -->
+        <!-- START JUMBOTRON -->
         <div class="jumbotron" data-pages="parallax">
             <div class=" container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
                 <div class="inner">
@@ -68,13 +68,7 @@
                                     Create new
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#" id="btn-new-role"
-                                    >
-                                        New Role</a>
-                                    <a class="dropdown-item" href="#" id="btn-new-permission">
-                                        New Permission
-                                    </a>
-
+                                    <create-new-menus></create-new-menus>
                                 </div>
                             </div>
                         </div>
@@ -179,10 +173,9 @@
         <!-- END CONTAINER FLUID -->
 
 
-
-
         <!-- MODAL NEW ROLE -->
-        <div class="modal fade stick-up disable-scroll" id="modal-new-role" tabindex="-1" role="dialog" aria-hidden="false">
+        <div class="modal fade stick-up disable-scroll" id="modal-new-role" tabindex="-1" role="dialog"
+             aria-hidden="false">
             <div class="modal-dialog ">
                 <div class="modal-content-wrapper">
                     <div class="modal-content">
@@ -264,12 +257,9 @@
 
     {{--TODO--}}
     <!-- END MODAL USER -->
-
         <!-- MODAL DELETE PERMISSION -->
     {{--TODO--}}
     <!-- END MODAL ROLE & PERMISSION -->
-
-
 
 
     </div>

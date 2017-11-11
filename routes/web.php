@@ -18,12 +18,12 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Path Configuration
+| Path & Type Configuration
 |--------------------------------------------------------------------------
 */
 $client_path = 'routes/client/';
 $backend_path = 'routes/backendV1/';
-
+$type_helpdesk = 'helpdesk/';
 /*
 |--------------------------------------------------------------------------
 | Init client routes
@@ -34,13 +34,8 @@ require(base_path($client_path . 'dashboard.php'));
 require(base_path($client_path . 'divisions.php'));
 require(base_path($client_path . 'employee.php'));
 require(base_path($client_path . 'settings/main.php'));
-/*
-|--------------------------------------------------------------------------
-| Init backendV1 routes
-|--------------------------------------------------------------------------
-*/
-require(base_path($backend_path . 'auth.php'));
-require(base_path($backend_path . 'settings/main.php'));
+
+
 
 /*
 |--------------------------------------------------------------------------

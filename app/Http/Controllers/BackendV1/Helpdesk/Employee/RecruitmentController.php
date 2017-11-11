@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BackendV1\Employee;
+namespace App\Http\Controllers\BackendV1\Helpdesk\Employee;
 
 use App\Http\Requests\EmployeeRequest;
 use Illuminate\Http\Request;

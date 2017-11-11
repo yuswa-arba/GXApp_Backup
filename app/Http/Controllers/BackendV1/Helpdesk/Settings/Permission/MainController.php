@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BackendV1\Settings\Permission;
+namespace App\Http\Controllers\BackendV1\Helpdesk\Settings\Permission;
 
 use App\Permission\Transformers\PermissionListTransformer;
 use App\Permission\Transformers\RoleListTransformer;
@@ -12,6 +12,7 @@ use Spatie\Permission\Models\Role;
 
 class MainController extends Controller
 {
+
     public function createRole(Request $request)
     {
         $request->validate(['name' => 'required|regex:/^[\pL\s\-]+$/u|unique:roles']);
