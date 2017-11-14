@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Employee;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
-class EmployeeRequest extends FormRequest
+class MasterEmployeeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class EmployeeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return (Auth::user()->allowSuperAdminAccess||Auth::user()->allowAdminAccess);
     }
 
     /**
@@ -24,29 +25,29 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'givenName' => 'required',
             'surname' => 'required',
+            'givenName' => 'required',
             'nickName' => 'required',
-            'birthDate' => 'required|date_format:dd/mm/yyyy',
             'gender' => 'required',
-            'religionId' => 'required',
+            'birthDate' => 'required|date_format:d/m/Y',
             'city' => 'required',
-            'address' => 'required',
-            'email' => 'required',
-            'phoneNo' => 'required',
             'educationLevelId' => 'required',
-            'maritalStautsId'=>'required',
-            'idCardNumber' => 'required',
-            'idCardPhoto' => 'required|mimes:jpeg,bmp,png|max:5000',
-            'employeePhoto'=>'mimes:jpeg,bmp,png|max:5000',
-            'motherName' => 'required',
-            'motherPhoneNo' => 'required',
-            'motherAddress' => 'required',
-            'motherMaritalStatusId' => 'required',
+            'religionId' => 'required',
+            'maritalStatusId'=>'required',
             'fatherName' => 'required',
             'fatherPhoneNo' => 'required',
             'fatherAddress' => 'required',
             'fatherMaritalStatusId' => 'required',
+            'motherName' => 'required',
+            'motherPhoneNo' => 'required',
+            'motherAddress' => 'required',
+            'motherMaritalStatusId' => 'required',
+            'idCardNumber' => 'required',
+            'idCardPhoto' => 'mimes:jpeg,bmp,png|max:2048',
+            'address' => 'required',
+            'phoneNo' => 'required',
+            'email' => 'required',
+            'employeePhoto'=>'mimes:jpeg,bmp,png|max:2048',
             'emergencyContact' => 'required',
             'emergencyRelationship' => 'required',
             'emergencyPhoneNo' => 'required',

@@ -37,3 +37,9 @@ source :
     @endforeach
 @endforeach
 ```
+
+
+**Routing**
+- Backend for helpdesk are call via web route with custom middleware
+- Backend for Android are call via api route with Passport Oauth token
+- Client for helpdesk are call via web route with custom middleware

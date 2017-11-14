@@ -21,9 +21,9 @@ class CreateEmploymentTable extends Migration
             $table->tinyInteger('activityStatusId');
             $table->tinyInteger('branchOfficeId');
             $table->tinyInteger('recruitmentStatusId');
-            $table->date('dateOfEntry');
-            $table->date('dateOfStart');
-            $table->date('dateOfResignation');
+            $table->string('dateOfEntry');
+            $table->string('dateOfStart');
+            $table->string('dateOfResignation');
             $table->timestamps();
         });
     }

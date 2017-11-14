@@ -30,13 +30,11 @@ class ViewController extends Controller
         $jobPositions = JobPosition::all();
         $divisions = Division::all();
         $branchOffices = BranchOffice::all();
-        $employeeStatuses = EmployeeStatus::all();
         $recruitmentStatuses = RecruitmentStatus::all();
 
         return view('pages.employee.recruitment', compact(
             'educationLevels', 'religions', 'maritalStatuses',
-            'jobPositions', 'divisions','branchOffices',
-            'employeeStatuses', 'recruitmentStatuses')
+            'jobPositions', 'divisions','branchOffices', 'recruitmentStatuses')
         );
     }
 

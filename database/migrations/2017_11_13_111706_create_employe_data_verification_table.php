@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeeStatusTable extends Migration
+class CreateEmployeDataVerificationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateEmployeeStatusTable extends Migration
      */
     public function up()
     {
-        Schema::create('employeeStatus', function (Blueprint $table) {
+        Schema::create('employeeDataVerification', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->uuid('employeeId');
+            $table->tinyInteger('verified')->default(0);
             $table->timestamps();
         });
     }
@@ -27,6 +28,6 @@ class CreateEmployeeStatusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('employeeStatus');
+        Schema::dropIfExists('employeeDataVerification');
     }
 }

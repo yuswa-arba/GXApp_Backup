@@ -10,11 +10,9 @@ use App\Traits\GlobalUtils;
  */
 class MasterEmployeeObserver
 {
-    use GlobalUtils;
 
     public function creating(MasterEmployee $model)
     {
-        /* Insert UUID in id column*/
-        $model->{$model->getKeyName()} = $this->generateUUID();
+
     }
 }

@@ -12,5 +12,13 @@ class MasterEmployee extends Model
     protected $table = 'MasterEmployee';
     public $incrementing = false;
 
-    protected $guarded = ['id','employeeNo'];
+//    protected $guarded = ['id','employeeNo'];
+    protected $guarded = [''];
+
+
+    public function dataVerification()
+    {
+        return $this->hasMany(EmployeeDataVerification::class,'employeeId','id');
+    }
+
 }

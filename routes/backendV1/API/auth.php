@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 /* v1/a = version 1 Android API */
 Route::prefix('v1/a')->group(function () {
 
-    Route::namespace('BackendV1\Android\Auth')->prefix('auth')->group(function (){
+    Route::namespace('BackendV1\API\Auth')->prefix('auth')->group(function (){
 
         Route::post('register', 'LoginController@register');
         Route::post('login', 'LoginController@login');

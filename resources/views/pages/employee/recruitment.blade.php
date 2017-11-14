@@ -5,10 +5,12 @@
 <link href="{{mix('plugins/css/select2.min.css')}}" rel="stylesheet" type="text/css" media="screen"/>
 <link href="{{mix('plugins/css/switchery.min.css')}}" rel="stylesheet" type="text/css" media="screen"/>
 <link href="{{mix('plugins/css/datepicker3.css')}}" rel="stylesheet" type="text/css" media="screen"/>
+
 @endpush
 
 @push('child-scripts-plugins')
 <!-- push needed plugins for this page -->
+<
 <script src="{{mix('plugins/js/select2.full.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/autoNumeric.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.inputmask.min.js')}}" type="text/javascript"></script>
@@ -19,7 +21,7 @@
 @endpush
 
 @push('child-page-controller')
-<script src="{{mix('js/client/employee/main.js')}}"></script>
+<script src = "{{mix('js/client/employee/main.js')}}" ></script>
 @endpush
 
 @section('content')
@@ -59,11 +61,19 @@
                                     class="fa fa-file-text tab-icon"></i> <span>Employment</span></a>
                     </li>
                 </ul>
+
+                <!-- Error Response -->
+                <div id="errors-container" class="alert alert-danger hide" role="alert">
+                    <strong>Error: </strong> <span id="errors-value"></span>
+                </div>
+                <!-- End of Error Response -->
+
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane slide-left padding-20 sm-no-padding active" id="tab-personal-info">
-                        <form class="" role="form" id="personalInformationForm" autocomplete="off">
-                            <div class="row row-same-height">
+                        <form class="" role="form" id="personalInformationForm" enctype="multipart/form-data"
+                              autocomplete="off">
+                            <div class="row ">
                                 <div class="col-md-6 b-r b-dashed b-grey ">
                                     <div class="padding-30 sm-padding-5">
                                         <p class="form-title">Private Information</p>
@@ -113,11 +123,11 @@
                                                 <label>Birth date <span
                                                             class="help fs-12">e.g. "25/12/2013"</span></label>
                                                 <input id="birth-date" type="text"
-                                                       class="form-control date"
+                                                       class="form-control datepicker"
                                                        name="birthDate" value="{{old('birthDate')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
-                                                <label>Hometown</label>
+                                                <label>Hometown / City</label>
                                                 <input type="text" class="form-control" name="city"
                                                        value="{{old('city')}}" required>
                                             </div>
@@ -279,12 +289,15 @@
                                                        value="{{old('idCardNumber')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
-                                                <label>ID Card Photo</label>
-
-                                                <div class="fallback">
-                                                    <input type="file" name="idCardPhoto" value="{{old('idCardPhoto')}}"
+                                                <label>ID Card Photo 1</label>
+                                                <form id="uploadIdCardForm" action="{{route('v1.recruitment.upload')}}"
+                                                      method="post" enctype="multipart/form-data">
+                                                    <input id="idCardPhoto" type="file" name="idCardPhoto"
+                                                           value="{{old('idCardPhoto')}}"
                                                            required/>
-                                                </div>
+                                                </form>
+                                                {{--<label>ID Card Photo </label>--}}
+                                                {{--<div id="idCardPhoto" class="dropzone"></div>--}}
 
                                             </div>
                                         </div>
@@ -442,7 +455,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn btn-outline-primary btn-block" id="createEmployeeBtn" type="button">Create
+                                    <button class="btn btn-outline-primary btn-block" id="createEmployeeBtn"
+                                            type="button">Create
                                         Employee &
                                         Go to Employment
                                     </button>
@@ -457,8 +471,9 @@
                                 <div class="padding-30 sm-padding-5">
                                     <span class="text-primary pointer" id="go-back-to-personal-tab"><i
                                                 class="pg-arrow_left"></i>Go Back</span>
-                                    <p class="form-title">Employment Information</h4>
-                                    <form role="form">
+                                    <p class="form-title">Employment Information</p>
+                                    <form role="form" id="employmentForm">
+
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Job Position</label>
@@ -512,26 +527,13 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
-                                                <label class="">Status</label>
-                                                <select class="full-width" data-placeholder="Select Employee Status"
-                                                        data-init-plugin="select2"
-                                                        name="employeeStatusId"
-                                                        required
-                                                >
-                                                    <option value="" disabled selected></option>
-                                                    @foreach($employeeStatuses as $employeeStatus)
-                                                        <option value="{{$employeeStatus->id}}">{{$employeeStatus->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-default required">
                                                         <label>Date of Entry </label>
                                                         <input id="date-of-entry" type="text"
                                                                class="form-control date datepicker"
-                                                               name="birthDate" value="{{old('birthDate')}}" required>
+                                                               name="dateOfEntry" value="{{old('dateOfEntry')}}" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -539,7 +541,7 @@
                                                         <label>Date of Start </label>
                                                         <input id="date-of-start" type="text"
                                                                class="form-control date datepicker"
-                                                               name="birthDate" value="{{old('birthDate')}}" required>
+                                                               name="dateOfStart" value="{{old('dateOfStart')}}" required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -558,7 +560,7 @@
                                         request should be made to the administrator to resend the verification
                                         e-mail.</p>
                                 </div>
-                                <button class="btn btn-outline-primary btn-block">Save Employment & Send Verification
+                                <button class="btn btn-outline-primary btn-block" id="saveEmploymentBtn">Save Employment & Send Verification
                                     Email
                                 </button>
 

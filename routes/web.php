@@ -36,6 +36,14 @@ require(base_path($client_path . 'employee.php'));
 require(base_path($client_path . 'settings/main.php'));
 
 
+/*
+|--------------------------------------------------------------------------
+| Init Backend routes
+|--------------------------------------------------------------------------
+*/
+require(base_path($backend_path . $type_helpdesk . 'settings/main.php'));
+require(base_path($backend_path . $type_helpdesk . 'employee.php'));
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,14 +59,12 @@ Route::get('/', 'Client\Dashboard\ViewController@index');
 */
 
 Route::prefix('testing')->middleware('auth.admin')->group(function () {
-    Route::get('guardtest', function () {
-        echo "ASdf";
+   Route::get('userevent',function(){
+       $user = \App\Account\Models\User::where('email','joko@example.com')->get();
+       event(new \App\Employee\Events\UserGenerated($user,'password'));
+   });
 
-    });
 
-    Route::get('mytoken',function(){
-       return Auth::guard('api')->user()->token();
-    });
 });
 
 

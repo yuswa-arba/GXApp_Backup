@@ -18,26 +18,10 @@ class User extends Authenticatable
     protected $table = 'users';
     public $incrementing = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'employeeId',
-        'userLevelId',
-        'accessStatusId',
-        'email',
-        'password',
-        'allowAdminAccess',
-        'allowSuperAdminAccess',
-    ];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    protected $guarded = [''];
+
+
     protected $hidden = [
         'password', 'remember_token',
     ];

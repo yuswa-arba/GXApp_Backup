@@ -31437,6 +31437,7 @@ if (token) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = get;
 /* harmony export (immutable) */ __webpack_exports__["b"] = post;
+/* unused harmony export multipartPost */
 /* unused harmony export del */
 /* unused harmony export interceptors */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
@@ -31467,6 +31468,19 @@ function post(url, payload) {
         }
     });
 }
+
+function multipartPost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            'Authorization': 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store_auth__["a" /* default */].state.api_token,
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+
 // delete is reserved keyword
 function del(url) {
     return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
@@ -31498,7 +31512,7 @@ function interceptors(cb) {
  * Created by kevinpurwono on 9/11/17.
  */
 function api_path() {
-  return '/api/v1/h/';
+  return '/v1/h/';
 }
 
 /***/ }),
