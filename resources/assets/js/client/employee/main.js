@@ -10,25 +10,23 @@ $(document).ready(function () {
 
     // on init
 
-    $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
+    $('.datepicker').datepicker({format: 'dd/mm/yyyy',todayHighlight:true});
 
     $(function ($) {
-        $("#birth-date").mask("99/99/9999");
+        $(".datepicker").mask("99/99/9999");
     });
 
 
     // constants
     let employeeId = '';
     let personalInfoForm = $('#personalInformationForm');
+    let employmentForm = $('#employmentForm');
 
     // on click events
     $('#createEmployeeBtn').on('click', function () {
 
 
         let formData = personalInfoForm.serialize();
-        // let formData = new FormData(personalInfoForm);
-
-        /* TODO CREATE VALIDATION FROM CONTROLLER AND SEND WITH AXIOS*/
 
         post(api_path() + 'employee/create', formData)
             .then((res) => {
@@ -47,7 +45,6 @@ $(document).ready(function () {
                         timeout: 3500,
                         type: 'info'
                     }).show();
-
 
                     if (employeeId) {// make sure employee ID is not empty
                         goToEmploymentTab()
@@ -89,7 +86,59 @@ $(document).ready(function () {
     })
 
 
-    $('#saveEmploymentBtn').on('click',function(){
+    $('#saveEmploymentBtn').on('click', function () {
+
+
+        let formData = employmentForm.serialize();
+        formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
+
+        post(api_path() + 'employee/employment', formData)
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    $('#errors-container').removeClass('show').addClass('hide')
+
+                    /* Show success notification*/
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    _.delay(function () {
+                        window.location.href = '/employee/list'
+                    }, 2500)
+
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
+
+            })
+            .catch((err) => {
+
+                let errorsResponse = err.message + '</br>';
+
+                _.forEach(err.response.data.errors, function (value, key) {
+                    errorsResponse += value[0] + ' ';
+                })
+
+                $('#errors-container').removeClass('hide').addClass('show')
+                $('#errors-value').html(errorsResponse)
+                errorsResponse = '' // reset value
+                /* Scroll to top*/
+                $('html, body').animate({
+                    scrollTop: $(".jumbotron").offset().top
+                }, 500);
+
+            })
 
     });
 

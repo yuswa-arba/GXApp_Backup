@@ -34,7 +34,7 @@ class Recruitment extends UseCase
             /* Return success response */
             $response['isFailed'] = false;
             $response['message'] = 'Employee has been created successfully';
-            $response['employeeId'] = $employee->employeeId;
+            $response['employeeId'] = $employee->id;
             return response()->json($response, 200);
 
         } else {
@@ -58,9 +58,9 @@ class Recruitment extends UseCase
 
     private function saveUnverifiedDataStatusState($employee)
     {
-        EmployeeDataVerification::updateOrCreate(['employeeId' => $employee->employeeId], ['employeeId' => $employee->employeeId]);
+        EmployeeDataVerification::updateOrCreate(['employeeId' => $employee->id], ['employeeId' => $employee->id]);
 
-        event(new EmployeeCreated($employee));
+        event(new EmployeeCreated($employee)); // trigger event to send email
 
         return $this;
     }
@@ -75,13 +75,16 @@ class Recruitment extends UseCase
     {
         $employee = $this->saveEmploymentData($request);
         if ($employee) {
+
             $this->generateUserLogin($employee);
 
             /* Return success response */
             $response['isFailed'] = false;
             $response['message'] = 'Employment has been saved successfully';
             return response()->json($response, 200);
+
         } else {
+
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to create employee, undefined employee';
@@ -101,12 +104,12 @@ class Recruitment extends UseCase
         $firstPassword = str_random(6);
         $user = User::create([
             'id' => $this->generateUUID(),
-            'employeeId' => $employee->employeeId,
+            'employeeId' => $employee->id,
             'email' => $employee->email,
             'password' => bcrypt($firstPassword)
         ]);
 
-        event(new UserGenerated($user, $firstPassword));
+        event(new UserGenerated($user, $firstPassword)); // trigger event to send email
 
         return $this;
     }

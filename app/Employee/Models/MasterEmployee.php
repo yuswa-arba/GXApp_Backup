@@ -2,6 +2,7 @@
 
 namespace App\Employee\Models;
 
+use App\Account\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
@@ -19,6 +20,16 @@ class MasterEmployee extends Model
     public function dataVerification()
     {
         return $this->hasMany(EmployeeDataVerification::class,'employeeId','id');
+    }
+
+    public function user()
+    {
+        return $this->hasOne(User::class,'employeeId','id');
+    }
+
+    public function employment()
+    {
+        return $this->hasOne(Employment::class,'employeeId','id');
     }
 
 }

@@ -1850,40 +1850,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 $(document).ready(function () {
 
-    // $('.datepicker').datepicker({format: 'dd/mm/yyyy'});
+    // on init
+
+    $('.datepicker').datepicker({ format: 'dd/mm/yyyy' });
 
     $(function ($) {
-        $("#birth-date").mask("99/99/9999");
+        $(".datepicker").mask("99/99/9999");
     });
 
-    // new Dropzone("div#idCardPhoto", {
-    //     paramName:'idCardPhoto',
-    //     maxFiles: 2048,
-    //     url: api_path() + 'employee/upload',
-    //     method:"post",
-    //     success: function (file, response) {
-    //         console.log(response);
-    //     }
-    // });
-
-    $('#idCardPhoto').on('change', function () {
-
-        console.log($(this).val());
-    });
-
+    // constants
+    var employeeId = '';
     var personalInfoForm = $('#personalInformationForm');
+    var employmentForm = $('#employmentForm');
 
+    // on click events
     $('#createEmployeeBtn').on('click', function () {
 
         var formData = personalInfoForm.serialize();
-        // let formData = new FormData(personalInfoForm);
-
-        /* TODO CREATE VALIDATION FROM CONTROLLER AND SEND WITH AXIOS*/
 
         Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */])() + 'employee/create', formData).then(function (res) {
-            console.log(res);
+
             if (!res.data.isFailed && res.data.employeeId) {
-                var employeeId = res.data.employeeId;
+
+                employeeId = res.data.employeeId; // insert employee ID
+
                 $('#errors-container').removeClass('show').addClass('hide');
 
                 /* Show success notification*/
@@ -1895,7 +1885,12 @@ $(document).ready(function () {
                     type: 'info'
                 }).show();
 
-                // TODO: move to employment tab and insert employee id
+                if (employeeId) {
+                    // make sure employee ID is not empty
+                    goToEmploymentTab();
+                } else {
+                    alert('Something went wrong! Employee ID is not defined');
+                }
             } else {
 
                 /* Show error notification */
@@ -1924,11 +1919,68 @@ $(document).ready(function () {
         });
     });
 
-    $('#go-back-to-personal-tab').on('click', function () {
-        goToPersonalInfoTab();
+    $('#saveEmploymentBtn').on('click', function () {
+
+        var formData = employmentForm.serialize();
+        formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
+
+        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */])() + 'employee/employment', formData).then(function (res) {
+            if (!res.data.isFailed) {
+                $('#errors-container').removeClass('show').addClass('hide');
+
+                /* Show success notification*/
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                _.delay(function () {
+                    window.location.href = '/employee/list';
+                }, 2500);
+            } else {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+
+            var errorsResponse = err.message + '</br>';
+
+            _.forEach(err.response.data.errors, function (value, key) {
+                errorsResponse += value[0] + ' ';
+            });
+
+            $('#errors-container').removeClass('hide').addClass('show');
+            $('#errors-value').html(errorsResponse);
+            errorsResponse = ''; // reset value
+            /* Scroll to top*/
+            $('html, body').animate({
+                scrollTop: $(".jumbotron").offset().top
+            }, 500);
+        });
     });
 
+    $('#go-back-to-personal-tab').on('click', function () {
+        // goToPersonalInfoTab()
+    });
+
+    // on change events
+    $('#idCardPhoto').on('change', function () {
+        console.log($(this).val());
+    });
+
+    // functions
+
     function goToEmploymentTab() {
+
         clearActiveTab();
         $('#item-employment').addClass('active');
         $('#tab-employment').addClass('active');

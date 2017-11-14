@@ -56,9 +56,19 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'kevin@globalxtreme.net'),
+        'name' => env('MAIL_FROM_NAME', 'GXApp Admin'),
     ],
+    /*
+     |--------------------------------------------------------------------------
+     | Global "To" Address
+     |--------------------------------------------------------------------------
+     |
+    */
+//    'to' => [
+//        'address' => 'kevin@example.com',
+//        'name' => 'Example'
+//    ],
 
     /*
     |--------------------------------------------------------------------------

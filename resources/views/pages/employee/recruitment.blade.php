@@ -21,7 +21,7 @@
 @endpush
 
 @push('child-page-controller')
-<script src = "{{mix('js/client/employee/main.js')}}" ></script>
+<script src="{{mix('js/client/employee/main.js')}}"></script>
 @endpush
 
 @section('content')
@@ -120,8 +120,7 @@
                                                 </div>
                                             </div>
                                             <div class="form-group form-group-default required">
-                                                <label>Birth date <span
-                                                            class="help fs-12">e.g. "25/12/2013"</span></label>
+                                                <label>Birth date <span class="help fs-10">e.g. "25/12/2013"</span></label>
                                                 <input id="birth-date" type="text"
                                                        class="form-control datepicker"
                                                        name="birthDate" value="{{old('birthDate')}}" required>
@@ -160,6 +159,30 @@
                                             </div>
                                         </div>
                                         <br>
+                                        <p class="form-title">Contact Information</p>
+                                        <div class="form-group-attached">
+                                            <div class="form-group form-group-default required">
+                                                <label>Address</label>
+                                                <input type="text" class="form-control" name="address"
+                                                       value="{{old('address')}}" required>
+                                            </div>
+                                            <div class="form-group form-group-default required">
+                                                <label>Phone Number</label>
+                                                <input type="number" class="form-control" name="phoneNo"
+                                                       value="{{old('phoneNo')}}" required>
+                                            </div>
+                                            <div class="form-group form-group-default required">
+                                                <label>E-mail Address<span class="help fs-10">(Company e-mail address)</span></label>
+                                                <input type="email" class="form-control" name="email"
+                                                       value="{{old('email')}}" required>
+                                            </div>
+                                            <div class="form-group form-group-default ">
+                                                <label>Alt. E-mail Address</label>
+                                                <input type="email" class="form-control" name="altEmail"
+                                                       value="{{old('altEmail')}}">
+                                            </div>
+                                        </div>
+                                        <br>
                                         <p class="form-title">Marriage</p>
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default form-group-default-select2 required">
@@ -173,15 +196,15 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default required">
+                                            <div class="form-group form-group-default">
                                                 <label>Spouse's Name</label>
                                                 <input type="text" class="form-control" name="spousesName"
-                                                       value="{{old('spousesName')}}" required>
+                                                       value="{{old('spousesName')}}">
                                             </div>
-                                            <div class="form-group form-group-default required">
+                                            <div class="form-group form-group-default">
                                                 <label>Number of Children</label>
                                                 <input type="number" class="form-control" name="totalChildren"
-                                                       value="{{old('totalChildren')}}" required>
+                                                       value="{{old('totalChildren')}}">
                                             </div>
 
                                         </div>
@@ -250,7 +273,7 @@
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default">
                                                 <label>Number of Siblings</label>
-                                                <input type="text" class="form-control" name="siblingPhoneNo"
+                                                <input type="number" class="form-control" name="siblingPhoneNo"
                                                        value="{{old('siblingPhoneNo')}}">
                                             </div>
                                             <div class="form-group form-group-default">
@@ -265,7 +288,7 @@
                                             </div>
                                             <div class="form-group form-group-default">
                                                 <label>Sibling's Phone Number</label>
-                                                <input type="text" class="form-control" name="siblingPhoneNo"
+                                                <input type="number" class="form-control" name="siblingPhoneNo"
                                                        value="{{old('siblingPhoneNo')}}">
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2">
@@ -281,6 +304,11 @@
                                             </div>
                                         </div>
                                         <br>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6  ">
+                                    <div class="padding-30 sm-padding-5">
                                         <p class="form-title">ID Card Information</p>
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default required">
@@ -289,7 +317,7 @@
                                                        value="{{old('idCardNumber')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
-                                                <label>ID Card Photo 1</label>
+                                                <label>ID Card Photo</label>
                                                 <form id="uploadIdCardForm" action="{{route('v1.recruitment.upload')}}"
                                                       method="post" enctype="multipart/form-data">
                                                     <input id="idCardPhoto" type="file" name="idCardPhoto"
@@ -299,35 +327,6 @@
                                                 {{--<label>ID Card Photo </label>--}}
                                                 {{--<div id="idCardPhoto" class="dropzone"></div>--}}
 
-                                            </div>
-                                        </div>
-                                        <br>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6  ">
-                                    <div class="padding-30 sm-padding-5">
-                                        <p class="form-title">Contact Information</p>
-                                        <div class="form-group-attached">
-                                            <div class="form-group form-group-default required">
-                                                <label>Address</label>
-                                                <input type="text" class="form-control" name="address"
-                                                       value="{{old('address')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Phone Number</label>
-                                                <input type="number" class="form-control" name="phoneNo"
-                                                       value="{{old('phoneNo')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>E-mail Address</label>
-                                                <input type="email" class="form-control" name="email"
-                                                       value="{{old('email')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default ">
-                                                <label>Alt. E-mail Address</label>
-                                                <input type="email" class="form-control" name="altEmail"
-                                                       value="{{old('altEmail')}}">
                                             </div>
                                         </div>
                                         <br>
@@ -469,8 +468,8 @@
                         <div class="row row-same-height">
                             <div class="col-md-7 b-r b-dashed b-grey ">
                                 <div class="padding-30 sm-padding-5">
-                                    <span class="text-primary pointer" id="go-back-to-personal-tab"><i
-                                                class="pg-arrow_left"></i>Go Back</span>
+                                    {{--<span class="text-primary pointer" id="go-back-to-personal-tab"><i--}}
+                                    {{--class="pg-arrow_left"></i>Go Back</span>--}}
                                     <p class="form-title">Employment Information</p>
                                     <form role="form" id="employmentForm">
 
@@ -533,7 +532,8 @@
                                                         <label>Date of Entry </label>
                                                         <input id="date-of-entry" type="text"
                                                                class="form-control date datepicker"
-                                                               name="dateOfEntry" value="{{old('dateOfEntry')}}" required>
+                                                               name="dateOfEntry" value="{{old('dateOfEntry')}}"
+                                                               required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
@@ -541,7 +541,8 @@
                                                         <label>Date of Start </label>
                                                         <input id="date-of-start" type="text"
                                                                class="form-control date datepicker"
-                                                               name="dateOfStart" value="{{old('dateOfStart')}}" required>
+                                                               name="dateOfStart" value="{{old('dateOfStart')}}"
+                                                               required>
                                                     </div>
                                                 </div>
                                             </div>
@@ -560,7 +561,8 @@
                                         request should be made to the administrator to resend the verification
                                         e-mail.</p>
                                 </div>
-                                <button class="btn btn-outline-primary btn-block" id="saveEmploymentBtn">Save Employment & Send Verification
+                                <button class="btn btn-outline-primary btn-block" id="saveEmploymentBtn">Save Employment
+                                    & Send Verification
                                     Email
                                 </button>
 

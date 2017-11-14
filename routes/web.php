@@ -59,10 +59,11 @@ Route::get('/', 'Client\Dashboard\ViewController@index');
 */
 
 Route::prefix('testing')->middleware('auth.admin')->group(function () {
-   Route::get('userevent',function(){
-       $user = \App\Account\Models\User::where('email','joko@example.com')->get();
-       event(new \App\Employee\Events\UserGenerated($user,'password'));
+   Route::get('employment',function(){
+      $employment = \App\Employee\Models\Employment::find(1);
+      echo json_encode($employment->employee);
    });
+
 
 
 });

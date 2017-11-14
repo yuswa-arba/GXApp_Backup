@@ -4,6 +4,8 @@ namespace App\Account\Models;
 
 use App\Account\Traits\Utils;
 use App\Account\Traits\Uuids;
+use App\Employee\Models\Employment;
+use App\Employee\Models\MasterEmployee;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -30,5 +32,15 @@ class User extends Authenticatable
         'allowAdminAccess'=>'boolean',
         'allowSuperAdminAccess' => 'boolean'
     ];
+
+    public function employee()
+    {
+        return $this->belongsTo(MasterEmployee::class,'employeeId','id');
+    }
+
+    public function employment()
+    {
+        return $this->belongsTo(Employment::class,'employeeId','id');
+    }
 
 }

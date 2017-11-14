@@ -18,7 +18,6 @@ class CreateEmploymentTable extends Migration
             $table->string('employeeId')->unique();
             $table->tinyInteger('jobPositionId');
             $table->tinyInteger('divisionId');
-            $table->tinyInteger('activityStatusId');
             $table->tinyInteger('branchOfficeId');
             $table->tinyInteger('recruitmentStatusId');
             $table->string('dateOfEntry');

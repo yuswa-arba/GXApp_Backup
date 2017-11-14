@@ -28,7 +28,6 @@ class EmploymentRequest extends FormRequest
             'employeeId'=>'required',
             'jobPositionId'=>'required',
             'divisionId'=>'required',
-            'activityStatusId'=>'required',
             'branchOfficeId'=>'required',
             'recruitmentStatusId'=>'required',
             'dateOfEntry'=>'required|date_format:d/m/Y',

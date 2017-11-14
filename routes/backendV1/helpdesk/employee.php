@@ -17,7 +17,7 @@ Route::prefix('v1/h')->group(function (){
 //        Route::post('create','RecruitmentController@create')->middleware('can:create')->name('v1.recruitment.create'); // using employe policy
 //        Route::post('create','RecruitmentController@create')->name('v1.recruitment.create');
         Route::post('create','RecruitmentController@createEmployee')->name('v1.recruitment.create');
-        Route::get('employment','RecruitmentController@submitEmployment')->name('v1.recruitment.employment');
+        Route::post('employment','RecruitmentController@submitEmployment')->name('v1.recruitment.employment');
         Route::post('upload','RecruitmentController@uploadImage')->name('v1.recruitment.upload');
     });
 
