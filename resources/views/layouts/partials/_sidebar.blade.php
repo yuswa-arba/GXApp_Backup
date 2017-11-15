@@ -29,6 +29,7 @@
             @include('layouts.partials.sub_partials.sidebar._documents')
 
             @include('layouts.partials.sub_partials.sidebar._settings')
+            @include('layouts.partials.sub_partials.sidebar._developer')
 
         </ul>
         <div class="clearfix"></div>

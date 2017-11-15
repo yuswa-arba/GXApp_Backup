@@ -102,3 +102,9 @@
   pointer-events:none;
 }
 
+// today highlight color
+.datepicker table tr td.today{
+  color: #000000!important;
+  background-color: #ffdb99!important;
+  border-color: #ffb733;
+}

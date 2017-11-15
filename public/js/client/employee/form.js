@@ -1834,7 +1834,7 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/employee/main.js":
+/***/ "./resources/assets/js/client/employee/form.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1852,7 +1852,7 @@ $(document).ready(function () {
 
     // on init
 
-    $('.datepicker').datepicker({ format: 'dd/mm/yyyy' });
+    $('.datepicker').datepicker({ format: 'dd/mm/yyyy', todayHighlight: true });
 
     $(function ($) {
         $(".datepicker").mask("99/99/9999");
@@ -2116,7 +2116,7 @@ function api_path() {
 /***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/employee/main.js");
+module.exports = __webpack_require__("./resources/assets/js/client/employee/form.js");
 
 
 /***/ })

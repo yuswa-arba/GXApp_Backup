@@ -19,6 +19,8 @@ Route::prefix('v1/h')->group(function (){
         Route::post('create','RecruitmentController@createEmployee')->name('v1.recruitment.create');
         Route::post('employment','RecruitmentController@submitEmployment')->name('v1.recruitment.employment');
         Route::post('upload','RecruitmentController@uploadImage')->name('v1.recruitment.upload');
+
+        Route::get('list','ListController@mainList');
     });
 
 });

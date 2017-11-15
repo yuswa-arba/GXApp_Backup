@@ -24,6 +24,7 @@ class SendEmployeeDataVerification implements ShouldQueue
      */
     public function handle(EmployeeCreated $event)
     {
+
         $message = (new AccountVerification($event->employee))->onConnection('database')->onQueue('emails');
         Mail::to($event->employee->email)->queue($message);
     }

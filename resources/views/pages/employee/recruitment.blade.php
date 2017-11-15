@@ -21,7 +21,7 @@
 @endpush
 
 @push('child-page-controller')
-<script src="{{mix('js/client/employee/main.js')}}"></script>
+<script src="{{mix('js/client/employee/form.js')}}"></script>
 @endpush
 
 @section('content')
@@ -133,11 +133,11 @@
 
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Education Level</label>
-                                                <select class="full-width" data-placeholder="Select Country"
+                                                <select class="full-width" data-placeholder="Select Education Level"
                                                         data-init-plugin="select2"
                                                         name="educationLevelId"
-                                                        required
-                                                >
+                                                        required>
+                                                    <option value="" disabled selected></option>
                                                     @foreach($educationLevels as $edcLevel)
                                                         <option value="{{$edcLevel->id}}">{{$edcLevel->name}}</option>
                                                     @endforeach
@@ -147,11 +147,11 @@
 
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Religion</label>
-                                                <select class="full-width" data-placeholder="Select Country"
+                                                <select class="full-width" data-placeholder="Select Religion"
                                                         data-init-plugin="select2"
                                                         name="religionId"
-                                                        required
-                                                >
+                                                        required>
+                                                    <option value="" disabled selected></option>
                                                     @foreach($religions as $religion)
                                                         <option value="{{$religion->id}}">{{$religion->name}}</option>
                                                     @endforeach
@@ -187,10 +187,11 @@
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Country"
+                                                <select class="full-width" data-placeholder="Select Marital Status"
                                                         data-init-plugin="select2"
                                                         name="maritalStatusId"
                                                         required>
+                                                    <option value="" disabled selected></option>
                                                     @foreach($maritalStatuses as $maritalStatus)
                                                         <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                     @endforeach
@@ -228,11 +229,11 @@
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Father's Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Country"
+                                                <select class="full-width" data-placeholder="Select Marital Status"
                                                         data-init-plugin="select2"
                                                         name="fatherMaritalStatusId"
-                                                        required
-                                                >
+                                                        required>
+                                                    <option value="" disabled selected></option>
                                                     @foreach($maritalStatuses as $maritalStatus)
                                                         <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                     @endforeach
@@ -258,11 +259,11 @@
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Mother's Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Country"
+                                                <select class="full-width" data-placeholder="Select Marital Status"
                                                         data-init-plugin="select2"
                                                         name="motherMaritalStatusId"
-                                                        required
-                                                >
+                                                        required>
+                                                    <option disabled selected></option>
                                                     @foreach($maritalStatuses as $maritalStatus)
                                                         <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                     @endforeach
@@ -293,10 +294,10 @@
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2">
                                                 <label class="">Sibling's Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Country"
+                                                <select class="full-width" data-placeholder="Select Marital Status"
                                                         data-init-plugin="select2"
-                                                        name="siblingMaritalStatusId"
-                                                >
+                                                        name="siblingMaritalStatusId">
+                                                    <option value="" disabled selected></option>
                                                     @foreach($maritalStatuses as $maritalStatus)
                                                         <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                     @endforeach
@@ -350,11 +351,11 @@
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Relationship</label>
-                                                <select class="full-width" data-placeholder="Select Country"
+                                                <select class="full-width" data-placeholder="Select Relationship"
                                                         data-init-plugin="select2"
                                                         name="emergencyRelationship"
-                                                        required
-                                                >
+                                                        required>
+                                                    <option value="" disabled selected></option>
                                                     <option value="1">Family</option>
                                                     <option value="1">Friend</option>
                                                 </select>
@@ -479,8 +480,7 @@
                                                 <select class="full-width" data-placeholder="Select Job Position"
                                                         data-init-plugin="select2"
                                                         name="jobPositionId"
-                                                        required
-                                                >
+                                                        required>
                                                     <option value="" disabled selected></option>
                                                     @foreach($jobPositions as $jobPosition)
                                                         <option value="{{$jobPosition->id}}">{{$jobPosition->name}}</option>
@@ -505,8 +505,7 @@
                                                 <select class="full-width" data-placeholder="Select Branch Office"
                                                         data-init-plugin="select2"
                                                         name="branchOfficeId"
-                                                        required
-                                                >
+                                                        required>
                                                     <option value="" disabled selected></option>
                                                     @foreach($branchOffices as $branchOffice)
                                                         <option value="{{$branchOffice->id}}">{{$branchOffice->name}}</option>

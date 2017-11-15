@@ -3,6 +3,10 @@
 namespace App\Employee\Models;
 
 use App\Account\Models\User;
+use App\Components\Models\Bank;
+use App\Components\Models\EducationLevel;
+use App\Components\Models\MaritalStatus;
+use App\Components\Models\Religion;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
@@ -19,17 +23,52 @@ class MasterEmployee extends Model
 
     public function dataVerification()
     {
-        return $this->hasMany(EmployeeDataVerification::class,'employeeId','id');
+        return $this->hasMany(EmployeeDataVerification::class, 'employeeId');
     }
 
     public function user()
     {
-        return $this->hasOne(User::class,'employeeId','id');
+        return $this->hasOne(User::class, 'employeeId');
     }
 
     public function employment()
     {
-        return $this->hasOne(Employment::class,'employeeId','id');
+        return $this->hasOne(Employment::class, 'employeeId');
+    }
+
+    public function religion()
+    {
+        return $this->belongsTo(Religion::class, 'religionId');
+    }
+
+    public function educationLevel()
+    {
+        return $this->belongsTo(EducationLevel::class, 'educationLevelId');
+    }
+
+    public function maritalStatus()
+    {
+        return $this->belongsTo(MaritalStatus::class, 'maritalStatusId');
+    }
+
+    public function fatherMaritalStatus()
+    {
+        return $this->belongsTo(MaritalStatus::class, 'fatherMaritalStatusId');
+    }
+
+    public function motherMaritalStatus()
+    {
+        return $this->belongsTo(MaritalStatus::class,'motherMaritalStatusId');
+    }
+
+    public function siblingMaritalStatus()
+    {
+        return $this->belongsTo(MaritalStatus::class,'siblingMaritalStatusId');
+    }
+
+    public function bank()
+    {
+        return $this->belongsTo(Bank::class, 'bankId');
     }
 
 }

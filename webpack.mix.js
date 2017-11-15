@@ -130,7 +130,8 @@ mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
  |--------------------------------------------------------------------------
  */
 
-mix.js('resources/assets/js/client/employee/main','public/js/client/employee');
+mix.js('resources/assets/js/client/employee/form','public/js/client/employee');
+mix.js('resources/assets/js/client/employee/list','public/js/client/employee');
 mix.js('resources/assets/js/client/passport/main','public/js/client/passport');
 mix.js('resources/assets/js/client/permission/main','public/js/client/permission');
 
