@@ -1698,6 +1698,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1710,8 +1754,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {},
+    data: function data() {
+        return {
+
+            detail: [],
+            employment: []
+
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/' + this.$route.params.id).then(function (res) {
+            console.log(res);
+            _this.detail = res.data.detail.data;
+            _this.employment = res.data.detail.data.employment.data;
+        });
+    },
 
     methods: {
         goBack: function goBack() {
@@ -19437,13 +19499,93 @@ var render = function() {
           }
         }
       },
-      [_c("i", { staticClass: "pg-arrow_left" }), _vm._v("Go Back")]
+      [
+        _c("i", { staticClass: "pg-arrow_left" }),
+        _vm._v("\n        Go Back\n    ")
+      ]
     ),
     _vm._v(" "),
-    _c("h3", [_vm._v("\n        " + _vm._s(_vm.$route.params.id) + "\n    ")])
+    _c("div", { staticClass: "col-lg-12" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("label", { staticClass: "label label-info" }, [
+        _vm._v(
+          "\n            ID: " + _vm._s(_vm.$route.params.id) + "\n        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row row-same-height" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Surname/Given name")]),
+              _vm._v(" "),
+              _c("h5", [
+                _vm._v(
+                  _vm._s(_vm.detail.surname) +
+                    "/" +
+                    _vm._s(_vm.detail.givenName)
+                )
+              ]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Birthday")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.birthDate))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Gender")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.gender))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Religion")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.gender))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Hometown")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.city))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Education level")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.educationLevel))])
+            ])
+          ])
+        ])
+      ])
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Personal Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4" }, [
+      _c("img", {
+        attrs: {
+          src:
+            "http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg",
+          alt: "",
+          width: "200px",
+          height: "200px"
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

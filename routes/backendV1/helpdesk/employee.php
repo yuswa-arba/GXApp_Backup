@@ -21,6 +21,7 @@ Route::prefix('v1/h')->group(function (){
         Route::post('upload','RecruitmentController@uploadImage')->name('v1.recruitment.upload');
 
         Route::get('list','ListController@mainList');
+        Route::get('detail/{id}','AjaxController@employeeDetail');
     });
 
 });
