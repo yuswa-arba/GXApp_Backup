@@ -1753,6 +1753,300 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19488,7 +19782,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "row row-same-height" }, [
     _c(
       "span",
       {
@@ -19505,20 +19799,20 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-12" }),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-6" }, [
+    _c("div", { staticClass: "col-lg-12" }, [
       _c("label", { staticClass: "label label-info" }, [
         _vm._v(
           "\n            ID: " + _vm._s(_vm.$route.params.id) + "\n        "
         )
-      ]),
-      _vm._v(" "),
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
       _c("div", { staticClass: "card card-default" }, [
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
-          _c("div", { staticClass: "row row-same-height" }, [
+          _c("div", { staticClass: "row" }, [
             _vm._m(1),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
@@ -19556,6 +19850,334 @@ var render = function() {
             ])
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.address))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.phoneNo))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("E-mail address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.email))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Alt. E-mail address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.altEmail))]),
+              _vm._v(" "),
+              !_vm.detail.altEmail ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(3),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-8 employee-details" }, [
+              _c("label", [_vm._v("ID Card Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.idCardNumber))])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(5),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bank))]),
+              _vm._v(" "),
+              !_vm.detail.bank ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank Branch")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bankBranch))]),
+              _vm._v(" "),
+              !_vm.detail.bankBranch ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bankCity))]),
+              _vm._v(" "),
+              !_vm.detail.bankCity ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank Account Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bankHolderName))]),
+              _vm._v(" "),
+              !_vm.detail.bankHolderName ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank Account Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bankAccNo))]),
+              _vm._v(" "),
+              !_vm.detail.bankAccNo ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(6),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Marital Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.maritalStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Spouse's Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.spousesName))]),
+              _vm._v(" "),
+              !_vm.detail.spousesName ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Number of children")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.totalChildren))]),
+              _vm._v(" "),
+              !_vm.detail.totalChildren ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(7),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Father's Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherName))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Father's Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherAddress))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Father's Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherPhoneNo))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Father's Marital Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherMaritalStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Mother's Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherName))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Mother's Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherAddress))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Mother's Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherPhoneNo))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Mother's Marital Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherMaritalStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Number of Siblings")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.numberOfSiblings))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Sibling's Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingName))]),
+              _vm._v(" "),
+              !_vm.detail.siblingName ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Sibling's Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingAddress))]),
+              _vm._v(" "),
+              !_vm.detail.siblingAddress ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Sibling's Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingPhoneNo))]),
+              _vm._v(" "),
+              !_vm.detail.siblingPhoneNo ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-8 employee-details" }, [
+              _c("label", [_vm._v("Sibling's Marital Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingMaritalStatus))]),
+              _vm._v(" "),
+              !_vm.detail.siblingMaritalStatus
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(8),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Contact Person Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyContact))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Relationship")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyRelations))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyAddress))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyPhoneNo))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Alt Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyAltPhoneNo))]),
+              _vm._v(" "),
+              !_vm.detail.emergencyAltPhoneNo
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Email")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyEmailAddress))]),
+              _vm._v(" "),
+              !_vm.detail.emergencyEmailAddress
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(9),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Company Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevCompanyName))]),
+              _vm._v(" "),
+              !_vm.detail.prevCompanyName ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Company Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevCompanyAddress))]),
+              _vm._v(" "),
+              !_vm.detail.prevCompanyAddress
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Company Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevCompanyPhoneNo))]),
+              _vm._v(" "),
+              !_vm.detail.prevCompanyPhoneNo
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Position")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevPosition))]),
+              _vm._v(" "),
+              !_vm.detail.prevPosition ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Length of Employment")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevLengthEmployment))]),
+              _vm._v(" "),
+              !_vm.detail.prevLengthEmployment
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ])
+          ])
+        ])
       ])
     ])
   ])
@@ -19583,6 +20205,82 @@ var staticRenderFns = [
           height: "200px"
         }
       })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Contact Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("ID Card Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4 employee-details" }, [
+      _c("img", {
+        attrs: {
+          src:
+            "http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg",
+          alt: "",
+          width: "200px",
+          height: "120px"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Bank Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Marriage")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Family")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [
+        _vm._v("Emergency Contact Information")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [
+        _vm._v("Previous Employment Information")
+      ])
     ])
   }
 ]

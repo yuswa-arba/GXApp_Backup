@@ -390,6 +390,34 @@
                                             </div>
                                         </div>
                                         <br>
+                                        <p class="form-title">Bank Information</p>
+                                        <div class="form-group-attached">
+                                            <div class="form-group form-group-default ">
+                                                <label>Bank Name</label>
+                                                <input type="text" class="form-control" name="bankId">
+                                            </div>
+                                            <div class="form-group form-group-default ">
+                                                <label>Bank Account Name</label>
+                                                <input type="text" class="form-control" name="bankHolderName"
+                                                       value="{{old('bankHolderName')}}">
+                                            </div>
+                                            <div class="form-group form-group-default ">
+                                                <label>Bank Account Number</label>
+                                                <input type="text" class="form-control" name="bankAccNo"
+                                                       value="{{old('bankAccNo')}}">
+                                            </div>
+                                            <div class="form-group form-group-default ">
+                                                <label>Bank Branch</label>
+                                                <input type="text" class="form-control" name="bankBranch"
+                                                       value="{{old('bankBranch')}}">
+                                            </div>
+                                            <div class="form-group form-group-default ">
+                                                <label>City</label>
+                                                <input type="text" class="form-control" name="bankCity"
+                                                       value="{{old('bankCity')}}">
+                                            </div>
+                                        </div>
+                                        <br>
                                         <p class="form-title">Previous Employment Information</p>
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default ">
@@ -427,33 +455,7 @@
                                         </div>
                                         <br>
 
-                                        <p class="form-title">Bank Information</p>
-                                        <div class="form-group-attached">
-                                            <div class="form-group form-group-default ">
-                                                <label>Bank Name</label>
-                                                <input type="text" class="form-control" name="bankId">
-                                            </div>
-                                            <div class="form-group form-group-default ">
-                                                <label>Bank Account Name</label>
-                                                <input type="text" class="form-control" name="bankHolderName"
-                                                       value="{{old('bankHolderName')}}">
-                                            </div>
-                                            <div class="form-group form-group-default ">
-                                                <label>Bank Account Number</label>
-                                                <input type="text" class="form-control" name="bankAccNo"
-                                                       value="{{old('bankAccNo')}}">
-                                            </div>
-                                            <div class="form-group form-group-default ">
-                                                <label>Bank Branch</label>
-                                                <input type="text" class="form-control" name="bankBranch"
-                                                       value="{{old('bankBranch')}}">
-                                            </div>
-                                            <div class="form-group form-group-default ">
-                                                <label>City</label>
-                                                <input type="text" class="form-control" name="bankCity"
-                                                       value="{{old('bankCity')}}">
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <button class="btn btn-outline-primary btn-block" id="createEmployeeBtn"
                                             type="button">Create
