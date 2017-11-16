@@ -98,8 +98,6 @@ $(document).ready(function () {
         post(api_path() + 'employee/employment', formData)
             .then((res) => {
 
-                console.log(res)
-
                 if (!res.data.isFailed) {
                     $('#errors-container').removeClass('show').addClass('hide')
 
@@ -112,9 +110,9 @@ $(document).ready(function () {
                         type: 'info'
                     }).show();
 
-                    // _.delay(function () {
-                    //     window.location.href = '/employee/list'
-                    // }, 2500)
+                    _.delay(function () {
+                        window.location.href = '/employee/list'
+                    }, 2500)
 
                 } else {
                     /* Show error notification */

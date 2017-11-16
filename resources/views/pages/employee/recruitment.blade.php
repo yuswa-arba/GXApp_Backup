@@ -442,7 +442,7 @@
                                             </div>
                                             <div class="form-group form-group-default ">
                                                 <label>Company Phone Number</label>
-                                                <input type="text" class="form-control" name="prevCompanyPhoneNo"
+                                                <input type="number" class="form-control" name="prevCompanyPhoneNo"
                                                        value="{{old('prevCompanyPhoneNo')}}">
                                             </div>
                                             <div class="row">

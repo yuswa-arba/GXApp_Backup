@@ -1933,8 +1933,6 @@ $(document).ready(function () {
 
         Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */])() + 'employee/employment', formData).then(function (res) {
 
-            console.log(res);
-
             if (!res.data.isFailed) {
                 $('#errors-container').removeClass('show').addClass('hide');
 
@@ -1947,9 +1945,9 @@ $(document).ready(function () {
                     type: 'info'
                 }).show();
 
-                // _.delay(function () {
-                //     window.location.href = '/employee/list'
-                // }, 2500)
+                _.delay(function () {
+                    window.location.href = '/employee/list';
+                }, 2500);
             } else {
                 /* Show error notification */
                 $('.page-container').pgNotification({

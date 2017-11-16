@@ -1665,6 +1665,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -20331,7 +20336,25 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "card-header clearfix" }, [
-                _vm._m(0, true),
+                _c("div", { staticClass: "user-pic" }, [
+                  employee.employeePhoto
+                    ? _c("img", {
+                        attrs: {
+                          alt: "None",
+                          src: "/images/" + employee.employeePhoto,
+                          width: "33",
+                          height: "33"
+                        }
+                      })
+                    : _c("img", {
+                        attrs: {
+                          alt: "None",
+                          src: "/core/img/profiles/avatar_small2x.jpg",
+                          width: "33",
+                          height: "33"
+                        }
+                      })
+                ]),
                 _vm._v(" "),
                 _c("h5", [
                   _vm._v(
@@ -20355,25 +20378,7 @@ var render = function() {
     })
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "user-pic" }, [
-      _c("img", {
-        attrs: {
-          alt: "Avatar",
-          width: "33",
-          height: "33",
-          "data-src-retina": "/core/img/profiles/avatar_small2x.jpg",
-          "data-src": "c/ore/img/profiles/avatar.jpg",
-          src: "/core/img/profiles/avatar_small2x.jpg"
-        }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

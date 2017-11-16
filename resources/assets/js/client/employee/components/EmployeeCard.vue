@@ -9,11 +9,16 @@
             >
                 <div class="card-header clearfix">
                     <div class="user-pic">
-                        <img alt="Avatar" width="33" height="33"
-                             data-src-retina="/core/img/profiles/avatar_small2x.jpg"
-                             data-src="c/ore/img/profiles/avatar.jpg"
+                        <img v-if="employee.employeePhoto"
+                             alt="None"
+                             :src="`/images/${employee.employeePhoto}`"
+                             width="33" height="33"/>
+
+                        <img v-else
+                             alt="None"
                              src="/core/img/profiles/avatar_small2x.jpg"
-                        >
+                             width="33" height="33"
+                        />
                     </div>
                     <h5>{{employee.givenName}} {{employee.surname}}</h5>
                     <h6>{{employee.jobPosition}} ({{employee.division}})</h6>
