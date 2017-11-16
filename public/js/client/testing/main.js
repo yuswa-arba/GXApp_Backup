@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1834,188 +1834,6 @@ process.umask = function() { return 0; };
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/employee/form.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_utils__ = __webpack_require__("./resources/assets/js/client/helpers/utils.js");
-/**
- * Created by kevinpurwono on 11/11/17.
- */
-
-
-
-
-
-$(document).ready(function () {
-
-    // on init
-
-    $('.datepicker').datepicker({ format: 'dd/mm/yyyy', todayHighlight: true });
-
-    $(function ($) {
-        $(".datepicker").mask("99/99/9999");
-    });
-
-    // constants
-    var employeeId = '';
-    var personalInfoForm = $('#personalInformationForm');
-    var employmentForm = $('#employmentForm');
-    var formObject = {};
-
-    // on click events
-    $('#createEmployeeBtn').on('click', function () {
-
-        var serializeForm = personalInfoForm.serializeArray();
-
-        _.forEach(serializeForm, function (value, key) {
-            formObject[value.name] = value.value;
-        });
-
-        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */])() + 'employee/create', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["a" /* objectToFormData */])(formObject)).then(function (res) {
-
-            if (!res.data.isFailed && res.data.employeeId) {
-
-                employeeId = res.data.employeeId; // insert employee ID
-
-                $('#errors-container').removeClass('show').addClass('hide');
-
-                /* Show success notification*/
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-
-                if (employeeId) {
-                    // make sure employee ID is not empty
-                    goToEmploymentTab();
-                } else {
-                    alert('Something went wrong! Employee ID is not defined');
-                }
-            } else {
-
-                /* Show error notification */
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 0,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            var errorsResponse = err.message + '</br>';
-
-            _.forEach(err.response.data.errors, function (value, key) {
-                errorsResponse += value[0] + ' ';
-            });
-
-            $('#errors-container').removeClass('hide').addClass('show');
-            $('#errors-value').html(errorsResponse);
-            errorsResponse = ''; // reset value
-            /* Scroll to top*/
-            $('html, body').animate({
-                scrollTop: $(".jumbotron").offset().top
-            }, 500);
-        });
-    });
-
-    $('#saveEmploymentBtn').on('click', function () {
-
-        var formData = employmentForm.serialize();
-        formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
-
-        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */])() + 'employee/employment', formData).then(function (res) {
-
-            console.log(res);
-
-            if (!res.data.isFailed) {
-                $('#errors-container').removeClass('show').addClass('hide');
-
-                /* Show success notification*/
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-
-                // _.delay(function () {
-                //     window.location.href = '/employee/list'
-                // }, 2500)
-            } else {
-                /* Show error notification */
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 0,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-
-            var errorsResponse = err.message + '</br>';
-
-            _.forEach(err.response.data.errors, function (value, key) {
-                errorsResponse += value[0] + ' ';
-            });
-
-            $('#errors-container').removeClass('hide').addClass('show');
-            $('#errors-value').html(errorsResponse);
-            errorsResponse = ''; // reset value
-            /* Scroll to top*/
-            $('html, body').animate({
-                scrollTop: $(".jumbotron").offset().top
-            }, 500);
-        });
-    });
-
-    $('#go-back-to-personal-tab').on('click', function () {
-        // goToPersonalInfoTab()
-    });
-
-    // on change events
-    $('#idCardPhoto').on('change', function (e) {
-        //insert file image data to object
-        formObject.idCardPhoto = e.target.files[0];
-    });
-
-    $('#employeePhoto').on('change', function (e) {
-        //insert file image data to object
-        formObject.employeePhoto = e.target.files[0];
-    });
-
-    // functions
-
-    function goToEmploymentTab() {
-
-        clearActiveTab();
-        $('#item-employment').addClass('active');
-        $('#tab-employment').addClass('active');
-    }
-
-    function goToPersonalInfoTab() {
-        clearActiveTab();
-        $('#item-personal-info').addClass('active');
-        $('#tab-personal-info').addClass('active');
-    }
-
-    function clearActiveTab() {
-        $('.tab-pane').removeClass('active');
-        $('.nav-item a').removeClass('active');
-    }
-});
-
-/***/ }),
-
 /***/ "./resources/assets/js/client/helpers/api.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2088,66 +1906,6 @@ function interceptors(cb) {
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/helpers/const.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = api_path;
-/**
- * Created by kevinpurwono on 9/11/17.
- */
-function api_path() {
-  return '/v1/h/';
-}
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/helpers/utils.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = objectToFormData;
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/**
- * Created by kevinpurwono on 16/11/17.
- */
-// export function toMulipartedForm(form, mode) {
-//     if(mode === 'edit' && typeof form.image === 'string') {
-//         const temp = JSON.parse(JSON.stringify(form))
-//         delete temp.image
-//         return temp
-//     } else {
-//         return objectToFormData(form)
-//     }
-// }
-
-function objectToFormData(obj, form, namespace) {
-    var fd = form || new FormData();
-    var formKey = void 0;
-    for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-            if (namespace) {
-                formKey = namespace + '[' + property + ']';
-            } else {
-                formKey = property;
-            }
-            if (obj[property] instanceof Array) {
-                for (var i = 0; i < obj[property].length; i++) {
-                    objectToFormData(obj[property][i], fd, property + '[' + i + ']');
-                }
-            } else if (_typeof(obj[property]) === 'object' && !(obj[property] instanceof File)) {
-                objectToFormData(obj[property], fd, property);
-            } else {
-                fd.append(formKey, obj[property]);
-            }
-        }
-    }
-    return fd;
-}
-
-/***/ }),
-
 /***/ "./resources/assets/js/client/store/auth.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2175,10 +1933,85 @@ function objectToFormData(obj, form, namespace) {
 
 /***/ }),
 
-/***/ 1:
+/***/ "./resources/assets/js/client/testing/main.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+
+$(document).ready(function () {
+
+    var form = {};
+    $('#submitBtn').on('click', function () {
+        form.name = $('#employeeName').val();
+        console.log("form:" + JSON.stringify(form));
+        console.log("formData: " + JSON.stringify(new FormData()));
+        console.log(objectToFormData(form));
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])('/testing/upload', objectToFormData(form)).then(function (res) {
+            console.log(res);
+            alert('Success! ' + res.data.message);
+            window.location.href = '/testing/upload';
+        });
+    });
+
+    $('#employeePhoto').on('change', function (e) {
+        console.log(e.target.files[0]);
+        var file = e.target.files[0];
+
+        form.employeePhoto = file;
+
+        setPreview(file);
+    });
+
+    function setPreview(file) {
+        if (file instanceof File) {
+            var fileReader = new FileReader();
+            fileReader.onload = function (event) {
+                $('#img-preview').prop('src', event.target.result);
+            };
+            fileReader.readAsDataURL(file);
+        } else if (file === 'string') {
+            $('#img-preview').prop('src', '/images/' + file);
+        } else {
+            $('#img-preview').prop('src', '');
+        }
+    }
+
+    function objectToFormData(obj, form, namespace) {
+        var fd = form || new FormData();
+        var formKey = void 0;
+        for (var property in obj) {
+            if (obj.hasOwnProperty(property)) {
+                if (namespace) {
+                    formKey = namespace + '[' + property + ']';
+                } else {
+                    formKey = property;
+                }
+                if (obj[property] instanceof Array) {
+                    for (var i = 0; i < obj[property].length; i++) {
+                        objectToFormData(obj[property][i], fd, property + '[' + i + ']');
+                    }
+                } else if (_typeof(obj[property]) === 'object' && !(obj[property] instanceof File)) {
+                    objectToFormData(obj[property], fd, property);
+                } else {
+                    fd.append(formKey, obj[property]);
+                }
+            }
+        }
+        return fd;
+    }
+});
+
+/***/ }),
+
+/***/ 5:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/employee/form.js");
+module.exports = __webpack_require__("./resources/assets/js/client/testing/main.js");
 
 
 /***/ })

@@ -19813,7 +19813,16 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
-            _vm._m(1),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("img", {
+                attrs: {
+                  src: "/images/" + _vm.detail.employeePhoto,
+                  alt: "No Image",
+                  width: "200px",
+                  height: "200px"
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Surname/Given name")]),
@@ -19853,7 +19862,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default" }, [
-        _vm._m(2),
+        _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -19883,11 +19892,20 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default" }, [
-        _vm._m(3),
+        _vm._m(2),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
-            _vm._m(4),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("img", {
+                attrs: {
+                  src: "/images/" + _vm.detail.idCardPhoto,
+                  alt: "No Image",
+                  width: "200px",
+                  height: "120px"
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-8 employee-details" }, [
               _c("label", [_vm._v("ID Card Number")]),
@@ -19899,7 +19917,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default" }, [
-        _vm._m(5),
+        _vm._m(3),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -19949,7 +19967,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-6" }, [
       _c("div", { staticClass: "card card-default" }, [
-        _vm._m(6),
+        _vm._m(4),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -19979,7 +19997,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default" }, [
-        _vm._m(7),
+        _vm._m(5),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -20075,7 +20093,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default" }, [
-        _vm._m(8),
+        _vm._m(6),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -20088,7 +20106,7 @@ var render = function() {
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Relationship")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyRelations))])
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyRelationship))])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
@@ -20127,7 +20145,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default" }, [
-        _vm._m(9),
+        _vm._m(7),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -20195,22 +20213,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-4" }, [
-      _c("img", {
-        attrs: {
-          src:
-            "http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg",
-          alt: "",
-          width: "200px",
-          height: "200px"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header " }, [
       _c("div", { staticClass: "card-title" }, [_vm._v("Contact Information")])
     ])
@@ -20221,22 +20223,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header " }, [
       _c("div", { staticClass: "card-title" }, [_vm._v("ID Card Information")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-4 employee-details" }, [
-      _c("img", {
-        attrs: {
-          src:
-            "http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg",
-          alt: "",
-          width: "200px",
-          height: "120px"
-        }
-      })
     ])
   },
   function() {

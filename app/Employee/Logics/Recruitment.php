@@ -9,6 +9,7 @@ use App\Employee\Models\EmployeeDataVerification;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
 use App\Traits\GlobalUtils;
+use GuzzleHttp\Psr7\Request;
 
 class Recruitment extends UseCase
 {
@@ -48,11 +49,29 @@ class Recruitment extends UseCase
 
     private function submitToMasterEmployee($request)
     {
+
         /*Add unique ID param*/
         $request->request->add(['id' => $this->generateUUID()]);
         $request->request->add(['employeeNo' => str_random(6)]);
 
-        $employee = MasterEmployee::create($request->all());
+        $requestData = $request->all();
+
+        /*Handle image uploads*/
+        if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
+            $filename = $this->getImageName($request->idCardPhoto, $request->nickName);
+            $request->idCardPhoto->move(base_path('public/images'), $filename);
+            $requestData['idCardPhoto'] = $filename; //rename
+
+        }
+
+        /*Handle image uploads*/
+        if ($request->hasFile('employeePhoto') && $request->file('employeePhoto')->isValid()) {
+            $filename = $this->getImageName($request->employeePhoto, $request->nickName);
+            $request->employeePhoto->move(base_path('public/images'), $filename);
+            $requestData['employeePhoto'] = $filename; // rename
+        }
+
+        $employee = MasterEmployee::create($requestData);
         return $employee;
     }
 
@@ -73,7 +92,10 @@ class Recruitment extends UseCase
 
     public function handleEmployment($request)
     {
+        $response = array();
+
         $employee = $this->saveEmploymentData($request);
+
         if ($employee) {
 
             $this->generateUserLogin($employee);
@@ -81,6 +103,7 @@ class Recruitment extends UseCase
             /* Return success response */
             $response['isFailed'] = false;
             $response['message'] = 'Employment has been saved successfully';
+
             return response()->json($response, 200);
 
         } else {

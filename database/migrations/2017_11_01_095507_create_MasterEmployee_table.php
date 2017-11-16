@@ -33,8 +33,8 @@ class CreateMasterEmployeeTable extends Migration
             $table->string('spousesName')->nullable();
             $table->tinyInteger('totalChildren')->default(0);
             $table->string('idCardNumber');
-            $table->binary('idCardPhoto')->nullable();
-            $table->binary('employeePhoto')->nullable();
+            $table->string('idCardPhoto')->nullable();
+            $table->string('employeePhoto')->nullable();
             $table->string('fatherName');
             $table->string('fatherAddress');
             $table->string('fatherPhoneNo');

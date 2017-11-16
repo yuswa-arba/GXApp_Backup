@@ -19,21 +19,7 @@ class RecruitmentController extends Controller
 
     public function submitEmployment(EmploymentRequest $request)
     {
-        Recruitment::submitEmploymentLogic($request);
-    }
-
-    // TODO : upload image logic is not working yet
-    public function uploadImage(Request $request)
-    {
-        $this->validate($request, [
-            'idCardPhoto' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-        ]);
-
-        $imageName = time().'.'.$request->idCardPhoto->getClientOriginalExtension();
-        $request->idCardPhoto->move(public_path('images'), $imageName);
-
-        echo json_encode($imageName);
-
+        return Recruitment::submitEmploymentLogic($request);
     }
 
 }

@@ -1,4 +1,17 @@
 @extends('layouts.main')
+
+@push('child-styles')
+<!-- push needed plugins for this page-->
+@endpush
+
+@push('child-scripts-plugins')
+<!-- push needed plugins for this page -->
+@endpush
+
+@push('child-page-controller')
+
+@endpush
+
 @section('content')
 
             <div class="content">

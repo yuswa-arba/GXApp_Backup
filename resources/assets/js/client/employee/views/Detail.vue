@@ -19,8 +19,8 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-lg-4">
-                            <img src="http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg"
-                                 alt="" width="200px" height="200px">
+                            <img :src="`/images/${detail.employeePhoto}`"
+                                 alt="No Image" width="200px" height="200px">
                         </div>
                         <div class="col-lg-4 employee-details">
 
@@ -89,8 +89,8 @@
                     <div class="row">
                         <div class="col-lg-4 employee-details">
 
-                            <img src="http://i.dailymail.co.uk/i/pix/2016/05/23/22/348B850600000578-3605456-image-m-32_1464040491071.jpg"
-                                 alt="" width="200px" height="120px">
+                            <img :src="`/images/${detail.idCardPhoto}`"
+                                 alt="No Image" width="200px" height="120px">
 
                         </div>
                         <div class="col-lg-8 employee-details">
@@ -272,7 +272,7 @@
 
                         <div class="col-lg-4 employee-details">
                             <label>Relationship</label>
-                            <h5>{{detail.emergencyRelations}}</h5>
+                            <h5>{{detail.emergencyRelationship}}</h5>
                         </div>
 
                         <div class="col-lg-4 employee-details">

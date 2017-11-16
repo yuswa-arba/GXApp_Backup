@@ -20,4 +20,14 @@ trait GlobalUtils
     {
         return Uuid::uuid();
     }
+
+    public function getFileName($file)
+    {
+        return str_random(32).'.'.$file->extension();
+    }
+
+    public function getImageName($file,$text)
+    {
+        return str_random(20).str_shuffle($text).'.'.$file->extension();
+    }
 }

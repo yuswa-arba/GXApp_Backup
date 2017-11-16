@@ -4,7 +4,7 @@
 
 import {api_path} from '../helpers/const'
 import {get, post, multipartPost} from '../helpers/api'
-
+import {objectToFormData} from '../helpers/utils'
 
 $(document).ready(function () {
 
@@ -16,19 +16,22 @@ $(document).ready(function () {
         $(".datepicker").mask("99/99/9999");
     });
 
-
     // constants
     let employeeId = '';
     let personalInfoForm = $('#personalInformationForm');
     let employmentForm = $('#employmentForm');
+    let formObject = {};
 
     // on click events
     $('#createEmployeeBtn').on('click', function () {
 
+        let serializeForm = personalInfoForm.serializeArray();
 
-        let formData = personalInfoForm.serialize();
+       _.forEach(serializeForm,function (value,key) {
+           formObject[value.name] = value.value
+       })
 
-        post(api_path() + 'employee/create', formData)
+        post(api_path() + 'employee/create', objectToFormData(formObject))
             .then((res) => {
 
                 if (!res.data.isFailed && res.data.employeeId) {
@@ -94,6 +97,9 @@ $(document).ready(function () {
 
         post(api_path() + 'employee/employment', formData)
             .then((res) => {
+
+                console.log(res)
+
                 if (!res.data.isFailed) {
                     $('#errors-container').removeClass('show').addClass('hide')
 
@@ -106,9 +112,9 @@ $(document).ready(function () {
                         type: 'info'
                     }).show();
 
-                    _.delay(function () {
-                        window.location.href = '/employee/list'
-                    }, 2500)
+                    // _.delay(function () {
+                    //     window.location.href = '/employee/list'
+                    // }, 2500)
 
                 } else {
                     /* Show error notification */
@@ -147,8 +153,14 @@ $(document).ready(function () {
     })
 
     // on change events
-    $('#idCardPhoto').on('change', function () {
-        console.log($(this).val())
+    $('#idCardPhoto').on('change', function (e) {
+        //insert file image data to object
+        formObject.idCardPhoto = e.target.files[0]
+    });
+
+    $('#employeePhoto').on('change',function(e){
+        //insert file image data to object
+        formObject.employeePhoto = e.target.files[0]
     });
 
     // functions

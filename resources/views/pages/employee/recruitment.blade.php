@@ -120,7 +120,8 @@
                                                 </div>
                                             </div>
                                             <div class="form-group form-group-default required">
-                                                <label>Birth date <span class="help fs-10">e.g. "25/12/2013"</span></label>
+                                                <label>Birth date <span
+                                                            class="help fs-10">e.g. "25/12/2013"</span></label>
                                                 <input id="birth-date" type="text"
                                                        class="form-control datepicker"
                                                        name="birthDate" value="{{old('birthDate')}}" required>
@@ -172,7 +173,8 @@
                                                        value="{{old('phoneNo')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
-                                                <label>E-mail Address<span class="help fs-10">(Company e-mail address)</span></label>
+                                                <label>E-mail Address<span
+                                                            class="help fs-10">(Company e-mail address)</span></label>
                                                 <input type="email" class="form-control" name="email"
                                                        value="{{old('email')}}" required>
                                             </div>
@@ -224,7 +226,7 @@
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>Father's Phone Number</label>
-                                                <input type="text" class="form-control" name="fatherPhoneNo"
+                                                <input type="number" class="form-control" name="fatherPhoneNo"
                                                        value="{{old('fatherPhoneNo')}}" required>
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
@@ -254,7 +256,7 @@
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>Mother's Phone Number</label>
-                                                <input type="text" class="form-control" name="motherPhoneNo"
+                                                <input type="number" class="form-control" name="motherPhoneNo"
                                                        value="{{old('motherPhoneNo')}}" required>
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
@@ -318,16 +320,18 @@
                                                        value="{{old('idCardNumber')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
-                                                <label>ID Card Photo</label>
-                                                <form id="uploadIdCardForm" action="{{route('v1.recruitment.upload')}}"
-                                                      method="post" enctype="multipart/form-data">
-                                                    <input id="idCardPhoto" type="file" name="idCardPhoto"
-                                                           value="{{old('idCardPhoto')}}"
-                                                           required/>
-                                                </form>
-                                                {{--<label>ID Card Photo </label>--}}
-                                                {{--<div id="idCardPhoto" class="dropzone"></div>--}}
-
+                                                {{--<form id="uploadIdCardForm" action="{{route('v1.recruitment.upload')}}"--}}
+                                                {{--method="post" enctype="multipart/form-data">--}}
+                                                {{--<input id="idCardPhoto" type="file" name="idCardPhoto"--}}
+                                                {{--value--}}
+                                                {{--required/>--}}
+                                                {{--</form>--}}
+                                                <label>ID Card Photo </label>
+                                                <input id="idCardPhoto"
+                                                       type="file"
+                                                       name="idCardPhoto"
+                                                       accept="image/*"
+                                                       required/>
                                             </div>
                                         </div>
                                         <br>
@@ -335,10 +339,8 @@
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default required">
                                                 <label>Contact Photo</label>
-                                                <div class="fallback">
-                                                    <input type="file" name="employeePhoto"
-                                                           value="{{old('employeePhoto')}}" required/>
-                                                </div>
+                                                <input type="file" name="employeePhoto" id="employeePhoto"
+                                                       value="" required/>
                                             </div>
                                         </div>
                                         <br>
@@ -356,8 +358,8 @@
                                                         name="emergencyRelationship"
                                                         required>
                                                     <option value="" disabled selected></option>
-                                                    <option value="1">Family</option>
-                                                    <option value="1">Friend</option>
+                                                    <option value="Family">Family</option>
+                                                    <option value="Friend">Friend</option>
                                                 </select>
                                             </div>
                                             <div class="form-group form-group-default required">
@@ -392,9 +394,17 @@
                                         <br>
                                         <p class="form-title">Bank Information</p>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default ">
-                                                <label>Bank Name</label>
-                                                <input type="text" class="form-control" name="bankId">
+                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                                <label class="">Bank</label>
+                                                <select class="full-width" data-placeholder="Select Bank"
+                                                        data-init-plugin="select2"
+                                                        name="bankId"
+                                                        required>
+                                                    <option value="" disabled selected></option>
+                                                    @foreach($banks as $bank)
+                                                        <option value="{{$bank->id}}">{{$bank->name}}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                             <div class="form-group form-group-default ">
                                                 <label>Bank Account Name</label>
@@ -403,7 +413,7 @@
                                             </div>
                                             <div class="form-group form-group-default ">
                                                 <label>Bank Account Number</label>
-                                                <input type="text" class="form-control" name="bankAccNo"
+                                                <input type="number" class="form-control" name="bankAccNo"
                                                        value="{{old('bankAccNo')}}">
                                             </div>
                                             <div class="form-group form-group-default ">

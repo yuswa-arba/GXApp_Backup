@@ -64,6 +64,12 @@ Route::prefix('testing')->middleware('auth.admin')->group(function () {
       echo json_encode($employment->employee);
    });
 
+   Route::get('upload',function(){
+       $datas = \Illuminate\Support\Facades\DB::table('test_upload')->select('*')->get();
+      return view('pages.testing.upload',compact('datas'));
+   })->name('form.upload');
+
+   Route::post('upload','TestUploadController@upload')->name('post.upload');
 
 
 });

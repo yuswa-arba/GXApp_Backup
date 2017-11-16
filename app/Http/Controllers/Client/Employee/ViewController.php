@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client\Employee;
 
+use App\Components\Models\Bank;
 use App\Components\Models\BranchOffice;
 use App\Components\Models\Division;
 use App\Components\Models\EducationLevel;
@@ -31,10 +32,11 @@ class ViewController extends Controller
         $divisions = Division::all();
         $branchOffices = BranchOffice::all();
         $recruitmentStatuses = RecruitmentStatus::all();
+        $banks = Bank::all();
 
         return view('pages.employee.recruitment', compact(
             'educationLevels', 'religions', 'maritalStatuses',
-            'jobPositions', 'divisions','branchOffices', 'recruitmentStatuses')
+            'jobPositions', 'divisions','branchOffices', 'recruitmentStatuses','banks')
         );
     }
 

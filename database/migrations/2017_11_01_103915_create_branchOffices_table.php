@@ -16,6 +16,8 @@ class CreateBranchOfficesTable extends Migration
         Schema::create('branchOffices', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('codeNo');
+            $table->string('codeName');
             $table->timestamps();
         });
     }

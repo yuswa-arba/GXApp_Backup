@@ -50,7 +50,7 @@ class EmployeeDetailTransfomer extends TransformerAbstract
             'siblingPhoneNo' => $employee->siblingPhoneNo,
             'siblingMaritalStatus' => !is_null($employee->siblingMaritalStatus) ? $employee->siblingMaritalStatus->name : '',
             'emergencyContact' => $employee->emergencyContact,
-            'emergencyRelations' => $employee->emergencyRelations,
+            'emergencyRelationship' => $employee->emergencyRelationship,
             'emergencyAddress' => $employee->emergencyAddress,
             'emergencyPhoneNo' => $employee->emergencyPhoneNo,
             'emergencyAltPhoneNo' => $employee->emergencyAltPhoneNo,

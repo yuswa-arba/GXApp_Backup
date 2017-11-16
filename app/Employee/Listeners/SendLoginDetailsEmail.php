@@ -25,8 +25,8 @@ class SendLoginDetailsEmail implements ShouldQueue
      */
     public function handle(UserGenerated $event)
     {
-        $message = (new LoginAccountDetails($event->user,$event->firstPassword))->onConnection('database')->onQueue('emails');
-        Mail::to($event->user->email)->queue($message);
+//        $message = (new LoginAccountDetails($event->user,$event->firstPassword))->onConnection('database')->onQueue('emails');
+//        Mail::to($event->user->email)->queue($message);
     }
 
     public function failed(UserGenerated $event,$exception)
