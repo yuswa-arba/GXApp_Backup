@@ -8,12 +8,21 @@
     <div class="">
         <div class="brand inline">
             <img src="{{asset('core/img/logo_blue.png')}}" alt="logo" data-src="{{asset('core/img/logo_blue.png')}}"
-                 data-src-retina="{{asset('core/img/logo_blue_2x.png')}}" width="78" height="22">
+                 data-src-retina="{{asset('core/img/logo_blue_2x.png')}}" width="78" height="22"
+                 class="m-t-5"
+            >
         </div>
-        <a href="#" class="btn btn-link text-primary m-l-20 hidden-md-down">Add New Item</a>
-        <a href="#" class="search-link hidden-md-down" data-toggle="search"><i class="pg-search"></i>Type anywhere to
-            <span class="bold">search</span></a>
     </div>
+    <div class="col-lg-6">
+        <div class="input-group">
+            <input type="text" id="search-box" class="form-control"
+            placeholder="Type here to search">
+            <span class="input-group-addon primary">
+                        <i class="fa fa-search"></i>
+                        </span>
+        </div>
+    </div>
+
     <div class="d-flex align-items-center">
         <!-- START NOTIFICATION LIST -->
         <ul class="hidden-md-down notification-list no-margin hidden-sm-down b-grey b-r no-style p-l-30 p-r-20">

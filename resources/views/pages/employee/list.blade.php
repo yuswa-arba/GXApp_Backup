@@ -32,12 +32,7 @@
         <div class="container-fluid container-fixed-lg">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="pull-right">
-                        <div class="col-xs-12">
-                            <input type="text" id="search-box" class="form-control pull-right"
-                                   placeholder="Search">
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>

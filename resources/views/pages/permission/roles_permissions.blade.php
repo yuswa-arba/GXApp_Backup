@@ -53,12 +53,6 @@
                     <div class="card-title dark-title">
                         Role & Permission List
                     </div>
-                    <div class="pull-right">
-                        <div class="col-xs-12">
-                            <input type="text" id="search-box" class="form-control pull-right"
-                                   placeholder="Search">
-                        </div>
-                    </div>
                     <div class="pull-right m-r-15">
                         <div class="">
                             <div class="dropdown dropdown-default">

@@ -1,18 +1,51 @@
 <template>
     <div class="row row-same-height">
-        <span class="text-primary pointer m-b-10"
-              @click="goBack()"><i class="pg-arrow_left"></i>
+
+        <div class="col-lg-12 m-b-10 m-t-10">
+
+             <button class="btn btn-outline-primary m-r-15 m-b-10 pull-left"
+                   @click="goBack()"><i class="pg-arrow_left"></i>
             Go Back
-        </span>
-        <div class="col-lg-12">
-            <label class="label label-info pull-left fs-14">
-                Employee No: {{detail.employeeNo}}
-            </label>
-            <label class="label label-primary pull-right fs-14">
-                ID: {{$route.params.id}}
-            </label>
+            </button>
+
+            <div class="pull-left m-r-15 m-b-10">
+                <div class="dropdown dropdown-default">
+                    <button class="btn btn-primary all-caps dropdown-toggle text-center" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        View
+                    </button>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">
+                            Master</a>
+                        <a class="dropdown-item" href="#">
+                            Employment</a>
+                        <a class="dropdown-item" href="#">
+                            Login Details
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
         <div class="col-lg-6">
+
+            <div class="card card-default filter-item">
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-lg-12 employee-details">
+                            <label>Employee ID</label>
+                            <p class="text-primary">{{$route.params.id}}</p>
+                        </div>
+                        <div class="col-lg-12 employee-details">
+                            <label>Employee No</label>
+                            <p class="text-primary">{{detail.employeeNo}}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
 
             <div class="card card-default filter-item">
                 <div class="card-header ">
@@ -101,7 +134,7 @@
 
                             <div style="">
                                 <img :src="`/images/employee/${detail.idCardPhoto}`"
-                                     alt="No Image"  class="img-responsive" style="width:100%; height:auto;">
+                                     alt="No Image" class="img-responsive" style="width:100%; height:auto;">
                             </div>
 
                         </div>
@@ -394,9 +427,9 @@
         created(){
             get(api_path() + 'employee/detail/' + this.$route.params.id)
                 .then((res) => {
-                    this.detail = res.data.detail.data
-                    this.employment = res.data.detail.data.employment.data
-                })
+                this.detail = res.data.detail.data
+                this.employment = res.data.detail.data.employment.data
+            })
         },
         methods: {
             goBack(){

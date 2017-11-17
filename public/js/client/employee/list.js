@@ -1625,9 +1625,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {}
+    created: function created() {}
 });
 
 /***/ }),
@@ -1705,6 +1707,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -19821,41 +19856,51 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row row-same-height" }, [
-    _c(
-      "span",
-      {
-        staticClass: "text-primary pointer m-b-10",
-        on: {
-          click: function($event) {
-            _vm.goBack()
+    _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-primary m-r-15 m-b-10 pull-left",
+          on: {
+            click: function($event) {
+              _vm.goBack()
+            }
           }
-        }
-      },
-      [
-        _c("i", { staticClass: "pg-arrow_left" }),
-        _vm._v("\n        Go Back\n    ")
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-12" }, [
-      _c("label", { staticClass: "label label-info pull-left fs-14" }, [
-        _vm._v(
-          "\n            Employee No: " +
-            _vm._s(_vm.detail.employeeNo) +
-            "\n        "
-        )
-      ]),
+        },
+        [
+          _c("i", { staticClass: "pg-arrow_left" }),
+          _vm._v("\n        Go Back\n        ")
+        ]
+      ),
       _vm._v(" "),
-      _c("label", { staticClass: "label label-primary pull-right fs-14" }, [
-        _vm._v(
-          "\n            ID: " + _vm._s(_vm.$route.params.id) + "\n        "
-        )
-      ])
+      _vm._m(0)
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-6" }, [
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(0),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee ID")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.$route.params.id))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee No")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.employeeNo))
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -19912,7 +19957,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(1),
+        _vm._m(2),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -19946,7 +19991,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(2),
+        _vm._m(3),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -19975,7 +20020,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(3),
+        _vm._m(4),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -20025,7 +20070,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-6" }, [
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(4),
+        _vm._m(5),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -20055,7 +20100,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(5),
+        _vm._m(6),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -20171,7 +20216,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(6),
+        _vm._m(7),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -20229,7 +20274,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(7),
+        _vm._m(8),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -20285,6 +20330,44 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pull-left m-r-15 m-b-10" }, [
+      _c("div", { staticClass: "dropdown dropdown-default" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary all-caps dropdown-toggle text-center",
+            attrs: {
+              type: "button",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "false"
+            }
+          },
+          [_vm._v("\n                    View\n                ")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "dropdown-menu" }, [
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+            _vm._v("\n                        Master")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+            _vm._v("\n                        Employment")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
+            _vm._v(
+              "\n                        Login Details\n                    "
+            )
+          ])
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
