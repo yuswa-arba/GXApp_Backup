@@ -15,7 +15,11 @@ class EmploymentTransfomer extends TransformerAbstract
      */
     public function transform(Employment $employment)
     {
+        $employee = MasterEmployee::where('id',$employment->employeeId)->first();
         return [
+            'employeeId' =>$employment->employeeId,
+            'employeeNo' => $employee->employeeNo,
+            'employeeName'=> $employee->givenName,
             'jobPosition' => !is_null($employment->jobPosition)?$employment->jobPosition->name:'',
             'division' => !is_null($employment->division)?$employment->division->name:'',
             'branchOffice' => !is_null($employment->branchOffice)?$employment->branchOffice->name:'',

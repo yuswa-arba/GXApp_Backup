@@ -3,32 +3,11 @@
 
         <div class="col-lg-12 m-b-10 m-t-10">
 
-             <button class="btn btn-outline-primary m-r-15 m-b-10 pull-left"
-                   @click="goBack()"><i class="pg-arrow_left"></i>
-            Go Back
-            </button>
-
-            <div class="pull-left m-r-15 m-b-10">
-                <div class="dropdown dropdown-default">
-                    <button class="btn btn-primary all-caps dropdown-toggle text-center" type="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        View
-                    </button>
-
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">
-                            Master</a>
-                        <a class="dropdown-item" href="#">
-                            Employment</a>
-                        <a class="dropdown-item" href="#">
-                            Login Details
-                        </a>
-                    </div>
-
-                </div>
-            </div>
+            <slot name="go-back-and-view-menu"></slot>
 
         </div>
+
+
         <div class="col-lg-6">
 
             <div class="card card-default filter-item">
@@ -418,23 +397,15 @@
     export default{
         data(){
             return {
-
                 detail: [],
-                employment: []
-
             }
         },
         created(){
-            get(api_path() + 'employee/detail/' + this.$route.params.id)
+            get(api_path() + 'employee/detail/master/' + this.$route.params.id)
                 .then((res) => {
+                console.log(res)
                 this.detail = res.data.detail.data
-                this.employment = res.data.detail.data.employment.data
             })
-        },
-        methods: {
-            goBack(){
-                this.$router.push('/')
-            }
         }
     }
 </script>

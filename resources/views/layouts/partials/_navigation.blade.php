@@ -13,7 +13,7 @@
             >
         </div>
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
         <div class="input-group">
             <input type="text" id="search-box" class="form-control"
             placeholder="Type here to search">

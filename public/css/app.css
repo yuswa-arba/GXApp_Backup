@@ -163,3 +163,7 @@
   display: flex;
 }
 
+#search-box {
+  height: 40px;
+}
+

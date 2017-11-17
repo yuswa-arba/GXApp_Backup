@@ -47,7 +47,7 @@
         },
         methods: {
             viewDetail(id){
-                this.$router.push({name: 'detail', params: {id: id}})
+                this.$router.push({name: 'detailMaster', params: {id: id}})
             }
 
         },

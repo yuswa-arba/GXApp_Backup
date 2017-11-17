@@ -35,12 +35,16 @@ class User extends Authenticatable
 
     public function employee()
     {
-        return $this->belongsTo(MasterEmployee::class,'employeeId','id');
+        return $this->belongsTo(MasterEmployee::class,'employeeId');
     }
 
     public function employment()
     {
-        return $this->belongsTo(Employment::class,'employeeId','id');
+        return $this->belongsTo(Employment::class,'employeeId');
     }
 
+    public function accessStatus()
+    {
+        return $this->belongsTo(AccessStatus::class,'accessStatusId');
+    }
 }
