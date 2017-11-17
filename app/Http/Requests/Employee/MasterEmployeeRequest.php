@@ -30,6 +30,7 @@ class MasterEmployeeRequest extends FormRequest
             'nickName' => 'required',
             'gender' => 'required',
             'birthDate' => 'required|date_format:d/m/Y',
+            'hometown'=>'required',
             'city' => 'required',
             'educationLevelId' => 'required',
             'religionId' => 'required',
@@ -37,10 +38,12 @@ class MasterEmployeeRequest extends FormRequest
             'fatherName' => 'required',
             'fatherPhoneNo' => 'required',
             'fatherAddress' => 'required',
+            'fatherCity' => 'required',
             'fatherMaritalStatusId' => 'required',
             'motherName' => 'required',
             'motherPhoneNo' => 'required',
             'motherAddress' => 'required',
+            'motherCity' => 'required',
             'motherMaritalStatusId' => 'required',
             'idCardNumber' => 'required',
             'idCardPhoto' => 'max:2048',
@@ -52,7 +55,7 @@ class MasterEmployeeRequest extends FormRequest
             'emergencyRelationship' => 'required',
             'emergencyPhoneNo' => 'required',
             'emergencyAddress' => 'required',
-            'emergencyEmailAddress' => 'required',
+            'emergencyCity' => 'required'
         ];
     }
 }

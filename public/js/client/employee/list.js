@@ -2052,6 +2052,33 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19791,7 +19818,7 @@ var render = function() {
     _c(
       "span",
       {
-        staticClass: "text-primary pointer",
+        staticClass: "text-primary pointer m-b-10",
         on: {
           click: function($event) {
             _vm.goBack()
@@ -19805,7 +19832,15 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-12" }, [
-      _c("label", { staticClass: "label label-info" }, [
+      _c("label", { staticClass: "label label-info pull-left fs-14" }, [
+        _vm._v(
+          "\n            Employee No: " +
+            _vm._s(_vm.detail.employeeNo) +
+            "\n        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("label", { staticClass: "label label-primary pull-right fs-14" }, [
         _vm._v(
           "\n            ID: " + _vm._s(_vm.$route.params.id) + "\n        "
         )
@@ -19821,7 +19856,7 @@ var render = function() {
             _c("div", { staticClass: "col-lg-4" }, [
               _c("img", {
                 attrs: {
-                  src: "/images/" + _vm.detail.employeePhoto,
+                  src: "/images/employee/" + _vm.detail.employeePhoto,
                   alt: "No Image",
                   width: "200px",
                   height: "200px"
@@ -19856,7 +19891,7 @@ var render = function() {
               _vm._v(" "),
               _c("label", [_vm._v("Hometown")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.city))]),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.hometown))]),
               _vm._v(" "),
               _c("label", [_vm._v("Education level")]),
               _vm._v(" "),
@@ -19875,6 +19910,10 @@ var render = function() {
               _c("label", [_vm._v("Address")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.address))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.city))]),
               _vm._v(" "),
               _c("label", [_vm._v("Phone Number")]),
               _vm._v(" "),
@@ -19904,7 +19943,7 @@ var render = function() {
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("img", {
                 attrs: {
-                  src: "/images/" + _vm.detail.idCardPhoto,
+                  src: "/images/employee/" + _vm.detail.idCardPhoto,
                   alt: "No Image",
                   width: "200px",
                   height: "120px"
@@ -20019,6 +20058,12 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Father's City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherCity))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Father's Phone Number")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.fatherPhoneNo))])
@@ -20040,6 +20085,12 @@ var render = function() {
               _c("label", [_vm._v("Mother's Address")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.motherAddress))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Mother's City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherCity))])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
@@ -20074,6 +20125,14 @@ var render = function() {
               _c("h5", [_vm._v(_vm._s(_vm.detail.siblingAddress))]),
               _vm._v(" "),
               !_vm.detail.siblingAddress ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Sibling's City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingCity))]),
+              _vm._v(" "),
+              !_vm.detail.siblingCity ? _c("h5", [_vm._v("-")]) : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
@@ -20118,6 +20177,12 @@ var render = function() {
               _c("label", [_vm._v("Address")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyAddress))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyCity))])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
@@ -20341,7 +20406,7 @@ var render = function() {
                     ? _c("img", {
                         attrs: {
                           alt: "None",
-                          src: "/images/" + employee.employeePhoto,
+                          src: "/images/employee/" + employee.employeePhoto,
                           width: "33",
                           height: "33"
                         }

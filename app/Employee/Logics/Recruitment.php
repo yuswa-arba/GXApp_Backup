@@ -59,7 +59,7 @@ class Recruitment extends UseCase
         /*Handle image uploads*/
         if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
             $filename = $this->getImageName($request->idCardPhoto, $request->nickName);
-            $request->idCardPhoto->move(base_path('public/images'), $filename);
+            $request->idCardPhoto->move(base_path('public/images/employee'), $filename);
             $requestData['idCardPhoto'] = $filename; //rename
 
         }
@@ -67,7 +67,7 @@ class Recruitment extends UseCase
         /*Handle image uploads*/
         if ($request->hasFile('employeePhoto') && $request->file('employeePhoto')->isValid()) {
             $filename = $this->getImageName($request->employeePhoto, $request->nickName);
-            $request->employeePhoto->move(base_path('public/images'), $filename);
+            $request->employeePhoto->move(base_path('public/images/employee'), $filename);
             $requestData['employeePhoto'] = $filename; // rename
         }
 
@@ -94,11 +94,12 @@ class Recruitment extends UseCase
     {
         $response = array();
 
-        $employee = $this->saveEmploymentData($request);
+        $employment = $this->saveEmploymentData($request);
 
-        if ($employee) {
+        if ($employment->employee) {
 
-            $this->generateUserLogin($employee);
+            $this->updateEmployeeNoBasedOnBranch($employment);
+            $this->generateUserLogin($employment->employee);
 
             /* Return success response */
             $response['isFailed'] = false;
@@ -119,7 +120,22 @@ class Recruitment extends UseCase
     {
         $employment = Employment::create($request->all());
 
-        return $employment->employee; // return employee data
+        return $employment; // return employee data
+    }
+
+    private function updateEmployeeNoBasedOnBranch($employment)
+    {
+       $employee = MasterEmployee::find($employment->employee->id);
+
+       //format : 17021201001 = ({date of entry : yymmdd}{branch code no}{order no})
+       $employee->employeeNo = $this->convertDateDDMMYYYYtoYMD($employment->dateOfEntry)
+           . $employment->branchOffice->codeNo
+           . $this->zeroPrefix(count(MasterEmployee::all()),3);
+
+       $employee->save();
+
+       return $this;
+
     }
 
     private function generateUserLogin($employee)

@@ -1,11 +1,14 @@
 <template>
     <div class="row row-same-height">
-        <span class="text-primary pointer"
+        <span class="text-primary pointer m-b-10"
               @click="goBack()"><i class="pg-arrow_left"></i>
             Go Back
         </span>
         <div class="col-lg-12">
-            <label class="label label-info">
+            <label class="label label-info pull-left fs-14">
+                Employee No: {{detail.employeeNo}}
+            </label>
+            <label class="label label-primary pull-right fs-14">
                 ID: {{$route.params.id}}
             </label>
         </div>
@@ -19,7 +22,7 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-lg-4">
-                            <img :src="`/images/${detail.employeePhoto}`"
+                            <img :src="`/images/employee/${detail.employeePhoto}`"
                                  alt="No Image" width="200px" height="200px">
                         </div>
                         <div class="col-lg-4 employee-details">
@@ -40,7 +43,7 @@
                             <h5>{{detail.gender}}</h5>
 
                             <label>Hometown</label>
-                            <h5>{{detail.city}}</h5>
+                            <h5>{{detail.hometown}}</h5>
 
                             <label>Education level</label>
                             <h5>{{detail.educationLevel}}</h5>
@@ -61,6 +64,9 @@
 
                             <label>Address</label>
                             <h5>{{detail.address}}</h5>
+
+                            <label>City</label>
+                            <h5>{{detail.city}}</h5>
 
                             <label>Phone Number</label>
                             <h5>{{detail.phoneNo}}</h5>
@@ -89,7 +95,7 @@
                     <div class="row">
                         <div class="col-lg-4 employee-details">
 
-                            <img :src="`/images/${detail.idCardPhoto}`"
+                            <img :src="`/images/employee/${detail.idCardPhoto}`"
                                  alt="No Image" width="200px" height="120px">
 
                         </div>
@@ -196,6 +202,11 @@
                         </div>
 
                         <div class="col-lg-4 employee-details">
+                            <label>Father's City</label>
+                            <h5>{{detail.fatherCity}}</h5>
+                        </div>
+
+                        <div class="col-lg-4 employee-details">
                             <label>Father's Phone Number</label>
                             <h5>{{detail.fatherPhoneNo}}</h5>
                         </div>
@@ -213,6 +224,11 @@
                         <div class="col-lg-4 employee-details">
                             <label>Mother's Address</label>
                             <h5>{{detail.motherAddress}}</h5>
+                        </div>
+
+                        <div class="col-lg-4 employee-details">
+                            <label>Mother's City</label>
+                            <h5>{{detail.motherCity}}</h5>
                         </div>
 
                         <div class="col-lg-4 employee-details">
@@ -240,6 +256,12 @@
                             <label>Sibling's Address</label>
                             <h5>{{detail.siblingAddress}}</h5>
                             <h5 v-if="!detail.siblingAddress">-</h5>
+                        </div>
+
+                        <div class="col-lg-4 employee-details">
+                            <label>Sibling's City</label>
+                            <h5>{{detail.siblingCity}}</h5>
+                            <h5 v-if="!detail.siblingCity">-</h5>
                         </div>
 
                         <div class="col-lg-4 employee-details">
@@ -278,6 +300,11 @@
                         <div class="col-lg-4 employee-details">
                             <label>Address</label>
                             <h5>{{detail.emergencyAddress}}</h5>
+                        </div>
+
+                        <div class="col-lg-4 employee-details">
+                            <label>City</label>
+                            <h5>{{detail.emergencyCity}}</h5>
                         </div>
 
                         <div class="col-lg-4 employee-details">

@@ -30,4 +30,17 @@ trait GlobalUtils
     {
         return str_random(20).str_shuffle($text).'.'.$file->extension();
     }
+
+
+    public function zeroPrefix($value,$totalZero)
+    {
+        return str_pad($value, $totalZero, '0', STR_PAD_LEFT);
+    }
+
+    public function convertDateDDMMYYYYtoYMD($date)
+    {
+        $date = str_replace('/', '-', $date);
+        return date('ymd', strtotime($date));
+    }
+
 }

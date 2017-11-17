@@ -127,9 +127,9 @@
                                                        name="birthDate" value="{{old('birthDate')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
-                                                <label>Hometown / City</label>
-                                                <input type="text" class="form-control" name="city"
-                                                       value="{{old('city')}}" required>
+                                                <label>Hometown </label>
+                                                <input type="text" class="form-control" name="hometown"
+                                                       value="{{old('hometown')}}" required>
                                             </div>
 
                                             <div class="form-group form-group-default form-group-default-select2 required">
@@ -166,6 +166,11 @@
                                                 <label>Address</label>
                                                 <input type="text" class="form-control" name="address"
                                                        value="{{old('address')}}" required>
+                                            </div>
+                                            <div class="form-group form-group-default required">
+                                                <label>City</label>
+                                                <input type="text" class="form-control" name="city"
+                                                       value="{{old('city')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>Phone Number</label>
@@ -225,6 +230,11 @@
                                                        value="{{old('fatherAddress')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
+                                                <label>Father's City</label>
+                                                <input type="text" class="form-control" name="fatherCity"
+                                                       value="{{old('fatherCity')}}" required>
+                                            </div>
+                                            <div class="form-group form-group-default required">
                                                 <label>Father's Phone Number</label>
                                                 <input type="number" class="form-control" name="fatherPhoneNo"
                                                        value="{{old('fatherPhoneNo')}}" required>
@@ -253,6 +263,11 @@
                                                 <label>Mother's Address</label>
                                                 <input type="text" class="form-control" name="motherAddress"
                                                        value="{{old('motherAddress')}}" required>
+                                            </div>
+                                            <div class="form-group form-group-default required">
+                                                <label>Mother's City</label>
+                                                <input type="text" class="form-control" name="motherCity"
+                                                       value="{{old('motherCity')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>Mother's Phone Number</label>
@@ -290,6 +305,11 @@
                                                        value="{{old('siblingAddress')}}">
                                             </div>
                                             <div class="form-group form-group-default">
+                                                <label>Sibling's City</label>
+                                                <input type="text" class="form-control" name="siblingCity"
+                                                       value="{{old('siblingCity')}}">
+                                            </div>
+                                            <div class="form-group form-group-default">
                                                 <label>Sibling's Phone Number</label>
                                                 <input type="number" class="form-control" name="siblingPhoneNo"
                                                        value="{{old('siblingPhoneNo')}}">
@@ -320,12 +340,6 @@
                                                        value="{{old('idCardNumber')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
-                                                {{--<form id="uploadIdCardForm" action="{{route('v1.recruitment.upload')}}"--}}
-                                                {{--method="post" enctype="multipart/form-data">--}}
-                                                {{--<input id="idCardPhoto" type="file" name="idCardPhoto"--}}
-                                                {{--value--}}
-                                                {{--required/>--}}
-                                                {{--</form>--}}
                                                 <label>ID Card Photo </label>
                                                 <input id="idCardPhoto"
                                                        type="file"
@@ -367,6 +381,11 @@
                                                 <input type="text" class="form-control" name="emergencyAddress"
                                                        value="{{old('emergencyAddress')}}" required>
                                             </div>
+                                            <div class="form-group form-group-default required">
+                                                <label>City</label>
+                                                <input type="text" class="form-control" name="emergencyCity"
+                                                       value="{{old('emergencyCity')}}" required>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-default required">
@@ -385,10 +404,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group form-group-default ">
+                                            <div class="form-group form-group-default  ">
                                                 <label>E-mail Address</label>
                                                 <input type="email" class="form-control" name="emergencyEmailAddress"
-                                                       value="{{old('emergencyEmailAddress')}}" required>
+                                                       value="{{old('emergencyEmailAddress')}}" >
                                             </div>
                                         </div>
                                         <br>

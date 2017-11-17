@@ -1,20 +1,9 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -59,17 +48,22 @@ Route::get('/', 'Client\Dashboard\ViewController@index');
 */
 
 Route::prefix('testing')->middleware('auth.admin')->group(function () {
-   Route::get('employment',function(){
-      $employment = \App\Employee\Models\Employment::find(1);
-      echo json_encode($employment->employee);
-   });
 
-   Route::get('upload',function(){
-       $datas = \Illuminate\Support\Facades\DB::table('test_upload')->select('*')->get();
-      return view('pages.testing.upload',compact('datas'));
-   })->name('form.upload');
+    Route::get('employment', function () {
+        $employment = \App\Employee\Models\Employment::find(1);
+        echo json_encode($employment->employee);
+    });
 
-   Route::post('upload','TestUploadController@upload')->name('post.upload');
+    Route::get('upload', function () {
+        $datas = \Illuminate\Support\Facades\DB::table('test_upload')->select('*')->get();
+        return view('pages.testing.upload', compact('datas'));
+    })->name('form.upload');
+
+    Route::post('upload', 'TestUploadController@upload')->name('post.upload');
+
+    Route::get('generateDate', function () {
+
+    });
 
 
 });

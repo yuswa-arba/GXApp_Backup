@@ -11,7 +11,7 @@
                     <div class="user-pic">
                         <img v-if="employee.employeePhoto"
                              alt="None"
-                             :src="`/images/${employee.employeePhoto}`"
+                             :src="`/images/employee/${employee.employeePhoto}`"
                              width="33" height="33"/>
 
                         <img v-else
