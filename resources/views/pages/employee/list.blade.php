@@ -13,7 +13,7 @@
 
 @section('content')
 
-    <div class="content" >
+    <div class="content">
         <!-- START JUMBOTRON -->
         <div class="jumbotron" data-pages="parallax">
             <div class=" container-fluid container-fixed-lg sm-p-l-0 sm-p-r-0">
@@ -29,29 +29,24 @@
         </div>
         <!-- END JUMBOTRON -->
         <!-- START CONTAINER FLUID -->
+        <div class="container-fluid container-fixed-lg">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="pull-right">
+                        <div class="col-xs-12">
+                            <input type="text" id="search-box" class="form-control pull-right"
+                                   placeholder="Search">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <div class="filter-container">
             <div id="vc-employee-list"></div>
-            {{--<div class="row" id="vc-employee-list">--}}
-                {{--@for($i=0;$i<15;$i++)--}}
-                    {{--<div class="col-lg-3 col-sm-6  d-flex flex-column">--}}
-                        {{--<!-- START ITEM -->--}}
-                        {{--<div class="card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75"--}}
-                             {{--data-social="item">--}}
-                            {{--<div class="card-header clearfix">--}}
-                                {{--<div class="user-pic">--}}
-                                    {{--<img alt="Avatar" width="33" height="33"--}}
-                                         {{--data-src-retina="{{asset('core/img/profiles/avatar_small2x.jpg')}}"--}}
-                                         {{--data-src="{{asset('core/img/profiles/avatar.jpg')}}"--}}
-                                         {{--src="{{asset('core/img/profiles/avatar_small2x.jpg')}}">--}}
-                                {{--</div>--}}
-                                {{--<h5>David Nester</h5>--}}
-                                {{--<h6>Shared a link on your wall</h6>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                        {{--<!-- END ITEM -->--}}
-                    {{--</div>--}}
-                {{--@endfor--}}
-            {{--</div>--}}
+        </div>
+
+
 
         <!-- END CONTAINER FLUID -->
     </div>

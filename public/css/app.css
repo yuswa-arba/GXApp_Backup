@@ -157,3 +157,9 @@
   font-weight: 400 !important;
 }
 
+.d-flex-not-important {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+

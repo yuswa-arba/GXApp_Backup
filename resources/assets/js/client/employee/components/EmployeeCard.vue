@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-lg-3 col-sm-6  d-flex flex-column"
+        <div class="col-lg-3 col-sm-6 d-flex-not-important flex-column filter-item"
              v-for="employee in employees">
             <!-- START ITEM -->
             <div class="card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75"
@@ -21,7 +21,7 @@
                         />
                     </div>
                     <h5>{{employee.givenName}} {{employee.surname}}</h5>
-                    <h6>{{employee.jobPosition}} ({{employee.division}})</h6>
+                    <h6>{{employee.jobPosition}}</h6>
                 </div>
             </div>
             <!-- END ITEM -->

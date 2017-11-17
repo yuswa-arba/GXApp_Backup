@@ -2079,6 +2079,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2095,7 +2102,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/' + this.$route.params.id).then(function (res) {
-            console.log(res);
             _this.detail = res.data.detail.data;
             _this.employment = res.data.detail.data.employment.data;
         });
@@ -19848,21 +19854,25 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-6" }, [
-      _c("div", { staticClass: "card card-default" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4" }, [
-              _c("img", {
-                attrs: {
-                  src: "/images/employee/" + _vm.detail.employeePhoto,
-                  alt: "No Image",
-                  width: "200px",
-                  height: "200px"
-                }
-              })
+              _c("div", {}, [
+                _c("img", {
+                  staticClass: "img-responsive",
+                  staticStyle: { width: "100%", height: "auto" },
+                  attrs: {
+                    src: "/images/employee/" + _vm.detail.employeePhoto,
+                    alt: "No Image"
+                  }
+                })
+              ])
             ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" }),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Surname/Given name")]),
@@ -19901,7 +19911,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card card-default" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
         _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
@@ -19935,21 +19945,25 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card card-default" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
         _vm._m(2),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
-              _c("img", {
-                attrs: {
-                  src: "/images/employee/" + _vm.detail.idCardPhoto,
-                  alt: "No Image",
-                  width: "200px",
-                  height: "120px"
-                }
-              })
+              _c("div", {}, [
+                _c("img", {
+                  staticClass: "img-responsive",
+                  staticStyle: { width: "100%", height: "auto" },
+                  attrs: {
+                    src: "/images/employee/" + _vm.detail.idCardPhoto,
+                    alt: "No Image"
+                  }
+                })
+              ])
             ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" }),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-8 employee-details" }, [
               _c("label", [_vm._v("ID Card Number")]),
@@ -19960,7 +19974,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card card-default" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
         _vm._m(3),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
@@ -20010,7 +20024,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-6" }, [
-      _c("div", { staticClass: "card card-default" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
         _vm._m(4),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
@@ -20040,7 +20054,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card card-default" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
         _vm._m(5),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
@@ -20156,7 +20170,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card card-default" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
         _vm._m(6),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
@@ -20214,7 +20228,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "card card-default" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
         _vm._m(7),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
@@ -20385,7 +20399,10 @@ var render = function() {
     _vm._l(_vm.employees, function(employee) {
       return _c(
         "div",
-        { staticClass: "col-lg-3 col-sm-6  d-flex flex-column" },
+        {
+          staticClass:
+            "col-lg-3 col-sm-6 d-flex-not-important flex-column filter-item"
+        },
         [
           _c(
             "div",
@@ -20427,14 +20444,7 @@ var render = function() {
                   )
                 ]),
                 _vm._v(" "),
-                _c("h6", [
-                  _vm._v(
-                    _vm._s(employee.jobPosition) +
-                      " (" +
-                      _vm._s(employee.division) +
-                      ")"
-                  )
-                ])
+                _c("h6", [_vm._v(_vm._s(employee.jobPosition))])
               ])
             ]
           )

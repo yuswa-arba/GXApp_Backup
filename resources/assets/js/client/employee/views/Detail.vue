@@ -14,7 +14,7 @@
         </div>
         <div class="col-lg-6">
 
-            <div class="card card-default">
+            <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">Personal Information</div>
 
@@ -22,9 +22,13 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-lg-4">
-                            <img :src="`/images/employee/${detail.employeePhoto}`"
-                                 alt="No Image" width="200px" height="200px">
+                            <div style="">
+                                <img :src="`/images/employee/${detail.employeePhoto}`"
+                                     alt="No Image" class="img-responsive" style="width:100%; height:auto;">
+                            </div>
+
                         </div>
+                        <div class="clearfix"></div>
                         <div class="col-lg-4 employee-details">
 
                             <label>Surname/Given name</label>
@@ -53,7 +57,7 @@
                 </div>
             </div>
 
-            <div class="card card-default">
+            <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">Contact Information</div>
 
@@ -86,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card card-default">
+            <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">ID Card Information</div>
 
@@ -95,10 +99,13 @@
                     <div class="row">
                         <div class="col-lg-4 employee-details">
 
-                            <img :src="`/images/employee/${detail.idCardPhoto}`"
-                                 alt="No Image" width="200px" height="120px">
+                            <div style="">
+                                <img :src="`/images/employee/${detail.idCardPhoto}`"
+                                     alt="No Image"  class="img-responsive" style="width:100%; height:auto;">
+                            </div>
 
                         </div>
+                        <div class="clearfix"></div>
                         <div class="col-lg-8 employee-details">
 
                             <label>ID Card Number</label>
@@ -110,7 +117,7 @@
                 </div>
             </div>
 
-            <div class="card card-default">
+            <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">Bank Information</div>
 
@@ -155,7 +162,7 @@
         </div>
         <div class="col-lg-6">
 
-            <div class="card card-default">
+            <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">Marriage</div>
 
@@ -184,7 +191,7 @@
             </div>
 
 
-            <div class="card card-default">
+            <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">Family</div>
 
@@ -280,7 +287,7 @@
                 </div>
             </div>
 
-            <div class="card card-default">
+            <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">Emergency Contact Information</div>
 
@@ -328,7 +335,7 @@
                 </div>
             </div>
 
-            <div class="card card-default">
+            <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">Previous Employment Information</div>
                 </div>
@@ -387,7 +394,6 @@
         created(){
             get(api_path() + 'employee/detail/' + this.$route.params.id)
                 .then((res) => {
-                    console.log(res)
                     this.detail = res.data.detail.data
                     this.employment = res.data.detail.data.employment.data
                 })
