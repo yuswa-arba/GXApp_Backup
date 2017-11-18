@@ -1852,14 +1852,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 $(document).ready(function () {
 
-    // on init
-
-    $('.datepicker').datepicker({ format: 'dd/mm/yyyy', todayHighlight: true });
-
-    $(function ($) {
-        $(".datepicker").mask("99/99/9999");
-    });
-
     // constants
     var employeeId = '';
     var personalInfoForm = $('#personalInformationForm');

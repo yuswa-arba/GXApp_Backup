@@ -19140,6 +19140,15 @@ $(document).ready(function () {
             }, 2000);
         }
     });
+
+    //Date picker
+    // on init
+
+    $('.datepicker').datepicker({ format: 'dd/mm/yyyy', todayHighlight: true });
+
+    $(function ($) {
+        $(".datepicker").mask("99/99/9999");
+    });
 });
 
 /***/ }),

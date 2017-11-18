@@ -48,11 +48,7 @@
   max-width: 1024px!important;
 }
 
-.text-alert{
-  color: #ea2c54;
-  font-size: 14px;
-  font-weight:bold;
-}
+
 
 /* Buttons */
 
@@ -168,4 +164,15 @@
 
 #search-box{
   height: 40px;
+}
+
+/* Text*/
+.text-green{
+  color: #00b282!important;
+}
+
+.text-alert{
+  color: #ea2c54;
+  font-size: 14px;
+  font-weight:bold;
 }

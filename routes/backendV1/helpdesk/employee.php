@@ -24,6 +24,15 @@ Route::prefix('v1/h')->group(function (){
         Route::get('detail/master/{id}','AjaxController@masterEmploymentDetail');
         Route::get('detail/employment/{employeeId}','AjaxController@employmentDetail');
         Route::get('detail/login/{employeeId}','AjaxController@loginDetail');
+
+        Route::get('edit/master/{id}','AjaxController@masterEmploymentEdit');
+        Route::post('edit/master','AjaxController@saveMasterEmploymentEdit');
+
+        Route::get('edit/employment/{employeeId}','AjaxController@employmentEdit');
+        Route::post('edit/employment','AjaxController@saveEmploymentEdit');
+
+        Route::get('edit/login/{employeeId}','AjaxController@loginEdit');
+        Route::post('edit/login','AjaxController@saveLoginEdit');
     });
 
 });

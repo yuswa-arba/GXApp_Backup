@@ -3,8 +3,11 @@
 
         <div class="col-lg-12 m-b-10 m-t-10">
 
-            <slot name="cancel-and-save-menu"></slot>
-
+            <slot name="cancel-menu"></slot>
+            <button class="btn btn-primary m-r-15 m-b-10 pull-left"
+                    @click="save()">
+                Save
+            </button>
         </div>
 
 

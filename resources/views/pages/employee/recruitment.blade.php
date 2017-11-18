@@ -2,21 +2,17 @@
 
 @push('child-styles')
 <!-- push needed plugins for this page-->
-<link href="{{mix('plugins/css/select2.min.css')}}" rel="stylesheet" type="text/css" media="screen"/>
 <link href="{{mix('plugins/css/switchery.min.css')}}" rel="stylesheet" type="text/css" media="screen"/>
-<link href="{{mix('plugins/css/datepicker3.css')}}" rel="stylesheet" type="text/css" media="screen"/>
+
 
 @endpush
 
 @push('child-scripts-plugins')
 <!-- push needed plugins for this page -->
-<
-<script src="{{mix('plugins/js/select2.full.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/autoNumeric.js')}}" type="text/javascript"></script>
-<script src="{{mix('plugins/js/jquery.inputmask.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.bootstrap.wizard.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.validate.min.js')}}" type="text/javascript"></script>
-<script src="{{mix('plugins/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
+
 
 @endpush
 

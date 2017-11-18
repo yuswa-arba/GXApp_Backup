@@ -28,13 +28,13 @@
             </div>
         </div>
         <!-- END JUMBOTRON -->
-        <!-- START CONTAINER FLUID -->
-        <div class="container-fluid container-fixed-lg">
-            <div class="row">
-                <div class="col-lg-12">
 
-                </div>
+        <div class="container-fluid container-fixed-lg">
+            <!-- Error Response -->
+            <div id="errors-container" class="alert alert-danger hide" role="alert">
+                <strong>Error: </strong> <span id="errors-value"></span>
             </div>
+            <!-- End of Error Response -->
         </div>
 
         <div class="filter-container">
@@ -42,8 +42,6 @@
         </div>
 
 
-
-        <!-- END CONTAINER FLUID -->
     </div>
     <!-- END PAGE CONTENT -->
 

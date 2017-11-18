@@ -32,14 +32,10 @@
                 </button>
             </div>
 
-            <div slot="cancel-and-save-menu">
+            <div slot="cancel-menu">
                 <button class="btn btn-outline-danger m-r-15 m-b-10 pull-left"
                         @click="cancel()"><i class="pg-close"></i>
                     Cancel
-                </button>
-                <button class="btn btn-primary m-r-15 m-b-10 pull-left"
-                        @click="save()">
-                    Save
                 </button>
             </div>
 
@@ -72,21 +68,6 @@
                         break;
                     case 'detailLogin':
                         this.$router.push({name: 'editLogin', params: {id: this.$route.params.id}})
-                        break;
-                    default:
-                        return null;
-                }
-            },
-            save(){
-                switch (this.$route.name) {
-                    case 'editMaster':
-                       //save
-                        break;
-                    case 'editEmployment':
-                       //save
-                        break;
-                    case 'editLogin':
-                        //save
                         break;
                     default:
                         return null;

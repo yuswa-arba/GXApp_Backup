@@ -3,8 +3,11 @@
 
         <div class="col-lg-12 m-b-10 m-t-10">
 
-            <slot name="cancel-and-save-menu"></slot>
-
+            <slot name="cancel-menu"></slot>
+            <button class="btn btn-primary m-r-15 m-b-10 pull-left"
+                    @click="save()">
+                Save
+            </button>
         </div>
 
 
@@ -13,7 +16,6 @@
             <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">Employee Profile</div>
-
                 </div>
                 <div class="card-block">
                     <div class="row">
@@ -47,37 +49,59 @@
                     <div class="row">
                         <div class="col-lg-3 employee-details">
                             <label>Job Position</label>
-                            <h5>{{detail.jobPosition}}</h5>
+                            <select class="form-control" v-model="form.jobPositionId">
+                                <option v-for="jobPosition in jobPositions" :value="jobPosition.id">
+                                    {{jobPosition.name}}
+                                </option>
+                            </select>
+
                         </div>
 
                         <div class="col-lg-3 employee-details">
+
                             <label>Division</label>
-                            <h5>{{detail.division}}</h5>
+                            <select class="form-control" v-model="form.divisionId">
+                                <option v-for="division in divisions" :value="division.id">
+                                    {{division.name}}
+                                </option>
+                            </select>
+
                         </div>
 
                         <div class="col-lg-3 employee-details">
                             <label>Branch Office</label>
-                            <h5>{{detail.branchOffice}}</h5>
+                            <select class="form-control" v-model="form.branchOfficeId">
+                                <option v-for="branchOffice in branchOffices" :value="branchOffice.id">
+                                    {{branchOffice.name}}
+                                </option>
+                            </select>
+
                         </div>
 
                         <div class="col-lg-3 employee-details">
                             <label>Recruitment Status</label>
-                            <h5>{{detail.recruitmentStatus}}</h5>
+                            <select class="form-control" v-model="form.recruitmentStatusId">
+                                <option v-for="recruitmentStatus in recruitmentStatuses"
+                                        :value="recruitmentStatus.id">
+                                    {{recruitmentStatus.name}}
+                                </option>
+                            </select>
                         </div>
 
                         <div class="col-lg-3 employee-details">
                             <label>Date of Entry</label>
-                            <h5>{{detail.dateOfEntry}}</h5>
+                            <input type="text" class="form-control" v-model="form.dateOfEntry" placeholder="dd/mm/yyyy">
                         </div>
 
                         <div class="col-lg-3 employee-details">
                             <label>Date of Start</label>
-                            <h5>{{detail.dateOfStart}}</h5>
+                            <input type="text" class="form-control" v-model="form.dateOfStart" placeholder="dd/mm/yyyy">
                         </div>
 
                         <div class="col-lg-3 employee-details">
                             <label>Date of Resignation</label>
-                            <h5>{{detail.dateOfResignation}}</h5>
+                            <input type="text" class="form-control" v-model="form.dateOfResignation"
+                                   placeholder="dd/mm/yyyy">
                         </div>
 
                     </div>
@@ -94,14 +118,86 @@
     export default{
         data(){
             return {
-                detail: []
+                detail: [],
+                form: [],
+
+                //form components
+                jobPositions: [],
+                divisions: [],
+                branchOffices: [],
+                recruitmentStatuses: []
             }
         },
         created(){
-            get(api_path() + 'employee/detail/employment/' + this.$route.params.id)
+            get(api_path() + 'employee/edit/employment/' + this.$route.params.id)
                 .then((res) => {
-                this.detail = res.data.detail.data
-            })
+                    this.detail = res.data.detail.data
+
+                    //current value
+                    this.form.employeeId = this.$route.params.id
+                    this.form.jobPositionId = this.detail.jobPositionId
+                    this.form.divisionId = this.detail.divisionId
+                    this.form.branchOfficeId = this.detail.branchOfficeId
+                    this.form.recruitmentStatusId = this.detail.recruitmentStatusId
+                    this.form.dateOfEntry = this.detail.dateOfEntry
+                    this.form.dateOfStart = this.detail.dateOfStart
+                    this.form.dateOfResignation = this.detail.dateOfResignation
+
+                    //form components
+                    this.jobPositions = this.detail.formComponents.jobPositions
+                    this.divisions = this.detail.formComponents.divisions
+                    this.branchOffices = this.detail.formComponents.branchOffices
+                    this.recruitmentStatuses = this.detail.formComponents.recruitmentStatuses
+                })
+        },
+        methods: {
+            save(){
+                post(api_path() + 'employee/edit/employment', this.form)
+                    .then((res) => {
+                        if (!res.data.isFailed && res.data.employeeId) {
+
+                            /* Show success notification*/
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            _.delay(function(){
+                                this.$router.push({name: 'detailEmployment', params: {id: this.$route.params.id}})
+                            },2500)
+                        }
+                        else {
+                            /* Show error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 0,
+                                type: 'danger'
+                            }).show();
+
+                        }
+                    })
+                    .catch((err) => {
+                        let errorsResponse = err.message + '</br>';
+
+                        _.forEach(err.response.data.errors, function (value, key) {
+                            errorsResponse += value[0] + ' ';
+                        })
+
+                        $('#errors-container').removeClass('hide').addClass('show')
+                        $('#errors-value').html(errorsResponse)
+                        errorsResponse = '' // reset value
+                        /* Scroll to top*/
+                        $('html, body').animate({
+                            scrollTop: $(".jumbotron").offset().top
+                        }, 500);
+
+                    })
+            }
         }
     }
 </script>

@@ -77,4 +77,13 @@ $(document).ready(function () {
         }
     });
 
+    //Date picker
+    // on init
+
+    $('.datepicker').datepicker({format: 'dd/mm/yyyy', todayHighlight: true});
+
+    $(function ($) {
+        $(".datepicker").mask("99/99/9999");
+    });
+
 });

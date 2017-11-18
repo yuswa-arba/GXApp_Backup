@@ -3,6 +3,8 @@
 <link href="{{mix('plugins/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" />  <!--bootstrap -->
 <link href="{{asset('plugins/font-awesome/css/font-awesome.css')}}" rel="stylesheet" type="text/css" /> <!--font awesome-->
 <link href="{{mix('plugins/css/jquery.scrollbar.css')}}" rel="stylesheet" type="text/css" media="screen" />
+<link href="{{mix('plugins/css/select2.min.css')}}" rel="stylesheet" type="text/css" media="screen"/>
+<link href="{{mix('plugins/css/datepicker3.css')}}" rel="stylesheet" type="text/css" media="screen"/>
 
 @stack('child-styles')
 

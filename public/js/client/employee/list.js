@@ -1665,10 +1665,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     methods: {
@@ -1694,21 +1690,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     break;
                 case 'detailLogin':
                     this.$router.push({ name: 'editLogin', params: { id: this.$route.params.id } });
-                    break;
-                default:
-                    return null;
-            }
-        },
-        save: function save() {
-            switch (this.$route.name) {
-                case 'editMaster':
-                    //save
-                    break;
-                case 'editEmployment':
-                    //save
-                    break;
-                case 'editLogin':
-                    //save
                     break;
                 default:
                     return null;
@@ -2536,21 +2517,113 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            detail: []
+            detail: [],
+            form: [],
+
+            //form components
+            jobPositions: [],
+            divisions: [],
+            branchOffices: [],
+            recruitmentStatuses: []
         };
     },
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/employment/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/employment/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
+
+            //current value
+            _this.form.employeeId = _this.$route.params.id;
+            _this.form.jobPositionId = _this.detail.jobPositionId;
+            _this.form.divisionId = _this.detail.divisionId;
+            _this.form.branchOfficeId = _this.detail.branchOfficeId;
+            _this.form.recruitmentStatusId = _this.detail.recruitmentStatusId;
+            _this.form.dateOfEntry = _this.detail.dateOfEntry;
+            _this.form.dateOfStart = _this.detail.dateOfStart;
+            _this.form.dateOfResignation = _this.detail.dateOfResignation;
+
+            //form components
+            _this.jobPositions = _this.detail.formComponents.jobPositions;
+            _this.divisions = _this.detail.formComponents.divisions;
+            _this.branchOffices = _this.detail.formComponents.branchOffices;
+            _this.recruitmentStatuses = _this.detail.formComponents.recruitmentStatuses;
         });
+    },
+
+    methods: {
+        save: function save() {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/employment', this.form).then(function (res) {
+                if (!res.data.isFailed && res.data.employeeId) {
+
+                    /* Show success notification*/
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    _.delay(function () {
+                        this.$router.push({ name: 'detailEmployment', params: { id: this.$route.params.id } });
+                    }, 2500);
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                var errorsResponse = err.message + '</br>';
+
+                _.forEach(err.response.data.errors, function (value, key) {
+                    errorsResponse += value[0] + ' ';
+                });
+
+                $('#errors-container').removeClass('hide').addClass('show');
+                $('#errors-value').html(errorsResponse);
+                errorsResponse = ''; // reset value
+                /* Scroll to top*/
+                $('html, body').animate({
+                    scrollTop: $(".jumbotron").offset().top
+                }, 500);
+            });
+        }
     }
 });
 
@@ -2563,6 +2636,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
 //
 //
 //
@@ -2665,6 +2741,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
 //
 //
 //
@@ -21448,7 +21528,22 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("cancel-and-save-menu")],
+      [
+        _vm._t("cancel-menu"),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary m-r-15 m-b-10 pull-left",
+            on: {
+              click: function($event) {
+                _vm.save()
+              }
+            }
+          },
+          [_vm._v("\n            Save\n        ")]
+        )
+      ],
       2
     ),
     _vm._v(" "),
@@ -22018,7 +22113,22 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("cancel-and-save-menu")],
+      [
+        _vm._t("cancel-menu"),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary m-r-15 m-b-10 pull-left",
+            on: {
+              click: function($event) {
+                _vm.save()
+              }
+            }
+          },
+          [_vm._v("\n            Save\n        ")]
+        )
+      ],
       2
     ),
     _vm._v(" "),
@@ -22065,43 +22175,275 @@ var render = function() {
             _c("div", { staticClass: "col-lg-3 employee-details" }, [
               _c("label", [_vm._v("Job Position")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.jobPosition))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.jobPositionId,
+                      expression: "form.jobPositionId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "jobPositionId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.jobPositions, function(jobPosition) {
+                  return _c("option", { domProps: { value: jobPosition.id } }, [
+                    _vm._v(
+                      "\n                                " +
+                        _vm._s(jobPosition.name) +
+                        "\n                            "
+                    )
+                  ])
+                })
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3 employee-details" }, [
               _c("label", [_vm._v("Division")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.division))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.divisionId,
+                      expression: "form.divisionId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "divisionId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.divisions, function(division) {
+                  return _c("option", { domProps: { value: division.id } }, [
+                    _vm._v(
+                      "\n                                " +
+                        _vm._s(division.name) +
+                        "\n                            "
+                    )
+                  ])
+                })
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3 employee-details" }, [
               _c("label", [_vm._v("Branch Office")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.branchOffice))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.branchOfficeId,
+                      expression: "form.branchOfficeId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "branchOfficeId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.branchOffices, function(branchOffice) {
+                  return _c(
+                    "option",
+                    { domProps: { value: branchOffice.id } },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(branchOffice.name) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                })
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3 employee-details" }, [
               _c("label", [_vm._v("Recruitment Status")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.recruitmentStatus))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.recruitmentStatusId,
+                      expression: "form.recruitmentStatusId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "recruitmentStatusId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.recruitmentStatuses, function(recruitmentStatus) {
+                  return _c(
+                    "option",
+                    { domProps: { value: recruitmentStatus.id } },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(recruitmentStatus.name) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                })
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3 employee-details" }, [
               _c("label", [_vm._v("Date of Entry")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.dateOfEntry))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.dateOfEntry,
+                    expression: "form.dateOfEntry"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "dd/mm/yyyy" },
+                domProps: { value: _vm.form.dateOfEntry },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "dateOfEntry", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3 employee-details" }, [
               _c("label", [_vm._v("Date of Start")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.dateOfStart))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.dateOfStart,
+                    expression: "form.dateOfStart"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "dd/mm/yyyy" },
+                domProps: { value: _vm.form.dateOfStart },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "dateOfStart", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3 employee-details" }, [
               _c("label", [_vm._v("Date of Resignation")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.dateOfResignation))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.dateOfResignation,
+                    expression: "form.dateOfResignation"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "dd/mm/yyyy" },
+                domProps: { value: _vm.form.dateOfResignation },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "dateOfResignation", $event.target.value)
+                  }
+                }
+              })
             ])
           ])
         ])
@@ -22228,7 +22570,22 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("cancel-and-save-menu")],
+      [
+        _vm._t("cancel-menu"),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary m-r-15 m-b-10 pull-left",
+            on: {
+              click: function($event) {
+                _vm.save()
+              }
+            }
+          },
+          [_vm._v("\n            Save\n        ")]
+        )
+      ],
       2
     ),
     _vm._v(" "),
@@ -22448,43 +22805,23 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            attrs: { slot: "cancel-and-save-menu" },
-            slot: "cancel-and-save-menu"
-          },
-          [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-danger m-r-15 m-b-10 pull-left",
-                on: {
-                  click: function($event) {
-                    _vm.cancel()
-                  }
+        _c("div", { attrs: { slot: "cancel-menu" }, slot: "cancel-menu" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-danger m-r-15 m-b-10 pull-left",
+              on: {
+                click: function($event) {
+                  _vm.cancel()
                 }
-              },
-              [
-                _c("i", { staticClass: "pg-close" }),
-                _vm._v("\n                Cancel\n            ")
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary m-r-15 m-b-10 pull-left",
-                on: {
-                  click: function($event) {
-                    _vm.save()
-                  }
-                }
-              },
-              [_vm._v("\n                Save\n            ")]
-            )
-          ]
-        )
+              }
+            },
+            [
+              _c("i", { staticClass: "pg-close" }),
+              _vm._v("\n                Cancel\n            ")
+            ]
+          )
+        ])
       ])
     ],
     1

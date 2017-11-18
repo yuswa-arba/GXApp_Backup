@@ -15,6 +15,9 @@
 <script src="{{mix('plugins/js/jquery.scrollbar.min.js')}}"></script>
 <script src="{{mix('plugins/js/classie.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.sieve.min.js')}}" type="text/javascript"></script>
+<script src="{{mix('plugins/js/select2.full.min.js')}}" type="text/javascript"></script>
+<script src="{{mix('plugins/js/jquery.inputmask.min.js')}}" type="text/javascript"></script>
+<script src="{{mix('plugins/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 
 
 @stack('child-scripts-plugins')

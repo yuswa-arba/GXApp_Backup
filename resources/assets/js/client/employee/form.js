@@ -8,13 +8,7 @@ import {objectToFormData} from '../helpers/utils'
 
 $(document).ready(function () {
 
-    // on init
 
-    $('.datepicker').datepicker({format: 'dd/mm/yyyy', todayHighlight: true});
-
-    $(function ($) {
-        $(".datepicker").mask("99/99/9999");
-    });
 
     // constants
     let employeeId = '';
