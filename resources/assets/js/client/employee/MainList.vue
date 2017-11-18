@@ -26,6 +26,21 @@
 
                     </div>
                 </div>
+                <button class="btn btn-danger m-b-10 pull-right"
+                        @click="edit()">
+                    Edit
+                </button>
+            </div>
+
+            <div slot="cancel-and-save-menu">
+                <button class="btn btn-outline-danger m-r-15 m-b-10 pull-left"
+                        @click="cancel()"><i class="pg-close"></i>
+                    Cancel
+                </button>
+                <button class="btn btn-primary m-r-15 m-b-10 pull-left"
+                        @click="save()">
+                    Save
+                </button>
             </div>
 
         </router-view>
@@ -46,6 +61,51 @@
             },
             goBack(){
                 this.$router.push('/')
+            },
+            edit(){
+                switch (this.$route.name) {
+                    case 'detailMaster':
+                        this.$router.push({name: 'editMaster', params: {id: this.$route.params.id}})
+                        break;
+                    case 'detailEmployment':
+                        this.$router.push({name: 'editEmployment', params: {id: this.$route.params.id}})
+                        break;
+                    case 'detailLogin':
+                        this.$router.push({name: 'editLogin', params: {id: this.$route.params.id}})
+                        break;
+                    default:
+                        return null;
+                }
+            },
+            save(){
+                switch (this.$route.name) {
+                    case 'editMaster':
+                       //save
+                        break;
+                    case 'editEmployment':
+                       //save
+                        break;
+                    case 'editLogin':
+                        //save
+                        break;
+                    default:
+                        return null;
+                }
+            },
+            cancel(){
+                switch (this.$route.name) {
+                    case 'editMaster':
+                        this.viewMasterDetail()
+                        break;
+                    case 'editEmployment':
+                        this.viewEmploymentDetail()
+                        break;
+                    case 'editLogin':
+                        this.viewLoginDetail()
+                        break;
+                    default:
+                        return null;
+                }
             }
 
         },

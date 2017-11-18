@@ -85,9 +85,8 @@
         created(){
             get(api_path() + 'employee/detail/login/' + this.$route.params.id)
                 .then((res) => {
-                console.log(res)
-            this.detail = res.data.detail.data
-        })
+                    this.detail = res.data.detail.data
+                })
         }
     }
 </script>

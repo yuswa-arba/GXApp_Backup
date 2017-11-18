@@ -3,7 +3,7 @@
 
         <div class="col-lg-12 m-b-10 m-t-10">
 
-            <slot name="go-back-and-view-menu"></slot>
+            <slot name="cancel-and-save-menu"></slot>
 
         </div>
 

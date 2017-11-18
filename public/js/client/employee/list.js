@@ -1654,6 +1654,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     methods: {
@@ -1668,6 +1683,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         goBack: function goBack() {
             this.$router.push('/');
+        },
+        edit: function edit() {
+            switch (this.$route.name) {
+                case 'detailMaster':
+                    this.$router.push({ name: 'editMaster', params: { id: this.$route.params.id } });
+                    break;
+                case 'detailEmployment':
+                    this.$router.push({ name: 'editEmployment', params: { id: this.$route.params.id } });
+                    break;
+                case 'detailLogin':
+                    this.$router.push({ name: 'editLogin', params: { id: this.$route.params.id } });
+                    break;
+                default:
+                    return null;
+            }
+        },
+        save: function save() {
+            switch (this.$route.name) {
+                case 'editMaster':
+                    //save
+                    break;
+                case 'editEmployment':
+                    //save
+                    break;
+                case 'editLogin':
+                    //save
+                    break;
+                default:
+                    return null;
+            }
+        },
+        cancel: function cancel() {
+            switch (this.$route.name) {
+                case 'editMaster':
+                    this.viewMasterDetail();
+                    break;
+                case 'editEmployment':
+                    this.viewEmploymentDetail();
+                    break;
+                case 'editLogin':
+                    this.viewLoginDetail();
+                    break;
+                default:
+                    return null;
+            }
         }
     }
 });
@@ -1850,7 +1910,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/employment/' + this.$route.params.id).then(function (res) {
-            console.log(res);
             _this.detail = res.data.detail.data;
         });
     }
@@ -1953,7 +2012,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/login/' + this.$route.params.id).then(function (res) {
-            console.log(res);
             _this.detail = res.data.detail.data;
         });
     }
@@ -2374,7 +2432,645 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/master/' + this.$route.params.id).then(function (res) {
-            console.log(res);
+            _this.detail = res.data.detail.data;
+        });
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/EditEmployment.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            detail: []
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/employment/' + this.$route.params.id).then(function (res) {
+            _this.detail = res.data.detail.data;
+        });
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/EditLogin.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            detail: []
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/login/' + this.$route.params.id).then(function (res) {
+            _this.detail = res.data.detail.data;
+        });
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/EditMaster.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            detail: []
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/master/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
     }
@@ -20741,6 +21437,555 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-22ae0e9c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/EditMaster.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row row-same-height" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 m-t-10" },
+      [_vm._t("cancel-and-save-menu")],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee ID")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.$route.params.id))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee No")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.employeeNo))
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", {}, [
+                _c("img", {
+                  staticClass: "img-responsive",
+                  staticStyle: { width: "100%", height: "auto" },
+                  attrs: {
+                    src: "/images/employee/" + _vm.detail.employeePhoto,
+                    alt: "No Image"
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Surname/Given name")]),
+              _vm._v(" "),
+              _c("h5", [
+                _vm._v(
+                  _vm._s(_vm.detail.surname) +
+                    "/" +
+                    _vm._s(_vm.detail.givenName)
+                )
+              ]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Birthday")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.birthDate))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Gender")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.gender))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Religion")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.gender))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Hometown")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.hometown))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Education level")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.educationLevel))])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.address))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.city))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.phoneNo))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("E-mail address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.email))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Alt. E-mail address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.altEmail))]),
+              _vm._v(" "),
+              !_vm.detail.altEmail ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("div", {}, [
+                _c("img", {
+                  staticClass: "img-responsive",
+                  staticStyle: { width: "100%", height: "auto" },
+                  attrs: {
+                    src: "/images/employee/" + _vm.detail.idCardPhoto,
+                    alt: "No Image"
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-8 employee-details" }, [
+              _c("label", [_vm._v("ID Card Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.idCardNumber))])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(3),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bank))]),
+              _vm._v(" "),
+              !_vm.detail.bank ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank Branch")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bankBranch))]),
+              _vm._v(" "),
+              !_vm.detail.bankBranch ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bankCity))]),
+              _vm._v(" "),
+              !_vm.detail.bankCity ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank Account Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bankHolderName))]),
+              _vm._v(" "),
+              !_vm.detail.bankHolderName ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Bank Account Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.bankAccNo))]),
+              _vm._v(" "),
+              !_vm.detail.bankAccNo ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Marital Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.maritalStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Spouse's Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.spousesName))]),
+              _vm._v(" "),
+              !_vm.detail.spousesName ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Number of children")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.totalChildren))]),
+              _vm._v(" "),
+              !_vm.detail.totalChildren ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(5),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Father's Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherName))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Father's Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherAddress))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Father's City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherCity))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Father's Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherPhoneNo))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Father's Marital Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherMaritalStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Mother's Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherName))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Mother's Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherAddress))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Mother's City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherCity))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Mother's Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherPhoneNo))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Mother's Marital Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.motherMaritalStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Number of Siblings")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.numberOfSiblings))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Sibling's Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingName))]),
+              _vm._v(" "),
+              !_vm.detail.siblingName ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Sibling's Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingAddress))]),
+              _vm._v(" "),
+              !_vm.detail.siblingAddress ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Sibling's City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingCity))]),
+              _vm._v(" "),
+              !_vm.detail.siblingCity ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Sibling's Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingPhoneNo))]),
+              _vm._v(" "),
+              !_vm.detail.siblingPhoneNo ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-8 employee-details" }, [
+              _c("label", [_vm._v("Sibling's Marital Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingMaritalStatus))]),
+              _vm._v(" "),
+              !_vm.detail.siblingMaritalStatus
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(6),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Contact Person Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyContact))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Relationship")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyRelationship))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyAddress))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("City")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyCity))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyPhoneNo))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Alt Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyAltPhoneNo))]),
+              _vm._v(" "),
+              !_vm.detail.emergencyAltPhoneNo
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Email")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyEmailAddress))]),
+              _vm._v(" "),
+              !_vm.detail.emergencyEmailAddress
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(7),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Company Name")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevCompanyName))]),
+              _vm._v(" "),
+              !_vm.detail.prevCompanyName ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Company Address")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevCompanyAddress))]),
+              _vm._v(" "),
+              !_vm.detail.prevCompanyAddress
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Company Phone Number")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevCompanyPhoneNo))]),
+              _vm._v(" "),
+              !_vm.detail.prevCompanyPhoneNo
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Position")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevPosition))]),
+              _vm._v(" "),
+              !_vm.detail.prevPosition ? _c("h5", [_vm._v("-")]) : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Length of Employment")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.prevLengthEmployment))]),
+              _vm._v(" "),
+              !_vm.detail.prevLengthEmployment
+                ? _c("h5", [_vm._v("-")])
+                : _vm._e()
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Personal Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Contact Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("ID Card Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Bank Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Marriage")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Family")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [
+        _vm._v("Emergency Contact Information")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [
+        _vm._v("Previous Employment Information")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-22ae0e9c", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-24df7a72\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20757,6 +22002,137 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-24df7a72", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3542dbb4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/EditEmployment.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row row-same-height" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 m-t-10" },
+      [_vm._t("cancel-and-save-menu")],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee ID")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.employeeId))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee No")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.employeeNo))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.employeeName))
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+              _c("label", [_vm._v("Job Position")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.jobPosition))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+              _c("label", [_vm._v("Division")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.division))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+              _c("label", [_vm._v("Branch Office")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.branchOffice))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+              _c("label", [_vm._v("Recruitment Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.recruitmentStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+              _c("label", [_vm._v("Date of Entry")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.dateOfEntry))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+              _c("label", [_vm._v("Date of Start")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.dateOfStart))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+              _c("label", [_vm._v("Date of Resignation")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.dateOfResignation))])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Employee Profile")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Employment Details")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3542dbb4", module.exports)
   }
 }
 
@@ -20836,6 +22212,119 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-3b72b978", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-43a8b69f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/EditLogin.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row row-same-height" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 m-t-10" },
+      [_vm._t("cancel-and-save-menu")],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee ID")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.employeeId))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee No")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.employeeNo))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Name")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.employeeName))
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Username / E-mail")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.email))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Access Status")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.accessStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Allow Super Admin")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.allowSuperAdminAccess))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Allow Admin")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.allowAdminAccess))])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Employee Profile")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Login Details")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-43a8b69f", module.exports)
   }
 }
 
@@ -20942,7 +22431,58 @@ var render = function() {
                   )
                 ])
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger m-b-10 pull-right",
+                on: {
+                  click: function($event) {
+                    _vm.edit()
+                  }
+                }
+              },
+              [_vm._v("\n                Edit\n            ")]
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            attrs: { slot: "cancel-and-save-menu" },
+            slot: "cancel-and-save-menu"
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-danger m-r-15 m-b-10 pull-left",
+                on: {
+                  click: function($event) {
+                    _vm.cancel()
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "pg-close" }),
+                _vm._v("\n                Cancel\n            ")
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary m-r-15 m-b-10 pull-left",
+                on: {
+                  click: function($event) {
+                    _vm.save()
+                  }
+                }
+              },
+              [_vm._v("\n                Save\n            ")]
+            )
           ]
         )
       ])
@@ -34618,6 +36158,12 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_DetailEmployment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_DetailEmployment_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_DetailLogin_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/DetailLogin.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_DetailLogin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__views_DetailLogin_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_EditMaster_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/EditMaster.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_EditMaster_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__views_EditMaster_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__views_EditEmployment_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/EditEmployment.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__views_EditEmployment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__views_EditEmployment_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__views_EditLogin_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/EditLogin.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__views_EditLogin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__views_EditLogin_vue__);
 /**
  * Created by kevinpurwono on 9/11/17.
  */
@@ -34629,10 +36175,14 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 
 
+
+
+
+
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]);
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_Index_vue___default.a }, { path: 'detail/:id/master', component: __WEBPACK_IMPORTED_MODULE_3__views_DetailMaster_vue___default.a, name: 'detailMaster' }, { path: 'detail/:id/employment', component: __WEBPACK_IMPORTED_MODULE_4__views_DetailEmployment_vue___default.a, name: 'detailEmployment' }, { path: 'detail/:id/login', component: __WEBPACK_IMPORTED_MODULE_5__views_DetailLogin_vue___default.a, name: 'detailLogin' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_Index_vue___default.a }, { path: 'detail/:id/master', component: __WEBPACK_IMPORTED_MODULE_3__views_DetailMaster_vue___default.a, name: 'detailMaster' }, { path: 'detail/:id/employment', component: __WEBPACK_IMPORTED_MODULE_4__views_DetailEmployment_vue___default.a, name: 'detailEmployment' }, { path: 'detail/:id/login', component: __WEBPACK_IMPORTED_MODULE_5__views_DetailLogin_vue___default.a, name: 'detailLogin' }, { path: 'detail/:id/master/edit', component: __WEBPACK_IMPORTED_MODULE_6__views_EditMaster_vue___default.a, name: 'editMaster' }, { path: 'detail/:id/employment/edit', component: __WEBPACK_IMPORTED_MODULE_7__views_EditEmployment_vue___default.a, name: 'editEmployment' }, { path: 'detail/:id/login/edit', component: __WEBPACK_IMPORTED_MODULE_8__views_EditLogin_vue___default.a, name: 'editLogin' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -34775,6 +36325,153 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-17626e23", Component.options)
   } else {
     hotAPI.reload("data-v-17626e23", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/views/EditEmployment.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/EditEmployment.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3542dbb4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/EditEmployment.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/employee/views/EditEmployment.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3542dbb4", Component.options)
+  } else {
+    hotAPI.reload("data-v-3542dbb4", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/views/EditLogin.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/EditLogin.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-43a8b69f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/EditLogin.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/employee/views/EditLogin.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-43a8b69f", Component.options)
+  } else {
+    hotAPI.reload("data-v-43a8b69f", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/views/EditMaster.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/EditMaster.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-22ae0e9c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/EditMaster.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/employee/views/EditMaster.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-22ae0e9c", Component.options)
+  } else {
+    hotAPI.reload("data-v-22ae0e9c", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
