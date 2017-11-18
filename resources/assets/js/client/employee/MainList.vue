@@ -44,7 +44,16 @@
     </div>
 </template>
 <script type="text/javascript">
+    import {get, post} from '../helpers/api'
+    import {api_path} from '../helpers/const'
     export default{
+        created(){
+            let self = this;
+
+            this.$bus.$on('save:employment_detail', function (form) {
+                self.save(form, "employment")
+            })
+        },
         methods: {
             viewMasterDetail(){
                 this.$router.push({name: 'detailMaster', params: {id: this.$route.params.id}})
@@ -73,6 +82,19 @@
                         return null;
                 }
             },
+            save(form, type){
+                switch (type) {
+                    case 'master':
+                        break;
+                    case 'employment':
+                        this.saveEmployment(form)
+                        break;
+                    case 'login':
+                        break;
+                    default:
+                        return null;
+                }
+            },
             cancel(){
                 switch (this.$route.name) {
                     case 'editMaster':
@@ -87,6 +109,54 @@
                     default:
                         return null;
                 }
+            },
+            saveEmployment(form){
+                let self = this;
+                post(api_path() + 'employee/edit/employment', form)
+                    .then((res) => {
+                        if (!res.data.isFailed) {
+
+                            /* Show success notification*/
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            //redirect
+                            self.$router.push({name: 'detailEmployment', params: {id: self.$route.params.id}})
+
+                        }
+                        else {
+                            /* Show error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 0,
+                                type: 'danger'
+                            }).show();
+
+                        }
+                    })
+                    .catch((err) => {
+                        let errorsResponse = err.message + '</br>';
+
+                        _.forEach(err.response.data.errors, function (value, key) {
+                            errorsResponse += value[0] + ' ';
+                        })
+
+                        $('#errors-container').removeClass('hide').addClass('show')
+                        $('#errors-value').html(errorsResponse)
+                        errorsResponse = '' // reset value
+                        /* Scroll to top*/
+                        $('html, body').animate({
+                            scrollTop: $(".jumbotron").offset().top
+                        }, 500);
+
+                    })
             }
 
         },

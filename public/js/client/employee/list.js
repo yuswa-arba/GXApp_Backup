@@ -1620,6 +1620,8 @@ module.exports = {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 //
 //
 //
@@ -1666,7 +1668,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {
+        var self = this;
+
+        this.$bus.$on('save:employment_detail', function (form) {
+            self.save(form, "employment");
+        });
+    },
+
     methods: {
         viewMasterDetail: function viewMasterDetail() {
             this.$router.push({ name: 'detailMaster', params: { id: this.$route.params.id } });
@@ -1695,6 +1707,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return null;
             }
         },
+        save: function save(form, type) {
+            switch (type) {
+                case 'master':
+                    break;
+                case 'employment':
+                    this.saveEmployment(form);
+                    break;
+                case 'login':
+                    break;
+                default:
+                    return null;
+            }
+        },
         cancel: function cancel() {
             switch (this.$route.name) {
                 case 'editMaster':
@@ -1709,6 +1734,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 default:
                     return null;
             }
+        },
+        saveEmployment: function saveEmployment(form) {
+            var self = this;
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/employment', form).then(function (res) {
+                if (!res.data.isFailed) {
+
+                    /* Show success notification*/
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    //redirect
+                    self.$router.push({ name: 'detailEmployment', params: { id: self.$route.params.id } });
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                var errorsResponse = err.message + '</br>';
+
+                _.forEach(err.response.data.errors, function (value, key) {
+                    errorsResponse += value[0] + ' ';
+                });
+
+                $('#errors-container').removeClass('hide').addClass('show');
+                $('#errors-value').html(errorsResponse);
+                errorsResponse = ''; // reset value
+                /* Scroll to top*/
+                $('html, body').animate({
+                    scrollTop: $(".jumbotron").offset().top
+                }, 500);
+            });
         }
     }
 });
@@ -2548,7 +2615,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             detail: [],
-            form: [],
+            form: {},
 
             //form components
             jobPositions: [],
@@ -2583,46 +2650,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         save: function save() {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/employment', this.form).then(function (res) {
-                if (!res.data.isFailed && res.data.employeeId) {
-
-                    /* Show success notification*/
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: res.data.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'info'
-                    }).show();
-
-                    _.delay(function () {
-                        this.$router.push({ name: 'detailEmployment', params: { id: this.$route.params.id } });
-                    }, 2500);
-                } else {
-                    /* Show error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: res.data.message,
-                        position: 'top-right',
-                        timeout: 0,
-                        type: 'danger'
-                    }).show();
-                }
-            }).catch(function (err) {
-                var errorsResponse = err.message + '</br>';
-
-                _.forEach(err.response.data.errors, function (value, key) {
-                    errorsResponse += value[0] + ' ';
-                });
-
-                $('#errors-container').removeClass('hide').addClass('show');
-                $('#errors-value').html(errorsResponse);
-                errorsResponse = ''; // reset value
-                /* Scroll to top*/
-                $('html, body').animate({
-                    scrollTop: $(".jumbotron").offset().top
-                }, 500);
-            });
+            this.$bus.$emit('save:employment_detail', this.form);
         }
     }
 });
