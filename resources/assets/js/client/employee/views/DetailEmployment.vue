@@ -45,37 +45,37 @@
                 </div>
                 <div class="card-block">
                     <div class="row">
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Job Position</label>
                             <h5>{{detail.jobPosition}}</h5>
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Division</label>
                             <h5>{{detail.division}}</h5>
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Branch Office</label>
                             <h5>{{detail.branchOffice}}</h5>
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Recruitment Status</label>
                             <h5>{{detail.recruitmentStatus}}</h5>
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Date of Entry</label>
                             <h5>{{detail.dateOfEntry}}</h5>
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Date of Start</label>
                             <h5>{{detail.dateOfStart}}</h5>
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Date of Resignation</label>
                             <h5>{{detail.dateOfResignation}}</h5>
                         </div>

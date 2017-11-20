@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-lg-12 employee-details">
                             <label>Employee No</label>
-                            <p class="text-primary">{{detail.employeeNo}}</p>
+                            <p class="text-primary">{{form.employeeNo}}</p>
                         </div>
 
                     </div>
@@ -39,7 +39,7 @@
                     <div class="row">
                         <div class="col-lg-4">
                             <div style="">
-                                <img :src="`/images/employee/${detail.employeePhoto}`"
+                                <img :src="`/images/employee/${form.employeePhoto}`"
                                      alt="No Image" class="img-responsive" style="width:100%; height:auto;">
                             </div>
 
@@ -48,25 +48,35 @@
                         <div class="col-lg-4 employee-details">
 
                             <label>Surname/Given name</label>
-                            <h5>{{detail.surname}}/{{detail.givenName}}</h5>
+                            <h5>{{form.surname}}/{{form.givenName}}</h5>
 
                             <label>Birthday</label>
-                            <h5>{{detail.birthDate}}</h5>
+                            <h5>{{form.birthDate}}</h5>
 
                             <label>Gender</label>
-                            <h5>{{detail.gender}}</h5>
+                            <h5>{{form.gender}}</h5>
 
 
                         </div>
                         <div class="col-lg-4 employee-details">
                             <label>Religion</label>
-                            <h5>{{detail.gender}}</h5>
+                            <select class="form-control" v-model="form.religionId">
+                                <option v-for="religion in religions"
+                                        :value="religion.id">
+                                    {{religion.name}}
+                                </option>
+                            </select>
 
                             <label>Hometown</label>
-                            <h5>{{detail.hometown}}</h5>
+                            <h5>{{form.hometown}}</h5>
 
                             <label>Education level</label>
-                            <h5>{{detail.educationLevel}}</h5>
+                            <select class="form-control" v-model="form.educationLevelId">
+                                <option v-for="educationLevel in educationLevels"
+                                        :value="educationLevel.id">
+                                    {{educationLevel.name}}
+                                </option>
+                            </select>
                         </div>
 
                     </div>
@@ -83,23 +93,22 @@
                         <div class="col-lg-6 employee-details">
 
                             <label>Address</label>
-                            <h5>{{detail.address}}</h5>
+                            <input type="text" class="form-control" v-model="form.address">
 
                             <label>City</label>
-                            <h5>{{detail.city}}</h5>
+                            <input type="text" class="form-control" v-model="form.city">
 
                             <label>Phone Number</label>
-                            <h5>{{detail.phoneNo}}</h5>
+                            <input type="text" class="form-control" v-model="form.phoneNo">
 
                         </div>
                         <div class="col-lg-6 employee-details">
 
                             <label>E-mail address</label>
-                            <h5>{{detail.email}}</h5>
+                            <h5>{{form.email}}</h5>
 
                             <label>Alt. E-mail address</label>
-                            <h5>{{detail.altEmail}}</h5>
-                            <h5 v-if="!detail.altEmail">-</h5>
+                            <input type="text" class="form-control" v-model="form.altEmail">
 
                         </div>
 
@@ -116,7 +125,7 @@
                         <div class="col-lg-4 employee-details">
 
                             <div style="">
-                                <img :src="`/images/employee/${detail.idCardPhoto}`"
+                                <img :src="`/images/employee/${form.idCardPhoto}`"
                                      alt="No Image" class="img-responsive" style="width:100%; height:auto;">
                             </div>
 
@@ -125,7 +134,7 @@
                         <div class="col-lg-8 employee-details">
 
                             <label>ID Card Number</label>
-                            <h5>{{detail.idCardNumber}}</h5>
+                            <input type="number" class="form-control" v-model="form.idCardNumber">
 
                         </div>
 
@@ -143,32 +152,32 @@
 
                         <div class="col-lg-4 employee-details">
                             <label>Bank Name</label>
-                            <h5>{{detail.bank}}</h5>
-                            <h5 v-if="!detail.bank">-</h5>
+                            <select class="form-control" v-model="form.bankId">
+                                <option v-for="bank in banks"
+                                        :value="bank.id">
+                                    {{bank.name}}
+                                </option>
+                            </select>
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Bank Branch</label>
-                            <h5>{{detail.bankBranch}}</h5>
-                            <h5 v-if="!detail.bankBranch">-</h5>
+                            <input type="text" class="form-control" v-model="form.bankBranch">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Bank City</label>
-                            <h5>{{detail.bankCity}}</h5>
-                            <h5 v-if="!detail.bankCity">-</h5>
+                            <input type="text" class="form-control" v-model="form.bankCity">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Bank Account Name</label>
-                            <h5>{{detail.bankHolderName}}</h5>
-                            <h5 v-if="!detail.bankHolderName">-</h5>
+                            <input type="text" class="form-control" v-model="form.bankHolderName">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Bank Account Number</label>
-                            <h5>{{detail.bankAccNo}}</h5>
-                            <h5 v-if="!detail.bankAccNo">-</h5>
+                            <input type="text" class="form-control" v-model="form.bankAccNo">
                         </div>
 
                     </div>
@@ -187,19 +196,22 @@
                     <div class="row">
                         <div class="col-lg-4 employee-details">
                             <label>Marital Status</label>
-                            <h5>{{detail.maritalStatus}}</h5>
+                            <select class="form-control" v-model="form.maritalStatusId">
+                                <option v-for="maritalStatus in maritalStatuses"
+                                        :value="maritalStatus.id">
+                                    {{maritalStatus.name}}
+                                </option>
+                            </select>
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Spouse's Name</label>
-                            <h5>{{detail.spousesName}}</h5>
-                            <h5 v-if="!detail.spousesName">-</h5>
+                            <input type="text" class="form-control" v-model="form.spousesName">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Number of children</label>
-                            <h5>{{detail.totalChildren}}</h5>
-                            <h5 v-if="!detail.totalChildren">-</h5>
+                            <input type="text" class="form-control" v-model="form.totalChildren">
                         </div>
 
                     </div>
@@ -216,87 +228,97 @@
                     <div class="row">
                         <div class="col-lg-4 employee-details">
                             <label>Father's Name</label>
-                            <h5>{{detail.fatherName}}</h5>
+                            <input type="text" class="form-control" v-model="form.fatherName">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Father's Address</label>
-                            <h5>{{detail.fatherAddress}}</h5>
+                            <input type="text" class="form-control" v-model="form.fatherAddress">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Father's City</label>
-                            <h5>{{detail.fatherCity}}</h5>
+                            <input type="text" class="form-control" v-model="form.fatherCity">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Father's Phone Number</label>
-                            <h5>{{detail.fatherPhoneNo}}</h5>
+                            <input type="text" class="form-control" v-model="form.fatherPhoneNo">
                         </div>
 
                         <div class="col-lg-12 employee-details">
                             <label>Father's Marital Status</label>
-                            <h5>{{detail.fatherMaritalStatus}}</h5>
+                            <select class="form-control" v-model="form.fatherMaritalStatusId">
+                                <option v-for="maritalStatus in maritalStatuses"
+                                        :value="maritalStatus.id">
+                                    {{maritalStatus.name}}
+                                </option>
+                            </select>
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Mother's Name</label>
-                            <h5>{{detail.motherName}}</h5>
+                            <input type="text" class="form-control" v-model="form.motherName">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Mother's Address</label>
-                            <h5>{{detail.motherAddress}}</h5>
+                            <input type="text" class="form-control" v-model="form.motherAddress">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Mother's City</label>
-                            <h5>{{detail.motherCity}}</h5>
+                            <input type="text" class="form-control" v-model="form.motherCity">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Mother's Phone Number</label>
-                            <h5>{{detail.motherPhoneNo}}</h5>
+                            <input type="text" class="form-control" v-model="form.motherPhoneNo">
                         </div>
 
                         <div class="col-lg-12 employee-details">
                             <label>Mother's Marital Status</label>
-                            <h5>{{detail.motherMaritalStatus}}</h5>
+                            <select class="form-control" v-model="form.motherMaritalStatusId">
+                                <option v-for="maritalStatus in maritalStatuses"
+                                        :value="maritalStatus.id">
+                                    {{maritalStatus.name}}
+                                </option>
+                            </select>
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Number of Siblings</label>
-                            <h5>{{detail.numberOfSiblings}}</h5>
+                            <input type="text" class="form-control" v-model="form.numberOfSiblings">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Sibling's Name</label>
-                            <h5>{{detail.siblingName}}</h5>
-                            <h5 v-if="!detail.siblingName">-</h5>
+                            <input type="text" class="form-control" v-model="form.siblingName">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Sibling's Address</label>
-                            <h5>{{detail.siblingAddress}}</h5>
-                            <h5 v-if="!detail.siblingAddress">-</h5>
+                            <input type="text" class="form-control" v-model="form.siblingAddress">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Sibling's City</label>
-                            <h5>{{detail.siblingCity}}</h5>
-                            <h5 v-if="!detail.siblingCity">-</h5>
+                            <input type="text" class="form-control" v-model="form.siblingCity">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Sibling's Phone Number</label>
-                            <h5>{{detail.siblingPhoneNo}}</h5>
-                            <h5 v-if="!detail.siblingPhoneNo">-</h5>
+                            <input type="text" class="form-control"v-model="form.siblingPhoneNo">
                         </div>
 
-                        <div class="col-lg-8 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Sibling's Marital Status</label>
-                            <h5>{{detail.siblingMaritalStatus}}</h5>
-                            <h5 v-if="!detail.siblingMaritalStatus">-</h5>
+                            <select class="form-control" v-model="form.siblingMaritalStatusId">
+                                <option v-for="maritalStatus in maritalStatuses"
+                                        :value="maritalStatus.id">
+                                    {{maritalStatus.name}}
+                                </option>
+                            </select>
                         </div>
 
                     </div>
@@ -312,39 +334,37 @@
                     <div class="row">
                         <div class="col-lg-4 employee-details">
                             <label>Contact Person Name</label>
-                            <h5>{{detail.emergencyContact}}</h5>
+                            <input type="text" class="form-control" v-model="form.emergencyContact">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Relationship</label>
-                            <h5>{{detail.emergencyRelationship}}</h5>
+                            <input type="text" class="form-control" v-model="form.emergencyRelationship">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Address</label>
-                            <h5>{{detail.emergencyAddress}}</h5>
+                            <input type="text" class="form-control" v-model="form.emergencyAddress">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>City</label>
-                            <h5>{{detail.emergencyCity}}</h5>
+                            <input type="text" class="form-control" v-model="form.emergencyCity">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Phone Number</label>
-                            <h5>{{detail.emergencyPhoneNo}}</h5>
+                            <input type="text" class="form-control" v-model="form.emergencyPhoneNo">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Alt Phone Number</label>
-                            <h5>{{detail.emergencyAltPhoneNo}}</h5>
-                            <h5 v-if="!detail.emergencyAltPhoneNo">-</h5>
+                            <input type="text" class="form-control" v-model="form.emergencyAltPhoneNo">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Email</label>
-                            <h5>{{detail.emergencyEmailAddress}}</h5>
-                            <h5 v-if="!detail.emergencyEmailAddress">-</h5>
+                            <input type="text" class="form-control" v-model="form.emergencyEmailAddress">
                         </div>
 
                     </div>
@@ -360,32 +380,27 @@
 
                         <div class="col-lg-4 employee-details">
                             <label>Company Name</label>
-                            <h5>{{detail.prevCompanyName}}</h5>
-                            <h5 v-if="!detail.prevCompanyName">-</h5>
+                            <input type="text" class="form-control" v-model="form.prevCompanyName">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Company Address</label>
-                            <h5>{{detail.prevCompanyAddress}}</h5>
-                            <h5 v-if="!detail.prevCompanyAddress">-</h5>
+                            <input type="text" class="form-control" v-model="form.prevCompanyAddress">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Company Phone Number</label>
-                            <h5>{{detail.prevCompanyPhoneNo}}</h5>
-                            <h5 v-if="!detail.prevCompanyPhoneNo">-</h5>
+                            <input type="text" class="form-control" v-model="form.prevCompanyPhoneNo">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Position</label>
-                            <h5>{{detail.prevPosition}}</h5>
-                            <h5 v-if="!detail.prevPosition">-</h5>
+                            <input type="text" class="form-control" v-model="form.prevPosition">
                         </div>
 
                         <div class="col-lg-4 employee-details">
                             <label>Length of Employment</label>
-                            <h5>{{detail.prevLengthEmployment}}</h5>
-                            <h5 v-if="!detail.prevLengthEmployment">-</h5>
+                            <input type="text" class="form-control" v-model="form.prevLengthEmployment">
                         </div>
 
                     </div>
@@ -401,14 +416,33 @@
     export default{
         data(){
             return {
-                detail: [],
+                form:{},
+                maritalStatuses:[],
+                banks:[],
+                educationLevels:[],
+                religions:[]
+
             }
         },
         created(){
-            get(api_path() + 'employee/detail/master/' + this.$route.params.id)
+            get(api_path() + 'employee/edit/master/' + this.$route.params.id)
                 .then((res) => {
-                this.detail = res.data.detail.data
-            })
+                //set current value
+                this.form = res.data.detail.data
+                this.form.id = this.$route.params.id
+
+                //form components
+                this.maritalStatuses = this.form.formComponents.maritalStatuses
+                this.banks = this.form.formComponents.banks
+                this.educationLevels = this.form.formComponents.educationLevels
+                this.religions = this.form.formComponents.religions
+        })
+        },
+        methods:{
+            save(){
+                delete this.form.formComponents // remove form components during submit
+                this.$bus.$emit('save:master_detail',this.form)
+            }
         }
     }
 </script>

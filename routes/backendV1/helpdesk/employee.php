@@ -25,8 +25,8 @@ Route::prefix('v1/h')->group(function (){
         Route::get('detail/employment/{employeeId}','AjaxController@employmentDetail');
         Route::get('detail/login/{employeeId}','AjaxController@loginDetail');
 
-        Route::get('edit/master/{id}','AjaxController@masterEmploymentEdit');
-        Route::post('edit/master','AjaxController@saveMasterEmploymentEdit');
+        Route::get('edit/master/{id}','AjaxController@masterEmployeeEdit');
+        Route::post('edit/master','AjaxController@saveMasterEmployeeEdit');
 
         Route::get('edit/employment/{employeeId}','AjaxController@employmentEdit');
         Route::post('edit/employment','AjaxController@saveEmploymentEdit');

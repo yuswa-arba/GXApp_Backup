@@ -1937,9 +1937,7 @@ $(document).ready(function () {
                     type: 'info'
                 }).show();
 
-                _.delay(function () {
-                    window.location.href = '/employee/list';
-                }, 2500);
+                window.location.href = '/employee/list';
             } else {
                 /* Show error notification */
                 $('.page-container').pgNotification({

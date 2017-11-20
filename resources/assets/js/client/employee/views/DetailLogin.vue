@@ -57,12 +57,14 @@
 
                         <div class="col-lg-6 employee-details">
                             <label>Allow Super Admin</label>
-                            <h5>{{detail.allowSuperAdminAccess}}</h5>
+                            <h5 v-if="detail.allowSuperAdminAccess">True</h5>
+                            <h5 v-else>False</h5>
                         </div>
 
                         <div class="col-lg-6 employee-details">
                             <label>Allow Admin</label>
-                            <h5>{{detail.allowAdminAccess}}</h5>
+                            <h5 v-if="detail.allowAdminAccess">True</h5>
+                            <h5 v-else>False</h5>
                         </div>
 
                     </div>
@@ -87,6 +89,11 @@
                 .then((res) => {
                     this.detail = res.data.detail.data
                 })
+        },
+        methods:{
+            save(){
+                this.$bus.$emit('save:login_detail',this.form)
+            }
         }
     }
 </script>

@@ -50,21 +50,35 @@
         created(){
             let self = this;
 
+            this.$bus.$on('save:master_detail',function(form){
+                self.save(form,'master')
+            })
+
             this.$bus.$on('save:employment_detail', function (form) {
                 self.save(form, "employment")
             })
+
+            this.$bus.$on('save:login_detail',function (form) {
+              self.save(form,'login')
+            })
+
+
         },
         methods: {
             viewMasterDetail(){
+                $('#errors-container').addClass('hide');
                 this.$router.push({name: 'detailMaster', params: {id: this.$route.params.id}})
             },
             viewEmploymentDetail(){
+                $('#errors-container').addClass('hide');
                 this.$router.push({name: 'detailEmployment', params: {id: this.$route.params.id}})
             },
             viewLoginDetail(){
+                $('#errors-container').addClass('hide');
                 this.$router.push({name: 'detailLogin', params: {id: this.$route.params.id}})
             },
             goBack(){
+                $('#errors-container').addClass('hide');
                 this.$router.push('/')
             },
             edit(){
@@ -85,11 +99,13 @@
             save(form, type){
                 switch (type) {
                     case 'master':
+                        this.saveMaster(form)
                         break;
                     case 'employment':
                         this.saveEmployment(form)
                         break;
                     case 'login':
+                        this.saveLogin(form)
                         break;
                     default:
                         return null;
@@ -110,6 +126,54 @@
                         return null;
                 }
             },
+            saveMaster(form){
+                let self = this;
+                post(api_path() + 'employee/edit/master', form)
+                    .then((res) => {
+                        if (!res.data.isFailed) {
+
+                            /* Show success notification*/
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            //redirect
+                            self.$router.push({name: 'detailMaster', params: {id: self.$route.params.id}})
+
+                        }
+                        else {
+                            /* Show error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 0,
+                                type: 'danger'
+                            }).show();
+
+                        }
+                    })
+                    .catch((err) => {
+                        let errorsResponse = err.message + '</br>';
+
+                        _.forEach(err.response.data.errors, function (value, key) {
+                            errorsResponse += value[0] + ' ';
+                        })
+
+                        $('#errors-container').removeClass('hide').addClass('show')
+                        $('#errors-value').html(errorsResponse)
+                        errorsResponse = '' // reset value
+                        /* Scroll to top*/
+                        $('html, body').animate({
+                            scrollTop: $(".jumbotron").offset().top
+                        }, 500);
+
+                    })
+            },
             saveEmployment(form){
                 let self = this;
                 post(api_path() + 'employee/edit/employment', form)
@@ -127,6 +191,54 @@
 
                             //redirect
                             self.$router.push({name: 'detailEmployment', params: {id: self.$route.params.id}})
+
+                        }
+                        else {
+                            /* Show error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 0,
+                                type: 'danger'
+                            }).show();
+
+                        }
+                    })
+                    .catch((err) => {
+                        let errorsResponse = err.message + '</br>';
+
+                        _.forEach(err.response.data.errors, function (value, key) {
+                            errorsResponse += value[0] + ' ';
+                        })
+
+                        $('#errors-container').removeClass('hide').addClass('show')
+                        $('#errors-value').html(errorsResponse)
+                        errorsResponse = '' // reset value
+                        /* Scroll to top*/
+                        $('html, body').animate({
+                            scrollTop: $(".jumbotron").offset().top
+                        }, 500);
+
+                    })
+            },
+            saveLogin(form){
+                let self = this;
+                post(api_path() + 'employee/edit/login', form)
+                    .then((res) => {
+                        if (!res.data.isFailed) {
+
+                            /* Show success notification*/
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            //redirect
+                            self.$router.push({name: 'detailLogin', params: {id: self.$route.params.id}})
 
                         }
                         else {

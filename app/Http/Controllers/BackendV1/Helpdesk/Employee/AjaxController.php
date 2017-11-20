@@ -4,12 +4,16 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Employee;
 
 use App\Account\Models\User;
 use App\Account\Transformers\LoginDetailTransfomer;
+use App\Account\Transformers\LoginEditTransfomer;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeDetailTransfomer;
+use App\Employee\Transformers\EmployeeEditTransfomer;
 use App\Employee\Transformers\EmploymentEditTransfomer;
 use App\Employee\Transformers\EmploymentTransfomer;
+use App\Http\Requests\Employee\EditMasterEmployeeRequest;
 use App\Http\Requests\Employee\EmploymentRequest;
+use App\Http\Requests\Employee\MasterEmployeeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -34,6 +38,56 @@ class AjaxController extends Controller
         }
     }
 
+
+
+    public function masterEmployeeEdit($id)
+    {
+        if ($id != null && $id != '') {
+
+            $employee = MasterEmployee::find($id);
+
+            if ($employee) {
+                return response()->json([
+                    'message' => 'Successful',
+                    'detail' => fractal($employee, new EmployeeEditTransfomer())
+                ], 200);
+
+            } else {
+                return response()->json(['message' => 'Error occured! Unable to find employee data'], 500);
+            }
+        } else {
+            return response()->json(['message' => 'Parameter ID is missing'], 500);
+        }
+    }
+
+    public function saveMasterEmployeeEdit(EditMasterEmployeeRequest $request)
+    {
+        $response = array();
+        $employee = MasterEmployee::find($request->id);
+
+        if($employee){
+
+            $employee->update($request->all());
+
+            /* Return success response */
+            $response['isFailed'] = false;
+            $response['message'] = 'Master Employee has been saved successfully';
+
+            return response()->json($response,200);
+
+        } else {
+
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Error occured! Unable to find employee data';
+
+            return response()->json($response,500);
+        }
+    }
+
+
+
+
     public function employmentDetail($employeeId)
     {
         if ($employeeId != null && $employeeId != '') {
@@ -53,27 +107,6 @@ class AjaxController extends Controller
             return response()->json(['message' => 'Parameter ID is missing'], 500);
         }
     }
-
-    public function loginDetail($employeeId)
-    {
-        if ($employeeId != null && $employeeId != '') {
-
-            $user = User::where('employeeId',$employeeId)->first();
-
-            if ($user) {
-                return response()->json([
-                    'message' => 'Successful',
-                    'detail' => fractal($user, new LoginDetailTransfomer())
-                ], 200);
-
-            } else {
-                return response()->json(['message' => 'Error occured! Unable to find login data'], 500);
-            }
-        } else {
-            return response()->json(['message' => 'Parameter ID is missing'], 500);
-        }
-    }
-
     public function employmentEdit($employeeId)
     {
         if ($employeeId != null && $employeeId != '') {
@@ -100,14 +133,7 @@ class AjaxController extends Controller
         $employment = Employment::where('employeeId',$request->employeeId)->first();
 
         if($employment){
-            $employment->jobPositionId = $request->jobPositionId;
-            $employment->divisionId = $request->divisionId;
-            $employment->branchOfficeId = $request->branchOfficeId;
-            $employment->recruitmentStatusId = $request->recruitmentStatusId;
-            $employment->dateOfEntry = $request->dateOfEntry;
-            $employment->dateOfStart = $request->dateOfStart;
-            $employment->dateOfResignation = $request->dateOfResignation;
-            $employment->save();
+            $employment->update($request->all());
 
             /* Return success response */
             $response['isFailed'] = false;
@@ -126,6 +152,82 @@ class AjaxController extends Controller
 
 
     }
+
+    public function loginDetail($employeeId)
+    {
+        if ($employeeId != null && $employeeId != '') {
+
+            $user = User::where('employeeId',$employeeId)->first();
+
+            if ($user) {
+                return response()->json([
+                    'message' => 'Successful',
+                    'detail' => fractal($user, new LoginDetailTransfomer())
+                ], 200);
+
+            } else {
+                return response()->json(['message' => 'Error occured! Unable to find login data'], 500);
+            }
+        } else {
+            return response()->json(['message' => 'Parameter ID is missing'], 500);
+        }
+    }
+
+    public function loginEdit($employeeId)
+    {
+        if ($employeeId != null && $employeeId != '') {
+
+            $user = User::where('employeeId',$employeeId)->first();
+
+            if ($user) {
+                return response()->json([
+                    'message' => 'Successful',
+                    'detail' => fractal($user, new LoginEditTransfomer())
+                ], 200);
+
+            } else {
+                return response()->json(['message' => 'Error occured! Unable to find user data'], 500);
+            }
+        } else {
+            return response()->json(['message' => 'Parameter ID is missing'], 500);
+        }
+    }
+
+    public function saveLoginEdit(Request $request)
+    {
+
+        $request->validate([
+            'employeeId'=>'required',
+            'email'=>'required',
+            'accessStatusId'=>'required',
+            'allowAdminAccess'=>'required',
+            'allowSuperAdminAccess'=>'required'
+        ]);
+
+        $response = array();
+        $user = User::where('employeeId',$request->employeeId)->first();
+
+        if($user){
+
+            $user->update($request->all());
+
+            /* Return success response */
+            $response['isFailed'] = false;
+            $response['message'] = 'Login detail has been saved successfully';
+
+            return response()->json($response,200);
+
+        } else {
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Error occured! Unable to find user data';
+
+            return response()->json($response,500);
+        }
+
+    }
+
+
 
 
 

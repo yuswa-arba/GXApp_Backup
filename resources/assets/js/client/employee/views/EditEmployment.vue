@@ -21,16 +21,16 @@
                     <div class="row">
                         <div class="col-lg-12 employee-details">
                             <label>Employee ID</label>
-                            <p class="text-primary">{{detail.employeeId}}</p>
+                            <p class="text-primary">{{form.employeeId}}</p>
                         </div>
                         <div class="col-lg-12 employee-details">
                             <label>Employee No</label>
-                            <p class="text-primary">{{detail.employeeNo}}</p>
+                            <p class="text-primary">{{form.employeeNo}}</p>
                         </div>
 
                         <div class="col-lg-12 employee-details">
                             <label>Name</label>
-                            <p class="text-primary">{{detail.employeeName}}</p>
+                            <p class="text-primary">{{form.employeeName}}</p>
                         </div>
 
                     </div>
@@ -47,7 +47,7 @@
                 </div>
                 <div class="card-block">
                     <div class="row">
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Job Position</label>
                             <select class="form-control" v-model="form.jobPositionId">
                                 <option v-for="jobPosition in jobPositions" :value="jobPosition.id">
@@ -57,7 +57,7 @@
 
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
 
                             <label>Division</label>
                             <select class="form-control" v-model="form.divisionId">
@@ -68,7 +68,7 @@
 
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Branch Office</label>
                             <select class="form-control" v-model="form.branchOfficeId">
                                 <option v-for="branchOffice in branchOffices" :value="branchOffice.id">
@@ -78,7 +78,7 @@
 
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Recruitment Status</label>
                             <select class="form-control" v-model="form.recruitmentStatusId">
                                 <option v-for="recruitmentStatus in recruitmentStatuses"
@@ -88,17 +88,17 @@
                             </select>
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Date of Entry</label>
                             <input type="text" class="form-control" v-model="form.dateOfEntry" placeholder="dd/mm/yyyy">
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Date of Start</label>
                             <input type="text" class="form-control" v-model="form.dateOfStart" placeholder="dd/mm/yyyy">
                         </div>
 
-                        <div class="col-lg-3 employee-details">
+                        <div class="col-lg-12 employee-details">
                             <label>Date of Resignation</label>
                             <input type="text" class="form-control" v-model="form.dateOfResignation"
                                    placeholder="dd/mm/yyyy">
@@ -118,7 +118,6 @@
     export default{
         data(){
             return {
-                detail: [],
                 form: {},
 
                 //form components
@@ -131,27 +130,21 @@
         created(){
             get(api_path() + 'employee/edit/employment/' + this.$route.params.id)
                 .then((res) => {
-                    this.detail = res.data.detail.data
 
-                    //current value
+                    //set current value
+                    this.form = res.data.detail.data
                     this.form.employeeId = this.$route.params.id
-                    this.form.jobPositionId = this.detail.jobPositionId
-                    this.form.divisionId = this.detail.divisionId
-                    this.form.branchOfficeId = this.detail.branchOfficeId
-                    this.form.recruitmentStatusId = this.detail.recruitmentStatusId
-                    this.form.dateOfEntry = this.detail.dateOfEntry
-                    this.form.dateOfStart = this.detail.dateOfStart
-                    this.form.dateOfResignation = this.detail.dateOfResignation
 
                     //form components
-                    this.jobPositions = this.detail.formComponents.jobPositions
-                    this.divisions = this.detail.formComponents.divisions
-                    this.branchOffices = this.detail.formComponents.branchOffices
-                    this.recruitmentStatuses = this.detail.formComponents.recruitmentStatuses
+                    this.jobPositions = this.form.formComponents.jobPositions
+                    this.divisions = this.form.formComponents.divisions
+                    this.branchOffices = this.form.formComponents.branchOffices
+                    this.recruitmentStatuses = this.form.formComponents.recruitmentStatuses
                 })
         },
         methods: {
             save(){
+                delete this.form.formComponents // remove form components during submit
                 this.$bus.$emit('save:employment_detail',this.form)
             }
         }

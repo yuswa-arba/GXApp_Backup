@@ -28,10 +28,10 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    protected $casts = [
-        'allowAdminAccess'=>'boolean',
-        'allowSuperAdminAccess' => 'boolean'
-    ];
+//    protected $casts = [
+//        'allowAdminAccess'=>'boolean',
+//        'allowSuperAdminAccess' => 'boolean'
+//    ];
 
     public function employee()
     {

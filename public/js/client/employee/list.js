@@ -1674,22 +1674,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var self = this;
 
+        this.$bus.$on('save:master_detail', function (form) {
+            self.save(form, 'master');
+        });
+
         this.$bus.$on('save:employment_detail', function (form) {
             self.save(form, "employment");
+        });
+
+        this.$bus.$on('save:login_detail', function (form) {
+            self.save(form, 'login');
         });
     },
 
     methods: {
         viewMasterDetail: function viewMasterDetail() {
+            $('#errors-container').addClass('hide');
             this.$router.push({ name: 'detailMaster', params: { id: this.$route.params.id } });
         },
         viewEmploymentDetail: function viewEmploymentDetail() {
+            $('#errors-container').addClass('hide');
             this.$router.push({ name: 'detailEmployment', params: { id: this.$route.params.id } });
         },
         viewLoginDetail: function viewLoginDetail() {
+            $('#errors-container').addClass('hide');
             this.$router.push({ name: 'detailLogin', params: { id: this.$route.params.id } });
         },
         goBack: function goBack() {
+            $('#errors-container').addClass('hide');
             this.$router.push('/');
         },
         edit: function edit() {
@@ -1710,11 +1722,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         save: function save(form, type) {
             switch (type) {
                 case 'master':
+                    this.saveMaster(form);
                     break;
                 case 'employment':
                     this.saveEmployment(form);
                     break;
                 case 'login':
+                    this.saveLogin(form);
                     break;
                 default:
                     return null;
@@ -1735,6 +1749,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     return null;
             }
         },
+        saveMaster: function saveMaster(form) {
+            var self = this;
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/master', form).then(function (res) {
+                if (!res.data.isFailed) {
+
+                    /* Show success notification*/
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    //redirect
+                    self.$router.push({ name: 'detailMaster', params: { id: self.$route.params.id } });
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                var errorsResponse = err.message + '</br>';
+
+                _.forEach(err.response.data.errors, function (value, key) {
+                    errorsResponse += value[0] + ' ';
+                });
+
+                $('#errors-container').removeClass('hide').addClass('show');
+                $('#errors-value').html(errorsResponse);
+                errorsResponse = ''; // reset value
+                /* Scroll to top*/
+                $('html, body').animate({
+                    scrollTop: $(".jumbotron").offset().top
+                }, 500);
+            });
+        },
         saveEmployment: function saveEmployment(form) {
             var self = this;
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/employment', form).then(function (res) {
@@ -1751,6 +1807,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                     //redirect
                     self.$router.push({ name: 'detailEmployment', params: { id: self.$route.params.id } });
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                var errorsResponse = err.message + '</br>';
+
+                _.forEach(err.response.data.errors, function (value, key) {
+                    errorsResponse += value[0] + ' ';
+                });
+
+                $('#errors-container').removeClass('hide').addClass('show');
+                $('#errors-value').html(errorsResponse);
+                errorsResponse = ''; // reset value
+                /* Scroll to top*/
+                $('html, body').animate({
+                    scrollTop: $(".jumbotron").offset().top
+                }, 500);
+            });
+        },
+        saveLogin: function saveLogin(form) {
+            var self = this;
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/login', form).then(function (res) {
+                if (!res.data.isFailed) {
+
+                    /* Show success notification*/
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    //redirect
+                    self.$router.push({ name: 'detailLogin', params: { id: self.$route.params.id } });
                 } else {
                     /* Show error notification */
                     $('.page-container').pgNotification({
@@ -2047,6 +2145,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -2062,6 +2162,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/login/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
+    },
+
+    methods: {
+        save: function save() {
+            this.$bus.$emit('save:login_detail', this.form);
+        }
     }
 });
 
@@ -2614,7 +2720,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            detail: [],
             form: {},
 
             //form components
@@ -2628,28 +2733,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/employment/' + this.$route.params.id).then(function (res) {
-            _this.detail = res.data.detail.data;
 
-            //current value
+            //set current value
+            _this.form = res.data.detail.data;
             _this.form.employeeId = _this.$route.params.id;
-            _this.form.jobPositionId = _this.detail.jobPositionId;
-            _this.form.divisionId = _this.detail.divisionId;
-            _this.form.branchOfficeId = _this.detail.branchOfficeId;
-            _this.form.recruitmentStatusId = _this.detail.recruitmentStatusId;
-            _this.form.dateOfEntry = _this.detail.dateOfEntry;
-            _this.form.dateOfStart = _this.detail.dateOfStart;
-            _this.form.dateOfResignation = _this.detail.dateOfResignation;
 
             //form components
-            _this.jobPositions = _this.detail.formComponents.jobPositions;
-            _this.divisions = _this.detail.formComponents.divisions;
-            _this.branchOffices = _this.detail.formComponents.branchOffices;
-            _this.recruitmentStatuses = _this.detail.formComponents.recruitmentStatuses;
+            _this.jobPositions = _this.form.formComponents.jobPositions;
+            _this.divisions = _this.form.formComponents.divisions;
+            _this.branchOffices = _this.form.formComponents.branchOffices;
+            _this.recruitmentStatuses = _this.form.formComponents.recruitmentStatuses;
         });
     },
 
     methods: {
         save: function save() {
+            delete this.form.formComponents; // remove form components during submit
             this.$bus.$emit('save:employment_detail', this.form);
         }
     }
@@ -2742,21 +2841,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            detail: []
+            form: {},
+
+            //form componetns
+            accessStatuses: []
         };
     },
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/login/' + this.$route.params.id).then(function (res) {
-            _this.detail = res.data.detail.data;
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/login/' + this.$route.params.id).then(function (res) {
+
+            //set current value
+            _this.form = res.data.detail.data;
+            _this.form.id = _this.$route.params.id;
+
+            //form components
+            _this.accessStatuses = _this.form.formComponents.accessStatuses;
         });
+    },
+
+    methods: {
+        save: function save() {
+            delete this.form.formComponents; // remove form components during submit
+            this.$bus.$emit('save:login_detail', this.form);
+        }
     }
 });
 
@@ -3166,21 +3291,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            detail: []
+            form: {},
+            maritalStatuses: [],
+            banks: [],
+            educationLevels: [],
+            religions: []
+
         };
     },
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/detail/master/' + this.$route.params.id).then(function (res) {
-            _this.detail = res.data.detail.data;
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/master/' + this.$route.params.id).then(function (res) {
+            //set current value
+            _this.form = res.data.detail.data;
+            _this.form.id = _this.$route.params.id;
+
+            //form components
+            _this.maritalStatuses = _this.form.formComponents.maritalStatuses;
+            _this.banks = _this.form.formComponents.banks;
+            _this.educationLevels = _this.form.formComponents.educationLevels;
+            _this.religions = _this.form.formComponents.religions;
         });
+    },
+
+    methods: {
+        save: function save() {
+            delete this.form.formComponents; // remove form components during submit
+            this.$bus.$emit('save:master_detail', this.form);
+        }
     }
 });
 
@@ -21502,13 +21662,17 @@ var render = function() {
             _c("div", { staticClass: "col-lg-6 employee-details" }, [
               _c("label", [_vm._v("Allow Super Admin")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.allowSuperAdminAccess))])
+              _vm.detail.allowSuperAdminAccess
+                ? _c("h5", [_vm._v("True")])
+                : _c("h5", [_vm._v("False")])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-6 employee-details" }, [
               _c("label", [_vm._v("Allow Admin")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.allowAdminAccess))])
+              _vm.detail.allowAdminAccess
+                ? _c("h5", [_vm._v("True")])
+                : _c("h5", [_vm._v("False")])
             ])
           ])
         ])
@@ -21591,7 +21755,7 @@ var render = function() {
               _c("label", [_vm._v("Employee No")]),
               _vm._v(" "),
               _c("p", { staticClass: "text-primary" }, [
-                _vm._v(_vm._s(_vm.detail.employeeNo))
+                _vm._v(_vm._s(_vm.form.employeeNo))
               ])
             ])
           ])
@@ -21609,7 +21773,7 @@ var render = function() {
                   staticClass: "img-responsive",
                   staticStyle: { width: "100%", height: "auto" },
                   attrs: {
-                    src: "/images/employee/" + _vm.detail.employeePhoto,
+                    src: "/images/employee/" + _vm.form.employeePhoto,
                     alt: "No Image"
                   }
                 })
@@ -21623,33 +21787,117 @@ var render = function() {
               _vm._v(" "),
               _c("h5", [
                 _vm._v(
-                  _vm._s(_vm.detail.surname) +
-                    "/" +
-                    _vm._s(_vm.detail.givenName)
+                  _vm._s(_vm.form.surname) + "/" + _vm._s(_vm.form.givenName)
                 )
               ]),
               _vm._v(" "),
               _c("label", [_vm._v("Birthday")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.birthDate))]),
+              _c("h5", [_vm._v(_vm._s(_vm.form.birthDate))]),
               _vm._v(" "),
               _c("label", [_vm._v("Gender")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.gender))])
+              _c("h5", [_vm._v(_vm._s(_vm.form.gender))])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Religion")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.gender))]),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.religionId,
+                      expression: "form.religionId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "religionId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.religions, function(religion) {
+                  return _c("option", { domProps: { value: religion.id } }, [
+                    _vm._v(
+                      "\n                                " +
+                        _vm._s(religion.name) +
+                        "\n                            "
+                    )
+                  ])
+                })
+              ),
               _vm._v(" "),
               _c("label", [_vm._v("Hometown")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.hometown))]),
+              _c("h5", [_vm._v(_vm._s(_vm.form.hometown))]),
               _vm._v(" "),
               _c("label", [_vm._v("Education level")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.educationLevel))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.educationLevelId,
+                      expression: "form.educationLevelId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "educationLevelId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.educationLevels, function(educationLevel) {
+                  return _c(
+                    "option",
+                    { domProps: { value: educationLevel.id } },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(educationLevel.name) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                })
+              )
             ])
           ])
         ])
@@ -21663,27 +21911,105 @@ var render = function() {
             _c("div", { staticClass: "col-lg-6 employee-details" }, [
               _c("label", [_vm._v("Address")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.address))]),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.address,
+                    expression: "form.address"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.address },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "address", $event.target.value)
+                  }
+                }
+              }),
               _vm._v(" "),
               _c("label", [_vm._v("City")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.city))]),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.city,
+                    expression: "form.city"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.city },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "city", $event.target.value)
+                  }
+                }
+              }),
               _vm._v(" "),
               _c("label", [_vm._v("Phone Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.phoneNo))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.phoneNo,
+                    expression: "form.phoneNo"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.phoneNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "phoneNo", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-6 employee-details" }, [
               _c("label", [_vm._v("E-mail address")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.email))]),
+              _c("h5", [_vm._v(_vm._s(_vm.form.email))]),
               _vm._v(" "),
               _c("label", [_vm._v("Alt. E-mail address")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.altEmail))]),
-              _vm._v(" "),
-              !_vm.detail.altEmail ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.altEmail,
+                    expression: "form.altEmail"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.altEmail },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "altEmail", $event.target.value)
+                  }
+                }
+              })
             ])
           ])
         ])
@@ -21700,7 +22026,7 @@ var render = function() {
                   staticClass: "img-responsive",
                   staticStyle: { width: "100%", height: "auto" },
                   attrs: {
-                    src: "/images/employee/" + _vm.detail.idCardPhoto,
+                    src: "/images/employee/" + _vm.form.idCardPhoto,
                     alt: "No Image"
                   }
                 })
@@ -21712,7 +22038,27 @@ var render = function() {
             _c("div", { staticClass: "col-lg-8 employee-details" }, [
               _c("label", [_vm._v("ID Card Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.idCardNumber))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.idCardNumber,
+                    expression: "form.idCardNumber"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "number" },
+                domProps: { value: _vm.form.idCardNumber },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "idCardNumber", $event.target.value)
+                  }
+                }
+              })
             ])
           ])
         ])
@@ -21726,41 +22072,152 @@ var render = function() {
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Bank Name")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.bank))]),
-              _vm._v(" "),
-              !_vm.detail.bank ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.bankId,
+                      expression: "form.bankId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "bankId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.banks, function(bank) {
+                  return _c("option", { domProps: { value: bank.id } }, [
+                    _vm._v(
+                      "\n                                " +
+                        _vm._s(bank.name) +
+                        "\n                            "
+                    )
+                  ])
+                })
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Bank Branch")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.bankBranch))]),
-              _vm._v(" "),
-              !_vm.detail.bankBranch ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.bankBranch,
+                    expression: "form.bankBranch"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.bankBranch },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "bankBranch", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Bank City")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.bankCity))]),
-              _vm._v(" "),
-              !_vm.detail.bankCity ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.bankCity,
+                    expression: "form.bankCity"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.bankCity },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "bankCity", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Bank Account Name")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.bankHolderName))]),
-              _vm._v(" "),
-              !_vm.detail.bankHolderName ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.bankHolderName,
+                    expression: "form.bankHolderName"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.bankHolderName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "bankHolderName", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Bank Account Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.bankAccNo))]),
-              _vm._v(" "),
-              !_vm.detail.bankAccNo ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.bankAccNo,
+                    expression: "form.bankAccNo"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.bankAccNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "bankAccNo", $event.target.value)
+                  }
+                }
+              })
             ])
           ])
         ])
@@ -21776,23 +22233,104 @@ var render = function() {
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Marital Status")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.maritalStatus))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.maritalStatusId,
+                      expression: "form.maritalStatusId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "maritalStatusId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.maritalStatuses, function(maritalStatus) {
+                  return _c(
+                    "option",
+                    { domProps: { value: maritalStatus.id } },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(maritalStatus.name) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                })
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Spouse's Name")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.spousesName))]),
-              _vm._v(" "),
-              !_vm.detail.spousesName ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.spousesName,
+                    expression: "form.spousesName"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.spousesName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "spousesName", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Number of children")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.totalChildren))]),
-              _vm._v(" "),
-              !_vm.detail.totalChildren ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.totalChildren,
+                    expression: "form.totalChildren"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.totalChildren },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "totalChildren", $event.target.value)
+                  }
+                }
+              })
             ])
           ])
         ])
@@ -21806,109 +22344,492 @@ var render = function() {
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Father's Name")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherName))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.fatherName,
+                    expression: "form.fatherName"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.fatherName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "fatherName", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Father's Address")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherAddress))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.fatherAddress,
+                    expression: "form.fatherAddress"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.fatherAddress },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "fatherAddress", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Father's City")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherCity))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.fatherCity,
+                    expression: "form.fatherCity"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.fatherCity },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "fatherCity", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Father's Phone Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherPhoneNo))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.fatherPhoneNo,
+                    expression: "form.fatherPhoneNo"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.fatherPhoneNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "fatherPhoneNo", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Father's Marital Status")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.fatherMaritalStatus))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.fatherMaritalStatusId,
+                      expression: "form.fatherMaritalStatusId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "fatherMaritalStatusId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.maritalStatuses, function(maritalStatus) {
+                  return _c(
+                    "option",
+                    { domProps: { value: maritalStatus.id } },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(maritalStatus.name) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                })
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Mother's Name")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.motherName))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.motherName,
+                    expression: "form.motherName"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.motherName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "motherName", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Mother's Address")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.motherAddress))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.motherAddress,
+                    expression: "form.motherAddress"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.motherAddress },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "motherAddress", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Mother's City")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.motherCity))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.motherCity,
+                    expression: "form.motherCity"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.motherCity },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "motherCity", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Mother's Phone Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.motherPhoneNo))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.motherPhoneNo,
+                    expression: "form.motherPhoneNo"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.motherPhoneNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "motherPhoneNo", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Mother's Marital Status")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.motherMaritalStatus))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.motherMaritalStatusId,
+                      expression: "form.motherMaritalStatusId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "motherMaritalStatusId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.maritalStatuses, function(maritalStatus) {
+                  return _c(
+                    "option",
+                    { domProps: { value: maritalStatus.id } },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(maritalStatus.name) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                })
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Number of Siblings")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.numberOfSiblings))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.numberOfSiblings,
+                    expression: "form.numberOfSiblings"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.numberOfSiblings },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "numberOfSiblings", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Sibling's Name")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingName))]),
-              _vm._v(" "),
-              !_vm.detail.siblingName ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.siblingName,
+                    expression: "form.siblingName"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.siblingName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "siblingName", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Sibling's Address")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingAddress))]),
-              _vm._v(" "),
-              !_vm.detail.siblingAddress ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.siblingAddress,
+                    expression: "form.siblingAddress"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.siblingAddress },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "siblingAddress", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Sibling's City")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingCity))]),
-              _vm._v(" "),
-              !_vm.detail.siblingCity ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.siblingCity,
+                    expression: "form.siblingCity"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.siblingCity },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "siblingCity", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Sibling's Phone Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingPhoneNo))]),
-              _vm._v(" "),
-              !_vm.detail.siblingPhoneNo ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.siblingPhoneNo,
+                    expression: "form.siblingPhoneNo"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.siblingPhoneNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "siblingPhoneNo", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-8 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Sibling's Marital Status")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingMaritalStatus))]),
-              _vm._v(" "),
-              !_vm.detail.siblingMaritalStatus
-                ? _c("h5", [_vm._v("-")])
-                : _vm._e()
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.siblingMaritalStatusId,
+                      expression: "form.siblingMaritalStatusId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "siblingMaritalStatusId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.maritalStatuses, function(maritalStatus) {
+                  return _c(
+                    "option",
+                    { domProps: { value: maritalStatus.id } },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(maritalStatus.name) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                })
+              )
             ])
           ])
         ])
@@ -21922,51 +22843,195 @@ var render = function() {
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Contact Person Name")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyContact))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.emergencyContact,
+                    expression: "form.emergencyContact"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.emergencyContact },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "emergencyContact", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Relationship")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyRelationship))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.emergencyRelationship,
+                    expression: "form.emergencyRelationship"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.emergencyRelationship },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "emergencyRelationship",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Address")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyAddress))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.emergencyAddress,
+                    expression: "form.emergencyAddress"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.emergencyAddress },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "emergencyAddress", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("City")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyCity))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.emergencyCity,
+                    expression: "form.emergencyCity"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.emergencyCity },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "emergencyCity", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Phone Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyPhoneNo))])
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.emergencyPhoneNo,
+                    expression: "form.emergencyPhoneNo"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.emergencyPhoneNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "emergencyPhoneNo", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Alt Phone Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyAltPhoneNo))]),
-              _vm._v(" "),
-              !_vm.detail.emergencyAltPhoneNo
-                ? _c("h5", [_vm._v("-")])
-                : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.emergencyAltPhoneNo,
+                    expression: "form.emergencyAltPhoneNo"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.emergencyAltPhoneNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "emergencyAltPhoneNo",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Email")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.emergencyEmailAddress))]),
-              _vm._v(" "),
-              !_vm.detail.emergencyEmailAddress
-                ? _c("h5", [_vm._v("-")])
-                : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.emergencyEmailAddress,
+                    expression: "form.emergencyEmailAddress"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.emergencyEmailAddress },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "emergencyEmailAddress",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
             ])
           ])
         ])
@@ -21980,47 +23045,143 @@ var render = function() {
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Company Name")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.prevCompanyName))]),
-              _vm._v(" "),
-              !_vm.detail.prevCompanyName ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.prevCompanyName,
+                    expression: "form.prevCompanyName"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.prevCompanyName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "prevCompanyName", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Company Address")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.prevCompanyAddress))]),
-              _vm._v(" "),
-              !_vm.detail.prevCompanyAddress
-                ? _c("h5", [_vm._v("-")])
-                : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.prevCompanyAddress,
+                    expression: "form.prevCompanyAddress"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.prevCompanyAddress },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "prevCompanyAddress",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Company Phone Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.prevCompanyPhoneNo))]),
-              _vm._v(" "),
-              !_vm.detail.prevCompanyPhoneNo
-                ? _c("h5", [_vm._v("-")])
-                : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.prevCompanyPhoneNo,
+                    expression: "form.prevCompanyPhoneNo"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.prevCompanyPhoneNo },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "prevCompanyPhoneNo",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Position")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.prevPosition))]),
-              _vm._v(" "),
-              !_vm.detail.prevPosition ? _c("h5", [_vm._v("-")]) : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.prevPosition,
+                    expression: "form.prevPosition"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.prevPosition },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "prevPosition", $event.target.value)
+                  }
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Length of Employment")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.prevLengthEmployment))]),
-              _vm._v(" "),
-              !_vm.detail.prevLengthEmployment
-                ? _c("h5", [_vm._v("-")])
-                : _vm._e()
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.prevLengthEmployment,
+                    expression: "form.prevLengthEmployment"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: _vm.form.prevLengthEmployment },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "prevLengthEmployment",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
             ])
           ])
         ])
@@ -22170,7 +23331,7 @@ var render = function() {
               _c("label", [_vm._v("Employee ID")]),
               _vm._v(" "),
               _c("p", { staticClass: "text-primary" }, [
-                _vm._v(_vm._s(_vm.detail.employeeId))
+                _vm._v(_vm._s(_vm.form.employeeId))
               ])
             ]),
             _vm._v(" "),
@@ -22178,7 +23339,7 @@ var render = function() {
               _c("label", [_vm._v("Employee No")]),
               _vm._v(" "),
               _c("p", { staticClass: "text-primary" }, [
-                _vm._v(_vm._s(_vm.detail.employeeNo))
+                _vm._v(_vm._s(_vm.form.employeeNo))
               ])
             ]),
             _vm._v(" "),
@@ -22186,7 +23347,7 @@ var render = function() {
               _c("label", [_vm._v("Name")]),
               _vm._v(" "),
               _c("p", { staticClass: "text-primary" }, [
-                _vm._v(_vm._s(_vm.detail.employeeName))
+                _vm._v(_vm._s(_vm.form.employeeName))
               ])
             ])
           ])
@@ -22200,7 +23361,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Job Position")]),
               _vm._v(" "),
               _c(
@@ -22247,7 +23408,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Division")]),
               _vm._v(" "),
               _c(
@@ -22294,7 +23455,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Branch Office")]),
               _vm._v(" "),
               _c(
@@ -22345,7 +23506,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Recruitment Status")]),
               _vm._v(" "),
               _c(
@@ -22396,7 +23557,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Date of Entry")]),
               _vm._v(" "),
               _c("input", {
@@ -22422,7 +23583,7 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Date of Start")]),
               _vm._v(" "),
               _c("input", {
@@ -22448,7 +23609,7 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Date of Resignation")]),
               _vm._v(" "),
               _c("input", {
@@ -22627,7 +23788,7 @@ var render = function() {
               _c("label", [_vm._v("Employee ID")]),
               _vm._v(" "),
               _c("p", { staticClass: "text-primary" }, [
-                _vm._v(_vm._s(_vm.detail.employeeId))
+                _vm._v(_vm._s(_vm.form.employeeId))
               ])
             ]),
             _vm._v(" "),
@@ -22635,7 +23796,7 @@ var render = function() {
               _c("label", [_vm._v("Employee No")]),
               _vm._v(" "),
               _c("p", { staticClass: "text-primary" }, [
-                _vm._v(_vm._s(_vm.detail.employeeNo))
+                _vm._v(_vm._s(_vm.form.employeeNo))
               ])
             ]),
             _vm._v(" "),
@@ -22643,7 +23804,7 @@ var render = function() {
               _c("label", [_vm._v("Name")]),
               _vm._v(" "),
               _c("p", { staticClass: "text-primary" }, [
-                _vm._v(_vm._s(_vm.detail.employeeName))
+                _vm._v(_vm._s(_vm.form.employeeName))
               ])
             ])
           ])
@@ -22660,25 +23821,144 @@ var render = function() {
             _c("div", { staticClass: "col-lg-6 employee-details" }, [
               _c("label", [_vm._v("Username / E-mail")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.email))])
+              _c("h5", [_vm._v(_vm._s(_vm.form.email))])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-6 employee-details" }, [
               _c("label", [_vm._v("Access Status")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.accessStatus))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.accessStatusId,
+                      expression: "form.accessStatusId"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "accessStatusId",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                _vm._l(_vm.accessStatuses, function(accessStatus) {
+                  return _c(
+                    "option",
+                    { domProps: { value: accessStatus.id } },
+                    [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(accessStatus.name) +
+                          "\n                            "
+                      )
+                    ]
+                  )
+                })
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-6 employee-details" }, [
               _c("label", [_vm._v("Allow Super Admin")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.allowSuperAdminAccess))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.allowSuperAdminAccess,
+                      expression: "form.allowSuperAdminAccess"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "allowSuperAdminAccess",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: 1 } }, [_vm._v("True")]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 0 } }, [_vm._v("False")])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-6 employee-details" }, [
               _c("label", [_vm._v("Allow Admin")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.allowAdminAccess))])
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.allowAdminAccess,
+                      expression: "form.allowAdminAccess"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "allowAdminAccess",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { domProps: { value: 1 } }, [_vm._v("True")]),
+                  _vm._v(" "),
+                  _c("option", { domProps: { value: 0 } }, [_vm._v("False")])
+                ]
+              )
             ])
           ])
         ])
@@ -22922,43 +24202,43 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Job Position")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.jobPosition))])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Division")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.division))])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Branch Office")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.branchOffice))])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Recruitment Status")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.recruitmentStatus))])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Date of Entry")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.dateOfEntry))])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Date of Start")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.dateOfStart))])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 employee-details" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
               _c("label", [_vm._v("Date of Resignation")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.dateOfResignation))])
@@ -22993,6 +24273,27 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-bb8c53a6", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-fb66584a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/helpers/NotFound.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("p", [_vm._v("404 Page Not Found")])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-fb66584a", module.exports)
   }
 }
 
@@ -36529,6 +37830,8 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__views_EditEmployment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__views_EditEmployment_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__views_EditLogin_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/EditLogin.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__views_EditLogin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__views_EditLogin_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__helpers_NotFound_vue__ = __webpack_require__("./resources/assets/js/client/helpers/NotFound.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__helpers_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__helpers_NotFound_vue__);
 /**
  * Created by kevinpurwono on 9/11/17.
  */
@@ -36544,10 +37847,12 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 
 
+
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]);
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_Index_vue___default.a }, { path: 'detail/:id/master', component: __WEBPACK_IMPORTED_MODULE_3__views_DetailMaster_vue___default.a, name: 'detailMaster' }, { path: 'detail/:id/employment', component: __WEBPACK_IMPORTED_MODULE_4__views_DetailEmployment_vue___default.a, name: 'detailEmployment' }, { path: 'detail/:id/login', component: __WEBPACK_IMPORTED_MODULE_5__views_DetailLogin_vue___default.a, name: 'detailLogin' }, { path: 'detail/:id/master/edit', component: __WEBPACK_IMPORTED_MODULE_6__views_EditMaster_vue___default.a, name: 'editMaster' }, { path: 'detail/:id/employment/edit', component: __WEBPACK_IMPORTED_MODULE_7__views_EditEmployment_vue___default.a, name: 'editEmployment' }, { path: 'detail/:id/login/edit', component: __WEBPACK_IMPORTED_MODULE_8__views_EditLogin_vue___default.a, name: 'editLogin' }]
+    // mode: 'history',
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_Index_vue___default.a }, { path: '/detail/:id/master', component: __WEBPACK_IMPORTED_MODULE_3__views_DetailMaster_vue___default.a, name: 'detailMaster' }, { path: '/detail/:id/employment', component: __WEBPACK_IMPORTED_MODULE_4__views_DetailEmployment_vue___default.a, name: 'detailEmployment' }, { path: '/detail/:id/login', component: __WEBPACK_IMPORTED_MODULE_5__views_DetailLogin_vue___default.a, name: 'detailLogin' }, { path: '/detail/:id/master/edit', component: __WEBPACK_IMPORTED_MODULE_6__views_EditMaster_vue___default.a, name: 'editMaster' }, { path: '/detail/:id/employment/edit', component: __WEBPACK_IMPORTED_MODULE_7__views_EditEmployment_vue___default.a, name: 'editEmployment' }, { path: '/detail/:id/login/edit', component: __WEBPACK_IMPORTED_MODULE_8__views_EditLogin_vue___default.a, name: 'editLogin' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -36886,6 +38191,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-24df7a72", Component.options)
   } else {
     hotAPI.reload("data-v-24df7a72", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/helpers/NotFound.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-fb66584a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/helpers/NotFound.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/helpers/NotFound.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-fb66584a", Component.options)
+  } else {
+    hotAPI.reload("data-v-fb66584a", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true

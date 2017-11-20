@@ -409,7 +409,7 @@
                                         <br>
                                         <p class="form-title">Bank Information</p>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default form-group-default-select2">
                                                 <label class="">Bank</label>
                                                 <select class="full-width" data-placeholder="Select Bank"
                                                         data-init-plugin="select2"
