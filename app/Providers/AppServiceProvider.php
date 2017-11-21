@@ -17,8 +17,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191); // fix for DB MySQL < 5.7 conflicts
 
-        /*Account provider*/
-
     }
 
     /**

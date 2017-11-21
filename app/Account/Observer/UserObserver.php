@@ -15,7 +15,21 @@ class UserObserver
 
     public function creating(User $model)
     {
-        /* Insert UUID in id column*/
-        $model->{$model->getKeyName()} = $this->generateUUID();
+
+    }
+
+    public function created()
+    {
+
+    }
+
+    public function saving()
+    {
+
+    }
+
+    public function saved()
+    {
+
     }
 }

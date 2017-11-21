@@ -47,7 +47,7 @@ Route::get('/', 'Client\Dashboard\ViewController@index');
 |--------------------------------------------------------------------------
 */
 
-Route::prefix('testing')->middleware('auth.admin')->group(function () {
+Route::prefix('testing')->group(function () {
 
     Route::get('employment', function () {
         $employment = \App\Employee\Models\Employment::find(1);
@@ -61,9 +61,7 @@ Route::prefix('testing')->middleware('auth.admin')->group(function () {
 
     Route::post('upload', 'TestUploadController@upload')->name('post.upload');
 
-    Route::get('generateDate', function () {
-
-    });
+    Route::get('seedCalendar','TestUploadController@seedCalendar');
 
 
 });
