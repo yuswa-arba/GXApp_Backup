@@ -6,8 +6,8 @@
     <span class="icon-thumbnail"><i data-feather="clock"></i></span>
     <ul class="sub-menu">
         <li class="">
-            <a href="#">Who's Working</a>
-            <span class="icon-thumbnail">ww</span>
+            <a href="#">Dashboard</a>
+            <span class="icon-thumbnail">db</span>
         </li>
         <li class="">
             <a href="#">Timesheets</a>
