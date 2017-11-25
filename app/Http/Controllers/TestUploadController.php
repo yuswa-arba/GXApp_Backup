@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Traits\GlobalUtils;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,7 +34,7 @@ class TestUploadController extends Controller
 
     public function seedCalendar()
     {
-        $months = ['JA','FB','MR','AP','MY','JN','JL','AG','SP','OC','NV','DC'];
+        $months = ['JA', 'FB', 'MR', 'AP', 'MY', 'JN', 'JL', 'AG', 'SP', 'OC', 'NV', 'DC'];
         $dayNames = ['SU', 'M', 'TU', 'W', 'TH', 'F', 'SA'];
         $totalWorkers = 1;
 
@@ -40,7 +42,7 @@ class TestUploadController extends Controller
         $cellIDs = array();
 
         for ($tw = 1; $tw <= $totalWorkers; $tw++) {
-            foreach ($months as $m){
+            foreach ($months as $m) {
 
                 // JANUARY
                 if ($m == 'JA') {
@@ -67,7 +69,7 @@ class TestUploadController extends Controller
                             $id = $m . $w . $dayName;
 
                             // Filter dates
-                            $filter = ['FB1SU', 'FB1M', 'FB1TU', 'FB1W','FB5TH','FB5F','FB5SA'];
+                            $filter = ['FB1SU', 'FB1M', 'FB1TU', 'FB1W', 'FB5TH', 'FB5F', 'FB5SA'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -96,13 +98,13 @@ class TestUploadController extends Controller
                 }
 
 
-                if ($m =='AP') {
+                if ($m == 'AP') {
                     foreach ($dayNames as $dayName) {
                         for ($w = 1; $w <= 5; $w++) {
                             $id = $m . $w . $dayName;
 
                             // Filter dates
-                            $filter = ['AP5TU', 'AP5W', 'AP5TH','AP5F','AP5SA'];
+                            $filter = ['AP5TU', 'AP5W', 'AP5TH', 'AP5F', 'AP5SA'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -119,7 +121,7 @@ class TestUploadController extends Controller
                             $id = $m . $w . $dayName;
 
                             // Filter dates
-                            $filter = ['MY1SU', 'MY1M', 'MY5F','MY5SA'];
+                            $filter = ['MY1SU', 'MY1M', 'MY5F', 'MY5SA'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -136,7 +138,7 @@ class TestUploadController extends Controller
                             $id = $m . $w . $dayName;
 
                             // Filter dates
-                            $filter = ['JN1SU', 'JN1M', 'JN1TU','JN1W','JN1TH'];
+                            $filter = ['JN1SU', 'JN1M', 'JN1TU', 'JN1W', 'JN1TH'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -154,7 +156,7 @@ class TestUploadController extends Controller
                             $id = $m . $w . $dayName;
 
                             // Filter dates
-                            $filter = ['JL5W', 'JL5TH', 'JL5F','JL5SA'];
+                            $filter = ['JL5W', 'JL5TH', 'JL5F', 'JL5SA'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -170,7 +172,7 @@ class TestUploadController extends Controller
                         for ($w = 1; $w <= 5; $w++) {
                             $id = $m . $w . $dayName;
                             // Filter dates
-                            $filter = ['AG1SU', 'AG1M', 'AG1TU','AG5SA'];
+                            $filter = ['AG1SU', 'AG1M', 'AG1TU', 'AG5SA'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -187,7 +189,7 @@ class TestUploadController extends Controller
                             $id = $m . $w . $dayName;
 
                             // Filter dates
-                            $filter = ['SP1SU','SP1M', 'SP1TU', 'SP1W','SP1TH','SP1F','SP6M', 'SP6TU', 'SP6W','SP6TH','SP6F','SP6SA'];
+                            $filter = ['SP1SU', 'SP1M', 'SP1TU', 'SP1W', 'SP1TH', 'SP1F', 'SP6M', 'SP6TU', 'SP6W', 'SP6TH', 'SP6F', 'SP6SA'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -203,7 +205,7 @@ class TestUploadController extends Controller
                         for ($w = 1; $w <= 5; $w++) {
                             $id = $m . $w . $dayName;
                             // Filter dates
-                            $filter = ['OC1SU','OC5TH','OC5F','OC5SA'];
+                            $filter = ['OC1SU', 'OC5TH', 'OC5F', 'OC5SA'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -219,7 +221,7 @@ class TestUploadController extends Controller
                         for ($w = 1; $w <= 5; $w++) {
                             $id = $m . $w . $dayName;
                             // Filter dates
-                            $filter = ['NV1SU','NV1M','NV1TU','NV1W','NV5SA'];
+                            $filter = ['NV1SU', 'NV1M', 'NV1TU', 'NV1W', 'NV5SA'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -235,7 +237,7 @@ class TestUploadController extends Controller
                         for ($w = 1; $w <= 6; $w++) {
                             $id = $m . $w . $dayName;
                             // Filter dates
-                            $filter = ['DC1SU','DC1M','DC1TU','DC1W','DC1TH','DC1F','DC6TU','DC6W','DC6TH','DC6F','DC6SA'];
+                            $filter = ['DC1SU', 'DC1M', 'DC1TU', 'DC1W', 'DC1TH', 'DC1F', 'DC6TU', 'DC6W', 'DC6TH', 'DC6F', 'DC6SA'];
 
                             if (!in_array($id, $filter)) {
                                 // if is not in filter dates then insert it
@@ -249,8 +251,56 @@ class TestUploadController extends Controller
         }
 
 
-
         echo count($cellIDs);
         echo json_encode($cellIDs);
+    }
+
+    public function attdLogic()
+    {
+
+
+
+    }
+
+
+    private function generateDateRange(Carbon $start_date, Carbon $end_date)
+    {
+        $dates = [];
+
+        for($date = $start_date; $date->lte($end_date); $date->addDay()) {
+            $dates[] = $date->format('Y-m-d');
+        }
+
+        return $dates;
+    }
+
+    public function getMondaysOfThisYearAddBy($day)
+    {
+        $start_date = Carbon::parse('first day of January');
+        $end_date = Carbon::parse('last day of December');
+        $dates = [];
+
+        for($date = $start_date; $date->lte($end_date); $date->addDay()) {
+            if($date->isMonday()){
+                $dates[] = $date->addDay($day)->format('d/m/Y');
+            }
+        }
+
+        return $dates;
+    }
+
+    public function getSundaysOfThisYearAddBy($day)
+    {
+        $start_date = Carbon::parse('first day of January');
+        $end_date = Carbon::parse('last day of December');
+        $dates = [];
+
+        for($date = $start_date; $date->lte($end_date); $date->addDay()) {
+            if($date->isSunday()){
+                $dates[] = $date->addDay($day)->format('d/m/Y');
+            }
+        }
+
+        return $dates;
     }
 }

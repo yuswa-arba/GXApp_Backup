@@ -5,6 +5,7 @@
 <link href="{{mix('plugins/css/jquery.scrollbar.css')}}" rel="stylesheet" type="text/css" media="screen" />
 <link href="{{mix('plugins/css/select2.min.css')}}" rel="stylesheet" type="text/css" media="screen"/>
 <link href="{{mix('plugins/css/datepicker3.css')}}" rel="stylesheet" type="text/css" media="screen"/>
+<link href="{{mix('plugins/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" media="screen"/>
 
 @stack('child-styles')
 

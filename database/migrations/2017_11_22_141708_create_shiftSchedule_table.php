@@ -18,6 +18,7 @@ class CreateShiftScheduleTable extends Migration
             $table->string('name');
             $table->string('timeStart');
             $table->string('timeEnd');
+            $table->tinyInteger('isOvernight');
             $table->timestamps();
         });
     }

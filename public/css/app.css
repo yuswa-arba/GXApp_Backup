@@ -173,3 +173,38 @@
   font-weight: bold;
 }
 
+.left-0 {
+  left: 0 !important;
+}
+
+.h-250 {
+  height: 250px !important;
+}
+
+.h-273 {
+  height: 273px !important;
+}
+
+.h-275 {
+  height: 275px !important;
+}
+
+.h-350 {
+  height: 350px !important;
+}
+
+.h-500 {
+  height: 500px !important;
+}
+
+.italic {
+  font-style: italic !important;
+}
+
+/* Table */
+
+.table-text-center th,
+.table-text-center td {
+  text-align: center !important;
+}
+

@@ -18,6 +18,7 @@
 <script src="{{mix('plugins/js/select2.full.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.inputmask.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
+<script src="{{mix('plugins/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
 
 
 @stack('child-scripts-plugins')

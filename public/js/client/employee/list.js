@@ -1754,6 +1754,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/master', form).then(function (res) {
                 if (!res.data.isFailed) {
 
+                    // remove errors alert
+                    $('#errors-container').addClass('hide');
+
                     /* Show success notification*/
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -1796,6 +1799,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/employment', form).then(function (res) {
                 if (!res.data.isFailed) {
 
+                    // remove errors alert
+                    $('#errors-container').addClass('hide');
+
                     /* Show success notification*/
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -1837,6 +1843,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'employee/edit/login', form).then(function (res) {
                 if (!res.data.isFailed) {
+
+                    // remove errors alert
+                    $('#errors-container').addClass('hide');
 
                     /* Show success notification*/
                     $('.page-container').pgNotification({

@@ -13,7 +13,6 @@ Route::namespace('Client\Employee')->prefix('employee')->middleware('auth.admin'
     Route::get('/', function () {
 
         // do something here or simply redirect
-
         return redirect()->route('employee.list');
 
     })->name('employee');

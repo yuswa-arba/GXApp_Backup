@@ -18,6 +18,8 @@ mix.copy([
     'resources/assets/plugins/select2/css/select2.min.css',
     'resources/assets/plugins/switchery/css/switchery.min.css',
     'resources/assets/plugins/bootstrap-datepicker/css/datepicker3.css',
+    'resources/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css',
+
 ], 'public/plugins/css/')
     .copy([
         'resources/assets/plugins/pace/pace.min.js',
@@ -134,7 +136,8 @@ mix.js('resources/assets/js/client/employee/form','public/js/client/employee');
 mix.js('resources/assets/js/client/employee/list','public/js/client/employee');
 mix.js('resources/assets/js/client/passport/main','public/js/client/passport');
 mix.js('resources/assets/js/client/permission/main','public/js/client/permission');
-mix.js('resources/assets/js/client/testing/main','public/js/client/testing');
+// mix.js('resources/assets/js/client/attendance/dashboard','public/js/client/attendance');
+mix.js('resources/assets/js/client/attendance/setting','public/js/client/attendance');
 
 /*
  |--------------------------------------------------------------------------

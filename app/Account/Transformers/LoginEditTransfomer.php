@@ -4,12 +4,7 @@ namespace App\Account\Transformers;
 
 use App\Account\Models\AccessStatus;
 use App\Account\Models\User;
-use App\Components\Models\BranchOffice;
-use App\Components\Models\Division;
-use App\Components\Models\JobPosition;
-use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
-use App\Employee\Models\RecruitmentStatus;
 use League\Fractal\TransformerAbstract;
 
 class LoginEditTransfomer extends TransformerAbstract

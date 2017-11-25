@@ -133,7 +133,14 @@ class AjaxController extends Controller
         $employment = Employment::where('employeeId',$request->employeeId)->first();
 
         if($employment){
-            $employment->update($request->all());
+
+            $employment->branchOfficeId = $request->branchOfficeId;
+            $employment->dateOfEntry = $request->dateOfEntry;
+            $employment->dateOfStart = $request->dateOfStart;
+            $employment->divisionId = $request->divisionId;
+            $employment->jobPositionId = $request->jobPositionId;
+            $employment->recruitmentStatusId = $request->recruitmentStatusId;
+            $employment->save();
 
             /* Return success response */
             $response['isFailed'] = false;
@@ -209,7 +216,10 @@ class AjaxController extends Controller
 
         if($user){
 
-            $user->update($request->all());
+            $user->accessStatusId = $request->accessStatusId;
+            $user->allowAdminAccess = $request->allowAdminAccess;
+            $user->allowSuperAdminAccess = $request->allowSuperAdminAccess;
+            $user->save();
 
             /* Return success response */
             $response['isFailed'] = false;

@@ -132,6 +132,9 @@
                     .then((res) => {
                         if (!res.data.isFailed) {
 
+                            // remove errors alert
+                            $('#errors-container').addClass('hide');
+
                             /* Show success notification*/
                             $('.page-container').pgNotification({
                                 style: 'flip',
@@ -180,6 +183,9 @@
                     .then((res) => {
                         if (!res.data.isFailed) {
 
+                            // remove errors alert
+                            $('#errors-container').addClass('hide');
+
                             /* Show success notification*/
                             $('.page-container').pgNotification({
                                 style: 'flip',
@@ -227,6 +233,9 @@
                 post(api_path() + 'employee/edit/login', form)
                     .then((res) => {
                         if (!res.data.isFailed) {
+
+                            // remove errors alert
+                            $('#errors-container').addClass('hide');
 
                             /* Show success notification*/
                             $('.page-container').pgNotification({

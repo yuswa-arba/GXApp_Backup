@@ -17,6 +17,7 @@ class CreateSlotScheduleTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->tinyInteger('allowMultiple');
+            $table->string('allowStartBeforeTime')->default('60'); // minutes
             $table->timestamps();
         });
     }

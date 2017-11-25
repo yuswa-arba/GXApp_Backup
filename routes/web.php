@@ -23,7 +23,7 @@ require(base_path($client_path . 'dashboard.php'));
 require(base_path($client_path . 'divisions.php'));
 require(base_path($client_path . 'employee.php'));
 require(base_path($client_path . 'settings/main.php'));
-
+require(base_path($client_path . 'attendance/main.php'));
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +62,7 @@ Route::prefix('testing')->group(function () {
     Route::post('upload', 'TestUploadController@upload')->name('post.upload');
 
     Route::get('seedCalendar','TestUploadController@seedCalendar');
-
+    Route::get('attdlogic','TestUploadController@attdLogic');
 
 });
 

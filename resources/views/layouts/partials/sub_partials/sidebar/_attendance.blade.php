@@ -6,7 +6,7 @@
     <span class="icon-thumbnail"><i data-feather="clock"></i></span>
     <ul class="sub-menu">
         <li class="">
-            <a href="#">Dashboard</a>
+            <a href="{{route('attendance.dashboard')}}">Dashboard</a>
             <span class="icon-thumbnail">db</span>
         </li>
         <li class="">
@@ -18,11 +18,7 @@
             <span class="icon-thumbnail">cl</span>
         </li>
         <li class="">
-            <a href="#">Shifts</a>
-            <span class="icon-thumbnail">sh</span>
-        </li>
-        <li class="">
-            <a href="#">Settings</a>
+            <a href="{{route('attendance.setting')}}">Settings</a>
             <span class="icon-thumbnail">st</span>
         </li>
     </ul>

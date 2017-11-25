@@ -12,8 +12,6 @@
 <script src="{{mix('plugins/js/autoNumeric.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.bootstrap.wizard.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.validate.min.js')}}" type="text/javascript"></script>
-
-
 @endpush
 
 @push('child-page-controller')

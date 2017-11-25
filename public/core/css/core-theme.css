@@ -2961,25 +2961,25 @@ hr.dotted {
 ------------------------------------
  */
 .bg-master {
-  background-color: #7a8994;
+  background-color: #7a8994!important;
 }
 .bg-master-light {
-  background-color: #eaecee;
+  background-color: #eaecee!important;
 }
 .bg-master-lighter {
-  background-color: #f2f4f5;
+  background-color: #f2f4f5!important;
 }
 .bg-master-lightest {
-  background-color: #f6f9fa;
+  background-color: #f6f9fa!important;
 }
 .bg-master-dark {
-  background-color: #373e43;
+  background-color: #373e43!important;
 }
 .bg-master-darker {
-  background-color: #212528;
+  background-color: #212528!important;
 }
 .bg-master-darkest {
-  background-color: #16191b;
+  background-color: #16191b!important;
 }
 /* Contextual Colors
 ------------------------------------
@@ -3167,6 +3167,11 @@ hr.dotted {
 .text-primary {
   color: #007be8 !important;
 }
+
+.text-true-black{
+  color:#000!important;
+}
+
 /* Text Aligngments
 ------------------------------------
 */
@@ -14762,6 +14767,7 @@ Main components
 }
 .jumbotron {
   background-color: #f6f9fa;
+  margin-bottom:0!important;
 }
 .breadcrumb > .breadcrumb-item.active {
   color: #000;
