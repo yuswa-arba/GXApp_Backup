@@ -2170,6 +2170,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 //
 //
 //
@@ -2184,10 +2185,335 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {}
+    data: function data() {
+        return {
+            slotMakers: [],
+            jobPositions: [],
+            formObject: {},
+            isRelatedToJob: false
+        };
+    },
+    mounted: function mounted() {
+        $('#firstdate').val('01/01/' + new Date().getFullYear());
+    },
+    created: function created() {
+
+        var self = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/jobPosition').then(function (res) {
+            self.jobPositions = res.data.data;
+        });
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slotMaker/list').then(function (res) {
+            self.slotMakers = res.data.data;
+
+            // fix datatables Bug displaying "no data available"
+            if (!_.isEmpty(self.slotMakers)) {
+                $('.dataTables_empty').hide();
+            }
+        });
+    },
+
+    methods: {
+        createSlotMaker: function createSlotMaker() {
+            var self = this;
+
+            var serializeForm = $('#slot-maker-form').serializeArray();
+
+            _.forEach(serializeForm, function (value, key) {
+                self.formObject[value.name] = value.value;
+            });
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slotMaker/create', self.formObject).then(function (res) {
+                if (!res.data.isFailed && res.data.slotMaker) {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    // reset form
+                    $('#slot-maker-form input').val('');
+                    $('#slot-maker-form select').val('');
+                    self.isRelatedToJob = false;
+
+                    // push to table
+                    self.slotMakers.push(res.data.slotMaker);
+
+                    // fix datatables Bug displaying "no data available"
+                    if (!_.isEmpty(self.slotMakers)) {
+                        $('.dataTables_empty').hide();
+                    }
+                } else {
+
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message + "<br>" + err.response.data.errors.name[0],
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        },
+        execute: function execute(slotMakerId, slotMakerName) {
+
+            if (confirm('Are you sure to execute slot maker : ' + slotMakerName + ' ?')) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slotMaker/execute', { id: slotMakerId }).then(function (res) {
+                    console.log(res);
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message + "<br>" + err.response.data.errors.name[0],
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            }
+        },
+        seeHow: function seeHow() {
+            $('#modal-see-how').modal('show');
+        },
+        closeModal: function closeModal() {
+            $('#modal-see-how').modal("toggle"); // close modal
+        }
+    }
 });
 
 /***/ }),
@@ -29406,29 +29732,537 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-5 m-b-10" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("form", { attrs: { id: "slot-maker-form" } }, [
+            _c("h4", [_vm._v("Slot Maker Form")]),
+            _vm._v(" "),
+            _c("div", [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v("Related to Job")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.isRelatedToJob,
+                      expression: "isRelatedToJob"
+                    }
+                  ],
+                  attrs: {
+                    type: "checkbox",
+                    name: "relatedToJobPosition",
+                    value: "1"
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.isRelatedToJob)
+                      ? _vm._i(_vm.isRelatedToJob, "1") > -1
+                      : _vm.isRelatedToJob
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.isRelatedToJob,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = "1",
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.isRelatedToJob = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.isRelatedToJob = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.isRelatedToJob = $$c
+                      }
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _vm.isRelatedToJob
+                ? _c("div", [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Job Position")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          staticClass: "form-control",
+                          attrs: { name: "jobPositionId", required: "" }
+                        },
+                        _vm._l(_vm.jobPositions, function(jobPosition) {
+                          return _c(
+                            "option",
+                            { domProps: { value: jobPosition.id } },
+                            [_vm._v(_vm._s(jobPosition.name))]
+                          )
+                        })
+                      )
+                    ])
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _vm._m(4)
+            ]),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass: "text-primary fs-14 pointer",
+                on: {
+                  click: function($event) {
+                    _vm.seeHow()
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  "\n                        See how\n                    "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary pull-right",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.createSlotMaker()
+                  }
+                }
+              },
+              [_vm._v("Save\n                    ")]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block" }, [
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticClass: " h-500" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table table-hover settingDT" }, [
+                    _vm._m(5),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.slotMakers, function(slotMaker) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(slotMaker.name))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(slotMaker.firstDate))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            slotMaker.relatedToJobPosition == 1
+                              ? _c("p", [
+                                  _vm._v(
+                                    "\n                                            " +
+                                      _vm._s(slotMaker.jobPosition) +
+                                      "\n                                        "
+                                  )
+                                ])
+                              : _c("p", [_vm._v("-")])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(slotMaker.totalDayLoop))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(slotMaker.workingDays))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            slotMaker.allowMultipleAssign == 1
+                              ? _c("p", [_vm._v("Yes")])
+                              : _c("p", [_vm._v("No")])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            slotMaker.isExecuted == 1
+                              ? _c("p", [
+                                  _vm._v(
+                                    "\n                                            by " +
+                                      _vm._s(slotMaker.executedBy) +
+                                      " at " +
+                                      _vm._s(slotMaker.executedAt) +
+                                      "\n                                        "
+                                  )
+                                ])
+                              : _c("p", [_vm._v("-")])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("i", {
+                              staticClass: "fs-14 fa fa-search pointer"
+                            }),
+                            _vm._v(
+                              "\n                                           \n\n\n                                        "
+                            ),
+                            slotMaker.isExecuted != 1
+                              ? _c("i", {
+                                  staticClass:
+                                    "fs-14 text-success fa fa-power-off pointer",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.execute(slotMaker.id, slotMaker.name)
+                                    }
+                                  }
+                                })
+                              : _c("i", {
+                                  staticClass:
+                                    "fs-14 text-danger fa fa-power-off pointer"
+                                }),
+                            _vm._v(
+                              "\n\n                                           \n\n                                        "
+                            ),
+                            slotMaker.isExecuted == 1
+                              ? _c("i", {
+                                  staticClass:
+                                    "fs-14 text-success fa fa-refresh pointer"
+                                })
+                              : _c("i", {
+                                  staticClass: "fs-14 fa fa-refresh pointer"
+                                })
+                          ])
+                        ])
+                      })
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade stick-up",
+        attrs: {
+          id: "modal-see-how",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(6),
+            _vm._v(" "),
+            _vm._m(7),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "p-t-5 p-b-5 btn text-primary bold all-caps btn-block",
+                  on: {
+                    click: function($event) {
+                      _vm.closeModal()
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                        Close\n                    "
+                  )
+                ]
+              )
+            ])
+          ])
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row column-seperation" }, [
-      _c("div", { staticClass: "col-lg-6" }, [
-        _c("h3", [
-          _c("span", { staticClass: "semi-bold" }, [_vm._v("Sometimes")]),
-          _vm._v(" Small things in life means the most\n        ")
+    return _c("div", { staticClass: "col-lg-5 m-b-10 m-t-10" }, [
+      _c("div", { staticClass: "card no-border" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "parent-center" }, [
+            _c("p", { staticClass: "pull-left child-center fs-14" }, [
+              _vm._v("Allow employees to exchange slot")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "pull-right child-center",
+              attrs: { type: "checkbox" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "parent-center" }, [
+            _c("p", { staticClass: "pull-left child-center fs-14" }, [
+              _vm._v("Allow exchange without confirmation")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "pull-right child-center",
+              attrs: { type: "checkbox" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "parent-center" }, [
+            _c("p", { staticClass: "pull-left child-center fs-14" }, [
+              _vm._v("Allow managers to edit timesheets")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "pull-right child-center",
+              attrs: { type: "checkbox" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix" }),
+          _vm._v(" "),
+          _c("div", { staticClass: "parent-center" }, [
+            _c("p", { staticClass: "pull-left child-center fs-14" }, [
+              _vm._v("Auto-sync slots")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "pull-right child-center",
+              attrs: { type: "checkbox" }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix" }),
+          _vm._v(" "),
+          _c("p", { staticClass: "fs-12" }, [
+            _vm._v(
+              "If someone is not assigned to any slot, he/she won't be able to clock in/out"
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "fs-12" }, [
+            _vm._v(
+              "Creating slot maker means only creating the setting, slot maker needs to be\n                    executed from the\n                    table below "
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "fs-12" }, [
+            _vm._v(
+              "Slot maker only generates day off based on the settings, it means working days is\n                    all days(in the year\n                    of the slot maker executed) EXCEPT the day-off days"
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-2 m-b-10 m-t-10" }, [
+      _c("div", { staticClass: "card no-border" }, [
+        _c("div", { staticClass: "card-block" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row clearfix" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group  required" }, [
+          _c("label", [_vm._v("Name")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", name: "name", required: "" }
+          })
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-6" }, [
-        _c("h3", { staticClass: "semi-bold" }, [_vm._v("great tabs")]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Native boostrap tabs customized to Pages look and feel, simply changing class name\n            you can change color as well as its animations"
-          )
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group required" }, [
+          _c("label", [_vm._v("First Date")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                id: "firstdate",
+                type: "text",
+                name: "firstDate",
+                required: ""
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "input-group-addon" }, [
+              _c("i", { staticClass: "fa fa-calendar" })
+            ])
+          ])
         ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row clearfix" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group  required" }, [
+          _c("label", [_vm._v("Working Days")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: {
+              type: "number",
+              name: "workingDays",
+              value: "6",
+              required: ""
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group required" }, [
+          _c("label", [_vm._v("Total Day Loop")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "number", name: "totalDayLoop", required: "" }
+          })
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group  required" }, [
+      _c("label", [_vm._v("Allow Multiple Assign")]),
+      _vm._v(" "),
+      _c(
+        "select",
+        {
+          staticClass: "form-control",
+          attrs: { name: "allowMultipleAssign", required: "" }
+        },
+        [
+          _c("option", { attrs: { value: "0" } }, [_vm._v("No")]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "1" } }, [_vm._v("Yes")])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("First Date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Related to")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Total Loop")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Working Days")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Multiple")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Executed")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close" })]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+        _vm._v(" Create Slot maker")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c("p", [
+        _c("span", { staticClass: "bold" }, [_vm._v("1. Name: ")]),
+        _vm._v(" Lorem ipsum astasf")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticClass: "bold" }, [_vm._v("2. First Date: ")]),
+        _vm._v(" Lorem ipsum astasf")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticClass: "bold" }, [_vm._v("3. Total Day Loop: ")]),
+        _vm._v(" Lorem ipsum astasf")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticClass: "bold" }, [_vm._v("4. Working Days: ")]),
+        _vm._v(" Lorem ipsum astasf")
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticClass: "bold" }, [
+          _vm._v("5. Allow multiple assign: ")
+        ]),
+        _vm._v(" Lorem ipsum astasf")
       ])
     ])
   }
@@ -30093,7 +30927,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-6 m-b-10" }, [
+    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
       _c("div", { staticClass: "card no-border" }, [
         _c(
           "div",
@@ -30172,7 +31006,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6 m-b-10" }, [
+    return _c("div", { staticClass: "col-lg-4 m-b-10" }, [
       _c("div", { staticClass: "card card-transparent" }, [
         _c("div", { staticClass: "card-block" }, [
           _c("form", { attrs: { id: "kiosk-form" } }, [
@@ -46428,6 +47262,12 @@ $(document).ready(function () {
         "destroy": true,
         "paging": false,
         "scrollCollapse": false
+    });
+
+    var d = new Date();
+    $('#firstdate').datepicker({
+        format: 'dd/mm/yyyy',
+        startDate: new Date(d.getFullYear(), 0, 1)
     });
 });
 

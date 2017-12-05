@@ -122,13 +122,15 @@
             let self = this;
             get(api_path() + 'setting/role/list')
                 .then((res) => {
-                    this.roles = res.data.data;
+                    self.roles = res.data.data;
                 })
 
             this.$bus.$on('assign:by_permission', function (role) {
 
                 $('#newPermission' + role.id).removeClass('hide'); //show badge
             })
+
+
         },
         methods: {
             percent(permission, totalPermission){
@@ -138,6 +140,7 @@
                 return _.upperCase(text)
             },
             showModal(role){
+
                 let self = this;
 
                 this.role = role;
@@ -151,7 +154,6 @@
                         this.role.permissions = this.assignedPermissions; // update card list
                         $('#newPermission' + role.id).addClass('hide'); // hide badge if there is any
                     });
-
 
                 $('#modal-role-detail').modal('show')
             },
@@ -173,7 +175,7 @@
 
                         this.role.permissions = res.data.assigned.data;
 
-                        this.$bus.$emit('assign:by_role',permission)
+                        this.$bus.$emit('assign:by_role', permission)
 
                         $('.page-container').pgNotification({
                             style: 'flip',

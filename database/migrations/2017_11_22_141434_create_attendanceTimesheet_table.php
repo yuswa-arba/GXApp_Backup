@@ -31,6 +31,7 @@ class CreateAttendanceTimesheetTable extends Migration
             $table->string('browser')->nullable();
             $table->tinyInteger('attendanceApproveId');
             $table->string('approvedBy')->nullable();
+            $table->tinyInteger('attendanceValidationId')->default(0);
             $table->timestamps();
         });
     }

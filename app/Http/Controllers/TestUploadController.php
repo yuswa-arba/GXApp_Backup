@@ -257,9 +257,9 @@ class TestUploadController extends Controller
 
     public function attdLogic()
     {
-
-
-
+        $d = Carbon::createFromFormat('d/m/Y', '06/02/2017')->dayOfYear;
+        $s = Carbon::createFromFormat('d/m/Y', '06/02/2017')->addDay(24)->toDayDateTimeString();
+        echo $d;
     }
 
 
@@ -267,7 +267,7 @@ class TestUploadController extends Controller
     {
         $dates = [];
 
-        for($date = $start_date; $date->lte($end_date); $date->addDay()) {
+        for ($date = $start_date; $date->lte($end_date); $date->addDay()) {
             $dates[] = $date->format('Y-m-d');
         }
 
@@ -280,8 +280,8 @@ class TestUploadController extends Controller
         $end_date = Carbon::parse('last day of December');
         $dates = [];
 
-        for($date = $start_date; $date->lte($end_date); $date->addDay()) {
-            if($date->isMonday()){
+        for ($date = $start_date; $date->lte($end_date); $date->addDay()) {
+            if ($date->isMonday()) {
                 $dates[] = $date->addDay($day)->format('d/m/Y');
             }
         }
@@ -295,12 +295,75 @@ class TestUploadController extends Controller
         $end_date = Carbon::parse('last day of December');
         $dates = [];
 
-        for($date = $start_date; $date->lte($end_date); $date->addDay()) {
-            if($date->isSunday()){
+        for ($date = $start_date; $date->lte($end_date); $date->addDay()) {
+            if ($date->isSunday()) {
                 $dates[] = $date->addDay($day)->format('d/m/Y');
             }
         }
 
         return $dates;
     }
+
+    public function tryLogic()
+    {
+
+        $turn = 23;
+        $maxLoopDay = 3;
+        $workinDay = 5;
+        $totalDaysInThisYear = (365 + Carbon::now()->format('L'));
+
+
+        $slots = array();
+
+
+        for ($i = 0; $i < $maxLoopDay; $i++) {
+
+            $w = 1;
+            for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
+                $week = $w++;
+//                $slot[$i+1][$week] = Carbon::parse('first monday of January')->addWeek($week)->format('d-m-Y');
+                $slots[$i + 1][$week] = Carbon::parse('first sunday of January')->addDays($i + ($workinDay+1) * $week)->format('d-m-Y');
+            }
+
+            // add first day off
+            $slots[$i + 1]["0"] = Carbon::parse('first sunday of January')->addDays($i)->format('d-m-Y');
+
+        }
+
+        echo json_encode($slots);
+
+    }
+
+//    public function tryLogic()
+//    {
+//
+//        $turn = 23;
+//        $maxLoopDay = 23;
+//        $workinDay = 6;
+//        $totalDaysInThisYear = (365 + Carbon::now()->format('L'));
+//
+//
+//        $slot = array();
+//
+//
+//        for ($i = 0; $i < $maxLoopDay; $i++) {
+//            $w = 1;
+//            for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
+//                $week = $w++;
+////                $slot[$i+1][$week] = Carbon::parse('first monday of January')->addWeek($week)->format('d-m-Y');
+//                $slot[$i + 1][$week] = Carbon::parse('first monday of January')->addDays($i + 6 * $week)->format('d-m-Y');
+//            }
+//
+//            // add first day off
+//            $slot[$i + 1]["0"] = Carbon::parse('first monday of January')->addDays($i)->format('d-m-Y');
+//
+//
+//        }
+//
+//        echo json_encode($slot);
+//
+//    }
+
+
+
 }

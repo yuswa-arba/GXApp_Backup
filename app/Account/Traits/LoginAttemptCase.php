@@ -24,7 +24,6 @@ trait  LoginAttemptCase
 
     public function logicCase($guard)
     {
-        $this->guest = Auth::guard($guard)->guest();
         if (!empty(Auth::guard($guard)) && !empty(Auth::guard($guard)->user())) {
 
             $this->noAccess = !Auth::guard($guard)->user()->accessStatusId;

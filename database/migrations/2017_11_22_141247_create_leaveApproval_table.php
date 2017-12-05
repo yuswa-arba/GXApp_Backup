@@ -16,7 +16,6 @@ class CreateLeaveApprovalTable extends Migration
         Schema::create('leaveApproval', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->timestamps();
         });
     }
 

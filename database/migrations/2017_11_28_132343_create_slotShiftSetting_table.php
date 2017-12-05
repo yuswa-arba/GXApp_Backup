@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateShiftScheduleTable extends Migration
+class CreateSlotShiftSettingTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,14 @@ class CreateShiftScheduleTable extends Migration
      */
     public function up()
     {
-        Schema::create('shiftSchedule', function (Blueprint $table) {
+        Schema::create('slotShiftSetting', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('timeStart');
-            $table->string('timeEnd');
-            $table->tinyInteger('isOvernight');
+            $table->tinyInteger('slotId');
+            $table->tinyInteger('shiftId');
+            $table->tinyInteger('week');
+            $table->tinyInteger('month');
+            $table->integer('year');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateShiftScheduleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('shiftSchedule');
+        Schema::dropIfExists('slotShiftSetting');
     }
 }

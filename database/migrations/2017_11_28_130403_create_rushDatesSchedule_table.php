@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSlotScheduleTable extends Migration
+class CreateRushDatesScheduleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateSlotScheduleTable extends Migration
      */
     public function up()
     {
-        Schema::create('slotSchedule', function (Blueprint $table) {
+        Schema::create('rushDatesSchedule', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->tinyInteger('allowMultiple');
-            $table->string('allowStartBeforeTime')->default('60'); // minutes
+            $table->string('date');
+            $table->string('startTime');
+            $table->string('endTime');
+            $table->tinyInteger('allDay');
+            $table->string('description');
             $table->timestamps();
         });
     }
@@ -29,6 +31,6 @@ class CreateSlotScheduleTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('slotSchedule');
+        Schema::dropIfExists('rushDatesSchedule');
     }
 }

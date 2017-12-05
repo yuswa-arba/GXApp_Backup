@@ -18,12 +18,13 @@ $type_helpdesk = 'helpdesk/';
 | Init client routes
 |--------------------------------------------------------------------------
 */
-require(base_path($client_path . 'auth.php'));
-require(base_path($client_path . 'dashboard.php'));
-require(base_path($client_path . 'divisions.php'));
-require(base_path($client_path . 'employee.php'));
+require(base_path($client_path . 'auth/main.php'));
+require(base_path($client_path . 'dashboard/main.php'));
+require(base_path($client_path . 'divisions/main.php'));
+require(base_path($client_path . 'employee/main.php'));
 require(base_path($client_path . 'settings/main.php'));
 require(base_path($client_path . 'attendance/main.php'));
+require(base_path($client_path . 'doorAccess/main.php'));
 
 /*
 |--------------------------------------------------------------------------
@@ -32,7 +33,9 @@ require(base_path($client_path . 'attendance/main.php'));
 */
 require(base_path($backend_path . $type_helpdesk . 'settings/main.php'));
 require(base_path($backend_path . $type_helpdesk . 'employee.php'));
+require(base_path($backend_path . $type_helpdesk . 'attendance.php'));
 
+require(base_path($backend_path . $type_helpdesk . 'component.php'));
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +66,7 @@ Route::prefix('testing')->group(function () {
 
     Route::get('seedCalendar','TestUploadController@seedCalendar');
     Route::get('attdlogic','TestUploadController@attdLogic');
+    Route::get('tryLogic','TestUploadController@tryLogic');
 
 });
 

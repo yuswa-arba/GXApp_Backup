@@ -16,6 +16,9 @@ class CreateKiosksTable extends Migration
         Schema::create('kiosks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('description');
+            $table->string('api_token');
+            $table->integer('batteryPower');
+            $table->tinyInteger('isCharging');
             $table->tinyInteger('isEnabled');
             $table->timestamps();
         });

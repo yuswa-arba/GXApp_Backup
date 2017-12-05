@@ -138,6 +138,7 @@ mix.js('resources/assets/js/client/passport/main','public/js/client/passport');
 mix.js('resources/assets/js/client/permission/main','public/js/client/permission');
 // mix.js('resources/assets/js/client/attendance/dashboard','public/js/client/attendance');
 mix.js('resources/assets/js/client/attendance/setting','public/js/client/attendance');
+mix.js('resources/assets/js/client/doorAccess/main','public/js/client/doorAccess');
 
 /*
  |--------------------------------------------------------------------------

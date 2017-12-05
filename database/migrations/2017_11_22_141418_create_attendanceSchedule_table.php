@@ -16,8 +16,12 @@ class CreateAttendanceScheduleTable extends Migration
         Schema::create('attendanceSchedule', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('slotId');
-            $table->string('date');
             $table->integer('shiftId');
+            $table->string('date');
+            $table->tinyInteger('allowedToCheckIn')->default(0);
+            $table->tinyInteger('allowedToCheckOut')->default(0);
+            $table->tinyInteger('allowedToBreakIn')->default(0);
+            $table->tinyInteger('allowedToBreakOut')->default(0);
             $table->timestamps();
         });
     }

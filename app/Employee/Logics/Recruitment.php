@@ -39,6 +39,7 @@ class Recruitment extends UseCase
             return response()->json($response, 200);
 
         } else {
+
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to create employee, undefined employee ID';

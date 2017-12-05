@@ -16,7 +16,6 @@ class CreateAttendanceApprovalTable extends Migration
         Schema::create('attendanceApproval', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->timestamps();
         });
     }
 

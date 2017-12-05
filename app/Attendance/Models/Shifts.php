@@ -6,13 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Shifts extends Model
 {
-    protected $table = 'shiftSchedule';
-
-    protected $fillable = [
+    protected $table='shifts';
+    protected $fillable=[
         'name',
-        'timeStart',
-        'timeEnd',
-        'isOvernight'
+        'workStartAt',
+        'workEndAt',
+        'breakStartAt',
+        'breakEndAt',
+        'isOvernight',
     ];
-
 }

@@ -16,9 +16,8 @@ class CreatePublicHolidayScheduleTable extends Migration
         Schema::create('publicHolidaySchedule', function (Blueprint $table) {
             $table->increments('id');
             $table->string('date');
-            $table->string('description');
+            $table->string('name');
             $table->tinyInteger('isGeneral')->default(1);
-            $table->tinyInteger('isSpecificReligion')->default(0);
             $table->tinyInteger('religionId')->nullable();
             $table->timestamps();
         });

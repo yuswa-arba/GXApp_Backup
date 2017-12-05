@@ -21,11 +21,11 @@ Object.defineProperties(Vue.prototype, {
     }
 })
 
-Vue.use(VueGoogleMaps,{
-    load:{
+Vue.use(VueGoogleMaps, {
+    load: {
         // key:'AIzaSyCRV00e8AjA3r4W3269xvjChOupfVDBz6U',
-        key:'',
-        libraries:'places'
+        key: '',
+        libraries: 'places'
     }
 })
 
@@ -63,6 +63,12 @@ $(document).ready(function () {
         "paging": false,
         "scrollCollapse": false
     })
+
+    let d = new Date();
+    $('#firstdate').datepicker({
+        format: 'dd/mm/yyyy',
+        startDate: new Date(d.getFullYear(), 0, 1)
+    });
 
 })
 

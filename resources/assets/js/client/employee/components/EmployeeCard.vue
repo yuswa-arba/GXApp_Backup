@@ -20,7 +20,8 @@
                              width="33" height="33"
                         />
                     </div>
-                    <h5>{{employee.givenName}} {{employee.surname}}</h5>
+                    <h5>{{employee.givenName}}</h5>
+                    <p class="hide">{{employee.surname}}</p>
                     <h6>{{employee.jobPosition}}</h6>
                 </div>
             </div>

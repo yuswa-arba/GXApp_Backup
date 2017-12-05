@@ -2063,11 +2063,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     created: function created() {
-        var _this = this;
 
         var self = this;
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/list').then(function (res) {
-            _this.roles = res.data.data;
+            self.roles = res.data.data;
         });
 
         this.$bus.$on('assign:by_permission', function (role) {
@@ -2084,18 +2083,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return _.upperCase(text);
         },
         showModal: function showModal(role) {
-            var _this2 = this;
+            var _this = this;
 
             var self = this;
 
             this.role = role;
 
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/assigned/' + role.name).then(function (res) {
-                _this2.roleId = res.data.data.id;
-                _this2.roleName = res.data.data.name;
-                _this2.permissions = res.data.data.allPermissions.data;
-                _this2.assignedPermissions = res.data.data.assignedPermissions.data;
-                _this2.role.permissions = _this2.assignedPermissions; // update card list
+                _this.roleId = res.data.data.id;
+                _this.roleName = res.data.data.name;
+                _this.permissions = res.data.data.allPermissions.data;
+                _this.assignedPermissions = res.data.data.assignedPermissions.data;
+                _this.role.permissions = _this.assignedPermissions; // update card list
                 $('#newPermission' + role.id).addClass('hide'); // hide badge if there is any
             });
 
@@ -2106,7 +2105,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             $('#modal-role-detail').modal("toggle"); // close modal
         },
         assign: function assign(roleName, permission) {
-            var _this3 = this;
+            var _this2 = this;
 
             var assignPermissionIdArr = [];
 
@@ -2118,9 +2117,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/assign/by_role', data).then(function (res) {
 
-                _this3.role.permissions = res.data.assigned.data;
+                _this2.role.permissions = res.data.assigned.data;
 
-                _this3.$bus.$emit('assign:by_role', permission);
+                _this2.$bus.$emit('assign:by_role', permission);
 
                 $('.page-container').pgNotification({
                     style: 'flip',

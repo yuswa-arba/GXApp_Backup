@@ -1,3 +1,9 @@
+/*HTML*/
+
+body {
+  zoom: 90% !important;
+}
+
 .dropzone {
   min-height: 170px;
 }
@@ -206,5 +212,15 @@
 .table-text-center th,
 .table-text-center td {
   text-align: center !important;
+}
+
+.parent-center {
+  position: relative;
+}
+
+.child-center {
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 

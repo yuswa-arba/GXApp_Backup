@@ -1,0 +1,31 @@
+<?php
+
+namespace App\Attendance\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class AttendanceSchedule extends Model
+{
+    protected $table = 'attendanceSchedule';
+    protected $fillable = [
+        'slotId',
+        'shiftId',
+        'date',
+        'allowedToCheckIn',
+        'allowedToCheckOut',
+        'allowedToBreakIn',
+        'allowedToBreakOut'
+    ];
+
+    public function slot()
+    {
+        return $this->belongsTo(Slots::class,'slotId');
+    }
+
+    public function shift()
+    {
+        return $this->belongsTo(Shifts::class,'shiftId');
+    }
+
+
+}

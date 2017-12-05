@@ -1927,6 +1927,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -23730,10 +23731,10 @@ var render = function() {
                       })
                 ]),
                 _vm._v(" "),
-                _c("h5", [
-                  _vm._v(
-                    _vm._s(employee.givenName) + " " + _vm._s(employee.surname)
-                  )
+                _c("h5", [_vm._v(_vm._s(employee.givenName))]),
+                _vm._v(" "),
+                _c("p", { staticClass: "hide" }, [
+                  _vm._v(_vm._s(employee.surname))
                 ]),
                 _vm._v(" "),
                 _c("h6", [_vm._v(_vm._s(employee.jobPosition))])

@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-lg-6 m-b-10">
+        <div class="col-lg-8 m-b-10">
             <div class="card no-border">
                 <div class="card-block">
                     <gmap-map
@@ -14,7 +14,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6 m-b-10">
+        <div class="col-lg-4 m-b-10">
             <div class="card card-transparent">
                 <div class="card-block">
                     <form id="kiosk-form">
