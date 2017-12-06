@@ -16,6 +16,8 @@ class CreateSlotsTable extends Migration
         Schema::create('slots', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->integer('positionOrder');
+            $table->tinyInteger('allowMultipleAssign')->default(0);
             $table->tinyInteger('slotMakerId');
             $table->timestamps();
         });

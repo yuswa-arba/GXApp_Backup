@@ -2402,6 +2402,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -2493,13 +2494,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         execute: function execute(slotMakerId, slotMakerName) {
 
+            var self = this;
+
             if (confirm('Are you sure to execute slot maker : ' + slotMakerName + ' ?')) {
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slotMaker/execute', { id: slotMakerId }).then(function (res) {
-                    console.log(res);
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    self.slotMakers = res.data.slotMakers;
                 }).catch(function (err) {
                     $('.page-container').pgNotification({
                         style: 'flip',
-                        message: err.message + "<br>" + err.response.data.errors.name[0],
+                        message: err.message,
                         position: 'top-right',
                         timeout: 3500,
                         type: 'danger'
@@ -29807,7 +29819,13 @@ var render = function() {
                           return _c(
                             "option",
                             { domProps: { value: jobPosition.id } },
-                            [_vm._v(_vm._s(jobPosition.name))]
+                            [
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(jobPosition.name) +
+                                  "\n                                    "
+                              )
+                            ]
                           )
                         })
                       )

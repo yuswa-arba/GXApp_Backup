@@ -9,6 +9,8 @@ class Slots extends Model
     protected $table='slots';
     protected $fillable = [
         'name',
+        'positionOrder',
+        'allowMultipleAssign',
         'slotMakerId',
     ];
 

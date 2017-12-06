@@ -71,7 +71,6 @@
                             </div>
 
 
-
                             <div class="form-group">
                                 <label>Related to Job</label>
                                 <input type="checkbox" name="relatedToJobPosition" v-model="isRelatedToJob" value="1">
@@ -81,7 +80,9 @@
                                 <div class="form-group">
                                     <label>Job Position</label>
                                     <select class="form-control" name="jobPositionId" required>
-                                        <option :value="jobPosition.id" v-for="jobPosition in jobPositions">{{jobPosition.name}}</option>
+                                        <option :value="jobPosition.id" v-for="jobPosition in jobPositions">
+                                            {{jobPosition.name}}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -241,11 +242,11 @@
                 slotMakers: [],
                 jobPositions: [],
                 formObject: {},
-                isRelatedToJob:false
+                isRelatedToJob: false
             }
         },
         mounted(){
-            $('#firstdate').val('01/01/'+new Date().getFullYear())
+            $('#firstdate').val('01/01/' + new Date().getFullYear())
         },
         created(){
 
@@ -320,7 +321,7 @@
                     .catch((err) => {
                         $('.page-container').pgNotification({
                             style: 'flip',
-                            message: err.message +  "<br>" + err.response.data.errors.name[0],
+                            message: err.message + "<br>" + err.response.data.errors.name[0],
                             position: 'top-right',
                             timeout: 3500,
                             type: 'danger'
@@ -329,15 +330,26 @@
             },
             execute(slotMakerId, slotMakerName){
 
+                let self = this;
+
                 if (confirm('Are you sure to execute slot maker : ' + slotMakerName + ' ?')) {
                     post(api_path() + 'attendance/slotMaker/execute', {id: slotMakerId})
                         .then((res) => {
-                            console.log(res)
+
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            self.slotMakers = res.data.slotMakers
                         })
                         .catch((err) => {
                             $('.page-container').pgNotification({
                                 style: 'flip',
-                                message: err.message +  "<br>" + err.response.data.errors.name[0],
+                                message: err.message,
                                 position: 'top-right',
                                 timeout: 3500,
                                 type: 'danger'

@@ -26,7 +26,7 @@ class SlotMakerListTransformer extends TransformerAbstract
             'workingDays' => $slotMaker->workingDays,
             'allowMultipleAssign' =>$slotMaker->allowMultipleAssign,
             'isExecuted' =>$slotMaker->isExecuted,
-            'executedAt' => !is_null($slotMaker->executedAt)?Carbon::createFromFormat('d/m/Y',$slotMaker->executedAt)->diffForHumans():'',
+            'executedAt' => Carbon::parse($slotMaker->executedAt)->diffForHumans(),
             'executedBy' =>$slotMaker->executedBy,
         ];
     }
