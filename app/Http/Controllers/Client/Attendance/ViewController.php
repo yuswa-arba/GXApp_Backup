@@ -12,6 +12,12 @@ class ViewController extends Controller
         return view('pages.attendance.dashboard');
     }
 
+    public function slot()
+    {
+        return view('pages.attendance.slot');
+    }
+
+
     public function setting()
     {
         return view('pages.attendance.setting');

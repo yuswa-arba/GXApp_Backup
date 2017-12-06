@@ -18,6 +18,10 @@
             <span class="icon-thumbnail">cl</span>
         </li>
         <li class="">
+            <a href="{{route('attendance.slot')}}">Slots</a>
+            <span class="icon-thumbnail">sl</span>
+        </li>
+        <li class="">
             <a href="{{route('attendance.setting')}}">Settings</a>
             <span class="icon-thumbnail">st</span>
         </li>

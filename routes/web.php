@@ -67,6 +67,7 @@ Route::prefix('testing')->group(function () {
     Route::get('seedCalendar','TestUploadController@seedCalendar');
     Route::get('attdlogic','TestUploadController@attdLogic');
     Route::get('tryLogic','TestUploadController@tryLogic');
+    Route::get('SEP','TestUploadController@slotEmployeePivot');
 
 });
 

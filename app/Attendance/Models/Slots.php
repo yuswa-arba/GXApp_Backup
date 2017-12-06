@@ -2,6 +2,7 @@
 
 namespace App\Attendance\Models;
 
+use App\Employee\Models\MasterEmployee;
 use Illuminate\Database\Eloquent\Model;
 
 class Slots extends Model
@@ -17,5 +18,10 @@ class Slots extends Model
     public function slotMaker()
     {
         return $this->belongsTo(SlotMaker::class,'slotMakerId');
+    }
+
+    public function employees()
+    {
+        return $this->belongsToMany(MasterEmployee::class,'employeeSlotSchedule','slotId','employeeId');
     }
 }

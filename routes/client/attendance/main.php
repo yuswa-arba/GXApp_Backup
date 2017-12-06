@@ -39,6 +39,7 @@ Route::prefix('attendance')->namespace('Client\Attendance')->middleware('auth.ad
      |--------------------------------------------------------------------------
      */
     include (base_path($client_setting_path .'dashboard.php'));
+    include (base_path($client_setting_path .'slot.php'));
     include (base_path($client_setting_path .'setting.php'));
 
 });

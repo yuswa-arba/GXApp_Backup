@@ -45,7 +45,6 @@
                                             <span class="help pull-right ">
                                                 ( Week {{\Carbon\Carbon::now()->weekOfYear}})
                                             </span>
-                                        </h3>
                                     </div>
                                 </div>
                             </div>

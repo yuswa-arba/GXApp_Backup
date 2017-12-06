@@ -19,6 +19,9 @@ Route::prefix('v1/h')->group(function () {
         Route::post('slotMaker/create', 'SlotMakerController@create')->name('v1.slotMaker.create');
         Route::post('slotMaker/execute','SlotMakerController@execute')->name('v1.slotMaker.execute');
 
+        Route::get('slot/list','SlotController@list')->name('v1.slot.list');
     });
+
+
 
 });

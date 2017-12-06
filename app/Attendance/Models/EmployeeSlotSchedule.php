@@ -4,6 +4,7 @@ namespace App\Attendance\Models;
 
 use App\Employee\Models\MasterEmployee;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
 class EmployeeSlotSchedule extends Model
 {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Attendance\Models\Slots;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -322,7 +323,7 @@ class TestUploadController extends Controller
             for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
                 $week = $w++;
 //                $slot[$i+1][$week] = Carbon::parse('first monday of January')->addWeek($week)->format('d-m-Y');
-                $slots[$i + 1][$week] = Carbon::parse('first sunday of January')->addDays($i + ($workinDay+1) * $week)->format('d-m-Y');
+                $slots[$i + 1][$week] = Carbon::parse('first sunday of January')->addDays($i + ($workinDay + 1) * $week)->format('d-m-Y');
             }
 
             // add first day off
@@ -334,36 +335,17 @@ class TestUploadController extends Controller
 
     }
 
-//    public function tryLogic()
-//    {
-//
-//        $turn = 23;
-//        $maxLoopDay = 23;
-//        $workinDay = 6;
-//        $totalDaysInThisYear = (365 + Carbon::now()->format('L'));
-//
-//
-//        $slot = array();
-//
-//
-//        for ($i = 0; $i < $maxLoopDay; $i++) {
-//            $w = 1;
-//            for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
-//                $week = $w++;
-////                $slot[$i+1][$week] = Carbon::parse('first monday of January')->addWeek($week)->format('d-m-Y');
-//                $slot[$i + 1][$week] = Carbon::parse('first monday of January')->addDays($i + 6 * $week)->format('d-m-Y');
-//            }
-//
-//            // add first day off
-//            $slot[$i + 1]["0"] = Carbon::parse('first monday of January')->addDays($i)->format('d-m-Y');
-//
-//
-//        }
-//
-//        echo json_encode($slot);
-//
-//    }
 
+    public function slotEmployeePivot()
+    {
+        $slots = Slots::all();
+        $assignedSlots = array();
+
+        foreach ($slots as $slot) {
+            echo json_encode($slot->employees);
+        }
+
+    }
 
 
 }
