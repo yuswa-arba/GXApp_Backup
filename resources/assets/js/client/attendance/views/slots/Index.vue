@@ -68,7 +68,7 @@
                                     10+
                                 </td>
                                 <td class="padding-10">
-                                    <i class="fs-14 fa fa-search pointer"></i>
+                                    <i class="fs-14 fa fa-search pointer" @click="viewSlotDetail(slot.id)"></i>
                                 </td>
                             </tr>
 
@@ -160,6 +160,11 @@
                             type: 'danger'
                         }).show();
                     })
+
+            },
+
+            viewSlotDetail(id){
+                this.$router.push({name: 'detailSlot', params: {id: id}})
 
             }
 

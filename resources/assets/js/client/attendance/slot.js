@@ -31,6 +31,7 @@ const app =  new Vue({
 $(document).ready(function(){
 
     let slotDT = $('.slotDT');
+
     slotDT.dataTable({
         "sDom": "t",
         "destroy": true,

@@ -78,6 +78,16 @@ mix.copyDirectory('resources/assets/plugins/feather-icons', 'public/plugins/feat
 
 mix.copyDirectory('resources/assets/plugins/dropzone', 'public/plugins/dropzone');
 
+/*
+ |--------------------------------------------------------------------------
+ | Full Calendar
+ |--------------------------------------------------------------------------
+ | fullcalendar.io plugins
+ */
+
+mix.copyDirectory('resources/assets/plugins/fullcalendar', 'public/plugins/fullcalendar');
+
+
 
 /*
  |--------------------------------------------------------------------------

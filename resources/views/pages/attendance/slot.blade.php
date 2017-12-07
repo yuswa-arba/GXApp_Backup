@@ -5,7 +5,8 @@
 <link href="{{asset('plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css')}}" rel="stylesheet" type="text/css" />
 <link href="{{asset('plugins/datatables-responsive/css/datatables.responsive.css')}}" rel="stylesheet" type="text/css" media="screen" />
-@endpush
+<link href="{{asset('plugins/fullcalendar/css/fullcalendar.css')}}" rel="stylesheet" type="text/css" media="screen" />
+
 
 @push('child-scripts-plugins')
 <!-- push needed plugins for this page -->
@@ -15,6 +16,8 @@
 <script src="{{asset('plugins/jquery-datatable/extensions/Bootstrap/jquery-datatable-bootstrap.js')}}" type="text/javascript"></script>
 <script src="{{asset('plugins/datatables-responsive/js/datatables.responsive.js')}}"></script>
 <script src="{{asset('plugins/datatables-responsive/js/lodash.min.js')}}"></script>
+<script src="{{asset('plugins/fullcalendar/js/moment.min.js')}}"></script>
+<script src="{{asset('plugins/fullcalendar/js/fullcalendar.min.js')}}"></script>
 
 @endpush
 
@@ -54,6 +57,8 @@
                 <div class="filter-container">
                     <div id="vc-attendance-slot"></div>
                 </div>
+
+
 
 
             </div>
