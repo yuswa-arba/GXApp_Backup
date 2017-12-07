@@ -16,6 +16,7 @@ use App\Http\Requests\Employee\EmploymentRequest;
 use App\Http\Requests\Employee\MasterEmployeeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class AjaxController extends Controller
 {
@@ -37,7 +38,6 @@ class AjaxController extends Controller
             return response()->json(['message' => 'Parameter ID is missing'], 500);
         }
     }
-
 
 
     public function masterEmployeeEdit($id)
@@ -65,7 +65,7 @@ class AjaxController extends Controller
         $response = array();
         $employee = MasterEmployee::find($request->id);
 
-        if($employee){
+        if ($employee) {
 
             $employee->update($request->all());
 
@@ -73,7 +73,7 @@ class AjaxController extends Controller
             $response['isFailed'] = false;
             $response['message'] = 'Master Employee has been saved successfully';
 
-            return response()->json($response,200);
+            return response()->json($response, 200);
 
         } else {
 
@@ -81,18 +81,16 @@ class AjaxController extends Controller
             $response['isFailed'] = true;
             $response['message'] = 'Error occured! Unable to find employee data';
 
-            return response()->json($response,500);
+            return response()->json($response, 500);
         }
     }
-
-
 
 
     public function employmentDetail($employeeId)
     {
         if ($employeeId != null && $employeeId != '') {
 
-            $employment = Employment::where('employeeId',$employeeId)->first();
+            $employment = Employment::where('employeeId', $employeeId)->first();
 
             if ($employment) {
                 return response()->json([
@@ -107,11 +105,12 @@ class AjaxController extends Controller
             return response()->json(['message' => 'Parameter ID is missing'], 500);
         }
     }
+
     public function employmentEdit($employeeId)
     {
         if ($employeeId != null && $employeeId != '') {
 
-            $employment = Employment::where('employeeId',$employeeId)->first();
+            $employment = Employment::where('employeeId', $employeeId)->first();
 
             if ($employment) {
                 return response()->json([
@@ -130,9 +129,9 @@ class AjaxController extends Controller
     public function saveEmploymentEdit(EmploymentRequest $request)
     {
         $response = array();
-        $employment = Employment::where('employeeId',$request->employeeId)->first();
+        $employment = Employment::where('employeeId', $request->employeeId)->first();
 
-        if($employment){
+        if ($employment) {
 
             $employment->branchOfficeId = $request->branchOfficeId;
             $employment->dateOfEntry = $request->dateOfEntry;
@@ -146,7 +145,7 @@ class AjaxController extends Controller
             $response['isFailed'] = false;
             $response['message'] = 'Employment has been saved successfully';
 
-            return response()->json($response,200);
+            return response()->json($response, 200);
 
         } else {
 
@@ -154,7 +153,7 @@ class AjaxController extends Controller
             $response['isFailed'] = true;
             $response['message'] = 'Error occured! Unable to find employment data';
 
-            return response()->json($response,500);
+            return response()->json($response, 500);
         }
 
 
@@ -164,7 +163,7 @@ class AjaxController extends Controller
     {
         if ($employeeId != null && $employeeId != '') {
 
-            $user = User::where('employeeId',$employeeId)->first();
+            $user = User::where('employeeId', $employeeId)->first();
 
             if ($user) {
                 return response()->json([
@@ -184,7 +183,7 @@ class AjaxController extends Controller
     {
         if ($employeeId != null && $employeeId != '') {
 
-            $user = User::where('employeeId',$employeeId)->first();
+            $user = User::where('employeeId', $employeeId)->first();
 
             if ($user) {
                 return response()->json([
@@ -204,41 +203,44 @@ class AjaxController extends Controller
     {
 
         $request->validate([
-            'employeeId'=>'required',
-            'email'=>'required',
-            'accessStatusId'=>'required',
-            'allowAdminAccess'=>'required',
-            'allowSuperAdminAccess'=>'required'
+            'employeeId' => 'required',
+            'email' => 'required',
+            'accessStatusId' => 'required',
+            'allowAdminAccess' => 'required',
+            'allowSuperAdminAccess' => 'required'
         ]);
 
         $response = array();
-        $user = User::where('employeeId',$request->employeeId)->first();
+        $user = User::where('employeeId', $request->employeeId)->first();
 
-        if($user){
+        if ($user) {
 
             $user->accessStatusId = $request->accessStatusId;
             $user->allowAdminAccess = $request->allowAdminAccess;
             $user->allowSuperAdminAccess = $request->allowSuperAdminAccess;
+
+            // if password is filled then change it
+            if ($request->changePassword != '' && !empty($request->changePassword)) {
+                $user->password = Hash::make($request->changePassword);
+            }
+
             $user->save();
 
             /* Return success response */
             $response['isFailed'] = false;
             $response['message'] = 'Login detail has been saved successfully';
 
-            return response()->json($response,200);
+            return response()->json($response, 200);
 
         } else {
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Error occured! Unable to find user data';
 
-            return response()->json($response,500);
+            return response()->json($response, 500);
         }
 
     }
-
-
-
 
 
 }

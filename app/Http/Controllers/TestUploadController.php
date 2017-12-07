@@ -310,9 +310,10 @@ class TestUploadController extends Controller
 
         $turn = 23;
         $maxLoopDay = 3;
-        $workinDay = 5;
+        $workinDay = 6;
         $totalDaysInThisYear = (365 + Carbon::now()->format('L'));
 
+        $dayOffs= array();
 
         $slots = array();
 
@@ -322,8 +323,8 @@ class TestUploadController extends Controller
             $w = 1;
             for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
                 $week = $w++;
-//                $slot[$i+1][$week] = Carbon::parse('first monday of January')->addWeek($week)->format('d-m-Y');
                 $slots[$i + 1][$week] = Carbon::parse('first sunday of January')->addDays($i + ($workinDay + 1) * $week)->format('d-m-Y');
+
             }
 
             // add first day off

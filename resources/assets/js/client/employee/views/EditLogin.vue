@@ -78,6 +78,12 @@
                             </select>
                         </div>
 
+                        <div class="col-lg-6 employee-details">
+                            <label>Change Password</label>
+                            <input type="password" class="form-control" v-model="form.changePassword">
+                        </div>
+
+
                     </div>
                 </div>
             </div>

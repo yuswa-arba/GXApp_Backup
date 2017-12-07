@@ -50,26 +50,6 @@
                         <h4>Slot Maker Form</h4>
                         <div>
 
-                            <div class="row clearfix">
-                                <div class="col-md-6">
-                                    <div class="form-group  required">
-                                        <label>Name</label>
-                                        <input type="text" class="form-control" name="name" required>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="form-group required">
-                                        <label>First Date</label>
-                                        <div class="input-group bootstrap-timepicker">
-                                            <input id="firstdate" type="text" class="form-control" name="firstDate"
-                                                   required>
-                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
 
                             <div class="form-group">
                                 <label>Related to Job</label>
@@ -84,6 +64,27 @@
                                             {{jobPosition.name}}
                                         </option>
                                     </select>
+                                </div>
+                            </div>
+
+                            <div class="row clearfix">
+                                <div class="col-md-6">
+                                    <div class="form-group  required">
+                                        <label>Name <i class="fa fa-question-circle pointer"
+                                                       @click="seeHow()"></i></label>
+                                        <input type="text" class="form-control" name="name" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group required">
+                                        <label>First Date</label>
+                                        <div class="input-group bootstrap-timepicker">
+                                            <input id="firstdate" type="text" class="form-control" name="firstDate"
+                                                   required>
+                                            <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -164,7 +165,7 @@
                                         </td>
                                         <td>
                                             <i class="fs-14 fa fa-search pointer"></i>
-                                            &nbsp; &nbsp;
+                                            &nbsp;
 
 
                                             <i class="fs-14 text-success fa fa-power-off pointer"
@@ -172,7 +173,7 @@
                                                v-if="slotMaker.isExecuted!=1"></i>
                                             <i class="fs-14 text-danger fa fa-power-off pointer" v-else></i>
 
-                                            &nbsp; &nbsp;
+                                            &nbsp;
 
                                             <i class="fs-14 text-success fa fa-refresh pointer"
                                                v-if="slotMaker.isExecuted==1"></i>
@@ -195,23 +196,55 @@
 
 
         <!--SEE HOW MODAL-->
-        <div class="modal fade stick-up" id="modal-see-how" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal  fade stick-up" id="modal-see-how" tabindex="-1" role="dialog" aria-hidden="true">
 
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg" style="width: 800px;">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
                             <i class="pg-close"></i>
                         </button>
                         <!--<div id="mh-role"></div>-->
-                        <h5 class="text-left dark-title p-b-5"> Create Slot maker</h5>
+                        <h5 class="text-left dark-title p-b-5"> Create Slot Maker</h5>
                     </div>
                     <div class="modal-body">
-                        <p><span class="bold">1. Name: </span> Lorem ipsum astasf</p>
-                        <p><span class="bold">2. First Date: </span> Lorem ipsum astasf</p>
-                        <p><span class="bold">3. Total Day Loop: </span> Lorem ipsum astasf</p>
-                        <p><span class="bold">4. Working Days: </span> Lorem ipsum astasf</p>
-                        <p><span class="bold">5. Allow multiple assign: </span> Lorem ipsum astasf</p>
+                        <p><span class="bold">1. Name: </span>
+                            It's basically just a name. However, we recommend this format:
+                            <br>
+                            <div class="p-l-10">
+                                <span style="font-style: italic">JobPositionName_6D_17</span>
+                                <br>
+                                So you can use it like : <b>HouseHoldTrainee_5D_17</b>
+                                <br>
+                                It means this slot was made for <b>Household Trainee</b> on 20<b>17</b> and has <b>5</b>
+                                working days
+                            </div>
+
+                        </p>
+                        <p><span class="bold">2. First Date: </span> Data will be generated starting from this date
+                            +total days in current year (recommend 1st of January)</p>
+                        <p><span class="bold">3. Total Day Loop: </span> Day offs loop through the given value and add
+                            day by 1.
+                            <br>
+                            <div class="p-l-10">
+                                Example:
+                                <br>
+                                - Total day loop = 3
+                                <br>
+                                It will generate 3 slots with the rule -> day off add by 1 day from previous slot.
+                                <br>
+                                <b>Dayoffs:</b> <br>
+                                Slot 1 : 12/01/2017,18/01/2017,25/01/2017... <br>
+                                Slot 2 : 13/01/2017,19/01/2017,26/01/2017... <br>
+                                Slot 3 : 14/01/2017,20/01/2017,27/01/2017... <br>
+                            </div>
+                        </p>
+                        <p><span class="bold">4. Working Days: </span> Total working days before 1 day off</p>
+                        <p><span class="bold">5. Allow multiple assign: </span> Can be assigned more than one individual
+                        </p>
+                        <p><span class="bold">6. Related to Job, Job Position: </span>
+                            If slot maker is related to specific job position, <b>Total loop day</b> will be sync to total of employees with that specific job position
+                        </p>
 
                     </div>
                     <div class="modal-footer">
@@ -364,7 +397,8 @@
 
             closeModal(){
                 $('#modal-see-how').modal("toggle"); // close modal
-            },
+            }
+
         }
     }
 

@@ -2860,6 +2860,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -23968,6 +23974,32 @@ var render = function() {
                   _c("option", { domProps: { value: 0 } }, [_vm._v("False")])
                 ]
               )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Change Password")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.changePassword,
+                    expression: "form.changePassword"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "password" },
+                domProps: { value: _vm.form.changePassword },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "changePassword", $event.target.value)
+                  }
+                }
+              })
             ])
           ])
         ])

@@ -39,9 +39,9 @@ class SlotMakerLogic extends SlotMakerUseCase
             } else {
 
                 /* Delete all data inserted during execution */
-                $getSlot = Slots::where('slotMakerId',$slotMaker->id)->first();
-                DayOffSchedule::where('slotId',$getSlot->id)->delete();
-                Slots::where('id',$getSlot->id)->delete();
+                $getSlot = Slots::where('slotMakerId', $slotMaker->id)->first();
+                DayOffSchedule::where('slotId', $getSlot->id)->delete();
+                Slots::where('id', $getSlot->id)->delete();
 
                 /* Return error response */
                 $response['isFailed'] = true;
@@ -74,15 +74,22 @@ class SlotMakerLogic extends SlotMakerUseCase
             $w = 1;
             for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
                 $week = $w++;
-//                $dayOffs[$i + 1][$week] = Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addDays($i + ($workinDay + 1) * $week)->format('d/m/Y');
+
                 $date = Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addDays($i + ($workinDay + 1) * $week)->format('d/m/Y');
-                array_push($dayOffs, array('slotId' => $slot->id, 'date' => $date, 'description' => 'Weekly Day Off'));
+
+                // Check if date is in current year
+                if (Carbon::createFromFormat('d/m/Y', $date)->year == Carbon::now()->year) {
+                    array_push($dayOffs, array('slotId' => $slot->id, 'date' => $date, 'description' => 'Weekly Day Off'));
+                }
             }
 
             // add first day off
-//            $dayOffs[$i + 1]["0"] = Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addDays($i)->format('d/m/Y');
             $firstDayOff = Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addDays($i)->format('d/m/Y');
-            array_push($dayOffs, array('slotId' => $slot->id, 'date' => $firstDayOff, 'description' => 'Weekly Day Off'));
+
+            // Check if date is in current year
+            if (Carbon::createFromFormat('d/m/Y', $firstDayOff)->year == Carbon::now()->year) {
+                array_push($dayOffs, array('slotId' => $slot->id, 'date' => $firstDayOff, 'description' => 'Weekly Day Off'));
+            }
 
             DayOffSchedule::insert($dayOffs);
         }
@@ -108,6 +115,6 @@ class SlotMakerLogic extends SlotMakerUseCase
     private function updateSlotMaker($slotMaker)
     {
         return SlotMaker::where('id', $slotMaker->id)
-            ->update(['isExecuted' => 1, 'executedAt' => Carbon::now(), 'executedBy' => !is_null(Auth::user()->employee)?Auth::user()->employee->name:'']);
+            ->update(['isExecuted' => 1, 'executedAt' => Carbon::now(), 'executedBy' => !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '']);
     }
 }

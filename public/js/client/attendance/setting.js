@@ -2403,6 +2403,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -29756,8 +29789,6 @@ var render = function() {
             _c("h4", [_vm._v("Slot Maker Form")]),
             _vm._v(" "),
             _c("div", [
-              _vm._m(2),
-              _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", [_vm._v("Related to Job")]),
                 _vm._v(" "),
@@ -29832,6 +29863,31 @@ var render = function() {
                     ])
                   ])
                 : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "row clearfix" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group  required" }, [
+                    _c("label", [
+                      _vm._v("Name "),
+                      _c("i", {
+                        staticClass: "fa fa-question-circle pointer",
+                        on: {
+                          click: function($event) {
+                            _vm.seeHow()
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: { type: "text", name: "name", required: "" }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm._m(2)
+              ]),
               _vm._v(" "),
               _vm._m(3),
               _vm._v(" "),
@@ -29937,7 +29993,7 @@ var render = function() {
                               staticClass: "fs-14 fa fa-search pointer"
                             }),
                             _vm._v(
-                              "\n                                           \n\n\n                                        "
+                              "\n                                         \n\n\n                                        "
                             ),
                             slotMaker.isExecuted != 1
                               ? _c("i", {
@@ -29954,7 +30010,7 @@ var render = function() {
                                     "fs-14 text-danger fa fa-power-off pointer"
                                 }),
                             _vm._v(
-                              "\n\n                                           \n\n                                        "
+                              "\n\n                                         \n\n                                        "
                             ),
                             slotMaker.isExecuted == 1
                               ? _c("i", {
@@ -29980,7 +30036,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "modal fade stick-up",
+        staticClass: "modal  fade stick-up",
         attrs: {
           id: "modal-see-how",
           tabindex: "-1",
@@ -29989,33 +30045,40 @@ var render = function() {
         }
       },
       [
-        _c("div", { staticClass: "modal-dialog" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _vm._m(6),
-            _vm._v(" "),
-            _vm._m(7),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-footer" }, [
-              _c(
-                "button",
-                {
-                  staticClass:
-                    "p-t-5 p-b-5 btn text-primary bold all-caps btn-block",
-                  on: {
-                    click: function($event) {
-                      _vm.closeModal()
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-lg",
+            staticStyle: { width: "800px" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(6),
+              _vm._v(" "),
+              _vm._m(7),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "p-t-5 p-b-5 btn text-primary bold all-caps btn-block",
+                    on: {
+                      click: function($event) {
+                        _vm.closeModal()
+                      }
                     }
-                  }
-                },
-                [
-                  _vm._v(
-                    "\n                        Close\n                    "
-                  )
-                ]
-              )
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Close\n                    "
+                    )
+                  ]
+                )
+              ])
             ])
-          ])
-        ])
+          ]
+        )
       ]
     )
   ])
@@ -30115,36 +30178,23 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row clearfix" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "form-group  required" }, [
-          _c("label", [_vm._v("Name")]),
-          _vm._v(" "),
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "form-group required" }, [
+        _c("label", [_vm._v("First Date")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
           _c("input", {
             staticClass: "form-control",
-            attrs: { type: "text", name: "name", required: "" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "form-group required" }, [
-          _c("label", [_vm._v("First Date")]),
+            attrs: {
+              id: "firstdate",
+              type: "text",
+              name: "firstDate",
+              required: ""
+            }
+          }),
           _vm._v(" "),
-          _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                id: "firstdate",
-                type: "text",
-                name: "firstDate",
-                required: ""
-              }
-            }),
-            _vm._v(" "),
-            _c("span", { staticClass: "input-group-addon" }, [
-              _c("i", { staticClass: "fa fa-calendar" })
-            ])
+          _c("span", { staticClass: "input-group-addon" }, [
+            _c("i", { staticClass: "fa fa-calendar" })
           ])
         ])
       ])
@@ -30247,7 +30297,7 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-        _vm._v(" Create Slot maker")
+        _vm._v(" Create Slot Maker")
       ])
     ])
   },
@@ -30258,29 +30308,108 @@ var staticRenderFns = [
     return _c("div", { staticClass: "modal-body" }, [
       _c("p", [
         _c("span", { staticClass: "bold" }, [_vm._v("1. Name: ")]),
-        _vm._v(" Lorem ipsum astasf")
+        _vm._v(
+          "\n                        It's basically just a name. However, we recommend this format:\n                        "
+        ),
+        _c("br")
       ]),
+      _c("div", { staticClass: "p-l-10" }, [
+        _c("span", { staticStyle: { "font-style": "italic" } }, [
+          _vm._v("JobPositionName_6D_17")
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v("\n                            So you can use it like : "),
+        _c("b", [_vm._v("HouseHoldTrainee_5D_17")]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(
+          "\n                            It means this slot was made for "
+        ),
+        _c("b", [_vm._v("Household Trainee")]),
+        _vm._v(" on 20"),
+        _c("b", [_vm._v("17")]),
+        _vm._v(" and has "),
+        _c("b", [_vm._v("5")]),
+        _vm._v(
+          "\n                            working days\n                        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p"),
       _vm._v(" "),
       _c("p", [
         _c("span", { staticClass: "bold" }, [_vm._v("2. First Date: ")]),
-        _vm._v(" Lorem ipsum astasf")
+        _vm._v(
+          " Data will be generated starting from this date\n                        +total days in current year (recommend 1st of January)"
+        )
       ]),
       _vm._v(" "),
       _c("p", [
         _c("span", { staticClass: "bold" }, [_vm._v("3. Total Day Loop: ")]),
-        _vm._v(" Lorem ipsum astasf")
+        _vm._v(
+          " Day offs loop through the given value and add\n                        day by 1.\n                        "
+        ),
+        _c("br")
       ]),
+      _c("div", { staticClass: "p-l-10" }, [
+        _vm._v(
+          "\n                            Example:\n                            "
+        ),
+        _c("br"),
+        _vm._v(
+          "\n                            - Total day loop = 3\n                            "
+        ),
+        _c("br"),
+        _vm._v(
+          "\n                            It will generate 3 slots with the rule -> day off add by 1 day from previous slot.\n                            "
+        ),
+        _c("br"),
+        _vm._v(" "),
+        _c("b", [_vm._v("Dayoffs:")]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(
+          "\n                            Slot 1 : 12/01/2017,18/01/2017,25/01/2017... "
+        ),
+        _c("br"),
+        _vm._v(
+          "\n                            Slot 2 : 13/01/2017,19/01/2017,26/01/2017... "
+        ),
+        _c("br"),
+        _vm._v(
+          "\n                            Slot 3 : 14/01/2017,20/01/2017,27/01/2017... "
+        ),
+        _c("br")
+      ]),
+      _vm._v(" "),
+      _c("p"),
       _vm._v(" "),
       _c("p", [
         _c("span", { staticClass: "bold" }, [_vm._v("4. Working Days: ")]),
-        _vm._v(" Lorem ipsum astasf")
+        _vm._v(" Total working days before 1 day off")
       ]),
       _vm._v(" "),
       _c("p", [
         _c("span", { staticClass: "bold" }, [
           _vm._v("5. Allow multiple assign: ")
         ]),
-        _vm._v(" Lorem ipsum astasf")
+        _vm._v(
+          " Can be assigned more than one individual\n                    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c("span", { staticClass: "bold" }, [
+          _vm._v("6. Related to Job, Job Position: ")
+        ]),
+        _vm._v(
+          "\n                        If slot maker is related to specific job position, "
+        ),
+        _c("b", [_vm._v("Total loop day")]),
+        _vm._v(
+          " will be sync to total of employees with that specific job position\n                    "
+        )
       ])
     ])
   }
