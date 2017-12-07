@@ -20,6 +20,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('slotMaker/execute','SlotMakerController@execute')->name('v1.slotMaker.execute');
 
         Route::get('slot/list','SlotController@list')->name('v1.slot.list');
+        Route::get('slot/detail/calendar','SlotController@calendar')->name('v1.slot.calendar');
     });
 
 

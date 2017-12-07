@@ -236,3 +236,9 @@ body {
           transform: translateY(-50%);
 }
 
+.calendar-cell {
+  padding: 5px 10px !important;
+  font-size: 12px !important;
+  border: none !important;
+}
+

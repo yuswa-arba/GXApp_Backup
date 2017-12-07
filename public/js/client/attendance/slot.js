@@ -1629,13 +1629,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {},
 
-    methods: {}
+    methods: {
+        goBack: function goBack() {
+            $('#errors-container').addClass('hide');
+            this.$router.push('/');
+        }
+    }
 });
 
 /***/ }),
@@ -1655,14 +1666,49 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {},
+    data: function data() {
+        return {
+            calendarEventSource: []
+        };
+    },
+    created: function created() {
+        var self = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/detail/calendar?' + 'slotId=' + this.$route.params.id).then(function (res) {
+            self.calendarEventSource = res.data.data;
+            $('#calendar').fullCalendar('addEventSource', self.calendarEventSource);
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
     mounted: function mounted() {
+
         $('#calendar').fullCalendar({
-            // put your options and callbacks here
+            eventRender: function eventRender(event, element, view) {
+                element.on('click', function () {
+                    console.log(moment(event.start).format('DD/MM/YYYY'));
+                });
+            }
         });
     }
 });
@@ -19522,17 +19568,35 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 m-t-10" },
+      [_vm._t("go-back-menu")],
+      2
+    ),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
-        _c("div", { attrs: { id: "calendar" } })
-      ])
+    return _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block padding-50" }, [
+            _c("div", { attrs: { id: "calendar" } })
+          ])
+        ]
+      )
     ])
   }
 ]
@@ -19800,7 +19864,27 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container-fluid container-fixed-lg" },
-    [_c("router-view")],
+    [
+      _c("router-view", [
+        _c("div", { attrs: { slot: "go-back-menu" }, slot: "go-back-menu" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-primary m-r-15 m-b-10 pull-left",
+              on: {
+                click: function($event) {
+                  _vm.goBack()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "pg-arrow_left" }),
+              _vm._v("\n                Go Back\n            ")
+            ]
+          )
+        ])
+      ])
+    ],
     1
   )
 }

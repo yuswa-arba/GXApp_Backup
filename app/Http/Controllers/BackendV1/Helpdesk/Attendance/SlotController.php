@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
+use App\Attendance\Logics\GetCalendarLogic;
 use App\Attendance\Logics\GetSlotListLogic;
 use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\SlotListTransformer;
@@ -13,6 +14,12 @@ class SlotController extends Controller
     public function list(Request $request)
     {
       return GetSlotListLogic::getData($request);
+    }
+
+    public function calendar(Request $request)
+    {
+        $request->validate(['slotId'=>'required']);
+        return GetCalendarLogic::getData($request);
     }
 
 
