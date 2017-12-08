@@ -12,7 +12,8 @@
             <a href="#">Chat</a>
         </li>
     </ul>
-    <a class="btn-link quickview-toggle" data-toggle-element="#quickview" data-toggle="quickview"><i class="pg-close"></i></a>
+    <a class="btn-link quickview-toggle" data-toggle-element="#quickview" data-toggle="quickview"><i
+                class="pg-close"></i></a>
     <!-- Tab panes -->
     <div class="tab-content">
         <!-- BEGIN Notes !-->
@@ -26,10 +27,12 @@
                                 <a href="#" class="delete-note-link"><i class="fa fa-trash-o"></i></a>
                             </li>
                             <li>
-                                <a href="#" class="new-note-link" data-navigate="view" data-view-port="#note-views" data-view-animation="push"><i class="fa fa-plus"></i></a>
+                                <a href="#" class="new-note-link" data-navigate="view" data-view-port="#note-views"
+                                   data-view-animation="push"><i class="fa fa-plus"></i></a>
                             </li>
                         </ul>
-                        <button class="btn-remove-notes btn btn-xs btn-block hide"><i class="fa fa-times"></i> Delete</button>
+                        <button class="btn-remove-notes btn btn-xs btn-block hide"><i class="fa fa-times"></i> Delete
+                        </button>
                     </div>
                     <ul>
                         <!-- BEGIN Note Item !-->
@@ -42,14 +45,17 @@
                                 </div>
                                 <!-- END Note Action !-->
                                 <!-- BEGIN Note Preview Text !-->
-                                <p class="note-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam</p>
+                                <p class="note-preview">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
+                                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+                                    veniam</p>
                                 <!-- BEGIN Note Preview Text !-->
                             </div>
                             <!-- BEGIN Note Details !-->
                             <div class="right pull-right">
                                 <!-- BEGIN Note Date !-->
                                 <span class="date">12/12/14</span>
-                                <a href="#" data-navigate="view" data-view-port="#note-views" data-view-animation="push"><i class="fa fa-chevron-right"></i></a>
+                                <a href="#" data-navigate="view" data-view-port="#note-views"
+                                   data-view-animation="push"><i class="fa fa-chevron-right"></i></a>
                                 <!-- END Note Date !-->
                             </div>
                             <!-- END Note Details !-->
@@ -76,7 +82,8 @@
                                     <span>21st april 2014 2:13am</span>
                                 </div>
                                 <div class="content">
-                                    <div class="quick-note-editor full-width full-height js-input" contenteditable="true"></div>
+                                    <div class="quick-note-editor full-width full-height js-input"
+                                         contenteditable="true"></div>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +101,8 @@
                     <div class="navbar navbar-default navbar-sm">
                         <div class="navbar-inner">
                             <!-- BEGIN Header Controler !-->
-                            <a href="javascript:;" class="inline action p-l-10 link text-master" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
+                            <a href="javascript:;" class="inline action p-l-10 link text-master" data-navigate="view"
+                               data-view-port="#chat" data-view-animation="push-parrallax">
                                 <i class="pg-more"></i>
                             </a>
                             <!-- END Header Controler !-->
@@ -122,7 +130,8 @@
                                 <!-- BEGIN List Group Item!-->
                                 <li class="alert-list">
                                     <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
-                                    <a href="javascript:;" class="align-items-center" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
+                                    <a href="javascript:;" class="align-items-center" data-navigate="view"
+                                       data-view-port="#chat" data-view-animation="push-parrallax">
                                         <p class="">
                                             <span class="text-warning fs-10"><i class="fa fa-circle"></i></span>
                                         </p>
@@ -151,7 +160,8 @@
                                 <!-- BEGIN List Group Item!-->
                                 <li class="alert-list">
                                     <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
-                                    <a href="javascript:;" class="p-t-10 p-b-10 align-items-center" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
+                                    <a href="javascript:;" class="p-t-10 p-b-10 align-items-center" data-navigate="view"
+                                       data-view-port="#chat" data-view-animation="push-parrallax">
                                         <p class="">
                                             <span class="text-complete fs-10"><i class="fa fa-circle"></i></span>
                                         </p>
@@ -175,7 +185,8 @@
                                 <!-- BEGIN List Group Item!-->
                                 <li class="alert-list">
                                     <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
-                                    <a href="#" class="p-t-10 p-b-10 align-items-center" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
+                                    <a href="#" class="p-t-10 p-b-10 align-items-center" data-navigate="view"
+                                       data-view-port="#chat" data-view-animation="push-parrallax">
                                         <p class="">
                                             <span class="text-danger fs-10"><i class="fa fa-circle"></i></span>
                                         </p>
@@ -203,7 +214,8 @@
                     <div class="navbar navbar-default">
                         <div class="navbar-inner">
                             <!-- BEGIN Header Controler !-->
-                            <a href="javascript:;" class="inline action p-l-10 link text-master" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
+                            <a href="javascript:;" class="inline action p-l-10 link text-master" data-navigate="view"
+                               data-view-port="#chat" data-view-animation="push-parrallax">
                                 <i class="pg-plus"></i>
                             </a>
                             <!-- END Header Controler !-->
@@ -222,14 +234,19 @@
                     <div data-init-list-view="ioslist" class="list-view boreded no-top-border">
                         <div class="list-view-group-container">
                             <div class="list-view-group-header text-uppercase">
-                                a</div>
+                                a
+                            </div>
                             <ul>
                                 <!-- BEGIN Chat User List Item  !-->
                                 <li class="chat-user-list clearfix">
-                                    <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
-                        <span class="thumbnail-wrapper d32 circular bg-success">
-                            <img width="34" height="34" data-src-retina="{{asset('core/img/profiles/1x.jpg')}}" data-src="{{asset('core/img/profiles/1.jpg')}}" alt="" src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
-                        </span>
+                                    <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view"
+                                       class="" href="#">
+                                        <span class="thumbnail-wrapper d32 circular bg-success">
+                                            <img width="34" height="34"
+                                                 data-src-retina="{{asset('core/img/profiles/1x.jpg')}}"
+                                                 data-src="{{asset('core/img/profiles/1.jpg')}}" alt=""
+                                                 src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
+                                        </span>
                                         <p class="p-l-10 ">
                                             <span class="text-master">ava flores</span>
                                             <span class="block text-master hint-text fs-12">Hello there</span>
@@ -244,10 +261,14 @@
                             <ul>
                                 <!-- BEGIN Chat User List Item  !-->
                                 <li class="chat-user-list clearfix">
-                                    <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
-                        <span class="thumbnail-wrapper d32 circular bg-success">
-                            <img width="34" height="34" data-src-retina="{{asset('core/img/profiles/1x.jpg')}}" data-src="{{asset('core/img/profiles/1.jpg')}}" alt="" src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
-                        </span>
+                                    <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view"
+                                       class="" href="#">
+                                        <span class="thumbnail-wrapper d32 circular bg-success">
+                                            <img width="34" height="34"
+                                                 data-src-retina="{{asset('core/img/profiles/1x.jpg')}}"
+                                                 data-src="{{asset('core/img/profiles/1.jpg')}}" alt=""
+                                                 src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
+                                        </span>
                                         <p class="p-l-10 ">
                                             <span class="text-master">bella mccoy</span>
                                             <span class="block text-master hint-text fs-12">Hello there</span>
@@ -257,10 +278,14 @@
                                 <!-- END Chat User List Item  !-->
                                 <!-- BEGIN Chat User List Item  !-->
                                 <li class="chat-user-list clearfix">
-                                    <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view" class="" href="#">
-                        <span class="thumbnail-wrapper d32 circular bg-success">
-                            <img width="34" height="34" data-src-retina="{{asset('core/img/profiles/1x.jpg')}}" data-src="{{asset('core/img/profiles/1.jpg')}}" alt="" src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
-                        </span>
+                                    <a data-view-animation="push-parrallax" data-view-port="#chat" data-navigate="view"
+                                       class="" href="#">
+                                        <span class="thumbnail-wrapper d32 circular bg-success">
+                                            <img width="34" height="34"
+                                                 data-src-retina="{{asset('core/img/profiles/1x.jpg')}}"
+                                                 data-src="{{asset('core/img/profiles/1.jpg')}}" alt=""
+                                                 src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
+                                        </span>
                                         <p class="p-l-10 ">
                                             <span class="text-master">bob stephens</span>
                                             <span class="block text-master hint-text fs-12">Hello there</span>
@@ -278,7 +303,8 @@
                     <!-- BEGIN Header  !-->
                     <div class="navbar navbar-default">
                         <div class="navbar-inner">
-                            <a href="javascript:;" class="link text-master inline action p-l-10 p-r-10" data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
+                            <a href="javascript:;" class="link text-master inline action p-l-10 p-r-10"
+                               data-navigate="view" data-view-port="#chat" data-view-animation="push-parrallax">
                                 <i class="pg-arrow_left"></i>
                             </a>
                             <div class="view-heading">
@@ -303,7 +329,9 @@
                         <!-- BEGIN From Them Message  !-->
                         <div class="message clearfix">
                             <div class="profile-img-wrapper m-t-5 inline">
-                                <img width="34" height="34" data-src-retina="{{asset('core/img/profiles/1x.jpg')}}" data-src="{{asset('core/img/profiles/1.jpg')}}" alt="" src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
+                                <img width="34" height="34" data-src-retina="{{asset('core/img/profiles/1x.jpg')}}"
+                                     data-src="{{asset('core/img/profiles/1.jpg')}}" alt=""
+                                     src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
                             </div>
                             <div class="chat-bubble from-them">
                                 Hey
@@ -327,7 +355,9 @@
                         <!-- BEGIN From Them Message  !-->
                         <div class="message clearfix">
                             <div class="profile-img-wrapper m-t-5 inline">
-                                <img width="34" height="34" data-src-retina="{{asset('core/img/profiles/1x.jpg')}}" data-src="{{asset('core/img/profiles/1.jpg')}}" alt="" src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
+                                <img width="34" height="34" data-src-retina="{{asset('core/img/profiles/1x.jpg')}}"
+                                     data-src="{{asset('core/img/profiles/1.jpg')}}" alt=""
+                                     src="{{asset('core/img/profiles/1.jpg')}}" class="col-top">
                             </div>
                             <div class="chat-bubble from-them">
                                 Yea
@@ -343,7 +373,8 @@
                                 <a href="#" class="link text-master"><i class="fa fa-plus-circle"></i></a>
                             </div>
                             <div class="col-8 no-padding">
-                                <input type="text" class="form-control chat-input" data-chat-input="" data-chat-conversation="#my-conversation" placeholder="Say something">
+                                <input type="text" class="form-control chat-input" data-chat-input=""
+                                       data-chat-conversation="#my-conversation" placeholder="Say something">
                             </div>
                             <div class="col-2 link text-master m-l-10 m-t-15 p-l-10 b-l b-grey col-top">
                                 <a href="#" class="link text-master"><i class="pg-camera"></i></a>

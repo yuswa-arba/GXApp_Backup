@@ -142,7 +142,7 @@
                                     </thead>
                                     <tbody>
                                     <tr v-for="slotMaker in slotMakers">
-                                        <td>{{slotMaker.name}}</td>
+                                        <td style="width: 100px">{{slotMaker.name}}</td>
                                         <td>{{slotMaker.firstDate}}</td>
                                         <td>
                                             <p v-if="slotMaker.relatedToJobPosition==1">
@@ -163,7 +163,7 @@
                                             </p>
                                             <p v-else>-</p>
                                         </td>
-                                        <td>
+                                        <td style="width: 70px">
                                             <i class="fs-14 fa fa-search pointer"></i>
                                             &nbsp;
 

@@ -29948,7 +29948,9 @@ var render = function() {
                       "tbody",
                       _vm._l(_vm.slotMakers, function(slotMaker) {
                         return _c("tr", [
-                          _c("td", [_vm._v(_vm._s(slotMaker.name))]),
+                          _c("td", { staticStyle: { width: "100px" } }, [
+                            _vm._v(_vm._s(slotMaker.name))
+                          ]),
                           _vm._v(" "),
                           _c("td", [_vm._v(_vm._s(slotMaker.firstDate))]),
                           _vm._v(" "),
@@ -29988,7 +29990,7 @@ var render = function() {
                               : _c("p", [_vm._v("-")])
                           ]),
                           _vm._v(" "),
-                          _c("td", [
+                          _c("td", { staticStyle: { width: "70px" } }, [
                             _c("i", {
                               staticClass: "fs-14 fa fa-search pointer"
                             }),
@@ -47408,7 +47410,8 @@ $(document).ready(function () {
         "sDom": "t",
         "destroy": true,
         "paging": false,
-        "scrollCollapse": false
+        "scrollCollapse": false,
+        "ordering": false
     });
 
     var d = new Date();

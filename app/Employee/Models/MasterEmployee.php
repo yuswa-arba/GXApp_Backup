@@ -3,6 +3,7 @@
 namespace App\Employee\Models;
 
 use App\Account\Models\User;
+use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Components\Models\Bank;
 use App\Components\Models\EducationLevel;
 use App\Components\Models\MaritalStatus;
@@ -69,6 +70,11 @@ class MasterEmployee extends Model
     public function bank()
     {
         return $this->belongsTo(Bank::class, 'bankId');
+    }
+
+    public function slotSchedule()
+    {
+        return $this->hasOne(EmployeeSlotSchedule::class,'employeeId');
     }
 
 }

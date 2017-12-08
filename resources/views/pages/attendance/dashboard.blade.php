@@ -6,9 +6,13 @@
 
 @push('child-scripts-plugins')
 <!-- push needed plugins for this page -->
+<!-- recommend to zoom out notification -->
+
 @endpush
 
 @push('child-page-controller')
+@include('layouts.partials.snippets._notification_to_zoom_out')
+
 
 @endpush
 

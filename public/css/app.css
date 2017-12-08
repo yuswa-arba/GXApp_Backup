@@ -1,9 +1,5 @@
 /*HTML*/
 
-body {
-  zoom: 90% !important;
-}
-
 .dropzone {
   min-height: 170px;
 }
@@ -179,6 +175,10 @@ body {
   font-weight: bold;
 }
 
+.text-disabled {
+  color: #7a8994 !important;
+}
+
 .left-0 {
   left: 0 !important;
 }
@@ -237,8 +237,30 @@ body {
 }
 
 .calendar-cell {
-  padding: 5px 10px !important;
-  font-size: 12px !important;
+  padding: 4px 8px !important;
+  font-size: 11px !important;
   border: none !important;
+}
+
+/* Max width*/
+
+.max-w-100 {
+  max-width: 100px !important;
+}
+
+.max-w-150 {
+  max-width: 150px !important;
+}
+
+.max-w-200 {
+  max-width: 200px !important;
+}
+
+.max-w-250 {
+  max-width: 250px !important;
+}
+
+.max-w-300 {
+  max-width: 300px !important;
 }
 

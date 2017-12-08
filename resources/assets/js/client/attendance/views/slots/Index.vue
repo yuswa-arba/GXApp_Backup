@@ -54,7 +54,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="slot in slots">
+                            <tr v-for="slot in slots" class="filter-item">
                                 <td class="padding-10 p-l-15">{{slot.id}}</td>
                                 <td class="padding-10 p-l-15">{{slot.name}}</td>
                                 <td class="padding-10 p-l-15">{{slot.positionOrder}}</td>
@@ -65,10 +65,13 @@
 
                                 </td>
                                 <td class="padding-10">
-                                    10+
+                                    <span class="badge badge-important">25</span>
                                 </td>
                                 <td class="padding-10">
-                                    <i class="fs-14 fa fa-search pointer" @click="viewSlotDetail(slot.id)"></i>
+                                    <i class="fs-14 fa fa-calendar pointer" @click="viewSlotDetail(slot.id)"></i>
+                                    &nbsp;
+                                    <!--TODO: fix isTrue class binding with real data-->
+                                    <i class="fs-14 fa fa-circle pointer" :class="{'text-complete':isTrue}" @click="assignSlot(slot.id)"></i>
                                 </td>
                             </tr>
 
@@ -78,16 +81,21 @@
                 </div>
             </div>
         </div>
+        <assign-slot-modal></assign-slot-modal>
     </div>
 </template>
 
 <script>
     import {get, post} from '../../../helpers/api'
     import {api_path} from '../../../helpers/const'
-
+    import AssignSlotModal from '../../components/slots/AssignSlotModal.vue'
     export default{
+        components:{
+            "assign-slot-modal":AssignSlotModal
+        },
         data(){
             return {
+                isTrue:true,
                 relatedBy: {id: '', name: 'All'},
                 statusBy: {id: '', name: 'All'},
                 jobPositions: [],
@@ -165,7 +173,10 @@
 
             viewSlotDetail(id){
                 this.$router.push({name: 'detailSlot', params: {id: id}})
+            },
 
+            assignSlot(id){
+                this.$bus.$emit('assign:slot', id)
             }
 
         }

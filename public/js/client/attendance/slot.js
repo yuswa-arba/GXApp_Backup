@@ -1651,6 +1651,153 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            employees: [],
+            slot: {}
+        };
+    },
+    created: function created() {
+        var self = this;
+
+        self.$bus.$on('assign:slot', function (id) {
+            console.log(id);
+
+            // get slot detail
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/slot/' + id).then(function (res) {
+                self.slot = res.data.data;
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            });
+
+            // get employee list detail
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/assign/employee?slotId=' + id).then(function (res) {
+
+                self.employees = res.data.data;
+
+                $('#assignSlotModal').modal('show');
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            });
+        });
+    },
+
+    methods: {},
+    mounted: function mounted() {
+        // Search using Sieve plugins
+        $('#filter-search-employee-container').sieve({
+            searchInput: $('#search-employee-box'),
+            itemSelector: ".filter-search-employee-item"
+        });
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/slots/DetailSlot.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1704,6 +1851,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
 
         $('#calendar').fullCalendar({
+            header: {
+                left: 'prev,next today removeSource',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            selectable: true,
+            selectHelper: true,
+            select: function select(start, end) {
+                //                  alert(moment(start).format('DD/MM/YYYY'))
+            },
             eventRender: function eventRender(event, element, view) {
                 element.on('click', function () {
                     console.log(moment(event.start).format('DD/MM/YYYY'));
@@ -1722,6 +1879,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignSlotModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignSlotModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_slots_AssignSlotModal_vue__);
+//
+//
+//
+//
 //
 //
 //
@@ -1810,8 +1973,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        "assign-slot-modal": __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignSlotModal_vue___default.a
+    },
     data: function data() {
         return {
+            isTrue: true,
             relatedBy: { id: '', name: 'All' },
             statusBy: { id: '', name: 'All' },
             jobPositions: [],
@@ -1878,6 +2045,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         viewSlotDetail: function viewSlotDetail(id) {
             this.$router.push({ name: 'detailSlot', params: { id: id } });
+        },
+        assignSlot: function assignSlot(id) {
+            this.$bus.$emit('assign:slot', id);
         }
     }
 
@@ -19592,7 +19762,7 @@ var staticRenderFns = [
             "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
         },
         [
-          _c("div", { staticClass: "card-block padding-50" }, [
+          _c("div", { staticClass: "card-block padding-30" }, [
             _c("div", { attrs: { id: "calendar" } })
           ])
         ]
@@ -19611,6 +19781,256 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-111e4541\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade slide-right",
+      attrs: {
+        id: "assignSlotModal",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog modal-sm" }, [
+        _c("div", { staticClass: "modal-content-wrapper" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "container-xs-height full-height" }, [
+              _c("div", { staticClass: "row-xs-height" }, [
+                _c(
+                  "div",
+                  { staticClass: "modal-body text-center padding-10" },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "list-view boreded no-top-border",
+                        attrs: { id: "filter-search-employee-container" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "list-view-group-container" },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "list-view-group-header text-uppercase"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(_vm.slot.name) +
+                                    "\n                                    "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.employees, function(employee) {
+                              return _c(
+                                "ul",
+                                { staticClass: "filter-search-employee-item" },
+                                [
+                                  _c("li", { staticClass: "alert-list" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "align-items-center",
+                                        attrs: { href: "javascript:;" }
+                                      },
+                                      [
+                                        _c("p", {}, [
+                                          _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "text-complete fs-10",
+                                              class: {
+                                                "text-complete": !employee.hasSlotSchedule,
+                                                "text-disabled":
+                                                  employee.hasSlotSchedule
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fa fa-circle"
+                                              })
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass:
+                                              "p-l-10 overflow-ellipsis fs-12 max-w-150"
+                                          },
+                                          [
+                                            _c(
+                                              "span",
+                                              { staticClass: "text-master" },
+                                              [_vm._v(_vm._s(employee.name))]
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        employee.hasSlotSchedule
+                                          ? _c(
+                                              "select",
+                                              {
+                                                staticClass:
+                                                  "btn btn-disabled p-r-10 ml-auto fs-12"
+                                              },
+                                              [
+                                                _c(
+                                                  "option",
+                                                  {
+                                                    attrs: {
+                                                      value: "",
+                                                      selected: "",
+                                                      hidden: "",
+                                                      disabled: ""
+                                                    }
+                                                  },
+                                                  [_vm._v("Assigned")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "option",
+                                                  { attrs: { value: "" } },
+                                                  [_vm._v("Remove")]
+                                                )
+                                              ]
+                                            )
+                                          : _c(
+                                              "select",
+                                              {
+                                                staticClass:
+                                                  "btn btn-outline-primary p-r-10 ml-auto fs-12"
+                                              },
+                                              [
+                                                _c(
+                                                  "option",
+                                                  {
+                                                    attrs: {
+                                                      value: "",
+                                                      selected: "",
+                                                      disabled: "",
+                                                      hidden: ""
+                                                    }
+                                                  },
+                                                  [_vm._v("Select")]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "option",
+                                                  { attrs: { value: "" } },
+                                                  [_vm._v("Assign")]
+                                                )
+                                              ]
+                                            )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "hidden" }, [
+                                      _vm._v(_vm._s(employee.employeeNo))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "hidden" }, [
+                                      _vm._v(_vm._s(employee.jobPosition))
+                                    ])
+                                  ])
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-hidden": "true"
+        }
+      },
+      [_c("i", { staticClass: "pg-close fs-14 p-t-10" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "navbar navbar-default navbar-sm m-b-0",
+        staticStyle: { padding: "25px 0" }
+      },
+      [
+        _c("div", { staticClass: "navbar-inner" }, [
+          _c("div", { staticClass: "input-group transparent" }, [
+            _c("span", { staticClass: "input-group-addon" }, [
+              _c("i", { staticClass: "fa fa-search" })
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                id: "search-employee-box",
+                type: "text",
+                placeholder: "Name / Employee No / Job Position"
+              }
+            })
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-111e4541", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-396796da\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/slots/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19618,197 +20038,215 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "pull-right m-r-15 m-b-10" }, [
-        _c("div", { staticClass: "dropdown dropdown-default" }, [
-          _c(
-            "button",
-            {
-              staticClass:
-                "btn btn-outline-primary dropdown-toggle text-center",
-              attrs: {
-                type: "button",
-                "data-toggle": "dropdown",
-                "aria-haspopup": "true",
-                "aria-expanded": "false"
-              }
-            },
-            [
-              _vm._v(
-                "\n                    Status: " +
-                  _vm._s(_vm.statusBy.name) +
-                  "\n                "
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "dropdown-menu" }, [
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "pull-right m-r-15 m-b-10" }, [
+          _c("div", { staticClass: "dropdown dropdown-default" }, [
             _c(
-              "a",
+              "button",
               {
-                staticClass: "dropdown-item pointer",
-                on: {
-                  click: function($event) {
-                    _vm.sortBy(_vm.relatedBy.id, "")
-                  }
-                }
-              },
-              [_vm._v("\n                        Show all")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "dropdown-item pointer",
-                on: {
-                  click: function($event) {
-                    _vm.sortBy(_vm.relatedBy.id, "assigned")
-                  }
-                }
-              },
-              [_vm._v("\n                        Assigned")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "dropdown-item pointer",
-                on: {
-                  click: function($event) {
-                    _vm.sortBy(_vm.relatedBy.id, "unassigned")
-                  }
+                staticClass:
+                  "btn btn-outline-primary dropdown-toggle text-center",
+                attrs: {
+                  type: "button",
+                  "data-toggle": "dropdown",
+                  "aria-haspopup": "true",
+                  "aria-expanded": "false"
                 }
               },
               [
                 _vm._v(
-                  "\n                        Unassigned\n                    "
+                  "\n                    Status: " +
+                    _vm._s(_vm.statusBy.name) +
+                    "\n                "
                 )
               ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "dropdown-menu" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "dropdown-item pointer",
+                  on: {
+                    click: function($event) {
+                      _vm.sortBy(_vm.relatedBy.id, "")
+                    }
+                  }
+                },
+                [_vm._v("\n                        Show all")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "dropdown-item pointer",
+                  on: {
+                    click: function($event) {
+                      _vm.sortBy(_vm.relatedBy.id, "assigned")
+                    }
+                  }
+                },
+                [_vm._v("\n                        Assigned")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "dropdown-item pointer",
+                  on: {
+                    click: function($event) {
+                      _vm.sortBy(_vm.relatedBy.id, "unassigned")
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                        Unassigned\n                    "
+                  )
+                ]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pull-right m-r-15 m-b-10" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.relatedBy.id,
+                    expression: "relatedBy.id"
+                  }
+                ],
+                staticClass: "btn btn-outline-primary h-35 w-100",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.relatedBy,
+                        "id",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    },
+                    function($event) {
+                      _vm.sortBy(_vm.relatedBy.id, _vm.statusBy.id)
+                    }
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("Show all")]),
+                _vm._v(" "),
+                _vm._l(_vm.jobPositions, function(jobPosition) {
+                  return _c("option", { domProps: { value: jobPosition.id } }, [
+                    _vm._v(_vm._s(jobPosition.name) + "\n                    ")
+                  ])
+                })
+              ],
+              2
             )
           ])
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "pull-right m-r-15 m-b-10" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.relatedBy.id,
-                  expression: "relatedBy.id"
-                }
-              ],
-              staticClass: "btn btn-outline-primary h-35 w-100",
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.relatedBy,
-                      "id",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  },
-                  function($event) {
-                    _vm.sortBy(_vm.relatedBy.id, _vm.statusBy.id)
-                  }
-                ]
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("Show all")]),
-              _vm._v(" "),
-              _vm._l(_vm.jobPositions, function(jobPosition) {
-                return _c("option", { domProps: { value: jobPosition.id } }, [
-                  _vm._v(_vm._s(jobPosition.name) + "\n                    ")
-                ])
-              })
-            ],
-            2
-          )
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-12 m-b-10" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-        },
-        [
-          _c("div", { staticClass: "card-block" }, [
-            _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table table-hover slotDT" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.slots, function(slot) {
-                    return _c("tr", [
-                      _c("td", { staticClass: "padding-10 p-l-15" }, [
-                        _vm._v(_vm._s(slot.id))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "padding-10 p-l-15" }, [
-                        _vm._v(_vm._s(slot.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "padding-10 p-l-15" }, [
-                        _vm._v(_vm._s(slot.positionOrder))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "padding-10 p-l-15" }, [
-                        slot.allowMultipleAssign
-                          ? _c("p", { staticClass: "text-primary bold" }, [
-                              _vm._v("Yes")
-                            ])
-                          : _c("p", { staticClass: "text-danger bold" }, [
-                              _vm._v("No")
-                            ])
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "padding-10" }, [
-                        _vm._v(
-                          "\n                                10+\n                            "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "padding-10" }, [
-                        _c("i", {
-                          staticClass: "fs-14 fa fa-search pointer",
-                          on: {
-                            click: function($event) {
-                              _vm.viewSlotDetail(slot.id)
+      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+          },
+          [
+            _c("div", { staticClass: "card-block" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table table-hover slotDT" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.slots, function(slot) {
+                      return _c("tr", { staticClass: "filter-item" }, [
+                        _c("td", { staticClass: "padding-10 p-l-15" }, [
+                          _vm._v(_vm._s(slot.id))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "padding-10 p-l-15" }, [
+                          _vm._v(_vm._s(slot.name))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "padding-10 p-l-15" }, [
+                          _vm._v(_vm._s(slot.positionOrder))
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "padding-10 p-l-15" }, [
+                          slot.allowMultipleAssign
+                            ? _c("p", { staticClass: "text-primary bold" }, [
+                                _vm._v("Yes")
+                              ])
+                            : _c("p", { staticClass: "text-danger bold" }, [
+                                _vm._v("No")
+                              ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(2, true),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "padding-10" }, [
+                          _c("i", {
+                            staticClass: "fs-14 fa fa-calendar pointer",
+                            on: {
+                              click: function($event) {
+                                _vm.viewSlotDetail(slot.id)
+                              }
                             }
-                          }
-                        })
+                          }),
+                          _vm._v(
+                            "\n                                 \n                                "
+                          ),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fs-14 fa fa-circle pointer",
+                            class: { "text-complete": _vm.isTrue },
+                            on: {
+                              click: function($event) {
+                                _vm.assignSlot(slot.id)
+                              }
+                            }
+                          })
+                        ])
                       ])
-                    ])
-                  })
-                )
+                    })
+                  )
+                ])
               ])
             ])
-          ])
-        ]
-      )
-    ])
-  ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("assign-slot-modal")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -19840,6 +20278,14 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "padding-10" }, [
+      _c("span", { staticClass: "badge badge-important" }, [_vm._v("25")])
     ])
   }
 ]
@@ -33320,6 +33766,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-111e4541\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-111e4541", Component.options)
+  } else {
+    hotAPI.reload("data-v-111e4541", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/attendance/router/slot.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -33398,7 +33893,8 @@ $(document).ready(function () {
         "sDom": "t",
         "destroy": true,
         "paging": false,
-        "scrollCollapse": false
+        "scrollCollapse": false,
+        "ordering": false
     });
 });
 

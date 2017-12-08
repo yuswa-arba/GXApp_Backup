@@ -36,7 +36,8 @@ $(document).ready(function(){
         "sDom": "t",
         "destroy": true,
         "paging": false,
-        "scrollCollapse": false
+        "scrollCollapse": false,
+        "ordering": false
     })
 
 

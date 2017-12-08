@@ -32,7 +32,7 @@ class GetSlotListLogic extends GetSlotListUseCase
             $byAllStatus = false;
         }
 
-
+        // all slots
         $slots = Slots::all();
 
         // by specific status, by specific job position relation
