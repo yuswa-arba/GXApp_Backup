@@ -27,9 +27,9 @@
                                 <div class="list-view boreded no-top-border" id="filter-search-employee-container">
                                     <div class="list-view-group-container">
                                         <div class="list-view-group-header text-uppercase">
-                                            {{slot.name}}
+                                            {{slotAssignModal.name}}
                                         </div>
-                                        <ul class="filter-search-employee-item" v-for="employee in employees">
+                                        <ul class="filter-search-employee-item" v-for="employee in employeesToBeAssigned">
                                             <li class="alert-list">
                                                 <a href="javascript:;" class="align-items-center">
                                                     <p class="">
@@ -80,76 +80,26 @@
 </template>
 
 <script>
-    import {get, post} from '../../../helpers/api'
-    import {api_path} from '../../../helpers/const'
+    import {mapGetters} from 'vuex'
     export default{
-        data(){
-            return {
-                employees: [],
-                slot: {}
-            }
-        },
+
         created(){
-            let self = this
-
-            self.$bus.$on('assign:slot', function (id) {
-
-                // get slot detail
-                get(api_path() + 'component/slot/' + id)
-                    .then((res) => {
-                        self.slot = res.data.data
-                    })
-                    .catch((err) => {
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: err.message,
-                            position: 'top-right',
-                            timeout: 0,
-                            type: 'danger'
-                        }).show();
-                    })
-
-                // get employee list detail
-                get(api_path() + 'attendance/slot/assign/employee?slotId=' + id)
-                    .then((res) => {
-
-                        self.employees = res.data.data
-
-                    })
-                    .catch((err) => {
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: err.message,
-                            position: 'top-right',
-                            timeout: 0,
-                            type: 'danger'
-                        }).show();
-                    })
-
-
-                // show modal if data is not empty
-                if (!_.isEmpty(self.employees)) {
-                    $('#assignSlotModal').modal('show')
-                } else {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: "Unable to find employees data for this slot",
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
-
-            })
 
         },
-        methods: {},
+        computed:{
+            ...mapGetters('slots',{
+                employeesToBeAssigned:'employeesToBeAssigned',
+                slotAssignModal:'slotAssignModal'
+            })
+        },
         mounted(){
             // Search using Sieve plugins
             $('#filter-search-employee-container').sieve({
                 searchInput: $('#search-employee-box'),
                 itemSelector: ".filter-search-employee-item"
             })
-        }
+        },
+
+        methods: {},
     }
 </script>

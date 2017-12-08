@@ -6,6 +6,9 @@ require('../../bootstrap')
 import Vue from 'vue'
 import router from './router/slot'
 import MainSlot from './MainSlot.vue'
+import {store} from './vuex/slot/store'
+
+
 
 // TODO : consider using VUEX instead
 // Create a global Event Bus
@@ -19,12 +22,14 @@ Object.defineProperties(Vue.prototype, {
     }
 })
 
-const app =  new Vue({
 
+
+const app =  new Vue({
     el:'#vc-attendance-slot',
     template:`<main-slot></main-slot>`,
     components:{MainSlot},
-    router
+    router,
+    store
 })
 
 
@@ -39,8 +44,6 @@ $(document).ready(function(){
         "scrollCollapse": false,
         "ordering": false
     })
-
-
 
 });
 

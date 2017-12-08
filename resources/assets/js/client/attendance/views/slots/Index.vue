@@ -90,50 +90,27 @@
 </template>
 
 <script>
-    import {get, post} from '../../../helpers/api'
-    import {api_path} from '../../../helpers/const'
+    import {mapGetters} from 'vuex'
     import AssignSlotModal from '../../components/slots/AssignSlotModal.vue'
     export default{
-        components:{
-            "assign-slot-modal":AssignSlotModal
+        components: {
+            "assign-slot-modal": AssignSlotModal
         },
         data(){
             return {
-                isTrue:true,
+                isTrue: true,
                 relatedBy: {id: '', name: 'All'},
                 statusBy: {id: '', name: 'All'},
-                jobPositions: [],
-                slots: []
             }
         },
+        computed: {
+            ...mapGetters('slots', {
+                jobPositions: 'jobPositions',
+                slots: 'slots'
+            })
+        },
         created(){
-            let self = this
-
-            get(api_path() + 'component/list/jobPosition')
-                .then((res) => {
-                    self.jobPositions = res.data.data
-                })
-
-
-            get(api_path() + 'attendance/slot/list')
-                .then((res) => {
-                    self.slots = res.data.data
-
-                    // fix datatables Bug displaying "no data available"
-                    if (!_.isEmpty(self.slots)) {
-                        $('.dataTables_empty').hide()
-                    }
-
-                })
-                .catch((err) => {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                })
+            this.$store.dispatch('slots/getDataOnCreate')
         },
         methods: {
 
@@ -152,26 +129,12 @@
                     self.statusBy.name = 'All'
                 }
 
-
-                get(api_path() + 'attendance/slot/list?' + 'statusBy=' + statusById + '&relatedBy=' + relatedById)
-                    .then((res) => {
-                        self.slots = res.data.data
-
-                        // fix datatables Bug displaying "no data available"
-                        if (!_.isEmpty(self.slots)) {
-                            $('.dataTables_empty').hide()
-                        }
-
-                    })
-                    .catch((err) => {
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: err.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    })
+                // get slot data
+                this.$store.commit({
+                    type:'slots/getSlots',
+                    statusById:statusById,
+                    relatedById:relatedById
+                })
 
             },
 
@@ -179,8 +142,8 @@
                 this.$router.push({name: 'detailSlot', params: {id: id}})
             },
 
-            assignSlot(id){
-                this.$bus.$emit('assign:slot', id)
+            assignSlot(slotId){
+                this.$store.dispatch('slots/getDataOnAssignSlot',slotId)
             }
 
         }
