@@ -1366,9 +1366,9 @@ body.menu-pin .overlay .overlay-brand {
 */
 .quickview-wrapper {
   position: fixed;
-  right: -285px;
+  right: -300px;
   top: 0;
-  width: 285px;
+  width: 300px;
   background: #fff;
   bottom: 0;
   z-index: 1000;

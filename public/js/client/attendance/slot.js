@@ -1651,7 +1651,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1659,9 +1659,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
-//
-//
 //
 //
 //
@@ -1828,8 +1825,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -1928,7 +1925,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        "assign-slot-modal": __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotModal_vue___default.a
+        "assign-slot-quickview": __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default.a
     },
     data: function data() {
         return {
@@ -19707,258 +19704,6 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-111e4541\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "modal fade slide-right",
-      attrs: {
-        id: "assignSlotModal",
-        tabindex: "-1",
-        role: "dialog",
-        "aria-hidden": "true"
-      }
-    },
-    [
-      _c("div", { staticClass: "modal-dialog modal-sm" }, [
-        _c("div", { staticClass: "modal-content-wrapper" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "container-xs-height full-height" }, [
-              _c("div", { staticClass: "row-xs-height" }, [
-                _c(
-                  "div",
-                  { staticClass: "modal-body text-center padding-10" },
-                  [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "list-view boreded no-top-border",
-                        attrs: { id: "filter-search-employee-container" }
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "list-view-group-container" },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "list-view-group-header text-uppercase"
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                        " +
-                                    _vm._s(_vm.slotAssignModal.name) +
-                                    "\n                                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.employeesToBeAssigned, function(
-                              employee
-                            ) {
-                              return _c(
-                                "ul",
-                                { staticClass: "filter-search-employee-item" },
-                                [
-                                  _c("li", { staticClass: "alert-list" }, [
-                                    _c(
-                                      "a",
-                                      {
-                                        staticClass: "align-items-center",
-                                        attrs: { href: "javascript:;" }
-                                      },
-                                      [
-                                        _c("p", {}, [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "text-complete fs-10",
-                                              class: {
-                                                "text-complete": !employee.hasSlotSchedule,
-                                                "text-disabled":
-                                                  employee.hasSlotSchedule
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "fa fa-circle"
-                                              })
-                                            ]
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "p",
-                                          {
-                                            staticClass:
-                                              "p-l-10 overflow-ellipsis fs-12 max-w-150"
-                                          },
-                                          [
-                                            _c(
-                                              "span",
-                                              { staticClass: "text-master" },
-                                              [_vm._v(_vm._s(employee.name))]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        employee.hasSlotSchedule
-                                          ? _c(
-                                              "select",
-                                              {
-                                                staticClass:
-                                                  "btn btn-disabled p-r-10 ml-auto fs-12"
-                                              },
-                                              [
-                                                _c(
-                                                  "option",
-                                                  {
-                                                    attrs: {
-                                                      value: "",
-                                                      selected: "",
-                                                      hidden: "",
-                                                      disabled: ""
-                                                    }
-                                                  },
-                                                  [_vm._v("Assigned")]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "option",
-                                                  { attrs: { value: "" } },
-                                                  [_vm._v("Remove")]
-                                                )
-                                              ]
-                                            )
-                                          : _c(
-                                              "select",
-                                              {
-                                                staticClass:
-                                                  "btn btn-outline-primary p-r-10 ml-auto fs-12"
-                                              },
-                                              [
-                                                _c(
-                                                  "option",
-                                                  {
-                                                    attrs: {
-                                                      value: "",
-                                                      selected: "",
-                                                      disabled: "",
-                                                      hidden: ""
-                                                    }
-                                                  },
-                                                  [_vm._v("Select")]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "option",
-                                                  { attrs: { value: "" } },
-                                                  [_vm._v("Assign")]
-                                                )
-                                              ]
-                                            )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "hidden" }, [
-                                      _vm._v(_vm._s(employee.employeeNo))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "hidden" }, [
-                                      _vm._v(_vm._s(employee.jobPosition))
-                                    ])
-                                  ])
-                                ]
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ])
-          ])
-        ])
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-hidden": "true"
-        }
-      },
-      [_c("i", { staticClass: "pg-close fs-14 p-t-10" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "navbar navbar-default navbar-sm m-b-0",
-        staticStyle: { padding: "25px 0" }
-      },
-      [
-        _c("div", { staticClass: "navbar-inner" }, [
-          _c("div", { staticClass: "input-group transparent" }, [
-            _c("span", { staticClass: "input-group-addon" }, [
-              _c("i", { staticClass: "fa fa-search" })
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                id: "search-employee-box",
-                type: "text",
-                placeholder: "Name / Employee No / Job Position"
-              }
-            })
-          ])
-        ])
-      ]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-111e4541", module.exports)
-  }
-}
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-396796da\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/slots/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20174,7 +19919,7 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("assign-slot-modal")
+      _c("assign-slot-quickview")
     ],
     1
   )
@@ -20226,6 +19971,217 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-396796da", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-9723d7b4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "quickview-wrapper", attrs: { id: "assignSlotQuickView" } },
+    [
+      _c("div", { staticClass: "view-port clearfix" }, [
+        _c("div", { staticClass: "view bg-white" }, [
+          _c("div", { staticClass: "scrollable padding-10" }, [
+            _c(
+              "p",
+              { staticClass: "text-primary fs-16 pull-left padding-10" },
+              [_vm._v("\n                    Assign Slot\n                ")]
+            ),
+            _vm._v(" "),
+            _c("a", {
+              staticClass: "pg-close text-master link pull-right padding-10",
+              attrs: {
+                "data-toggle": "quickview",
+                "data-toggle-element": "#assignSlotQuickView",
+                href: "#"
+              }
+            }),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "list-view boreded no-top-border",
+                attrs: { id: "filter-search-employee-container" }
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "list-view-group-container" },
+                  [
+                    _c(
+                      "div",
+                      { staticClass: "list-view-group-header text-uppercase" },
+                      [
+                        _vm._v(
+                          "\n                            " +
+                            _vm._s(_vm.slotAssignModal.name) +
+                            "\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.employeesToBeAssigned, function(employee) {
+                      return _c(
+                        "ul",
+                        { staticClass: "filter-search-employee-item" },
+                        [
+                          _c("li", { staticClass: "alert-list" }, [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "align-items-center",
+                                attrs: { href: "javascript:;" }
+                              },
+                              [
+                                _c("p", {}, [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "text-complete fs-10",
+                                      class: {
+                                        "text-complete": !employee.hasSlotSchedule,
+                                        "text-disabled":
+                                          employee.hasSlotSchedule
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "fa fa-circle" })]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass:
+                                      "p-l-10 overflow-ellipsis fs-12 max-w-150"
+                                  },
+                                  [
+                                    _c("span", { staticClass: "text-master" }, [
+                                      _vm._v(_vm._s(employee.name))
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                employee.hasSlotSchedule
+                                  ? _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "btn btn-disabled p-r-10 ml-auto fs-12"
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          {
+                                            attrs: {
+                                              value: "",
+                                              selected: "",
+                                              hidden: "",
+                                              disabled: ""
+                                            }
+                                          },
+                                          [_vm._v("Assigned")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Remove")
+                                        ])
+                                      ]
+                                    )
+                                  : _c(
+                                      "select",
+                                      {
+                                        staticClass:
+                                          "btn btn-outline-primary p-r-10 ml-auto fs-12"
+                                      },
+                                      [
+                                        _c(
+                                          "option",
+                                          {
+                                            attrs: {
+                                              value: "",
+                                              selected: "",
+                                              disabled: "",
+                                              hidden: ""
+                                            }
+                                          },
+                                          [_vm._v("Select")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("option", { attrs: { value: "" } }, [
+                                          _vm._v("Assign")
+                                        ])
+                                      ]
+                                    )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "hidden" }, [
+                              _vm._v(_vm._s(employee.employeeNo))
+                            ]),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "hidden" }, [
+                              _vm._v(_vm._s(employee.jobPosition))
+                            ])
+                          ])
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "navbar navbar-default navbar-sm m-b-0 p-b-20" },
+      [
+        _c("div", { staticClass: "navbar-inner" }, [
+          _c("div", { staticClass: "input-group transparent" }, [
+            _c("span", { staticClass: "input-group-addon" }, [
+              _c("i", { staticClass: "fa fa-search" })
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                id: "search-employee-box",
+                type: "text",
+                placeholder: "Name / Employee No / Job Position"
+              }
+            })
+          ])
+        ])
+      ]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-9723d7b4", module.exports)
   }
 }
 
@@ -34643,15 +34599,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue":
+/***/ "./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-111e4541\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-9723d7b4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -34668,7 +34624,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue"
+Component.options.__file = "resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -34678,9 +34634,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-111e4541", Component.options)
+    hotAPI.createRecord("data-v-9723d7b4", Component.options)
   } else {
-    hotAPI.reload("data-v-111e4541", Component.options)
+    hotAPI.reload("data-v-9723d7b4", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -34995,9 +34951,11 @@ module.exports = Component.exports
 
             state.employeesToBeAssigned = res.data.data;
 
-            // show modal if data is not empty
             if (!_.isEmpty(state.employeesToBeAssigned)) {
-                $('#assignSlotModal').modal('show');
+                // show quickview if data is not empty
+                if (!$('#assignSlotQuickView').hasClass('open')) {
+                    $('#assignSlotQuickView').addClass('open');
+                }
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',

@@ -41,9 +41,12 @@ export default{
 
                 state.employeesToBeAssigned = res.data.data
 
-                // show modal if data is not empty
+
                 if (!_.isEmpty(state.employeesToBeAssigned)) {
-                    $('#assignSlotModal').modal('show')
+                    // show quickview if data is not empty
+                    if (!$('#assignSlotQuickView').hasClass('open')) {
+                        $('#assignSlotQuickView').addClass('open')
+                    }
                 } else {
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -55,17 +58,13 @@ export default{
                 }
             })
             .catch((err) => {
-
-                // bug bootstrap modal error
-                if (err.message != "Modal is transitioning") {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 0,
-                        type: 'danger'
-                    }).show();
-                }
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
             })
     },
     getSlotsDetail(state, slotId){
@@ -83,11 +82,11 @@ export default{
                 }).show();
             })
     },
-    getCalendarEventSource(state,slotId){
-        get(api_path() + 'attendance/slot/detail/calendar?' + 'slotId=' +slotId)
+    getCalendarEventSource(state, slotId){
+        get(api_path() + 'attendance/slot/detail/calendar?' + 'slotId=' + slotId)
             .then((res) => {
                 state.calendarEventSource = res.data.data
-                $('#calendar').fullCalendar('addEventSource', state.calendarEventSource );
+                $('#calendar').fullCalendar('addEventSource', state.calendarEventSource);
 
             })
             .catch((err) => {

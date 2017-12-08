@@ -85,16 +85,16 @@
                 </div>
             </div>
         </div>
-        <assign-slot-modal></assign-slot-modal>
+        <assign-slot-quickview></assign-slot-quickview>
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex'
-    import AssignSlotModal from '../../components/slots/AssignSlotModal.vue'
+    import AssignSlotQuickview from '../../components/slots/AssignSlotQuickview.vue'
     export default{
         components: {
-            "assign-slot-modal": AssignSlotModal
+            "assign-slot-quickview": AssignSlotQuickview
         },
         data(){
             return {
