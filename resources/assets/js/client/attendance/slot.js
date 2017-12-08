@@ -8,22 +8,6 @@ import router from './router/slot'
 import MainSlot from './MainSlot.vue'
 import {store} from './vuex/slot/store'
 
-
-
-// TODO : consider using VUEX instead
-// Create a global Event Bus
-let EventBus = new Vue()
-// Add to Vue properties by exposing a getter for $bus
-Object.defineProperties(Vue.prototype, {
-    $bus: {
-        get: function () {
-            return EventBus;
-        }
-    }
-})
-
-
-
 const app =  new Vue({
     el:'#vc-attendance-slot',
     template:`<main-slot></main-slot>`,
