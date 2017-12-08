@@ -16,10 +16,10 @@
                                             <span class="input-group-addon">
                                                 <i class="fa fa-search"></i>
                                             </span>
-                                            <input id="search-employee-box" type="text" placeholder="Name / Employee No / Job Position"
+                                            <input id="search-employee-box" type="text"
+                                                   placeholder="Name / Employee No / Job Position"
                                                    class="form-control">
                                         </div>
-
 
 
                                     </div>
@@ -93,7 +93,6 @@
             let self = this
 
             self.$bus.$on('assign:slot', function (id) {
-                console.log(id)
 
                 // get slot detail
                 get(api_path() + 'component/slot/' + id)
@@ -116,7 +115,6 @@
 
                         self.employees = res.data.data
 
-                        $('#assignSlotModal').modal('show')
                     })
                     .catch((err) => {
                         $('.page-container').pgNotification({
@@ -128,6 +126,19 @@
                         }).show();
                     })
 
+
+                // show modal if data is not empty
+                if (!_.isEmpty(self.employees)) {
+                    $('#assignSlotModal').modal('show')
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: "Unable to find employees data for this slot",
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
 
             })
 

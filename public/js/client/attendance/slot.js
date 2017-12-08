@@ -1753,7 +1753,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var self = this;
 
         self.$bus.$on('assign:slot', function (id) {
-            console.log(id);
 
             // get slot detail
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/slot/' + id).then(function (res) {
@@ -1772,8 +1771,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/assign/employee?slotId=' + id).then(function (res) {
 
                 self.employees = res.data.data;
-
-                $('#assignSlotModal').modal('show');
             }).catch(function (err) {
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -1783,6 +1780,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     type: 'danger'
                 }).show();
             });
+
+            // show modal if data is not empty
+            if (!_.isEmpty(self.employees)) {
+                $('#assignSlotModal').modal('show');
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: "Unable to find employees data for this slot",
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
         });
     },
 
@@ -1881,6 +1891,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignSlotModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignSlotModal.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignSlotModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_slots_AssignSlotModal_vue__);
+//
+//
+//
+//
 //
 //
 //
@@ -20229,6 +20243,9 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 _vm.assignSlot(slot.id)
+                              },
+                              dblclick: function($event) {
+                                $event.preventDefault()
                               }
                             }
                           })

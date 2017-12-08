@@ -71,7 +71,11 @@
                                     <i class="fs-14 fa fa-calendar pointer" @click="viewSlotDetail(slot.id)"></i>
                                     &nbsp;
                                     <!--TODO: fix isTrue class binding with real data-->
-                                    <i class="fs-14 fa fa-circle pointer" :class="{'text-complete':isTrue}" @click="assignSlot(slot.id)"></i>
+                                    <i class="fs-14 fa fa-circle pointer"
+                                       :class="{'text-complete':isTrue}"
+                                       @click="assignSlot(slot.id)"
+                                       @dblclick.prevent=""
+                                    ></i>
                                 </td>
                             </tr>
 
