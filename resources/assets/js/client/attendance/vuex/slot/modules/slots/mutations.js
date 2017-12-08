@@ -82,5 +82,22 @@ export default{
                     type: 'danger'
                 }).show();
             })
+    },
+    getCalendarEventSource(state,slotId){
+        get(api_path() + 'attendance/slot/detail/calendar?' + 'slotId=' +slotId)
+            .then((res) => {
+                state.calendarEventSource = res.data.data
+                $('#calendar').fullCalendar('addEventSource', state.calendarEventSource );
+
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
     }
 }

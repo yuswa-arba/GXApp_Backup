@@ -13,5 +13,8 @@ export default{
     },
     slotAssignModal(state){
         return state.slotAssignModal
+    },
+    calendarEventSource(state){
+        return state.calendarEventSource
     }
 }

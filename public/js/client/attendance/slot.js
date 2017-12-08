@@ -1768,8 +1768,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 //
 //
 //
@@ -1793,25 +1792,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {
-            calendarEventSource: []
-        };
+        return {};
     },
     created: function created() {
         var self = this;
-
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/detail/calendar?' + 'slotId=' + this.$route.params.id).then(function (res) {
-            self.calendarEventSource = res.data.data;
-            $('#calendar').fullCalendar('addEventSource', self.calendarEventSource);
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
+        this.$store.commit('slots/getCalendarEventSource', this.$route.params.id);
     },
     mounted: function mounted() {
 
@@ -34759,18 +34744,6 @@ __webpack_require__("./resources/assets/js/bootstrap.js");
 
 
 
-// TODO : consider using VUEX instead
-// Create a global Event Bus
-var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
-// Add to Vue properties by exposing a getter for $bus
-Object.defineProperties(__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype, {
-    $bus: {
-        get: function get() {
-            return EventBus;
-        }
-    }
-});
-
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     el: '#vc-attendance-slot',
     template: '<main-slot></main-slot>',
@@ -34939,6 +34912,9 @@ module.exports = Component.exports
     },
     slotAssignModal: function slotAssignModal(state) {
         return state.slotAssignModal;
+    },
+    calendarEventSource: function calendarEventSource(state) {
+        return state.calendarEventSource;
     }
 });
 
@@ -34965,7 +34941,8 @@ module.exports = Component.exports
         jobPositions: [],
         slots: [],
         employeesToBeAssigned: [],
-        slotAssignModal: {}
+        slotAssignModal: {},
+        calendarEventSource: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -35053,6 +35030,20 @@ module.exports = Component.exports
                 message: err.message,
                 position: 'top-right',
                 timeout: 0,
+                type: 'danger'
+            }).show();
+        });
+    },
+    getCalendarEventSource: function getCalendarEventSource(state, slotId) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/detail/calendar?' + 'slotId=' + slotId).then(function (res) {
+            state.calendarEventSource = res.data.data;
+            $('#calendar').fullCalendar('addEventSource', state.calendarEventSource);
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top',
+                timeout: 3500,
                 type: 'danger'
             }).show();
         });

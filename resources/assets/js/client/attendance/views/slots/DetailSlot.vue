@@ -17,31 +17,19 @@
 </template>
 
 <script>
-    import {get, post} from '../../../helpers/api'
-    import {api_path} from '../../../helpers/const'
+    import {mapState} from 'vuex'
+
     export default{
+
         data(){
-            return {
-                calendarEventSource: []
+            return{
+
             }
         },
         created(){
             let self = this
+            this.$store.commit('slots/getCalendarEventSource',this.$route.params.id)
 
-            get(api_path() + 'attendance/slot/detail/calendar?' + 'slotId=' + this.$route.params.id)
-                .then((res) => {
-                    self.calendarEventSource = res.data.data
-                    $('#calendar').fullCalendar('addEventSource', self.calendarEventSource);
-                })
-                .catch((err) => {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                })
         },
         mounted(){
 
