@@ -76,7 +76,10 @@
                                     <span v-if="slot.id==1">
                                         Default
                                     </span>
-                                    <span v-else="" class="badge badge-important">{{slot.assignedTo}}</span>
+                                    <span v-else-if="slot.assignedTo.total==1&&slot.assignedTo.name!=null">{{slot.assignedTo.name}}</span>
+                                    <span v-else="" class="badge badge-important">{{slot.assignedTo.total}}</span>
+
+
                                 </td>
                                 <td class="padding-10">
 

@@ -345,8 +345,12 @@ class TestUploadController extends Controller
         foreach ($slots as $slot) {
             echo json_encode($slot->employees);
         }
-
     }
 
+    public function employeeFromSlot()
+    {
+        $slot = Slots::find(4);
+        echo json_encode($slot->employees);
+    }
 
 }

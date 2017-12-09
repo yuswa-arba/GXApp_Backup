@@ -62,7 +62,6 @@ class Recruitment extends UseCase
             $filename = $this->getImageName($request->idCardPhoto, $request->nickName);
             $request->idCardPhoto->move(base_path('public/images/employee'), $filename);
             $requestData['idCardPhoto'] = $filename; //rename
-
         }
 
         /*Handle image uploads*/

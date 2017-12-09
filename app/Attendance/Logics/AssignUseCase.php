@@ -16,9 +16,23 @@ abstract class AssignUseCase
 {
     public static function assign(Request $request)
     {
-        return (new static)->handle($request);
+        return (new static)->handleAssign($request);
     }
 
-    abstract public function handle($request);
+    public static function remove(Request $request)
+    {
+        return (new static)->handleRemove($request);
+    }
+
+    public static function assignRandom(Request $request)
+    {
+        return (new static)->handleRandomAssign($request);
+    }
+
+    abstract public function handleAssign($request);
+
+    abstract public function handleRemove($request);
+
+    abstract public function handleRandomAssign($request);
 
 }

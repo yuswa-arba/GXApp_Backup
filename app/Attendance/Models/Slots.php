@@ -29,7 +29,7 @@ class Slots extends Model
         return $this->belongsToMany(MasterEmployee::class,'employeeSlotSchedule','slotId','employeeId');
     }
 
-    public function employeeSlotSchedule()
+    public function slotSchedule()
     {
         return $this->hasMany(EmployeeSlotSchedule::class,'slotId');
     }

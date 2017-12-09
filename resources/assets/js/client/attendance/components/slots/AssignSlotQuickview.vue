@@ -28,7 +28,7 @@
                             </div>
                             <div class="scrollable">
                                 <ul class="filter-search-employee-item" v-for="employee in employeesToBeAssigned">
-                                    <li class="alert-list">
+                                    <li class="alert-list p-l-5">
                                         <a href="javascript:;" class="align-items-center">
                                             <p class="">
                                                         <span class="text-complete fs-10"
@@ -37,18 +37,24 @@
                                                             <i class="fa fa-circle"></i>
                                                         </span>
                                             </p>
-                                            <p class="p-l-10 overflow-ellipsis fs-12 max-w-150">
-                                                <span class="text-master">{{employee.name}}</span>
+                                            <p class="p-l-10 overflow-ellipsis fs-14 max-w-150">
+                                                <span class="text-master">
+                                                    {{employee.name}}
+                                                </span>
+                                                <br>
+                                                <span v-if="employee.hasSlotSchedule" class="fs-11 text-master link">
+                                                    {{employee.slotSchedule.name}}
+                                                </span>
                                             </p>
 
 
                                             <label class="label m-t-10 p-b-5 ml-auto fs-12 cursor"
-                                                    v-if="employee.hasSlotSchedule">
+                                                   v-if="employee.hasSlotSchedule">
                                                 Remove
                                             </label>
 
                                             <label class="label label-success m-t-10 p-b-5 ml-auto fs-12 cursor"
-                                                   v-else="" @click="assign(employee.id)">
+                                                   v-else="" @click="assign(employee.id,slotDetail.id)">
                                                 Assign
                                             </label>
 
@@ -99,8 +105,12 @@
         },
 
         methods: {
-            assign(employeeId){
-                alert(employeeId)
+            assign(employeeId, slotId){
+                this.$store.dispatch({
+                    type: 'slots/assignSlotToEmployee',
+                    employeeId: employeeId,
+                    slotId: slotId
+                })
             }
         },
     }

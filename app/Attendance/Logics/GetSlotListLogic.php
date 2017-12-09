@@ -37,7 +37,6 @@ class GetSlotListLogic extends GetSlotDataUseCase
     {
         $slots = $this->getSlotBySpecificRelation($request->get('relatedBy'));
         return fractal($slots, new SlotListTransformer())->respond(200);
-
     }
 
     private function getSlotByStatusAndRelation($statusBy, $relatedBy)

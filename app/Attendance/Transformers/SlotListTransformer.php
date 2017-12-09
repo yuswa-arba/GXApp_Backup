@@ -34,7 +34,7 @@ class SlotListTransformer extends TransformerAbstract
     private function isAvailableForAssign($slots)
     {
         // if its not allow multiple assign and has already at least one return false
-        if (!$slots->allowMultipleAssign && count($slots->employeeSlotSchedule) > 0) {
+        if (!$slots->allowMultipleAssign && count($slots->slotSchedule) > 0) {
             return false;
         } else {
             return true;
@@ -43,19 +43,18 @@ class SlotListTransformer extends TransformerAbstract
 
     private function assignedTo($slots)
     {
+        $assignedTo = array();
+        $assignedTo['total'] = count($slots->slotSchedule);
+
         // if value is only one return employee name
-        if (count($slots->employeeSlotSchedule) == 1) {
+        if (count($slots->slotSchedule) == 1) {
             // get employee data
-            if ($slots->employeeSlotSchedule->employee) {
+            if ($slots->employees) {
                 // if found return employee name
-                return $slots->employeeSlotSchedule->employee->givenName;
-            } else {
-                // if failed return count value
-                return count($slots->employeeSlotSchedule);
+                $assignedTo['name'] = $slots->employees[0]->givenName.' '.$slots->employees[0]->surname;
             }
-        } else {
-            // return count value
-            return count($slots->employeeSlotSchedule);
         }
+
+        return $assignedTo;
     }
 }

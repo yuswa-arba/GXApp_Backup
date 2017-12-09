@@ -17,6 +17,7 @@
         "lodash": "^4.17.4"
     },
     "dependencies": {
+        "async": "^2.6.0",
         "axios": "^0.16.2",
         "bootstrap-sass": "^3.3.7",
         "fullcalendar": "^3.7.0",

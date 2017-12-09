@@ -3,7 +3,7 @@
  */
 import {get, post} from '../../../../../helpers/api'
 import {api_path} from '../../../../../helpers/const'
-
+import series from 'async/series';
 export default{
     getJobPositions(state){
         get(api_path() + 'component/list/jobPosition')
@@ -97,5 +97,91 @@ export default{
                     type: 'danger'
                 }).show();
             })
+    },
+    assignSlot(state, payload){
+        post(api_path() + 'attendance/slot/assign/employee', {employeeId: payload.employeeId, slotId: payload.slotId})
+            .then((res) => {
+                if (!res.data.isFailed && res.data.employeeSlotData) {
+
+                    const employeeData = res.data.employeeSlotData
+
+                    const user = _.find(state.employeesToBeAssigned, {id: employeeData.employeeId})
+                    const userIndex = _.findIndex(state.employeesToBeAssigned, user)
+
+                    const slot = _.find(state.slots, {id: employeeData.slot.id})
+                    const slotIndex = _.findIndex(state.slots, slot)
+
+                    series([
+                        function (callback) {
+
+                            //update user object
+                            user.hasSlotSchedule = true
+                            user.slotSchedule = {id: employeeData.slot.id, name: employeeData.slot.name}
+
+                            //update slot object
+
+
+                            slot.assignedTo ={total: parseInt(slot.assignedTo.total) + 1,name:user.name}
+
+
+                            if (!slot.allowMultipleAssign) {
+                                slot.availableForAssign = false
+                            }
+
+                            //update user data in array
+                            state.employeesToBeAssigned.splice(userIndex, 1, user)
+
+                            //update slot data in arrray
+                            state.slots.splice(slotIndex, 1, slot)
+
+                            callback(null)
+                        },
+                        function (callback) {
+                            /* Show success notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-left',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            callback(null)
+                        },
+                        function (callback) {
+
+                            setTimeout(() => {
+                                commit('register', userId)
+                            }, 1000)
+
+                            // $('#assignSlotQuickView').removeClass('open')
+
+                            callback(null)
+                        }
+                    ])
+
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-left',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-left',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+
+
     }
 }

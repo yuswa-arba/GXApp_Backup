@@ -43,7 +43,6 @@ abstract class GetSlotDataUseCase
             return (new static)->handleSlotWithSpecificRelation($request);
         }
 
-
         return (new static)->handleGetAllSlot($request);
 
     }

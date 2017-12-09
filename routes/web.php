@@ -68,6 +68,8 @@ Route::prefix('testing')->group(function () {
     Route::get('attdlogic','TestUploadController@attdLogic');
     Route::get('tryLogic','TestUploadController@tryLogic');
     Route::get('SEP','TestUploadController@slotEmployeePivot');
+    Route::get('efs','TestUploadController@employeeFromSlot');
+
 
 });
 

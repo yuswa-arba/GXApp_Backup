@@ -85,7 +85,6 @@ $(document).ready(function () {
         $(".datepicker").mask("99/99/9999");
     });
 
-
     //Tooltip
     $('[data-toggle="tooltip"]').tooltip();
 

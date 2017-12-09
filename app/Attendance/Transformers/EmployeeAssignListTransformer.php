@@ -16,10 +16,21 @@ class EmployeeAssignListTransformer extends TransformerAbstract
         return [
             'id' => $employees->id,
             'employeeNo' => $employees->employeeNo,
-            'name' => $employees->givenName . ' ' .$employees->surname,
+            'name' => $employees->givenName . ' ' . $employees->surname,
             'jobPosition' => $employees->employment->jobPosition->name,
             'hasSlotSchedule' => is_null($employees->slotSchedule) ? false : true,
-            'slotSchedule' => !is_null($employees->slotSchedule) ? $employees->slotSchedule->slot->name : ''
+            'slotSchedule' => $this->slotSchedule($employees)
         ];
+    }
+
+    private function slotSchedule($employees)
+    {
+        if ($employees->slotSchedule) {
+            $slot = $employees->slotSchedule->slot;
+            return ['id' => $slot->id, 'name' => $slot->name];
+        } else {
+            return '';
+        }
+
     }
 }
