@@ -41,7 +41,6 @@ export default{
 
                 state.employeesToBeAssigned = res.data.data
 
-
                 if (!_.isEmpty(state.employeesToBeAssigned)) {
                     // show quickview if data is not empty
                     if (!$('#assignSlotQuickView').hasClass('open')) {
@@ -70,7 +69,7 @@ export default{
     getSlotsDetail(state, slotId){
         get(api_path() + 'component/slot/' + slotId)
             .then((res) => {
-                state.slotAssignModal = res.data.data
+                state.slotDetail = res.data.data
             })
             .catch((err) => {
                 $('.page-container').pgNotification({

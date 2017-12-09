@@ -59,6 +59,6 @@ class SlotMakerController extends Controller
     public function execute(Request $request)
     {
         $request->validate(['id' => 'required']);
-        return SlotMakerLogic::executeSlotMaker($request);
+        return SlotMakerLogic::execute($request);
     }
 }

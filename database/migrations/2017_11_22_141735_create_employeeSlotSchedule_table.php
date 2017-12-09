@@ -17,6 +17,8 @@ class CreateEmployeeSlotScheduleTable extends Migration
             $table->increments('id');
             $table->uuid('employeeId');
             $table->tinyInteger('slotId');
+            $table->string('setBy');
+            $table->string('setAt');
             $table->timestamps();
         });
     }

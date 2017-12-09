@@ -12,6 +12,8 @@ class EmployeeSlotSchedule extends Model
     protected $fillable = [
         'employeeId',
         'slotId',
+        'setBy',
+        'setAt'
     ];
 
     public function employee()

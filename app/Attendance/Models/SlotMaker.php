@@ -21,15 +21,20 @@ class SlotMaker extends Model
         'executedBy',
     ];
 
+    protected $casts = [
+        'allowMultipleAssign' => 'boolean'
+    ];
+
 
     public function slot()
     {
-        return $this->hasMany(Slots::class,'slotMakerId');
+        return $this->hasMany(Slots::class, 'slotMakerId');
     }
 
     public function jobPosition()
     {
-        return $this->belongsTo(JobPosition::class,'jobPositionId');
+        return $this->belongsTo(JobPosition::class, 'jobPositionId');
     }
+
 
 }

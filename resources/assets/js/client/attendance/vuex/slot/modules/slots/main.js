@@ -12,7 +12,7 @@ export default {
         jobPositions: [],
         slots: [],
         employeesToBeAssigned: [],
-        slotAssignModal:{},
+        slotDetail:{},
         calendarEventSource:[]
     },
     getters,

@@ -15,6 +15,10 @@ class Slots extends Model
         'slotMakerId',
     ];
 
+    protected $casts = [
+        'allowMultipleAssign' => 'boolean'
+    ];
+
     public function slotMaker()
     {
         return $this->belongsTo(SlotMaker::class,'slotMakerId');
@@ -23,5 +27,10 @@ class Slots extends Model
     public function employees()
     {
         return $this->belongsToMany(MasterEmployee::class,'employeeSlotSchedule','slotId','employeeId');
+    }
+
+    public function employeeSlotSchedule()
+    {
+        return $this->hasMany(EmployeeSlotSchedule::class,'slotId');
     }
 }

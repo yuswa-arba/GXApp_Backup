@@ -12,7 +12,7 @@ namespace App\Attendance\Logics;
 
 use Illuminate\Http\Request;
 
-abstract class GetEmployeeListUseCase
+abstract class GetDataUseCase
 {
     public static function getData(Request $request)
     {

@@ -15,7 +15,7 @@ use App\Attendance\Models\Slots;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-class SlotMakerLogic extends SlotMakerUseCase
+class SlotMakerLogic extends ExecuteUseCase
 {
 
     public function handleExecution($request)

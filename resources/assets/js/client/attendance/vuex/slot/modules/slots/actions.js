@@ -13,5 +13,10 @@ export default{
     getDataOnAssignSlot({commit},slotId){
         commit('getEmployeesToBeAssigned',slotId)
         commit('getSlotsDetail',slotId)
+    },
+    getDataOnSlotCalendar({commit},slotId){
+        commit('getSlotsDetail',slotId)
+        commit('getCalendarEventSource',slotId)
+
     }
 }

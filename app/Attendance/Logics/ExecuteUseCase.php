@@ -12,9 +12,9 @@ namespace App\Attendance\Logics;
 
 use Illuminate\Http\Request;
 
-abstract class SlotMakerUseCase
+abstract class ExecuteUseCase
 {
-    public static function executeSlotMaker(Request $request)
+    public static function execute(Request $request)
     {
         return (new static)->handleExecution($request);
     }

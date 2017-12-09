@@ -1635,6 +1635,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -1737,6 +1738,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1744,7 +1746,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
         employeesToBeAssigned: 'employeesToBeAssigned',
-        slotAssignModal: 'slotAssignModal'
+        slotDetail: 'slotDetail'
     })),
     mounted: function mounted() {
         // Search using Sieve plugins
@@ -1755,7 +1757,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
 
-    methods: {}
+    methods: {
+        assign: function assign(employeeId) {
+            alert(employeeId);
+        }
+    }
 });
 
 /***/ }),
@@ -1766,6 +1772,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -1784,16 +1794,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        "assign-slot-quickview": __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default.a
+    },
     data: function data() {
         return {};
     },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
+        slotDetail: 'slotDetail'
+    })),
     created: function created() {
         var self = this;
-        this.$store.commit('slots/getCalendarEventSource', this.$route.params.id);
+        this.$store.dispatch('slots/getDataOnSlotCalendar', this.$route.params.id);
     },
     mounted: function mounted() {
 
@@ -1814,7 +1843,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             }
         });
+    },
+
+    methods: {
+        assignSlot: function assignSlot() {
+            this.$store.dispatch('slots/getDataOnAssignSlot', this.$route.params.id);
+        }
     }
+
 });
 
 /***/ }),
@@ -1829,6 +1865,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -19661,16 +19712,51 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("go-back-menu")],
-      2
-    ),
-    _vm._v(" "),
-    _vm._m(0)
-  ])
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c(
+        "div",
+        { staticClass: "col-lg-12 m-b-10 m-t-10" },
+        [
+          _vm._t("go-back-menu"),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass:
+                "fs-24 pull-center text-primary text-center z-index-minus-1"
+            },
+            [_vm._v(_vm._s(_vm.slotDetail.name))]
+          ),
+          _vm._v(" "),
+          _vm.slotDetail.id != 1
+            ? _c("div", { staticClass: "pull-right m-r-15 m-b-10" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary all-caps",
+                    on: {
+                      click: function($event) {
+                        _vm.assignSlot()
+                      }
+                    }
+                  },
+                  [_vm._v("Assign "), _c("i", { staticClass: "fa fa-plus" })]
+                )
+              ])
+            : _vm._e()
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c("assign-slot-quickview")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -19872,6 +19958,19 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "padding-10 p-l-15" }, [
+                          slot.slotMaker.job_position &&
+                          slot.slotMaker.relatedToJobPosition
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(slot.slotMaker.job_position.name) +
+                                    "\n                                    "
+                                )
+                              ])
+                            : _c("span", [_vm._v("-")])
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "padding-10 p-l-15" }, [
                           slot.allowMultipleAssign
                             ? _c("p", { staticClass: "text-primary bold" }, [
                                 _vm._v("Yes")
@@ -19881,7 +19980,19 @@ var render = function() {
                               ])
                         ]),
                         _vm._v(" "),
-                        _vm._m(2, true),
+                        _c("td", { staticClass: "padding-10" }, [
+                          slot.id == 1
+                            ? _c("span", [
+                                _vm._v(
+                                  "\n                                    Default\n                                "
+                                )
+                              ])
+                            : _c(
+                                "span",
+                                { staticClass: "badge badge-important" },
+                                [_vm._v(_vm._s(slot.assignedTo))]
+                              )
+                        ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "padding-10" }, [
                           _c("i", {
@@ -19893,21 +20004,25 @@ var render = function() {
                             }
                           }),
                           _vm._v(
-                            "\n                                 \n                                "
+                            "\n\n                                 \n                                "
                           ),
                           _vm._v(" "),
-                          _c("i", {
-                            staticClass: "fs-14 fa fa-circle pointer",
-                            class: { "text-complete": _vm.isTrue },
-                            on: {
-                              click: function($event) {
-                                _vm.assignSlot(slot.id)
-                              },
-                              dblclick: function($event) {
-                                $event.preventDefault()
-                              }
-                            }
-                          })
+                          slot.id != 1
+                            ? _c("i", {
+                                staticClass: "fs-14 fa fa-circle pointer",
+                                class: {
+                                  "text-complete": slot.availableForAssign
+                                },
+                                on: {
+                                  click: function($event) {
+                                    _vm.assignSlot(slot.id)
+                                  },
+                                  dblclick: function($event) {
+                                    $event.preventDefault()
+                                  }
+                                }
+                              })
+                            : _vm._e()
                         ])
                       ])
                     })
@@ -19931,8 +20046,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "pull-left m-r-15 m-b-10" }, [
       _c("button", { staticClass: "btn btn-primary all-caps" }, [
-        _vm._v("Assign "),
-        _c("i", { staticClass: "fa fa-plus" })
+        _vm._v("Calendar "),
+        _c("i", { staticClass: "fa fa-calendar" })
       ])
     ])
   },
@@ -19948,20 +20063,14 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Order")]),
         _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Job Related")]),
+        _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Allow Multiple")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Assigned to")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "padding-10" }, [
-      _c("span", { staticClass: "badge badge-important" }, [_vm._v("25")])
     ])
   }
 ]
@@ -19989,7 +20098,7 @@ var render = function() {
     [
       _c("div", { staticClass: "view-port clearfix" }, [
         _c("div", { staticClass: "view bg-white" }, [
-          _c("div", { staticClass: "scrollable padding-10" }, [
+          _c("div", { staticClass: "padding-10" }, [
             _c(
               "p",
               { staticClass: "text-primary fs-16 pull-left padding-10" },
@@ -20014,22 +20123,22 @@ var render = function() {
                 attrs: { id: "filter-search-employee-container" }
               },
               [
-                _c(
-                  "div",
-                  { staticClass: "list-view-group-container" },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "list-view-group-header text-uppercase" },
-                      [
-                        _vm._v(
-                          "\n                            " +
-                            _vm._s(_vm.slotAssignModal.name) +
-                            "\n                        "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
+                _c("div", { staticClass: "list-view-group-container" }, [
+                  _c(
+                    "div",
+                    { staticClass: "list-view-group-header text-uppercase" },
+                    [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(_vm.slotDetail.name) +
+                          "\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "scrollable" },
                     _vm._l(_vm.employeesToBeAssigned, function(employee) {
                       return _c(
                         "ul",
@@ -20073,53 +20182,32 @@ var render = function() {
                                 _vm._v(" "),
                                 employee.hasSlotSchedule
                                   ? _c(
-                                      "select",
+                                      "label",
                                       {
                                         staticClass:
-                                          "btn btn-disabled p-r-10 ml-auto fs-12"
+                                          "label m-t-10 p-b-5 ml-auto fs-12 cursor"
                                       },
                                       [
-                                        _c(
-                                          "option",
-                                          {
-                                            attrs: {
-                                              value: "",
-                                              selected: "",
-                                              hidden: "",
-                                              disabled: ""
-                                            }
-                                          },
-                                          [_vm._v("Assigned")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("option", { attrs: { value: "" } }, [
-                                          _vm._v("Remove")
-                                        ])
+                                        _vm._v(
+                                          "\n                                            Remove\n                                        "
+                                        )
                                       ]
                                     )
                                   : _c(
-                                      "select",
+                                      "label",
                                       {
                                         staticClass:
-                                          "btn btn-outline-primary p-r-10 ml-auto fs-12"
+                                          "label label-success m-t-10 p-b-5 ml-auto fs-12 cursor",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.assign(employee.id)
+                                          }
+                                        }
                                       },
                                       [
-                                        _c(
-                                          "option",
-                                          {
-                                            attrs: {
-                                              value: "",
-                                              selected: "",
-                                              disabled: "",
-                                              hidden: ""
-                                            }
-                                          },
-                                          [_vm._v("Select")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("option", { attrs: { value: "" } }, [
-                                          _vm._v("Assign")
-                                        ])
+                                        _vm._v(
+                                          "\n                                            Assign\n                                        "
+                                        )
                                       ]
                                     )
                               ]
@@ -20136,9 +20224,8 @@ var render = function() {
                         ]
                       )
                     })
-                  ],
-                  2
-                )
+                  )
+                ])
               ]
             )
           ])
@@ -34844,6 +34931,12 @@ module.exports = Component.exports
 
         commit('getEmployeesToBeAssigned', slotId);
         commit('getSlotsDetail', slotId);
+    },
+    getDataOnSlotCalendar: function getDataOnSlotCalendar(_ref3, slotId) {
+        var commit = _ref3.commit;
+
+        commit('getSlotsDetail', slotId);
+        commit('getCalendarEventSource', slotId);
     }
 });
 
@@ -34866,8 +34959,8 @@ module.exports = Component.exports
     employeesToBeAssigned: function employeesToBeAssigned(state) {
         return state.employeesToBeAssigned;
     },
-    slotAssignModal: function slotAssignModal(state) {
-        return state.slotAssignModal;
+    slotDetail: function slotDetail(state) {
+        return state.slotDetail;
     },
     calendarEventSource: function calendarEventSource(state) {
         return state.calendarEventSource;
@@ -34897,7 +34990,7 @@ module.exports = Component.exports
         jobPositions: [],
         slots: [],
         employeesToBeAssigned: [],
-        slotAssignModal: {},
+        slotDetail: {},
         calendarEventSource: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
@@ -34966,22 +35059,18 @@ module.exports = Component.exports
                 }).show();
             }
         }).catch(function (err) {
-
-            // bug bootstrap modal error
-            if (err.message != "Modal is transitioning") {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top-right',
-                    timeout: 0,
-                    type: 'danger'
-                }).show();
-            }
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 0,
+                type: 'danger'
+            }).show();
         });
     },
     getSlotsDetail: function getSlotsDetail(state, slotId) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/slot/' + slotId).then(function (res) {
-            state.slotAssignModal = res.data.data;
+            state.slotDetail = res.data.data;
         }).catch(function (err) {
             $('.page-container').pgNotification({
                 style: 'flip',

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-12 m-b-10 m-t-10">
             <div class="pull-left m-r-15 m-b-10">
-                <button class="btn btn-primary all-caps">Assign <i class="fa fa-plus"></i></button>
+                <button class="btn btn-primary all-caps">Calendar <i class="fa fa-calendar"></i></button>
             </div>
 
             <div class="pull-right m-r-15 m-b-10">
@@ -48,6 +48,7 @@
                                 <th class="text-black">ID</th>
                                 <th class="text-black">Name</th>
                                 <th class="text-black">Order</th>
+                                <th class="text-black">Job Related</th>
                                 <th class="text-black">Allow Multiple</th>
                                 <th class="text-black">Assigned to</th>
                                 <th class="text-black">Action</th>
@@ -59,23 +60,37 @@
                                 <td class="padding-10 p-l-15">{{slot.name}}</td>
                                 <td class="padding-10 p-l-15">{{slot.positionOrder}}</td>
                                 <td class="padding-10 p-l-15">
+                                        <span v-if="slot.slotMaker.job_position&&slot.slotMaker.relatedToJobPosition">
+                                            {{slot.slotMaker.job_position.name}}
+                                        </span>
+                                    <span v-else="">-</span>
+                                </td>
+                                <td class="padding-10 p-l-15">
 
                                     <p v-if="slot.allowMultipleAssign" class="text-primary bold">Yes</p>
                                     <p v-else class="text-danger bold">No</p>
 
                                 </td>
                                 <td class="padding-10">
-                                    <span class="badge badge-important">25</span>
+                                    <!--if its general slot show 'Default'-->
+                                    <span v-if="slot.id==1">
+                                        Default
+                                    </span>
+                                    <span v-else="" class="badge badge-important">{{slot.assignedTo}}</span>
                                 </td>
                                 <td class="padding-10">
+
                                     <i class="fs-14 fa fa-calendar pointer" @click="viewSlotDetail(slot.id)"></i>
+
                                     &nbsp;
-                                    <!--TODO: fix isTrue class binding with real data-->
-                                    <i class="fs-14 fa fa-circle pointer"
-                                       :class="{'text-complete':isTrue}"
+                                    <!--if its not general then show assign button-->
+                                    <i v-if="slot.id!=1"
+                                       class="fs-14 fa fa-circle pointer"
+                                       :class="{'text-complete':slot.availableForAssign}"
                                        @click="assignSlot(slot.id)"
-                                       @dblclick.prevent=""
-                                    ></i>
+                                       @dblclick.prevent=""></i>
+
+
                                 </td>
                             </tr>
 
@@ -131,9 +146,9 @@
 
                 // get slot data
                 this.$store.commit({
-                    type:'slots/getSlots',
-                    statusById:statusById,
-                    relatedById:relatedById
+                    type: 'slots/getSlots',
+                    statusById: statusById,
+                    relatedById: relatedById
                 })
 
             },
@@ -143,7 +158,7 @@
             },
 
             assignSlot(slotId){
-                this.$store.dispatch('slots/getDataOnAssignSlot',slotId)
+                this.$store.dispatch('slots/getDataOnAssignSlot', slotId)
             }
 
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
+use App\Attendance\Logics\AssignSlotLogic;
 use App\Attendance\Logics\GetCalendarLogic;
 use App\Attendance\Logics\GetEmployeeListLogic;
 use App\Attendance\Logics\GetSlotListLogic;
@@ -29,5 +30,14 @@ class SlotController extends Controller
         return GetEmployeeListLogic::getData($request);
     }
 
+    public function assign(Request $request)
+    {
+        $request->validate([
+            'employeeId'=>'required|unique:employeeSlotSchedule',
+            'slotId'=>'required'
+        ]);
+
+        return AssignSlotLogic::assign($request);
+    }
 
 }

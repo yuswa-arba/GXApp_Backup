@@ -10,16 +10,11 @@
 namespace App\Attendance\Logics;
 
 use App\Attendance\Models\DayOffSchedule;
-use App\Attendance\Models\SlotMaker;
-use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\SlotCalendarTransformer;
-use App\Attendance\Transformers\SlotListTransformer;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
-class GetCalendarLogic extends GetSlotListUseCase
+
+class GetCalendarLogic extends GetDataUseCase
 {
-
 
     public function handle($request)
     {

@@ -9,49 +9,35 @@
 
 namespace App\Attendance\Logics;
 
-use App\Attendance\Models\DayOffSchedule;
-use App\Attendance\Models\SlotMaker;
 use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\SlotListTransformer;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
-class GetSlotListLogic extends GetSlotListUseCase
+class GetSlotListLogic extends GetSlotDataUseCase
 {
 
-    public function handle($request)
+    public function handleGetAllSlot($request)
     {
-        $byAllStatus = true;
-        $byAllRelated = true;
-
-        if ($request->get('relatedBy') != '') {
-            $byAllRelated = false;
-        }
-
-        if ($request->get('statusBy') != '') {
-            $byAllStatus = false;
-        }
-
-        // all slots
         $slots = Slots::all();
-
-        // by specific status, by specific job position relation
-        if (!$byAllStatus && !$byAllRelated) {
-            $slots = $this->getSlotByStatusAndRelation($request->get('statusBy'), $request->get('relatedBy'));
-        }
-
-        // by specific status , by all related
-        if (!$byAllStatus && $byAllRelated) {
-            $slots = $this->getSlotBySpecificStatus($request->get('statusBy'));
-        }
-
-        // by specific job position relation ,  by all status
-        if (!$byAllRelated && $byAllStatus) {
-            $slots = $this->getSlotBySpecificRelation($request->get('relatedBy'));
-        }
-
-        // by default return all slots
         return fractal($slots, new SlotListTransformer())->respond(200);
+    }
+
+    public function handleStatusAndRelation($request)
+    {
+        $slots = $this->getSlotByStatusAndRelation($request->get('statusBy'), $request->get('relatedBy'));
+        return fractal($slots, new SlotListTransformer())->respond(200);
+    }
+
+    public function handleSlotWithSpecificStatus($request)
+    {
+        $slots = $this->getSlotBySpecificStatus($request->get('statusBy'));
+        return fractal($slots, new SlotListTransformer())->respond(200);
+    }
+
+    public function handleSlotWithSpecificRelation($request)
+    {
+        $slots = $this->getSlotBySpecificRelation($request->get('relatedBy'));
+        return fractal($slots, new SlotListTransformer())->respond(200);
+
     }
 
     private function getSlotByStatusAndRelation($statusBy, $relatedBy)
@@ -71,7 +57,7 @@ class GetSlotListLogic extends GetSlotListUseCase
 
             case 'assigned':
 
-                if (!count($assignedSlotsId)>0){
+                if (!count($assignedSlotsId) > 0) {
                     return null;
                 }
 
@@ -117,7 +103,7 @@ class GetSlotListLogic extends GetSlotListUseCase
 
             case 'assigned':
 
-                if (!count($assignedSlotsId)>0){
+                if (!count($assignedSlotsId) > 0) {
                     return null;
                 }
 

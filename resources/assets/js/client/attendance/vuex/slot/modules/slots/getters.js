@@ -11,8 +11,8 @@ export default{
     employeesToBeAssigned(state){
         return state.employeesToBeAssigned
     },
-    slotAssignModal(state){
-        return state.slotAssignModal
+    slotDetail(state){
+        return state.slotDetail
     },
     calendarEventSource(state){
         return state.calendarEventSource

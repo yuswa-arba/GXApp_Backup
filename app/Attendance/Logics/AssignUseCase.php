@@ -12,9 +12,9 @@ namespace App\Attendance\Logics;
 
 use Illuminate\Http\Request;
 
-abstract class GetCalendarUseCase
+abstract class AssignUseCase
 {
-    public static function getData(Request $request)
+    public static function assign(Request $request)
     {
         return (new static)->handle($request);
     }

@@ -3,6 +3,13 @@
 
         <div class="col-lg-12 m-b-10 m-t-10">
             <slot name="go-back-menu"></slot>
+            <span class="fs-24 pull-center text-primary text-center z-index-minus-1">{{slotDetail.name}}</span>
+
+            <!--if its not general slot then show assign button-->
+            <div class="pull-right m-r-15 m-b-10" v-if="slotDetail.id!=1">
+                <button class="btn btn-primary all-caps" @click="assignSlot()">Assign <i class="fa fa-plus"></i></button>
+            </div>
+
         </div>
 
 
@@ -13,23 +20,34 @@
                 </div>
             </div>
         </div>
+
+        <assign-slot-quickview></assign-slot-quickview>
+
+
     </div>
 </template>
 
 <script>
-    import {mapState} from 'vuex'
+    import {mapGetters} from 'vuex'
+    import AssignSlotQuickview from '../../components/slots/AssignSlotQuickview.vue'
 
     export default{
-
+        components: {
+            "assign-slot-quickview": AssignSlotQuickview
+        },
         data(){
             return{
 
             }
         },
+        computed: {
+            ...mapGetters('slots', {
+                slotDetail: 'slotDetail'
+            })
+        },
         created(){
             let self = this
-            this.$store.commit('slots/getCalendarEventSource',this.$route.params.id)
-
+            this.$store.dispatch('slots/getDataOnSlotCalendar',this.$route.params.id)
         },
         mounted(){
 
@@ -50,6 +68,11 @@
                     })
                 },
             })
+        },
+        methods:{
+            assignSlot(){
+                this.$store.dispatch('slots/getDataOnAssignSlot',this.$route.params.id)
+            }
         }
 
     }

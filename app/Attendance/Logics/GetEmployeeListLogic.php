@@ -9,19 +9,13 @@
 
 namespace App\Attendance\Logics;
 
-use App\Attendance\Models\DayOffSchedule;
-use App\Attendance\Models\SlotMaker;
 use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\EmployeeAssignListTransformer;
-use App\Attendance\Transformers\SlotCalendarTransformer;
-use App\Attendance\Transformers\SlotListTransformer;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
-use App\Employee\Transformers\EmployeeListTransfomer;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
-class GetEmployeeListLogic extends GetEmployeeListUseCase
+
+class GetEmployeeListLogic extends GetDataUseCase
 {
 
 
