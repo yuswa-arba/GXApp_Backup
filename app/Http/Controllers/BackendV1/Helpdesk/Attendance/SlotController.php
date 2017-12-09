@@ -43,8 +43,7 @@ class SlotController extends Controller
     public function remove(Request $request)
     {
         $request->validate([
-            'employeeId'=>'required',
-            'slotId'=>'required'
+            'employeeId'=>'required'
         ]);
 
         return AssignSlotLogic::remove($request);

@@ -36915,13 +36915,13 @@ module.exports = Component.exports
         });
     },
     removeSlot: function removeSlot(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/remove/employee', { employeeId: payload.employee.id, slotId: payload.slot.id }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/remove/employee', { employeeId: payload.employee.id }).then(function (res) {
             if (!res.data.isFailed) {
 
                 var user = _.find(state.employeesToBeAssigned, { id: payload.employee.id });
                 var userIndex = _.findIndex(state.employeesToBeAssigned, user);
 
-                var slot = _.find(state.slots, { id: payload.slot.id });
+                var slot = _.find(state.slots, { id: user.slotSchedule.id });
                 var slotIndex = _.findIndex(state.slots, slot);
 
                 __WEBPACK_IMPORTED_MODULE_2_async_series___default()([function (callback) {
@@ -36931,7 +36931,9 @@ module.exports = Component.exports
                     user.slotSchedule = '';
 
                     //update slot object
-                    slot.assignedTo = { total: parseInt(slot.assignedTo.total) - 1 };
+                    if (parseInt(slot.assignedTo.total) > 0) {
+                        slot.assignedTo = { total: parseInt(slot.assignedTo.total) - 1 };
+                    }
 
                     if (!slot.allowMultipleAssign) {
                         slot.availableForAssign = true;

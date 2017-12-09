@@ -10,6 +10,7 @@
 namespace App\Attendance\Logics;
 
 use App\Attendance\Models\EmployeeSlotSchedule;
+use App\Attendance\Models\Slots;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,21 +23,29 @@ class AssignSlotLogic extends AssignUseCase
         $request->request->add(['setAt' => Carbon::now()]);
         $requestData = $request->all();
 
-        $employeeSlotSchedule = EmployeeSlotSchedule::create($requestData);
 
-        $response = array();
+        if($this->slotAvailableToBeAssigned($request->slotId)){
+            $employeeSlotSchedule = EmployeeSlotSchedule::create($requestData);
 
-        if ($employeeSlotSchedule) {
-            /* Return success response */
-            $response['isFailed'] = false;
-            $response['message'] = 'Assign slot to employee is successful';
+            $response = array();
 
-            return response()->json($response, 200);
+            if ($employeeSlotSchedule) {
+                /* Return success response */
+                $response['isFailed'] = false;
+                $response['message'] = 'Assign slot to employee is successful';
 
-        } else {
+                return response()->json($response, 200);
+
+            } else {
+                /* Return error response */
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to assign slot to employee';
+                return response()->json($response, 500);
+            }
+        }else {
             /* Return error response */
             $response['isFailed'] = true;
-            $response['message'] = 'Unable to assign slot to employee';
+            $response['message'] = 'This slot is currently assigned to other employee';
             return response()->json($response, 500);
         }
 
@@ -46,7 +55,7 @@ class AssignSlotLogic extends AssignUseCase
     {
         $response = array();
 
-        $deleteEmployeeSchedule = EmployeeSlotSchedule::where('employeeId', $request->employeeId)->where('slotId', $request->slotId)->delete();
+        $deleteEmployeeSchedule = EmployeeSlotSchedule::where('employeeId', $request->employeeId)->delete();
         if ($deleteEmployeeSchedule) {
 
             /* Return success response */
@@ -69,5 +78,15 @@ class AssignSlotLogic extends AssignUseCase
     public function handleRandomAssign($request)
     {
         // TODO: Implement handleRandomAssign() method.
+    }
+
+    private function slotAvailableToBeAssigned($slotId)
+    {
+        $slot = Slots::find($slotId);
+        if (!$slot->allowMultipleAssign && count($slot->slotSchedule) > 0) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }

@@ -174,14 +174,14 @@ export default{
             })
     },
     removeSlot(state, payload){
-        post(api_path() + 'attendance/slot/remove/employee', {employeeId: payload.employee.id, slotId: payload.slot.id})
+        post(api_path() + 'attendance/slot/remove/employee', {employeeId: payload.employee.id})
             .then((res) => {
                 if (!res.data.isFailed) {
 
                     const user = _.find(state.employeesToBeAssigned, {id: payload.employee.id})
                     const userIndex = _.findIndex(state.employeesToBeAssigned, user)
 
-                    const slot = _.find(state.slots, {id: payload.slot.id})
+                    const slot = _.find(state.slots, {id:user.slotSchedule.id})
                     const slotIndex = _.findIndex(state.slots, slot)
 
                     series([
@@ -192,7 +192,9 @@ export default{
                             user.slotSchedule = ''
 
                             //update slot object
-                            slot.assignedTo = {total: parseInt(slot.assignedTo.total) - 1}
+                            if(parseInt(slot.assignedTo.total)>0){
+                                slot.assignedTo = {total: parseInt(slot.assignedTo.total) - 1}
+                            }
 
                             if (!slot.allowMultipleAssign) {
                                 slot.availableForAssign = true
