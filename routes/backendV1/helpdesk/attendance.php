@@ -23,6 +23,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('slot/detail/calendar','SlotController@calendar')->name('v1.slot.calendar');
         Route::get('slot/assign/employee','SlotController@employeeList')->name('v1.slot.assign.get.employee');
         Route::post('slot/assign/employee','SlotController@assign')->name('v1.slot.assign.employee');
+        Route::post('slot/remove/employee','SlotController@remove')->name('v1.slot.remove.employee');
 
     });
 

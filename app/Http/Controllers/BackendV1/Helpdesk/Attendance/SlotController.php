@@ -40,4 +40,14 @@ class SlotController extends Controller
         return AssignSlotLogic::assign($request);
     }
 
+    public function remove(Request $request)
+    {
+        $request->validate([
+            'employeeId'=>'required',
+            'slotId'=>'required'
+        ]);
+
+        return AssignSlotLogic::remove($request);
+    }
+
 }

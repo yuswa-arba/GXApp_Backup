@@ -30,8 +30,6 @@ class AssignSlotLogic extends AssignUseCase
             /* Return success response */
             $response['isFailed'] = false;
             $response['message'] = 'Assign slot to employee is successful';
-            $response['employeeSlotData'] = $employeeSlotSchedule;
-            $response['employeeSlotData']['slot'] =$employeeSlotSchedule->slot;
 
             return response()->json($response, 200);
 
@@ -46,7 +44,26 @@ class AssignSlotLogic extends AssignUseCase
 
     public function handleRemove($request)
     {
-        // TODO: Implement handleRemove() method.
+        $response = array();
+
+        $deleteEmployeeSchedule = EmployeeSlotSchedule::where('employeeId', $request->employeeId)->where('slotId', $request->slotId)->delete();
+        if ($deleteEmployeeSchedule) {
+
+            /* Return success response */
+            $response['isFailed'] = false;
+            $response['message'] = 'Remove slot from employee is successful';
+            return response()->json($response, 200);
+
+        } else {
+
+
+
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to remove slot from employee';
+            return response()->json($response, 500);
+
+        }
     }
 
     public function handleRandomAssign($request)

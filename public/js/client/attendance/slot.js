@@ -2487,11 +2487,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
     methods: {
-        assign: function assign(employeeId, slotId) {
+        assign: function assign(employee, slot) {
             this.$store.dispatch({
                 type: 'slots/assignSlotToEmployee',
-                employeeId: employeeId,
-                slotId: slotId
+                employee: employee,
+                slot: slot
+            });
+        },
+        remove: function remove(employee, slot) {
+            this.$store.dispatch({
+                type: 'slots/removeSlotFromEmployee',
+                employee: employee,
+                slot: slot
             });
         }
     }
@@ -21910,7 +21917,12 @@ var render = function() {
                                       "label",
                                       {
                                         staticClass:
-                                          "label m-t-10 p-b-5 ml-auto fs-12 cursor"
+                                          "label m-t-10 p-b-5 ml-auto fs-12 cursor",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.remove(employee, _vm.slotDetail)
+                                          }
+                                        }
                                       },
                                       [
                                         _vm._v(
@@ -21925,10 +21937,7 @@ var render = function() {
                                           "label label-success m-t-10 p-b-5 ml-auto fs-12 cursor",
                                         on: {
                                           click: function($event) {
-                                            _vm.assign(
-                                              employee.id,
-                                              _vm.slotDetail.id
-                                            )
+                                            _vm.assign(employee, _vm.slotDetail)
                                           }
                                         }
                                       },
@@ -36671,7 +36680,13 @@ module.exports = Component.exports
         var commit = _ref4.commit,
             state = _ref4.state;
 
-        commit({ type: 'assignSlot', employeeId: payload.employeeId, slotId: payload.slotId });
+        commit({ type: 'assignSlot', employee: payload.employee, slot: payload.slot });
+    },
+    removeSlotFromEmployee: function removeSlotFromEmployee(_ref5, payload) {
+        var commit = _ref5.commit,
+            state = _ref5.state;
+
+        commit({ type: 'removeSlot', employee: payload.employee, slot: payload.slot });
     }
 });
 
@@ -36833,26 +36848,22 @@ module.exports = Component.exports
         });
     },
     assignSlot: function assignSlot(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/assign/employee', { employeeId: payload.employeeId, slotId: payload.slotId }).then(function (res) {
-            if (!res.data.isFailed && res.data.employeeSlotData) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/assign/employee', { employeeId: payload.employee.id, slotId: payload.slot.id }).then(function (res) {
+            if (!res.data.isFailed) {
 
-                var employeeData = res.data.employeeSlotData;
-
-                var user = _.find(state.employeesToBeAssigned, { id: employeeData.employeeId });
+                var user = _.find(state.employeesToBeAssigned, { id: payload.employee.id });
                 var userIndex = _.findIndex(state.employeesToBeAssigned, user);
 
-                var slot = _.find(state.slots, { id: employeeData.slot.id });
+                var slot = _.find(state.slots, { id: payload.slot.id });
                 var slotIndex = _.findIndex(state.slots, slot);
 
                 __WEBPACK_IMPORTED_MODULE_2_async_series___default()([function (callback) {
 
                     //update user object
                     user.hasSlotSchedule = true;
-                    user.slotSchedule = { id: employeeData.slot.id, name: employeeData.slot.name
+                    user.slotSchedule = { id: payload.slot.id, name: payload.slot.name
 
                         //update slot object
-
-
                     };slot.assignedTo = { total: parseInt(slot.assignedTo.total) + 1, name: user.name };
 
                     if (!slot.allowMultipleAssign) {
@@ -36879,9 +36890,72 @@ module.exports = Component.exports
                     callback(null);
                 }, function (callback) {
 
-                    setTimeout(function () {
-                        commit('register', userId);
-                    }, 1000);
+                    // $('#assignSlotQuickView').removeClass('open')
+
+                    callback(null);
+                }]);
+            } else {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-left',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-left',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    removeSlot: function removeSlot(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/remove/employee', { employeeId: payload.employee.id, slotId: payload.slot.id }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                var user = _.find(state.employeesToBeAssigned, { id: payload.employee.id });
+                var userIndex = _.findIndex(state.employeesToBeAssigned, user);
+
+                var slot = _.find(state.slots, { id: payload.slot.id });
+                var slotIndex = _.findIndex(state.slots, slot);
+
+                __WEBPACK_IMPORTED_MODULE_2_async_series___default()([function (callback) {
+
+                    //update user object
+                    user.hasSlotSchedule = false;
+                    user.slotSchedule = '';
+
+                    //update slot object
+                    slot.assignedTo = { total: parseInt(slot.assignedTo.total) - 1 };
+
+                    if (!slot.allowMultipleAssign) {
+                        slot.availableForAssign = true;
+                    }
+
+                    //update user data in array
+                    state.employeesToBeAssigned.splice(userIndex, 1, user);
+
+                    //update slot data in arrray
+                    state.slots.splice(slotIndex, 1, slot);
+
+                    callback(null);
+                }, function (callback) {
+                    /* Show success notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-left',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    callback(null);
+                }, function (callback) {
 
                     // $('#assignSlotQuickView').removeClass('open')
 

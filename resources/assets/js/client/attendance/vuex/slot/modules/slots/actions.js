@@ -20,6 +20,10 @@ export default{
         commit('getCalendarEventSource', slotId)
     },
     assignSlotToEmployee({commit, state}, payload){
-        commit({type: 'assignSlot', employeeId: payload.employeeId, slotId: payload.slotId})
+        commit({type: 'assignSlot', employee: payload.employee, slot: payload.slot})
+    },
+    removeSlotFromEmployee({commit,state},payload){
+        commit({type: 'removeSlot', employee: payload.employee, slot: payload.slot})
     }
+
 }

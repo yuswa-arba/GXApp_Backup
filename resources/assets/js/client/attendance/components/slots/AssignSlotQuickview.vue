@@ -49,12 +49,12 @@
 
 
                                             <label class="label m-t-10 p-b-5 ml-auto fs-12 cursor"
-                                                   v-if="employee.hasSlotSchedule">
+                                                   v-if="employee.hasSlotSchedule" @click="remove(employee,slotDetail)">
                                                 Remove
                                             </label>
 
                                             <label class="label label-success m-t-10 p-b-5 ml-auto fs-12 cursor"
-                                                   v-else="" @click="assign(employee.id,slotDetail.id)">
+                                                   v-else="" @click="assign(employee,slotDetail)">
                                                 Assign
                                             </label>
 
@@ -105,11 +105,18 @@
         },
 
         methods: {
-            assign(employeeId, slotId){
+            assign(employee, slot){
                 this.$store.dispatch({
                     type: 'slots/assignSlotToEmployee',
-                    employeeId: employeeId,
-                    slotId: slotId
+                    employee: employee,
+                    slot: slot
+                })
+            },
+            remove(employee, slot){
+                this.$store.dispatch({
+                    type: 'slots/removeSlotFromEmployee',
+                    employee: employee,
+                    slot: slot
                 })
             }
         },

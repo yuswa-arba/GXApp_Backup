@@ -99,16 +99,14 @@ export default{
             })
     },
     assignSlot(state, payload){
-        post(api_path() + 'attendance/slot/assign/employee', {employeeId: payload.employeeId, slotId: payload.slotId})
+        post(api_path() + 'attendance/slot/assign/employee', {employeeId: payload.employee.id, slotId: payload.slot.id})
             .then((res) => {
-                if (!res.data.isFailed && res.data.employeeSlotData) {
+                if (!res.data.isFailed) {
 
-                    const employeeData = res.data.employeeSlotData
-
-                    const user = _.find(state.employeesToBeAssigned, {id: employeeData.employeeId})
+                    const user = _.find(state.employeesToBeAssigned, {id: payload.employee.id})
                     const userIndex = _.findIndex(state.employeesToBeAssigned, user)
 
-                    const slot = _.find(state.slots, {id: employeeData.slot.id})
+                    const slot = _.find(state.slots, {id: payload.slot.id})
                     const slotIndex = _.findIndex(state.slots, slot)
 
                     series([
@@ -116,13 +114,10 @@ export default{
 
                             //update user object
                             user.hasSlotSchedule = true
-                            user.slotSchedule = {id: employeeData.slot.id, name: employeeData.slot.name}
+                            user.slotSchedule = {id: payload.slot.id, name: payload.slot.name}
 
                             //update slot object
-
-
-                            slot.assignedTo ={total: parseInt(slot.assignedTo.total) + 1,name:user.name}
-
+                            slot.assignedTo = {total: parseInt(slot.assignedTo.total) + 1, name: user.name}
 
                             if (!slot.allowMultipleAssign) {
                                 slot.availableForAssign = false
@@ -149,10 +144,6 @@ export default{
                             callback(null)
                         },
                         function (callback) {
-
-                            setTimeout(() => {
-                                commit('register', userId)
-                            }, 1000)
 
                             // $('#assignSlotQuickView').removeClass('open')
 
@@ -181,7 +172,80 @@ export default{
                     type: 'danger'
                 }).show();
             })
+    },
+    removeSlot(state, payload){
+        post(api_path() + 'attendance/slot/remove/employee', {employeeId: payload.employee.id, slotId: payload.slot.id})
+            .then((res) => {
+                if (!res.data.isFailed) {
 
+                    const user = _.find(state.employeesToBeAssigned, {id: payload.employee.id})
+                    const userIndex = _.findIndex(state.employeesToBeAssigned, user)
+
+                    const slot = _.find(state.slots, {id: payload.slot.id})
+                    const slotIndex = _.findIndex(state.slots, slot)
+
+                    series([
+                        function (callback) {
+
+                            //update user object
+                            user.hasSlotSchedule = false
+                            user.slotSchedule = ''
+
+                            //update slot object
+                            slot.assignedTo = {total: parseInt(slot.assignedTo.total) - 1}
+
+                            if (!slot.allowMultipleAssign) {
+                                slot.availableForAssign = true
+                            }
+
+                            //update user data in array
+                            state.employeesToBeAssigned.splice(userIndex, 1, user)
+
+                            //update slot data in arrray
+                            state.slots.splice(slotIndex, 1, slot)
+
+                            callback(null)
+                        },
+                        function (callback) {
+                            /* Show success notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-left',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            callback(null)
+                        },
+                        function (callback) {
+
+                            // $('#assignSlotQuickView').removeClass('open')
+
+                            callback(null)
+                        }
+                    ])
+
+
+                } else { /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-left',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-left',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
 
     }
 }
