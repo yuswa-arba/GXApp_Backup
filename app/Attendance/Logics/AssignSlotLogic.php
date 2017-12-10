@@ -32,14 +32,14 @@ class AssignSlotLogic extends AssignUseCase
             if ($employeeSlotSchedule) {
                 /* Return success response */
                 $response['isFailed'] = false;
-                $response['message'] = 'Assign slot to employee is successful';
+                $response['message'] = 'Assign employee to slot is successful';
 
                 return response()->json($response, 200);
 
             } else {
                 /* Return error response */
                 $response['isFailed'] = true;
-                $response['message'] = 'Unable to assign slot to employee';
+                $response['message'] = 'Unable to assign employee to slot';
                 return response()->json($response, 500);
             }
         }else {
@@ -60,7 +60,7 @@ class AssignSlotLogic extends AssignUseCase
 
             /* Return success response */
             $response['isFailed'] = false;
-            $response['message'] = 'Remove slot from employee is successful';
+            $response['message'] = 'Remove employee from slot is successful.';
             return response()->json($response, 200);
 
         } else {
@@ -69,7 +69,7 @@ class AssignSlotLogic extends AssignUseCase
 
             /* Return error response */
             $response['isFailed'] = true;
-            $response['message'] = 'Unable to remove slot from employee';
+            $response['message'] = 'Unable to remove employee from slot';
             return response()->json($response, 500);
 
         }

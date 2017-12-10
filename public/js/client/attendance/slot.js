@@ -2495,11 +2495,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             });
         },
         remove: function remove(employee, slot) {
-            this.$store.dispatch({
-                type: 'slots/removeSlotFromEmployee',
-                employee: employee,
-                slot: slot
-            });
+
+            if (confirm('Are you sure to remove ' + employee.name + ' from this slot now?')) {
+                this.$store.dispatch({
+                    type: 'slots/removeSlotFromEmployee',
+                    employee: employee,
+                    slot: slot
+                });
+            }
         }
     }
 });
@@ -36796,6 +36799,10 @@ module.exports = Component.exports
 
             state.employeesToBeAssigned = res.data.data;
 
+            _.sortBy(state.employeesToBeAssigned, function (employees) {
+                return employees.hasSlotSchedule && employees.slotSchedule.id == slotId;
+            });
+
             if (!_.isEmpty(state.employeesToBeAssigned)) {
                 // show quickview if data is not empty
                 if (!$('#assignSlotQuickView').hasClass('open')) {
@@ -36959,7 +36966,16 @@ module.exports = Component.exports
                     callback(null);
                 }, function (callback) {
 
-                    // $('#assignSlotQuickView').removeClass('open')
+                    setTimeout(function () {
+                        /* Show warning slot removed notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: 'Employee automatically assigned to default slot',
+                            position: 'top-left',
+                            timeout: 6000,
+                            type: 'warning'
+                        }).show();
+                    }, 2000);
 
                     callback(null);
                 }]);

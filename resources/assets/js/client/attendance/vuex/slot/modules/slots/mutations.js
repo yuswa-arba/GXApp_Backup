@@ -41,6 +41,11 @@ export default{
 
                 state.employeesToBeAssigned = res.data.data
 
+                _.sortBy(state.employeesToBeAssigned,(employees)=>{
+                        return employees.hasSlotSchedule && employees.slotSchedule.id == slotId
+                })
+
+
                 if (!_.isEmpty(state.employeesToBeAssigned)) {
                     // show quickview if data is not empty
                     if (!$('#assignSlotQuickView').hasClass('open')) {
@@ -222,7 +227,17 @@ export default{
                         },
                         function (callback) {
 
-                            // $('#assignSlotQuickView').removeClass('open')
+                            setTimeout(()=>{
+                                /* Show warning slot removed notification */
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: 'Employee automatically assigned to default slot',
+                                    position: 'top-left',
+                                    timeout: 6000,
+                                    type: 'warning'
+                                }).show();
+                            },2000)
+
 
                             callback(null)
                         }

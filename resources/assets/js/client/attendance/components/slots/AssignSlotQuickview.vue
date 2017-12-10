@@ -76,8 +76,8 @@
 
                 </div>
             </div>
-
         </div>
+
     </div>
 
     <!-- /.modal-dialog -->
@@ -113,11 +113,16 @@
                 })
             },
             remove(employee, slot){
-                this.$store.dispatch({
-                    type: 'slots/removeSlotFromEmployee',
-                    employee: employee,
-                    slot: slot
-                })
+
+                if(confirm('Are you sure to remove '+employee.name+' from this slot now?')){
+                    this.$store.dispatch({
+                        type: 'slots/removeSlotFromEmployee',
+                        employee: employee,
+                        slot: slot
+                    })
+                }
+
+
             }
         },
     }
