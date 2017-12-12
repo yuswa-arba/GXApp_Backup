@@ -36542,7 +36542,7 @@ $(document).ready(function () {
     slotDT.dataTable({
         "sDom": "t",
         "destroy": true,
-        "paging": false,
+        "paging": true,
         "scrollCollapse": false,
         "ordering": false
     });

@@ -21,6 +21,9 @@ Route::prefix('v1/h')->group(function () {
         Route::get('slot/{id}','GetListController@slot')->name('v1.component.list.slot');
         Route::get('list/slots', 'GetListController@slots')->name('v1.component.list.slots');
 
+        Route::get('shift/{id}','GetListController@shift')->name('v1.component.list.shift');
+        Route::get('list/shifts', 'GetListController@shifts')->name('v1.component.list.shifts');
+
     });
 
 });

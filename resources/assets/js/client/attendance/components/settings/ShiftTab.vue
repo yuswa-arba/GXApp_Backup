@@ -4,22 +4,26 @@
             <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                 <div class="card-block">
                     <div class="scrollable">
-                        <div class=" h-350">
+                        <div class=" h-500">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover settingDT">
                                     <thead class="bg-master-lighter">
                                     <tr>
                                         <th class="text-black">Name</th>
-                                        <th class="text-black">Time Start</th>
-                                        <th class="text-black">Time End</th>
+                                        <th class="text-black">Work Start</th>
+                                        <th class="text-black">Work End</th>
+                                        <th class="text-black">Break Start</th>
+                                        <th class="text-black">Break End</th>
                                         <th class="text-black">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="index in 10">
-                                        <td>8to17</td>
-                                        <td>08:00</td>
-                                        <td>17:00</td>
+                                    <tr v-for="shift in shifts">
+                                        <td>{{shift.name}}</td>
+                                        <td>{{shift.workStartAt}}</td>
+                                        <td>{{shift.workEndAt}}</td>
+                                        <td>{{shift.breakStartAt}}</td>
+                                        <td>{{shift.breakEndAt}}</td>
                                         <td>
                                             <i class="fs-14 fa fa-pencil pointer"></i>
                                             &nbsp; &nbsp;
@@ -48,30 +52,57 @@
                             <div class="row clearfix">
                                 <div class="col-md-6">
                                     <div class="form-group required">
-                                        <label>Time Start</label>
+                                        <label>Work Start</label>
                                         <div class="input-group bootstrap-timepicker">
-                                            <input id="timestart" type="text" class="form-control">
-                                            <span class="input-group-addon"><i class="pg-clock"></i></span>
+                                            <input id="workstart" type="text" class="form-control" v-model="timeStart"
+                                                   name="workStartAt">
+                                            <!--<span class="input-group-addon"><i class="pg-clock"></i></span>-->
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group required">
-                                        <label>Time End</label>
+                                        <label>Work End</label>
                                         <div class="input-group bootstrap-timepicker">
-                                            <input id="timeend" type="text" class="form-control">
-                                            <span class="input-group-addon"><i class="pg-clock"></i></span>
+                                            <input id="workend" type="text" class="form-control" v-model="timeEnd"
+                                                   name="workEndAt">
+                                            <!--<span class="input-group-addon"><i class="pg-clock"></i></span>-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="row clearfix">
+                                <div class="col-md-6">
+                                    <div class="form-group required">
+                                        <label>Break Start</label>
+                                        <div class="input-group bootstrap-timepicker">
+                                            <input id="breakstart" type="text" class="form-control"
+                                                   v-model="breakStart" name="breakStartAt">
+                                            <!--<span class="input-group-addon"><i class="pg-clock"></i></span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group required">
+                                        <label>Break End</label>
+                                        <div class="input-group bootstrap-timepicker">
+                                            <input id="breakend" type="text" class="form-control" v-model="breakEnd"
+                                                   name="breakEndAt">
+                                            <!--<span class="input-group-addon"><i class="pg-clock"></i></span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="form-group  required">
                                 <label>Shift name</label>
-                                <input type="text" class="form-control" required>
+                                <input type="text" class="form-control" required :value="autoGeneratedShiftName"
+                                       name="name">
                             </div>
                         </div>
-                        <p>If time end is smaller than time start, the system will automatically registered it as a new date/tomorrow's date</p>
-                        <button class="btn btn-complete pull-right" type="button">Save</button>
+                        <p>If time end is smaller than time start, the system will automatically registered it as a new
+                            date/tomorrow's date</p>
+                        <button class="btn btn-complete pull-right" type="button" @click="createShift()">Save</button>
                     </form>
                 </div>
             </div>
@@ -80,9 +111,82 @@
 </template>
 <script type="text/javascript">
     import {get, post} from '../../../helpers/api'
+    import {api_path} from '../../../helpers/const'
     export default{
+        data(){
+            return {
+                shifts: [],
+                timeStart: '08:00',
+                timeEnd: '17:00',
+                breakStart: '12:00',
+                breakEnd: '13:00',
+                formObject: {},
+            }
+        },
         created(){
+            let self = this
+            get(api_path() + 'component/list/shifts')
+                .then((res) => {
+                    self.shifts = res.data.data
+                })
+        },
+        methods: {
+            createShift(){
+                let self = this
+                let serializeForm = $('#shift-form').serializeArray()
 
+                _.forEach(serializeForm, function (value, key) {
+                    self.formObject[value.name] = value.value
+                })
+
+                post(api_path() + 'attendance/shift/create', self.formObject)
+                    .then((res) => {
+                        if (!res.data.isFailed && res.data.shift) {
+
+                            /* Show success notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            // push to table
+                            self.shifts.push(res.data.shift)
+
+                        } else {
+                            /* Show error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        }
+                    })
+                    .catch((err) => {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message + "<br>" + err.response.data.errors.name[0],
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    })
+
+            }
+
+        },
+        computed: {
+            autoGeneratedShiftName: function () {
+                let self = this
+                let timeStart = _.trimStart(_.trimEnd(self.timeStart, '00'), '0')
+                let timeEnd = _.trimStart(_.trimEnd(self.timeEnd, '00'), '0')
+
+                return _.trim(timeStart, ':') + "to" + _.trim(timeEnd, ':')
+            }
         }
     }
 </script>

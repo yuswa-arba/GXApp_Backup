@@ -40,17 +40,12 @@ const app = new Vue({
 $(document).ready(function () {
 
 
-    $('#timestart').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
+    $('#workstart,#workend,#breakstart,#breakend').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
         let widget = $('.bootstrap-timepicker-widget');
-        widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
-        widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
+        // widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
+        // widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
     });
 
-    $('#timeend').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
-        let widget = $('.bootstrap-timepicker-widget');
-        widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
-        widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
-    });
 
     $('#holiday-datepicker-range').datepicker({format: 'dd/mm/yyyy'});
 

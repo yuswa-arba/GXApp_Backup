@@ -334,25 +334,38 @@ class TestUploadController extends Controller
 //        }
 //
 //        echo json_encode($slots);
-        $dayOffs = array();
-        if (15 > 5) {
-            for ($m = 15; $m >0; $m -= 5 + 1) {
 
-                $date = Carbon::createFromFormat('d/m/Y', "01/01/2017")->addDays($m - 1);
-
-                if ($date->day != 15) {
-                    if (Carbon::createFromFormat('d/m/Y', $date->format('d/m/Y'))->year == Carbon::now()->year) {
-                        array_push($dayOffs, array('date' => $date->format('d/m/Y'), 'description' => 'Weekly Day Off'));
-                    }
-                }
-
-            }
-        }
-
-        echo json_encode($dayOffs);
+//        $dayOffs = array();
+//        if (15 > 5) {
+//            for ($m = 15; $m >0; $m -= 5 + 1) {
+//
+//                $date = Carbon::createFromFormat('d/m/Y', "01/01/2017")->addDays($m - 1);
+//
+//                if ($date->day != 15) {
+//                    if (Carbon::createFromFormat('d/m/Y', $date->format('d/m/Y'))->year == Carbon::now()->year) {
+//                        array_push($dayOffs, array('date' => $date->format('d/m/Y'), 'description' => 'Weekly Day Off'));
+//                    }
+//                }
+//
+//            }
+//        }
+//
+//        echo json_encode($dayOffs);
 
     }
 
+    public function isTimeGT()
+    {
+        $start = Carbon::createFromFormat('H:i','08:00');
+        $end = Carbon::createFromFormat('H:i','07:00');
+
+        // check if its over night
+        if($start->gt($end)){
+            echo 'it\'s overnight';
+        } else {
+            echo 'it\'s not overnight';
+        }
+    }
 
     public function slotEmployeePivot()
     {

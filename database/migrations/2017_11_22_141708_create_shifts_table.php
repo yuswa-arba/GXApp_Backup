@@ -18,9 +18,9 @@ class CreateShiftsTable extends Migration
             $table->string('name');
             $table->string('workStartAt');
             $table->string('workEndAt');
-            $table->string('breakStartAt');
-            $table->string('breakEndAt');
-            $table->tinyInteger('isOvernight');
+            $table->string('breakStartAt')->nullable();
+            $table->string('breakEndAt')->nullable();
+            $table->tinyInteger('isOvernight')->default(0);
             $table->timestamps();
         });
     }
