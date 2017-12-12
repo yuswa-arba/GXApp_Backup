@@ -42,8 +42,8 @@ $(document).ready(function () {
 
     $('#workstart,#workend,#breakstart,#breakend').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
         let widget = $('.bootstrap-timepicker-widget');
-        // widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
-        // widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
+        widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
+        widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
     });
 
 

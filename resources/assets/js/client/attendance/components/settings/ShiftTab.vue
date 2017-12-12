@@ -25,9 +25,10 @@
                                         <td>{{shift.breakStartAt}}</td>
                                         <td>{{shift.breakEndAt}}</td>
                                         <td>
-                                            <i class="fs-14 fa fa-pencil pointer"></i>
+                                            <i class="fs-14 fa fa-pencil pointer" v-if="shift.id!=1"></i>
                                             &nbsp; &nbsp;
-                                            <i class="fs-14 text-danger fa fa-times pointer"></i>
+                                            <i class="fs-14 text-danger fa fa-times pointer" v-if="shift.id!=1"
+                                               @click="deleteShift(shift.id)"></i>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -48,15 +49,17 @@
                 <div class="card-block">
                     <form id="shift-form">
                         <h4>Shift Form</h4>
+                        <label class="help">(Format H:i e.g: 00:30 or 08:00 or 23:00)</label>
                         <div>
                             <div class="row clearfix">
                                 <div class="col-md-6">
                                     <div class="form-group required">
                                         <label>Work Start</label>
                                         <div class="input-group bootstrap-timepicker">
-                                            <input id="workstart" type="text" class="form-control" v-model="timeStart"
+                                            <input id="workstart" type="text" class="form-control"
+                                                   v-model="workStartAt"
                                                    name="workStartAt">
-                                            <!--<span class="input-group-addon"><i class="pg-clock"></i></span>-->
+                                            <span class="input-group-addon"><i class="pg-clock"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -64,9 +67,9 @@
                                     <div class="form-group required">
                                         <label>Work End</label>
                                         <div class="input-group bootstrap-timepicker">
-                                            <input id="workend" type="text" class="form-control" v-model="timeEnd"
+                                            <input id="workend" type="text" class="form-control" v-model="workEndAt"
                                                    name="workEndAt">
-                                            <!--<span class="input-group-addon"><i class="pg-clock"></i></span>-->
+                                            <span class="input-group-addon"><i class="pg-clock"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -77,8 +80,8 @@
                                         <label>Break Start</label>
                                         <div class="input-group bootstrap-timepicker">
                                             <input id="breakstart" type="text" class="form-control"
-                                                   v-model="breakStart" name="breakStartAt">
-                                            <!--<span class="input-group-addon"><i class="pg-clock"></i></span>-->
+                                                   name="breakStartAt" v-model="breakStartAt">
+                                            <span class="input-group-addon"><i class="pg-clock"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -86,9 +89,9 @@
                                     <div class="form-group required">
                                         <label>Break End</label>
                                         <div class="input-group bootstrap-timepicker">
-                                            <input id="breakend" type="text" class="form-control" v-model="breakEnd"
-                                                   name="breakEndAt">
-                                            <!--<span class="input-group-addon"><i class="pg-clock"></i></span>-->
+                                            <input id="breakend" type="text" class="form-control"
+                                                   name="breakEndAt" v-model="breakEndAt">
+                                            <span class="input-group-addon"><i class="pg-clock"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +99,7 @@
 
                             <div class="form-group  required">
                                 <label>Shift name</label>
-                                <input type="text" class="form-control" required :value="autoGeneratedShiftName"
+                                <input type="text" class="form-control" required :placeholder="autoGeneratedShiftName"
                                        name="name">
                             </div>
                         </div>
@@ -116,10 +119,10 @@
         data(){
             return {
                 shifts: [],
-                timeStart: '08:00',
-                timeEnd: '17:00',
-                breakStart: '12:00',
-                breakEnd: '13:00',
+                workStartAt: '08:00',
+                workEndAt: '17:00',
+                breakStartAt: '12:00',
+                breakEndAt: '13:00',
                 formObject: {},
             }
         },
@@ -169,24 +172,68 @@
                     .catch((err) => {
                         $('.page-container').pgNotification({
                             style: 'flip',
-                            message: err.message + "<br>" + err.response.data.errors.name[0],
+                            message: err.message + '<br>' + err.response.data.errors.name[0],
                             position: 'top-right',
                             timeout: 3500,
                             type: 'danger'
                         }).show();
                     })
 
-            }
+            },
+            deleteShift(id){
+                let self = this
+                if(confirm('Are you sure to delete this shift?')){
+                    post(api_path() + 'attendance/shift/delete', {shiftId: id})
+                        .then((res) => {
+                            if (!res.data.isFailed) {
 
+                                const shiftIndex = _.findIndex(self.shifts, {id: id})
+                                self.shifts.splice(shiftIndex, 1)
+
+
+                                /* Show success notification */
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+
+                            } else {
+                                /* Show error notification */
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            }
+
+                        }).catch((err) => {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message + '<br>' + err.response.data.errors.name[0],
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    })
+
+                }
+
+            }
         },
         computed: {
             autoGeneratedShiftName: function () {
                 let self = this
-                let timeStart = _.trimStart(_.trimEnd(self.timeStart, '00'), '0')
-                let timeEnd = _.trimStart(_.trimEnd(self.timeEnd, '00'), '0')
+                let workStartAt = _.trimStart(_.trimEnd(self.workStartAt, '00'), '0')
+                let workEndAt = _.trimStart(_.trimEnd(self.workEndAt, '00'), '0')
 
-                return _.trim(timeStart, ':') + "to" + _.trim(timeEnd, ':')
-            }
+                return "e.g: " + _.trim(workStartAt, ':') + "to" + _.trim(workEndAt, ':')
+            },
         }
     }
 </script>

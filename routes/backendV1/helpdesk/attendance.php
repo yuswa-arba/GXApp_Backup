@@ -26,7 +26,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('slot/remove/employee','SlotController@remove')->name('v1.slot.remove.employee');
 
         Route::post('shift/create','ShiftController@create')->name('v1.shift.create');
-
+        Route::post('shift/delete','ShiftController@delete')->name('v1.shift.delete');
     });
 
 

@@ -20,20 +20,20 @@ class ShiftController extends Controller
 
         //validate form
         $request->validate([
-            'name'=>'required',
-            'workStartAt'=>'date_format:H:i|required',
-            'workEndAt'=>'date_format:H:i|required',
-            'breakStartAt'=>'date_format:H:i',
-            'breakEndAt'=>'date_format:H:i'
+            'name' => 'required',
+            'workStartAt' => 'required',
+            'workEndAt' => 'required',
+//            'breakStartAt'=>'date_format:H:i',
+//            'breakEndAt'=>'date_format:H:i'
         ]);
 
 
-        $start = Carbon::createFromFormat('H:i',$request->workStartAt);
-        $end = Carbon::createFromFormat('H:i',$request->workEndAt);
+        $start = Carbon::createFromFormat('H:i', $request->workStartAt);
+        $end = Carbon::createFromFormat('H:i', $request->workEndAt);
 
         // check if its over night
-        if($start->gt($end)){
-            $request->request->add(['isOvernight'=>1]);
+        if ($start->gt($end)) {
+            $request->request->add(['isOvernight' => 1]);
         }
 
         //is valid
@@ -52,6 +52,26 @@ class ShiftController extends Controller
             $response['message'] = 'Unable to create Shift';
             return response()->json($response, 500);
 
+        }
+
+    }
+
+    public function delete(Request $request)
+    {
+        $response = array();
+
+        $request->validate(['shiftId' => 'required']);
+
+        $delete = Shifts::where('id', $request->shiftId)->delete();
+
+        if ($delete) {
+            $response['isFailed'] = false;
+            $response['message'] = 'Shift has been deleted successfully';
+            return response()->json($response, 200);
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to delete Shift';
+            return response()->json($response, 500);
         }
 
     }
