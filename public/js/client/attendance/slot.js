@@ -36972,7 +36972,7 @@ module.exports = Component.exports
                             style: 'flip',
                             message: 'Employee automatically assigned to default slot',
                             position: 'top-left',
-                            timeout: 6000,
+                            timeout: 4500,
                             type: 'warning'
                         }).show();
                     }, 2000);

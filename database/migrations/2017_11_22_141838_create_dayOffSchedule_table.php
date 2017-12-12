@@ -15,7 +15,7 @@ class CreateDayOffScheduleTable extends Migration
     {
         Schema::create('dayOffSchedule', function (Blueprint $table) {
             $table->increments('id');
-            $table->tinyInteger('slotId');
+            $table->integer('slotId');
             $table->string('date');
             $table->string('description');
             $table->timestamps();

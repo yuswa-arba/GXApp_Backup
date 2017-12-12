@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class TestUploadController extends Controller
 {
@@ -308,31 +309,47 @@ class TestUploadController extends Controller
     public function tryLogic()
     {
 
-        $turn = 23;
-        $maxLoopDay = 3;
-        $workinDay = 6;
-        $totalDaysInThisYear = (365 + Carbon::now()->format('L'));
+//        $turn = 23;
+//        $maxLoopDay = 3;
+//        $workinDay = 6;
+//        $totalDaysInThisYear = (365 + Carbon::now()->format('L'));
+//
+//        $dayOffs= array();
+//
+//        $slots = array();
+//
+//
+//        for ($i = 0; $i < $maxLoopDay; $i++) {
+//
+//            $w = 1;
+//            for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
+//                $week = $w++;
+//                $slots[$i + 1][$week] = Carbon::parse('first sunday of January')->addDays($i + ($workinDay + 1) * $week)->format('d-m-Y');
+//
+//            }
+//
+//            // add first day off
+//            $slots[$i + 1]["0"] = Carbon::parse('first sunday of January')->addDays($i)->format('d-m-Y');
+//
+//        }
+//
+//        echo json_encode($slots);
+        $dayOffs = array();
+        if (15 > 5) {
+            for ($m = 15; $m >0; $m -= 5 + 1) {
 
-        $dayOffs= array();
+                $date = Carbon::createFromFormat('d/m/Y', "01/01/2017")->addDays($m - 1);
 
-        $slots = array();
-
-
-        for ($i = 0; $i < $maxLoopDay; $i++) {
-
-            $w = 1;
-            for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
-                $week = $w++;
-                $slots[$i + 1][$week] = Carbon::parse('first sunday of January')->addDays($i + ($workinDay + 1) * $week)->format('d-m-Y');
+                if ($date->day != 15) {
+                    if (Carbon::createFromFormat('d/m/Y', $date->format('d/m/Y'))->year == Carbon::now()->year) {
+                        array_push($dayOffs, array('date' => $date->format('d/m/Y'), 'description' => 'Weekly Day Off'));
+                    }
+                }
 
             }
-
-            // add first day off
-            $slots[$i + 1]["0"] = Carbon::parse('first sunday of January')->addDays($i)->format('d-m-Y');
-
         }
 
-        echo json_encode($slots);
+        echo json_encode($dayOffs);
 
     }
 

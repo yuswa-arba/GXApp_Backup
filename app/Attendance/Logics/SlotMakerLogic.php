@@ -14,6 +14,7 @@ use App\Attendance\Models\SlotMaker;
 use App\Attendance\Models\Slots;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class SlotMakerLogic extends ExecuteUseCase
 {
@@ -90,6 +91,22 @@ class SlotMakerLogic extends ExecuteUseCase
             if (Carbon::createFromFormat('d/m/Y', $firstDayOff)->year == Carbon::now()->year) {
                 array_push($dayOffs, array('slotId' => $slot->id, 'date' => $firstDayOff, 'description' => 'Weekly Day Off'));
             }
+
+            // add missing working days
+            if($i+1 > $workinDay){
+                for ($m=$i+1 ;$m > 0 ; $m-=$workinDay+1){
+
+                    $date = Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addDays($m-1);
+
+                    if($date->day!=$i+1){
+                        if (Carbon::createFromFormat('d/m/Y', $date->format('d/m/Y'))->year == Carbon::now()->year) {
+                            array_push($dayOffs, array('slotId' => $slot->id, 'date'=>$date->format('d/m/Y'), 'description' => 'Weekly Day Off'));
+                        }
+                    }
+                }
+            }
+
+
 
             DayOffSchedule::insert($dayOffs);
         }
