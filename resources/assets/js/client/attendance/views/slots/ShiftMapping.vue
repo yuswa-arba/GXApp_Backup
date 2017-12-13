@@ -20,7 +20,7 @@
                                 <label for="cbAll">All</label>
                                 <i class="fa fa-circle text-danger"></i>
                             </div>
-                            <div class="checkbox padding-10" v-for="(slot,index) in slotsBeingMap">
+                            <div class="checkbox padding-10" v-for="(slot,index) in cbSlotsBeingMap">
                                 <input type="checkbox"
                                        :value="slot.id"
                                        :id="'cbSlot'+index"
@@ -53,12 +53,12 @@
         data(){
             return {
                 isProcessing: false,
-                slotIdsBeingMap: _.map(this.$store.state.slots.slotsBeingMap, 'id')
+                slotIdsBeingMap: _.map(this.$store.state.slots.slotsBeingMap, 'id'),
             }
         },
         computed: {
             ...mapGetters('slots', {
-                slotsBeingMap: 'slotsBeingMap',
+                cbSlotsBeingMap: 'cbSlotsBeingMap',
                 shiftMapPalette: 'shiftMapPalette'
             })
         },
@@ -72,10 +72,16 @@
                     },
                     function (cb) {
                         setTimeout(() => {
-                            let filterCalendar = _.filter(self.$store.state.slots.calendarShiftMappingEventSource, {slotId: slotId})
+//                            let filterCalendar = _.filter(self.$store.state.slots.calendarShiftMappingEventSource, {slotId: slotId})
+//
+//                            _.forEach(filterCalendar, function (value, key) {
+//                                $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id)
+//                            })
 
-                            _.forEach(filterCalendar, function (value, key) {
-                                $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id)
+                            self.$store.dispatch({
+                                type: 'slots/starShiftMapping',
+                                slotIds: self.slotIdsBeingMap,
+                                refreshCb:false //do not refresh checkboxes
                             })
 
                             cb(null)
@@ -85,8 +91,6 @@
                 ], function (err, result) {
                     self.isProcessing = false
                 })
-
-
             }
         },
         mounted(){

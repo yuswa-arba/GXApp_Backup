@@ -45,15 +45,22 @@ export default{
     },
     starShiftMapping({commit, state}, payload){
 
-        // resset data
+        // reset data
         state.cbMappingSlots = []
         state.slotsBeingMap = []
-
 
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
             state.slotsBeingMap.push(_.find(state.slots, {id: value}))
+
+            if(payload.refreshCb){
+                state.cbSlotsBeingMap.push(_.find(state.slots, {id: value}))
+            }
+
         })
+
+
+
 
         commit({
             type: 'getCalendarDataForMapping',

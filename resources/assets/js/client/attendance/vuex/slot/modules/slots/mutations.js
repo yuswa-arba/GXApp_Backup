@@ -275,9 +275,11 @@ export default{
 
         post(api_path() + 'attendance/shift/mapping/calendar', {slotIds: payload.slotIds})
             .then((res) => {
+
+                //reset
+                $('#calendar-shift-mapping').fullCalendar('removeEvents')
+
                 state.calendarShiftMappingEventSource = res.data.data
-
-
 
                 //add color
                 let c = 0
@@ -288,7 +290,6 @@ export default{
                         _.assign(filteredToAddColor[i],{backgroundColor:'#'+state.shiftMapPalette[c]})
                     }
                 })
-
 
                 $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource)
 

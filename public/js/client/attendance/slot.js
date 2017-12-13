@@ -2749,7 +2749,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                 this.$store.dispatch({
                     type: 'slots/starShiftMapping',
-                    slotIds: self.selectedSlots
+                    slotIds: self.selectedSlots,
+                    refreshCb: true // get checkboxes first time
                 });
 
                 this.$router.push({ name: 'shiftMapping' });
@@ -3161,7 +3162,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
-        slotsBeingMap: 'slotsBeingMap',
+        cbSlotsBeingMap: 'cbSlotsBeingMap',
         shiftMapPalette: 'shiftMapPalette'
     })),
     methods: {
@@ -3172,10 +3173,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 cb(null);
             }, function (cb) {
                 setTimeout(function () {
-                    var filterCalendar = _.filter(self.$store.state.slots.calendarShiftMappingEventSource, { slotId: slotId });
+                    //                            let filterCalendar = _.filter(self.$store.state.slots.calendarShiftMappingEventSource, {slotId: slotId})
+                    //
+                    //                            _.forEach(filterCalendar, function (value, key) {
+                    //                                $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id)
+                    //                            })
 
-                    _.forEach(filterCalendar, function (value, key) {
-                        $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id);
+                    self.$store.dispatch({
+                        type: 'slots/starShiftMapping',
+                        slotIds: self.slotIdsBeingMap,
+                        refreshCb: false //do not refresh checkboxes
                     });
 
                     cb(null);
@@ -22328,7 +22335,7 @@ var render = function() {
               [
                 _vm._m(1),
                 _vm._v(" "),
-                _vm._l(_vm.slotsBeingMap, function(slot, index) {
+                _vm._l(_vm.cbSlotsBeingMap, function(slot, index) {
                   return _c("div", { staticClass: "checkbox padding-10" }, [
                     _c("input", {
                       directives: [
@@ -37824,13 +37831,17 @@ module.exports = Component.exports
             state = _ref8.state;
 
 
-        // resset data
+        // reset data
         state.cbMappingSlots = [];
         state.slotsBeingMap = [];
 
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
             state.slotsBeingMap.push(_.find(state.slots, { id: value }));
+
+            if (payload.refreshCb) {
+                state.cbSlotsBeingMap.push(_.find(state.slots, { id: value }));
+            }
         });
 
         commit({
@@ -37876,6 +37887,9 @@ module.exports = Component.exports
     },
     shiftMapPalette: function shiftMapPalette(state) {
         return state.shiftMapPalette;
+    },
+    cbSlotsBeingMap: function cbSlotsBeingMap(state) {
+        return state.cbSlotsBeingMap;
     }
 });
 
@@ -37907,6 +37921,7 @@ module.exports = Component.exports
         calendarEventSource: [],
         cbMappingSlots: [],
         slotsBeingMap: [],
+        cbSlotsBeingMap: [],
         calendarShiftMappingEventSource: [],
         shiftMapPalette: palette('tol-rainbow', 25)
     },
@@ -38171,6 +38186,10 @@ module.exports = Component.exports
     getCalendarDataForMapping: function getCalendarDataForMapping(state, payload) {
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
+
+            //reset
+            $('#calendar-shift-mapping').fullCalendar('removeEvents');
+
             state.calendarShiftMappingEventSource = res.data.data;
 
             //add color

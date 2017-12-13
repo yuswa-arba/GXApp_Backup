@@ -17,6 +17,7 @@ export default {
         calendarEventSource: [],
         cbMappingSlots: [],
         slotsBeingMap: [],
+        cbSlotsBeingMap:[],
         calendarShiftMappingEventSource: [],
         shiftMapPalette: palette('tol-rainbow', 25)
     },

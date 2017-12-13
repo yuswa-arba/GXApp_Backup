@@ -28,5 +28,8 @@ export default{
     },
     shiftMapPalette(state){
         return state.shiftMapPalette
+    },
+    cbSlotsBeingMap(state){
+        return state.cbSlotsBeingMap
     }
 }

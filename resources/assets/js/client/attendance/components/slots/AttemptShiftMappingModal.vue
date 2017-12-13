@@ -115,8 +115,10 @@
 
                     this.$store.dispatch({
                         type: 'slots/starShiftMapping',
-                        slotIds: self.selectedSlots
+                        slotIds: self.selectedSlots,
+                        refreshCb:true // get checkboxes first time
                     })
+
 
                     this.$router.push({name: 'shiftMapping'})
 
