@@ -24,7 +24,7 @@
                     </div>
 
                     <div class="clearfix"></div>
-                    <p class="fs-12">If someone is not assigned to any slot, he/she won't be able to clock in/out</p>
+                    <p class="fs-12">If someone is not assigned to specific slot, he/she will be automatically assigned to default slot</p>
                     <p class="fs-12">Creating slot maker means only creating the setting, slot maker needs to be
                         executed from the
                         table below </p>
@@ -164,8 +164,8 @@
                                             <p v-else>-</p>
                                         </td>
                                         <td style="width: 70px">
-                                            <i class="fs-14 fa fa-search pointer"></i>
-                                            &nbsp;
+                                            <!--<i class="fs-14 fa fa-search pointer"></i>-->
+                                            <!--&nbsp;-->
 
 
                                             <i class="fs-14 text-success fa fa-power-off pointer"

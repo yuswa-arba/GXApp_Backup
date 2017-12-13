@@ -79,8 +79,6 @@
         </div>
 
     </div>
-
-    <!-- /.modal-dialog -->
 </template>
 
 <script>
@@ -114,7 +112,7 @@
             },
             remove(employee, slot){
 
-                if(confirm('Are you sure to remove '+employee.name+' from this slot now?')){
+                if (confirm('Are you sure to remove ' + employee.name + ' from this slot now?')) {
                     this.$store.dispatch({
                         type: 'slots/removeSlotFromEmployee',
                         employee: employee,

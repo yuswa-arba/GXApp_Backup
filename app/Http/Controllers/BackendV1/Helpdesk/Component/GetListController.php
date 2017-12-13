@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\BackendV1\Helpdesk\Component;
 
 use App\Attendance\Models\Shifts;
+use App\Attendance\Models\SlotMaker;
 use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\ShiftListTransformer;
 use App\Attendance\Transformers\SlotListTransformer;
+use App\Attendance\Transformers\SlotMakerListTransformer;
 use App\Components\Models\JobPosition;
 use App\Components\Transformers\JobPositionListTransfomer;
 use Illuminate\Http\Request;
@@ -23,6 +25,16 @@ class GetListController extends Controller
     public function jobPositions()
     {
         return fractal(JobPosition::all(),new JobPositionListTransfomer())->respond(200);
+    }
+
+    public function slotMaker($id)
+    {
+        return fractal(SlotMaker::find($id),new SlotMakerListTransformer())->respond(200);
+    }
+
+    public function slotMakers()
+    {
+        return fractal(SlotMaker::all(), new SlotMakerListTransformer())->respond(200);
     }
 
     public function slot($id)

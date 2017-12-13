@@ -25,7 +25,7 @@
                                         <td>{{shift.breakStartAt}}</td>
                                         <td>{{shift.breakEndAt}}</td>
                                         <td>
-                                            <i class="fs-14 fa fa-pencil pointer" v-if="shift.id!=1"></i>
+                                            <!--<i class="fs-14 fa fa-pencil pointer" v-if="shift.id!=1"></i>-->
                                             &nbsp; &nbsp;
                                             <i class="fs-14 text-danger fa fa-times pointer" v-if="shift.id!=1"
                                                @click="deleteShift(shift.id)"></i>
@@ -145,6 +145,9 @@
                 post(api_path() + 'attendance/shift/create', self.formObject)
                     .then((res) => {
                         if (!res.data.isFailed && res.data.shift) {
+
+                            //reset form
+                            $('#shift-form input').val('')
 
                             /* Show success notification */
                             $('.page-container').pgNotification({

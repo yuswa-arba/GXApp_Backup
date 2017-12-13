@@ -10,10 +10,12 @@ export default {
     namespaced: true,
     state: {
         jobPositions: [],
+        slotMakers:[],
         slots: [],
         employeesToBeAssigned: [],
         slotDetail:{},
-        calendarEventSource:[]
+        calendarEventSource:[],
+        cbMappingSlots:[]
     },
     getters,
     mutations,

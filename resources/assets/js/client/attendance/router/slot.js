@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 
 import Index from '../views/slots/Index.vue'
 import DetailSlot from '../views/slots/DetailSlot.vue'
+import ShiftMapping from '../views/slots/ShiftMapping.vue'
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,8 @@ const router = new VueRouter({
     // mode: 'history',
     routes: [
         {path:'/',component:Index},
-        {path:'/detail/:id/slot',component:DetailSlot,name:'detailSlot'}
+        {path:'/detail/:id/slot',component:DetailSlot,name:'detailSlot'},
+        {path:'/shift/:id/mapping',component:ShiftMapping,name:'shiftMapping'}
     ]
 })
 

@@ -11,6 +11,12 @@ export default{
                 state.jobPositions = res.data.data
             })
     },
+    getSlotMakers(state){
+        get(api_path() + 'component/list/slotMakers')
+            .then((res) => {
+                state.slotMakers = res.data.data
+            })
+    },
     getSlots(state, payload){
         const statusById = payload.statusById
         const relatedById = payload.relatedById

@@ -21,6 +21,7 @@ class SlotMakerListTransformer extends TransformerAbstract
             'name' => $slotMaker->name,
             'firstDate' => $slotMaker->firstDate,
             'relatedToJobPosition'=>$slotMaker->relatedToJobPosition,
+            'jobPositionId'=>$slotMaker->jobPositionId,
             'jobPosition'=>!is_null($slotMaker->jobPosition)?$slotMaker->jobPosition->name:'',
             'totalDayLoop' => $slotMaker->totalDayLoop,
             'workingDays' => $slotMaker->workingDays,

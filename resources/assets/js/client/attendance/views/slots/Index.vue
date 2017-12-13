@@ -4,6 +4,9 @@
             <div class="pull-left m-r-15 m-b-10">
                 <button class="btn btn-primary all-caps">Calendar <i class="fa fa-calendar"></i></button>
             </div>
+            <div class="pull-left m-r-15 m-b-10">
+                <button class="btn btn-info all-caps" @click="shiftMapping()">Shift Mapping <i class="fa fa-clock-o"></i></button>
+            </div>
 
             <div class="pull-right m-r-15 m-b-10">
                 <div class="dropdown dropdown-default">
@@ -51,6 +54,7 @@
                                 <th class="text-black">Job Related</th>
                                 <th class="text-black">Allow Multiple</th>
                                 <th class="text-black">Assigned to</th>
+                                <th class="text-black">Shift</th>
                                 <th class="text-black">Action</th>
                             </tr>
                             </thead>
@@ -82,6 +86,23 @@
 
                                 </td>
                                 <td class="padding-10">
+                                    <div class="dropdown dropdown-default">
+                                        <button class="btn btn-xs btn-outline-primary dropdown-toggle text-center" type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                           Default
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item pointer">
+                                               Use Default</a>
+                                            <a class="dropdown-item pointer">
+                                                Create Setting </a>
+                                        </div>
+
+                                    </div>
+
+                                </td>
+                                <td class="padding-10">
 
                                     <i class="fs-14 fa fa-calendar pointer" @click="viewSlotDetail(slot.id)"></i>
 
@@ -104,15 +125,18 @@
             </div>
         </div>
         <assign-slot-quickview></assign-slot-quickview>
+        <attempt-shift-mapping-modal></attempt-shift-mapping-modal>
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex'
     import AssignSlotQuickview from '../../components/slots/AssignSlotQuickview.vue'
+    import AttemptShiftMappingModal from '../../components/slots/AttemptShiftMappingModal.vue'
     export default{
         components: {
-            "assign-slot-quickview": AssignSlotQuickview
+            "assign-slot-quickview": AssignSlotQuickview,
+            "attempt-shift-mapping-modal":AttemptShiftMappingModal
         },
         data(){
             return {
@@ -162,6 +186,9 @@
 
             assignSlot(slotId){
                 this.$store.dispatch('slots/getDataOnAssignSlot', slotId)
+            },
+            shiftMapping(){
+                this.$store.dispatch('slots/attempShiftMapping')
             }
 
         }

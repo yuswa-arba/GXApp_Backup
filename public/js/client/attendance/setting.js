@@ -2224,6 +2224,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/create', self.formObject).then(function (res) {
                 if (!res.data.isFailed && res.data.shift) {
 
+                    //reset form
+                    $('#shift-form input').val('');
+
                     /* Show success notification */
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -29103,11 +29106,6 @@ var render = function() {
                             _c("td", [_vm._v(_vm._s(shift.breakEndAt))]),
                             _vm._v(" "),
                             _c("td", [
-                              shift.id != 1
-                                ? _c("i", {
-                                    staticClass: "fs-14 fa fa-pencil pointer"
-                                  })
-                                : _vm._e(),
                               _vm._v(
                                 "\n                                           \n                                        "
                               ),
@@ -30310,12 +30308,6 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("td", { staticStyle: { width: "70px" } }, [
-                            _c("i", {
-                              staticClass: "fs-14 fa fa-search pointer"
-                            }),
-                            _vm._v(
-                              "\n                                         \n\n\n                                        "
-                            ),
                             slotMaker.isExecuted != 1
                               ? _c("i", {
                                   staticClass:
@@ -30466,7 +30458,7 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("p", { staticClass: "fs-12" }, [
             _vm._v(
-              "If someone is not assigned to any slot, he/she won't be able to clock in/out"
+              "If someone is not assigned to specific slot, he/she will be automatically assigned to default slot"
             )
           ]),
           _vm._v(" "),

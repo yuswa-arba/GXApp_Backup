@@ -2466,8 +2466,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2503,6 +2501,149 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     slot: slot
                 });
             }
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            withSameParent: true,
+            selectedOptions: {},
+            slotsCb: [],
+            selectedSlots: []
+        };
+    },
+    created: function created() {},
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
+        jobPositions: 'jobPositions',
+        slotMakers: 'slotMakers',
+        cbMappingSlots: 'cbMappingSlots'
+    })),
+    mounted: function mounted() {},
+
+
+    methods: {
+        startMapping: function startMapping() {
+            if (!this.withSameParent) {
+                delete this.selectedOptions.slotMakerId;
+            }
+        },
+        closeModal: function closeModal() {
+            $('#modal-attempt-shift-mapping').modal("toggle"); // close modal
+        },
+        getSlotsCb: function getSlotsCb() {
+
+            var self = this;
+            if (this.withSameParent) {
+                this.$store.dispatch({
+                    type: 'slots/getSlotsMapping',
+                    by: 'withSameParent',
+                    slotMakerId: this.selectedOptions.slotMakerId,
+                    jobPositionId: this.selectedOptions.jobPositionId
+                });
+            } else {
+                this.$store.dispatch({
+                    type: 'slots/getSlotsMapping',
+                    jobPositionId: this.selectedOptions.jobPositionId
+                });
+            }
+
+            // push result to local selected slots
+            _.forEach(this.$store.state.slots.cbMappingSlots, function (value, key) {
+                self.selectedSlots.push(value.id);
+            });
         }
     }
 });
@@ -2606,6 +2747,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AttemptShiftMappingModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AttemptShiftMappingModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_slots_AttemptShiftMappingModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2717,12 +2860,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        "assign-slot-quickview": __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default.a
+        "assign-slot-quickview": __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default.a,
+        "attempt-shift-mapping-modal": __WEBPACK_IMPORTED_MODULE_2__components_slots_AttemptShiftMappingModal_vue___default.a
     },
     data: function data() {
         return {
@@ -2768,10 +2935,30 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         assignSlot: function assignSlot(slotId) {
             this.$store.dispatch('slots/getDataOnAssignSlot', slotId);
+        },
+        shiftMapping: function shiftMapping() {
+            this.$store.dispatch('slots/attempShiftMapping');
         }
     }
 
 });
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/slots/ShiftMapping.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
 
 /***/ }),
 
@@ -21509,6 +21696,24 @@ var render = function() {
       _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
         _vm._m(0),
         _vm._v(" "),
+        _c("div", { staticClass: "pull-left m-r-15 m-b-10" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info all-caps",
+              on: {
+                click: function($event) {
+                  _vm.shiftMapping()
+                }
+              }
+            },
+            [
+              _vm._v("Shift Mapping "),
+              _c("i", { staticClass: "fa fa-clock-o" })
+            ]
+          )
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "pull-right m-r-15 m-b-10" }, [
           _c("div", { staticClass: "dropdown dropdown-default" }, [
             _c(
@@ -21704,6 +21909,8 @@ var render = function() {
                                 )
                         ]),
                         _vm._v(" "),
+                        _vm._m(2, true),
+                        _vm._v(" "),
                         _c("td", { staticClass: "padding-10" }, [
                           _c("i", {
                             staticClass: "fs-14 fa fa-calendar pointer",
@@ -21744,7 +21951,9 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("assign-slot-quickview")
+      _c("assign-slot-quickview"),
+      _vm._v(" "),
+      _c("attempt-shift-mapping-modal")
     ],
     1
   )
@@ -21779,7 +21988,48 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Assigned to")]),
         _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Shift")]),
+        _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "padding-10" }, [
+      _c("div", { staticClass: "dropdown dropdown-default" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-xs btn-outline-primary dropdown-toggle text-center",
+            attrs: {
+              type: "button",
+              "data-toggle": "dropdown",
+              "aria-haspopup": "true",
+              "aria-expanded": "false"
+            }
+          },
+          [
+            _vm._v(
+              "\n                                       Default\n                                    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "dropdown-menu" }, [
+          _c("a", { staticClass: "dropdown-item pointer" }, [
+            _vm._v("\n                                           Use Default")
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "dropdown-item pointer" }, [
+            _vm._v(
+              "\n                                            Create Setting "
+            )
+          ])
+        ])
       ])
     ])
   }
@@ -21790,6 +22040,27 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-396796da", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6325483b\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/slots/ShiftMapping.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6325483b", module.exports)
   }
 }
 
@@ -22009,6 +22280,350 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-9723d7b4", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a84127fa\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade stick-up",
+      attrs: {
+        id: "modal-attempt-shift-mapping",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("form", { attrs: { role: "form" } }, [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-md-12" },
+                  [
+                    _c("div", { staticClass: "checkbox check-success  " }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.withSameParent,
+                            expression: "withSameParent"
+                          }
+                        ],
+                        attrs: { type: "checkbox", id: "same-parent-cb" },
+                        domProps: {
+                          value: true,
+                          checked: Array.isArray(_vm.withSameParent)
+                            ? _vm._i(_vm.withSameParent, true) > -1
+                            : _vm.withSameParent
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.withSameParent,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = true,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.withSameParent = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.withSameParent = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.withSameParent = $$c
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { attrs: { for: "same-parent-cb" } }, [
+                        _vm._v("With same parent")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Select Parent")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selectedOptions,
+                              expression: "selectedOptions"
+                            }
+                          ],
+                          staticClass: "btn btn-outline-primary h-35 w-100",
+                          attrs: { disabled: !_vm.withSameParent },
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.selectedOptions = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                              function($event) {
+                                _vm.getSlotsCb()
+                              }
+                            ]
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: { value: "", disabled: "", selected: "" }
+                            },
+                            [_vm._v("Select")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.slotMakers, function(slotMaker) {
+                            return slotMaker.id != 1
+                              ? _c(
+                                  "option",
+                                  {
+                                    domProps: {
+                                      value: {
+                                        slotMakerId: slotMaker.id,
+                                        jobPositionId: slotMaker.jobPositionId
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(slotMaker.name) +
+                                        "\n                                    "
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v(" Job Position")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selectedOptions.jobPositionId,
+                              expression: "selectedOptions.jobPositionId"
+                            }
+                          ],
+                          staticClass: "btn btn-outline-primary h-35 w-100",
+                          attrs: { disabled: _vm.withSameParent },
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.selectedOptions,
+                                  "jobPositionId",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              },
+                              function($event) {
+                                _vm.getSlotsCb()
+                              }
+                            ]
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: {
+                                value: "",
+                                disabled: "",
+                                hidden: "",
+                                selected: ""
+                              }
+                            },
+                            [_vm._v("Select")]
+                          ),
+                          _vm._v(" "),
+                          _vm._l(_vm.jobPositions, function(jobPosition) {
+                            return _c(
+                              "option",
+                              { domProps: { value: jobPosition.id } },
+                              [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(jobPosition.name) +
+                                    "\n                                    "
+                                )
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.cbMappingSlots, function(slot) {
+                      return _c(
+                        "div",
+                        { staticClass: "checkbox check-success " },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedSlots,
+                                expression: "selectedSlots"
+                              }
+                            ],
+                            attrs: { type: "checkbox", id: "cbSlot" + slot.id },
+                            domProps: {
+                              value: slot.id,
+                              checked: Array.isArray(_vm.selectedSlots)
+                                ? _vm._i(_vm.selectedSlots, slot.id) > -1
+                                : _vm.selectedSlots
+                            },
+                            on: {
+                              change: function($event) {
+                                var $$a = _vm.selectedSlots,
+                                  $$el = $event.target,
+                                  $$c = $$el.checked ? true : false
+                                if (Array.isArray($$a)) {
+                                  var $$v = slot.id,
+                                    $$i = _vm._i($$a, $$v)
+                                  if ($$el.checked) {
+                                    $$i < 0 &&
+                                      (_vm.selectedSlots = $$a.concat([$$v]))
+                                  } else {
+                                    $$i > -1 &&
+                                      (_vm.selectedSlots = $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1)))
+                                  }
+                                } else {
+                                  _vm.selectedSlots = $$c
+                                }
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("label", { attrs: { for: "cbSlot" + slot.id } }, [
+                            _vm._v(_vm._s(slot.name))
+                          ])
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-8" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-block m-t-5",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.startMapping()
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Mapping\n                        "
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close" })]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+        _vm._v("Shifts Mapping")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a84127fa", module.exports)
   }
 }
 
@@ -36475,6 +37090,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a84127fa\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a84127fa", Component.options)
+  } else {
+    hotAPI.reload("data-v-a84127fa", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/attendance/router/slot.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -36486,9 +37150,12 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_slots_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_slots_Index_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_slots_DetailSlot_vue__ = __webpack_require__("./resources/assets/js/client/attendance/views/slots/DetailSlot.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_slots_DetailSlot_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_slots_DetailSlot_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_slots_ShiftMapping_vue__ = __webpack_require__("./resources/assets/js/client/attendance/views/slots/ShiftMapping.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_slots_ShiftMapping_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_slots_ShiftMapping_vue__);
 /**
  * Created by kevinpurwono on 23/11/17.
  */
+
 
 
 
@@ -36499,7 +37166,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_slots_Index_vue___default.a }, { path: '/detail/:id/slot', component: __WEBPACK_IMPORTED_MODULE_3__views_slots_DetailSlot_vue___default.a, name: 'detailSlot' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_slots_Index_vue___default.a }, { path: '/detail/:id/slot', component: __WEBPACK_IMPORTED_MODULE_3__views_slots_DetailSlot_vue___default.a, name: 'detailSlot' }, { path: '/shift/:id/mapping', component: __WEBPACK_IMPORTED_MODULE_4__views_slots_ShiftMapping_vue___default.a, name: 'shiftMapping' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -36648,6 +37315,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/attendance/views/slots/ShiftMapping.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/slots/ShiftMapping.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6325483b\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/slots/ShiftMapping.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/attendance/views/slots/ShiftMapping.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6325483b", Component.options)
+  } else {
+    hotAPI.reload("data-v-6325483b", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/attendance/vuex/slot/modules/slots/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -36661,6 +37377,7 @@ module.exports = Component.exports
         var commit = _ref.commit;
 
         commit('getJobPositions');
+        commit('getSlotMakers');
         commit({
             type: 'getSlots',
             statusById: '',
@@ -36690,6 +37407,23 @@ module.exports = Component.exports
             state = _ref5.state;
 
         commit({ type: 'removeSlot', employee: payload.employee, slot: payload.slot });
+    },
+    attempShiftMapping: function attempShiftMapping(_ref6, payload) {
+        var commit = _ref6.commit,
+            state = _ref6.state;
+
+        $('#modal-attempt-shift-mapping').modal('show');
+    },
+    getSlotsMapping: function getSlotsMapping(_ref7, payload) {
+        var commit = _ref7.commit,
+            state = _ref7.state;
+
+
+        if (payload.by == 'withSameParent') {
+            state.cbMappingSlots = _.filter(state.slots, { slotMaker: { id: payload.slotMakerId, jobPositionId: payload.jobPositionId } });
+        } else {
+            state.cbMappingSlots = _.filter(state.slots, { slotMaker: { jobPositionid: payload.jobPositionId } });
+        }
     }
 });
 
@@ -36706,6 +37440,9 @@ module.exports = Component.exports
     jobPositions: function jobPositions(state) {
         return state.jobPositions;
     },
+    slotMakers: function slotMakers(state) {
+        return state.slotMakers;
+    },
     slots: function slots(state) {
         return state.slots;
     },
@@ -36717,6 +37454,9 @@ module.exports = Component.exports
     },
     calendarEventSource: function calendarEventSource(state) {
         return state.calendarEventSource;
+    },
+    cbMappingSlots: function cbMappingSlots(state) {
+        return state.cbMappingSlots;
     }
 });
 
@@ -36741,10 +37481,12 @@ module.exports = Component.exports
     namespaced: true,
     state: {
         jobPositions: [],
+        slotMakers: [],
         slots: [],
         employeesToBeAssigned: [],
         slotDetail: {},
-        calendarEventSource: []
+        calendarEventSource: [],
+        cbMappingSlots: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -36771,6 +37513,11 @@ module.exports = Component.exports
     getJobPositions: function getJobPositions(state) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/jobPosition').then(function (res) {
             state.jobPositions = res.data.data;
+        });
+    },
+    getSlotMakers: function getSlotMakers(state) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/slotMakers').then(function (res) {
+            state.slotMakers = res.data.data;
         });
     },
     getSlots: function getSlots(state, payload) {

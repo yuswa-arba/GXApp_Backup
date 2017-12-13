@@ -4,16 +4,14 @@ namespace App\Attendance\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SlotShiftSetting extends Model
+class SlotShiftSchedule extends Model
 {
-    protected $table='slotShiftSetting';
+    protected $table='slotShiftSchedule';
     protected $fillable = [
-        'name',
         'slotId',
         'shiftId',
-        'week',
-        'month',
-        'year',
+        'date',
+        'isOverwrite'
     ];
 
     public function slot()

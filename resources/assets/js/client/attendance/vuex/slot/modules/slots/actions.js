@@ -5,11 +5,13 @@
 export default{
     getDataOnCreate({commit}){
         commit('getJobPositions')
+        commit('getSlotMakers')
         commit({
             type: 'getSlots',
             statusById: '',
             relatedById: ''
         })
+
     },
     getDataOnAssignSlot({commit}, slotId){
         commit('getEmployeesToBeAssigned', slotId)
@@ -24,6 +26,18 @@ export default{
     },
     removeSlotFromEmployee({commit,state},payload){
         commit({type: 'removeSlot', employee: payload.employee, slot: payload.slot})
+    },
+    attempShiftMapping({commit,state},payload){
+        $('#modal-attempt-shift-mapping').modal('show')
+    },
+    getSlotsMapping({commit,state},payload){
+
+        if(payload.by =='withSameParent'){
+            state.cbMappingSlots = _.filter(state.slots,{slotMaker:{id:payload.slotMakerId,jobPositionId:payload.jobPositionId}})
+        } else {
+            state.cbMappingSlots = _.filter(state.slots,{slotMaker:{jobPositionid:payload.jobPositionId}})
+        }
+
     }
 
 }

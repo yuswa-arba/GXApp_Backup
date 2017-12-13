@@ -5,6 +5,9 @@ export default{
     jobPositions(state){
         return state.jobPositions
     },
+    slotMakers(state){
+        return state.slotMakers
+    },
     slots(state){
         return state.slots
     },
@@ -16,5 +19,8 @@ export default{
     },
     calendarEventSource(state){
         return state.calendarEventSource
+    },
+    cbMappingSlots(state){
+        return state.cbMappingSlots
     }
 }

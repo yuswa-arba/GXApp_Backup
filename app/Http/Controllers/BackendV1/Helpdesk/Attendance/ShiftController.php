@@ -7,6 +7,7 @@ use App\Attendance\Logics\GetCalendarLogic;
 use App\Attendance\Logics\GetEmployeeListLogic;
 use App\Attendance\Logics\GetSlotListLogic;
 use App\Attendance\Models\Shifts;
+use App\Attendance\Models\SlotShiftSchedule;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -37,7 +38,6 @@ class ShiftController extends Controller
         }
 
         //is valid
-
         $shift = Shifts::create($request->all());
 
 
@@ -61,6 +61,14 @@ class ShiftController extends Controller
         $response = array();
 
         $request->validate(['shiftId' => 'required']);
+
+        $slotBeingUse = SlotShiftSchedule::where('shiftId', $request->shiftId)->count();
+
+        if ($slotBeingUse > 0) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to delete Shift is currently being use';
+            return response()->json($response, 500);
+        }
 
         $delete = Shifts::where('id', $request->shiftId)->delete();
 
