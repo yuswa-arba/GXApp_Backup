@@ -15,7 +15,7 @@
                             <div class="col-md-12">
                                 <div class="checkbox check-success  ">
                                     <input type="checkbox" :value="true" id="same-parent-cb"
-                                           v-model="withSameParent">
+                                           v-model="withSameParent" @change="getSlotsCb">
                                     <label for="same-parent-cb">With same parent</label>
                                 </div>
                                 <div class="form-group">
@@ -59,7 +59,7 @@
                         </div>
                         <div class="col-md-4 m-t-10 sm-m-t-10">
                             <button type="button" class="btn btn-primary btn-block m-t-5" @click="startMapping()">
-                                Mapping
+                                Start Mapping
                             </button>
                         </div>
                     </div>
@@ -102,9 +102,36 @@
 
         methods: {
             startMapping(){
+                let self = this
+
                 if (!this.withSameParent) {
                     delete this.selectedOptions.slotMakerId
                 }
+
+                if (!_.isEmpty(this.selectedSlots)) {
+
+                    // close modal
+                    self.closeModal()
+
+                    this.$store.dispatch({
+                        type: 'slots/starShiftMapping',
+                        slotIds: self.selectedSlots
+                    })
+
+                    this.$router.push({name: 'shiftMapping'})
+
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'bar',
+                        message: "Unable to start mapping, slot is empty",
+                        position: 'bottom',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+
+
             },
             closeModal(){
                 $('#modal-attempt-shift-mapping').modal("toggle"); // close modal
@@ -112,6 +139,10 @@
             getSlotsCb(){
 
                 let self = this
+
+                // reset first time so it wont duplicatd
+                self.selectedSlots = []
+
                 if (this.withSameParent) {
                     this.$store.dispatch({
                         type: 'slots/getSlotsMapping',

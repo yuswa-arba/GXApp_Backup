@@ -22,5 +22,11 @@ export default{
     },
     cbMappingSlots(state){
         return state.cbMappingSlots
+    },
+    slotsBeingMap(state){
+        return state.slotsBeingMap
+    },
+    shiftMapPalette(state){
+        return state.shiftMapPalette
     }
 }

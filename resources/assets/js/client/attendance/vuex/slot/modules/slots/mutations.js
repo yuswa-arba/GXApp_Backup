@@ -47,8 +47,8 @@ export default{
 
                 state.employeesToBeAssigned = res.data.data
 
-                _.sortBy(state.employeesToBeAssigned,(employees)=>{
-                        return employees.hasSlotSchedule && employees.slotSchedule.id == slotId
+                _.sortBy(state.employeesToBeAssigned, (employees) => {
+                    return employees.hasSlotSchedule && employees.slotSchedule.id == slotId
                 })
 
 
@@ -192,7 +192,7 @@ export default{
                     const user = _.find(state.employeesToBeAssigned, {id: payload.employee.id})
                     const userIndex = _.findIndex(state.employeesToBeAssigned, user)
 
-                    const slot = _.find(state.slots, {id:user.slotSchedule.id})
+                    const slot = _.find(state.slots, {id: user.slotSchedule.id})
                     const slotIndex = _.findIndex(state.slots, slot)
 
                     series([
@@ -203,7 +203,7 @@ export default{
                             user.slotSchedule = ''
 
                             //update slot object
-                            if(parseInt(slot.assignedTo.total)>0){
+                            if (parseInt(slot.assignedTo.total) > 0) {
                                 slot.assignedTo = {total: parseInt(slot.assignedTo.total) - 1}
                             }
 
@@ -233,7 +233,7 @@ export default{
                         },
                         function (callback) {
 
-                            setTimeout(()=>{
+                            setTimeout(() => {
                                 /* Show warning slot removed notification */
                                 $('.page-container').pgNotification({
                                     style: 'flip',
@@ -242,7 +242,7 @@ export default{
                                     timeout: 4500,
                                     type: 'warning'
                                 }).show();
-                            },2000)
+                            }, 2000)
 
 
                             callback(null)
@@ -270,5 +270,37 @@ export default{
                 }).show();
             })
 
+    },
+    getCalendarDataForMapping(state, payload){
+
+        post(api_path() + 'attendance/shift/mapping/calendar', {slotIds: payload.slotIds})
+            .then((res) => {
+                state.calendarShiftMappingEventSource = res.data.data
+
+
+
+                //add color
+                let c = 0
+                _.forEach(payload.slotIds, function (value, key) {
+                    c++
+                    let filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, {slotId: value})
+                    for(let i = 0; i < filteredToAddColor.length; i++) {
+                        _.assign(filteredToAddColor[i],{backgroundColor:'#'+state.shiftMapPalette[c]})
+                    }
+                })
+
+
+                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource)
+
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
     }
 }

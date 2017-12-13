@@ -48,6 +48,7 @@ mix.copy([
         'resources/assets/plugins/bootstrap-daterangepicker/daterangepicker.js',
         'resources/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js',
         'resources/assets/plugins/jquery.sieve.min.js',
+        'resources/assets/plugins/google-palette/palette.js',
     ], 'public/plugins/js/');
 
 /*

@@ -10,12 +10,15 @@ export default {
     namespaced: true,
     state: {
         jobPositions: [],
-        slotMakers:[],
+        slotMakers: [],
         slots: [],
         employeesToBeAssigned: [],
-        slotDetail:{},
-        calendarEventSource:[],
-        cbMappingSlots:[]
+        slotDetail: {},
+        calendarEventSource: [],
+        cbMappingSlots: [],
+        slotsBeingMap: [],
+        calendarShiftMappingEventSource: [],
+        shiftMapPalette: palette('tol-rainbow', 25)
     },
     getters,
     mutations,

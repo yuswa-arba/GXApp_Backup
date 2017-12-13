@@ -1,0 +1,54 @@
+{
+  "_from": "google-palette",
+  "_id": "google-palette@1.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-j9EII//i5X+O7mbRqCRNuITqFoYu6Fy6fCBgYSH9PBB8+UA2OB+KakXMgeJJ597V+Op5pRO0KdEHc44cDsFMjA==",
+  "_location": "/google-palette",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "google-palette",
+    "name": "google-palette",
+    "escapedName": "google-palette",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/google-palette/-/google-palette-1.0.0.tgz",
+  "_shasum": "9da061ee881c79688b25ccacc36bf846deecc4c3",
+  "_spec": "google-palette",
+  "_where": "/Applications/MAMP/htdocs/GXApp_Employee_Server",
+  "author": {
+    "name": "Google Inc."
+  },
+  "bugs": {
+    "url": "https://github.com/google/palette.js/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "Script for generating colour palettes for use with graphs, charts and cartography.",
+  "homepage": "https://github.com/google/palette.js#readme",
+  "keywords": [
+    "palette",
+    "palette.js",
+    "palettejs",
+    "google",
+    "google-color-palette"
+  ],
+  "license": "Apache-2.0",
+  "main": "palette.js",
+  "name": "google-palette",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/google/palette.js.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}

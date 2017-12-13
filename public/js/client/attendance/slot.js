@@ -2616,8 +2616,31 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     methods: {
         startMapping: function startMapping() {
+            var self = this;
+
             if (!this.withSameParent) {
                 delete this.selectedOptions.slotMakerId;
+            }
+
+            if (!_.isEmpty(this.selectedSlots)) {
+
+                // close modal
+                self.closeModal();
+
+                this.$store.dispatch({
+                    type: 'slots/starShiftMapping',
+                    slotIds: self.selectedSlots
+                });
+
+                this.$router.push({ name: 'shiftMapping' });
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'bar',
+                    message: "Unable to start mapping, slot is empty",
+                    position: 'bottom',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
             }
         },
         closeModal: function closeModal() {
@@ -2626,6 +2649,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         getSlotsCb: function getSlotsCb() {
 
             var self = this;
+
+            // reset first time so it wont duplicatd
+            self.selectedSlots = [];
+
             if (this.withSameParent) {
                 this.$store.dispatch({
                     type: 'slots/getSlotsMapping',
@@ -2951,6 +2978,44 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2958,7 +3023,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
+        slotsBeingMap: 'slotsBeingMap',
+        shiftMapPalette: 'shiftMapPalette'
+    })),
+    methods: {},
+    mounted: function mounted() {
+
+        $('#calendar-shift-mapping').fullCalendar({
+            header: {
+                left: 'prev,next today removeSource',
+                center: 'title',
+                right: 'month,basicWeek,basicDay'
+            },
+            selectable: true,
+            selectHelper: true,
+            select: function select(start, end) {
+                //                  alert(moment(start).format('DD/MM/YYYY'))
+            },
+            eventRender: function eventRender(event, element, view) {
+                element.on('click', function () {
+                    console.log(moment(event.start).format('DD/MM/YYYY'));
+                });
+            }
+        });
+    }
+});
 
 /***/ }),
 
@@ -22052,9 +22147,97 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" })
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 m-t-10" },
+      [_vm._t("go-back-menu")],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4 m-b-10" }, [
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "scrollable" }, [
+            _c(
+              "div",
+              { staticClass: " h-500" },
+              [
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._l(_vm.slotsBeingMap, function(slot, index) {
+                  return _c("div", { staticClass: "checkbox padding-10" }, [
+                    _c("input", {
+                      attrs: { type: "checkbox", id: "cbSlot" + index },
+                      domProps: { value: slot.id }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: "cbSlot" + index } }, [
+                      _vm._v(_vm._s(slot.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("i", {
+                      staticClass: "fa fa-circle",
+                      style: { color: "#" + _vm.shiftMapPalette[index] }
+                    })
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(2)
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [
+        _vm._v("Slot List\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "checkbox padding-10" }, [
+      _c("input", { attrs: { type: "checkbox", id: "cbAll" } }),
+      _vm._v(" "),
+      _c("label", { attrs: { for: "cbAll" } }, [_vm._v("All")]),
+      _vm._v(" "),
+      _c("i", { staticClass: "fa fa-circle text-danger" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-8 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block padding-30" }, [
+            _c("div", { attrs: { id: "calendar-shift-mapping" } })
+          ])
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -22333,26 +22516,29 @@ var render = function() {
                             : _vm.withSameParent
                         },
                         on: {
-                          change: function($event) {
-                            var $$a = _vm.withSameParent,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = true,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  (_vm.withSameParent = $$a.concat([$$v]))
+                          change: [
+                            function($event) {
+                              var $$a = _vm.withSameParent,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = true,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.withSameParent = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.withSameParent = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
                               } else {
-                                $$i > -1 &&
-                                  (_vm.withSameParent = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
+                                _vm.withSameParent = $$c
                               }
-                            } else {
-                              _vm.withSameParent = $$c
-                            }
-                          }
+                            },
+                            _vm.getSlotsCb
+                          ]
                         }
                       }),
                       _vm._v(" "),
@@ -22581,7 +22767,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n                            Mapping\n                        "
+                      "\n                            Start Mapping\n                        "
                     )
                   ]
                 )
@@ -37166,7 +37352,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_slots_Index_vue___default.a }, { path: '/detail/:id/slot', component: __WEBPACK_IMPORTED_MODULE_3__views_slots_DetailSlot_vue___default.a, name: 'detailSlot' }, { path: '/shift/:id/mapping', component: __WEBPACK_IMPORTED_MODULE_4__views_slots_ShiftMapping_vue___default.a, name: 'shiftMapping' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_slots_Index_vue___default.a }, { path: '/detail/:id/slot', component: __WEBPACK_IMPORTED_MODULE_3__views_slots_DetailSlot_vue___default.a, name: 'detailSlot' }, { path: '/shift/mapping', component: __WEBPACK_IMPORTED_MODULE_4__views_slots_ShiftMapping_vue___default.a, name: 'shiftMapping' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -37368,6 +37554,8 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_series__ = __webpack_require__("./node_modules/async/series.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_async_series__);
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -37420,10 +37608,34 @@ module.exports = Component.exports
 
 
         if (payload.by == 'withSameParent') {
-            state.cbMappingSlots = _.filter(state.slots, { slotMaker: { id: payload.slotMakerId, jobPositionId: payload.jobPositionId } });
+            state.cbMappingSlots = _.filter(state.slots, {
+                slotMaker: {
+                    id: payload.slotMakerId,
+                    jobPositionId: payload.jobPositionId
+                }
+            });
         } else {
-            state.cbMappingSlots = _.filter(state.slots, { slotMaker: { jobPositionid: payload.jobPositionId } });
+            state.cbMappingSlots = _.filter(state.slots, { slotMaker: { jobPositionId: payload.jobPositionId } });
         }
+    },
+    starShiftMapping: function starShiftMapping(_ref8, payload) {
+        var commit = _ref8.commit,
+            state = _ref8.state;
+
+
+        // resset data
+        state.cbMappingSlots = [];
+        state.slotsBeingMap = [];
+
+        //insert slot data
+        _.forEach(payload.slotIds, function (value, key) {
+            state.slotsBeingMap.push(_.find(state.slots, { id: value }));
+        });
+
+        commit({
+            type: 'getCalendarDataForMapping',
+            slotIds: payload.slotIds
+        });
     }
 });
 
@@ -37457,6 +37669,12 @@ module.exports = Component.exports
     },
     cbMappingSlots: function cbMappingSlots(state) {
         return state.cbMappingSlots;
+    },
+    slotsBeingMap: function slotsBeingMap(state) {
+        return state.slotsBeingMap;
+    },
+    shiftMapPalette: function shiftMapPalette(state) {
+        return state.shiftMapPalette;
     }
 });
 
@@ -37486,7 +37704,10 @@ module.exports = Component.exports
         employeesToBeAssigned: [],
         slotDetail: {},
         calendarEventSource: [],
-        cbMappingSlots: []
+        cbMappingSlots: [],
+        slotsBeingMap: [],
+        calendarShiftMappingEventSource: [],
+        shiftMapPalette: palette('tol-rainbow', 25)
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -37741,6 +37962,32 @@ module.exports = Component.exports
                 style: 'flip',
                 message: err.message,
                 position: 'top-left',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    getCalendarDataForMapping: function getCalendarDataForMapping(state, payload) {
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
+            state.calendarShiftMappingEventSource = res.data.data;
+
+            //add color
+            var c = 0;
+            _.forEach(payload.slotIds, function (value, key) {
+                c++;
+                var filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, { slotId: value });
+                for (var i = 0; i < filteredToAddColor.length; i++) {
+                    _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
+                }
+            });
+
+            $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource);
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top',
                 timeout: 3500,
                 type: 'danger'
             }).show();

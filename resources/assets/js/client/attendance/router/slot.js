@@ -15,7 +15,7 @@ const router = new VueRouter({
     routes: [
         {path:'/',component:Index},
         {path:'/detail/:id/slot',component:DetailSlot,name:'detailSlot'},
-        {path:'/shift/:id/mapping',component:ShiftMapping,name:'shiftMapping'}
+        {path:'/shift/mapping',component:ShiftMapping,name:'shiftMapping'}
     ]
 })
 

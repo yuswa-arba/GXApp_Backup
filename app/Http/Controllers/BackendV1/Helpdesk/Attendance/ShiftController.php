@@ -5,6 +5,7 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 use App\Attendance\Logics\AssignSlotLogic;
 use App\Attendance\Logics\GetCalendarLogic;
 use App\Attendance\Logics\GetEmployeeListLogic;
+use App\Attendance\Logics\GetShiftMappingCalendarLogic;
 use App\Attendance\Logics\GetSlotListLogic;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotShiftSchedule;
@@ -82,6 +83,12 @@ class ShiftController extends Controller
             return response()->json($response, 500);
         }
 
+    }
+
+    public function getMappingCalendar(Request $request)
+    {
+        $request->validate(['slotIds'=>'required']);
+        return GetShiftMappingCalendarLogic::getData($request);
     }
 
 }
