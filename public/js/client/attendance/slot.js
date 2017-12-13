@@ -788,6 +788,126 @@ module.exports = exports['default'];
 
 /***/ }),
 
+/***/ "./node_modules/async/waterfall.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+exports.default = function (tasks, callback) {
+    callback = (0, _once2.default)(callback || _noop2.default);
+    if (!(0, _isArray2.default)(tasks)) return callback(new Error('First argument to waterfall must be an array of functions'));
+    if (!tasks.length) return callback();
+    var taskIndex = 0;
+
+    function nextTask(args) {
+        var task = (0, _wrapAsync2.default)(tasks[taskIndex++]);
+        args.push((0, _onlyOnce2.default)(next));
+        task.apply(null, args);
+    }
+
+    function next(err /*, ...args*/) {
+        if (err || taskIndex === tasks.length) {
+            return callback.apply(null, arguments);
+        }
+        nextTask((0, _slice2.default)(arguments, 1));
+    }
+
+    nextTask([]);
+};
+
+var _isArray = __webpack_require__("./node_modules/lodash/isArray.js");
+
+var _isArray2 = _interopRequireDefault(_isArray);
+
+var _noop = __webpack_require__("./node_modules/lodash/noop.js");
+
+var _noop2 = _interopRequireDefault(_noop);
+
+var _once = __webpack_require__("./node_modules/async/internal/once.js");
+
+var _once2 = _interopRequireDefault(_once);
+
+var _slice = __webpack_require__("./node_modules/async/internal/slice.js");
+
+var _slice2 = _interopRequireDefault(_slice);
+
+var _onlyOnce = __webpack_require__("./node_modules/async/internal/onlyOnce.js");
+
+var _onlyOnce2 = _interopRequireDefault(_onlyOnce);
+
+var _wrapAsync = __webpack_require__("./node_modules/async/internal/wrapAsync.js");
+
+var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+module.exports = exports['default'];
+
+/**
+ * Runs the `tasks` array of functions in series, each passing their results to
+ * the next in the array. However, if any of the `tasks` pass an error to their
+ * own callback, the next function is not executed, and the main `callback` is
+ * immediately called with the error.
+ *
+ * @name waterfall
+ * @static
+ * @memberOf module:ControlFlow
+ * @method
+ * @category Control Flow
+ * @param {Array} tasks - An array of [async functions]{@link AsyncFunction}
+ * to run.
+ * Each function should complete with any number of `result` values.
+ * The `result` values will be passed as arguments, in order, to the next task.
+ * @param {Function} [callback] - An optional callback to run once all the
+ * functions have completed. This will be passed the results of the last task's
+ * callback. Invoked with (err, [results]).
+ * @returns undefined
+ * @example
+ *
+ * async.waterfall([
+ *     function(callback) {
+ *         callback(null, 'one', 'two');
+ *     },
+ *     function(arg1, arg2, callback) {
+ *         // arg1 now equals 'one' and arg2 now equals 'two'
+ *         callback(null, 'three');
+ *     },
+ *     function(arg1, callback) {
+ *         // arg1 now equals 'three'
+ *         callback(null, 'done');
+ *     }
+ * ], function (err, result) {
+ *     // result now equals 'done'
+ * });
+ *
+ * // Or, with named functions:
+ * async.waterfall([
+ *     myFirstFunction,
+ *     mySecondFunction,
+ *     myLastFunction,
+ * ], function (err, result) {
+ *     // result now equals 'done'
+ * });
+ * function myFirstFunction(callback) {
+ *     callback(null, 'one', 'two');
+ * }
+ * function mySecondFunction(arg1, arg2, callback) {
+ *     // arg1 now equals 'one' and arg2 now equals 'two'
+ *     callback(null, 'three');
+ * }
+ * function myLastFunction(arg1, callback) {
+ *     // arg1 now equals 'three'
+ *     callback(null, 'done');
+ * }
+ */
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2978,6 +3098,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_waterfall__ = __webpack_require__("./node_modules/async/waterfall.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_waterfall__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -3021,18 +3143,48 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            isProcessing: false,
+            slotIdsBeingMap: _.map(this.$store.state.slots.slotsBeingMap, 'id')
+        };
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
         slotsBeingMap: 'slotsBeingMap',
         shiftMapPalette: 'shiftMapPalette'
     })),
-    methods: {},
+    methods: {
+        sortCalendarBySlot: function sortCalendarBySlot(slotId) {
+            var self = this;
+            __WEBPACK_IMPORTED_MODULE_1_async_waterfall___default()([function (cb) {
+                self.isProcessing = true;
+                cb(null);
+            }, function (cb) {
+                setTimeout(function () {
+                    var filterCalendar = _.filter(self.$store.state.slots.calendarShiftMappingEventSource, { slotId: slotId });
+
+                    _.forEach(filterCalendar, function (value, key) {
+                        $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id);
+                    });
+
+                    cb(null);
+                }, 2000);
+            }], function (err, result) {
+                self.isProcessing = false;
+            });
+        }
+    },
     mounted: function mounted() {
 
         $('#calendar-shift-mapping').fullCalendar({
@@ -3048,6 +3200,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             eventRender: function eventRender(event, element, view) {
                 element.on('click', function () {
+                    console.log(event.slotId);
                     console.log(moment(event.start).format('DD/MM/YYYY'));
                 });
             }
@@ -22151,7 +22304,15 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("go-back-menu")],
+      [
+        _vm._t("go-back-menu"),
+        _vm._v(" "),
+        _vm.isProcessing
+          ? _c("p", { staticClass: "m-r-15 m-b-10 pull-right" }, [
+              _vm._v("\n            Processing.. Please wait..\n        ")
+            ])
+          : _vm._e()
+      ],
       2
     ),
     _vm._v(" "),
@@ -22170,8 +22331,48 @@ var render = function() {
                 _vm._l(_vm.slotsBeingMap, function(slot, index) {
                   return _c("div", { staticClass: "checkbox padding-10" }, [
                     _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.slotIdsBeingMap,
+                          expression: "slotIdsBeingMap"
+                        }
+                      ],
                       attrs: { type: "checkbox", id: "cbSlot" + index },
-                      domProps: { value: slot.id }
+                      domProps: {
+                        value: slot.id,
+                        checked: Array.isArray(_vm.slotIdsBeingMap)
+                          ? _vm._i(_vm.slotIdsBeingMap, slot.id) > -1
+                          : _vm.slotIdsBeingMap
+                      },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$a = _vm.slotIdsBeingMap,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = slot.id,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.slotIdsBeingMap = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.slotIdsBeingMap = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.slotIdsBeingMap = $$c
+                            }
+                          },
+                          function($event) {
+                            _vm.sortCalendarBySlot(slot.id)
+                          }
+                        ]
+                      }
                     }),
                     _vm._v(" "),
                     _c("label", { attrs: { for: "cbSlot" + index } }, [

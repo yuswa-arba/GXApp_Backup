@@ -2,6 +2,9 @@
     <div class="row">
         <div class="col-lg-12 m-b-10 m-t-10">
             <slot name="go-back-menu"></slot>
+            <p class="m-r-15 m-b-10 pull-right" v-if="isProcessing">
+                Processing.. Please wait..
+            </p>
         </div>
         <div class="col-lg-4 m-b-10">
             <div class="card card-default">
@@ -20,7 +23,10 @@
                             <div class="checkbox padding-10" v-for="(slot,index) in slotsBeingMap">
                                 <input type="checkbox"
                                        :value="slot.id"
-                                       :id="'cbSlot'+index">
+                                       :id="'cbSlot'+index"
+                                       v-model="slotIdsBeingMap"
+                                       @change="sortCalendarBySlot(slot.id)"
+                                >
                                 <label :for="'cbSlot'+index">{{slot.name}}</label>
                                 <i class="fa fa-circle" :style="{color:'#'+shiftMapPalette[index]}"></i>
                             </div>
@@ -41,20 +47,47 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import waterfall from 'async/waterfall';
     export default{
 
         data(){
-          return{
-          }
+            return {
+                isProcessing: false,
+                slotIdsBeingMap: _.map(this.$store.state.slots.slotsBeingMap, 'id')
+            }
         },
-        computed:{
-            ...mapGetters('slots',{
-                slotsBeingMap:'slotsBeingMap',
-                shiftMapPalette :'shiftMapPalette'
+        computed: {
+            ...mapGetters('slots', {
+                slotsBeingMap: 'slotsBeingMap',
+                shiftMapPalette: 'shiftMapPalette'
             })
         },
-        methods:{
+        methods: {
+            sortCalendarBySlot(slotId){
+                let self = this
+                waterfall([
+                    function (cb) {
+                        self.isProcessing = true
+                        cb(null)
+                    },
+                    function (cb) {
+                        setTimeout(() => {
+                            let filterCalendar = _.filter(self.$store.state.slots.calendarShiftMappingEventSource, {slotId: slotId})
 
+                            _.forEach(filterCalendar, function (value, key) {
+                                $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id)
+                            })
+
+                            cb(null)
+                        }, 2000)
+
+                    }
+                ], function (err, result) {
+                    self.isProcessing = false
+                })
+
+
+            }
         },
         mounted(){
 
@@ -71,6 +104,7 @@
                 },
                 eventRender: function (event, element, view) {
                     element.on('click', () => {
+                        console.log(event.slotId)
                         console.log(moment(event.start).format('DD/MM/YYYY'))
                     })
                 },
