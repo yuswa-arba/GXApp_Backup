@@ -3141,15 +3141,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3168,6 +3159,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     methods: {
         sortCalendarBySlot: function sortCalendarBySlot(slotId) {
             var self = this;
+
+            /* Pluck & Insert Logic to simulate toggle*/
+            var affectedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
+                return o == slotId;
+            });
+
+            if (affectedCbIndex != -1) {
+                self.slotIdsBeingMap.splice(affectedCbIndex, 1, 'plucked_' + slotId);
+            } else {
+                var pluckedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
+                    return o == 'plucked_' + slotId;
+                });
+                self.slotIdsBeingMap.splice(pluckedCbIndex, 1, slotId);
+            }
+
             __WEBPACK_IMPORTED_MODULE_1_async_waterfall___default()([function (cb) {
                 self.isProcessing = true;
                 cb(null);
@@ -3182,7 +3188,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     self.$store.dispatch({
                         type: 'slots/starShiftMapping',
                         slotIds: self.slotIdsBeingMap,
-                        refreshCb: false //do not refresh checkboxes
+                        refreshCb: false, //do not refresh checkboxes
+                        affectedCbSlotId: slotId
                     });
 
                     cb(null);
@@ -22332,75 +22339,28 @@ var render = function() {
             _c(
               "div",
               { staticClass: " h-500" },
-              [
-                _vm._m(1),
-                _vm._v(" "),
-                _vm._l(_vm.cbSlotsBeingMap, function(slot, index) {
-                  return _c("div", { staticClass: "checkbox padding-10" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.slotIdsBeingMap,
-                          expression: "slotIdsBeingMap"
-                        }
-                      ],
-                      attrs: { type: "checkbox", id: "cbSlot" + index },
-                      domProps: {
-                        value: slot.id,
-                        checked: Array.isArray(_vm.slotIdsBeingMap)
-                          ? _vm._i(_vm.slotIdsBeingMap, slot.id) > -1
-                          : _vm.slotIdsBeingMap
-                      },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$a = _vm.slotIdsBeingMap,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = slot.id,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  (_vm.slotIdsBeingMap = $$a.concat([$$v]))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.slotIdsBeingMap = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.slotIdsBeingMap = $$c
-                            }
-                          },
-                          function($event) {
-                            _vm.sortCalendarBySlot(slot.id)
-                          }
-                        ]
+              _vm._l(_vm.cbSlotsBeingMap, function(slot, index) {
+                return _c("div", { staticClass: "padding-10" }, [
+                  _c("label", [_vm._v(_vm._s(slot.name))]),
+                  _vm._v(" "),
+                  _c("i", {
+                    staticClass: "fa fa-circle cursor p-l-10",
+                    style: { color: "#" + _vm.shiftMapPalette[index] },
+                    on: {
+                      click: function($event) {
+                        _vm.sortCalendarBySlot(slot.id)
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("label", { attrs: { for: "cbSlot" + index } }, [
-                      _vm._v(_vm._s(slot.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("i", {
-                      staticClass: "fa fa-circle",
-                      style: { color: "#" + _vm.shiftMapPalette[index] }
-                    })
-                  ])
-                })
-              ],
-              2
+                    }
+                  })
+                ])
+              })
             )
           ])
         ])
       ])
     ]),
     _vm._v(" "),
-    _vm._m(2)
+    _vm._m(1)
   ])
 }
 var staticRenderFns = [
@@ -22412,18 +22372,6 @@ var staticRenderFns = [
       _c("div", { staticClass: "card-title" }, [
         _vm._v("Slot List\n                ")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "checkbox padding-10" }, [
-      _c("input", { attrs: { type: "checkbox", id: "cbAll" } }),
-      _vm._v(" "),
-      _c("label", { attrs: { for: "cbAll" } }, [_vm._v("All")]),
-      _vm._v(" "),
-      _c("i", { staticClass: "fa fa-circle text-danger" })
     ])
   },
   function() {
@@ -37835,8 +37783,18 @@ module.exports = Component.exports
         state.cbMappingSlots = [];
         state.slotsBeingMap = [];
 
+        if (payload.refreshCb) {
+            state.cbSlotsBeingMap = [];
+        }
+
+        var currentAffectedCbIndex = void 0;
+        if (payload.affectedCbSlotId) {
+            currentAffectedCbIndex = _.findIndex(state.cbSlotsBeingMap, { id: payload.affectedCbSlotId });
+        }
+
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
+
             state.slotsBeingMap.push(_.find(state.slots, { id: value }));
 
             if (payload.refreshCb) {
@@ -37923,7 +37881,7 @@ module.exports = Component.exports
         slotsBeingMap: [],
         cbSlotsBeingMap: [],
         calendarShiftMappingEventSource: [],
-        shiftMapPalette: palette('tol-rainbow', 25)
+        shiftMapPalette: ['336699', '00aaff', '6600ff', 'ff00ff', 'ff0080', '009999', '003399', '33334d', '13060d', '0d260d', '666633', '133913', 'ff99ff', '99ff66', 'b3b300', '737373', '00e6e6', '739900', 'e60000', '000000', '0000ff', 'ff0000', 'ff8000', 'ff5500', 'ffff00', 'aaff00', '666666', '660033', '33ccff', 'b35900', '00ffcc', '800080', '669900', '2929a3', 'cc00cc', '6b00b3', '1aff66', 'ff6699', '0000b3', '009933', '7a00cc', 'bf4080', '4d0000', '003366', '2a0080', '558000', '006666']
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -38185,33 +38143,40 @@ module.exports = Component.exports
     },
     getCalendarDataForMapping: function getCalendarDataForMapping(state, payload) {
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
+        if (!_.isEmpty(payload.slotIds)) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
 
-            //reset
-            $('#calendar-shift-mapping').fullCalendar('removeEvents');
+                //reset
+                $('#calendar-shift-mapping').fullCalendar('removeEvents');
 
-            state.calendarShiftMappingEventSource = res.data.data;
+                state.calendarShiftMappingEventSource = res.data.data;
 
-            //add color
-            var c = 0;
-            _.forEach(payload.slotIds, function (value, key) {
-                c++;
-                var filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, { slotId: value });
-                for (var i = 0; i < filteredToAddColor.length; i++) {
-                    _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
-                }
+                //add color
+                var c = 0;
+                _.forEach(payload.slotIds, function (value, key) {
+
+                    var filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, { slotId: value });
+                    for (var i = 0; i < filteredToAddColor.length; i++) {
+                        _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
+                    }
+
+                    c++; //increment
+                });
+
+                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource);
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
             });
-
-            $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource);
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
+        } else {
+            // if no slot ids sent then remove all events
+            $('#calendar-shift-mapping').fullCalendar('removeEvents');
+        }
     }
 });
 

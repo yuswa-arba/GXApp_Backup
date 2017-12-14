@@ -15,20 +15,11 @@
                 <div class="card-block">
                     <div class="scrollable">
                         <div class=" h-500">
-                            <div class="checkbox padding-10">
-                                <input type="checkbox" id="cbAll">
-                                <label for="cbAll">All</label>
-                                <i class="fa fa-circle text-danger"></i>
-                            </div>
-                            <div class="checkbox padding-10" v-for="(slot,index) in cbSlotsBeingMap">
-                                <input type="checkbox"
-                                       :value="slot.id"
-                                       :id="'cbSlot'+index"
-                                       v-model="slotIdsBeingMap"
-                                       @change="sortCalendarBySlot(slot.id)"
-                                >
-                                <label :for="'cbSlot'+index">{{slot.name}}</label>
-                                <i class="fa fa-circle" :style="{color:'#'+shiftMapPalette[index]}"></i>
+                            <div class="padding-10" v-for="(slot,index) in cbSlotsBeingMap">
+                                <label>{{slot.name}}</label>
+                                <i class="fa fa-circle cursor p-l-10" :style="{color:'#'+shiftMapPalette[index]}"
+                                   @click="sortCalendarBySlot(slot.id)"
+                                ></i>
                             </div>
                         </div>
                     </div>
@@ -65,13 +56,31 @@
         methods: {
             sortCalendarBySlot(slotId){
                 let self = this
+
+                /* Pluck & Insert Logic to simulate toggle*/
+                let affectedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
+                    return o == slotId
+                })
+
+                if (affectedCbIndex != -1) {
+                    self.slotIdsBeingMap.splice(affectedCbIndex, 1, 'plucked_' + slotId)
+                }
+
+                else {
+                    let pluckedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
+                        return o == 'plucked_' + slotId
+                    })
+                    self.slotIdsBeingMap.splice(pluckedCbIndex, 1, slotId)
+                }
+
+
                 waterfall([
                     function (cb) {
                         self.isProcessing = true
                         cb(null)
                     },
                     function (cb) {
-                        setTimeout(() => {
+                        setTimeout(function () {
 //                            let filterCalendar = _.filter(self.$store.state.slots.calendarShiftMappingEventSource, {slotId: slotId})
 //
 //                            _.forEach(filterCalendar, function (value, key) {
@@ -81,7 +90,8 @@
                             self.$store.dispatch({
                                 type: 'slots/starShiftMapping',
                                 slotIds: self.slotIdsBeingMap,
-                                refreshCb:false //do not refresh checkboxes
+                                refreshCb: false, //do not refresh checkboxes
+                                affectedCbSlotId: slotId
                             })
 
                             cb(null)

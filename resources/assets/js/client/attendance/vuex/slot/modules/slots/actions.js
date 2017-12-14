@@ -49,11 +49,22 @@ export default{
         state.cbMappingSlots = []
         state.slotsBeingMap = []
 
+        if (payload.refreshCb) {
+            state.cbSlotsBeingMap = []
+        }
+
+
+        let currentAffectedCbIndex
+        if (payload.affectedCbSlotId) {
+            currentAffectedCbIndex = _.findIndex(state.cbSlotsBeingMap, {id: payload.affectedCbSlotId})
+        }
+
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
+
             state.slotsBeingMap.push(_.find(state.slots, {id: value}))
 
-            if(payload.refreshCb){
+            if (payload.refreshCb) {
                 state.cbSlotsBeingMap.push(_.find(state.slots, {id: value}))
             }
 
@@ -64,7 +75,7 @@ export default{
 
         commit({
             type: 'getCalendarDataForMapping',
-            slotIds: payload.slotIds
+            slotIds: payload.slotIds,
         })
     }
 
