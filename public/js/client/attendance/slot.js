@@ -2495,6 +2495,114 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            selectedSlotToAssign: {},
+            selectedDateStart: '',
+            selectedDateEnd: ''
+        };
+    },
+    created: function created() {},
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
+        slotsBeingMap: 'slotsBeingMap',
+        dateStartToAssign: 'dateStartToAssign',
+        dateEndToAssign: 'dateEndToAssign'
+    })),
+    mounted: function mounted() {
+        $('#dateStart').datepicker({ format: 'dd/mm/yyyy', todayHighlight: false });
+        $('#dateEnd').datepicker({ format: 'dd/mm/yyyy', todayHighlight: false });
+    },
+
+
+    methods: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3101,6 +3209,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_waterfall__ = __webpack_require__("./node_modules/async/waterfall.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_waterfall__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -3141,10 +3251,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {
+
+        if (_.isEmpty(this.$store.state.slots.slotsBeingMap)) {
+            this.$router.push('/');
+        }
+    },
+
+    components: {
+        'assign-shift-modal': __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue___default.a
+    },
     data: function data() {
         return {
             isProcessing: false,
@@ -3160,22 +3282,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         sortCalendarBySlot: function sortCalendarBySlot(slotId) {
             var self = this;
 
-            /* Pluck & Insert Logic to simulate toggle*/
-            var affectedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
-                return o == slotId;
-            });
-
-            if (affectedCbIndex != -1) {
-                self.slotIdsBeingMap.splice(affectedCbIndex, 1, 'plucked_' + slotId);
-            } else {
-                var pluckedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
-                    return o == 'plucked_' + slotId;
-                });
-                self.slotIdsBeingMap.splice(pluckedCbIndex, 1, slotId);
-            }
-
             __WEBPACK_IMPORTED_MODULE_1_async_waterfall___default()([function (cb) {
                 self.isProcessing = true;
+                cb(null);
+            }, function (cb) {
+                /* Pluck & Insert Logic to simluate toggle*/
+                var affectedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
+                    return o == slotId;
+                });
+
+                if (affectedCbIndex != -1) {
+                    self.slotIdsBeingMap.splice(affectedCbIndex, 1, 'plucked_' + slotId);
+                } else {
+                    var pluckedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
+                        return o == 'plucked_' + slotId;
+                    });
+                    self.slotIdsBeingMap.splice(pluckedCbIndex, 1, slotId);
+                }
+
                 cb(null);
             }, function (cb) {
                 setTimeout(function () {
@@ -3200,17 +3324,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         }
     },
     mounted: function mounted() {
+        var self = this;
 
         $('#calendar-shift-mapping').fullCalendar({
             header: {
                 left: 'prev,next today removeSource',
                 center: 'title',
-                right: 'month,basicWeek,basicDay'
+                right: 'month,agendaWeek,agendaDay'
             },
             selectable: true,
             selectHelper: true,
             select: function select(start, end) {
-                //                  alert(moment(start).format('DD/MM/YYYY'))
+                console.log(moment(start).format('DD/MM/YYYY'));
+                console.log(moment(end).format('DD/MM/YYYY'));
+
+                self.$store.dispatch({
+                    type: 'slots/attemptAssignShift',
+                    dateStartToAssign: moment(start).format('DD/MM/YYYY'),
+                    dateEndToAssign: moment(end).subtract(1, 'days').format('DD/MM/YYYY')
+                });
             },
             eventRender: function eventRender(event, element, view) {
                 element.on('click', function () {
@@ -22314,54 +22446,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [
-        _vm._t("go-back-menu"),
-        _vm._v(" "),
-        _vm.isProcessing
-          ? _c("p", { staticClass: "m-r-15 m-b-10 pull-right" }, [
-              _vm._v("\n            Processing.. Please wait..\n        ")
-            ])
-          : _vm._e()
-      ],
-      2
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4 m-b-10" }, [
-      _c("div", { staticClass: "card card-default" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-block" }, [
-          _c("div", { staticClass: "scrollable" }, [
-            _c(
-              "div",
-              { staticClass: " h-500" },
-              _vm._l(_vm.cbSlotsBeingMap, function(slot, index) {
-                return _c("div", { staticClass: "padding-10" }, [
-                  _c("label", [_vm._v(_vm._s(slot.name))]),
-                  _vm._v(" "),
-                  _c("i", {
-                    staticClass: "fa fa-circle cursor p-l-10",
-                    style: { color: "#" + _vm.shiftMapPalette[index] },
-                    on: {
-                      click: function($event) {
-                        _vm.sortCalendarBySlot(slot.id)
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c(
+        "div",
+        { staticClass: "col-lg-12 m-b-10 m-t-10" },
+        [
+          _vm._t("go-back-menu"),
+          _vm._v(" "),
+          _vm.isProcessing
+            ? _c(
+                "p",
+                {
+                  staticClass:
+                    "m-r-15 m-b-10 bg-info padding-5 text-white pull-right bold fs-16"
+                },
+                [_vm._v("\n            Processing.. Please wait..\n        ")]
+              )
+            : _vm._e()
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4 m-b-10" }, [
+        _c("div", { staticClass: "card card-default" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-block" }, [
+            _c("div", { staticClass: "scrollable" }, [
+              _c(
+                "div",
+                { staticClass: " h-500" },
+                _vm._l(_vm.cbSlotsBeingMap, function(slot, index) {
+                  return _c("div", { staticClass: "padding-10" }, [
+                    _c("label", [_vm._v(_vm._s(slot.name))]),
+                    _vm._v(" "),
+                    _c("i", {
+                      staticClass: "fa fa-circle cursor p-l-10",
+                      style: { color: "#" + _vm.shiftMapPalette[index] },
+                      on: {
+                        click: function($event) {
+                          _vm.sortCalendarBySlot(slot.id)
+                        }
                       }
-                    }
-                  })
-                ])
-              })
-            )
+                    })
+                  ])
+                })
+              )
+            ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _vm._m(1)
-  ])
+      ]),
+      _vm._v(" "),
+      _vm._m(1),
+      _vm._v(" "),
+      _c("assign-shift-modal")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -22966,6 +23110,171 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-a84127fa", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-dc21266e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade slide-up disable-scroll",
+      attrs: {
+        id: "modal-mapping-shift",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog " }, [
+        _c("div", { staticClass: "modal-content-wrapper" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("form", { attrs: { role: "form" } }, [
+                _c("div", { staticClass: "form-group-attached" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Select Slot")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          { staticClass: "btn btn-outline-primary h-35 w-100" },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "", disabled: "", selected: "" }
+                              },
+                              [_vm._v("Select")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.slotsBeingMap, function(slot) {
+                              return _c(
+                                "option",
+                                { domProps: { value: slot.id } },
+                                [
+                                  _vm._v(
+                                    "\n                                                " +
+                                      _vm._s(slot.name) +
+                                      "\n                                            "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group form-group-default" },
+                        [
+                          _c("label", [_vm._v("Date Start")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: { id: "dateStart", type: "text" },
+                            domProps: { value: _vm.dateStartToAssign }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group form-group-default" },
+                        [
+                          _c("label", [_vm._v("Date End")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: { id: "dateEnd", type: "text" },
+                            domProps: { value: _vm.dateEndToAssign }
+                          })
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(1)
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header clearfix text-left" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close fs-14" })]
+      ),
+      _vm._v(" "),
+      _c("h5", [_vm._v("Shift Mapping")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "p-b-10" }, [
+        _vm._v("We need payment information inorder to process your order")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary btn-block m-t-5",
+            attrs: { type: "button" }
+          },
+          [_vm._v("Save")]
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-dc21266e", module.exports)
   }
 }
 
@@ -37383,6 +37692,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-dc21266e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-dc21266e", Component.options)
+  } else {
+    hotAPI.reload("data-v-dc21266e", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/attendance/components/slots/AssignSlotQuickview.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37762,7 +38120,7 @@ module.exports = Component.exports
         var commit = _ref7.commit,
             state = _ref7.state;
 
-
+        //
         if (payload.by == 'withSameParent') {
             state.cbMappingSlots = _.filter(state.slots, {
                 slotMaker: {
@@ -37795,7 +38153,10 @@ module.exports = Component.exports
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
 
-            state.slotsBeingMap.push(_.find(state.slots, { id: value }));
+            // insert slots except the plucked ones
+            if (!value.toString().startsWith('plucked_')) {
+                state.slotsBeingMap.push(_.find(state.slots, { id: value }));
+            }
 
             if (payload.refreshCb) {
                 state.cbSlotsBeingMap.push(_.find(state.slots, { id: value }));
@@ -37806,6 +38167,17 @@ module.exports = Component.exports
             type: 'getCalendarDataForMapping',
             slotIds: payload.slotIds
         });
+    },
+    attemptAssignShift: function attemptAssignShift(_ref9, payload) {
+        var commit = _ref9.commit,
+            state = _ref9.state;
+
+
+        // set state value
+        state.dateStartToAssign = payload.dateStartToAssign;
+        state.dateEndToAssign = payload.dateEndToAssign;
+
+        $('#modal-mapping-shift').modal('show');
     }
 });
 
@@ -37848,6 +38220,12 @@ module.exports = Component.exports
     },
     cbSlotsBeingMap: function cbSlotsBeingMap(state) {
         return state.cbSlotsBeingMap;
+    },
+    dateStartToAssign: function dateStartToAssign(state) {
+        return state.dateStartToAssign;
+    },
+    dateEndToAssign: function dateEndToAssign(state) {
+        return state.dateEndToAssign;
     }
 });
 
@@ -37881,7 +38259,9 @@ module.exports = Component.exports
         slotsBeingMap: [],
         cbSlotsBeingMap: [],
         calendarShiftMappingEventSource: [],
-        shiftMapPalette: ['336699', '00aaff', '6600ff', 'ff00ff', 'ff0080', '009999', '003399', '33334d', '13060d', '0d260d', '666633', '133913', 'ff99ff', '99ff66', 'b3b300', '737373', '00e6e6', '739900', 'e60000', '000000', '0000ff', 'ff0000', 'ff8000', 'ff5500', 'ffff00', 'aaff00', '666666', '660033', '33ccff', 'b35900', '00ffcc', '800080', '669900', '2929a3', 'cc00cc', '6b00b3', '1aff66', 'ff6699', '0000b3', '009933', '7a00cc', 'bf4080', '4d0000', '003366', '2a0080', '558000', '006666']
+        shiftMapPalette: ['336699', '00aaff', '6600ff', 'ff00ff', 'ff0080', '009999', '003399', '33334d', '13060d', '0d260d', '666633', '133913', 'ff99ff', '99ff66', 'b3b300', '737373', '00e6e6', '739900', 'e60000', '000000', '0000ff', 'ff0000', 'ff8000', 'ff5500', 'ffff00', 'aaff00', '666666', '660033', '33ccff', 'b35900', '00ffcc', '800080', '669900', '2929a3', 'cc00cc', '6b00b3', '1aff66', 'ff6699', '0000b3', '009933', '7a00cc', 'bf4080', '4d0000', '003366', '2a0080', '558000', '006666'],
+        dateStartToAssign: '',
+        dateEndToAssign: ''
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],

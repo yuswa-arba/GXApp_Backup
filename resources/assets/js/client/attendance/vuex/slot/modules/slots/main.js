@@ -67,7 +67,9 @@ export default {
             '2a0080',
             '558000',
             '006666'
-        ]
+        ],
+        dateStartToAssign:'',
+        dateEndToAssign:''
     },
     getters,
     mutations,

@@ -31,5 +31,11 @@ export default{
     },
     cbSlotsBeingMap(state){
         return state.cbSlotsBeingMap
+    },
+    dateStartToAssign(state){
+        return state.dateStartToAssign
+    },
+    dateEndToAssign(state){
+        return state.dateEndToAssign
     }
 }

@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-12 m-b-10 m-t-10">
             <slot name="go-back-menu"></slot>
-            <p class="m-r-15 m-b-10 pull-right" v-if="isProcessing">
+            <p class="m-r-15 m-b-10 bg-info padding-5 text-white pull-right bold fs-16" v-if="isProcessing">
                 Processing.. Please wait..
             </p>
         </div>
@@ -33,14 +33,24 @@
                 </div>
             </div>
         </div>
+        <assign-shift-modal></assign-shift-modal>
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex'
     import waterfall from 'async/waterfall';
+    import AssignShiftModal from '../../components/slots/AssignShiftModal.vue'
     export default{
+        created(){
 
+            if (_.isEmpty(this.$store.state.slots.slotsBeingMap)) {
+                this.$router.push('/')
+            }
+        },
+        components: {
+            'assign-shift-modal': AssignShiftModal
+        },
         data(){
             return {
                 isProcessing: false,
@@ -57,26 +67,29 @@
             sortCalendarBySlot(slotId){
                 let self = this
 
-                /* Pluck & Insert Logic to simulate toggle*/
-                let affectedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
-                    return o == slotId
-                })
-
-                if (affectedCbIndex != -1) {
-                    self.slotIdsBeingMap.splice(affectedCbIndex, 1, 'plucked_' + slotId)
-                }
-
-                else {
-                    let pluckedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
-                        return o == 'plucked_' + slotId
-                    })
-                    self.slotIdsBeingMap.splice(pluckedCbIndex, 1, slotId)
-                }
-
-
                 waterfall([
                     function (cb) {
                         self.isProcessing = true
+                        cb(null)
+                    },
+                    function (cb) {
+                        /* Pluck & Insert Logic to simluate toggle*/
+                        let affectedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
+                            return o == slotId
+                        })
+
+                        if (affectedCbIndex != -1) {
+                            self.slotIdsBeingMap.splice(affectedCbIndex, 1, 'plucked_' + slotId)
+                        }
+
+                        else {
+                            let pluckedCbIndex = _.findIndex(self.slotIdsBeingMap, function (o) {
+                                return o == 'plucked_' + slotId
+                            })
+                            self.slotIdsBeingMap.splice(pluckedCbIndex, 1, slotId)
+                        }
+
+
                         cb(null)
                     },
                     function (cb) {
@@ -104,17 +117,25 @@
             }
         },
         mounted(){
+            let self = this
 
             $('#calendar-shift-mapping').fullCalendar({
                 header: {
                     left: 'prev,next today removeSource',
                     center: 'title',
-                    right: 'month,basicWeek,basicDay'
+                    right: 'month,agendaWeek,agendaDay'
                 },
                 selectable: true,
                 selectHelper: true,
                 select: function (start, end) {
-//                  alert(moment(start).format('DD/MM/YYYY'))
+                    console.log((moment(start).format('DD/MM/YYYY')))
+                    console.log((moment(end).format('DD/MM/YYYY')))
+
+                    self.$store.dispatch({
+                        type:'slots/attemptAssignShift',
+                        dateStartToAssign:moment(start).format('DD/MM/YYYY'),
+                        dateEndToAssign: moment(end).subtract(1,'days').format('DD/MM/YYYY')
+                    })
                 },
                 eventRender: function (event, element, view) {
                     element.on('click', () => {

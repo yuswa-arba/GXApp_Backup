@@ -31,7 +31,7 @@ export default{
         $('#modal-attempt-shift-mapping').modal('show')
     },
     getSlotsMapping({commit, state}, payload){
-
+        //
         if (payload.by == 'withSameParent') {
             state.cbMappingSlots = _.filter(state.slots, {
                 slotMaker: {
@@ -53,7 +53,6 @@ export default{
             state.cbSlotsBeingMap = []
         }
 
-
         let currentAffectedCbIndex
         if (payload.affectedCbSlotId) {
             currentAffectedCbIndex = _.findIndex(state.cbSlotsBeingMap, {id: payload.affectedCbSlotId})
@@ -62,7 +61,10 @@ export default{
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
 
-            state.slotsBeingMap.push(_.find(state.slots, {id: value}))
+            // insert slots except the plucked ones
+            if (!value.toString().startsWith('plucked_')) {
+                state.slotsBeingMap.push(_.find(state.slots, {id: value}))
+            }
 
             if (payload.refreshCb) {
                 state.cbSlotsBeingMap.push(_.find(state.slots, {id: value}))
@@ -70,13 +72,19 @@ export default{
 
         })
 
-
-
-
         commit({
             type: 'getCalendarDataForMapping',
             slotIds: payload.slotIds,
         })
+    },
+    attemptAssignShift({commit, state}, payload){
+
+        // set state value
+        state.dateStartToAssign = payload.dateStartToAssign
+        state.dateEndToAssign = payload.dateEndToAssign
+
+        $('#modal-mapping-shift').modal('show')
+
     }
 
 }
