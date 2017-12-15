@@ -114,7 +114,7 @@
                     self.closeModal()
 
                     this.$store.dispatch({
-                        type: 'slots/starShiftMapping',
+                        type: 'slots/startShiftMapping',
                         slotIds: self.selectedSlots,
                         refreshCb:true // get checkboxes first time
                     })

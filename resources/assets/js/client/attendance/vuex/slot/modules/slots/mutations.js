@@ -41,6 +41,21 @@ export default{
                 }).show();
             })
     },
+    getShifts(state, payload){
+        get(api_path() + 'component/list/shifts')
+            .then((res) => {
+                state.shifts = res.data.data
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+    },
     getEmployeesToBeAssigned(state, slotId){
         get(api_path() + 'attendance/slot/assign/employee?slotId=' + slotId)
             .then((res) => {
@@ -273,7 +288,7 @@ export default{
     },
     getCalendarDataForMapping(state, payload){
 
-        if(!_.isEmpty(payload.slotIds)){
+        if (!_.isEmpty(payload.slotIds)) {
             post(api_path() + 'attendance/shift/mapping/calendar', {slotIds: payload.slotIds})
                 .then((res) => {
 
@@ -287,8 +302,8 @@ export default{
                     _.forEach(payload.slotIds, function (value, key) {
 
                         let filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, {slotId: value})
-                        for(let i = 0; i < filteredToAddColor.length; i++) {
-                            _.assign(filteredToAddColor[i],{backgroundColor:'#'+state.shiftMapPalette[c]})
+                        for (let i = 0; i < filteredToAddColor.length; i++) {
+                            _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
                         }
 
                         c++ //increment
@@ -313,5 +328,37 @@ export default{
 
         }
 
+    },
+    mapShift(state, payload){
+        post(api_path() + 'attendance/shift/mapping', {
+            slotId: payload.slotId,
+            shiftId: payload.shiftId,
+            dateStart: payload.dateStart,
+            dateEnd: payload.dateEnd
+        })
+            .then((res) => {
+                if (!res.isFailed) {
+                    $('#modal-mapping-shift').modal('toggle')
+                    /* Show success notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-left',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+
+            })
     }
 }

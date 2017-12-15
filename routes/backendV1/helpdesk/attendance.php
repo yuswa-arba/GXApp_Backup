@@ -28,6 +28,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('shift/create','ShiftController@create')->name('v1.shift.create');
         Route::post('shift/delete','ShiftController@delete')->name('v1.shift.delete');
 
+        Route::post('shift/mapping','ShiftController@mapping')->name('v1.shift.mapping');
         Route::post('shift/mapping/calendar','ShiftController@getMappingCalendar')->name('v1.shift.mapping.calendar');
     });
 

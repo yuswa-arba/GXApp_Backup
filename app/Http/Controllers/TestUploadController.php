@@ -265,16 +265,6 @@ class TestUploadController extends Controller
     }
 
 
-    private function generateDateRange(Carbon $start_date, Carbon $end_date)
-    {
-        $dates = [];
-
-        for ($date = $start_date; $date->lte($end_date); $date->addDay()) {
-            $dates[] = $date->format('Y-m-d');
-        }
-
-        return $dates;
-    }
 
     public function getMondaysOfThisYearAddBy($day)
     {
@@ -381,6 +371,16 @@ class TestUploadController extends Controller
     {
         $slot = Slots::find(4);
         echo json_encode($slot->employees);
+    }
+
+    public function generateDate()
+    {
+        $dates =  $this->generateDateRange('01/01/2017','13/01/2017','d/m/Y');
+        foreach ($dates as $date) {
+
+            echo $date.'<br>';
+
+        }
     }
 
 }

@@ -11,6 +11,7 @@ export default{
             statusById: '',
             relatedById: ''
         })
+        commit('getShifts')
 
     },
     getDataOnAssignSlot({commit}, slotId){
@@ -43,8 +44,8 @@ export default{
             state.cbMappingSlots = _.filter(state.slots, {slotMaker: {jobPositionId: payload.jobPositionId}})
         }
     },
-    starShiftMapping({commit, state}, payload){
-
+    startShiftMapping({commit, state}, payload){
+        //
         // reset data
         state.cbMappingSlots = []
         state.slotsBeingMap = []
@@ -84,7 +85,15 @@ export default{
         state.dateEndToAssign = payload.dateEndToAssign
 
         $('#modal-mapping-shift').modal('show')
-
+    },
+    saveShiftMap({commit,state},payload){
+        commit({
+            type:'mapShift',
+            slotId:payload.slotId,
+            shiftId: payload.shiftId,
+            dateStart: payload.dateStart,
+            dateEnd: payload.dateEnd
+        })
     }
 
 }

@@ -7,6 +7,7 @@ use App\Attendance\Logics\GetCalendarLogic;
 use App\Attendance\Logics\GetEmployeeListLogic;
 use App\Attendance\Logics\GetShiftMappingCalendarLogic;
 use App\Attendance\Logics\GetSlotListLogic;
+use App\Attendance\Logics\MappingShiftLogic;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotShiftSchedule;
 use Carbon\Carbon;
@@ -89,6 +90,18 @@ class ShiftController extends Controller
     {
         $request->validate(['slotIds'=>'required']);
         return GetShiftMappingCalendarLogic::getData($request);
+    }
+
+    public function mapping(Request $request)
+    {
+        $request->validate([
+            'slotId'=>'required',
+            'shiftId'=>'required',
+            'dateStart'=>'required',
+            'dateEnd'=>'required'
+        ]);
+
+        return MappingShiftLogic::mapping($request);
     }
 
 }

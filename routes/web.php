@@ -70,6 +70,7 @@ Route::prefix('testing')->group(function () {
     Route::get('SEP','TestUploadController@slotEmployeePivot');
     Route::get('efs','TestUploadController@employeeFromSlot');
     Route::get('istimegt','TestUploadController@isTimeGT');
+    Route::get('gd','TestUploadController@generateDate');
 
 });
 

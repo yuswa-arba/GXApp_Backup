@@ -23,9 +23,9 @@ class ShiftMappingCalendarTransformer extends TransformerAbstract
             'title' => $dayOffSchedule->description,
             'start' => Carbon::createFromFormat('d/m/Y', $dayOffSchedule->date)->format('Y-m-d'),
             'slotId' => $dayOffSchedule->slotId,
-//            'start' => $dayOffSchedule->date,
             'className' => 'calendar-cell-sm',
-            'textColor' => '#fff'
+            'textColor' => '#fff',
+            'eventType' => 'dayOff'
         ];
     }
 }

@@ -12,8 +12,6 @@ use Faker\Provider\Uuid;
  * Date: 2/11/17
  * Time: 10:07 AM
  */
-
-
 trait GlobalUtils
 {
     public function generateUUID()
@@ -23,16 +21,16 @@ trait GlobalUtils
 
     public function getFileName($file)
     {
-        return str_random(32).'.'.$file->extension();
+        return str_random(32) . '.' . $file->extension();
     }
 
-    public function getImageName($file,$text)
+    public function getImageName($file, $text)
     {
-        return str_random(20).str_shuffle($text).'.'.$file->extension();
+        return str_random(20) . str_shuffle($text) . '.' . $file->extension();
     }
 
 
-    public function zeroPrefix($value,$totalZero)
+    public function zeroPrefix($value, $totalZero)
     {
         return str_pad($value, $totalZero, '0', STR_PAD_LEFT);
     }
@@ -41,6 +39,20 @@ trait GlobalUtils
     {
         $date = str_replace('/', '-', $date);
         return date('ymd', strtotime($date));
+    }
+
+    public function generateDateRange($start_date, $end_date, $format)
+    {
+        $start_date = Carbon::createFromFormat($format, $start_date);
+        $end_date = Carbon::createFromFormat($format, $end_date);
+
+        $dates = [];
+
+        for ($date = $start_date; $date->lte($end_date); $date->addDay()) {
+            $dates[] = $date->format($format);
+        }
+
+        return $dates;
     }
 
 }

@@ -9,7 +9,7 @@
                                 class="pg-close fs-14"></i>
                         </button>
                         <h5>Shift Mapping</h5>
-                        <p class="p-b-10">We need payment information inorder to process your order</p>
+
                     </div>
                     <div class="modal-body">
                         <form role="form">
@@ -18,11 +18,25 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             <label>Select Slot</label>
-                                            <select class="btn btn-outline-primary h-35 w-100">
+                                            <select class="btn btn-outline-primary h-35 w-100" v-model="selectedSlotId">
                                                 <option value="" disabled selected>Select</option>
                                                 <option :value="slot.id"
                                                         v-for="slot in slotsBeingMap">
                                                     {{slot.name}}
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Select Shift</label>
+                                            <select class="btn btn-outline-primary h-35 w-100"
+                                                    v-model="selectedShiftId">
+                                                <option value="" disabled selected>Select</option>
+                                                <option v-if="shift.id!=1"
+                                                        :value="shift.id"
+                                                        v-for="shift in shifts">
+                                                    {{shift.name}} ({{shift.workStartAt}} - {{shift.workEndAt}})
                                                 </option>
                                             </select>
                                         </div>
@@ -34,8 +48,10 @@
                                             <label>Date Start</label>
                                             <input id="dateStart"
                                                    type="text"
-                                                   class="form-control"
-                                                   :value="dateStartToAssign">
+                                                   class="form-control text-black"
+                                                   :value="dateStartToAssign"
+                                                   readonly
+                                            >
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -43,8 +59,10 @@
                                             <label>Date End</label>
                                             <input id="dateEnd"
                                                    type="text"
-                                                   class="form-control"
-                                                   :value="dateEndToAssign">
+                                                   class="form-control text-black"
+                                                   :value="dateEndToAssign"
+                                                   readonly
+                                            >
                                         </div>
                                     </div>
                                 </div>
@@ -57,7 +75,9 @@
 
                             </div>
                             <div class="col-md-4 m-t-10 sm-m-t-10">
-                                <button type="button" class="btn btn-primary btn-block m-t-5">Save</button>
+                                <button type="button" class="btn btn-primary btn-block m-t-5" @click="saveMapping()">
+                                    Save
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -75,9 +95,9 @@
     export default{
         data(){
             return {
-                selectedSlotToAssign: {},
-                selectedDateStart: '',
-                selectedDateEnd: ''
+                selectedSlotId: '',
+                selectedShiftId: '',
+                errorMsg:''
             }
         },
         created(){
@@ -85,6 +105,7 @@
         },
         computed: {
             ...mapGetters('slots', {
+                shifts: 'shifts',
                 slotsBeingMap: 'slotsBeingMap',
                 dateStartToAssign: 'dateStartToAssign',
                 dateEndToAssign: 'dateEndToAssign'
@@ -95,6 +116,34 @@
             $('#dateEnd').datepicker({format: 'dd/mm/yyyy', todayHighlight: false});
         },
 
-        methods: {},
+        methods: {
+            saveMapping(){
+                let self = this
+
+                let selectedDateStart = $('#dateStart').val()
+                let selectedDateEnd = $('#dateEnd').val()
+
+                if (self.selectedShiftId && self.selectedSlotId && selectedDateStart && selectedDateEnd) {
+                    this.$store.dispatch({
+                        type: 'slots/saveShiftMap',
+                        slotId: self.selectedSlotId,
+                        shiftId: self.selectedShiftId,
+                        dateStart: selectedDateStart,
+                        dateEnd: selectedDateEnd
+                    })
+                } else {
+
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: "Unable to save mapping, something is missing. Please check your form",
+                        position: 'top-right',
+                        timeout: 5000,
+                        type: 'danger'
+                    }).show();
+                }
+            },
+
+        },
     }
 </script>

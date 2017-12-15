@@ -11,6 +11,9 @@ export default{
     slots(state){
         return state.slots
     },
+    shifts(state){
+        return state.shifts
+    },
     employeesToBeAssigned(state){
         return state.employeesToBeAssigned
     },

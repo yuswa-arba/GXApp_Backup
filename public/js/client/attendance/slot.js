@@ -2574,20 +2574,41 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            selectedSlotToAssign: {},
-            selectedDateStart: '',
-            selectedDateEnd: ''
+            selectedSlotId: '',
+            selectedShiftId: '',
+            errorMsg: ''
         };
     },
     created: function created() {},
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
+        shifts: 'shifts',
         slotsBeingMap: 'slotsBeingMap',
         dateStartToAssign: 'dateStartToAssign',
         dateEndToAssign: 'dateEndToAssign'
@@ -2598,7 +2619,33 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
 
-    methods: {}
+    methods: {
+        saveMapping: function saveMapping() {
+            var self = this;
+
+            var selectedDateStart = $('#dateStart').val();
+            var selectedDateEnd = $('#dateEnd').val();
+
+            if (self.selectedShiftId && self.selectedSlotId && selectedDateStart && selectedDateEnd) {
+                this.$store.dispatch({
+                    type: 'slots/saveShiftMap',
+                    slotId: self.selectedSlotId,
+                    shiftId: self.selectedShiftId,
+                    dateStart: selectedDateStart,
+                    dateEnd: selectedDateEnd
+                });
+            } else {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: "Unable to save mapping, something is missing. Please check your form",
+                    position: 'top-right',
+                    timeout: 5000,
+                    type: 'danger'
+                }).show();
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -2856,7 +2903,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 self.closeModal();
 
                 this.$store.dispatch({
-                    type: 'slots/starShiftMapping',
+                    type: 'slots/startShiftMapping',
                     slotIds: self.selectedSlots,
                     refreshCb: true // get checkboxes first time
                 });
@@ -3310,7 +3357,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     //                            })
 
                     self.$store.dispatch({
-                        type: 'slots/starShiftMapping',
+                        type: 'slots/startShiftMapping',
                         slotIds: self.slotIdsBeingMap,
                         refreshCb: false, //do not refresh checkboxes
                         affectedCbSlotId: slotId
@@ -22470,7 +22517,7 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-4 m-b-10" }, [
+      _c("div", { staticClass: "col-lg-3 m-b-10" }, [
         _c("div", { staticClass: "card card-default" }, [
           _vm._m(0),
           _vm._v(" "),
@@ -22481,7 +22528,18 @@ var render = function() {
                 { staticClass: " h-500" },
                 _vm._l(_vm.cbSlotsBeingMap, function(slot, index) {
                   return _c("div", { staticClass: "padding-10" }, [
-                    _c("label", [_vm._v(_vm._s(slot.name))]),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "fs-12 cursor",
+                        on: {
+                          click: function($event) {
+                            _vm.sortCalendarBySlot(slot.id)
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(slot.name))]
+                    ),
                     _vm._v(" "),
                     _c("i", {
                       staticClass: "fa fa-circle cursor p-l-10",
@@ -22522,7 +22580,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-8 m-b-10" }, [
+    return _c("div", { staticClass: "col-lg-9 m-b-10" }, [
       _c(
         "div",
         {
@@ -23149,7 +23207,32 @@ var render = function() {
                         _vm._v(" "),
                         _c(
                           "select",
-                          { staticClass: "btn btn-outline-primary h-35 w-100" },
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedSlotId,
+                                expression: "selectedSlotId"
+                              }
+                            ],
+                            staticClass: "btn btn-outline-primary h-35 w-100",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.selectedSlotId = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
                           [
                             _c(
                               "option",
@@ -23176,6 +23259,72 @@ var render = function() {
                           2
                         )
                       ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", [_vm._v("Select Shift")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedShiftId,
+                                expression: "selectedShiftId"
+                              }
+                            ],
+                            staticClass: "btn btn-outline-primary h-35 w-100",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.selectedShiftId = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "", disabled: "", selected: "" }
+                              },
+                              [_vm._v("Select")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.shifts, function(shift) {
+                              return shift.id != 1
+                                ? _c(
+                                    "option",
+                                    { domProps: { value: shift.id } },
+                                    [
+                                      _vm._v(
+                                        "\n                                                " +
+                                          _vm._s(shift.name) +
+                                          " (" +
+                                          _vm._s(shift.workStartAt) +
+                                          " - " +
+                                          _vm._s(shift.workEndAt) +
+                                          ")\n                                            "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            })
+                          ],
+                          2
+                        )
+                      ])
                     ])
                   ]),
                   _vm._v(" "),
@@ -23188,8 +23337,12 @@ var render = function() {
                           _c("label", [_vm._v("Date Start")]),
                           _vm._v(" "),
                           _c("input", {
-                            staticClass: "form-control",
-                            attrs: { id: "dateStart", type: "text" },
+                            staticClass: "form-control text-black",
+                            attrs: {
+                              id: "dateStart",
+                              type: "text",
+                              readonly: ""
+                            },
                             domProps: { value: _vm.dateStartToAssign }
                           })
                         ]
@@ -23204,8 +23357,12 @@ var render = function() {
                           _c("label", [_vm._v("Date End")]),
                           _vm._v(" "),
                           _c("input", {
-                            staticClass: "form-control",
-                            attrs: { id: "dateEnd", type: "text" },
+                            staticClass: "form-control text-black",
+                            attrs: {
+                              id: "dateEnd",
+                              type: "text",
+                              readonly: ""
+                            },
                             domProps: { value: _vm.dateEndToAssign }
                           })
                         ]
@@ -23215,7 +23372,29 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-8" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-block m-t-5",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.saveMapping()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Save\n                            "
+                      )
+                    ]
+                  )
+                ])
+              ])
             ])
           ])
         ])
@@ -23242,30 +23421,7 @@ var staticRenderFns = [
         [_c("i", { staticClass: "pg-close fs-14" })]
       ),
       _vm._v(" "),
-      _c("h5", [_vm._v("Shift Mapping")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "p-b-10" }, [
-        _vm._v("We need payment information inorder to process your order")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-8" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary btn-block m-t-5",
-            attrs: { type: "button" }
-          },
-          [_vm._v("Save")]
-        )
-      ])
+      _c("h5", [_vm._v("Shift Mapping")])
     ])
   }
 ]
@@ -38085,6 +38241,7 @@ module.exports = Component.exports
             statusById: '',
             relatedById: ''
         });
+        commit('getShifts');
     },
     getDataOnAssignSlot: function getDataOnAssignSlot(_ref2, slotId) {
         var commit = _ref2.commit;
@@ -38132,11 +38289,11 @@ module.exports = Component.exports
             state.cbMappingSlots = _.filter(state.slots, { slotMaker: { jobPositionId: payload.jobPositionId } });
         }
     },
-    starShiftMapping: function starShiftMapping(_ref8, payload) {
+    startShiftMapping: function startShiftMapping(_ref8, payload) {
         var commit = _ref8.commit,
             state = _ref8.state;
 
-
+        //
         // reset data
         state.cbMappingSlots = [];
         state.slotsBeingMap = [];
@@ -38178,6 +38335,18 @@ module.exports = Component.exports
         state.dateEndToAssign = payload.dateEndToAssign;
 
         $('#modal-mapping-shift').modal('show');
+    },
+    saveShiftMap: function saveShiftMap(_ref10, payload) {
+        var commit = _ref10.commit,
+            state = _ref10.state;
+
+        commit({
+            type: 'mapShift',
+            slotId: payload.slotId,
+            shiftId: payload.shiftId,
+            dateStart: payload.dateStart,
+            dateEnd: payload.dateEnd
+        });
     }
 });
 
@@ -38199,6 +38368,9 @@ module.exports = Component.exports
     },
     slots: function slots(state) {
         return state.slots;
+    },
+    shifts: function shifts(state) {
+        return state.shifts;
     },
     employeesToBeAssigned: function employeesToBeAssigned(state) {
         return state.employeesToBeAssigned;
@@ -38252,6 +38424,7 @@ module.exports = Component.exports
         jobPositions: [],
         slotMakers: [],
         slots: [],
+        shifts: [],
         employeesToBeAssigned: [],
         slotDetail: {},
         calendarEventSource: [],
@@ -38306,6 +38479,19 @@ module.exports = Component.exports
             if (!_.isEmpty(state.slots)) {
                 $('.dataTables_empty').hide();
             }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    getShifts: function getShifts(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/shifts').then(function (res) {
+            state.shifts = res.data.data;
         }).catch(function (err) {
             $('.page-container').pgNotification({
                 style: 'flip',
@@ -38557,6 +38743,34 @@ module.exports = Component.exports
             // if no slot ids sent then remove all events
             $('#calendar-shift-mapping').fullCalendar('removeEvents');
         }
+    },
+    mapShift: function mapShift(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping', {
+            slotId: payload.slotId,
+            shiftId: payload.shiftId,
+            dateStart: payload.dateStart,
+            dateEnd: payload.dateEnd
+        }).then(function (res) {
+            if (!res.isFailed) {
+                $('#modal-mapping-shift').modal('toggle');
+                /* Show success notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-left',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {});
     }
 });
 

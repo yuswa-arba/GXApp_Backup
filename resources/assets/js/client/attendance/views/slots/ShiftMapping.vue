@@ -6,7 +6,7 @@
                 Processing.. Please wait..
             </p>
         </div>
-        <div class="col-lg-4 m-b-10">
+        <div class="col-lg-3 m-b-10">
             <div class="card card-default">
                 <div class="card-header ">
                     <div class="card-title">Slot List
@@ -16,7 +16,7 @@
                     <div class="scrollable">
                         <div class=" h-500">
                             <div class="padding-10" v-for="(slot,index) in cbSlotsBeingMap">
-                                <label>{{slot.name}}</label>
+                                <label class="fs-12 cursor"  @click="sortCalendarBySlot(slot.id)">{{slot.name}}</label>
                                 <i class="fa fa-circle cursor p-l-10" :style="{color:'#'+shiftMapPalette[index]}"
                                    @click="sortCalendarBySlot(slot.id)"
                                 ></i>
@@ -26,7 +26,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-8 m-b-10">
+        <div class="col-lg-9 m-b-10">
             <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                 <div class="card-block padding-30">
                     <div id="calendar-shift-mapping"></div>
@@ -101,7 +101,7 @@
 //                            })
 
                             self.$store.dispatch({
-                                type: 'slots/starShiftMapping',
+                                type: 'slots/startShiftMapping',
                                 slotIds: self.slotIdsBeingMap,
                                 refreshCb: false, //do not refresh checkboxes
                                 affectedCbSlotId: slotId
