@@ -131,6 +131,12 @@
                         dateStart: selectedDateStart,
                         dateEnd: selectedDateEnd
                     })
+
+                    // reset form value
+                    self.selectedSlotId = ''
+                    self.selectedShiftId = ''
+
+
                 } else {
 
 

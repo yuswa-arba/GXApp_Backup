@@ -1,7 +1,7 @@
 /**
  * Created by kevinpurwono on 8/12/17.
  */
-import series from 'async/series';
+import waterfall from 'async/waterfall';
 export default{
     getDataOnCreate({commit}){
         commit('getJobPositions')
@@ -95,7 +95,7 @@ export default{
     },
     saveShiftMap({dispatch, commit, state}, payload){
 
-        series([
+        waterfall([
             function (cb) {
                 commit({
                     type: 'mapShift',
@@ -114,21 +114,29 @@ export default{
                     eventType: 'shiftSchedule'
                 })
 
-                _.forEach(filterShiftSchedule, function (value, key) {
-                    $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id)
-                })
+                cb(null, filterShiftSchedule)
+            },
+            function (filterShiftSchedule, cb) {
+
+                let slotIdsBeingMap = _.map(state.slotsBeingMap, 'id')
+
+                setTimeout(function () {
+
+                    _.forEach(filterShiftSchedule, function (value, key) {
+                        $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id)
+                    })
+
+                    commit({
+                        type: 'getShiftSchedule',
+                        slotIds: slotIdsBeingMap
+                    })
+                },2000)
 
                 cb(null)
             }
 
         ], function (err, result) {
-            if (!err) {
-                let slotIdsBeingMap = _.map(state.slotsBeingMap, 'id')
-                commit({
-                    type: 'getShiftSchedule',
-                    slotIds: slotIdsBeingMap
-                })
-            }
+            //done
         })
 
 

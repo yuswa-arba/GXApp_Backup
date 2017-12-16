@@ -2634,6 +2634,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     dateStart: selectedDateStart,
                     dateEnd: selectedDateEnd
                 });
+
+                // reset form value
+                self.selectedSlotId = '';
+                self.selectedShiftId = '';
             } else {
 
                 $('.page-container').pgNotification({
@@ -38232,8 +38236,8 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_series__ = __webpack_require__("./node_modules/async/series.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_async_series__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall__ = __webpack_require__("./node_modules/async/waterfall.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_async_waterfall__);
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -38354,7 +38358,7 @@ module.exports = Component.exports
             state = _ref10.state;
 
 
-        __WEBPACK_IMPORTED_MODULE_0_async_series___default()([function (cb) {
+        __WEBPACK_IMPORTED_MODULE_0_async_waterfall___default()([function (cb) {
             commit({
                 type: 'mapShift',
                 slotId: payload.slotId,
@@ -38371,19 +38375,26 @@ module.exports = Component.exports
                 eventType: 'shiftSchedule'
             });
 
-            _.forEach(filterShiftSchedule, function (value, key) {
-                $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id);
-            });
+            cb(null, filterShiftSchedule);
+        }, function (filterShiftSchedule, cb) {
 
-            cb(null);
-        }], function (err, result) {
-            if (!err) {
-                var slotIdsBeingMap = _.map(state.slotsBeingMap, 'id');
+            var slotIdsBeingMap = _.map(state.slotsBeingMap, 'id');
+
+            setTimeout(function () {
+
+                _.forEach(filterShiftSchedule, function (value, key) {
+                    $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id);
+                });
+
                 commit({
                     type: 'getShiftSchedule',
                     slotIds: slotIdsBeingMap
                 });
-            }
+            }, 2000);
+
+            cb(null);
+        }], function (err, result) {
+            //done
         });
     }
 });
