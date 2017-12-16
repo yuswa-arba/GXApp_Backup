@@ -371,7 +371,7 @@ export default{
             dateEnd: payload.dateEnd
         })
             .then((res) => {
-                if (!res.isFailed) {
+                if (!res.data.isFailed) {
                     $('#modal-mapping-shift').modal('toggle')
 
                     /* Show success notification */
@@ -388,7 +388,7 @@ export default{
                 } else {
                     $('.page-container').pgNotification({
                         style: 'flip',
-                        message: err.message,
+                        message: res.data.message,
                         position: 'top-left',
                         timeout: 3500,
                         type: 'danger'
@@ -398,5 +398,54 @@ export default{
             .catch((err) => {
 
             })
+    },
+    saveSlotUseMapping(state, payload){
+
+        post(api_path() + 'attendance/slot/edit/useMapping', {
+            slotId: payload.slotId,
+            isUsingMapping: payload.isUsingMapping
+        })
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                    /* Show success notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    const slot = _.find(state.slots, {id: payload.slotId})
+                    const slotIndex = _.findIndex(state.slots, slot)
+
+                    slot.isUsingMapping = payload.isUsingMapping
+
+                    //update slot data in arrray
+                    state.slots.splice(slotIndex, 1, slot)
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+
+
     }
 }

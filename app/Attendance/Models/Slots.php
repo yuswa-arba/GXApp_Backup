@@ -13,10 +13,12 @@ class Slots extends Model
         'positionOrder',
         'allowMultipleAssign',
         'slotMakerId',
+        'isUsingMapping',
     ];
 
     protected $casts = [
-        'allowMultipleAssign' => 'boolean'
+        'allowMultipleAssign' => 'boolean',
+        'isUsingMapping'=>'boolean'
     ];
 
     public function slotMaker()

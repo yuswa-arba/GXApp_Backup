@@ -27,7 +27,8 @@ class SlotListTransformer extends TransformerAbstract
             'allowMultipleAssign' => $slots->allowMultipleAssign,
             'slotMaker' => $slots->slotMaker,
             'assignedTo' => $this->assignedTo($slots),
-            'availableForAssign' => $this->isAvailableForAssign($slots)
+            'availableForAssign' => $this->isAvailableForAssign($slots),
+            'isUsingMapping' =>$slots->isUsingMapping
         ];
     }
 

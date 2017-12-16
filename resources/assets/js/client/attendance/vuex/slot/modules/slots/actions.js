@@ -150,6 +150,13 @@ export default{
         })
 
 
+    },
+    editSlotUseMapping({commit,state},payload){
+        commit({
+            type:'saveSlotUseMapping',
+            slotId:payload.slotId,
+            isUsingMapping:payload.isUsingMapping
+        })
     }
 
 }

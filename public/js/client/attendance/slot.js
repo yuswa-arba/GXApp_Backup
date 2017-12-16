@@ -3324,6 +3324,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -3380,6 +3385,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         shiftMapping: function shiftMapping() {
             this.$store.dispatch('slots/attempShiftMapping');
+        },
+        editShiftOption: function editShiftOption(slotId, isUsingMapping) {
+
+            this.$store.dispatch({
+                type: 'slots/editSlotUseMapping',
+                slotId: slotId,
+                isUsingMapping: isUsingMapping
+            });
         }
     }
 
@@ -22488,7 +22501,70 @@ var render = function() {
                                 )
                         ]),
                         _vm._v(" "),
-                        _vm._m(2, true),
+                        _c("td", { staticClass: "padding-10" }, [
+                          slot.id != 1
+                            ? _c(
+                                "div",
+                                { staticClass: "dropdown dropdown-default" },
+                                [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-xs btn-outline-primary dropdown-toggle text-center",
+                                      attrs: {
+                                        type: "button",
+                                        "data-toggle": "dropdown",
+                                        "aria-haspopup": "true",
+                                        "aria-expanded": "false"
+                                      }
+                                    },
+                                    [
+                                      slot.isUsingMapping
+                                        ? _c("span", [_vm._v("Mapping")])
+                                        : _c("span", [_vm._v("Default")])
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "dropdown-menu" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item pointer",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.editShiftOption(slot.id, 0)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                            Use Default"
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item pointer",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.editShiftOption(slot.id, 1)
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                            Use Mapping "
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
+                            : _vm._e()
+                        ]),
                         _vm._v(" "),
                         _c("td", { staticClass: "padding-10" }, [
                           _c("i", {
@@ -22570,43 +22646,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-black" }, [_vm._v("Shift")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "padding-10" }, [
-      _c("div", { staticClass: "dropdown dropdown-default" }, [
-        _c(
-          "button",
-          {
-            staticClass:
-              "btn btn-xs btn-outline-primary dropdown-toggle text-center",
-            attrs: {
-              type: "button",
-              "data-toggle": "dropdown",
-              "aria-haspopup": "true",
-              "aria-expanded": "false"
-            }
-          },
-          [
-            _vm._v(
-              "\n                                       Default\n                                    "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "dropdown-menu" }, [
-          _c("a", { staticClass: "dropdown-item pointer" }, [
-            _vm._v("\n                                           Use Default")
-          ]),
-          _vm._v(" "),
-          _c("a", { staticClass: "dropdown-item pointer" }, [
-            _vm._v("\n                                            Use Mapping ")
-          ])
-        ])
       ])
     ])
   }
@@ -38555,6 +38594,16 @@ module.exports = Component.exports
         }], function (err, result) {
             //done
         });
+    },
+    editSlotUseMapping: function editSlotUseMapping(_ref11, payload) {
+        var commit = _ref11.commit,
+            state = _ref11.state;
+
+        commit({
+            type: 'saveSlotUseMapping',
+            slotId: payload.slotId,
+            isUsingMapping: payload.isUsingMapping
+        });
     }
 });
 
@@ -38991,7 +39040,7 @@ module.exports = Component.exports
             dateStart: payload.dateStart,
             dateEnd: payload.dateEnd
         }).then(function (res) {
-            if (!res.isFailed) {
+            if (!res.data.isFailed) {
                 $('#modal-mapping-shift').modal('toggle');
 
                 /* Show success notification */
@@ -39007,13 +39056,56 @@ module.exports = Component.exports
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',
-                    message: err.message,
+                    message: res.data.message,
                     position: 'top-left',
                     timeout: 3500,
                     type: 'danger'
                 }).show();
             }
         }).catch(function (err) {});
+    },
+    saveSlotUseMapping: function saveSlotUseMapping(state, payload) {
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/edit/useMapping', {
+            slotId: payload.slotId,
+            isUsingMapping: payload.isUsingMapping
+        }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                /* Show success notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                var slot = _.find(state.slots, { id: payload.slotId });
+                var slotIndex = _.findIndex(state.slots, slot);
+
+                slot.isUsingMapping = payload.isUsingMapping;
+
+                //update slot data in arrray
+                state.slots.splice(slotIndex, 1, slot);
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
     }
 });
 

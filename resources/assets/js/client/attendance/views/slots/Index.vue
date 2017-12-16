@@ -5,7 +5,8 @@
                 <button class="btn btn-primary all-caps">Calendar <i class="fa fa-calendar"></i></button>
             </div>
             <div class="pull-left m-r-15 m-b-10">
-                <button class="btn btn-info all-caps" @click="shiftMapping()">Shift Mapping <i class="fa fa-clock-o"></i></button>
+                <button class="btn btn-info all-caps" @click="shiftMapping()">Shift Mapping <i
+                        class="fa fa-clock-o"></i></button>
             </div>
 
             <div class="pull-right m-r-15 m-b-10">
@@ -86,16 +87,20 @@
 
                                 </td>
                                 <td class="padding-10">
-                                    <div class="dropdown dropdown-default">
-                                        <button class="btn btn-xs btn-outline-primary dropdown-toggle text-center" type="button"
+                                    <div class="dropdown dropdown-default" v-if="slot.id!=1">
+                                        <button class="btn btn-xs btn-outline-primary dropdown-toggle text-center"
+                                                type="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                           Default
+
+                                            <span v-if="slot.isUsingMapping">Mapping</span>
+                                            <span v-else="">Default</span>
+
                                         </button>
 
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item pointer">
-                                               Use Default</a>
-                                            <a class="dropdown-item pointer">
+                                            <a class="dropdown-item pointer" @click="editShiftOption(slot.id,0)">
+                                                Use Default</a>
+                                            <a class="dropdown-item pointer" @click="editShiftOption(slot.id,1)">
                                                 Use Mapping </a>
                                         </div>
 
@@ -136,7 +141,7 @@
     export default{
         components: {
             "assign-slot-quickview": AssignSlotQuickview,
-            "attempt-shift-mapping-modal":AttemptShiftMappingModal
+            "attempt-shift-mapping-modal": AttemptShiftMappingModal
         },
         data(){
             return {
@@ -189,6 +194,14 @@
             },
             shiftMapping(){
                 this.$store.dispatch('slots/attempShiftMapping')
+            },
+            editShiftOption(slotId, isUsingMapping){
+
+                this.$store.dispatch({
+                    type: 'slots/editSlotUseMapping',
+                    slotId: slotId,
+                    isUsingMapping: isUsingMapping
+                })
             }
 
         }
