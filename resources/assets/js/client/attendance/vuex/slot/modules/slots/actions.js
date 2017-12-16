@@ -2,6 +2,7 @@
  * Created by kevinpurwono on 8/12/17.
  */
 import waterfall from 'async/waterfall';
+import until from 'async/until';
 export default{
     getDataOnCreate({commit}){
         commit('getJobPositions')
@@ -104,15 +105,24 @@ export default{
                     dateStart: payload.dateStart,
                     dateEnd: payload.dateEnd
                 })
-
                 cb(null)
+
             },
             function (cb) {
+
+                if (state.isSavingShift) {
+                    /* Show please wait notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Refreshing data please wait...',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'success'
+                    }).show();
+                }
+
                 // remove event before adding the new saved so its not duplicated
-                let filterShiftSchedule = _.filter(state.calendarShiftScheduleEventSource, {
-                    slotId: payload.slotId,
-                    eventType: 'shiftSchedule'
-                })
+                let filterShiftSchedule = _.filter(state.calendarShiftScheduleEventSource, {eventType: 'shiftSchedule'})
 
                 cb(null, filterShiftSchedule)
             },
@@ -130,7 +140,7 @@ export default{
                         type: 'getShiftSchedule',
                         slotIds: slotIdsBeingMap
                     })
-                },2000)
+                }, 2000)
 
                 cb(null)
             }

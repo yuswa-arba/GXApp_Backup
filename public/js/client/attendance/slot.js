@@ -788,6 +788,54 @@ module.exports = exports['default'];
 
 /***/ }),
 
+/***/ "./node_modules/async/until.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = until;
+
+var _whilst = __webpack_require__("./node_modules/async/whilst.js");
+
+var _whilst2 = _interopRequireDefault(_whilst);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Repeatedly call `iteratee` until `test` returns `true`. Calls `callback` when
+ * stopped, or an error occurs. `callback` will be passed an error and any
+ * arguments passed to the final `iteratee`'s callback.
+ *
+ * The inverse of [whilst]{@link module:ControlFlow.whilst}.
+ *
+ * @name until
+ * @static
+ * @memberOf module:ControlFlow
+ * @method
+ * @see [async.whilst]{@link module:ControlFlow.whilst}
+ * @category Control Flow
+ * @param {Function} test - synchronous truth test to perform before each
+ * execution of `iteratee`. Invoked with ().
+ * @param {AsyncFunction} iteratee - An async function which is called each time
+ * `test` fails. Invoked with (callback).
+ * @param {Function} [callback] - A callback which is called after the test
+ * function has passed and repeated execution of `iteratee` has stopped. `callback`
+ * will be passed an error and any arguments passed to the final `iteratee`'s
+ * callback. Invoked with (err, [results]);
+ */
+function until(test, iteratee, callback) {
+    (0, _whilst2.default)(function () {
+        return !test.apply(this, arguments);
+    }, iteratee, callback);
+}
+module.exports = exports['default'];
+
+/***/ }),
+
 /***/ "./node_modules/async/waterfall.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -905,6 +953,85 @@ module.exports = exports['default'];
  *     callback(null, 'done');
  * }
  */
+
+/***/ }),
+
+/***/ "./node_modules/async/whilst.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = whilst;
+
+var _noop = __webpack_require__("./node_modules/lodash/noop.js");
+
+var _noop2 = _interopRequireDefault(_noop);
+
+var _slice = __webpack_require__("./node_modules/async/internal/slice.js");
+
+var _slice2 = _interopRequireDefault(_slice);
+
+var _onlyOnce = __webpack_require__("./node_modules/async/internal/onlyOnce.js");
+
+var _onlyOnce2 = _interopRequireDefault(_onlyOnce);
+
+var _wrapAsync = __webpack_require__("./node_modules/async/internal/wrapAsync.js");
+
+var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Repeatedly call `iteratee`, while `test` returns `true`. Calls `callback` when
+ * stopped, or an error occurs.
+ *
+ * @name whilst
+ * @static
+ * @memberOf module:ControlFlow
+ * @method
+ * @category Control Flow
+ * @param {Function} test - synchronous truth test to perform before each
+ * execution of `iteratee`. Invoked with ().
+ * @param {AsyncFunction} iteratee - An async function which is called each time
+ * `test` passes. Invoked with (callback).
+ * @param {Function} [callback] - A callback which is called after the test
+ * function has failed and repeated execution of `iteratee` has stopped. `callback`
+ * will be passed an error and any arguments passed to the final `iteratee`'s
+ * callback. Invoked with (err, [results]);
+ * @returns undefined
+ * @example
+ *
+ * var count = 0;
+ * async.whilst(
+ *     function() { return count < 5; },
+ *     function(callback) {
+ *         count++;
+ *         setTimeout(function() {
+ *             callback(null, count);
+ *         }, 1000);
+ *     },
+ *     function (err, n) {
+ *         // 5 seconds have passed, n = 5
+ *     }
+ * );
+ */
+function whilst(test, iteratee, callback) {
+    callback = (0, _onlyOnce2.default)(callback || _noop2.default);
+    var _iteratee = (0, _wrapAsync2.default)(iteratee);
+    if (!test()) return callback(null);
+    var next = function (err /*, ...args*/) {
+        if (err) return callback(err);
+        if (test()) return _iteratee(next);
+        var args = (0, _slice2.default)(arguments, 1);
+        callback.apply(null, [null].concat(args));
+    };
+    _iteratee(next);
+}
+module.exports = exports['default'];
 
 /***/ }),
 
@@ -2503,6 +2630,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -22472,9 +22604,7 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("a", { staticClass: "dropdown-item pointer" }, [
-            _vm._v(
-              "\n                                            Create Setting "
-            )
+            _vm._v("\n                                            Use Mapping ")
           ])
         ])
       ])
@@ -23313,6 +23443,24 @@ var render = function() {
                               },
                               [_vm._v("Select")]
                             ),
+                            _vm._v(" "),
+                            _vm._l(_vm.shifts, function(shift) {
+                              return shift.id == 1
+                                ? _c(
+                                    "option",
+                                    { domProps: { value: shift.id } },
+                                    [
+                                      _vm._v(
+                                        "\n                                                Default (" +
+                                          _vm._s(shift.workStartAt) +
+                                          " - " +
+                                          _vm._s(shift.workEndAt) +
+                                          ")\n                                            "
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
+                            }),
                             _vm._v(" "),
                             _vm._l(_vm.shifts, function(shift) {
                               return shift.id != 1
@@ -38238,9 +38386,12 @@ module.exports = Component.exports
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall__ = __webpack_require__("./node_modules/async/waterfall.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_async_waterfall__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_until__ = __webpack_require__("./node_modules/async/until.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_until___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_until__);
 /**
  * Created by kevinpurwono on 8/12/17.
  */
+
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     getDataOnCreate: function getDataOnCreate(_ref) {
@@ -38366,14 +38517,22 @@ module.exports = Component.exports
                 dateStart: payload.dateStart,
                 dateEnd: payload.dateEnd
             });
-
             cb(null);
         }, function (cb) {
+
+            if (state.isSavingShift) {
+                /* Show please wait notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'Refreshing data please wait...',
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'success'
+                }).show();
+            }
+
             // remove event before adding the new saved so its not duplicated
-            var filterShiftSchedule = _.filter(state.calendarShiftScheduleEventSource, {
-                slotId: payload.slotId,
-                eventType: 'shiftSchedule'
-            });
+            var filterShiftSchedule = _.filter(state.calendarShiftScheduleEventSource, { eventType: 'shiftSchedule' });
 
             cb(null, filterShiftSchedule);
         }, function (filterShiftSchedule, cb) {
@@ -38484,7 +38643,8 @@ module.exports = Component.exports
         calendarShiftScheduleEventSource: [],
         shiftMapPalette: ['336699', '00aaff', '6600ff', '009999', 'ff00ff', 'ff0080', '003399', '33334d', '13060d', '0d260d', '666633', '133913', 'ff99ff', '99ff66', 'b3b300', '737373', '00e6e6', '739900', 'e60000', '000000', '0000ff', 'ff0000', 'ff8000', 'ff5500', 'ffff00', 'aaff00', '666666', '660033', '33ccff', 'b35900', '00ffcc', '800080', '669900', '2929a3', 'cc00cc', '6b00b3', '1aff66', 'ff6699', '0000b3', '009933', '7a00cc', 'bf4080', '4d0000', '003366', '2a0080', '558000', '006666'],
         dateStartToAssign: '',
-        dateEndToAssign: ''
+        dateEndToAssign: '',
+        isSavingShift: false
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -38822,6 +38982,9 @@ module.exports = Component.exports
         }
     },
     mapShift: function mapShift(state, payload) {
+
+        state.isSavingShift = true;
+
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping', {
             slotId: payload.slotId,
             shiftId: payload.shiftId,
@@ -38839,6 +39002,8 @@ module.exports = Component.exports
                     timeout: 3500,
                     type: 'info'
                 }).show();
+
+                state.isSavingShift = false;
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',

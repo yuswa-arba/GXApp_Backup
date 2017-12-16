@@ -23,8 +23,9 @@ class DayOffCalendarTransformer extends TransformerAbstract
             'title' => $dayOffSchedule->description,
             'start' => Carbon::createFromFormat('d/m/Y', $dayOffSchedule->date)->format('Y-m-d'),
             'slotId' => $dayOffSchedule->slotId,
-            'className' => 'calendar-cell-sm bold',
+            'className' => 'calendar-cell-sm  bold red-border-2',
             'textColor' => '#fff',
+//            'borderColor'=>'#ff0000',
             'eventType' => 'dayOff'
         ];
     }

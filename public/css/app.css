@@ -261,7 +261,18 @@
 .calendar-cell-sm {
   padding: 4px 8px !important;
   font-size: 10px !important;
-  border: none !important;
+}
+
+.red-border-1 {
+  border: 1px solid #ff0000 !important;
+}
+
+.red-border-2 {
+  border: 2px solid #ff0000 !important;
+}
+
+.red-border-3 {
+  border: 3px solid #ff0000 !important;
 }
 
 /* Max width*/

@@ -24,11 +24,21 @@ class MappingShiftLogic extends MappingUseCase
         $dates = $this->getDates($request->dateStart, $request->dateEnd);
 
         if (count($dates) > 0) {
-            foreach ($dates as $date) {
-                SlotShiftSchedule::updateOrCreate(
-                    ['slotId' => $request->slotId, 'date' => $date],
-                    ['shiftId' => $request->shiftId]);
+
+            // insert if shift is not default, otherwise remove it
+
+            if($request->shiftId!=1){
+                foreach ($dates as $date) {
+                    SlotShiftSchedule::updateOrCreate(
+                        ['slotId' => $request->slotId, 'date' => $date],
+                        ['shiftId' => $request->shiftId]);
+                }
+            } else {
+                foreach ($dates as $date) {
+                    SlotShiftSchedule::where('slotId',$request->slotId)->where('date',$date)->delete();
+                }
             }
+
 
             /* Return success response */
             $response['isFailed'] = false;

@@ -332,7 +332,7 @@ export default{
     },
     getShiftSchedule(state, payload){
         if (!_.isEmpty(payload.slotIds)) {
-            post(api_path() + 'attendance/shift/mapping/schedule',{slotIds:payload.slotIds})
+            post(api_path() + 'attendance/shift/mapping/schedule', {slotIds: payload.slotIds})
                 .then((res) => {
                     state.calendarShiftScheduleEventSource = res.data.data
                     //add color
@@ -361,6 +361,9 @@ export default{
         }
     },
     mapShift(state, payload){
+
+        state.isSavingShift = true
+
         post(api_path() + 'attendance/shift/mapping', {
             slotId: payload.slotId,
             shiftId: payload.shiftId,
@@ -379,6 +382,9 @@ export default{
                         timeout: 3500,
                         type: 'info'
                     }).show();
+
+                    state.isSavingShift = false
+
                 } else {
                     $('.page-container').pgNotification({
                         style: 'flip',

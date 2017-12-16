@@ -71,7 +71,8 @@ export default {
             '006666'
         ],
         dateStartToAssign:'',
-        dateEndToAssign:''
+        dateEndToAssign:'',
+        isSavingShift:false
     },
     getters,
     mutations,

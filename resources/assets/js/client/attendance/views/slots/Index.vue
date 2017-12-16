@@ -96,7 +96,7 @@
                                             <a class="dropdown-item pointer">
                                                Use Default</a>
                                             <a class="dropdown-item pointer">
-                                                Create Setting </a>
+                                                Use Mapping </a>
                                         </div>
 
                                     </div>

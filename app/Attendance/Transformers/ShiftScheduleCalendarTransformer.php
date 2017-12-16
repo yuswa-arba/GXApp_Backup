@@ -26,7 +26,7 @@ class ShiftScheduleCalendarTransformer extends TransformerAbstract
             'end' => $this->getEndDate($slotShiftSchedule),
             'slotId' => $slotShiftSchedule->slotId,
             'shiftId' => $slotShiftSchedule->shiftId,
-            'className' => 'calendar-cell-sm',
+            'className' => 'calendar-cell-sm no-border',
             'textColor' => '#fff',
             'eventType' => 'shiftSchedule'
         ];

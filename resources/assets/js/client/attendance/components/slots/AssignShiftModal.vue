@@ -33,6 +33,11 @@
                                             <select class="btn btn-outline-primary h-35 w-100"
                                                     v-model="selectedShiftId">
                                                 <option value="" disabled selected>Select</option>
+                                                <option v-if="shift.id==1"
+                                                        :value="shift.id"
+                                                        v-for="shift in shifts">
+                                                    Default ({{shift.workStartAt}} - {{shift.workEndAt}})
+                                                </option>
                                                 <option v-if="shift.id!=1"
                                                         :value="shift.id"
                                                         v-for="shift in shifts">
