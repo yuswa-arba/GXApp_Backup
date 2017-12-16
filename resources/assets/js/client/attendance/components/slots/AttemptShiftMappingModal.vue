@@ -70,9 +70,10 @@
         </div>
         <!-- /.modal-dialog -->
     </div>
-
-
     <!-- /.modal-dialog -->
+
+
+
 </template>
 
 <script>
@@ -160,9 +161,10 @@
                 }
 
                 // push result to local selected slots
-                _.forEach(this.$store.state.slots.cbMappingSlots, function (value, key) {
-                    self.selectedSlots.push(value.id)
-                })
+                // ENABLE THIS IF YOU WANT TO CHECK ALL BOXES BY DEFAULT
+//                _.forEach(this.$store.state.slots.cbMappingSlots, function (value, key) {
+//                    self.selectedSlots.push(value.id)
+//                })
 
 
             }

@@ -10,17 +10,23 @@
 namespace App\Attendance\Logics;
 
 use App\Attendance\Models\DayOffSchedule;
-use App\Attendance\Transformers\ShiftMappingCalendarTransformer;
+use App\Attendance\Models\SlotShiftSchedule;
+use App\Attendance\Transformers\DayOffCalendarTransformer;
+use App\Attendance\Transformers\ShiftScheduleCalendarTransformer;
 use App\Attendance\Transformers\SlotCalendarTransformer;
 
 
-class GetShiftMappingCalendarLogic extends GetDataUseCase
+class GetShiftMappingCalendarLogic extends GetShiftCalendarUseCase
 {
-
-    public function handle($request)
+    public function handleDayOffs($request)
     {
-       $dayOffSchedule = DayOffSchedule::whereIn('slotId',$request->slotIds)->get();
+        $dayOffSchedule = DayOffSchedule::whereIn('slotId',$request->slotIds)->get();
+        return fractal($dayOffSchedule,new DayOffCalendarTransformer())->respond(200);
+    }
 
-       return fractal($dayOffSchedule,new ShiftMappingCalendarTransformer())->respond(200);
+    public function handleShiftSchedules($request)
+    {
+        $shiftSchedule = SlotShiftSchedule::whereIn('slotId',$request->slotIds)->get();
+        return fractal($shiftSchedule,new ShiftScheduleCalendarTransformer())->respond(200);
     }
 }

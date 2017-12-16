@@ -86,12 +86,6 @@ class ShiftController extends Controller
 
     }
 
-    public function getMappingCalendar(Request $request)
-    {
-        $request->validate(['slotIds'=>'required']);
-        return GetShiftMappingCalendarLogic::getData($request);
-    }
-
     public function mapping(Request $request)
     {
         $request->validate([
@@ -102,6 +96,18 @@ class ShiftController extends Controller
         ]);
 
         return MappingShiftLogic::mapping($request);
+    }
+
+    public function getMappingCalendar(Request $request)
+    {
+        // by default mapping calendar only return day offs
+        $request->validate(['slotIds'=>'required']);
+        return GetShiftMappingCalendarLogic::getDayOffs($request);
+    }
+
+    public function getShiftScheduleOnCalendar(Request $request){
+        $request->validate(['slotIds'=>'required']);
+        return GetShiftMappingCalendarLogic::getShiftSchedules($request);
     }
 
 }

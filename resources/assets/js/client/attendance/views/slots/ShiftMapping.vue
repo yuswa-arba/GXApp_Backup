@@ -6,25 +6,23 @@
                 Processing.. Please wait..
             </p>
         </div>
-        <div class="col-lg-3 m-b-10">
-            <div class="card card-default">
-                <div class="card-header ">
-                    <div class="card-title">Slot List
-                    </div>
+        <div class="col-lg-3 m-b-10 padding-10 bg-white">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h5 class="f-w-400">Slot List</h5>
+                    <label class="help fs-12 m-b-20" style="line-height: 15px">Click on the slot button below <br> to toggle view in calendar</label>
                 </div>
-                <div class="card-block">
-                    <div class="scrollable">
-                        <div class=" h-500">
-                            <div class="padding-10" v-for="(slot,index) in cbSlotsBeingMap">
-                                <label class="fs-12 cursor"  @click="sortCalendarBySlot(slot.id)">{{slot.name}}</label>
-                                <i class="fa fa-circle cursor p-l-10" :style="{color:'#'+shiftMapPalette[index]}"
-                                   @click="sortCalendarBySlot(slot.id)"
-                                ></i>
-                            </div>
-                        </div>
-                    </div>
+
+                <div class="col-lg-12  text-center" v-for="(slot,index) in cbSlotsBeingMap">
+                    <button class="btn fs-12 m-b-5 cursor overflow-ellipsis bold text-white"
+                            :style="{background:'#'+shiftMapPalette[index]}"
+                            @click="sortCalendarBySlot(slot.id)">
+                        {{slot.name}}
+                    </button>
+                    <!--<i class="fa fa-clock-o cursor fs-24 p-l-5" :style="{color:'#'+shiftMapPalette[index]}"></i>-->
                 </div>
             </div>
+
         </div>
         <div class="col-lg-9 m-b-10">
             <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
@@ -127,18 +125,19 @@
                 },
                 selectable: true,
                 selectHelper: true,
+                timeFormat:'H:mm',
                 select: function (start, end) {
                     console.log((moment(start).format('DD/MM/YYYY')))
                     console.log((moment(end).format('DD/MM/YYYY')))
 
                     self.$store.dispatch({
-                        type:'slots/attemptAssignShift',
-                        dateStartToAssign:moment(start).format('DD/MM/YYYY'),
-                        dateEndToAssign: moment(end).subtract(1,'days').format('DD/MM/YYYY')
+                        type: 'slots/attemptAssignShift',
+                        dateStartToAssign: moment(start).format('DD/MM/YYYY'),
+                        dateEndToAssign: moment(end).subtract(1, 'days').format('DD/MM/YYYY')
                     })
                 },
                 eventRender: function (event, element, view) {
-                    element.on('click', () => {
+                    element.on('click', function () {
                         console.log(event.slotId)
                         console.log(moment(event.start).format('DD/MM/YYYY'))
                     })

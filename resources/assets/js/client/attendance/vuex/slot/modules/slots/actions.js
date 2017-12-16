@@ -45,7 +45,6 @@ export default{
         }
     },
     startShiftMapping({commit, state}, payload){
-        //
         // reset data
         state.cbMappingSlots = []
         state.slotsBeingMap = []
@@ -77,6 +76,13 @@ export default{
             type: 'getCalendarDataForMapping',
             slotIds: payload.slotIds,
         })
+
+        commit({
+            type: 'getShiftSchedule',
+            slotIds: payload.slotIds,
+        })
+
+
     },
     attemptAssignShift({commit, state}, payload){
 
@@ -85,15 +91,47 @@ export default{
         state.dateEndToAssign = payload.dateEndToAssign
 
         $('#modal-mapping-shift').modal('show')
+
     },
-    saveShiftMap({commit,state},payload){
-        commit({
-            type:'mapShift',
-            slotId:payload.slotId,
-            shiftId: payload.shiftId,
-            dateStart: payload.dateStart,
-            dateEnd: payload.dateEnd
+    saveShiftMap({dispatch, commit, state}, payload){
+
+        series([
+            function (cb) {
+                commit({
+                    type: 'mapShift',
+                    slotId: payload.slotId,
+                    shiftId: payload.shiftId,
+                    dateStart: payload.dateStart,
+                    dateEnd: payload.dateEnd
+                })
+
+                cb(null)
+            },
+            function (cb) {
+                // remove event before adding the new saved so its not duplicated
+                let filterShiftSchedule = _.filter(state.calendarShiftScheduleEventSource, {
+                    slotId: payload.slotId,
+                    eventType: 'shiftSchedule'
+                })
+
+                _.forEach(filterShiftSchedule, function (value, key) {
+                    $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id)
+                })
+
+                cb(null)
+            }
+
+        ], function (err, result) {
+            if (!err) {
+                let slotIdsBeingMap = _.map(state.slotsBeingMap, 'id')
+                commit({
+                    type: 'getShiftSchedule',
+                    slotIds: slotIdsBeingMap
+                })
+            }
         })
+
+
     }
 
 }

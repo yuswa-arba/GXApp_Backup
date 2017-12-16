@@ -292,7 +292,7 @@ export default{
             post(api_path() + 'attendance/shift/mapping/calendar', {slotIds: payload.slotIds})
                 .then((res) => {
 
-                    //reset
+                    //reset calendar
                     $('#calendar-shift-mapping').fullCalendar('removeEvents')
 
                     state.calendarShiftMappingEventSource = res.data.data
@@ -310,6 +310,7 @@ export default{
                     })
 
                     $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource)
+
 
                 })
                 .catch((err) => {
@@ -329,6 +330,36 @@ export default{
         }
 
     },
+    getShiftSchedule(state, payload){
+        if (!_.isEmpty(payload.slotIds)) {
+            post(api_path() + 'attendance/shift/mapping/schedule',{slotIds:payload.slotIds})
+                .then((res) => {
+                    state.calendarShiftScheduleEventSource = res.data.data
+                    //add color
+                    let c = 0
+                    _.forEach(payload.slotIds, function (value, key) {
+
+                        let filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, {slotId: value})
+                        for (let i = 0; i < filteredToAddColor.length; i++) {
+                            _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
+                        }
+
+                        c++ //increment
+                    })
+                    $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource)
+
+                })
+                .catch((err) => {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                })
+        }
+    },
     mapShift(state, payload){
         post(api_path() + 'attendance/shift/mapping', {
             slotId: payload.slotId,
@@ -339,6 +370,7 @@ export default{
             .then((res) => {
                 if (!res.isFailed) {
                     $('#modal-mapping-shift').modal('toggle')
+
                     /* Show success notification */
                     $('.page-container').pgNotification({
                         style: 'flip',

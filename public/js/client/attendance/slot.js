@@ -2867,6 +2867,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -2944,9 +2945,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
 
             // push result to local selected slots
-            _.forEach(this.$store.state.slots.cbMappingSlots, function (value, key) {
-                self.selectedSlots.push(value.id);
-            });
+            // ENABLE THIS IF YOU WANT TO CHECK ALL BOXES BY DEFAULT
+            //                _.forEach(this.$store.state.slots.cbMappingSlots, function (value, key) {
+            //                    self.selectedSlots.push(value.id)
+            //                })
+
         }
     }
 });
@@ -3297,8 +3300,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
 
 
 
@@ -3381,6 +3382,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             selectable: true,
             selectHelper: true,
+            timeFormat: 'H:mm',
             select: function select(start, end) {
                 console.log(moment(start).format('DD/MM/YYYY'));
                 console.log(moment(end).format('DD/MM/YYYY'));
@@ -22517,45 +22519,40 @@ var render = function() {
         2
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 m-b-10" }, [
-        _c("div", { staticClass: "card card-default" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-block" }, [
-            _c("div", { staticClass: "scrollable" }, [
-              _c(
-                "div",
-                { staticClass: " h-500" },
-                _vm._l(_vm.cbSlotsBeingMap, function(slot, index) {
-                  return _c("div", { staticClass: "padding-10" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "fs-12 cursor",
-                        on: {
-                          click: function($event) {
-                            _vm.sortCalendarBySlot(slot.id)
-                          }
-                        }
-                      },
-                      [_vm._v(_vm._s(slot.name))]
-                    ),
-                    _vm._v(" "),
-                    _c("i", {
-                      staticClass: "fa fa-circle cursor p-l-10",
-                      style: { color: "#" + _vm.shiftMapPalette[index] },
-                      on: {
-                        click: function($event) {
-                          _vm.sortCalendarBySlot(slot.id)
-                        }
+      _c("div", { staticClass: "col-lg-3 m-b-10 padding-10 bg-white" }, [
+        _c(
+          "div",
+          { staticClass: "row" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._l(_vm.cbSlotsBeingMap, function(slot, index) {
+              return _c("div", { staticClass: "col-lg-12  text-center" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn fs-12 m-b-5 cursor overflow-ellipsis bold text-white",
+                    style: { background: "#" + _vm.shiftMapPalette[index] },
+                    on: {
+                      click: function($event) {
+                        _vm.sortCalendarBySlot(slot.id)
                       }
-                    })
-                  ])
-                })
-              )
-            ])
-          ])
-        ])
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(slot.name) +
+                        "\n                "
+                    )
+                  ]
+                )
+              ])
+            })
+          ],
+          2
+        )
       ]),
       _vm._v(" "),
       _vm._m(1),
@@ -22570,10 +22567,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header " }, [
-      _c("div", { staticClass: "card-title" }, [
-        _vm._v("Slot List\n                ")
-      ])
+    return _c("div", { staticClass: "col-lg-12 text-center" }, [
+      _c("h5", { staticClass: "f-w-400" }, [_vm._v("Slot List")]),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "help fs-12 m-b-20",
+          staticStyle: { "line-height": "15px" }
+        },
+        [
+          _vm._v("Click on the slot button below "),
+          _c("br"),
+          _vm._v(" to toggle view in calendar")
+        ]
+      )
     ])
   },
   function() {
@@ -38293,7 +38301,6 @@ module.exports = Component.exports
         var commit = _ref8.commit,
             state = _ref8.state;
 
-        //
         // reset data
         state.cbMappingSlots = [];
         state.slotsBeingMap = [];
@@ -38324,6 +38331,11 @@ module.exports = Component.exports
             type: 'getCalendarDataForMapping',
             slotIds: payload.slotIds
         });
+
+        commit({
+            type: 'getShiftSchedule',
+            slotIds: payload.slotIds
+        });
     },
     attemptAssignShift: function attemptAssignShift(_ref9, payload) {
         var commit = _ref9.commit,
@@ -38337,15 +38349,41 @@ module.exports = Component.exports
         $('#modal-mapping-shift').modal('show');
     },
     saveShiftMap: function saveShiftMap(_ref10, payload) {
-        var commit = _ref10.commit,
+        var dispatch = _ref10.dispatch,
+            commit = _ref10.commit,
             state = _ref10.state;
 
-        commit({
-            type: 'mapShift',
-            slotId: payload.slotId,
-            shiftId: payload.shiftId,
-            dateStart: payload.dateStart,
-            dateEnd: payload.dateEnd
+
+        __WEBPACK_IMPORTED_MODULE_0_async_series___default()([function (cb) {
+            commit({
+                type: 'mapShift',
+                slotId: payload.slotId,
+                shiftId: payload.shiftId,
+                dateStart: payload.dateStart,
+                dateEnd: payload.dateEnd
+            });
+
+            cb(null);
+        }, function (cb) {
+            // remove event before adding the new saved so its not duplicated
+            var filterShiftSchedule = _.filter(state.calendarShiftScheduleEventSource, {
+                slotId: payload.slotId,
+                eventType: 'shiftSchedule'
+            });
+
+            _.forEach(filterShiftSchedule, function (value, key) {
+                $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id);
+            });
+
+            cb(null);
+        }], function (err, result) {
+            if (!err) {
+                var slotIdsBeingMap = _.map(state.slotsBeingMap, 'id');
+                commit({
+                    type: 'getShiftSchedule',
+                    slotIds: slotIdsBeingMap
+                });
+            }
         });
     }
 });
@@ -38432,7 +38470,8 @@ module.exports = Component.exports
         slotsBeingMap: [],
         cbSlotsBeingMap: [],
         calendarShiftMappingEventSource: [],
-        shiftMapPalette: ['336699', '00aaff', '6600ff', 'ff00ff', 'ff0080', '009999', '003399', '33334d', '13060d', '0d260d', '666633', '133913', 'ff99ff', '99ff66', 'b3b300', '737373', '00e6e6', '739900', 'e60000', '000000', '0000ff', 'ff0000', 'ff8000', 'ff5500', 'ffff00', 'aaff00', '666666', '660033', '33ccff', 'b35900', '00ffcc', '800080', '669900', '2929a3', 'cc00cc', '6b00b3', '1aff66', 'ff6699', '0000b3', '009933', '7a00cc', 'bf4080', '4d0000', '003366', '2a0080', '558000', '006666'],
+        calendarShiftScheduleEventSource: [],
+        shiftMapPalette: ['336699', '00aaff', '6600ff', '009999', 'ff00ff', 'ff0080', '003399', '33334d', '13060d', '0d260d', '666633', '133913', 'ff99ff', '99ff66', 'b3b300', '737373', '00e6e6', '739900', 'e60000', '000000', '0000ff', 'ff0000', 'ff8000', 'ff5500', 'ffff00', 'aaff00', '666666', '660033', '33ccff', 'b35900', '00ffcc', '800080', '669900', '2929a3', 'cc00cc', '6b00b3', '1aff66', 'ff6699', '0000b3', '009933', '7a00cc', 'bf4080', '4d0000', '003366', '2a0080', '558000', '006666'],
         dateStartToAssign: '',
         dateEndToAssign: ''
     },
@@ -38712,7 +38751,7 @@ module.exports = Component.exports
         if (!_.isEmpty(payload.slotIds)) {
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
 
-                //reset
+                //reset calendar
                 $('#calendar-shift-mapping').fullCalendar('removeEvents');
 
                 state.calendarShiftMappingEventSource = res.data.data;
@@ -38744,6 +38783,33 @@ module.exports = Component.exports
             $('#calendar-shift-mapping').fullCalendar('removeEvents');
         }
     },
+    getShiftSchedule: function getShiftSchedule(state, payload) {
+        if (!_.isEmpty(payload.slotIds)) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/schedule', { slotIds: payload.slotIds }).then(function (res) {
+                state.calendarShiftScheduleEventSource = res.data.data;
+                //add color
+                var c = 0;
+                _.forEach(payload.slotIds, function (value, key) {
+
+                    var filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, { slotId: value });
+                    for (var i = 0; i < filteredToAddColor.length; i++) {
+                        _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
+                    }
+
+                    c++; //increment
+                });
+                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource);
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        }
+    },
     mapShift: function mapShift(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping', {
             slotId: payload.slotId,
@@ -38753,6 +38819,7 @@ module.exports = Component.exports
         }).then(function (res) {
             if (!res.isFailed) {
                 $('#modal-mapping-shift').modal('toggle');
+
                 /* Show success notification */
                 $('.page-container').pgNotification({
                     style: 'flip',
