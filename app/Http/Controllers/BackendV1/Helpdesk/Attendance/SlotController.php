@@ -59,7 +59,7 @@ class SlotController extends Controller
         if ($updateSlot) {
             /* Return success response */
             $response['isFailed'] = false;
-            $response['message'] = 'Slot has been slot successfully';
+            $response['message'] = 'Slot has been edit successfully';
             return response()->json($response,200);
         } else {
             /* Return error response */

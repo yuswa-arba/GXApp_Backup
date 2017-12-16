@@ -47,7 +47,7 @@ class SlotMakerLogic extends ExecuteUseCase
                 /* Return error response */
                 $response['isFailed'] = true;
                 $response['message'] = 'Failed! Error during execution';
-                return response()->json($response, 500);
+                return response()->json($response, 200);
 
             }
 
@@ -55,7 +55,7 @@ class SlotMakerLogic extends ExecuteUseCase
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to execute slot maker, undefined slot maker';
-            return response()->json($response, 500);
+            return response()->json($response, 200);
         }
 
     }

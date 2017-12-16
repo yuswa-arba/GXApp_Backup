@@ -55,7 +55,7 @@
                                 <th class="text-black">Job Related</th>
                                 <th class="text-black">Allow Multiple</th>
                                 <th class="text-black">Assigned to</th>
-                                <th class="text-black">Shift</th>
+                                <th class="text-black">Shift Option</th>
                                 <th class="text-black">Action</th>
                             </tr>
                             </thead>

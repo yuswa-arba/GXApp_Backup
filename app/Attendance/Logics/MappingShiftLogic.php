@@ -48,7 +48,7 @@ class MappingShiftLogic extends MappingUseCase
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to map shift to slot, undefined dates';
-            return response()->json($response, 500);
+            return response()->json($response, 200);
         }
 
 

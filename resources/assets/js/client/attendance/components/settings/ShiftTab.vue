@@ -218,7 +218,7 @@
                         }).catch((err) => {
                         $('.page-container').pgNotification({
                             style: 'flip',
-                            message: err.message + '<br>' + err.response.data.errors.name[0],
+                            message: err.message,
                             position: 'top-right',
                             timeout: 3500,
                             type: 'danger'

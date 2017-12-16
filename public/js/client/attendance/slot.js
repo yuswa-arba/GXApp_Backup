@@ -22643,7 +22643,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Assigned to")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Shift")]),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Shift Option")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
       ])

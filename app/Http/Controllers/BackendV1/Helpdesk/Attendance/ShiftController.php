@@ -69,7 +69,7 @@ class ShiftController extends Controller
         if ($slotBeingUse > 0) {
             $response['isFailed'] = true;
             $response['message'] = 'Unable to delete Shift is currently being use';
-            return response()->json($response, 500);
+            return response()->json($response, 200);
         }
 
         $delete = Shifts::where('id', $request->shiftId)->delete();

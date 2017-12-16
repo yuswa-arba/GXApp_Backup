@@ -43,7 +43,7 @@ class Recruitment extends UseCase
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to create employee, undefined employee ID';
-            return response()->json($response, 500);
+            return response()->json($response, 200);
         }
 
     }
@@ -112,7 +112,7 @@ class Recruitment extends UseCase
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to create employee, undefined employee';
-            return response()->json($response, 500);
+            return response()->json($response, 200);
         }
     }
 
