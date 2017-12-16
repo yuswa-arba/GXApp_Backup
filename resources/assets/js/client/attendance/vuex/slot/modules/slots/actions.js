@@ -2,6 +2,8 @@
  * Created by kevinpurwono on 8/12/17.
  */
 import waterfall from 'async/waterfall';
+import series from 'async/series';
+
 import until from 'async/until';
 export default{
     getDataOnCreate({commit}){
@@ -73,15 +75,22 @@ export default{
 
         })
 
-        commit({
-            type: 'getCalendarDataForMapping',
-            slotIds: payload.slotIds,
-        })
-
-        commit({
-            type: 'getShiftSchedule',
-            slotIds: payload.slotIds,
-        })
+        series([
+            function (cb) {
+                commit({
+                    type: 'getCalendarDataForMapping',
+                    slotIds: payload.slotIds,
+                })
+                cb(null)
+            },
+            function (cb) {
+                commit({
+                    type: 'getShiftSchedule',
+                    slotIds: payload.slotIds,
+                })
+                cb(null)
+            }
+        ])
 
 
     },
@@ -151,11 +160,11 @@ export default{
 
 
     },
-    editSlotUseMapping({commit,state},payload){
+    editSlotUseMapping({commit, state}, payload){
         commit({
-            type:'saveSlotUseMapping',
-            slotId:payload.slotId,
-            isUsingMapping:payload.isUsingMapping
+            type: 'saveSlotUseMapping',
+            slotId: payload.slotId,
+            isUsingMapping: payload.isUsingMapping
         })
     }
 

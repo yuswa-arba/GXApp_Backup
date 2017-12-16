@@ -14,19 +14,24 @@ use App\Attendance\Models\SlotShiftSchedule;
 use App\Attendance\Transformers\DayOffCalendarTransformer;
 use App\Attendance\Transformers\ShiftScheduleCalendarTransformer;
 use App\Attendance\Transformers\SlotCalendarTransformer;
+use App\Traits\GlobalUtils;
 
 
 class GetShiftMappingCalendarLogic extends GetShiftCalendarUseCase
 {
+    use GlobalUtils;
+
     public function handleDayOffs($request)
     {
-        $dayOffSchedule = DayOffSchedule::whereIn('slotId',$request->slotIds)->get();
-        return fractal($dayOffSchedule,new DayOffCalendarTransformer())->respond(200);
+        //get based on this current year
+        $dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->where('date', 'like', '%' . $this->currentYear())->get();
+        return fractal($dayOffSchedule, new DayOffCalendarTransformer())->respond(200);
     }
 
     public function handleShiftSchedules($request)
     {
-        $shiftSchedule = SlotShiftSchedule::whereIn('slotId',$request->slotIds)->get();
-        return fractal($shiftSchedule,new ShiftScheduleCalendarTransformer())->respond(200);
+        //get based on this current year
+        $shiftSchedule = SlotShiftSchedule::whereIn('slotId', $request->slotIds)->where('date', 'like', '%' . $this->currentYear())->get();
+        return fractal($shiftSchedule, new ShiftScheduleCalendarTransformer())->respond(200);
     }
 }

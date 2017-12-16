@@ -55,4 +55,12 @@ trait GlobalUtils
         return $dates;
     }
 
+    public function currentMonth()
+    {
+        return Carbon::now()->month;
+    }
+    public function currentYear()
+    {
+        return Carbon::now()->year;
+    }
 }

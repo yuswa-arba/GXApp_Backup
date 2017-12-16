@@ -38425,11 +38425,15 @@ module.exports = Component.exports
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall__ = __webpack_require__("./node_modules/async/waterfall.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_async_waterfall__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_until__ = __webpack_require__("./node_modules/async/until.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_until___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_until__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series__ = __webpack_require__("./node_modules/async/series.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_series__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_until__ = __webpack_require__("./node_modules/async/until.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_until___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_async_until__);
 /**
  * Created by kevinpurwono on 8/12/17.
  */
+
+
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
@@ -38521,15 +38525,19 @@ module.exports = Component.exports
             }
         });
 
-        commit({
-            type: 'getCalendarDataForMapping',
-            slotIds: payload.slotIds
-        });
-
-        commit({
-            type: 'getShiftSchedule',
-            slotIds: payload.slotIds
-        });
+        __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
+            commit({
+                type: 'getCalendarDataForMapping',
+                slotIds: payload.slotIds
+            });
+            cb(null);
+        }, function (cb) {
+            commit({
+                type: 'getShiftSchedule',
+                slotIds: payload.slotIds
+            });
+            cb(null);
+        }]);
     },
     attemptAssignShift: function attemptAssignShift(_ref9, payload) {
         var commit = _ref9.commit,

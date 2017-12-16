@@ -107,7 +107,6 @@ class SlotMakerLogic extends ExecuteUseCase
             }
 
 
-
             DayOffSchedule::insert($dayOffs);
         }
 
