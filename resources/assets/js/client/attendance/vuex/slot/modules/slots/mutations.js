@@ -321,34 +321,35 @@ export default{
 
     },
     getShiftSchedule(state, payload){
-        if (!_.isEmpty(payload.slotIds)) {
-            post(api_path() + 'attendance/shift/mapping/schedule', {slotIds: payload.slotIds})
-                .then((res) => {
-                    state.calendarShiftScheduleEventSource = res.data.data
-                    //add color
-                    let c = 0
-                    _.forEach(payload.slotIds, function (value, key) {
+        console.log("adf"+payload.slotIds)
 
-                        let filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, {slotId: value})
-                        for (let i = 0; i < filteredToAddColor.length; i++) {
-                            _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
-                        }
+        post(api_path() + 'attendance/shift/mapping/schedule', {slotIds: payload.slotIds})
+            .then((res) => {
+                state.calendarShiftScheduleEventSource = res.data.data
+                //add color
+                let c = 0
+                _.forEach(payload.slotIds, function (value, key) {
 
-                        c++ //increment
-                    })
-                    $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource)
+                    let filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, {slotId: value})
+                    for (let i = 0; i < filteredToAddColor.length; i++) {
+                        _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
+                    }
 
+                    c++ //increment
                 })
-                .catch((err) => {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                })
-        }
+                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource)
+
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+
     },
     mapShift(state, payload){
 

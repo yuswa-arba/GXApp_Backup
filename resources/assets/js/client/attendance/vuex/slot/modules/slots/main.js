@@ -18,6 +18,7 @@ export default {
         calendarEventSource: [],
         cbMappingSlots: [],
         slotsBeingMap: [],
+        slotIdsBeingMapAndPlucked:[],
         cbSlotsBeingMap: [],
         calendarShiftMappingEventSource: [],
         calendarShiftScheduleEventSource:[],

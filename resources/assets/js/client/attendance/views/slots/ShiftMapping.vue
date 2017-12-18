@@ -93,6 +93,7 @@
                             self.slotIdsBeingMap.splice(pluckedCbIndex, 1, slotId)
                         }
 
+                        self.$store.state.slots.slotIdsBeingMapAndPlucked = self.slotIdsBeingMap
 
                         cb(null)
                     },

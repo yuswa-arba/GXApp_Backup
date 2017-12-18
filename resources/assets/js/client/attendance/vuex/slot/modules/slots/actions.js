@@ -61,7 +61,6 @@ export default{
 
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
-
             // insert slots except the plucked ones
             if (!value.toString().startsWith('plucked_')) {
                 state.slotsBeingMap.push(_.find(state.slots, {id: value}))
@@ -70,7 +69,6 @@ export default{
             if (payload.refreshCb) {
                 state.cbSlotsBeingMap.push(_.find(state.slots, {id: value}))
             }
-
         })
 
         if (!_.isEmpty(payload.slotIds)) {
@@ -144,8 +142,6 @@ export default{
             },
             function (filterShiftSchedule, cb) {
 
-                let slotIdsBeingMap = _.map(state.slotsBeingMap, 'id')
-
                 setTimeout(function () {
 
                     _.forEach(filterShiftSchedule, function (value, key) {
@@ -154,7 +150,7 @@ export default{
 
                     commit({
                         type: 'getShiftSchedule',
-                        slotIds: slotIdsBeingMap
+                        slotIds: state.slotIdsBeingMapAndPlucked
                     })
                 }, 2000)
 

@@ -3460,7 +3460,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {
-
         if (_.isEmpty(this.$store.state.slots.slotsBeingMap)) {
             this.$router.push('/');
         }
@@ -3503,6 +3502,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     self.slotIdsBeingMap.splice(pluckedCbIndex, 1, slotId);
                 }
 
+                self.$store.state.slots.slotIdsBeingMapAndPlucked = self.slotIdsBeingMap;
+
                 cb(null);
             }, function (cb) {
                 setTimeout(function () {
@@ -3539,9 +3540,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             selectHelper: true,
             timeFormat: 'H:mm',
             select: function select(start, end) {
-                console.log(moment(start).format('DD/MM/YYYY'));
-                console.log(moment(end).format('DD/MM/YYYY'));
-
                 self.$store.dispatch({
                     type: 'slots/attemptAssignShift',
                     dateStartToAssign: moment(start).format('DD/MM/YYYY'),
@@ -3552,8 +3550,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 element.on('click', function () {
 
                     if (event.eventType == 'shiftSchedule') {
-
                         __WEBPACK_IMPORTED_MODULE_2_async_series___default()([function (cb) {
+
                             self.$store.dispatch({
                                 type: 'slots/getShiftDetail',
                                 shiftId: event.shiftId,
@@ -3567,10 +3565,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                             cb(null);
                         }]);
                     }
-
-                    //
-                    //                        console.log(event.slotId)
-                    //                        console.log(moment(event.start).format('DD/MM/YYYY'))
                 });
             }
         });
@@ -38757,7 +38751,6 @@ module.exports = Component.exports
 
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
-
             // insert slots except the plucked ones
             if (!value.toString().startsWith('plucked_')) {
                 state.slotsBeingMap.push(_.find(state.slots, { id: value }));
@@ -38835,8 +38828,6 @@ module.exports = Component.exports
             cb(null, filterShiftSchedule);
         }, function (filterShiftSchedule, cb) {
 
-            var slotIdsBeingMap = _.map(state.slotsBeingMap, 'id');
-
             setTimeout(function () {
 
                 _.forEach(filterShiftSchedule, function (value, key) {
@@ -38845,7 +38836,7 @@ module.exports = Component.exports
 
                 commit({
                     type: 'getShiftSchedule',
-                    slotIds: slotIdsBeingMap
+                    slotIds: state.slotIdsBeingMapAndPlucked
                 });
             }, 2000);
 
@@ -38985,6 +38976,7 @@ module.exports = Component.exports
         calendarEventSource: [],
         cbMappingSlots: [],
         slotsBeingMap: [],
+        slotIdsBeingMapAndPlucked: [],
         cbSlotsBeingMap: [],
         calendarShiftMappingEventSource: [],
         calendarShiftScheduleEventSource: [],
@@ -39296,31 +39288,31 @@ module.exports = Component.exports
         });
     },
     getShiftSchedule: function getShiftSchedule(state, payload) {
-        if (!_.isEmpty(payload.slotIds)) {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/schedule', { slotIds: payload.slotIds }).then(function (res) {
-                state.calendarShiftScheduleEventSource = res.data.data;
-                //add color
-                var c = 0;
-                _.forEach(payload.slotIds, function (value, key) {
+        console.log("adf" + payload.slotIds);
 
-                    var filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, { slotId: value });
-                    for (var i = 0; i < filteredToAddColor.length; i++) {
-                        _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
-                    }
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/schedule', { slotIds: payload.slotIds }).then(function (res) {
+            state.calendarShiftScheduleEventSource = res.data.data;
+            //add color
+            var c = 0;
+            _.forEach(payload.slotIds, function (value, key) {
 
-                    c++; //increment
-                });
-                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource);
-            }).catch(function (err) {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
+                var filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, { slotId: value });
+                for (var i = 0; i < filteredToAddColor.length; i++) {
+                    _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
+                }
+
+                c++; //increment
             });
-        }
+            $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource);
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
     },
     mapShift: function mapShift(state, payload) {
 
