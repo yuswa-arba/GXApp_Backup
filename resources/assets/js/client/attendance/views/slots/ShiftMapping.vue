@@ -12,7 +12,8 @@
                     </p>
                     <div class="clearfix"></div>
                     <h5 class="f-w-400">Slot List</h5>
-                    <label class="help fs-12 m-b-20" style="line-height: 15px">Click on the slot button below <br> to toggle view in calendar</label>
+                    <label class="help fs-12 m-b-20" style="line-height: 15px">Click on the slot button below <br> to
+                        toggle view in calendar</label>
                 </div>
 
                 <div class="col-lg-12  text-center" v-for="(slot,index) in cbSlotsBeingMap">
@@ -34,15 +35,16 @@
             </div>
         </div>
         <assign-shift-modal></assign-shift-modal>
-        <shift-detail-modal></shift-detail-modal>
+        <edit-shift-modal></edit-shift-modal>
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex'
     import waterfall from 'async/waterfall';
+    import series from 'async/series';
     import AssignShiftModal from '../../components/slots/AssignShiftModal.vue'
-    import ShiftDetailModal from '../../components/slots/ShiftDetailModal.vue'
+    import EditShiftModal from '../../components/slots/EditShiftModal.vue'
     export default{
         created(){
 
@@ -52,7 +54,7 @@
         },
         components: {
             'assign-shift-modal': AssignShiftModal,
-            'shift-detail-modal':ShiftDetailModal
+            'edit-shift-modal': EditShiftModal
         },
         data(){
             return {
@@ -130,7 +132,7 @@
                 },
                 selectable: true,
                 selectHelper: true,
-                timeFormat:'H:mm',
+                timeFormat: 'H:mm',
                 select: function (start, end) {
                     console.log((moment(start).format('DD/MM/YYYY')))
                     console.log((moment(end).format('DD/MM/YYYY')))
@@ -144,12 +146,25 @@
                 eventRender: function (event, element, view) {
                     element.on('click', function () {
 
-                        if(event.eventType=='shiftSchedule'){
-                            self.$store.dispatch({
-                                type:'slots/getShiftDetail',
-                                shiftId:event.shiftId,
-                                slotShiftScheduleId:event.id
-                            })
+                        if (event.eventType == 'shiftSchedule') {
+
+                            series([
+                                function (cb) {
+                                    self.$store.dispatch({
+                                        type: 'slots/getShiftDetail',
+                                        shiftId: event.shiftId,
+                                        slotShiftScheduleId: event.id,
+                                        calendarEvent:event
+                                    })
+
+                                    cb(null)
+                                },
+                                function (cb) {
+                                    $('#modal-shift-edit').modal('show')
+                                    cb(null)
+                                }
+                            ])
+
                         }
 
 //

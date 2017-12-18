@@ -10,6 +10,7 @@ use App\Attendance\Logics\GetSlotListLogic;
 use App\Attendance\Logics\MappingShiftLogic;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotShiftSchedule;
+use App\Attendance\Transformers\ShiftScheduleCalendarTransformer;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -131,6 +132,25 @@ class ShiftController extends Controller
         return response()->json($response,200);
 
 
+    }
+
+    public function editSchedule(Request $request)
+    {
+        $request->validate(['id'=>'required','shiftId'=>'required']);
+
+        $editSchedule = SlotShiftSchedule::where('id',$request->id)->update(['shiftId'=>$request->shiftId]);
+        $response = array();
+        if ($editSchedule) {
+            $response['isFailed'] = false;
+            $response['message']='Shift has been edit successfully';
+            $response['slotShiftData'] = fractal( SlotShiftSchedule::find($request->id),new ShiftScheduleCalendarTransformer());
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message']='Unable to edit shift';
+        }
+
+        return response()->json($response,200);
     }
 
 

@@ -73,7 +73,8 @@ export default {
         dateStartToAssign:'',
         dateEndToAssign:'',
         isSavingShift:false,
-        selectedShiftDetail:{}
+        selectedShiftDetail:{},
+        selectedCalendarEvent:[]
     },
     getters,
     mutations,

@@ -2965,7 +2965,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/EditShiftModal.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3034,37 +3034,52 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            deleteShift: false
+            deleteShift: false,
+            selectShiftId: ''
         };
     },
     created: function created() {},
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
+        shifts: 'shifts',
         selectedShiftDetail: 'selectedShiftDetail'
     })),
     mounted: function mounted() {},
 
     methods: {
-        save: function save(id) {
+        save: function save(slotShiftScheduleId) {
+            var self = this;
             if (this.deleteShift) {
                 this.$store.dispatch({
                     type: 'slots/removeShift',
-                    id: id
+                    id: slotShiftScheduleId
                 });
 
                 //reset check box
                 this.deleteShift = false;
             } else {
-                $('#modal-shift-detail').modal('toggle');
+
+                self.selectShiftId = $('#selectShift').val();
+
+                if (self.selectShiftId) {
+                    this.$store.dispatch({
+                        type: 'slots/editShift',
+                        slotShiftScheduleId: slotShiftScheduleId,
+                        shiftId: self.selectShiftId
+
+                    });
+
+                    //reset form
+                    self.selectShiftId = '';
+                } else {
+                    $('#modal-shift-edit').modal('toggle');
+                }
             }
         }
     }
@@ -3388,10 +3403,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_waterfall__ = __webpack_require__("./node_modules/async/waterfall.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_waterfall__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_slots_ShiftDetailModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_slots_ShiftDetailModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_slots_ShiftDetailModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series__ = __webpack_require__("./node_modules/async/series.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_async_series__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_slots_AssignShiftModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_slots_AssignShiftModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_slots_AssignShiftModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_slots_EditShiftModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/EditShiftModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_slots_EditShiftModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_slots_EditShiftModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -3434,6 +3451,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+
 
 
 
@@ -3448,8 +3467,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     components: {
-        'assign-shift-modal': __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue___default.a,
-        'shift-detail-modal': __WEBPACK_IMPORTED_MODULE_3__components_slots_ShiftDetailModal_vue___default.a
+        'assign-shift-modal': __WEBPACK_IMPORTED_MODULE_3__components_slots_AssignShiftModal_vue___default.a,
+        'edit-shift-modal': __WEBPACK_IMPORTED_MODULE_4__components_slots_EditShiftModal_vue___default.a
     },
     data: function data() {
         return {
@@ -3533,11 +3552,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 element.on('click', function () {
 
                     if (event.eventType == 'shiftSchedule') {
-                        self.$store.dispatch({
-                            type: 'slots/getShiftDetail',
-                            shiftId: event.shiftId,
-                            slotShiftScheduleId: event.id
-                        });
+
+                        __WEBPACK_IMPORTED_MODULE_2_async_series___default()([function (cb) {
+                            self.$store.dispatch({
+                                type: 'slots/getShiftDetail',
+                                shiftId: event.shiftId,
+                                slotShiftScheduleId: event.id,
+                                calendarEvent: event
+                            });
+
+                            cb(null);
+                        }, function (cb) {
+                            $('#modal-shift-edit').modal('show');
+                            cb(null);
+                        }]);
                     }
 
                     //
@@ -22271,7 +22299,7 @@ if (false) {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0a489229\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2ecf4864\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/EditShiftModal.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22283,7 +22311,7 @@ var render = function() {
     {
       staticClass: "modal fade stick-up",
       attrs: {
-        id: "modal-shift-detail",
+        id: "modal-shift-edit",
         tabindex: "-1",
         role: "dialog",
         "aria-hidden": "true"
@@ -22292,39 +22320,56 @@ var render = function() {
     [
       _c("div", { staticClass: "modal-dialog " }, [
         _c("div", { staticClass: "modal-content" }, [
-          _c("div", { staticClass: "modal-header clearfix text-left" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("h5", [
-              _vm._v("Shift Detail "),
-              _c("b", [_vm._v(_vm._s(_vm.selectedShiftDetail.name))])
-            ])
-          ]),
+          _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
             _c("form", { attrs: { role: "form" } }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group form-group-default" }, [
-                    _c("label", [_vm._v("Work Start")]),
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Select Shift")]),
                     _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control text-black",
-                      attrs: { type: "text", readonly: "" },
-                      domProps: { value: _vm.selectedShiftDetail.workStartAt }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group form-group-default" }, [
-                    _c("label", [_vm._v("Work End")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control text-black",
-                      attrs: { type: "text", readonly: "" },
-                      domProps: { value: _vm.selectedShiftDetail.workEndAt }
-                    })
+                    _c(
+                      "select",
+                      {
+                        staticClass: "btn btn-outline-primary h-35 w-100",
+                        attrs: { id: "selectShift" }
+                      },
+                      [
+                        _c(
+                          "option",
+                          { attrs: { value: "", disabled: "", selected: "" } },
+                          [_vm._v("Select")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.shifts, function(shift) {
+                          return shift.id != 1
+                            ? _c(
+                                "option",
+                                {
+                                  domProps: {
+                                    selected:
+                                      shift.id == _vm.selectedShiftDetail.id,
+                                    value: shift.id
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(shift.name) +
+                                      " (" +
+                                      _vm._s(shift.workStartAt) +
+                                      " - " +
+                                      _vm._s(shift.workEndAt) +
+                                      ")\n                                    "
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        })
+                      ],
+                      2
+                    )
                   ])
                 ])
               ]),
@@ -22412,18 +22457,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "close",
-        attrs: {
-          type: "button",
-          "data-dismiss": "modal",
-          "aria-hidden": "true"
-        }
-      },
-      [_c("i", { staticClass: "pg-close fs-14" })]
-    )
+    return _c("div", { staticClass: "modal-header clearfix text-left" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close fs-14" })]
+      ),
+      _vm._v(" "),
+      _c("h5", [_vm._v("Edit Shift ")])
+    ])
   }
 ]
 render._withStripped = true
@@ -22431,7 +22480,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0a489229", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-2ecf4864", module.exports)
   }
 }
 
@@ -22896,7 +22945,7 @@ var render = function() {
       _vm._v(" "),
       _c("assign-shift-modal"),
       _vm._v(" "),
-      _c("shift-detail-modal")
+      _c("edit-shift-modal")
     ],
     1
   )
@@ -22915,7 +22964,7 @@ var staticRenderFns = [
       [
         _vm._v("Click on the slot button below "),
         _c("br"),
-        _vm._v(" to toggle view in calendar")
+        _vm._v(" to\n                    toggle view in calendar")
       ]
     )
   },
@@ -38356,15 +38405,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue":
+/***/ "./resources/assets/js/client/attendance/components/slots/EditShiftModal.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/EditShiftModal.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0a489229\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2ecf4864\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/EditShiftModal.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -38381,7 +38430,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue"
+Component.options.__file = "resources/assets/js/client/attendance/components/slots/EditShiftModal.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -38391,9 +38440,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0a489229", Component.options)
+    hotAPI.createRecord("data-v-2ecf4864", Component.options)
   } else {
-    hotAPI.reload("data-v-0a489229", Component.options)
+    hotAPI.reload("data-v-2ecf4864", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -38832,17 +38881,9 @@ module.exports = Component.exports
         var commit = _ref12.commit,
             state = _ref12.state;
 
-        __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
-            state.selectedShiftDetail = _.find(state.shifts, { id: payload.shiftId });
-            state.selectedShiftDetail.slotShiftScheduleId = payload.slotShiftScheduleId;
-
-            console.log(payload.shiftId);
-            console.log(state.selectedShiftDetail);
-            cb(null);
-        }, function (cb) {
-            $('#modal-shift-detail').modal('show');
-            cb(null);
-        }]);
+        state.selectedShiftDetail = _.find(state.shifts, { id: payload.shiftId });
+        state.selectedShiftDetail.slotShiftScheduleId = payload.slotShiftScheduleId;
+        state.selectedCalendarEvent = payload.calendarEvent;
     },
     removeShift: function removeShift(_ref13, payload) {
         var commit = _ref13.commit,
@@ -38852,6 +38893,25 @@ module.exports = Component.exports
             type: 'removeShiftSchedule',
             id: payload.id
         });
+    },
+    editShift: function editShift(_ref14, payload) {
+        var commit = _ref14.commit,
+            state = _ref14.state;
+
+
+        __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
+            commit({
+                type: 'editShiftSchedule',
+                id: payload.slotShiftScheduleId,
+                shiftId: payload.shiftId,
+                calendarEvent: state.selectedCalendarEvent
+            });
+            cb(null);
+        }, function (cb) {
+            //reset
+            state.selectedCalendarEvent = '';
+            cb(null);
+        }]);
     }
 });
 
@@ -38945,7 +39005,8 @@ module.exports = Component.exports
         dateStartToAssign: '',
         dateEndToAssign: '',
         isSavingShift: false,
-        selectedShiftDetail: {}
+        selectedShiftDetail: {},
+        selectedCalendarEvent: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -39354,6 +39415,7 @@ module.exports = Component.exports
     removeShiftSchedule: function removeShiftSchedule(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/remove/schedule', { id: payload.id }).then(function (res) {
             if (!res.isFailed) {
+
                 /* Show success notification */
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -39363,8 +39425,61 @@ module.exports = Component.exports
                     type: 'info'
                 }).show();
 
-                $('#modal-shift-detail').modal('toggle'); //close modal
+                $('#modal-shift-edit').modal('toggle'); //close modal
                 $('#calendar-shift-mapping').fullCalendar('removeEvents', payload.id); //remove event
+            } else {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            /* Show error notification */
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    editShiftSchedule: function editShiftSchedule(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/edit/schedule', { id: payload.id, shiftId: payload.shiftId }).then(function (res) {
+            if (!res.isFailed && res.data.slotShiftData) {
+
+                /* Show success notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                $('#modal-shift-edit').modal('toggle'); //close modal
+
+                var shiftEvent = _.find(state.calendarShiftScheduleEventSource, { id: payload.id });
+                var shiftEventIndex = _.findIndex(state.calendarShiftScheduleEventSource, shiftEvent);
+
+                //update slot shift data in array
+                var slotShiftData = res.data.slotShiftData.data;
+                var calendarEvent = payload.calendarEvent;
+
+                console.log(slotShiftData);
+
+                calendarEvent.title = slotShiftData.title;
+                calendarEvent.shiftId = slotShiftData.shiftId;
+                calendarEvent.start = slotShiftData.start;
+                calendarEvent.end = slotShiftData.end;
+
+                $('#calendar-shift-mapping').fullCalendar('updateEvent', calendarEvent); //add event
+
+                state.calendarShiftScheduleEventSource.splice(shiftEventIndex, 1, slotShiftData);
             } else {
                 /* Show error notification */
                 $('.page-container').pgNotification({

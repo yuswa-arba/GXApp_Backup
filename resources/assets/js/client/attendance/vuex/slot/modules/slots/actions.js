@@ -175,26 +175,35 @@ export default{
         })
     },
     getShiftDetail({commit, state}, payload){
-        series([
-            function (cb) {
-                state.selectedShiftDetail = _.find(state.shifts, {id: payload.shiftId})
-                state.selectedShiftDetail.slotShiftScheduleId = payload.slotShiftScheduleId
-
-                console.log(payload.shiftId)
-                console.log(state.selectedShiftDetail)
-                cb(null)
-            },
-            function (cb) {
-                $('#modal-shift-detail').modal('show')
-                cb(null)
-            }
-        ])
+        state.selectedShiftDetail = _.find(state.shifts, {id: payload.shiftId})
+        state.selectedShiftDetail.slotShiftScheduleId = payload.slotShiftScheduleId
+        state.selectedCalendarEvent = payload.calendarEvent
     },
     removeShift({commit, state}, payload){
         commit({
             type: 'removeShiftSchedule',
             id: payload.id
         })
+    },
+    editShift({commit, state}, payload){
+
+        series([
+            function (cb) {
+                commit({
+                    type: 'editShiftSchedule',
+                    id: payload.slotShiftScheduleId,
+                    shiftId: payload.shiftId,
+                    calendarEvent: state.selectedCalendarEvent
+                })
+                cb(null)
+            },
+            function (cb) {
+                //reset
+                state.selectedCalendarEvent = ''
+                cb(null)
+            }
+        ])
+
     }
 
 }

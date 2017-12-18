@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade stick-up" id="modal-shift-detail" tabindex="-1" role="dialog"
+    <div class="modal fade stick-up" id="modal-shift-edit" tabindex="-1" role="dialog"
          aria-hidden="true">
         <div class="modal-dialog ">
             <div class="modal-content">
@@ -7,35 +7,32 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i
                             class="pg-close fs-14"></i>
                     </button>
-                    <h5>Shift Detail <b>{{selectedShiftDetail.name}}</b></h5>
+                    <h5>Edit Shift </h5>
 
                 </div>
                 <div class="modal-body">
                     <form role="form">
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <label>Work Start</label>
-                                    <input type="text"
-                                           class="form-control text-black"
-                                           :value="selectedShiftDetail.workStartAt"
-                                           readonly>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group form-group-default">
-                                    <label>Work End</label>
-                                    <input type="text"
-                                           class="form-control text-black"
-                                           :value="selectedShiftDetail.workEndAt"
-                                           readonly>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Select Shift</label>
+                                    <select class="btn btn-outline-primary h-35 w-100"
+                                            id="selectShift">
+                                        <option value="" disabled selected>Select</option>
+                                        <option v-if="shift.id!=1"
+                                                :selected="shift.id==selectedShiftDetail.id"
+                                                :value="shift.id"
+                                                v-for="shift in shifts">
+                                            {{shift.name}} ({{shift.workStartAt}} - {{shift.workEndAt}})
+                                        </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="checkbox check-success " >
+                                <div class="checkbox check-success ">
                                     <input type="checkbox" v-model="deleteShift" id="deleteShiftEventCb">
                                     <label for="deleteShiftEventCb">Remove Shift</label>
                                 </div>
@@ -68,7 +65,8 @@
     export default{
         data(){
             return {
-                deleteShift:false
+                deleteShift: false,
+                selectShiftId: ''
             }
         },
         created(){
@@ -76,6 +74,7 @@
         },
         computed: {
             ...mapGetters('slots', {
+                shifts: 'shifts',
                 selectedShiftDetail: 'selectedShiftDetail'
             })
         },
@@ -83,17 +82,33 @@
 
         },
         methods: {
-            save(id){
-                if(this.deleteShift){
+            save(slotShiftScheduleId){
+                let self = this
+                if (this.deleteShift) {
                     this.$store.dispatch({
-                        type:'slots/removeShift',
-                        id:id
+                        type: 'slots/removeShift',
+                        id: slotShiftScheduleId
                     })
 
                     //reset check box
-                    this.deleteShift=false
+                    this.deleteShift = false
                 } else {
-                    $('#modal-shift-detail').modal('toggle')
+
+                    self.selectShiftId = $('#selectShift').val()
+
+                    if (self.selectShiftId) {
+                        this.$store.dispatch({
+                            type: 'slots/editShift',
+                            slotShiftScheduleId: slotShiftScheduleId,
+                            shiftId: self.selectShiftId,
+
+                        })
+
+                        //reset form
+                        self.selectShiftId = ''
+                    } else {
+                        $('#modal-shift-edit').modal('toggle')
+                    }
                 }
             }
         }

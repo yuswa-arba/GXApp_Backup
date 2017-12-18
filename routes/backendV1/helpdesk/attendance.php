@@ -33,6 +33,8 @@ Route::prefix('v1/h')->group(function () {
         Route::post('shift/mapping/calendar','ShiftController@getMappingCalendar')->name('v1.shift.mapping.calendar');
         Route::post('shift/mapping/schedule','ShiftController@getShiftScheduleOnCalendar')->name('v1.shift.mapping.shiftSchedule');
         Route::post('shift/remove/schedule','ShiftController@removeSchedule')->name('v1.shift.remove.schedule');
+        Route::post('shift/edit/schedule','ShiftController@editSchedule')->name('v1.shift.edit.schedule');
+
     });
 
 

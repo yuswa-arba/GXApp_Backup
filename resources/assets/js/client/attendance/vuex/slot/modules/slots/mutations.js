@@ -443,6 +443,7 @@ export default{
         post(api_path() + 'attendance/shift/remove/schedule', {id: payload.id})
             .then((res) => {
                 if (!res.isFailed) {
+
                     /* Show success notification */
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -452,8 +453,66 @@ export default{
                         type: 'info'
                     }).show();
 
-                    $('#modal-shift-detail').modal('toggle') //close modal
+                    $('#modal-shift-edit').modal('toggle') //close modal
                     $('#calendar-shift-mapping').fullCalendar('removeEvents', payload.id) //remove event
+
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    editShiftSchedule(state, payload){
+        post(api_path() + 'attendance/shift/edit/schedule', {id: payload.id, shiftId: payload.shiftId})
+            .then((res) => {
+                if (!res.isFailed&&res.data.slotShiftData) {
+
+                    /* Show success notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    $('#modal-shift-edit').modal('toggle') //close modal
+
+                    const shiftEvent = _.find(state.calendarShiftScheduleEventSource, {id: payload.id})
+                    const shiftEventIndex = _.findIndex(state.calendarShiftScheduleEventSource, shiftEvent)
+
+                    //update slot shift data in array
+                    let slotShiftData = res.data.slotShiftData.data
+                    let calendarEvent = payload.calendarEvent
+
+                    console.log(slotShiftData)
+
+                    calendarEvent.title =slotShiftData.title
+                    calendarEvent.shiftId =slotShiftData.shiftId
+                    calendarEvent.start =slotShiftData.start
+                    calendarEvent.end =slotShiftData.end
+
+
+                    $('#calendar-shift-mapping').fullCalendar('updateEvent',calendarEvent); //add event
+
+                    state.calendarShiftScheduleEventSource.splice(shiftEventIndex, 1, slotShiftData)
+
 
                 } else {
                     /* Show error notification */
