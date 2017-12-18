@@ -8,9 +8,7 @@ class AttendanceSchedule extends Model
 {
     protected $table = 'attendanceSchedule';
     protected $fillable = [
-        'slotId',
         'shiftId',
-        'date',
         'allowedToCheckIn',
         'allowedToCheckOut',
         'allowedToBreakIn',

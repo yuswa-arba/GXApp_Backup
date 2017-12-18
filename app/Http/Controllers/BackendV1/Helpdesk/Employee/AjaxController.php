@@ -39,7 +39,6 @@ class AjaxController extends Controller
         }
     }
 
-
     public function masterEmployeeEdit($id)
     {
         if ($id != null && $id != '') {
@@ -84,7 +83,6 @@ class AjaxController extends Controller
             return response()->json($response, 500);
         }
     }
-
 
     public function employmentDetail($employeeId)
     {
@@ -241,6 +239,4 @@ class AjaxController extends Controller
         }
 
     }
-
-
 }

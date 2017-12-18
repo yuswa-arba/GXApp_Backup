@@ -14,21 +14,20 @@ class AttendanceTimesheet extends Model
         return $this->belongsTo(AttendanceSchedule::class,'attendanceScheduleId');
     }
 
-    public function attendanceViaType()
+    public function clockInKiosk()
     {
-        return $this->belongsTo(AttendanceViaType::class,'attendanceViaTypeId');
+        return $this->belongsTo(Kiosks::class,'clockInKioskId');
     }
 
-    public function kiosk()
+    public function clockOutKiosk()
     {
-        return $this->belongsTo(Kiosks::class,'kioskId');
+        return $this->belongsTo(Kiosks::class,'clockOutKioskId');
     }
 
     public function attendanceValidation()
     {
         return $this->belongsTo(AttendanceValidation::class,'attendanceValidationId');
     }
-
 
 
 }

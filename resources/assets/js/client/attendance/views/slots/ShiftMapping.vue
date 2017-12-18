@@ -47,7 +47,6 @@
     import EditShiftModal from '../../components/slots/EditShiftModal.vue'
     export default{
         created(){
-
             if (_.isEmpty(this.$store.state.slots.slotsBeingMap)) {
                 this.$router.push('/')
             }
@@ -134,9 +133,6 @@
                 selectHelper: true,
                 timeFormat: 'H:mm',
                 select: function (start, end) {
-                    console.log((moment(start).format('DD/MM/YYYY')))
-                    console.log((moment(end).format('DD/MM/YYYY')))
-
                     self.$store.dispatch({
                         type: 'slots/attemptAssignShift',
                         dateStartToAssign: moment(start).format('DD/MM/YYYY'),
@@ -147,14 +143,14 @@
                     element.on('click', function () {
 
                         if (event.eventType == 'shiftSchedule') {
-
                             series([
                                 function (cb) {
+
                                     self.$store.dispatch({
                                         type: 'slots/getShiftDetail',
                                         shiftId: event.shiftId,
                                         slotShiftScheduleId: event.id,
-                                        calendarEvent:event
+                                        calendarEvent: event
                                     })
 
                                     cb(null)
@@ -164,12 +160,7 @@
                                     cb(null)
                                 }
                             ])
-
                         }
-
-//
-//                        console.log(event.slotId)
-//                        console.log(moment(event.start).format('DD/MM/YYYY'))
                     })
                 },
             })

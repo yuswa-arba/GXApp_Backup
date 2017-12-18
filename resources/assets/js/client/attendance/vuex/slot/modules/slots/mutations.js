@@ -112,7 +112,6 @@ export default{
             .then((res) => {
                 $('#calendar').fullCalendar('addEventSource', res.data.dayOffs.data);
                 $('#calendar').fullCalendar('addEventSource', res.data.shiftSchedules.data);
-
             })
             .catch((err) => {
                 $('.page-container').pgNotification({

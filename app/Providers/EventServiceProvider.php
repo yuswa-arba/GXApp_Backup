@@ -13,6 +13,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
+
         /* Employment Event Listeners*/
         'App\Employee\Events\EmployeeCreated' => [
             'App\Employee\Listeners\SendEmployeeDataVerification'
@@ -27,7 +28,7 @@ class EventServiceProvider extends ServiceProvider
         ],
         'Illuminate\Mail\Events\MessageSent' => [
             'App\Mail\Listeners\SentMessageListener',
-        ],
+        ]
     ];
 
     /**

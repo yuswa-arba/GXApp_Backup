@@ -2,8 +2,10 @@
 
 namespace App\Attendance\Console;
 
+use App\Attendance\Jobs\CheckAttendanceSchedule;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\App;
 
 class Kernel extends ConsoleKernel
 {
@@ -13,7 +15,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        \App\Attendance\Console\Commands\AttendanceScheduleChecker::class
     ];
 
     /**
@@ -24,8 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+         $schedule->job(new CheckAttendanceSchedule())->everyFiveMinutes();
     }
 
     /**

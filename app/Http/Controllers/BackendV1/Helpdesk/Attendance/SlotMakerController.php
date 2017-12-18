@@ -55,7 +55,6 @@ class SlotMakerController extends Controller
         return fractal($slotMakers, new SlotMakerListTransformer())->respond(200);
     }
 
-
     public function execute(Request $request)
     {
         $request->validate(['id' => 'required']);
