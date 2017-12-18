@@ -9,7 +9,7 @@ use App\Employee\Models\MasterEmployee;
 use Carbon\Carbon;
 use League\Fractal\TransformerAbstract;
 
-class DayOffCalendarTransformer extends TransformerAbstract
+class DayOffSingleCalendarTransformer extends TransformerAbstract
 {
     /**
      * A Fractal transformer.
@@ -21,12 +21,9 @@ class DayOffCalendarTransformer extends TransformerAbstract
         return [
             'id' => $dayOffSchedule->id,
             'title' => $dayOffSchedule->description,
-            'start' => Carbon::createFromFormat('d/m/Y', $dayOffSchedule->date)->format('Y-m-d'),
-            'slotId' => $dayOffSchedule->slotId,
-            'className' => 'calendar-cell-sm  bold red-border-2',
-            'textColor' => '#fff',
-//            'borderColor'=>'#ff0000',
-            'eventType' => 'dayOff'
+            'start' => Carbon::createFromFormat('d/m/Y',$dayOffSchedule->date)->format('Y-m-d'),
+//            'start' => $dayOffSchedule->date,
+            'className'=> 'bg-danger calendar-cell text-white',
         ];
     }
 }

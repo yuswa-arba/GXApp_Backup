@@ -1,9 +1,9 @@
 <template>
     <div class="row">
         <div class="col-lg-12 m-b-10 m-t-10">
-            <div class="pull-left m-r-15 m-b-10">
-                <button class="btn btn-primary all-caps">Calendar <i class="fa fa-calendar"></i></button>
-            </div>
+            <!--<div class="pull-left m-r-15 m-b-10">-->
+                <!--<button class="btn btn-primary all-caps">Calendar <i class="fa fa-calendar"></i></button>-->
+            <!--</div>-->
             <div class="pull-left m-r-15 m-b-10">
                 <button class="btn btn-info all-caps" @click="shiftMapping()">Shift Mapping <i
                         class="fa fa-clock-o"></i></button>

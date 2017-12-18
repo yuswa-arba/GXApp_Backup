@@ -110,8 +110,8 @@ export default{
     getCalendarEventSource(state, slotId){
         get(api_path() + 'attendance/slot/detail/calendar?' + 'slotId=' + slotId)
             .then((res) => {
-                state.calendarEventSource = res.data.data
-                $('#calendar').fullCalendar('addEventSource', state.calendarEventSource);
+                $('#calendar').fullCalendar('addEventSource', res.data.dayOffs.data);
+                $('#calendar').fullCalendar('addEventSource', res.data.shiftSchedules.data);
 
             })
             .catch((err) => {
@@ -481,7 +481,7 @@ export default{
     editShiftSchedule(state, payload){
         post(api_path() + 'attendance/shift/edit/schedule', {id: payload.id, shiftId: payload.shiftId})
             .then((res) => {
-                if (!res.isFailed&&res.data.slotShiftData) {
+                if (!res.isFailed && res.data.slotShiftData) {
 
                     /* Show success notification */
                     $('.page-container').pgNotification({
@@ -503,13 +503,13 @@ export default{
 
                     console.log(slotShiftData)
 
-                    calendarEvent.title =slotShiftData.title
-                    calendarEvent.shiftId =slotShiftData.shiftId
-                    calendarEvent.start =slotShiftData.start
-                    calendarEvent.end =slotShiftData.end
+                    calendarEvent.title = slotShiftData.title
+                    calendarEvent.shiftId = slotShiftData.shiftId
+                    calendarEvent.start = slotShiftData.start
+                    calendarEvent.end = slotShiftData.end
 
 
-                    $('#calendar-shift-mapping').fullCalendar('updateEvent',calendarEvent); //add event
+                    $('#calendar-shift-mapping').fullCalendar('updateEvent', calendarEvent); //add event
 
                     state.calendarShiftScheduleEventSource.splice(shiftEventIndex, 1, slotShiftData)
 

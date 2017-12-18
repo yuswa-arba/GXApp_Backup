@@ -22498,8 +22498,6 @@ var render = function() {
     { staticClass: "row" },
     [
       _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
-        _vm._m(0),
-        _vm._v(" "),
         _c("div", { staticClass: "pull-left m-r-15 m-b-10" }, [
           _c(
             "button",
@@ -22653,7 +22651,7 @@ var render = function() {
             _c("div", { staticClass: "card-block" }, [
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table table-hover slotDT" }, [
-                  _vm._m(1),
+                  _vm._m(0),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -22826,17 +22824,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "pull-left m-r-15 m-b-10" }, [
-      _c("button", { staticClass: "btn btn-primary all-caps" }, [
-        _vm._v("Calendar "),
-        _c("i", { staticClass: "fa fa-calendar" })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -39122,8 +39109,8 @@ module.exports = Component.exports
     },
     getCalendarEventSource: function getCalendarEventSource(state, slotId) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/detail/calendar?' + 'slotId=' + slotId).then(function (res) {
-            state.calendarEventSource = res.data.data;
-            $('#calendar').fullCalendar('addEventSource', state.calendarEventSource);
+            $('#calendar').fullCalendar('addEventSource', res.data.dayOffs.data);
+            $('#calendar').fullCalendar('addEventSource', res.data.shiftSchedules.data);
         }).catch(function (err) {
             $('.page-container').pgNotification({
                 style: 'flip',

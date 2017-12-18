@@ -10,7 +10,7 @@ use App\Employee\Models\MasterEmployee;
 use Carbon\Carbon;
 use League\Fractal\TransformerAbstract;
 
-class ShiftScheduleCalendarTransformer extends TransformerAbstract
+class ShiftScheduleSingleCalendarTransformer extends TransformerAbstract
 {
     /**
      * A Fractal transformer.
@@ -26,7 +26,8 @@ class ShiftScheduleCalendarTransformer extends TransformerAbstract
             'end' => $this->getEndDate($slotShiftSchedule),
             'slotId' => $slotShiftSchedule->slotId,
             'shiftId' => $slotShiftSchedule->shiftId,
-            'className' => 'calendar-cell-sm no-border cursor',
+            'className'=> 'bg-primary calendar-cell text-white',
+//            'backgroundColor'=>'',
             'textColor' => '#fff',
             'eventType' => 'shiftSchedule'
         ];
