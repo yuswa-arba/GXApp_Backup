@@ -39,19 +39,18 @@ class MappingShiftLogic extends MappingUseCase
                 }
             }
 
-
             /* Return success response */
             $response['isFailed'] = false;
             $response['message'] = 'Shift has been mapped successfully';
-            return response()->json($response, 200);
+
         } else {
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to map shift to slot, undefined dates';
-            return response()->json($response, 200);
+
         }
 
-
+        return response()->json($response, 200);
     }
 
     private function getDates($dateStart, $dateEnd)

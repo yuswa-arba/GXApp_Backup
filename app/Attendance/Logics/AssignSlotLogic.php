@@ -23,7 +23,6 @@ class AssignSlotLogic extends AssignUseCase
         $request->request->add(['setAt' => Carbon::now()]);
         $requestData = $request->all();
 
-
         if($this->slotAvailableToBeAssigned($request->slotId)){
             $employeeSlotSchedule = EmployeeSlotSchedule::create($requestData);
 
@@ -34,20 +33,19 @@ class AssignSlotLogic extends AssignUseCase
                 $response['isFailed'] = false;
                 $response['message'] = 'Assign employee to slot is successful';
 
-                return response()->json($response, 200);
-
             } else {
                 /* Return error response */
                 $response['isFailed'] = true;
                 $response['message'] = 'Unable to assign employee to slot';
-                return response()->json($response, 200);
+
             }
         }else {
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'This slot is currently assigned to other employee';
-            return response()->json($response, 200);
         }
+
+        return response()->json($response, 200);
 
     }
 
@@ -57,22 +55,17 @@ class AssignSlotLogic extends AssignUseCase
 
         $deleteEmployeeSchedule = EmployeeSlotSchedule::where('employeeId', $request->employeeId)->delete();
         if ($deleteEmployeeSchedule) {
-
             /* Return success response */
             $response['isFailed'] = false;
             $response['message'] = 'Remove employee from slot is successful.';
-            return response()->json($response, 200);
 
         } else {
-
-
-
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to remove employee from slot';
-            return response()->json($response, 200);
-
         }
+
+        return response()->json($response, 200);
     }
 
     public function handleRandomAssign($request)

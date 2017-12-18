@@ -72,7 +72,8 @@ export default {
         ],
         dateStartToAssign:'',
         dateEndToAssign:'',
-        isSavingShift:false
+        isSavingShift:false,
+        selectedShiftDetail:{}
     },
     getters,
     mutations,

@@ -4,7 +4,6 @@
 import waterfall from 'async/waterfall';
 import series from 'async/series';
 
-import until from 'async/until';
 export default{
     getDataOnCreate({commit}){
         commit('getJobPositions')
@@ -35,7 +34,6 @@ export default{
         $('#modal-attempt-shift-mapping').modal('show')
     },
     getSlotsMapping({commit, state}, payload){
-        //
         if (payload.by == 'withSameParent') {
             state.cbMappingSlots = _.filter(state.slots, {
                 slotMaker: {
@@ -75,24 +73,33 @@ export default{
 
         })
 
-        series([
-            function (cb) {
-                commit({
-                    type: 'getCalendarDataForMapping',
-                    slotIds: payload.slotIds,
-                })
-                cb(null)
-            },
-            function (cb) {
-                commit({
-                    type: 'getShiftSchedule',
-                    slotIds: payload.slotIds,
-                })
-                cb(null)
-            }
-        ])
+        if (!_.isEmpty(payload.slotIds)) {
+            series([
+                function (cb) {
+                    //reset calendar
+                    $('#calendar-shift-mapping').fullCalendar('removeEvents')
+                    cb(null)
+                },
+                function (cb) {
+                    commit({
+                        type: 'getCalendarDataForMapping',
+                        slotIds: payload.slotIds,
+                    })
+                    cb(null)
+                },
+                function (cb) {
+                    commit({
+                        type: 'getShiftSchedule',
+                        slotIds: payload.slotIds,
+                    })
+                    cb(null)
+                }
+            ])
 
+        } else {
+            $('#calendar-shift-mapping').fullCalendar('removeEvents')
 
+        }
     },
     attemptAssignShift({commit, state}, payload){
 
@@ -165,6 +172,28 @@ export default{
             type: 'saveSlotUseMapping',
             slotId: payload.slotId,
             isUsingMapping: payload.isUsingMapping
+        })
+    },
+    getShiftDetail({commit, state}, payload){
+        series([
+            function (cb) {
+                state.selectedShiftDetail = _.find(state.shifts, {id: payload.shiftId})
+                state.selectedShiftDetail.slotShiftScheduleId = payload.slotShiftScheduleId
+
+                console.log(payload.shiftId)
+                console.log(state.selectedShiftDetail)
+                cb(null)
+            },
+            function (cb) {
+                $('#modal-shift-detail').modal('show')
+                cb(null)
+            }
+        ])
+    },
+    removeShift({commit, state}, payload){
+        commit({
+            type: 'removeShiftSchedule',
+            id: payload.id
         })
     }
 

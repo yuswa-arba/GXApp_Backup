@@ -40,5 +40,8 @@ export default{
     },
     dateEndToAssign(state){
         return state.dateEndToAssign
+    },
+    selectedShiftDetail(state){
+        return state.selectedShiftDetail
     }
 }

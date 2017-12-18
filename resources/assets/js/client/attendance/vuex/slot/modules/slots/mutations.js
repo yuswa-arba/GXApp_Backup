@@ -288,46 +288,37 @@ export default{
     },
     getCalendarDataForMapping(state, payload){
 
-        if (!_.isEmpty(payload.slotIds)) {
-            post(api_path() + 'attendance/shift/mapping/calendar', {slotIds: payload.slotIds})
-                .then((res) => {
+        post(api_path() + 'attendance/shift/mapping/calendar', {slotIds: payload.slotIds})
+            .then((res) => {
 
-                    //reset calendar
-                    $('#calendar-shift-mapping').fullCalendar('removeEvents')
+                state.calendarShiftMappingEventSource = res.data.data
 
-                    state.calendarShiftMappingEventSource = res.data.data
+                //add color
+                let c = 0
+                _.forEach(payload.slotIds, function (value, key) {
 
-                    //add color
-                    let c = 0
-                    _.forEach(payload.slotIds, function (value, key) {
+                    let filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, {slotId: value})
+                    for (let i = 0; i < filteredToAddColor.length; i++) {
+                        _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
+                    }
 
-                        let filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, {slotId: value})
-                        for (let i = 0; i < filteredToAddColor.length; i++) {
-                            _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
-                        }
-
-                        c++ //increment
-                    })
-
-                    $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource)
-
-
-                })
-                .catch((err) => {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
+                    c++ //increment
                 })
 
-        } else {
-            // if no slot ids sent then remove all events
-            $('#calendar-shift-mapping').fullCalendar('removeEvents')
+                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource)
 
-        }
+
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+
 
     },
     getShiftSchedule(state, payload){
@@ -447,5 +438,43 @@ export default{
             })
 
 
+    },
+    removeShiftSchedule(state, payload){
+        post(api_path() + 'attendance/shift/remove/schedule', {id: payload.id})
+            .then((res) => {
+                if (!res.isFailed) {
+                    /* Show success notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    $('#modal-shift-detail').modal('toggle') //close modal
+                    $('#calendar-shift-mapping').fullCalendar('removeEvents', payload.id) //remove event
+
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
     }
 }

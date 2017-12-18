@@ -188,7 +188,6 @@
             viewSlotDetail(id){
                 this.$router.push({name: 'detailSlot', params: {id: id}})
             },
-
             assignSlot(slotId){
                 this.$store.dispatch('slots/getDataOnAssignSlot', slotId)
             },

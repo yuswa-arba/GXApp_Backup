@@ -788,54 +788,6 @@ module.exports = exports['default'];
 
 /***/ }),
 
-/***/ "./node_modules/async/until.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = until;
-
-var _whilst = __webpack_require__("./node_modules/async/whilst.js");
-
-var _whilst2 = _interopRequireDefault(_whilst);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Repeatedly call `iteratee` until `test` returns `true`. Calls `callback` when
- * stopped, or an error occurs. `callback` will be passed an error and any
- * arguments passed to the final `iteratee`'s callback.
- *
- * The inverse of [whilst]{@link module:ControlFlow.whilst}.
- *
- * @name until
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @see [async.whilst]{@link module:ControlFlow.whilst}
- * @category Control Flow
- * @param {Function} test - synchronous truth test to perform before each
- * execution of `iteratee`. Invoked with ().
- * @param {AsyncFunction} iteratee - An async function which is called each time
- * `test` fails. Invoked with (callback).
- * @param {Function} [callback] - A callback which is called after the test
- * function has passed and repeated execution of `iteratee` has stopped. `callback`
- * will be passed an error and any arguments passed to the final `iteratee`'s
- * callback. Invoked with (err, [results]);
- */
-function until(test, iteratee, callback) {
-    (0, _whilst2.default)(function () {
-        return !test.apply(this, arguments);
-    }, iteratee, callback);
-}
-module.exports = exports['default'];
-
-/***/ }),
-
 /***/ "./node_modules/async/waterfall.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -953,85 +905,6 @@ module.exports = exports['default'];
  *     callback(null, 'done');
  * }
  */
-
-/***/ }),
-
-/***/ "./node_modules/async/whilst.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.default = whilst;
-
-var _noop = __webpack_require__("./node_modules/lodash/noop.js");
-
-var _noop2 = _interopRequireDefault(_noop);
-
-var _slice = __webpack_require__("./node_modules/async/internal/slice.js");
-
-var _slice2 = _interopRequireDefault(_slice);
-
-var _onlyOnce = __webpack_require__("./node_modules/async/internal/onlyOnce.js");
-
-var _onlyOnce2 = _interopRequireDefault(_onlyOnce);
-
-var _wrapAsync = __webpack_require__("./node_modules/async/internal/wrapAsync.js");
-
-var _wrapAsync2 = _interopRequireDefault(_wrapAsync);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * Repeatedly call `iteratee`, while `test` returns `true`. Calls `callback` when
- * stopped, or an error occurs.
- *
- * @name whilst
- * @static
- * @memberOf module:ControlFlow
- * @method
- * @category Control Flow
- * @param {Function} test - synchronous truth test to perform before each
- * execution of `iteratee`. Invoked with ().
- * @param {AsyncFunction} iteratee - An async function which is called each time
- * `test` passes. Invoked with (callback).
- * @param {Function} [callback] - A callback which is called after the test
- * function has failed and repeated execution of `iteratee` has stopped. `callback`
- * will be passed an error and any arguments passed to the final `iteratee`'s
- * callback. Invoked with (err, [results]);
- * @returns undefined
- * @example
- *
- * var count = 0;
- * async.whilst(
- *     function() { return count < 5; },
- *     function(callback) {
- *         count++;
- *         setTimeout(function() {
- *             callback(null, count);
- *         }, 1000);
- *     },
- *     function (err, n) {
- *         // 5 seconds have passed, n = 5
- *     }
- * );
- */
-function whilst(test, iteratee, callback) {
-    callback = (0, _onlyOnce2.default)(callback || _noop2.default);
-    var _iteratee = (0, _wrapAsync2.default)(iteratee);
-    if (!test()) return callback(null);
-    var next = function (err /*, ...args*/) {
-        if (err) return callback(err);
-        if (test()) return _iteratee(next);
-        var args = (0, _slice2.default)(arguments, 1);
-        callback.apply(null, [null].concat(args));
-    };
-    _iteratee(next);
-}
-module.exports = exports['default'];
 
 /***/ }),
 
@@ -3092,6 +2965,113 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            deleteShift: false
+        };
+    },
+    created: function created() {},
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
+        selectedShiftDetail: 'selectedShiftDetail'
+    })),
+    mounted: function mounted() {},
+
+    methods: {
+        save: function save(id) {
+            if (this.deleteShift) {
+                this.$store.dispatch({
+                    type: 'slots/removeShift',
+                    id: id
+                });
+
+                //reset check box
+                this.deleteShift = false;
+            } else {
+                $('#modal-shift-detail').modal('toggle');
+            }
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/slots/DetailSlot.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3410,6 +3390,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_waterfall__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AssignShiftModal.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_slots_ShiftDetailModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_slots_ShiftDetailModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_slots_ShiftDetailModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -3449,6 +3431,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -3462,7 +3448,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     components: {
-        'assign-shift-modal': __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue___default.a
+        'assign-shift-modal': __WEBPACK_IMPORTED_MODULE_2__components_slots_AssignShiftModal_vue___default.a,
+        'shift-detail-modal': __WEBPACK_IMPORTED_MODULE_3__components_slots_ShiftDetailModal_vue___default.a
     },
     data: function data() {
         return {
@@ -3544,8 +3531,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             eventRender: function eventRender(event, element, view) {
                 element.on('click', function () {
-                    console.log(event.slotId);
-                    console.log(moment(event.start).format('DD/MM/YYYY'));
+
+                    if (event.eventType == 'shiftSchedule') {
+                        self.$store.dispatch({
+                            type: 'slots/getShiftDetail',
+                            shiftId: event.shiftId,
+                            slotShiftScheduleId: event.id
+                        });
+                    }
+
+                    //
+                    //                        console.log(event.slotId)
+                    //                        console.log(moment(event.start).format('DD/MM/YYYY'))
                 });
             }
         });
@@ -22274,6 +22271,172 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0a489229\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade stick-up",
+      attrs: {
+        id: "modal-shift-detail",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog " }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header clearfix text-left" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("h5", [
+              _vm._v("Shift Detail "),
+              _c("b", [_vm._v(_vm._s(_vm.selectedShiftDetail.name))])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("form", { attrs: { role: "form" } }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group form-group-default" }, [
+                    _c("label", [_vm._v("Work Start")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control text-black",
+                      attrs: { type: "text", readonly: "" },
+                      domProps: { value: _vm.selectedShiftDetail.workStartAt }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group form-group-default" }, [
+                    _c("label", [_vm._v("Work End")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "form-control text-black",
+                      attrs: { type: "text", readonly: "" },
+                      domProps: { value: _vm.selectedShiftDetail.workEndAt }
+                    })
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "checkbox check-success " }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.deleteShift,
+                          expression: "deleteShift"
+                        }
+                      ],
+                      attrs: { type: "checkbox", id: "deleteShiftEventCb" },
+                      domProps: {
+                        checked: Array.isArray(_vm.deleteShift)
+                          ? _vm._i(_vm.deleteShift, null) > -1
+                          : _vm.deleteShift
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.deleteShift,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.deleteShift = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.deleteShift = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.deleteShift = $$c
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: "deleteShiftEventCb" } }, [
+                      _vm._v("Remove Shift")
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-8" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-block m-t-5",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.save(_vm.selectedShiftDetail.slotShiftScheduleId)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Save\n                        "
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-hidden": "true"
+        }
+      },
+      [_c("i", { staticClass: "pg-close fs-14" })]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0a489229", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-396796da\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/slots/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22675,20 +22838,7 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-lg-12 m-b-10 m-t-10" },
-        [
-          _vm._t("go-back-menu"),
-          _vm._v(" "),
-          _vm.isProcessing
-            ? _c(
-                "p",
-                {
-                  staticClass:
-                    "m-r-15 m-b-10 bg-info padding-5 text-white pull-right bold fs-16"
-                },
-                [_vm._v("\n            Processing.. Please wait..\n        ")]
-              )
-            : _vm._e()
-        ],
+        [_vm._t("go-back-menu")],
         2
       ),
       _vm._v(" "),
@@ -22697,7 +22847,21 @@ var render = function() {
           "div",
           { staticClass: "row" },
           [
-            _vm._m(0),
+            _c("div", { staticClass: "col-lg-12 text-center" }, [
+              _vm.isProcessing
+                ? _c("p", { staticClass: "padding-5 text-danger bold fs-16" }, [
+                    _vm._v(
+                      "\n                    Processing.. Please wait..\n                "
+                    )
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "clearfix" }),
+              _vm._v(" "),
+              _c("h5", { staticClass: "f-w-400" }, [_vm._v("Slot List")]),
+              _vm._v(" "),
+              _vm._m(0)
+            ]),
             _vm._v(" "),
             _vm._l(_vm.cbSlotsBeingMap, function(slot, index) {
               return _c("div", { staticClass: "col-lg-12  text-center" }, [
@@ -22730,7 +22894,9 @@ var render = function() {
       _vm._v(" "),
       _vm._m(1),
       _vm._v(" "),
-      _c("assign-shift-modal")
+      _c("assign-shift-modal"),
+      _vm._v(" "),
+      _c("shift-detail-modal")
     ],
     1
   )
@@ -22740,22 +22906,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12 text-center" }, [
-      _c("h5", { staticClass: "f-w-400" }, [_vm._v("Slot List")]),
-      _vm._v(" "),
-      _c(
-        "label",
-        {
-          staticClass: "help fs-12 m-b-20",
-          staticStyle: { "line-height": "15px" }
-        },
-        [
-          _vm._v("Click on the slot button below "),
-          _c("br"),
-          _vm._v(" to toggle view in calendar")
-        ]
-      )
-    ])
+    return _c(
+      "label",
+      {
+        staticClass: "help fs-12 m-b-20",
+        staticStyle: { "line-height": "15px" }
+      },
+      [
+        _vm._v("Click on the slot button below "),
+        _c("br"),
+        _vm._v(" to toggle view in calendar")
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -38194,6 +38356,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0a489229\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/attendance/components/slots/ShiftDetailModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0a489229", Component.options)
+  } else {
+    hotAPI.reload("data-v-0a489229", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/attendance/router/slot.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38427,12 +38638,9 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_async_waterfall__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series__ = __webpack_require__("./node_modules/async/series.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_series__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_until__ = __webpack_require__("./node_modules/async/until.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_until___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_async_until__);
 /**
  * Created by kevinpurwono on 8/12/17.
  */
-
 
 
 
@@ -38483,7 +38691,6 @@ module.exports = Component.exports
         var commit = _ref7.commit,
             state = _ref7.state;
 
-        //
         if (payload.by == 'withSameParent') {
             state.cbMappingSlots = _.filter(state.slots, {
                 slotMaker: {
@@ -38525,19 +38732,27 @@ module.exports = Component.exports
             }
         });
 
-        __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
-            commit({
-                type: 'getCalendarDataForMapping',
-                slotIds: payload.slotIds
-            });
-            cb(null);
-        }, function (cb) {
-            commit({
-                type: 'getShiftSchedule',
-                slotIds: payload.slotIds
-            });
-            cb(null);
-        }]);
+        if (!_.isEmpty(payload.slotIds)) {
+            __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
+                //reset calendar
+                $('#calendar-shift-mapping').fullCalendar('removeEvents');
+                cb(null);
+            }, function (cb) {
+                commit({
+                    type: 'getCalendarDataForMapping',
+                    slotIds: payload.slotIds
+                });
+                cb(null);
+            }, function (cb) {
+                commit({
+                    type: 'getShiftSchedule',
+                    slotIds: payload.slotIds
+                });
+                cb(null);
+            }]);
+        } else {
+            $('#calendar-shift-mapping').fullCalendar('removeEvents');
+        }
     },
     attemptAssignShift: function attemptAssignShift(_ref9, payload) {
         var commit = _ref9.commit,
@@ -38612,6 +38827,31 @@ module.exports = Component.exports
             slotId: payload.slotId,
             isUsingMapping: payload.isUsingMapping
         });
+    },
+    getShiftDetail: function getShiftDetail(_ref12, payload) {
+        var commit = _ref12.commit,
+            state = _ref12.state;
+
+        __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
+            state.selectedShiftDetail = _.find(state.shifts, { id: payload.shiftId });
+            state.selectedShiftDetail.slotShiftScheduleId = payload.slotShiftScheduleId;
+
+            console.log(payload.shiftId);
+            console.log(state.selectedShiftDetail);
+            cb(null);
+        }, function (cb) {
+            $('#modal-shift-detail').modal('show');
+            cb(null);
+        }]);
+    },
+    removeShift: function removeShift(_ref13, payload) {
+        var commit = _ref13.commit,
+            state = _ref13.state;
+
+        commit({
+            type: 'removeShiftSchedule',
+            id: payload.id
+        });
     }
 });
 
@@ -38663,6 +38903,9 @@ module.exports = Component.exports
     },
     dateEndToAssign: function dateEndToAssign(state) {
         return state.dateEndToAssign;
+    },
+    selectedShiftDetail: function selectedShiftDetail(state) {
+        return state.selectedShiftDetail;
     }
 });
 
@@ -38701,7 +38944,8 @@ module.exports = Component.exports
         shiftMapPalette: ['336699', '00aaff', '6600ff', '009999', 'ff00ff', 'ff0080', '003399', '33334d', '13060d', '0d260d', '666633', '133913', 'ff99ff', '99ff66', 'b3b300', '737373', '00e6e6', '739900', 'e60000', '000000', '0000ff', 'ff0000', 'ff8000', 'ff5500', 'ffff00', 'aaff00', '666666', '660033', '33ccff', 'b35900', '00ffcc', '800080', '669900', '2929a3', 'cc00cc', '6b00b3', '1aff66', 'ff6699', '0000b3', '009933', '7a00cc', 'bf4080', '4d0000', '003366', '2a0080', '558000', '006666'],
         dateStartToAssign: '',
         dateEndToAssign: '',
-        isSavingShift: false
+        isSavingShift: false,
+        selectedShiftDetail: {}
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -38976,40 +39220,32 @@ module.exports = Component.exports
     },
     getCalendarDataForMapping: function getCalendarDataForMapping(state, payload) {
 
-        if (!_.isEmpty(payload.slotIds)) {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
 
-                //reset calendar
-                $('#calendar-shift-mapping').fullCalendar('removeEvents');
+            state.calendarShiftMappingEventSource = res.data.data;
 
-                state.calendarShiftMappingEventSource = res.data.data;
+            //add color
+            var c = 0;
+            _.forEach(payload.slotIds, function (value, key) {
 
-                //add color
-                var c = 0;
-                _.forEach(payload.slotIds, function (value, key) {
+                var filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, { slotId: value });
+                for (var i = 0; i < filteredToAddColor.length; i++) {
+                    _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
+                }
 
-                    var filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, { slotId: value });
-                    for (var i = 0; i < filteredToAddColor.length; i++) {
-                        _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
-                    }
-
-                    c++; //increment
-                });
-
-                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource);
-            }).catch(function (err) {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
+                c++; //increment
             });
-        } else {
-            // if no slot ids sent then remove all events
-            $('#calendar-shift-mapping').fullCalendar('removeEvents');
-        }
+
+            $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource);
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
     },
     getShiftSchedule: function getShiftSchedule(state, payload) {
         if (!_.isEmpty(payload.slotIds)) {
@@ -39110,6 +39346,41 @@ module.exports = Component.exports
                 style: 'flip',
                 message: err.message,
                 position: 'top',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    removeShiftSchedule: function removeShiftSchedule(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/remove/schedule', { id: payload.id }).then(function (res) {
+            if (!res.isFailed) {
+                /* Show success notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                $('#modal-shift-detail').modal('toggle'); //close modal
+                $('#calendar-shift-mapping').fullCalendar('removeEvents', payload.id); //remove event
+            } else {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            /* Show error notification */
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
                 timeout: 3500,
                 type: 'danger'
             }).show();

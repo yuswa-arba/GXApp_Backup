@@ -35,7 +35,6 @@ class SlotMakerLogic extends ExecuteUseCase
                 $response['isFailed'] = false;
                 $response['message'] = 'Slot has been executed successfully';
                 $response['slotMakers'] = SlotMaker::all();
-                return response()->json($response, 200);
 
             } else {
 
@@ -47,17 +46,15 @@ class SlotMakerLogic extends ExecuteUseCase
                 /* Return error response */
                 $response['isFailed'] = true;
                 $response['message'] = 'Failed! Error during execution';
-                return response()->json($response, 200);
-
             }
 
         } else {
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to execute slot maker, undefined slot maker';
-            return response()->json($response, 200);
-        }
 
+        }
+        return response()->json($response, 200);
     }
 
     private function createDayOffSlots($slotMaker)

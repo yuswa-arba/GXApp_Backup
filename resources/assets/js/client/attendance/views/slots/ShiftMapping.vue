@@ -2,13 +2,15 @@
     <div class="row">
         <div class="col-lg-12 m-b-10 m-t-10">
             <slot name="go-back-menu"></slot>
-            <p class="m-r-15 m-b-10 bg-info padding-5 text-white pull-right bold fs-16" v-if="isProcessing">
-                Processing.. Please wait..
-            </p>
+
         </div>
         <div class="col-lg-3 m-b-10 padding-10 bg-white">
             <div class="row">
                 <div class="col-lg-12 text-center">
+                    <p class="padding-5 text-danger bold fs-16" v-if="isProcessing">
+                        Processing.. Please wait..
+                    </p>
+                    <div class="clearfix"></div>
                     <h5 class="f-w-400">Slot List</h5>
                     <label class="help fs-12 m-b-20" style="line-height: 15px">Click on the slot button below <br> to toggle view in calendar</label>
                 </div>
@@ -32,6 +34,7 @@
             </div>
         </div>
         <assign-shift-modal></assign-shift-modal>
+        <shift-detail-modal></shift-detail-modal>
     </div>
 </template>
 
@@ -39,6 +42,7 @@
     import {mapGetters} from 'vuex'
     import waterfall from 'async/waterfall';
     import AssignShiftModal from '../../components/slots/AssignShiftModal.vue'
+    import ShiftDetailModal from '../../components/slots/ShiftDetailModal.vue'
     export default{
         created(){
 
@@ -47,7 +51,8 @@
             }
         },
         components: {
-            'assign-shift-modal': AssignShiftModal
+            'assign-shift-modal': AssignShiftModal,
+            'shift-detail-modal':ShiftDetailModal
         },
         data(){
             return {
@@ -138,8 +143,18 @@
                 },
                 eventRender: function (event, element, view) {
                     element.on('click', function () {
-                        console.log(event.slotId)
-                        console.log(moment(event.start).format('DD/MM/YYYY'))
+
+                        if(event.eventType=='shiftSchedule'){
+                            self.$store.dispatch({
+                                type:'slots/getShiftDetail',
+                                shiftId:event.shiftId,
+                                slotShiftScheduleId:event.id
+                            })
+                        }
+
+//
+//                        console.log(event.slotId)
+//                        console.log(moment(event.start).format('DD/MM/YYYY'))
                     })
                 },
             })

@@ -69,7 +69,7 @@ class ShiftController extends Controller
         if ($slotBeingUse > 0) {
             $response['isFailed'] = true;
             $response['message'] = 'Unable to delete Shift is currently being use';
-            return response()->json($response, 200);
+
         }
 
         $delete = Shifts::where('id', $request->shiftId)->delete();
@@ -77,22 +77,24 @@ class ShiftController extends Controller
         if ($delete) {
             $response['isFailed'] = false;
             $response['message'] = 'Shift has been deleted successfully';
-            return response()->json($response, 200);
+
         } else {
             $response['isFailed'] = true;
             $response['message'] = 'Unable to delete Shift';
-            return response()->json($response, 500);
+
         }
+
+        return response()->json($response, 200);
 
     }
 
     public function mapping(Request $request)
     {
         $request->validate([
-            'slotId'=>'required',
-            'shiftId'=>'required',
-            'dateStart'=>'required',
-            'dateEnd'=>'required'
+            'slotId' => 'required',
+            'shiftId' => 'required',
+            'dateStart' => 'required',
+            'dateEnd' => 'required'
         ]);
 
         return MappingShiftLogic::mapping($request);
@@ -101,15 +103,35 @@ class ShiftController extends Controller
     public function getMappingCalendar(Request $request)
     {
         // by default mapping calendar only return day offs
-        $request->validate(['slotIds'=>'required']);
+        $request->validate(['slotIds' => 'required']);
         return GetShiftMappingCalendarLogic::getDayOffs($request);
     }
 
-    public function getShiftScheduleOnCalendar(Request $request){
-        $request->validate(['slotIds'=>'required']);
+    public function getShiftScheduleOnCalendar(Request $request)
+    {
+        $request->validate(['slotIds' => 'required']);
         return GetShiftMappingCalendarLogic::getShiftSchedules($request);
     }
 
+    public function removeSchedule(Request $request)
+    {
+        $request->validate(['id' => 'required']);
+
+        $deleteSlotShiftSchedule = SlotShiftSchedule::where('id', $request->id)->delete();
+        $response = array();
+        if ($deleteSlotShiftSchedule) {
+            $response['isFailed'] = false;
+            $response['message']='Shift has been removed successfully';
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message']='Unable to remove shift';
+        }
+
+        return response()->json($response,200);
+
+
+    }
 
 
 }
