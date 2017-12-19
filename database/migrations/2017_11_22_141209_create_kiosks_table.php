@@ -15,11 +15,12 @@ class CreateKiosksTable extends Migration
     {
         Schema::create('kiosks', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('codeName')->unique();
             $table->string('description');
-            $table->string('api_token');
-            $table->integer('batteryPower');
-            $table->tinyInteger('isCharging');
-            $table->tinyInteger('isEnabled');
+            $table->text('api_token');
+            $table->integer('batteryPower')->default(0)->nullable();
+            $table->tinyInteger('isCharging')->default(0);
+            $table->tinyInteger('isEnabled')->default(0);
             $table->timestamps();
         });
     }

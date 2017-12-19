@@ -17,6 +17,7 @@ $api_path = 'API/';
 |--------------------------------------------------------------------------
 */
 require(base_path($backend_path . $api_path . 'auth.php'));
+require(base_path($backend_path . $api_path . 'attendance.php'));
 
 
 

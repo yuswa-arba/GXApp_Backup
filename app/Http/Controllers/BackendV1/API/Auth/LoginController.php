@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\API\Auth;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,6 @@ class LoginController extends Controller
 
     public function logout(Request $request)
     {
-
         $accessToken = Auth::guard('api')->user()->token();
 
         DB::table('oauth_refresh_tokens')
@@ -52,6 +52,15 @@ class LoginController extends Controller
         $accessToken->revoke();
 
         return response()->json([], 204);
+    }
+
+    public function test()
+    {
+        $response =  array();
+        $response['testResult'] = true;
+        $response['message'] = Carbon::now()->timestamp;
+
+        return response()->json($response,200);
     }
 
 }

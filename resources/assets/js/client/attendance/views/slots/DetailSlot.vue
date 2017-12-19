@@ -59,6 +59,7 @@
                 },
                 selectable: true,
                 selectHelper: true,
+                timeFormat: 'H:mm',
                 select: function(start, end) {
 //                  alert(moment(start).format('DD/MM/YYYY'))
                 },

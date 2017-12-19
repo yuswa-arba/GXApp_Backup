@@ -9,42 +9,37 @@
 
 namespace App\Attendance\Logics;
 
-use App\Attendance\Models\EmployeeSlotSchedule;
-use App\Attendance\Models\Slots;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
-
 class AttendanceLogic extends AttendanceUseCase
 {
 
-    public function handleKioskClockIn($request)
+    public function handleKioskClockIn($formRequest)
     {
-        // TODO: Implement handleKioskClockIn() method.
+        echo 'handle kiosk clock in';
     }
 
-    public function handleKioskClockOut($request)
+    public function handleKioskClockOut($formRequest)
     {
-        // TODO: Implement handleKioskClockOut() method.
+        echo 'handle kiosk clock out';
     }
 
-    public function handlePersonalDeviceClockIn($request)
+    public function handlePersonalDeviceClockIn($formRequest)
     {
-        // TODO: Implement handlePersonalDeviceClockIn() method.
+        echo 'handle personal device clock in';
     }
 
-    public function handlePersonalDeviceClockOut($request)
+    public function handlePersonalDeviceClockOut($formRequest)
     {
-        // TODO: Implement handlePersonalDeviceClockOut() method.
+        echo 'handle personal device clock out';
     }
 
-    public function handleWebPortalClockIn($request)
+    public function handleWebPortalClockIn($formRequest)
     {
-        // TODO: Implement handleWebPortalClockIn() method.
+        echo 'handle web portal clock in';
     }
 
-    public function handleWebPortalClockOut($request)
+    public function handleWebPortalClockOut($formRequest)
     {
-        // TODO: Implement handleWebPortalClockOut() method.
+        echo 'handle web portal clock out';
     }
 
 }

@@ -3155,6 +3155,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             selectable: true,
             selectHelper: true,
+            timeFormat: 'H:mm',
             select: function select(start, end) {
                 //                  alert(moment(start).format('DD/MM/YYYY'))
             },

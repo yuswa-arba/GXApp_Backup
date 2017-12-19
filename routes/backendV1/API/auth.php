@@ -20,6 +20,7 @@ Route::prefix('v1/a')->group(function () {
 
         Route::middleware('auth:api')->group(function () {
 
+            Route::get('test', 'LoginController@test');
             Route::post('logout', 'LoginController@logout');
 
         });
