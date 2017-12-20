@@ -15,14 +15,21 @@ class AttendanceSchedule extends Model
         'allowedToBreakOut'
     ];
 
+//    protected $casts = [
+//        'allowedToCheckIn' => 'boolean',
+//        'allowedToCheckOut' => 'boolean',
+//        'allowedToBreakIn' => 'boolean',
+//        'allowedToBreakOut' => 'boolean'
+//    ];
+
     public function slot()
     {
-        return $this->belongsTo(Slots::class,'slotId');
+        return $this->belongsTo(Slots::class, 'slotId');
     }
 
     public function shift()
     {
-        return $this->belongsTo(Shifts::class,'shiftId');
+        return $this->belongsTo(Shifts::class, 'shiftId');
     }
 
 

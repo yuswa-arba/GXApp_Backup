@@ -42,9 +42,11 @@ class CheckAttendanceSchedule implements ShouldQueue
             $breakEndAt = Carbon::createFromFormat('H:i', $shift->breakEndAt);
 
 
-            // allow check in before 1 hour or after work start time and lower than work end time
-            if ($nowTime->gte($workStartAt) || $nowTime->lte($workStartAt->subHour(1))) {
+            // allow check in before 1 hour
+            if ($nowTime->gte($workStartAt->subHour(1))) {
                 AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToCheckIn' => 1,'allowedToCheckOut' => 0]);
+
+
             } else {
                 AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToCheckIn' => 0]);
             }

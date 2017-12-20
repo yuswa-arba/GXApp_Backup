@@ -38835,6 +38835,11 @@ module.exports = Component.exports
                     $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id);
                 });
 
+                // prevent null
+                if (_.isEmpty(state.slotIdsBeingMapAndPlucked)) {
+                    state.slotIdsBeingMapAndPlucked = _.map(state.slotsBeingMap, 'id');
+                }
+
                 commit({
                     type: 'getShiftSchedule',
                     slotIds: state.slotIdsBeingMapAndPlucked
@@ -39289,7 +39294,6 @@ module.exports = Component.exports
         });
     },
     getShiftSchedule: function getShiftSchedule(state, payload) {
-        console.log("adf" + payload.slotIds);
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/schedule', { slotIds: payload.slotIds }).then(function (res) {
             state.calendarShiftScheduleEventSource = res.data.data;

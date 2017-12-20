@@ -14,96 +14,71 @@ class MainController extends Controller
 {
     use TokenUtils;
 
-    
-    public function clockIn(Request $request)
+
+    public function clock(Request $request, $punchType)
     {
+        /* Validation Request*/
         $request->validate([
-//            'employeeId'=>'required',
-            'clockInViaTypeId' => 'required',
+            'employeeId' => 'required',
+            'cViaTypeId' => 'required'
 //            'employeePhotoClockIn' => 'required'
         ]);
 
-        $formRequest['employeeId'] = $this->getUserByAccessToken()->employeeId;
-        $formRequest['clockInDate'] = Carbon::now()->format('d/m/Y');
-        $formRequest['clockInTime'] = Carbon::now()->format('H:i');
-        $formRequest['viaTypeId'] = $request->clockInViaTypeId;
-        $formRequest['isClockingIn'] = true;
+        $checkAvailability = $this->isAvailableToClock($request->employeeId, $punchType);
 
+        if (!$checkAvailability['isFailed']
+            && $checkAvailability['isAllowed'] == 1
+            && $checkAvailability['shiftId'] != null) {
 
-        if ($request->clockInViaTypeId == 1) {//by kiosk
+            $formRequest['employeeId'] = $request->employeeId;
+            $formRequest['cDate'] = Carbon::now()->format('d/m/Y');
+            $formRequest['cTime'] = Carbon::now()->format('H:i');
+            $formRequest['cViaTypeId'] = $request->cViaTypeId;
+            $formRequest['punchType'] = $punchType;
+            $formRequest['shiftId'] = $checkAvailability['shiftId']; // get shift ID from $checkAvailability response
 
-            $request->validate(['clockInKioskId' => 'required']);
-            $formRequest['clockInKioskId'] = $request->clockInKioskId;
+            if ($request->cViaTypeId == 1) {//by kiosk
+
+                $request->validate(['cKioskId' => 'required']);
+                $formRequest['cKioskId'] = $request->cKioskId;
+            }
+
+            if ($request->cViaTypeId == 2) {//by personal device
+
+                $request->validate([
+                    'cValidGeofence' => 'required',
+                    'cLatitude' => 'required',
+                    'cLongitude' => 'required'
+                ]);
+                $formRequest['cValidGeofence'] = $request->cValidGeofence;
+                $formRequest['cLatitude'] = $request->cLatitude;
+                $formRequest['cLongitude'] = $request->cLongitude;
+
+            }
+
+            if ($request->cViaTypeId == 3) {//by web portal
+                $request->validate([
+                    'cIpAddress' => 'required',
+                    'cBrowser' => 'required'
+                ]);
+                $formRequest['cIpAddress'] = $request->cIpAddress;
+                $formRequest['cBrowser'] = $request->cBrowser;
+            }
+
+            /* Run the logic */
+            return AttendanceLogic::clocking($formRequest);
+
+        } else {
+
+            /* Return response */
+            return $checkAvailability;
         }
 
-        if ($request->clockInViaTypeId == 2) {//by personal device
-
-            $request->validate([
-                'clockInValidGeofence' => 'required',
-                'clockInLatitude' => 'required',
-                'clockInLongitude' => 'required'
-            ]);
-            $formRequest['clockInValidGeofence'] = $request->clockInValidGeofence;
-            $formRequest['clockInLatitude'] = $request->clockInLatitude;
-            $formRequest['clockInLongitude'] = $request->clockInLongitude;
-
-        }
-
-        if ($request->clockInViaTypeId == 3) {//by web portal
-            $request->validate([
-                'clockInIpAddress' => 'required',
-                'clockInBrowser' => 'required'
-            ]);
-            $formRequest['clockInIpAddress'] = $request->clockInIpAddress;
-            $formRequest['clockInBrowser'] = $request->clockInBrowser;
-        }
-
-        return $this->getOAuthAccessToken();
-//        return AttendanceLogic::clock($formRequest);
     }
 
-    public function clockOut(Request $request)
+    private function isAvailableToClock($employeeId, $punchType)
     {
-
-        $request->validate([
-            'clockOutViaTypeId' => 'required',
-//            'employeePhotoClockIn' => 'required'
-        ]);
-
-        $formRequest['employeeId'] = $this->getUserByAccessToken()->employeeId;
-        $formRequest['clockOutDate'] = Carbon::now()->format('d/m/Y');
-        $formRequest['clockOutTime'] = Carbon::now()->format('H:i');
-        $formRequest['viaTypeId'] = $request->clockOutViaTypeId;
-        $formRequest['isClockingIn'] = false;
-
-
-        if ($request->clockOutViaTypeId == 1) {//by kiosk
-            $request->validate(['clockOutKioskId' => 'required']);
-            $formRequest['clockOutKioskId'] = $request->clockOutKioskId;
-        }
-
-        if ($request->clockOutViaTypeId == 2) {//by personal device
-
-            $request->validate([
-                'clockOutValidGeofence' => 'required',
-                'clockOutLatitude' => 'required',
-                'clockOutLongitude' => 'required'
-            ]);
-            $formRequest['clockOutValidGeofence'] = $request->clockOutValidGeofence;
-            $formRequest['clockOutLatitude'] = $request->clockOutLatitude;
-            $formRequest['clockOutLongitude'] = $request->clockOutLongitude;
-
-        }
-
-        if ($request->clockOutViaTypeId == 3) {//by web portal
-            $request->validate([
-                'clockOutIpAddress' => 'required',
-                'clockOutBrowser' => 'required'
-            ]);
-            $formRequest['clockOutIpAddress'] = $request->clockOutIpAddress;
-            $formRequest['clockOutBrowser'] = $request->clockOutBrowser;
-        }
-
-        return AttendanceLogic::clock($formRequest);
+        return AttendanceLogic::checkAllowClocking($employeeId, $punchType);
     }
+
 }

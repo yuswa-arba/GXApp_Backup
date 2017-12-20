@@ -31,8 +31,13 @@ class Slots extends Model
         return $this->belongsToMany(MasterEmployee::class,'employeeSlotSchedule','slotId','employeeId');
     }
 
-    public function slotSchedule()
+    public function employeeSchedule() //employee
     {
         return $this->hasMany(EmployeeSlotSchedule::class,'slotId');
+    }
+
+    public function shiftSchedule()
+    {
+        return $this->hasMany(SlotShiftSchedule::class,'slotId');
     }
 }

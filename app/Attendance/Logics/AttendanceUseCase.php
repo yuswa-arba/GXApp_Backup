@@ -26,41 +26,53 @@ abstract class AttendanceUseCase
      * @param clockInKioskId/clockOutKioskId (by web portal)
      * @param clockInBrowser/clockOutBrowser (by web portal)
      *
+     * return response array
      * */
-    public static function clock($formRequest)
+    public static function clocking($formRequest)
     {
-    
-        $byKIosk = $formRequest['viaTypeId'] == 1;
-        $byPersonalDevice = $formRequest['viaTypeId'] == 2;
-        $byWebPortal = $formRequest['viaTypeId'] == 3;
-        $clockIn = $formRequest['isClockingIn'];
+        $punchType = $formRequest['punchType'];
+
+        $byKIosk = $formRequest['cViaTypeId'] == 1;
+        $byPersonalDevice = $formRequest['cViaTypeId'] == 2;
+        $byWebPortal = $formRequest['cViaTypeId'] == 3;
+
 
         if ($byKIosk) {
-            if ($clockIn) {
+            if ($punchType == 'in') {
                 return (new static)->handleKioskClockIn($formRequest);
-            } else {
+            } elseif ($punchType == 'out') {
                 return (new static)->handleKioskClockOut($formRequest);
             }
         }
 
         if ($byPersonalDevice) {
-            if ($clockIn) {
+            if ($punchType == 'in') {
                 return (new static)->handlePersonalDeviceClockIn($formRequest);
-            } else {
+            } elseif ($punchType == 'out') {
                 return (new static)->handlePersonalDeviceClockOut($formRequest);
             }
         }
 
         if ($byWebPortal) {
-            if ($clockIn) {
+            if ($punchType == 'in') {
                 return (new static)->handleWebPortalClockIn($formRequest);
-            } else {
+            } elseif ($punchType == 'out') {
                 return (new static)->handleWebPortalClockOut($formRequest);
             }
         }
 
         //else
-        return response()->json('Invalid Request', 500);
+        return response()->json('Invalid Request', 400);
+
+    }
+
+    /*
+     * @param employeeId uuid
+     * return boolean
+     * */
+    public static function checkAllowClocking($employeeId,$punchType){
+
+        return (new static)->handleClockingAvailability($employeeId,$punchType);
 
     }
 
@@ -76,5 +88,8 @@ abstract class AttendanceUseCase
     abstract public function handleWebPortalClockIn($formRequest);
 
     abstract public function handleWebPortalClockOut($formRequest);
+
+    abstract public function handleClockingAvailability($employeeId,$punchType);
+
 
 }

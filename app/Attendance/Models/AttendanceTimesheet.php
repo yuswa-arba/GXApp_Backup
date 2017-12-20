@@ -29,5 +29,10 @@ class AttendanceTimesheet extends Model
         return $this->belongsTo(AttendanceValidation::class,'attendanceValidationId');
     }
 
+    public function shift()
+    {
+        return $this->belongsTo(Shifts::class,'shiftId');
+    }
+
 
 }

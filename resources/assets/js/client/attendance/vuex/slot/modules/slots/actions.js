@@ -148,6 +148,11 @@ export default{
                         $('#calendar-shift-mapping').fullCalendar('removeEvents', value.id)
                     })
 
+                    // prevent null
+                    if(_.isEmpty(state.slotIdsBeingMapAndPlucked)){
+                        state.slotIdsBeingMapAndPlucked = _.map(state.slotsBeingMap, 'id')
+                    }
+
                     commit({
                         type: 'getShiftSchedule',
                         slotIds: state.slotIdsBeingMapAndPlucked

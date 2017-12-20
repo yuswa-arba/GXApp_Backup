@@ -321,7 +321,6 @@ export default{
 
     },
     getShiftSchedule(state, payload){
-        console.log("adf"+payload.slotIds)
 
         post(api_path() + 'attendance/shift/mapping/schedule', {slotIds: payload.slotIds})
             .then((res) => {

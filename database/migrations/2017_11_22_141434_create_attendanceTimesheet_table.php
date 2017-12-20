@@ -16,6 +16,7 @@ class CreateAttendanceTimesheetTable extends Migration
         Schema::create('attendanceTimesheet', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('employeeId');
+            $table->integer('shiftId');
             $table->string('clockInDate')->nullablle();
             $table->string('clockOutDate')->nullablle();
             $table->string('clockInTime')->nullablle();
@@ -32,8 +33,8 @@ class CreateAttendanceTimesheetTable extends Migration
             $table->string('clockInLongitude')->nullable();
             $table->string('clockOutLatitude')->nullable();
             $table->string('clockOutLongitude')->nullable();
-            $table->tinyInteger('clockInKioskId')->nullable();
-            $table->tinyInteger('clockOutKioskId')->nullable();
+            $table->integer('clockInKioskId')->nullable();
+            $table->integer('clockOutKioskId')->nullable();
             $table->ipAddress('clockInIpAddress')->nullable();
             $table->ipAddress('clockOutIpAddress')->nullable();
             $table->string('clockInBrowser')->nullable();

@@ -168,6 +168,7 @@
                 //set value for display
                 self.relatedBy.id = relatedById
                 self.statusBy.id = statusById
+
                 if (statusById == 'assigned') {
                     self.statusBy.name = 'Assigned'
                 } else if (statusById == 'unassigned') {

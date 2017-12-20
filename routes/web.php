@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,15 @@ Route::prefix('testing')->group(function () {
     Route::get('efs','TestUploadController@employeeFromSlot');
     Route::get('istimegt','TestUploadController@isTimeGT');
     Route::get('gd','TestUploadController@generateDate');
+    Route::get('bin',function(){
+
+        $rawBytes = "";
+        foreach(str_split(base64_decode(Storage::get('binary/raw.txt'))) as $byte)
+        {
+            $rawBytes .= ' ' . sprintf("%08b", ord($byte));
+        }
+        return base64_decode(Storage::get('binary/raw.txt'));
+    });
 
 });
 
