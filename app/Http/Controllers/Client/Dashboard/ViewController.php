@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client\Dashboard;
 
+use App\Attendance\Events\EmployeeClocked;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

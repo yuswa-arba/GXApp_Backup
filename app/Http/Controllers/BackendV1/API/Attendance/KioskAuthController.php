@@ -35,10 +35,10 @@ class KioskAuthController extends Controller
         $request->validate(['kioskId'=>'required']);
         $kiosk = Kiosks::find($request->kioskId);
         $response = array();
-        if($kiosk&&$kiosk->api_token!=null){
+        if($kiosk&&$kiosk->apiToken!=null){
             $response['isFailed'] = false;
             $response['message']= 'Ok';
-            $response['api_token']= $kiosk->api_token;
+            $response['apiToken']= $kiosk->apiToken;
         } else {
             $response['isFailed'] = false;
             $response['message']= 'Kiosk api token not found';

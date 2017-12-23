@@ -25,6 +25,7 @@
 
 <script src="{{mix('core/js/core-theme.js')}}" type="text/javascript"></script> <!-- core theme -->
 
-@stack('child-page-controller')
+<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script> <!-- socket io client -->
 
+@stack('child-page-controller')
 <script src="{{mix('js/app.js')}}" type="text/javascript"></script> <!-- app -->

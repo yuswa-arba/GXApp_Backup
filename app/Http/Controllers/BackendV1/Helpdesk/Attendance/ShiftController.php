@@ -53,7 +53,7 @@ class ShiftController extends Controller
         } else {
             $response['isFailed'] = true;
             $response['message'] = 'Unable to create Shift';
-            return response()->json($response, 500);
+            return response()->json($response, 200);
 
         }
 

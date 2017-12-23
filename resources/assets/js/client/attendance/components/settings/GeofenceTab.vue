@@ -17,7 +17,7 @@
         <div class="col-lg-4 m-b-10">
             <div class="card card-transparent">
                 <div class="card-block">
-                    <form id="kiosk-form">
+                    <form id="geofence-form">
                         <h4>Geofence Form</h4>
                         <div class="form-group ">
                             <label>Name</label>

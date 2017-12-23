@@ -24,8 +24,8 @@ Route::prefix('v1/a')->group(function () {
     /*Kiosk Authentication using passport client_credentials grant type*/
     Route::namespace('BackendV1\API\Attendance')->prefix('kiosk/auth')->group(function () {
 
-        Route::post('login', 'KioskController@login');
-        Route::get('getApiToken', 'KioskController@getApiToken');
+        Route::post('login', 'KioskAuthController@login');
+        Route::get('getApiToken', 'KioskAuthController@getApiToken');
 
         Route::middleware('client')->group(function () {
 
@@ -42,7 +42,13 @@ Route::prefix('v1/a')->group(function () {
 
 
         Route::middleware('client')->group(function () {
-            Route::get('av', 'MainController@isAvailableToClock');
+            /* @url api/v1/a/kiosk/clock/{punchType}
+             * @header Authorization Bearer <kiosk_api_token>
+             *
+             * @param punchType in/out
+             * @body cViaTypeId int
+             * @body employeeId uuid
+             * */
             Route::post('clock/{punchType}', 'MainController@clock');
 
         });

@@ -8,7 +8,7 @@ export function get(url) {
         method: 'GET',
         url: url,
         headers: {
-            'Authorization': `Bearer ${Auth.state.api_token}`
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
         }
     })
 }
@@ -19,7 +19,7 @@ export function post(url, payload) {
         url: url,
         data: payload,
         headers: {
-            'Authorization': `Bearer ${Auth.state.api_token}`,
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
         }
     })
 }
@@ -30,7 +30,7 @@ export function multipartPost(url, payload) {
         url: url,
         data: payload,
         headers: {
-            'Authorization': `Bearer ${Auth.state.api_token}`,
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
             'Content-Type': 'multipart/form-data'
         }
     })
@@ -42,7 +42,7 @@ export function del(url) {
         method: 'DELETE',
         url: url,
         headers: {
-            'Authorization': `Bearer ${Auth.state.api_token}`
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
         }
     })
 }

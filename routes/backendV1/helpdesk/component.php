@@ -27,6 +27,9 @@ Route::prefix('v1/h')->group(function () {
         Route::get('shift/{id}','GetListController@shift')->name('v1.component.shift');
         Route::get('list/shifts', 'GetListController@shifts')->name('v1.component.list.shifts');
 
+        Route::get('kiosk/{id}','GetListController@kiosk')->name('v1.component.kiosk');
+        Route::get('list/kiosks', 'GetListController@kiosks')->name('v1.component.list.kiosks');
+
     });
 
 });

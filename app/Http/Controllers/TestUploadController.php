@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Attendance\Events\EmployeeClocked;
 use App\Attendance\Models\Slots;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
@@ -265,7 +266,6 @@ class TestUploadController extends Controller
     }
 
 
-
     public function getMondaysOfThisYearAddBy($day)
     {
         $start_date = Carbon::parse('first day of January');
@@ -346,11 +346,11 @@ class TestUploadController extends Controller
 
     public function isTimeGT()
     {
-        $start = Carbon::createFromFormat('H:i','08:00');
-        $end = Carbon::createFromFormat('H:i','07:00');
+        $start = Carbon::createFromFormat('H:i', '08:00');
+        $end = Carbon::createFromFormat('H:i', '07:00');
 
         // check if its over night
-        if($start->gt($end)){
+        if ($start->gt($end)) {
             echo 'it\'s overnight';
         } else {
             echo 'it\'s not overnight';
@@ -375,12 +375,19 @@ class TestUploadController extends Controller
 
     public function generateDate()
     {
-        $dates =  $this->generateDateRange('01/01/2017','13/01/2017','d/m/Y');
+        $dates = $this->generateDateRange('01/01/2017', '13/01/2017', 'd/m/Y');
         foreach ($dates as $date) {
 
-            echo $date.'<br>';
+            echo $date . '<br>';
 
         }
+    }
+
+    public function broadcast()
+    {
+//        event(new EmployeeClocked(['name' => 'Kevin', 'age' => 21]));
+        broadcast(new EmployeeClocked(['name' => 'Kevin', 'age' => 21]))->toOthers();
+
     }
 
 }

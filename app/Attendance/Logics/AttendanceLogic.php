@@ -47,8 +47,10 @@ class AttendanceLogic extends AttendanceUseCase
                     'clockInKioskId' => $formRequest['cKioskId']
                 ]
             );
+
             //TODO: Trigger event to update dashboard
             //TODO: Return response + telling that employee has clocked in right in time/late/early , show clock out time
+
             return 'inserted';
         }
 

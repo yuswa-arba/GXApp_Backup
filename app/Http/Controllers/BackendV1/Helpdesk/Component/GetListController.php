@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Component;
 
+use App\Attendance\Models\Kiosks;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotMaker;
 use App\Attendance\Models\Slots;
+use App\Attendance\Transformers\KioskListTransformer;
 use App\Attendance\Transformers\ShiftListTransformer;
 use App\Attendance\Transformers\SlotListTransformer;
 use App\Attendance\Transformers\SlotMakerListTransformer;
@@ -55,5 +57,15 @@ class GetListController extends Controller
     public function shifts()
     {
         return fractal(Shifts::all(), new ShiftListTransformer())->respond(200);
+    }
+
+    public function kiosk($id)
+    {
+        return fractal(Kiosks::where('id',$id)->where('isDeleted',0)->first(),new KioskListTransformer())->respond(200);
+    }
+
+    public function kiosks()
+    {
+        return fractal(Kiosks::where('isDeleted',0)->get(), new KioskListTransformer())->respond(200);
     }
 }

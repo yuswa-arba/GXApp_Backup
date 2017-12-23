@@ -2026,7 +2026,7 @@ function get(url) {
         method: 'GET',
         url: url,
         headers: {
-            'Authorization': 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store_auth__["a" /* default */].state.api_token
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
         }
     });
 }
@@ -2037,7 +2037,7 @@ function post(url, payload) {
         url: url,
         data: payload,
         headers: {
-            'Authorization': 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store_auth__["a" /* default */].state.api_token
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
         }
     });
 }
@@ -2048,7 +2048,7 @@ function multipartPost(url, payload) {
         url: url,
         data: payload,
         headers: {
-            'Authorization': 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store_auth__["a" /* default */].state.api_token,
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
             'Content-Type': 'multipart/form-data'
         }
     });
@@ -2060,7 +2060,7 @@ function del(url) {
         method: 'DELETE',
         url: url,
         headers: {
-            'Authorization': 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store_auth__["a" /* default */].state.api_token
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
         }
     });
 }
@@ -2140,7 +2140,7 @@ function objectToFormData(obj, form, namespace) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
+/* unused harmony default export */ var _unused_webpack_default_export = ({
 	state: {
 		api_token: null,
 		user_id: null

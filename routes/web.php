@@ -82,6 +82,10 @@ Route::prefix('testing')->group(function () {
         return base64_decode(Storage::get('binary/raw.txt'));
     });
 
+    Route::get('broadcast','TestUploadController@broadcast');
+    Route::get('rn/{length}','TestUploadController@randomNumber');
+
+
 });
 
 

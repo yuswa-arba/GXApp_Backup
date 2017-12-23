@@ -40,6 +40,7 @@ class MainController extends Controller
             if ($request->cViaTypeId == 1) {//by kiosk
 
                 $request->validate(['cKioskId' => 'required']);
+
                 $formRequest['cKioskId'] = $request->cKioskId;
             }
 
@@ -50,10 +51,10 @@ class MainController extends Controller
                     'cLatitude' => 'required',
                     'cLongitude' => 'required'
                 ]);
+
                 $formRequest['cValidGeofence'] = $request->cValidGeofence;
                 $formRequest['cLatitude'] = $request->cLatitude;
                 $formRequest['cLongitude'] = $request->cLongitude;
-
             }
 
             if ($request->cViaTypeId == 3) {//by web portal
@@ -61,6 +62,7 @@ class MainController extends Controller
                     'cIpAddress' => 'required',
                     'cBrowser' => 'required'
                 ]);
+
                 $formRequest['cIpAddress'] = $request->cIpAddress;
                 $formRequest['cBrowser'] = $request->cBrowser;
             }

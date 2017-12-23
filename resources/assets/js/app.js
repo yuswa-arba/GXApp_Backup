@@ -11,9 +11,4 @@ require('./global');
 
 
 
-/* Vue Instances & Components */
-
-
-
-
 

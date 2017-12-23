@@ -17,10 +17,14 @@ class CreateKiosksTable extends Migration
             $table->increments('id');
             $table->string('codeName')->unique();
             $table->string('description');
-            $table->text('api_token');
+            $table->string('activationCode');
+            $table->string('passcode');
+            $table->text('apiToken');
             $table->integer('batteryPower')->default(0)->nullable();
             $table->tinyInteger('isCharging')->default(0);
-            $table->tinyInteger('isEnabled')->default(0);
+            $table->tinyInteger('isInMaintenanceMode')->default(0);
+            $table->tinyInteger('isActivated')->default(0);
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }
