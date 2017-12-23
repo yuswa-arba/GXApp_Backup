@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\API\Auth;
 
+use App\Http\Controllers\BackendV1\API\Traits\IssueTokenTrait;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;

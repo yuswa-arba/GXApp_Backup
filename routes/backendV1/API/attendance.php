@@ -26,11 +26,10 @@ Route::prefix('v1/a')->group(function () {
 
         Route::post('login', 'KioskAuthController@login');
         Route::get('getApiToken', 'KioskAuthController@getApiToken');
+        Route::post('activate', 'KioskAuthController@activateKiosk');
 
         Route::middleware('client')->group(function () {
 
-            Route::post('updateToken', 'KioskAuthController@updateAccessToken');
-            Route::post('removeAccessToken', 'KioskAuthController@removeAccessToken');
             Route::post('logout', 'KioskAuthController@logout');
             Route::get('test', 'KioskAuthController@test');
 

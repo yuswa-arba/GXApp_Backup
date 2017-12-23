@@ -8,4 +8,9 @@ class Kiosks extends Model
 {
     protected $table = 'kiosks';
     protected $guarded = [];
+
+    public function kioskActivity()
+    {
+        return $this->hasOne(KioskActivity::class,'kioskId');
+    }
 }

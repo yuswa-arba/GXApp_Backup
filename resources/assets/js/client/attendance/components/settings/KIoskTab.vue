@@ -15,13 +15,6 @@
                             <input name="description" type="text" class="form-control"
                                    placeholder="e.q 2nd Floor near meeting room ">
                         </div>
-                        <div class="form-group ">
-                            <label>API Token <span class="label label-primary" @click="getApiToken()"
-                                                   v-if="apiToken==''">Get</span></label>
-                            <input name="apiToken" type="text" class="form-control"
-                                   v-model="apiToken"
-                                   readonly>
-                        </div>
 
                         <div class="form-group form-group-default-select2">
                             <label class="">Activate</label>
@@ -79,7 +72,7 @@
                                             <i class="fs-16 text-complete fa fa-check" v-if="kiosk.isActivated==1"></i>
                                             <i class="fs-16 text-danger fa fa-times" v-else=""></i></td>
                                         <td>
-                                            <i class="fs-14 fa fa-pencil pointer"></i>
+                                            <i class="fs-14 text-success fa fa-refresh pointer"></i>
                                             &nbsp; &nbsp;
                                             <i class="fs-14 text-danger fa fa-trash pointer"
                                                @click="deleteKiosk(kiosk.id)"></i>
@@ -173,18 +166,18 @@
                     })
 
             },
-            getApiToken(){
-                let self = this
-                post('/oauth/token', {
-                    grant_type: 'client_credentials',
-                    client_id: '5',
-                    client_secret: 'NVPNbhFw7EwWlqnvyCcAFE1dvMs1E9AtC4pdBO9h'
-                })
-                    .then((res) => {
-                        self.apiToken = res.data.access_token
-                    })
-
-            },
+//            getApiToken(){
+//                let self = this
+//                post('/oauth/token', {
+//                    grant_type: 'client_credentials',
+//                    client_id: '5',
+//                    client_secret: 'NVPNbhFw7EwWlqnvyCcAFE1dvMs1E9AtC4pdBO9h'
+//                })
+//                    .then((res) => {
+//                        self.apiToken = res.data.access_token
+//                    })
+//
+//            },
             deleteKiosk(kioskId){
                 let self = this
                 if(confirm('Are you sure to delete this Kiosk?')){

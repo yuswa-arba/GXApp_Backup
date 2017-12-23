@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\BackendV1\API\Auth;
+namespace App\Http\Controllers\BackendV1\API\Traits;
 
+use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 
 trait IssueTokenTrait
 {
@@ -36,4 +38,23 @@ trait IssueTokenTrait
         return Route::dispatch($proxy);
     }
 
+    public function issueTokenWithResponse(Request $request, $grantType, $scope = "")
+    {
+
+        $guzzle = new Client();
+
+        $response = $guzzle->post(URL::to('/').'/oauth/token', [
+            'form_params' => [
+                'grant_type' => $grantType,
+                'client_id' => $this->client->id,
+                'client_secret' => $this->client->secret,
+                'scope' => '',
+            ],
+        ]);
+
+        return json_decode((string) $response->getBody(), true);
+
+
+
+    }
 }

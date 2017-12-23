@@ -28,7 +28,6 @@ class KioskController extends Controller
         $request->validate([
             'codeName' => 'required|unique:kiosks',
             'description' => 'required',
-            'apiToken'=>'required',
             'isActivated' => 'required',
         ]);
 

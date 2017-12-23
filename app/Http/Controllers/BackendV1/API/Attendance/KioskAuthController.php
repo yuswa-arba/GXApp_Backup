@@ -5,76 +5,71 @@ namespace App\Http\Controllers\BackendV1\API\Attendance;
 use App\Account\Models\User;
 use App\Account\Traits\TokenUtils;
 use App\Attendance\Logics\AttendanceLogic;
+use App\Attendance\Logics\Kiosk\AuthenticationLogic;
+use App\Attendance\Logics\Kiosk\KioskAuthLogic;
+use App\Attendance\Models\KioskActivity;
 use App\Attendance\Models\Kiosks;
-use App\Http\Controllers\BackendV1\API\Auth\IssueTokenTrait;
+use App\Http\Controllers\BackendV1\API\Traits\IssueTokenTrait;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\Client;
 
 class KioskAuthController extends Controller
 {
-    use IssueTokenTrait;
-
-    private $client;
-
-    public function __construct()
-    {
-        $this->client = Client::find(5);
-    }
 
     public function login(Request $request)
     {
-        return $this->issueToken($request, 'client_credentials');
-    }
 
-    public function getApiToken(Request $request)
-    {
-        $request->validate(['kioskId'=>'required']);
-        $kiosk = Kiosks::find($request->kioskId);
-        $response = array();
-        if($kiosk&&$kiosk->apiToken!=null){
-            $response['isFailed'] = false;
-            $response['message']= 'Ok';
-            $response['apiToken']= $kiosk->apiToken;
-        } else {
-            $response['isFailed'] = false;
-            $response['message']= 'Kiosk api token not found';
+        $validator = Validator::make($request->all(), [
+            'kioskId' => 'required',
+            'passcode' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameter';
+            return response()->json($response, 200);
         }
 
-        return response()->json($response,200);
 
+        return KioskAuthLogic::login($request);
     }
 
-    public function updateAccessToken(Request $request)
+    public function logout(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'kioskId' => 'required',
-            'access_token' => 'required'
+            'passcode' => 'required',
         ]);
 
-        Kiosks::where('id', $request->kioskId)->update(['api_token' => $request->access_token]);
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
 
-        $response = array();
-        $response['isFailed'] = false;
-        $response['message'] = 'Kiosk access token updated';
-        return response()->json($response, 200);
+        return KioskAuthLogic::logout($request);
     }
 
-    public function removeAccessToken(Request $request)
+    public function activateKiosk(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'kioskId' => 'required',
+            'activationCode' => 'required',
+            'passcode' => 'required',
         ]);
 
-        Kiosks::where('id', $request->kioskId)->update(['api_token' => '']);
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
 
-        $response = array();
-        $response['isFailed'] = false;
-        $response['message'] = 'Kiosk access token removed';
-        return response()->json($response, 200);
+        return KioskAuthLogic::activate($request);
     }
 
     public function test()

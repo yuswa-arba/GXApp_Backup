@@ -166,8 +166,6 @@
                                         <td style="width: 70px">
                                             <!--<i class="fs-14 fa fa-search pointer"></i>-->
                                             <!--&nbsp;-->
-
-
                                             <i class="fs-14 text-success fa fa-power-off pointer"
                                                @click="execute(slotMaker.id,slotMaker.name)"
                                                v-if="slotMaker.isExecuted!=1"></i>

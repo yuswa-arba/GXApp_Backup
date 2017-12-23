@@ -31819,7 +31819,8 @@ var render = function() {
                             _vm._v(" "),
                             _c("td", [
                               _c("i", {
-                                staticClass: "fs-14 fa fa-pencil pointer"
+                                staticClass:
+                                  "fs-14 text-success fa fa-refresh pointer"
                               }),
                               _vm._v(
                                 "\n                                           \n                                        "
