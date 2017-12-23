@@ -11,6 +11,7 @@ namespace App\Attendance\Logics\Kiosk;
 
 use App\Attendance\Models\KioskActivity;
 use App\Attendance\Models\Kiosks;
+use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\BackendV1\API\Traits\IssueTokenTrait;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -29,8 +30,6 @@ class KioskAuthLogic extends AuthUseCase
 
     public function handleLogin($request)
     {
-
-
         //is valid
 
         $kiosk = Kiosks::find($request->kioskId);
@@ -52,6 +51,7 @@ class KioskAuthLogic extends AuthUseCase
                     /* Success Response*/
                     $response = array();
                     $response['isFailed'] = false;
+                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Login successful';
 
                     return response()->json($response, 200);
@@ -59,6 +59,7 @@ class KioskAuthLogic extends AuthUseCase
                 } else {
                     $response = array();
                     $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['ACCESS_TOKEN_MISSING'];
                     $response['message'] = 'Unable to login , try again later';
 
                     return response()->json($response, 200);
@@ -67,6 +68,7 @@ class KioskAuthLogic extends AuthUseCase
             } else {
                 $response = array();
                 $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['PASSCODE_NOT_MATCH'];
                 $response['message'] = 'Passcode does not match';
 
                 return response()->json($response, 200);
@@ -74,6 +76,7 @@ class KioskAuthLogic extends AuthUseCase
         } else {
             $response = array();
             $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['KIOSK_NOT_FOUND'];
             $response['message'] = 'Kiosk not found';
 
             return response()->json($response, 200);
@@ -83,38 +86,42 @@ class KioskAuthLogic extends AuthUseCase
 
     public function handleLogout($request)
     {
-       $kiosk = Kiosks::find($request->kioskId);
+        $kiosk = Kiosks::find($request->kioskId);
 
-       if($kiosk){
-           if ($kiosk->passcode == $request->passcode) {
-               if($kiosk->update(['apiToken'=>''])){
-                   $response = array();
-                   $response['isFailed'] = false;
-                   $response['message'] = 'Logout successfully';
+        if ($kiosk) {
+            if ($kiosk->passcode == $request->passcode) {
+                if ($kiosk->update(['apiToken' => ''])) {
+                    $response = array();
+                    $response['isFailed'] = false;
+                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                    $response['message'] = 'Logout successfully';
 
-                   return response()->json($response, 200);
-               } else {
-                   $response = array();
-                   $response['isFailed'] = true;
-                   $response['message'] = 'Unable to logout . Try again later';
+                    return response()->json($response, 200);
+                } else {
+                    $response = array();
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                    $response['message'] = 'Unable to logout . Try again later';
 
-                   return response()->json($response, 200);
-               }
-           } else {
-               $response = array();
-               $response['isFailed'] = true;
-               $response['message'] = 'Passcode does not match';
+                    return response()->json($response, 200);
+                }
+            } else {
+                $response = array();
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['PASSCODE_NOT_MATCH'];
+                $response['message'] = 'Passcode does not match';
 
-               return response()->json($response, 200);
-           }
+                return response()->json($response, 200);
+            }
 
-       } else {
-           $response = array();
-           $response['isFailed'] = true;
-           $response['message'] = 'Kiosk not found';
+        } else {
+            $response = array();
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['KIOSK_NOT_FOUND'];
+            $response['message'] = 'Kiosk not found';
 
-           return response()->json($response, 200);
-       }
+            return response()->json($response, 200);
+        }
     }
 
     public function handleActivation($request)
@@ -130,6 +137,7 @@ class KioskAuthLogic extends AuthUseCase
 
                 $response = array();
                 $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['HAS_BEEN_ACTIVATED'];
                 $response['message'] = 'Kiosk has already been activated';
 
                 return response()->json($response, 200);
@@ -156,6 +164,7 @@ class KioskAuthLogic extends AuthUseCase
                         /** Success Response **/
                         $response = array();
                         $response['isFailed'] = false;
+                        $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                         $response['message'] = 'Kiosk has been successfully activated';
                         $response['kiosk'] = $kiosk;
 
@@ -165,6 +174,7 @@ class KioskAuthLogic extends AuthUseCase
 
                         $response = array();
                         $response['isFailed'] = true;
+                        $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
                         $response['message'] = 'Unable to activate Kiosk, try again later';
 
                         return response()->json($response, 200);
@@ -174,6 +184,7 @@ class KioskAuthLogic extends AuthUseCase
                 } else {
                     $response = array();
                     $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['ACCESS_TOKEN_MISSING'];
                     $response['message'] = 'Unable to activate Kiosk, try again later';
 
                     return response()->json($response, 200);
@@ -182,6 +193,7 @@ class KioskAuthLogic extends AuthUseCase
 
                 $response = array();
                 $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['ACTIVATION_CODE_MISMATCH'];
                 $response['message'] = 'Activation Code does not match';
 
                 return response()->json($response, 200);
@@ -190,9 +202,12 @@ class KioskAuthLogic extends AuthUseCase
 
             $response = array();
             $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['KIOSK_NOT_FOUND'];
             $response['message'] = 'Kiosk not found';
 
             return response()->json($response, 200);
+
+
         }
     }
 }

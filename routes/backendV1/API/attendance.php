@@ -48,6 +48,8 @@ Route::prefix('v1/a')->group(function () {
              * @body cViaTypeId int
              * @body employeeId uuid
              * */
+
+            Route::get('detail/{id}', 'KioskController@detail');
             Route::post('clock/{punchType}', 'MainController@clock');
 
         });

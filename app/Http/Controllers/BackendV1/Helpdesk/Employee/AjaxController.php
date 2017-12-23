@@ -32,10 +32,10 @@ class AjaxController extends Controller
                 ], 200);
 
             } else {
-                return response()->json(['message' => 'Error occured! Unable to find employee data'], 500);
+                return response()->json(['message' => 'Error occured! Unable to find employee data'], 200);
             }
         } else {
-            return response()->json(['message' => 'Parameter ID is missing'], 500);
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
         }
     }
 
@@ -52,10 +52,10 @@ class AjaxController extends Controller
                 ], 200);
 
             } else {
-                return response()->json(['message' => 'Error occured! Unable to find employee data'], 500);
+                return response()->json(['message' => 'Error occured! Unable to find employee data'], 200);
             }
         } else {
-            return response()->json(['message' => 'Parameter ID is missing'], 500);
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
         }
     }
 
@@ -80,7 +80,7 @@ class AjaxController extends Controller
             $response['isFailed'] = true;
             $response['message'] = 'Error occured! Unable to find employee data';
 
-            return response()->json($response, 500);
+            return response()->json($response, 200);
         }
     }
 
@@ -97,10 +97,10 @@ class AjaxController extends Controller
                 ], 200);
 
             } else {
-                return response()->json(['message' => 'Error occured! Unable to find employee data'], 500);
+                return response()->json(['message' => 'Error occured! Unable to find employee data'], 200);
             }
         } else {
-            return response()->json(['message' => 'Parameter ID is missing'], 500);
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
         }
     }
 
@@ -117,10 +117,10 @@ class AjaxController extends Controller
                 ], 200);
 
             } else {
-                return response()->json(['message' => 'Error occured! Unable to find employment data'], 500);
+                return response()->json(['message' => 'Error occured! Unable to find employment data'], 200);
             }
         } else {
-            return response()->json(['message' => 'Parameter ID is missing'], 500);
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
         }
     }
 
@@ -151,7 +151,7 @@ class AjaxController extends Controller
             $response['isFailed'] = true;
             $response['message'] = 'Error occured! Unable to find employment data';
 
-            return response()->json($response, 500);
+            return response()->json($response, 200);
         }
 
 
@@ -170,10 +170,10 @@ class AjaxController extends Controller
                 ], 200);
 
             } else {
-                return response()->json(['message' => 'Error occured! Unable to find login data'], 500);
+                return response()->json(['message' => 'Error occured! Unable to find login data'], 200);
             }
         } else {
-            return response()->json(['message' => 'Parameter ID is missing'], 500);
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
         }
     }
 
@@ -190,10 +190,10 @@ class AjaxController extends Controller
                 ], 200);
 
             } else {
-                return response()->json(['message' => 'Error occured! Unable to find user data'], 500);
+                return response()->json(['message' => 'Error occured! Unable to find user data'], 200);
             }
         } else {
-            return response()->json(['message' => 'Parameter ID is missing'], 500);
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
         }
     }
 
@@ -235,7 +235,7 @@ class AjaxController extends Controller
             $response['isFailed'] = true;
             $response['message'] = 'Error occured! Unable to find user data';
 
-            return response()->json($response, 500);
+            return response()->json($response, 200);
         }
 
     }
