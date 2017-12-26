@@ -38,9 +38,8 @@ Route::prefix('v1/a')->group(function () {
 
     /*Kiosk*/
     Route::namespace('BackendV1\API\Attendance')->prefix('kiosk')->group(function () {
+//        Route::middleware('client')->group(function () {
 
-
-        Route::middleware('client')->group(function () {
             /* @url api/v1/a/kiosk/clock/{punchType}
              * @header Authorization Bearer <kiosk_api_token>
              *
@@ -49,10 +48,11 @@ Route::prefix('v1/a')->group(function () {
              * @body employeeId uuid
              * */
 
-            Route::get('detail/{id}', 'KioskController@detail');
             Route::post('clock/{punchType}', 'MainController@clock');
 
-        });
+            Route::get('detail/{id}', 'KioskController@detail');
+
+//        });
     });
 
 });

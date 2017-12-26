@@ -16,6 +16,7 @@ use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Employee\Models\MasterEmployee;
+use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use Carbon\Carbon;
 
 class AttendanceLogic extends AttendanceUseCase
@@ -87,7 +88,7 @@ class AttendanceLogic extends AttendanceUseCase
      * */
     public function handleClockingAvailability($employeeId, $punchType)
     {
-        $result = array();
+        $response = array();
         $employee = MasterEmployee::find($employeeId);
 
         if ($employee != null) {
@@ -119,42 +120,46 @@ class AttendanceLogic extends AttendanceUseCase
             /* return result based on punch type */
             if ($punchType == 'in') {
 
-                $result['isFailed'] = false;
-                $result['isAllowed'] = $attdSchedule->allowedToCheckIn;
-                $result['shiftId'] = $shiftId;
+                $response['isFailed'] = false;
+                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                $response['isAllowed'] = $attdSchedule->allowedToCheckIn;
+                $response['shiftId'] = $shiftId;
 
                 if ($attdSchedule->allowedToCheckIn == 1) {
-                    $result['message'] = 'Allowed to Clock-In';
+                    $response['message'] = 'Allowed to Clock-In';
                 } else {
                     $timeAvailable = Carbon::createFromFormat('H:i', Shifts::find($shiftId)->workStartAt)->subHours(1)->format('H:i');
-                    $result['message'] = 'Not allowed to Clock-In yet until ' . $timeAvailable;
+                    $response['message'] = 'Not allowed to Clock-In yet until ' . $timeAvailable;
                 }
 
             } elseif ($punchType == 'out') {
 
-                $result['isFailed'] = false;
-                $result['isAllowed'] = $attdSchedule->allowedToCheckOut;
-                $result['shiftId'] = $shiftId;
+                $response['isFailed'] = false;
+                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                $response['isAllowed'] = $attdSchedule->allowedToCheckOut;
+                $response['shiftId'] = $shiftId;
 
                 if ($attdSchedule->allowedToCheckOut == 1) {
-                    $result['message'] = 'Allowed to Clock-Out';
+                    $response['message'] = 'Allowed to Clock-Out';
                 } else {
                     $timeAvailable = Carbon::createFromFormat('H:i', Shifts::find($shiftId)->workEndAt)->format('H:i');
-                    $result['message'] = 'Not allowed to Clock-Out yet until ' . $timeAvailable;
+                    $response['message'] = 'Not allowed to Clock-Out yet until ' . $timeAvailable;
                 }
 
             } else {
                 // return error response
-                $result['isFailed'] = true;
-                $result['message'] = 'Undefined punch type';
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['UNDEFINED_PUNCH_TYPE'];
+                $response['message'] = 'Undefined punch type';
             }
 
         } else {
             // return error response employee not found
-            $result['isFailed'] = true;
-            $result['message'] = 'Unable to find employee data';
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+            $response['message'] = 'Unable to find employee data';
         }
 
-        return $result;
+        return $response;
     }
 }

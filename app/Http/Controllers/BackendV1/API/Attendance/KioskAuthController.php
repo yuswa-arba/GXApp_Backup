@@ -5,7 +5,6 @@ namespace App\Http\Controllers\BackendV1\API\Attendance;
 use App\Account\Models\User;
 use App\Account\Traits\TokenUtils;
 use App\Attendance\Logics\AttendanceLogic;
-use App\Attendance\Logics\Kiosk\AuthenticationLogic;
 use App\Attendance\Logics\Kiosk\KioskAuthLogic;
 use App\Attendance\Models\KioskActivity;
 use App\Attendance\Models\Kiosks;

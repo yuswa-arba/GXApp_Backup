@@ -13,6 +13,7 @@ use App\Attendance\Models\KioskActivity;
 use App\Attendance\Models\Kiosks;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\BackendV1\API\Traits\IssueTokenTrait;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\Client;
@@ -53,6 +54,8 @@ class KioskAuthLogic extends AuthUseCase
                     $response['isFailed'] = false;
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Login successful';
+                    $response['kiosk'] = $kiosk;
+                    $response['OAuthToken'] = $OAuthLogin;
 
                     return response()->json($response, 200);
 
@@ -147,16 +150,16 @@ class KioskAuthLogic extends AuthUseCase
             if ($kiosk->activationCode == $request->activationCode) {
 
                 // get api token by login first time
-                $loginFirstTime = $this->issueTokenWithResponse($request, 'client_credentials');
+                $OAuthLogin = $this->issueTokenWithResponse($request, 'client_credentials');
 
-                if ($loginFirstTime['access_token'] != null) {
+                if ($OAuthLogin['access_token'] != null) {
 
                     // Update kiosk activity
                     KioskActivity::updateOrCreate(['kioskId' => $kiosk->id], ['isLogined' => 1, 'lastLoginAt' => Carbon::now()]);
 
                     if ($kiosk->update([
                         'passcode' => $request->passcode,
-                        'apiToken' => $loginFirstTime['access_token'],
+                        'apiToken' => $OAuthLogin['access_token'],
                         'isActivated' => 1
                     ])
                     ) {
@@ -167,6 +170,7 @@ class KioskAuthLogic extends AuthUseCase
                         $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                         $response['message'] = 'Kiosk has been successfully activated';
                         $response['kiosk'] = $kiosk;
+                        $response['OAuthToken'] = $OAuthLogin;
 
                         return response()->json($response, 200);
 

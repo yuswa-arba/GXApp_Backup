@@ -21,6 +21,8 @@ class ResponseCodes{
         'INVALID_TOKEN' => 300004,
         'HAS_BEEN_ACTIVATED' =>300005,
         'ACTIVATION_CODE_MISMATCH' =>300005,
+        'UNDEFINED_PUNCH_TYPE' =>300006,
+        'EMPLOYEE_NOT_FOUND'=>300007
     ];
 
     public static $HTTP_CODES = [
