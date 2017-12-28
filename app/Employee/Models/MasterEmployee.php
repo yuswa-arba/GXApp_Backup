@@ -77,4 +77,9 @@ class MasterEmployee extends Model
         return $this->hasOne(EmployeeSlotSchedule::class,'employeeId');
     }
 
+    public function facePerson()
+    {
+        return $this->hasOne(FacePerson::class,'employeeId');
+    }
+
 }

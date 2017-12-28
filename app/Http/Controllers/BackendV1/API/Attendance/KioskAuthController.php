@@ -78,7 +78,7 @@ class KioskAuthController extends Controller
     public function test()
     {
         $response = array();
-        $response['testResult'] = true;
+        $response['isFailed'] = false;
         $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
         $response['message'] = Carbon::now()->timestamp;
 
