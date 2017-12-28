@@ -19,7 +19,9 @@
                                 Master</a>
                             <a class="dropdown-item pointer" @click="viewEmploymentDetail()">
                                 Employment</a>
-                            <a class="dropdown-item pointer" @click="viewLoginDetail()">
+                            <a class="dropdown-item pointer" @click="">
+                                Face</a>
+                            <a class="dropdown-item pointer" @click="viewFaceDetail()">
                                 Login Details
                             </a>
                         </div>
@@ -76,6 +78,10 @@
                 $('#errors-container').addClass('hide');
                 this.$router.push({name: 'detailLogin', params: {id: this.$route.params.id}})
             },
+            viewFaceDetail(){
+                $('#errors-container').addClass('hide');
+                this.$router.push({name: 'detailFace', params: {id: this.$route.params.id}})
+            },
             goBack(){
                 $('#errors-container').addClass('hide');
                 this.$router.push('/')
@@ -127,7 +133,7 @@
             },
             saveMaster(form){
                 let self = this;
-                post(api_path() + 'employee/edit/master', form)
+                post(api_path + 'employee/edit/master', form)
                     .then((res) => {
                         if (!res.data.isFailed) {
 
@@ -178,7 +184,7 @@
             },
             saveEmployment(form){
                 let self = this;
-                post(api_path() + 'employee/edit/employment', form)
+                post(api_path + 'employee/edit/employment', form)
                     .then((res) => {
                         if (!res.data.isFailed) {
 
@@ -229,7 +235,7 @@
             },
             saveLogin(form){
                 let self = this;
-                post(api_path() + 'employee/edit/login', form)
+                post(api_path + 'employee/edit/login', form)
                     .then((res) => {
                         if (!res.data.isFailed) {
 

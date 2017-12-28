@@ -1921,13 +1921,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -1941,7 +1934,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/kiosks').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/kiosks').then(function (res) {
             self.kiosks = res.data.data;
         }).catch(function (err) {
             $('.page-container').pgNotification({
@@ -1963,7 +1956,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.formObject[value.name] = value.value;
             });
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/kiosk/create', self.formObject).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/kiosk/create', self.formObject).then(function (res) {
                 if (!res.data.isFailed && res.data.kiosk) {
 
                     $('.page-container').pgNotification({
@@ -1995,20 +1988,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).show();
             });
         },
-        getApiToken: function getApiToken() {
-            var self = this;
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])('/oauth/token', {
-                grant_type: 'client_credentials',
-                client_id: '5',
-                client_secret: 'NVPNbhFw7EwWlqnvyCcAFE1dvMs1E9AtC4pdBO9h'
-            }).then(function (res) {
-                self.apiToken = res.data.access_token;
-            });
-        },
+
+        //            getApiToken(){
+        //                let self = this
+        //                post('/oauth/token', {
+        //                    grant_type: 'client_credentials',
+        //                    client_id: '5',
+        //                    client_secret: 'NVPNbhFw7EwWlqnvyCcAFE1dvMs1E9AtC4pdBO9h'
+        //                })
+        //                    .then((res) => {
+        //                        self.apiToken = res.data.access_token
+        //                    })
+        //
+        //            },
         deleteKiosk: function deleteKiosk(kioskId) {
             var self = this;
             if (confirm('Are you sure to delete this Kiosk?')) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/kiosk/delete', { id: kioskId }).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/kiosk/delete', { id: kioskId }).then(function (res) {
                     if (!res.data.isFailed) {
 
                         $('.page-container').pgNotification({
@@ -2343,7 +2339,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/shifts').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/shifts').then(function (res) {
             self.shifts = res.data.data;
         });
     },
@@ -2357,7 +2353,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.formObject[value.name] = value.value;
             });
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/create', self.formObject).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/create', self.formObject).then(function (res) {
                 if (!res.data.isFailed && res.data.shift) {
 
                     //reset form
@@ -2397,7 +2393,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deleteShift: function deleteShift(id) {
             var self = this;
             if (confirm('Are you sure to delete this shift?')) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/delete', { shiftId: id }).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/delete', { shiftId: id }).then(function (res) {
                     if (!res.data.isFailed) {
 
                         var shiftIndex = _.findIndex(self.shifts, { id: id });
@@ -2716,8 +2712,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -2739,11 +2733,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         var self = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/jobPosition').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/jobPosition').then(function (res) {
             self.jobPositions = res.data.data;
         });
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slotMaker/list').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/list').then(function (res) {
             self.slotMakers = res.data.data;
 
             // fix datatables Bug displaying "no data available"
@@ -2763,7 +2757,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.formObject[value.name] = value.value;
             });
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slotMaker/create', self.formObject).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/create', self.formObject).then(function (res) {
                 if (!res.data.isFailed && res.data.slotMaker) {
 
                     $('.page-container').pgNotification({
@@ -2812,7 +2806,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
 
             if (confirm('Are you sure to execute slot maker : ' + slotMakerName + ' ?')) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slotMaker/execute', { id: slotMakerId }).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/execute', { id: slotMakerId }).then(function (res) {
 
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -31681,48 +31675,6 @@ var render = function() {
             _vm._v(" "),
             _vm._m(1),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group " }, [
-              _c("label", [
-                _vm._v("API Token "),
-                _vm.apiToken == ""
-                  ? _c(
-                      "span",
-                      {
-                        staticClass: "label label-primary",
-                        on: {
-                          click: function($event) {
-                            _vm.getApiToken()
-                          }
-                        }
-                      },
-                      [_vm._v("Get")]
-                    )
-                  : _vm._e()
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.apiToken,
-                    expression: "apiToken"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { name: "apiToken", type: "text", readonly: "" },
-                domProps: { value: _vm.apiToken },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.apiToken = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
             _vm._m(2),
             _vm._v(" "),
             _c(
@@ -48805,17 +48757,24 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = get;
-/* harmony export (immutable) */ __webpack_exports__["b"] = post;
+/* harmony export (immutable) */ __webpack_exports__["d"] = get;
+/* harmony export (immutable) */ __webpack_exports__["e"] = post;
 /* unused harmony export multipartPost */
 /* unused harmony export del */
 /* unused harmony export interceptors */
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["c"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
+/* unused harmony export facePost */
+/* unused harmony export facePutOctet */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /**
  * Created by kevinpurwono on 9/11/17.
  */
+
 
 
 function get(url) {
@@ -48871,19 +48830,80 @@ function interceptors(cb) {
     });
 }
 
+function faceGet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePut(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function faceDel(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+function facePutOctet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
 /***/ }),
 
 /***/ "./resources/assets/js/client/helpers/const.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = api_path;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
 /**
  * Created by kevinpurwono on 9/11/17.
  */
-function api_path() {
-  return '/v1/h/';
-}
+
+var api_path = '/v1/h/';
+var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
+var faceSubKey = 'e498335112c8402a82967303033da0a4';
 
 /***/ }),
 

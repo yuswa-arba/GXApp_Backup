@@ -26,7 +26,7 @@ require(base_path($client_path . 'employee/main.php'));
 require(base_path($client_path . 'settings/main.php'));
 require(base_path($client_path . 'attendance/main.php'));
 require(base_path($client_path . 'doorAccess/main.php'));
-
+require(base_path($client_path . 'developer/main.php'));
 /*
 |--------------------------------------------------------------------------
 | Init Backend routes
@@ -35,7 +35,7 @@ require(base_path($client_path . 'doorAccess/main.php'));
 require(base_path($backend_path . $type_helpdesk . 'settings/main.php'));
 require(base_path($backend_path . $type_helpdesk . 'employee.php'));
 require(base_path($backend_path . $type_helpdesk . 'attendance.php'));
-
+require(base_path($backend_path . $type_helpdesk . 'developer.php'));
 require(base_path($backend_path . $type_helpdesk . 'component.php'));
 
 /*
@@ -65,25 +65,24 @@ Route::prefix('testing')->group(function () {
 
     Route::post('upload', 'TestUploadController@upload')->name('post.upload');
 
-    Route::get('seedCalendar','TestUploadController@seedCalendar');
-    Route::get('attdlogic','TestUploadController@attdLogic');
-    Route::get('tryLogic','TestUploadController@tryLogic');
-    Route::get('SEP','TestUploadController@slotEmployeePivot');
-    Route::get('efs','TestUploadController@employeeFromSlot');
-    Route::get('istimegt','TestUploadController@isTimeGT');
-    Route::get('gd','TestUploadController@generateDate');
-    Route::get('bin',function(){
+    Route::get('seedCalendar', 'TestUploadController@seedCalendar');
+    Route::get('attdlogic', 'TestUploadController@attdLogic');
+    Route::get('tryLogic', 'TestUploadController@tryLogic');
+    Route::get('SEP', 'TestUploadController@slotEmployeePivot');
+    Route::get('efs', 'TestUploadController@employeeFromSlot');
+    Route::get('istimegt', 'TestUploadController@isTimeGT');
+    Route::get('gd', 'TestUploadController@generateDate');
+    Route::get('bin', function () {
 
         $rawBytes = "";
-        foreach(str_split(base64_decode(Storage::get('binary/raw.txt'))) as $byte)
-        {
+        foreach (str_split(base64_decode(Storage::get('binary/raw.txt'))) as $byte) {
             $rawBytes .= ' ' . sprintf("%08b", ord($byte));
         }
         return base64_decode(Storage::get('binary/raw.txt'));
     });
 
-    Route::get('broadcast','TestUploadController@broadcast');
-    Route::get('rn/{length}','TestUploadController@randomNumber');
+    Route::get('broadcast', 'TestUploadController@broadcast');
+    Route::get('rn/{length}', 'TestUploadController@randomNumber');
 
 
 });

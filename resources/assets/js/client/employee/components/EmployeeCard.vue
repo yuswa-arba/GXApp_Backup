@@ -41,7 +41,7 @@
         },
         created(){
             let self = this;
-            get(api_path() + 'employee/list')
+            get(api_path + 'employee/list')
                 .then((res) => {
                     this.employees = res.data.data;
                 })

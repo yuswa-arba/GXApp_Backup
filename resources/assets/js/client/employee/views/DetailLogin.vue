@@ -85,7 +85,7 @@
             }
         },
         created(){
-            get(api_path() + 'employee/detail/login/' + this.$route.params.id)
+            get(api_path + 'employee/detail/login/' + this.$route.params.id)
                 .then((res) => {
                     this.detail = res.data.detail.data
                 })

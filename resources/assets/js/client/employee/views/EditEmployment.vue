@@ -128,7 +128,7 @@
             }
         },
         created(){
-            get(api_path() + 'employee/edit/employment/' + this.$route.params.id)
+            get(api_path + 'employee/edit/employment/' + this.$route.params.id)
                 .then((res) => {
 
                     //set current value

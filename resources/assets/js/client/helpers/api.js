@@ -3,6 +3,7 @@
  */
 import axios from 'axios'
 import Auth from '../store/auth'
+import {faceBaseUrl, faceSubKey}  from './const'
 export function get(url) {
     return axios({
         method: 'GET',
@@ -54,4 +55,67 @@ export function interceptors(cb) {
         cb(err)
         return Promise.reject(err)
     })
+}
+
+
+export function faceGet(url, payload) {
+    return axios({
+        method: 'GET',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': faceSubKey,
+        }
+    })
+}
+
+export function facePut(url, payload) {
+    return axios({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': faceSubKey,
+        }
+    })
+}
+
+export function faceDel(url) {
+    return axios({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': faceSubKey,
+        }
+    })
+}
+
+
+export function facePost(url, payload) {
+    return axios({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': faceSubKey,
+        }
+    })
+
+}
+export function facePutOctet(url, payload) {
+    return axios({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': faceSubKey,
+        }
+    })
+
+
 }

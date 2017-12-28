@@ -39811,12 +39811,12 @@ module.exports = Component.exports
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     getJobPositions: function getJobPositions(state) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/jobPosition').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/jobPosition').then(function (res) {
             state.jobPositions = res.data.data;
         });
     },
     getSlotMakers: function getSlotMakers(state) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/slotMakers').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/slotMakers').then(function (res) {
             state.slotMakers = res.data.data;
         });
     },
@@ -39824,7 +39824,7 @@ module.exports = Component.exports
         var statusById = payload.statusById;
         var relatedById = payload.relatedById;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/list?' + 'statusBy=' + statusById + '&relatedBy=' + relatedById).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/list?' + 'statusBy=' + statusById + '&relatedBy=' + relatedById).then(function (res) {
             state.slots = res.data.data;
 
             // fix datatables Bug displaying "no data available"
@@ -39842,7 +39842,7 @@ module.exports = Component.exports
         });
     },
     getShifts: function getShifts(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/list/shifts').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/shifts').then(function (res) {
             state.shifts = res.data.data;
         }).catch(function (err) {
             $('.page-container').pgNotification({
@@ -39855,7 +39855,7 @@ module.exports = Component.exports
         });
     },
     getEmployeesToBeAssigned: function getEmployeesToBeAssigned(state, slotId) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/assign/employee?slotId=' + slotId).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/assign/employee?slotId=' + slotId).then(function (res) {
 
             state.employeesToBeAssigned = res.data.data;
 
@@ -39888,7 +39888,7 @@ module.exports = Component.exports
         });
     },
     getSlotsDetail: function getSlotsDetail(state, slotId) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'component/slot/' + slotId).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/slot/' + slotId).then(function (res) {
             state.slotDetail = res.data.data;
         }).catch(function (err) {
             $('.page-container').pgNotification({
@@ -39901,7 +39901,7 @@ module.exports = Component.exports
         });
     },
     getCalendarEventSource: function getCalendarEventSource(state, slotId) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/detail/calendar?' + 'slotId=' + slotId).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/detail/calendar?' + 'slotId=' + slotId).then(function (res) {
             $('#calendar').fullCalendar('addEventSource', res.data.dayOffs.data);
             $('#calendar').fullCalendar('addEventSource', res.data.shiftSchedules.data);
         }).catch(function (err) {
@@ -39915,7 +39915,7 @@ module.exports = Component.exports
         });
     },
     assignSlot: function assignSlot(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/assign/employee', { employeeId: payload.employee.id, slotId: payload.slot.id }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/assign/employee', { employeeId: payload.employee.id, slotId: payload.slot.id }).then(function (res) {
             if (!res.data.isFailed) {
 
                 var user = _.find(state.employeesToBeAssigned, { id: payload.employee.id });
@@ -39982,7 +39982,7 @@ module.exports = Component.exports
         });
     },
     removeSlot: function removeSlot(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/remove/employee', { employeeId: payload.employee.id }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/remove/employee', { employeeId: payload.employee.id }).then(function (res) {
             if (!res.data.isFailed) {
 
                 var user = _.find(state.employeesToBeAssigned, { id: payload.employee.id });
@@ -40061,7 +40061,7 @@ module.exports = Component.exports
     },
     getCalendarDataForMapping: function getCalendarDataForMapping(state, payload) {
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
 
             state.calendarShiftMappingEventSource = res.data.data;
 
@@ -40090,7 +40090,7 @@ module.exports = Component.exports
     },
     getShiftSchedule: function getShiftSchedule(state, payload) {
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping/schedule', { slotIds: payload.slotIds }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/mapping/schedule', { slotIds: payload.slotIds }).then(function (res) {
             state.calendarShiftScheduleEventSource = res.data.data;
             //add color
             var c = 0;
@@ -40118,7 +40118,7 @@ module.exports = Component.exports
 
         state.isSavingShift = true;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/mapping', {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/mapping', {
             slotId: payload.slotId,
             shiftId: payload.shiftId,
             dateStart: payload.dateStart,
@@ -40150,7 +40150,7 @@ module.exports = Component.exports
     },
     saveSlotUseMapping: function saveSlotUseMapping(state, payload) {
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/slot/edit/useMapping', {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/edit/useMapping', {
             slotId: payload.slotId,
             isUsingMapping: payload.isUsingMapping
         }).then(function (res) {
@@ -40192,7 +40192,7 @@ module.exports = Component.exports
         });
     },
     removeShiftSchedule: function removeShiftSchedule(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/remove/schedule', { id: payload.id }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/remove/schedule', { id: payload.id }).then(function (res) {
             if (!res.isFailed) {
 
                 /* Show success notification */
@@ -40228,7 +40228,7 @@ module.exports = Component.exports
         });
     },
     editShiftSchedule: function editShiftSchedule(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'attendance/shift/edit/schedule', { id: payload.id, shiftId: payload.shiftId }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/edit/schedule', { id: payload.id, shiftId: payload.shiftId }).then(function (res) {
             if (!res.isFailed && res.data.slotShiftData) {
 
                 /* Show success notification */
@@ -40315,17 +40315,24 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = get;
-/* harmony export (immutable) */ __webpack_exports__["b"] = post;
+/* harmony export (immutable) */ __webpack_exports__["d"] = get;
+/* harmony export (immutable) */ __webpack_exports__["e"] = post;
 /* unused harmony export multipartPost */
 /* unused harmony export del */
 /* unused harmony export interceptors */
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["c"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
+/* unused harmony export facePost */
+/* unused harmony export facePutOctet */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /**
  * Created by kevinpurwono on 9/11/17.
  */
+
 
 
 function get(url) {
@@ -40381,19 +40388,80 @@ function interceptors(cb) {
     });
 }
 
+function faceGet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePut(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function faceDel(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+function facePutOctet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
 /***/ }),
 
 /***/ "./resources/assets/js/client/helpers/const.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = api_path;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
 /**
  * Created by kevinpurwono on 9/11/17.
  */
-function api_path() {
-  return '/v1/h/';
-}
+
+var api_path = '/v1/h/';
+var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
+var faceSubKey = 'e498335112c8402a82967303033da0a4';
 
 /***/ }),
 

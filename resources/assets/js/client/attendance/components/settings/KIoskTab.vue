@@ -107,7 +107,7 @@
         },
         created(){
             let self = this
-            get(api_path() + 'component/list/kiosks')
+            get(api_path + 'component/list/kiosks')
                 .then((res) => {
                     self.kiosks = res.data.data
                 })
@@ -130,7 +130,7 @@
                     self.formObject[value.name] = value.value
                 })
 
-                post(api_path() + 'attendance/kiosk/create', self.formObject)
+                post(api_path + 'attendance/kiosk/create', self.formObject)
                     .then((res) => {
                         if (!res.data.isFailed && res.data.kiosk) {
 
@@ -181,7 +181,7 @@
             deleteKiosk(kioskId){
                 let self = this
                 if(confirm('Are you sure to delete this Kiosk?')){
-                    post(api_path() + 'attendance/kiosk/delete', {id: kioskId})
+                    post(api_path + 'attendance/kiosk/delete', {id: kioskId})
                         .then((res) => {
                             if (!res.data.isFailed) {
 

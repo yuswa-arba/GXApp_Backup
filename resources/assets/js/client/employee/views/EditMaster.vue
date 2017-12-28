@@ -308,7 +308,7 @@
 
                         <div class="col-lg-4 employee-details">
                             <label>Sibling's Phone Number</label>
-                            <input type="text" class="form-control"v-model="form.siblingPhoneNo">
+                            <input type="text" class="form-control" v-model="form.siblingPhoneNo">
                         </div>
 
                         <div class="col-lg-12 employee-details">
@@ -416,32 +416,33 @@
     export default{
         data(){
             return {
-                form:{},
-                maritalStatuses:[],
-                banks:[],
-                educationLevels:[],
-                religions:[]
+                form: {},
+                maritalStatuses: [],
+                banks: [],
+                educationLevels: [],
+                religions: []
 
             }
         },
         created(){
-            get(api_path() + 'employee/edit/master/' + this.$route.params.id)
+            get(api_path + 'employee/edit/master/' + this.$route.params.id)
                 .then((res) => {
-                //set current value
-                this.form = res.data.detail.data
-                this.form.id = this.$route.params.id
+                    //set current value
+                    this.form = res.data.detail.data
+                    this.form.id = this.$route.params.id
 
-                //form components
-                this.maritalStatuses = this.form.formComponents.maritalStatuses
-                this.banks = this.form.formComponents.banks
-                this.educationLevels = this.form.formComponents.educationLevels
-                this.religions = this.form.formComponents.religions
-        })
+                    //form components
+                    this.maritalStatuses = this.form.formComponents.maritalStatuses
+                    this.banks = this.form.formComponents.banks
+                    this.educationLevels = this.form.formComponents.educationLevels
+                    this.religions = this.form.formComponents.religions
+                })
         },
-        methods:{
+        methods: {
             save(){
-                delete this.form.formComponents // remove form components during submit
-                this.$bus.$emit('save:master_detail',this.form)
+                let self = this
+                delete self.form.formComponents // remove form components during submit
+                self.$bus.$emit('save:master_detail',this.form)
             }
         }
     }

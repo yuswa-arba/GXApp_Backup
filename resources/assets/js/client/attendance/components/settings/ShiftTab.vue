@@ -128,7 +128,7 @@
         },
         created(){
             let self = this
-            get(api_path() + 'component/list/shifts')
+            get(api_path + 'component/list/shifts')
                 .then((res) => {
                     self.shifts = res.data.data
                 })
@@ -142,7 +142,7 @@
                     self.formObject[value.name] = value.value
                 })
 
-                post(api_path() + 'attendance/shift/create', self.formObject)
+                post(api_path + 'attendance/shift/create', self.formObject)
                     .then((res) => {
                         if (!res.data.isFailed && res.data.shift) {
 
@@ -186,7 +186,7 @@
             deleteShift(id){
                 let self = this
                 if(confirm('Are you sure to delete this shift?')){
-                    post(api_path() + 'attendance/shift/delete', {shiftId: id})
+                    post(api_path + 'attendance/shift/delete', {shiftId: id})
                         .then((res) => {
                             if (!res.data.isFailed) {
 

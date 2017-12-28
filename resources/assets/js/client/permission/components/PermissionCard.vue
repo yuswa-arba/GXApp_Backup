@@ -172,7 +172,7 @@
         },
         created(){
             let self = this;
-            get(api_path() + 'setting/permission/list')
+            get(api_path + 'setting/permission/list')
                 .then((res) => {
                     this.permissions = res.data.data;
                 })
@@ -194,7 +194,7 @@
 
                 this.permission = permission;
 
-                get(api_path() + 'setting/permission/assigned/' + permission.name)
+                get(api_path + 'setting/permission/assigned/' + permission.name)
                     .then((res) => {
                         this.permissionId = res.data.data.id;
                         this.permissionName = res.data.data.name;
@@ -223,7 +223,7 @@
 
                 let data = {permissionName: permissionName, assignRoleIdArr: assignRoleIdArr};
 
-                post(api_path() + 'setting/permission/assign/by_permission', data)
+                post(api_path + 'setting/permission/assign/by_permission', data)
                     .then((res) => {
                         /* TODO Create response for User too*/
                         this.permission.roles = res.data.assigned.data

@@ -20,6 +20,7 @@
 
 @push('child-page-controller')
 @include('layouts.partials.snippets._notification_to_zoom_out')
+
 <script src="{{mix('js/client/attendance/setting.js')}}"></script>
 @endpush
 

@@ -1852,7 +1852,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/permission/list').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/list').then(function (res) {
             _this.permissions = res.data.data;
         });
 
@@ -1876,7 +1876,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.permission = permission;
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/permission/assigned/' + permission.name).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/assigned/' + permission.name).then(function (res) {
                 _this2.permissionId = res.data.data.id;
                 _this2.permissionName = res.data.data.name;
                 _this2.roles = res.data.data.allRoles.data;
@@ -1904,7 +1904,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var data = { permissionName: permissionName, assignRoleIdArr: assignRoleIdArr };
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/permission/assign/by_permission', data).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/assign/by_permission', data).then(function (res) {
                 /* TODO Create response for User too*/
                 _this3.permission.roles = res.data.assigned.data;
 
@@ -2065,7 +2065,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
 
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/list').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/role/list').then(function (res) {
             self.roles = res.data.data;
         });
 
@@ -2089,7 +2089,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.role = role;
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* get */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/assigned/' + role.name).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/role/assigned/' + role.name).then(function (res) {
                 _this.roleId = res.data.data.id;
                 _this.roleName = res.data.data.name;
                 _this.permissions = res.data.data.allPermissions.data;
@@ -2115,7 +2115,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var data = { roleName: roleName, assignPermissionIdArr: assignPermissionIdArr };
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */])() + 'setting/role/assign/by_role', data).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/role/assign/by_role', data).then(function (res) {
 
                 _this2.role.permissions = res.data.assigned.data;
 
@@ -32228,17 +32228,24 @@ echo.channel('attendance').listen('Attendance.Events.EmployeeClocked', function 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = get;
-/* harmony export (immutable) */ __webpack_exports__["b"] = post;
+/* harmony export (immutable) */ __webpack_exports__["d"] = get;
+/* harmony export (immutable) */ __webpack_exports__["e"] = post;
 /* unused harmony export multipartPost */
 /* unused harmony export del */
 /* unused harmony export interceptors */
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["c"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
+/* unused harmony export facePost */
+/* unused harmony export facePutOctet */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /**
  * Created by kevinpurwono on 9/11/17.
  */
+
 
 
 function get(url) {
@@ -32294,19 +32301,80 @@ function interceptors(cb) {
     });
 }
 
+function faceGet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePut(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function faceDel(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+function facePutOctet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
 /***/ }),
 
 /***/ "./resources/assets/js/client/helpers/const.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = api_path;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
 /**
  * Created by kevinpurwono on 9/11/17.
  */
-function api_path() {
-  return '/v1/h/';
-}
+
+var api_path = '/v1/h/';
+var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
+var faceSubKey = 'e498335112c8402a82967303033da0a4';
 
 /***/ }),
 

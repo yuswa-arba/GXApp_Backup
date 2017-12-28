@@ -283,12 +283,12 @@
 
             let self = this
 
-            get(api_path() + 'component/list/jobPosition')
+            get(api_path + 'component/list/jobPosition')
                 .then((res) => {
                     self.jobPositions = res.data.data
                 })
 
-            get(api_path() + 'attendance/slotMaker/list')
+            get(api_path + 'attendance/slotMaker/list')
                 .then((res) => {
                     self.slotMakers = res.data.data
 
@@ -310,7 +310,7 @@
                     self.formObject[value.name] = value.value
                 })
 
-                post(api_path() + 'attendance/slotMaker/create', self.formObject)
+                post(api_path + 'attendance/slotMaker/create', self.formObject)
                     .then((res) => {
                         if (!res.data.isFailed && res.data.slotMaker) {
 
@@ -364,7 +364,7 @@
                 let self = this;
 
                 if (confirm('Are you sure to execute slot maker : ' + slotMakerName + ' ?')) {
-                    post(api_path() + 'attendance/slotMaker/execute', {id: slotMakerId})
+                    post(api_path + 'attendance/slotMaker/execute', {id: slotMakerId})
                         .then((res) => {
 
                             $('.page-container').pgNotification({

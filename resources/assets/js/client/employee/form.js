@@ -8,8 +8,6 @@ import {objectToFormData} from '../helpers/utils'
 
 $(document).ready(function () {
 
-
-
     // constants
     let employeeId = '';
     let personalInfoForm = $('#personalInformationForm');
@@ -25,7 +23,7 @@ $(document).ready(function () {
            formObject[value.name] = value.value
        })
 
-        post(api_path() + 'employee/create', objectToFormData(formObject))
+        post(api_path + 'employee/create', objectToFormData(formObject))
             .then((res) => {
 
                 if (!res.data.isFailed && res.data.employeeId) {
@@ -89,7 +87,7 @@ $(document).ready(function () {
         let formData = employmentForm.serialize();
         formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
 
-        post(api_path() + 'employee/employment', formData)
+        post(api_path + 'employee/employment', formData)
             .then((res) => {
 
                 if (!res.data.isFailed) {

@@ -6,13 +6,13 @@ import {api_path} from '../../../../../helpers/const'
 import series from 'async/series';
 export default{
     getJobPositions(state){
-        get(api_path() + 'component/list/jobPosition')
+        get(api_path + 'component/list/jobPosition')
             .then((res) => {
                 state.jobPositions = res.data.data
             })
     },
     getSlotMakers(state){
-        get(api_path() + 'component/list/slotMakers')
+        get(api_path + 'component/list/slotMakers')
             .then((res) => {
                 state.slotMakers = res.data.data
             })
@@ -21,7 +21,7 @@ export default{
         const statusById = payload.statusById
         const relatedById = payload.relatedById
 
-        get(api_path() + 'attendance/slot/list?' + 'statusBy=' + statusById + '&relatedBy=' + relatedById)
+        get(api_path + 'attendance/slot/list?' + 'statusBy=' + statusById + '&relatedBy=' + relatedById)
             .then((res) => {
                 state.slots = res.data.data
 
@@ -42,7 +42,7 @@ export default{
             })
     },
     getShifts(state, payload){
-        get(api_path() + 'component/list/shifts')
+        get(api_path + 'component/list/shifts')
             .then((res) => {
                 state.shifts = res.data.data
             })
@@ -57,7 +57,7 @@ export default{
             })
     },
     getEmployeesToBeAssigned(state, slotId){
-        get(api_path() + 'attendance/slot/assign/employee?slotId=' + slotId)
+        get(api_path + 'attendance/slot/assign/employee?slotId=' + slotId)
             .then((res) => {
 
                 state.employeesToBeAssigned = res.data.data
@@ -93,7 +93,7 @@ export default{
             })
     },
     getSlotsDetail(state, slotId){
-        get(api_path() + 'component/slot/' + slotId)
+        get(api_path + 'component/slot/' + slotId)
             .then((res) => {
                 state.slotDetail = res.data.data
             })
@@ -108,7 +108,7 @@ export default{
             })
     },
     getCalendarEventSource(state, slotId){
-        get(api_path() + 'attendance/slot/detail/calendar?' + 'slotId=' + slotId)
+        get(api_path + 'attendance/slot/detail/calendar?' + 'slotId=' + slotId)
             .then((res) => {
                 $('#calendar').fullCalendar('addEventSource', res.data.dayOffs.data);
                 $('#calendar').fullCalendar('addEventSource', res.data.shiftSchedules.data);
@@ -124,7 +124,7 @@ export default{
             })
     },
     assignSlot(state, payload){
-        post(api_path() + 'attendance/slot/assign/employee', {employeeId: payload.employee.id, slotId: payload.slot.id})
+        post(api_path + 'attendance/slot/assign/employee', {employeeId: payload.employee.id, slotId: payload.slot.id})
             .then((res) => {
                 if (!res.data.isFailed) {
 
@@ -199,7 +199,7 @@ export default{
             })
     },
     removeSlot(state, payload){
-        post(api_path() + 'attendance/slot/remove/employee', {employeeId: payload.employee.id})
+        post(api_path + 'attendance/slot/remove/employee', {employeeId: payload.employee.id})
             .then((res) => {
                 if (!res.data.isFailed) {
 
@@ -287,7 +287,7 @@ export default{
     },
     getCalendarDataForMapping(state, payload){
 
-        post(api_path() + 'attendance/shift/mapping/calendar', {slotIds: payload.slotIds})
+        post(api_path + 'attendance/shift/mapping/calendar', {slotIds: payload.slotIds})
             .then((res) => {
 
                 state.calendarShiftMappingEventSource = res.data.data
@@ -322,7 +322,7 @@ export default{
     },
     getShiftSchedule(state, payload){
 
-        post(api_path() + 'attendance/shift/mapping/schedule', {slotIds: payload.slotIds})
+        post(api_path + 'attendance/shift/mapping/schedule', {slotIds: payload.slotIds})
             .then((res) => {
                 state.calendarShiftScheduleEventSource = res.data.data
                 //add color
@@ -354,7 +354,7 @@ export default{
 
         state.isSavingShift = true
 
-        post(api_path() + 'attendance/shift/mapping', {
+        post(api_path + 'attendance/shift/mapping', {
             slotId: payload.slotId,
             shiftId: payload.shiftId,
             dateStart: payload.dateStart,
@@ -391,7 +391,7 @@ export default{
     },
     saveSlotUseMapping(state, payload){
 
-        post(api_path() + 'attendance/slot/edit/useMapping', {
+        post(api_path + 'attendance/slot/edit/useMapping', {
             slotId: payload.slotId,
             isUsingMapping: payload.isUsingMapping
         })
@@ -439,7 +439,7 @@ export default{
 
     },
     removeShiftSchedule(state, payload){
-        post(api_path() + 'attendance/shift/remove/schedule', {id: payload.id})
+        post(api_path + 'attendance/shift/remove/schedule', {id: payload.id})
             .then((res) => {
                 if (!res.isFailed) {
 
@@ -478,7 +478,7 @@ export default{
             })
     },
     editShiftSchedule(state, payload){
-        post(api_path() + 'attendance/shift/edit/schedule', {id: payload.id, shiftId: payload.shiftId})
+        post(api_path + 'attendance/shift/edit/schedule', {id: payload.id, shiftId: payload.shiftId})
             .then((res) => {
                 if (!res.isFailed && res.data.slotShiftData) {
 

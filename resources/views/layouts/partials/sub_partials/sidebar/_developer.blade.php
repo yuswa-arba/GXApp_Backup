@@ -6,6 +6,14 @@
     <span class="icon-thumbnail "><i data-feather="cpu"></i></span>
     <ul class="sub-menu">
         <li class="">
+            <a href="">Dashboard</a>
+            <span class="icon-thumbnail">db</span>
+        </li>
+        <li class="">
+            <a href="{{route('developer.face')}}">Face API</a>
+            <span class="icon-thumbnail">fa</span>
+        </li>
+        <li class="">
             <a href="">Queue Jobs</a>
             <span class="icon-thumbnail">qj</span>
         </li>

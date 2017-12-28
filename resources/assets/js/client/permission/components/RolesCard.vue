@@ -120,7 +120,7 @@
         created(){
 
             let self = this;
-            get(api_path() + 'setting/role/list')
+            get(api_path + 'setting/role/list')
                 .then((res) => {
                     self.roles = res.data.data;
                 })
@@ -145,7 +145,7 @@
 
                 this.role = role;
 
-                get(api_path() + 'setting/role/assigned/' + role.name)
+                get(api_path + 'setting/role/assigned/' + role.name)
                     .then((res) => {
                         this.roleId = res.data.data.id;
                         this.roleName = res.data.data.name;
@@ -170,7 +170,7 @@
 
                 let data = {roleName: roleName, assignPermissionIdArr: assignPermissionIdArr};
 
-                post(api_path() + 'setting/role/assign/by_role', data)
+                post(api_path + 'setting/role/assign/by_role', data)
                     .then((res) => {
 
                         this.role.permissions = res.data.assigned.data;
