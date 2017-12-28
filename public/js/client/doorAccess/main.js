@@ -33724,15 +33724,15 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["d"] = get;
-/* harmony export (immutable) */ __webpack_exports__["e"] = post;
+/* harmony export (immutable) */ __webpack_exports__["e"] = get;
+/* harmony export (immutable) */ __webpack_exports__["f"] = post;
 /* unused harmony export multipartPost */
 /* unused harmony export del */
 /* unused harmony export interceptors */
 /* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
-/* harmony export (immutable) */ __webpack_exports__["c"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePut;
 /* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
-/* unused harmony export facePost */
+/* harmony export (immutable) */ __webpack_exports__["c"] = facePost;
 /* unused harmony export facePutOctet */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);

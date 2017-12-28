@@ -19,8 +19,8 @@
                                 Master</a>
                             <a class="dropdown-item pointer" @click="viewEmploymentDetail()">
                                 Employment</a>
-                            <a class="dropdown-item pointer" @click="">
-                                Face</a>
+                            <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">
+                                Face API</a>
                             <a class="dropdown-item pointer" @click="viewFaceDetail()">
                                 Login Details
                             </a>
@@ -78,9 +78,9 @@
                 $('#errors-container').addClass('hide');
                 this.$router.push({name: 'detailLogin', params: {id: this.$route.params.id}})
             },
-            viewFaceDetail(){
+            viewFaceAPIDetail(){
                 $('#errors-container').addClass('hide');
-                this.$router.push({name: 'detailFace', params: {id: this.$route.params.id}})
+                this.$router.push({name: 'detailFaceAPI', params: {id: this.$route.params.id}})
             },
             goBack(){
                 $('#errors-container').addClass('hide');

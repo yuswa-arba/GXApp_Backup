@@ -6,11 +6,13 @@ use App\Account\Models\User;
 use App\Account\Transformers\LoginDetailTransfomer;
 use App\Account\Transformers\LoginEditTransfomer;
 use App\Employee\Models\Employment;
+use App\Employee\Models\FacePerson;
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeDetailTransfomer;
 use App\Employee\Transformers\EmployeeEditTransfomer;
 use App\Employee\Transformers\EmploymentEditTransfomer;
 use App\Employee\Transformers\EmploymentTransfomer;
+use App\Employee\Transformers\FaceAPIDetailTransfomer;
 use App\Http\Requests\Employee\EditMasterEmployeeRequest;
 use App\Http\Requests\Employee\EmploymentRequest;
 use App\Http\Requests\Employee\MasterEmployeeRequest;
@@ -238,5 +240,51 @@ class AjaxController extends Controller
             return response()->json($response, 200);
         }
 
+    }
+
+    public function faceAPIDetail($employeeId)
+    {
+        if ($employeeId != null && $employeeId != '') {
+
+            $employee = MasterEmployee::where('id', $employeeId)->first();
+
+            if ($employee) {
+                return response()->json([
+                    'message' => 'Successful',
+                    'detail' => fractal($employee, new FaceAPIDetailTransfomer())
+                ], 200);
+
+            } else {
+                return response()->json(['message' => 'Error occured! Unable to find user data'], 200);
+            }
+        } else {
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
+        }
+    }
+
+    public function saveFaceApiPerson(Request $request)
+    {
+        $request->validate([
+            'employeeId'=>'required',
+            'personId'=>'required',
+            'personGroupId'=>'required'
+        ]);
+
+        $response = array();
+
+        $saveFacePerson = FacePerson::updateOrCreate(
+            ['employeeId'=>$request->employeeId, 'personGroupId'=>$request->personGroupId],
+            ['personId'=>$request->personId,]
+        );
+
+        if($saveFacePerson){
+            $response['isFailed'] = false;
+            $response['message'] = 'Save to face person table success';
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'An error occured.Unable to save face person';
+        }
+
+        return response()->json($response,200);
     }
 }

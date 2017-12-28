@@ -1867,7 +1867,7 @@ $(document).ready(function () {
             formObject[value.name] = value.value;
         });
 
-        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/create', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["a" /* objectToFormData */])(formObject)).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/create', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["b" /* objectToFormData */])(formObject)).then(function (res) {
 
             if (!res.data.isFailed && res.data.employeeId) {
 
@@ -1923,7 +1923,7 @@ $(document).ready(function () {
         var formData = employmentForm.serialize();
         formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
 
-        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/employment', formData).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/employment', formData).then(function (res) {
 
             if (!res.data.isFailed) {
                 $('#errors-container').removeClass('show').addClass('hide');
@@ -2008,15 +2008,15 @@ $(document).ready(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["d"] = get;
-/* harmony export (immutable) */ __webpack_exports__["e"] = post;
+/* harmony export (immutable) */ __webpack_exports__["e"] = get;
+/* harmony export (immutable) */ __webpack_exports__["f"] = post;
 /* unused harmony export multipartPost */
 /* unused harmony export del */
 /* unused harmony export interceptors */
 /* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
-/* harmony export (immutable) */ __webpack_exports__["c"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePut;
 /* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
-/* unused harmony export facePost */
+/* harmony export (immutable) */ __webpack_exports__["c"] = facePost;
 /* unused harmony export facePutOctet */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
@@ -2162,7 +2162,8 @@ var faceSubKey = 'e498335112c8402a82967303033da0a4';
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = objectToFormData;
+/* harmony export (immutable) */ __webpack_exports__["b"] = objectToFormData;
+/* harmony export (immutable) */ __webpack_exports__["a"] = makeBlob;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
@@ -2200,6 +2201,28 @@ function objectToFormData(obj, form, namespace) {
         }
     }
     return fd;
+}
+
+function makeBlob(dataURL) {
+    var BASE64_MARKER = ';base64,';
+    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+        var _parts = dataURL.split(',');
+        var _contentType = _parts[0].split(':')[1];
+        var _raw = decodeURIComponent(_parts[1]);
+        return new Blob([_raw], { type: _contentType });
+    }
+    var parts = dataURL.split(BASE64_MARKER);
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+
+    var uInt8Array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], { type: contentType });
 }
 
 /***/ }),

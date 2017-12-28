@@ -1852,7 +1852,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/list').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/list').then(function (res) {
             _this.permissions = res.data.data;
         });
 
@@ -1876,7 +1876,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.permission = permission;
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/assigned/' + permission.name).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/assigned/' + permission.name).then(function (res) {
                 _this2.permissionId = res.data.data.id;
                 _this2.permissionName = res.data.data.name;
                 _this2.roles = res.data.data.allRoles.data;
@@ -1904,7 +1904,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var data = { permissionName: permissionName, assignRoleIdArr: assignRoleIdArr };
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/assign/by_permission', data).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/assign/by_permission', data).then(function (res) {
                 /* TODO Create response for User too*/
                 _this3.permission.roles = res.data.assigned.data;
 
@@ -2065,7 +2065,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
 
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/role/list').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/role/list').then(function (res) {
             self.roles = res.data.data;
         });
 
@@ -2089,7 +2089,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             this.role = role;
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/role/assigned/' + role.name).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/role/assigned/' + role.name).then(function (res) {
                 _this.roleId = res.data.data.id;
                 _this.roleName = res.data.data.name;
                 _this.permissions = res.data.data.allPermissions.data;
@@ -2115,7 +2115,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var data = { roleName: roleName, assignPermissionIdArr: assignPermissionIdArr };
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/role/assign/by_role', data).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/role/assign/by_role', data).then(function (res) {
 
                 _this2.role.permissions = res.data.assigned.data;
 
@@ -32228,15 +32228,15 @@ echo.channel('attendance').listen('Attendance.Events.EmployeeClocked', function 
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["d"] = get;
-/* harmony export (immutable) */ __webpack_exports__["e"] = post;
+/* harmony export (immutable) */ __webpack_exports__["e"] = get;
+/* harmony export (immutable) */ __webpack_exports__["f"] = post;
 /* unused harmony export multipartPost */
 /* unused harmony export del */
 /* unused harmony export interceptors */
 /* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
-/* harmony export (immutable) */ __webpack_exports__["c"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePut;
 /* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
-/* unused harmony export facePost */
+/* harmony export (immutable) */ __webpack_exports__["c"] = facePost;
 /* unused harmony export facePutOctet */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);

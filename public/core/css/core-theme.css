@@ -2946,7 +2946,7 @@ hr.dotted {
   margin: 18px 14px;
 }
 .all-caps {
-  text-transform: uppercase;
+  text-transform: uppercase!important;
 }
 .muted {
   color: #ffffff;
