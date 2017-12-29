@@ -106,16 +106,28 @@ export function facePost(url, payload) {
     })
 
 }
-export function facePutOctet(url, payload) {
+export function facePutOctet(url, data) {
     return axios({
         method: 'PUT',
         url: url,
-        data: payload,
+        data: data,
         headers: {
             'Content-Type': 'application/octet-stream',
             'Ocp-Apim-Subscription-Key': faceSubKey,
         }
     })
 
+}
+
+export function facePostOctet(url, data) {
+    return axios({
+        method: 'POST',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': faceSubKey,
+        }
+    })
 
 }

@@ -2511,6 +2511,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2599,7 +2631,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         saveMaster: function saveMaster(form) {
             var self = this;
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master', form).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master', form).then(function (res) {
                 if (!res.data.isFailed) {
 
                     // remove errors alert
@@ -2644,7 +2676,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         saveEmployment: function saveEmployment(form) {
             var self = this;
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/employment', form).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/employment', form).then(function (res) {
                 if (!res.data.isFailed) {
 
                     // remove errors alert
@@ -2689,7 +2721,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         saveLogin: function saveLogin(form) {
             var self = this;
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/login', form).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/login', form).then(function (res) {
                 if (!res.data.isFailed) {
 
                     // remove errors alert
@@ -2789,7 +2821,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/list').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/list').then(function (res) {
             _this.employees = res.data.data;
         });
     },
@@ -2913,7 +2945,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/employment/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/employment/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
     }
@@ -3026,6 +3058,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3034,14 +3080,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             detail: [],
-            personFaceData: ''
+            personFaceData: '',
+            personDetail: {}
         };
     },
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/faceapi/' + this.$route.params.id).then(function (res) {
+        var self = this;
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/faceapi/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
+            self.getPersonDetail();
         });
     },
 
@@ -3061,7 +3110,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     var receivedPeronId = res.data.personId;
                     //save to DB
                     if (receivedPeronId) {
-                        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/faceapi/person', {
+                        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/faceapi/person', {
                             personId: receivedPeronId,
                             employeeId: self.detail.employeeId,
                             personGroupId: personGroupId
@@ -3080,6 +3129,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                                 }).show();
 
                                 $('#createPersonBtn').html('Completed');
+                                self.getPersonDetail();
                             } else {
                                 $('.page-container').pgNotification({
                                     style: 'flip',
@@ -3120,6 +3170,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         addPersonFace: function addPersonFace() {
             var self = this;
+            console.log(self.personFaceData);
+
+            $('#addPersonFaceBtn').html('...');
+            $('#addPersonFaceBtn').attr('disabled', 'disabled');
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* facePostOctet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces', self.personFaceData).then(function (res) {
+                if (res.status == 200 && res.data.persistedFaceId) {
+                    console.log(res.data.persistedFaceId);
+
+                    /*Reset data*/
+                    self.personFaceData = '';
+                    $('#inputFace').val('');
+                    $('#addPersonFaceBtn').html('Face Data Empty');
+                    $('#addPersonFaceBtn').removeAttr('disabled');
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+
+                /*Reset data*/
+                self.personFaceData = '';
+                $('#inputFace').val('');
+                $('#addPersonFaceBtn').html('Face Data Empty');
+                $('#addPersonFaceBtn').removeAttr('disabled');
+            });
         },
         inputPersonFace: function inputPersonFace(event) {
             /* Convert file to base64 then convert it to Blob*/
@@ -3134,6 +3214,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
 
             FR.readAsDataURL(event.target.files[0]);
+        },
+        getPersonDetail: function getPersonDetail() {
+            var self = this;
+            if (self.detail.personGroupId && self.detail.personId) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* faceGet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId).then(function (res) {
+                    if (res.data) {
+                        self.personDetail = res.data;
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            }
         }
     }
 });
@@ -3236,7 +3334,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/login/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/login/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
     },
@@ -3662,7 +3760,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/master/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/master/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
     }
@@ -3809,7 +3907,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/employment/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/employment/' + this.$route.params.id).then(function (res) {
 
             //set current value
             _this.form = res.data.detail.data;
@@ -3949,7 +4047,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/login/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/login/' + this.$route.params.id).then(function (res) {
 
             //set current value
             _this.form = res.data.detail.data;
@@ -4406,7 +4504,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master/' + this.$route.params.id).then(function (res) {
             //set current value
             _this.form = res.data.detail.data;
             _this.form.id = _this.$route.params.id;
@@ -26982,6 +27080,112 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
+        _c(
+          "div",
+          {
+            attrs: { slot: "go-back-and-view-menu-without-edit" },
+            slot: "go-back-and-view-menu-without-edit"
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-primary m-r-15 m-b-10 pull-left",
+                on: {
+                  click: function($event) {
+                    _vm.goBack()
+                  }
+                }
+              },
+              [
+                _c("i", { staticClass: "pg-arrow_left" }),
+                _vm._v("\n                Go Back\n            ")
+              ]
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "pull-left m-r-15 m-b-10" }, [
+              _c("div", { staticClass: "dropdown dropdown-default" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-primary all-caps dropdown-toggle text-center",
+                    attrs: {
+                      type: "button",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        View\n                    "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown-menu" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.viewMasterDetail()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                            Master")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.viewEmploymentDetail()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                            Employment")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.viewFaceAPIDetail()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                            Face API")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.viewFaceDetail()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Login Details\n                        "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
         _c("div", { attrs: { slot: "cancel-menu" }, slot: "cancel-menu" }, [
           _c(
             "button",
@@ -27027,7 +27231,7 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("go-back-and-view-menu")],
+      [_vm._t("go-back-and-view-menu-without-edit")],
       2
     ),
     _vm._v(" "),
@@ -27116,6 +27320,14 @@ var render = function() {
                     [_vm._v("Completed")]
                   ),
               _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("span", { staticClass: "help m-t-10" }, [
+                _vm._v("Create person to get Person ID and Person Group ID")
+              ]),
+              _vm._v(" "),
               _c("hr")
             ]),
             _vm._v(" "),
@@ -27126,7 +27338,7 @@ var render = function() {
               _vm._v(" "),
               _vm.detail.personId != "-" && _vm.detail.personGroupId != "-"
                 ? _c("input", {
-                    attrs: { type: "file" },
+                    attrs: { id: "inputFace", type: "file" },
                     on: {
                       change: function($event) {
                         _vm.inputPersonFace($event)
@@ -27156,7 +27368,7 @@ var render = function() {
                 : _c(
                     "button",
                     { staticClass: "btn", attrs: { disabled: "" } },
-                    [_vm._v(" Face Data Empty ")]
+                    [_vm._v(" Face Data Empty")]
                   ),
               _vm._v(" "),
               _c("br"),
@@ -27165,8 +27377,47 @@ var render = function() {
                 _vm._v(
                   "Choose File to Add Person Face. It may take a while to convert image"
                 )
-              ])
-            ])
+              ]),
+              _vm._v(" "),
+              _c("hr")
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-lg-12 m-t-10" },
+              [
+                _c("p", { staticClass: "all-caps bold text-black" }, [
+                  _vm._v("Person Details\n                        ")
+                ]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Person Id")]),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-primary" }, [
+                  _vm._v(_vm._s(_vm.personDetail.personId))
+                ]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("p", { staticClass: " text-primary" }, [
+                  _vm._v(_vm._s(_vm.personDetail.name))
+                ]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Persisted Face Ids")]),
+                _vm._v(" "),
+                _vm._l(_vm.personDetail.persistedFaceIds, function(
+                  persistedFace
+                ) {
+                  return _c("p", { staticClass: " text-primary" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(persistedFace) +
+                        "\n                        "
+                    )
+                  ])
+                })
+              ],
+              2
+            )
           ])
         ])
       ])
@@ -42419,16 +42670,17 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["e"] = get;
-/* harmony export (immutable) */ __webpack_exports__["f"] = post;
+/* harmony export (immutable) */ __webpack_exports__["f"] = get;
+/* harmony export (immutable) */ __webpack_exports__["g"] = post;
 /* unused harmony export multipartPost */
 /* unused harmony export del */
 /* unused harmony export interceptors */
 /* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
-/* harmony export (immutable) */ __webpack_exports__["d"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["e"] = facePut;
 /* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
 /* harmony export (immutable) */ __webpack_exports__["c"] = facePost;
 /* unused harmony export facePutOctet */
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePostOctet;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
@@ -42538,11 +42790,23 @@ function facePost(url, payload) {
         }
     });
 }
-function facePutOctet(url, payload) {
+function facePutOctet(url, data) {
     return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
         method: 'PUT',
         url: url,
-        data: payload,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePostOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: data,
         headers: {
             'Content-Type': 'application/octet-stream',
             'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]

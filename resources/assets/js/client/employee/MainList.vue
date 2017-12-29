@@ -34,6 +34,38 @@
                 </button>
             </div>
 
+            <div slot="go-back-and-view-menu-without-edit">
+                <button class="btn btn-outline-primary m-r-15 m-b-10 pull-left"
+                        @click="goBack()"><i class="pg-arrow_left"></i>
+                    Go Back
+                </button>
+                <div class="pull-left m-r-15 m-b-10">
+                    <div class="dropdown dropdown-default">
+                        <button class="btn btn-primary all-caps dropdown-toggle text-center" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            View
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item pointer" @click="viewMasterDetail()">
+                                Master</a>
+                            <a class="dropdown-item pointer" @click="viewEmploymentDetail()">
+                                Employment</a>
+                            <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">
+                                Face API</a>
+                            <a class="dropdown-item pointer" @click="viewFaceDetail()">
+                                Login Details
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
             <div slot="cancel-menu">
                 <button class="btn btn-outline-danger m-r-15 m-b-10 pull-left"
                         @click="cancel()"><i class="pg-close"></i>

@@ -1934,7 +1934,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/kiosks').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/kiosks').then(function (res) {
             self.kiosks = res.data.data;
         }).catch(function (err) {
             $('.page-container').pgNotification({
@@ -1956,7 +1956,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.formObject[value.name] = value.value;
             });
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/kiosk/create', self.formObject).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/kiosk/create', self.formObject).then(function (res) {
                 if (!res.data.isFailed && res.data.kiosk) {
 
                     $('.page-container').pgNotification({
@@ -2004,7 +2004,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deleteKiosk: function deleteKiosk(kioskId) {
             var self = this;
             if (confirm('Are you sure to delete this Kiosk?')) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/kiosk/delete', { id: kioskId }).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/kiosk/delete', { id: kioskId }).then(function (res) {
                     if (!res.data.isFailed) {
 
                         $('.page-container').pgNotification({
@@ -2339,7 +2339,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/shifts').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/shifts').then(function (res) {
             self.shifts = res.data.data;
         });
     },
@@ -2353,7 +2353,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.formObject[value.name] = value.value;
             });
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/create', self.formObject).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/create', self.formObject).then(function (res) {
                 if (!res.data.isFailed && res.data.shift) {
 
                     //reset form
@@ -2393,7 +2393,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deleteShift: function deleteShift(id) {
             var self = this;
             if (confirm('Are you sure to delete this shift?')) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/delete', { shiftId: id }).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/delete', { shiftId: id }).then(function (res) {
                     if (!res.data.isFailed) {
 
                         var shiftIndex = _.findIndex(self.shifts, { id: id });
@@ -2733,11 +2733,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         var self = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/jobPosition').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/jobPosition').then(function (res) {
             self.jobPositions = res.data.data;
         });
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/list').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/list').then(function (res) {
             self.slotMakers = res.data.data;
 
             // fix datatables Bug displaying "no data available"
@@ -2757,7 +2757,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.formObject[value.name] = value.value;
             });
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/create', self.formObject).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/create', self.formObject).then(function (res) {
                 if (!res.data.isFailed && res.data.slotMaker) {
 
                     $('.page-container').pgNotification({
@@ -2806,7 +2806,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
 
             if (confirm('Are you sure to execute slot maker : ' + slotMakerName + ' ?')) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/execute', { id: slotMakerId }).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/execute', { id: slotMakerId }).then(function (res) {
 
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -48757,16 +48757,17 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["e"] = get;
-/* harmony export (immutable) */ __webpack_exports__["f"] = post;
+/* harmony export (immutable) */ __webpack_exports__["f"] = get;
+/* harmony export (immutable) */ __webpack_exports__["g"] = post;
 /* unused harmony export multipartPost */
 /* unused harmony export del */
 /* unused harmony export interceptors */
 /* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
-/* harmony export (immutable) */ __webpack_exports__["d"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["e"] = facePut;
 /* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
 /* harmony export (immutable) */ __webpack_exports__["c"] = facePost;
 /* unused harmony export facePutOctet */
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePostOctet;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
@@ -48876,11 +48877,23 @@ function facePost(url, payload) {
         }
     });
 }
-function facePutOctet(url, payload) {
+function facePutOctet(url, data) {
     return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
         method: 'PUT',
         url: url,
-        data: payload,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePostOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: data,
         headers: {
             'Content-Type': 'application/octet-stream',
             'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]

@@ -3,7 +3,7 @@
 
         <div class="col-lg-12 m-b-10 m-t-10">
 
-            <slot name="go-back-and-view-menu"></slot>
+            <slot name="go-back-and-view-menu-without-edit"></slot>
 
         </div>
 
@@ -65,14 +65,15 @@
                                 Create
                             </button>
                             <button class="btn" v-else="" disabled>Completed</button>
-
+                            <br> <br>
+                            <span class="help m-t-10">Create person to get Person ID and Person Group ID</span>
                             <hr>
                         </div>
                         <div class="col-lg-12 m-t-10">
                             <p class="all-caps bold text-black">Add Person Face
                             </p>
 
-                            <input type="file" @change="inputPersonFace($event)"
+                            <input id="inputFace" type="file" @change="inputPersonFace($event)"
                                    v-if="detail.personId!='-' && detail.personGroupId!='-'">
                             <p v-else="">Required Person Id and Person Group Id</p>
 
@@ -83,9 +84,22 @@
                             >
                                 Add
                             </button>
-                            <button v-else="" class="btn" disabled> Face Data Empty </button>
+                            <button v-else="" class="btn" disabled> Face Data Empty</button>
                             <br>
                             <span class="help">Choose File to Add Person Face. It may take a while to convert image</span>
+                            <hr>
+                        </div>
+                        <div class="col-lg-12 m-t-10">
+                            <p class="all-caps bold text-black">Person Details
+                            </p>
+                            <p>Person Id</p>
+                            <p class="text-primary">{{personDetail.personId}}</p>
+                            <p>Name</p>
+                            <p class=" text-primary">{{personDetail.name}}</p>
+                            <p>Persisted Face Ids</p>
+                            <p class=" text-primary" v-for="persistedFace in personDetail.persistedFaceIds">
+                                {{persistedFace}}
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -96,21 +110,26 @@
     </div>
 </template>
 <script type="text/javascript">
-    import {get, post, faceGet, facePut, facePost, facePutOctet} from '../../helpers/api'
-    import {api_path, faceBaseUrl} from '../../helpers/const'
+    import {get, post, faceGet, facePut, facePost, facePutOctet, facePostOctet} from '../../helpers/api'
+    import {api_path, faceBaseUrl, faceSubKey} from '../../helpers/const'
     import {makeBlob} from'../../helpers/utils'
     export default{
         data(){
             return {
                 detail: [],
-                personFaceData: ''
+                personFaceData: '',
+                personDetail: {}
             }
         },
         created(){
+            let self = this
             get(api_path + 'employee/detail/faceapi/' + this.$route.params.id)
                 .then((res) => {
                     this.detail = res.data.detail.data
+                    self.getPersonDetail()
                 })
+
+
         },
         methods: {
             createPerson(){
@@ -151,6 +170,7 @@
                                             }).show();
 
                                             $('#createPersonBtn').html('Completed')
+                                            self.getPersonDetail().
 
                                         } else {
                                             $('.page-container').pgNotification({
@@ -194,12 +214,44 @@
                             $('#createPersonBtn').html('Error')
 
                         })
-
-
                 }
             },
             addPersonFace(){
                 let self = this
+                console.log(self.personFaceData)
+
+                $('#addPersonFaceBtn').html('...')
+                $('#addPersonFaceBtn').attr('disabled', 'disabled')
+
+
+                facePostOctet(faceBaseUrl + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces', self.personFaceData)
+                    .then((res) => {
+                        if (res.status == 200 && res.data.persistedFaceId) {
+                            console.log(res.data.persistedFaceId)
+
+                            /*Reset data*/
+                            self.personFaceData = ''
+                            $('#inputFace').val('')
+                            $('#addPersonFaceBtn').html('Face Data Empty')
+                            $('#addPersonFaceBtn').removeAttr('disabled')
+                        }
+                    })
+                    .catch((err) => {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+
+
+                        /*Reset data*/
+                        self.personFaceData = ''
+                        $('#inputFace').val('')
+                        $('#addPersonFaceBtn').html('Face Data Empty')
+                        $('#addPersonFaceBtn').removeAttr('disabled')
+                    })
             },
             inputPersonFace(event){
                 /* Convert file to base64 then convert it to Blob*/
@@ -214,6 +266,25 @@
                 });
 
                 FR.readAsDataURL(event.target.files[0]);
+            },
+            getPersonDetail(){
+                let self = this
+                if (self.detail.personGroupId && self.detail.personId) {
+                    faceGet(faceBaseUrl + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId)
+                        .then((res) => {
+                            if (res.data){
+                                self.personDetail = res.data
+                            }
+                        }).catch((err) => {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    })
+                }
             }
         }
     }
