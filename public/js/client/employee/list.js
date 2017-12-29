@@ -3152,6 +3152,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                                 $('#createPersonBtn').html('Completed');
                                 self.getPersonDetail();
+                                self.trainPersonGroup();
                             } else {
                                 $('.page-container').pgNotification({
                                     style: 'flip',
@@ -3218,6 +3219,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             if (self.personDetail) {
                                 self.personDetail.persistedFaceIds.push(formObject.persistedFaceId);
                             }
+
+                            // Train personGroup
+                            self.trainPersonGroup();
                         } else {
 
                             $('.page-container').pgNotification({
@@ -3334,10 +3338,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             return o == persistedFaceId;
                         });
                         self.personDetail.persistedFaceIds.splice(PIFIndex, 1);
+                        // Train personGroup
+                        self.trainPersonGroup();
                     }
                 }).catch(function (err) {
 
                     /* Error Notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            }
+        },
+        trainPersonGroup: function trainPersonGroup() {
+            var self = this;
+            var personGroupId = self.detail.personGroupId;
+            if (personGroupId) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* facePost */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + personGroupId + '/train').then(function (res) {
+                    // okay
+                }).catch(function (err) {
                     $('.page-container').pgNotification({
                         style: 'flip',
                         message: err.message,

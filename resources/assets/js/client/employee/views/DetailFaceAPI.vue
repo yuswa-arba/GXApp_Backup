@@ -193,6 +193,7 @@
 
                                             $('#createPersonBtn').html('Completed')
                                             self.getPersonDetail()
+                                            self.trainPersonGroup()
 
                                         } else {
                                             $('.page-container').pgNotification({
@@ -270,6 +271,9 @@
                                         if (self.personDetail) {
                                             self.personDetail.persistedFaceIds.push(formObject.persistedFaceId)
                                         }
+
+                                        // Train personGroup
+                                        self.trainPersonGroup()
 
 
                                     } else {
@@ -380,7 +384,7 @@
                                     .then((res) => {
 
                                     })
-                                    .catch((err)=>{
+                                    .catch((err) => {
                                         /* Error Notification */
                                         $('.page-container').pgNotification({
                                             style: 'flip',
@@ -405,6 +409,8 @@
                                     return o == persistedFaceId
                                 })
                                 self.personDetail.persistedFaceIds.splice(PIFIndex, 1)
+                                // Train personGroup
+                                self.trainPersonGroup()
                             }
 
                         }).catch((err) => {
@@ -421,7 +427,28 @@
                     })
                 }
 
-            }
+            },
+            trainPersonGroup(){
+                let self = this
+                let personGroupId = self.detail.personGroupId
+                if (personGroupId) {
+                    facePost(faceBaseUrl + 'persongroups/' + personGroupId + '/train')
+                        .then((res) => {
+                            // okay
+                        })
+                        .catch((err) => {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        })
+                }
+
+            },
+
         }
     }
 </script>
