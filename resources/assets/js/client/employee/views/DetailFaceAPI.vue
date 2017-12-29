@@ -131,7 +131,7 @@
     </div>
 </template>
 <script type="text/javascript">
-    import {get, post, faceGet, facePut, facePost, faceDel, facePostOctet} from '../../helpers/api'
+    import {get, post, del, faceGet, facePut, facePost, faceDel, facePostOctet} from '../../helpers/api'
     import {api_path, faceBaseUrl, faceSubKey} from '../../helpers/const'
     import {makeBlob, objectToFormData} from'../../helpers/utils'
     export default{
@@ -241,7 +241,6 @@
             addPersonFace(){
                 let self = this
 
-                $('#addPersonFaceBtn').html('...')
                 $('#addPersonFaceBtn').attr('disabled', 'disabled')
 
 
@@ -289,7 +288,6 @@
                                     self.personFaceData = ''
                                     self.personFaceFile = ''
                                     $('#inputFace').val('')
-                                    $('#addPersonFaceBtn').html('Face Data Empty')
                                     $('#addPersonFaceBtn').removeAttr('disabled')
 
                                 })
@@ -307,7 +305,6 @@
                                     self.personFaceData = ''
                                     self.personFaceFile = ''
                                     $('#inputFace').val('')
-                                    $('#addPersonFaceBtn').html('Face Data Empty')
                                     $('#addPersonFaceBtn').removeAttr('disabled')
 
 
@@ -328,7 +325,6 @@
                         self.personFaceData = ''
                         self.personFaceFile = ''
                         $('#inputFace').val('')
-                        $('#addPersonFaceBtn').html('Face Data Empty')
                         $('#addPersonFaceBtn').removeAttr('disabled')
                     })
             },
@@ -378,6 +374,22 @@
                         + '/persistedFaces/' + persistedFaceId)
                         .then((res) => {
                             if (res.status == 200) {
+
+                                // delete photo from server storage
+                                del(api_path + 'employee/edit/faceapi/deletePhoto/' + persistedFaceId)
+                                    .then((res) => {
+
+                                    })
+                                    .catch((err)=>{
+                                        /* Error Notification */
+                                        $('.page-container').pgNotification({
+                                            style: 'flip',
+                                            message: err.message,
+                                            position: 'top-right',
+                                            timeout: 3500,
+                                            type: 'danger'
+                                        }).show();
+                                    })
 
                                 /* Success Notification */
                                 $('.page-container').pgNotification({

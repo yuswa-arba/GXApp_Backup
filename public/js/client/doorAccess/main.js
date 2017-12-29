@@ -33724,17 +33724,17 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["f"] = get;
-/* harmony export (immutable) */ __webpack_exports__["g"] = post;
+/* harmony export (immutable) */ __webpack_exports__["g"] = get;
+/* harmony export (immutable) */ __webpack_exports__["h"] = post;
 /* unused harmony export multipartPost */
-/* unused harmony export del */
+/* harmony export (immutable) */ __webpack_exports__["a"] = del;
 /* unused harmony export interceptors */
-/* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
-/* harmony export (immutable) */ __webpack_exports__["e"] = facePut;
-/* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
-/* harmony export (immutable) */ __webpack_exports__["c"] = facePost;
+/* harmony export (immutable) */ __webpack_exports__["c"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["f"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceDel;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePost;
 /* unused harmony export facePutOctet */
-/* harmony export (immutable) */ __webpack_exports__["d"] = facePostOctet;
+/* harmony export (immutable) */ __webpack_exports__["e"] = facePostOctet;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");

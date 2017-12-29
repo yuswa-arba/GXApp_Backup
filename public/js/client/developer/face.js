@@ -1747,7 +1747,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* faceGet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["c" /* faceGet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups').then(function (res) {
             self.personGroups = res.data;
             /*Get Train Status*/
             _.forEach(self.personGroups, function (value, key) {
@@ -1769,7 +1769,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         creatPersonGroup: function creatPersonGroup() {
             var self = this;
             if (!_.isEmpty(self.formPersonGroupId) && !_.isEmpty(self.formPersonGroupName)) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* facePut */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.formPersonGroupId, { name: self.formPersonGroupName }).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* facePut */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.formPersonGroupId, { name: self.formPersonGroupName }).then(function (res) {
 
                     if (res.status == 200) {
                         self.personGroups.push({
@@ -1814,7 +1814,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         deletePersonGroup: function deletePersonGroup(personGroupId) {
             var self = this;
             if (confirm("Are you sure to delete this Person Group?")) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* faceDel */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + personGroupId).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* faceDel */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + personGroupId).then(function (res) {
                     if (res.status == 200) {
                         //remove from person group
                         var personGroupIndex = _.findIndex(self.personGroups, { personGroupId: personGroupId });
@@ -1839,7 +1839,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             $('#trainBtn_' + personGroupId).html('....');
             $('#trainBtn_' + personGroupId).attr('disabled', 'disabled');
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["c" /* facePost */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + personGroupId + '/train').then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* facePost */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + personGroupId + '/train').then(function (res) {
                 if (res.status == 202) {
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -1868,7 +1868,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var self = this;
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* faceGet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + personGroupId + '/training').then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["c" /* faceGet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + personGroupId + '/training').then(function (res) {
                 if (res.status == 200 && res.data != null) {
 
                     var personGroup = _.find(self.personGroups, { personGroupId: personGroupId });
@@ -34348,17 +34348,17 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["f"] = get;
-/* harmony export (immutable) */ __webpack_exports__["g"] = post;
+/* harmony export (immutable) */ __webpack_exports__["g"] = get;
+/* harmony export (immutable) */ __webpack_exports__["h"] = post;
 /* unused harmony export multipartPost */
-/* unused harmony export del */
+/* harmony export (immutable) */ __webpack_exports__["a"] = del;
 /* unused harmony export interceptors */
-/* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
-/* harmony export (immutable) */ __webpack_exports__["e"] = facePut;
-/* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
-/* harmony export (immutable) */ __webpack_exports__["c"] = facePost;
+/* harmony export (immutable) */ __webpack_exports__["c"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["f"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceDel;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePost;
 /* unused harmony export facePutOctet */
-/* harmony export (immutable) */ __webpack_exports__["d"] = facePostOctet;
+/* harmony export (immutable) */ __webpack_exports__["e"] = facePostOctet;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");

@@ -2631,7 +2631,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         saveMaster: function saveMaster(form) {
             var self = this;
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master', form).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master', form).then(function (res) {
                 if (!res.data.isFailed) {
 
                     // remove errors alert
@@ -2676,7 +2676,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         saveEmployment: function saveEmployment(form) {
             var self = this;
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/employment', form).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/employment', form).then(function (res) {
                 if (!res.data.isFailed) {
 
                     // remove errors alert
@@ -2721,7 +2721,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         saveLogin: function saveLogin(form) {
             var self = this;
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/login', form).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/login', form).then(function (res) {
                 if (!res.data.isFailed) {
 
                     // remove errors alert
@@ -2821,7 +2821,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/list').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/list').then(function (res) {
             _this.employees = res.data.data;
         });
     },
@@ -2945,7 +2945,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/employment/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/employment/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
     }
@@ -3110,7 +3110,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/faceapi/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/faceapi/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
             self.getPersonDetail();
         });
@@ -3128,11 +3128,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 $('#createPersonBtn').html('...');
                 $('#createPersonBtn').attr('disabled', 'disabled');
 
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["c" /* facePost */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + personGroupId + '/persons', { name: self.detail.employeeFullName }).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* facePost */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + personGroupId + '/persons', { name: self.detail.employeeFullName }).then(function (res) {
                     var receivedPeronId = res.data.personId;
                     //save to DB
                     if (receivedPeronId) {
-                        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/faceapi/person', {
+                        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/faceapi/person', {
                             personId: receivedPeronId,
                             employeeId: self.detail.employeeId,
                             personGroupId: personGroupId
@@ -3193,10 +3193,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         addPersonFace: function addPersonFace() {
             var self = this;
 
-            $('#addPersonFaceBtn').html('...');
             $('#addPersonFaceBtn').attr('disabled', 'disabled');
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* facePostOctet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces', self.personFaceData).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["e" /* facePostOctet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces', self.personFaceData).then(function (res) {
                 if (res.status == 200 && res.data.persistedFaceId) {
 
                     var formObject = {};
@@ -3204,7 +3203,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     formObject.facePhoto = self.personFaceFile;
 
                     // save photo to local srever
-                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/faceapi/savePhoto', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["b" /* objectToFormData */])(formObject)).then(function (res) {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/faceapi/savePhoto', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["b" /* objectToFormData */])(formObject)).then(function (res) {
                         if (!res.data.isFailed) {
 
                             $('.page-container').pgNotification({
@@ -3234,7 +3233,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         self.personFaceData = '';
                         self.personFaceFile = '';
                         $('#inputFace').val('');
-                        $('#addPersonFaceBtn').html('Face Data Empty');
                         $('#addPersonFaceBtn').removeAttr('disabled');
                     }).catch(function (err) {
                         $('.page-container').pgNotification({
@@ -3249,7 +3247,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         self.personFaceData = '';
                         self.personFaceFile = '';
                         $('#inputFace').val('');
-                        $('#addPersonFaceBtn').html('Face Data Empty');
                         $('#addPersonFaceBtn').removeAttr('disabled');
                     });
                 }
@@ -3266,7 +3263,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.personFaceData = '';
                 self.personFaceFile = '';
                 $('#inputFace').val('');
-                $('#addPersonFaceBtn').html('Face Data Empty');
                 $('#addPersonFaceBtn').removeAttr('disabled');
             });
         },
@@ -3289,7 +3285,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         getPersonDetail: function getPersonDetail() {
             var self = this;
             if (self.detail.personGroupId && self.detail.personId) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* faceGet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["c" /* faceGet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId).then(function (res) {
                     if (res.data) {
                         self.personDetail = res.data;
                     }
@@ -3310,8 +3306,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
 
             if (confirm('Are you sure to delete this persisted face?')) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* faceDel */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces/' + persistedFaceId).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* faceDel */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces/' + persistedFaceId).then(function (res) {
                     if (res.status == 200) {
+
+                        // delete photo from server storage
+                        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* del */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/faceapi/deletePhoto/' + persistedFaceId).then(function (res) {}).catch(function (err) {
+                            /* Error Notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        });
 
                         /* Success Notification */
                         $('.page-container').pgNotification({
@@ -3441,7 +3449,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/login/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/login/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
     },
@@ -3867,7 +3875,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/master/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/master/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
     }
@@ -4014,7 +4022,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/employment/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/employment/' + this.$route.params.id).then(function (res) {
 
             //set current value
             _this.form = res.data.detail.data;
@@ -4154,7 +4162,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/login/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/login/' + this.$route.params.id).then(function (res) {
 
             //set current value
             _this.form = res.data.detail.data;
@@ -4611,7 +4619,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         var _this = this;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["f" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master/' + this.$route.params.id).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master/' + this.$route.params.id).then(function (res) {
             //set current value
             _this.form = res.data.detail.data;
             _this.form.id = _this.$route.params.id;
@@ -42831,17 +42839,17 @@ module.exports = Component.exports
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["f"] = get;
-/* harmony export (immutable) */ __webpack_exports__["g"] = post;
+/* harmony export (immutable) */ __webpack_exports__["g"] = get;
+/* harmony export (immutable) */ __webpack_exports__["h"] = post;
 /* unused harmony export multipartPost */
-/* unused harmony export del */
+/* harmony export (immutable) */ __webpack_exports__["a"] = del;
 /* unused harmony export interceptors */
-/* harmony export (immutable) */ __webpack_exports__["b"] = faceGet;
-/* harmony export (immutable) */ __webpack_exports__["e"] = facePut;
-/* harmony export (immutable) */ __webpack_exports__["a"] = faceDel;
-/* harmony export (immutable) */ __webpack_exports__["c"] = facePost;
+/* harmony export (immutable) */ __webpack_exports__["c"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["f"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceDel;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePost;
 /* unused harmony export facePutOctet */
-/* harmony export (immutable) */ __webpack_exports__["d"] = facePostOctet;
+/* harmony export (immutable) */ __webpack_exports__["e"] = facePostOctet;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");

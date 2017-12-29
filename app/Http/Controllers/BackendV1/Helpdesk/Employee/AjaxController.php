@@ -18,6 +18,7 @@ use App\Http\Requests\Employee\EmploymentRequest;
 use App\Http\Requests\Employee\MasterEmployeeRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 
 class AjaxController extends Controller
@@ -312,5 +313,15 @@ class AjaxController extends Controller
         }
 
         return response()->json($response, 200);
+    }
+
+    public function deleteFacePhoto($persistedFaceId)
+    {
+        $filename = $persistedFaceId . '.png'; //use png
+        $imagePath = base_path('public/images/faces/'.$filename);
+         unlink($imagePath); //delete image
+
+        return response()->json('',200);
+
     }
 }
