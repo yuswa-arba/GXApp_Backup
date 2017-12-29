@@ -298,7 +298,9 @@ class AjaxController extends Controller
         $response = array();
 
         if ($request->hasFile('facePhoto') && $request->file('facePhoto')->isValid()) {
-            $filename = $request->persistedFaceId . '.' . $request->facePhoto->extension();
+//            $filename = $request->persistedFaceId . '.' . $request->facePhoto->extension();
+            $filename = $request->persistedFaceId . '.png'; //use png
+
             $request->facePhoto->move(base_path('public/images/faces'), $filename);
 
             $response['isFailed'] = false;

@@ -97,11 +97,30 @@
                             <p>Name</p>
                             <p class=" text-primary">{{personDetail.name}}</p>
                             <p>Persisted Face Ids</p>
-                            <p class=" text-primary" v-for="persistedFace in personDetail.persistedFaceIds">
-                                {{persistedFace}} &nbsp; &nbsp;
-                                <i class="fs-14 text-danger fa fa-times pointer"
-                                   @click="deleteFace(persistedFace)"></i>
-                            </p>
+                            <div v-for="persistedFace in personDetail.persistedFaceIds">
+                                <p class=" text-primary">{{persistedFace}} &nbsp; &nbsp;
+                                    <i class="fs-14 text-danger fa fa-times pointer"
+                                       @click="deleteFace(persistedFace)"></i>
+                                    &nbsp; &nbsp;
+                                    <i class="fs-14 fa fa-eye pointer" data-toggle="modal"
+                                       :href="'#img'+persistedFace" aria-expanded="false"></i>
+                                </p>
+                                <div class="clearfix"></div>
+                                <div class="modal fade" :id="'img'+persistedFace">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header"></div>
+                                            <div class="modal-body">
+                                                <div class="center-margin">
+                                                    <img :src="'/images/faces/'+persistedFace+'.png'" alt=""
+                                                         height="300px" style="margin: 0 auto; display: block">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -338,6 +357,8 @@
                                 self.personDetail = res.data
                             }
                         }).catch((err) => {
+
+                        /* Error Notification */
                         $('.page-container').pgNotification({
                             style: 'flip',
                             message: err.message,
@@ -345,19 +366,20 @@
                             timeout: 3500,
                             type: 'danger'
                         }).show();
+
                     })
                 }
             },
             deleteFace(persistedFaceId){
                 let self = this
 
-                if(confirm('Are you sure to delete this persisted face?')){
+                if (confirm('Are you sure to delete this persisted face?')) {
                     faceDel(faceBaseUrl + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId
                         + '/persistedFaces/' + persistedFaceId)
                         .then((res) => {
                             if (res.status == 200) {
 
-                                /* Notification */
+                                /* Success Notification */
                                 $('.page-container').pgNotification({
                                     style: 'flip',
                                     message: 'Persisted Face Deleted',
@@ -367,13 +389,15 @@
                                 }).show();
 
 
-                                let PIFIndex = _.findIndex(self.personDetail.persistedFaceIds, (o)=>{
+                                let PIFIndex = _.findIndex(self.personDetail.persistedFaceIds, (o) => {
                                     return o == persistedFaceId
                                 })
-                                self.personDetail.persistedFaceIds.splice(PIFIndex,1)
+                                self.personDetail.persistedFaceIds.splice(PIFIndex, 1)
                             }
 
                         }).catch((err) => {
+
+                        /* Error Notification */
                         $('.page-container').pgNotification({
                             style: 'flip',
                             message: err.message,
@@ -381,6 +405,7 @@
                             timeout: 3500,
                             type: 'danger'
                         }).show();
+
                     })
                 }
 

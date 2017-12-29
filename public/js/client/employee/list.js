@@ -3074,6 +3074,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3275,6 +3294,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         self.personDetail = res.data;
                     }
                 }).catch(function (err) {
+
+                    /* Error Notification */
                     $('.page-container').pgNotification({
                         style: 'flip',
                         message: err.message,
@@ -3292,7 +3313,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* faceDel */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces/' + persistedFaceId).then(function (res) {
                     if (res.status == 200) {
 
-                        /* Notification */
+                        /* Success Notification */
                         $('.page-container').pgNotification({
                             style: 'flip',
                             message: 'Persisted Face Deleted',
@@ -3307,6 +3328,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         self.personDetail.persistedFaceIds.splice(PIFIndex, 1);
                     }
                 }).catch(function (err) {
+
+                    /* Error Notification */
                     $('.page-container').pgNotification({
                         style: 'flip',
                         message: err.message,
@@ -27491,20 +27514,66 @@ var render = function() {
                 _vm._l(_vm.personDetail.persistedFaceIds, function(
                   persistedFace
                 ) {
-                  return _c("p", { staticClass: " text-primary" }, [
-                    _vm._v(
-                      "\n                            " +
+                  return _c("div", [
+                    _c("p", { staticClass: " text-primary" }, [
+                      _vm._v(
                         _vm._s(persistedFace) +
-                        "    \n                            "
-                    ),
-                    _c("i", {
-                      staticClass: "fs-14 text-danger fa fa-times pointer",
-                      on: {
-                        click: function($event) {
-                          _vm.deleteFace(persistedFace)
+                          "    \n                                "
+                      ),
+                      _c("i", {
+                        staticClass: "fs-14 text-danger fa fa-times pointer",
+                        on: {
+                          click: function($event) {
+                            _vm.deleteFace(persistedFace)
+                          }
                         }
-                      }
-                    })
+                      }),
+                      _vm._v(
+                        "\n                                   \n                                "
+                      ),
+                      _c("i", {
+                        staticClass: "fs-14 fa fa-eye pointer",
+                        attrs: {
+                          "data-toggle": "modal",
+                          href: "#img" + persistedFace,
+                          "aria-expanded": "false"
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "clearfix" }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "modal fade",
+                        attrs: { id: "img" + persistedFace }
+                      },
+                      [
+                        _c("div", { staticClass: "modal-dialog" }, [
+                          _c("div", { staticClass: "modal-content" }, [
+                            _c("div", { staticClass: "modal-header" }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "modal-body" }, [
+                              _c("div", { staticClass: "center-margin" }, [
+                                _c("img", {
+                                  staticStyle: {
+                                    margin: "0 auto",
+                                    display: "block"
+                                  },
+                                  attrs: {
+                                    src:
+                                      "/images/faces/" + persistedFace + ".png",
+                                    alt: "",
+                                    height: "300px"
+                                  }
+                                })
+                              ])
+                            ])
+                          ])
+                        ])
+                      ]
+                    )
                   ])
                 })
               ],
