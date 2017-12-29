@@ -98,7 +98,9 @@
                             <p class=" text-primary">{{personDetail.name}}</p>
                             <p>Persisted Face Ids</p>
                             <p class=" text-primary" v-for="persistedFace in personDetail.persistedFaceIds">
-                                {{persistedFace}}
+                                {{persistedFace}} &nbsp; &nbsp;
+                                <i class="fs-14 text-danger fa fa-times pointer"
+                                   @click="deleteFace(persistedFace)"></i>
                             </p>
                         </div>
                     </div>
@@ -110,14 +112,15 @@
     </div>
 </template>
 <script type="text/javascript">
-    import {get, post, faceGet, facePut, facePost, facePutOctet, facePostOctet} from '../../helpers/api'
+    import {get, post, faceGet, facePut, facePost, faceDel, facePostOctet} from '../../helpers/api'
     import {api_path, faceBaseUrl, faceSubKey} from '../../helpers/const'
-    import {makeBlob} from'../../helpers/utils'
+    import {makeBlob, objectToFormData} from'../../helpers/utils'
     export default{
         data(){
             return {
                 detail: [],
-                personFaceData: '',
+                personFaceData: '', // for send to microsoft API
+                personFaceFile: '', // for upload image to local server
                 personDetail: {}
             }
         },
@@ -170,7 +173,7 @@
                                             }).show();
 
                                             $('#createPersonBtn').html('Completed')
-                                            self.getPersonDetail().
+                                            self.getPersonDetail()
 
                                         } else {
                                             $('.page-container').pgNotification({
@@ -218,7 +221,6 @@
             },
             addPersonFace(){
                 let self = this
-                console.log(self.personFaceData)
 
                 $('#addPersonFaceBtn').html('...')
                 $('#addPersonFaceBtn').attr('disabled', 'disabled')
@@ -227,13 +229,70 @@
                 facePostOctet(faceBaseUrl + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces', self.personFaceData)
                     .then((res) => {
                         if (res.status == 200 && res.data.persistedFaceId) {
-                            console.log(res.data.persistedFaceId)
 
-                            /*Reset data*/
-                            self.personFaceData = ''
-                            $('#inputFace').val('')
-                            $('#addPersonFaceBtn').html('Face Data Empty')
-                            $('#addPersonFaceBtn').removeAttr('disabled')
+
+                            let formObject = {}
+                            formObject.persistedFaceId = res.data.persistedFaceId
+                            formObject.facePhoto = self.personFaceFile
+
+                            // save photo to local srever
+                            post(api_path + 'employee/edit/faceapi/savePhoto', objectToFormData(formObject))
+                                .then((res) => {
+                                    if (!res.data.isFailed) {
+
+                                        $('.page-container').pgNotification({
+                                            style: 'flip',
+                                            message: res.data.message,
+                                            position: 'top-right',
+                                            timeout: 3500,
+                                            type: 'info'
+                                        }).show();
+
+                                        // push ID to personDetail
+                                        if (self.personDetail) {
+                                            self.personDetail.persistedFaceIds.push(formObject.persistedFaceId)
+                                        }
+
+
+                                    } else {
+
+                                        $('.page-container').pgNotification({
+                                            style: 'flip',
+                                            message: res.data.message,
+                                            position: 'top-right',
+                                            timeout: 3500,
+                                            type: 'danger'
+                                        }).show();
+                                    }
+
+
+                                    /*Reset data*/
+                                    self.personFaceData = ''
+                                    self.personFaceFile = ''
+                                    $('#inputFace').val('')
+                                    $('#addPersonFaceBtn').html('Face Data Empty')
+                                    $('#addPersonFaceBtn').removeAttr('disabled')
+
+                                })
+                                .catch((err) => {
+                                    $('.page-container').pgNotification({
+                                        style: 'flip',
+                                        message: err.message,
+                                        position: 'top-right',
+                                        timeout: 3500,
+                                        type: 'danger'
+                                    }).show();
+
+
+                                    /*Reset data*/
+                                    self.personFaceData = ''
+                                    self.personFaceFile = ''
+                                    $('#inputFace').val('')
+                                    $('#addPersonFaceBtn').html('Face Data Empty')
+                                    $('#addPersonFaceBtn').removeAttr('disabled')
+
+
+                                })
                         }
                     })
                     .catch((err) => {
@@ -248,6 +307,7 @@
 
                         /*Reset data*/
                         self.personFaceData = ''
+                        self.personFaceFile = ''
                         $('#inputFace').val('')
                         $('#addPersonFaceBtn').html('Face Data Empty')
                         $('#addPersonFaceBtn').removeAttr('disabled')
@@ -260,9 +320,11 @@
                 let FR = new FileReader();
                 let base64Result = ''
 
+                self.personFaceFile = event.target.files[0] //for save to local server
+
                 FR.addEventListener("load", function (e) {
                     base64Result = e.target.result
-                    self.personFaceData = makeBlob(base64Result)
+                    self.personFaceData = makeBlob(base64Result) // for microsoft api request
                 });
 
                 FR.readAsDataURL(event.target.files[0]);
@@ -272,7 +334,7 @@
                 if (self.detail.personGroupId && self.detail.personId) {
                     faceGet(faceBaseUrl + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId)
                         .then((res) => {
-                            if (res.data){
+                            if (res.data) {
                                 self.personDetail = res.data
                             }
                         }).catch((err) => {
@@ -285,6 +347,43 @@
                         }).show();
                     })
                 }
+            },
+            deleteFace(persistedFaceId){
+                let self = this
+
+                if(confirm('Are you sure to delete this persisted face?')){
+                    faceDel(faceBaseUrl + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId
+                        + '/persistedFaces/' + persistedFaceId)
+                        .then((res) => {
+                            if (res.status == 200) {
+
+                                /* Notification */
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: 'Persisted Face Deleted',
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+
+                                let PIFIndex = _.findIndex(self.personDetail.persistedFaceIds, (o)=>{
+                                    return o == persistedFaceId
+                                })
+                                self.personDetail.persistedFaceIds.splice(PIFIndex,1)
+                            }
+
+                        }).catch((err) => {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    })
+                }
+
             }
         }
     }

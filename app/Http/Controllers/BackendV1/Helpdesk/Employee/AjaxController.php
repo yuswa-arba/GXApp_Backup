@@ -265,19 +265,19 @@ class AjaxController extends Controller
     public function saveFaceApiPerson(Request $request)
     {
         $request->validate([
-            'employeeId'=>'required',
-            'personId'=>'required',
-            'personGroupId'=>'required'
+            'employeeId' => 'required',
+            'personId' => 'required',
+            'personGroupId' => 'required'
         ]);
 
         $response = array();
 
         $saveFacePerson = FacePerson::updateOrCreate(
-            ['employeeId'=>$request->employeeId, 'personGroupId'=>$request->personGroupId],
-            ['personId'=>$request->personId,]
+            ['employeeId' => $request->employeeId, 'personGroupId' => $request->personGroupId],
+            ['personId' => $request->personId,]
         );
 
-        if($saveFacePerson){
+        if ($saveFacePerson) {
             $response['isFailed'] = false;
             $response['message'] = 'Save to face person table success';
         } else {
@@ -285,6 +285,30 @@ class AjaxController extends Controller
             $response['message'] = 'An error occured.Unable to save face person';
         }
 
-        return response()->json($response,200);
+        return response()->json($response, 200);
+    }
+
+    public function saveFacePhoto(Request $request)
+    {
+
+        $request->validate(['facePhoto' => 'required', 'persistedFaceId' => 'required']);
+
+        //is valid
+
+        $response = array();
+
+        if ($request->hasFile('facePhoto') && $request->file('facePhoto')->isValid()) {
+            $filename = $request->persistedFaceId . '.' . $request->facePhoto->extension();
+            $request->facePhoto->move(base_path('public/images/faces'), $filename);
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Save face photo success';
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'File not found';
+        }
+
+        return response()->json($response, 200);
     }
 }

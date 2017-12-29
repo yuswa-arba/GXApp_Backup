@@ -3072,6 +3072,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -3080,7 +3082,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             detail: [],
-            personFaceData: '',
+            personFaceData: '', // for send to microsoft API
+            personFaceFile: '', // for upload image to local server
             personDetail: {}
         };
     },
@@ -3170,20 +3173,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         addPersonFace: function addPersonFace() {
             var self = this;
-            console.log(self.personFaceData);
 
             $('#addPersonFaceBtn').html('...');
             $('#addPersonFaceBtn').attr('disabled', 'disabled');
 
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["d" /* facePostOctet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces', self.personFaceData).then(function (res) {
                 if (res.status == 200 && res.data.persistedFaceId) {
-                    console.log(res.data.persistedFaceId);
 
-                    /*Reset data*/
-                    self.personFaceData = '';
-                    $('#inputFace').val('');
-                    $('#addPersonFaceBtn').html('Face Data Empty');
-                    $('#addPersonFaceBtn').removeAttr('disabled');
+                    var formObject = {};
+                    formObject.persistedFaceId = res.data.persistedFaceId;
+                    formObject.facePhoto = self.personFaceFile;
+
+                    // save photo to local srever
+                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/faceapi/savePhoto', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["b" /* objectToFormData */])(formObject)).then(function (res) {
+                        if (!res.data.isFailed) {
+
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            // push ID to personDetail
+                            if (self.personDetail) {
+                                self.personDetail.persistedFaceIds.push(formObject.persistedFaceId);
+                            }
+                        } else {
+
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        }
+
+                        /*Reset data*/
+                        self.personFaceData = '';
+                        self.personFaceFile = '';
+                        $('#inputFace').val('');
+                        $('#addPersonFaceBtn').html('Face Data Empty');
+                        $('#addPersonFaceBtn').removeAttr('disabled');
+                    }).catch(function (err) {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+
+                        /*Reset data*/
+                        self.personFaceData = '';
+                        self.personFaceFile = '';
+                        $('#inputFace').val('');
+                        $('#addPersonFaceBtn').html('Face Data Empty');
+                        $('#addPersonFaceBtn').removeAttr('disabled');
+                    });
                 }
             }).catch(function (err) {
                 $('.page-container').pgNotification({
@@ -3196,6 +3245,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 /*Reset data*/
                 self.personFaceData = '';
+                self.personFaceFile = '';
                 $('#inputFace').val('');
                 $('#addPersonFaceBtn').html('Face Data Empty');
                 $('#addPersonFaceBtn').removeAttr('disabled');
@@ -3208,9 +3258,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var FR = new FileReader();
             var base64Result = '';
 
+            self.personFaceFile = event.target.files[0]; //for save to local server
+
             FR.addEventListener("load", function (e) {
                 base64Result = e.target.result;
-                self.personFaceData = Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["a" /* makeBlob */])(base64Result);
+                self.personFaceData = Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["a" /* makeBlob */])(base64Result); // for microsoft api request
             });
 
             FR.readAsDataURL(event.target.files[0]);
@@ -3221,6 +3273,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["b" /* faceGet */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId).then(function (res) {
                     if (res.data) {
                         self.personDetail = res.data;
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            }
+        },
+        deleteFace: function deleteFace(persistedFaceId) {
+            var self = this;
+
+            if (confirm('Are you sure to delete this persisted face?')) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["a" /* faceDel */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["b" /* faceBaseUrl */] + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId + '/persistedFaces/' + persistedFaceId).then(function (res) {
+                    if (res.status == 200) {
+
+                        /* Notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: 'Persisted Face Deleted',
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        var PIFIndex = _.findIndex(self.personDetail.persistedFaceIds, function (o) {
+                            return o == persistedFaceId;
+                        });
+                        self.personDetail.persistedFaceIds.splice(PIFIndex, 1);
                     }
                 }).catch(function (err) {
                     $('.page-container').pgNotification({
@@ -27411,8 +27495,16 @@ var render = function() {
                     _vm._v(
                       "\n                            " +
                         _vm._s(persistedFace) +
-                        "\n                        "
-                    )
+                        "    \n                            "
+                    ),
+                    _c("i", {
+                      staticClass: "fs-14 text-danger fa fa-times pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.deleteFace(persistedFace)
+                        }
+                      }
+                    })
                   ])
                 })
               ],

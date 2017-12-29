@@ -37,6 +37,7 @@ Route::prefix('v1/h')->group(function (){
 
         Route::post('edit/faceapi/person','AjaxController@saveFaceApiPerson');
         Route::post('edit/faceapi/personFace','AjaxController@saveFaceApiPersonFace');
+        Route::post('edit/faceapi/savePhoto','AjaxController@saveFacePhoto');
     });
 
 });
