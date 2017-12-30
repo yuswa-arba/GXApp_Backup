@@ -76,7 +76,54 @@ class AttendanceLogic extends AttendanceUseCase
 
     public function handleKioskClockOut($formRequest)
     {
-        echo 'handle kiosk clock out';
+        /* Check if employee has clocked in once today */
+        $existingTimeSheet = AttendanceTimesheet::where('employeeId', $formRequest['employeeId'])
+            ->where('shiftId', $formRequest['shiftId'])
+            ->where('clockOutDate', Carbon::now()->format('d/m/Y'))
+            ->whereNotNull('clockOutTime')
+            ->first();
+
+        if ($existingTimeSheet != null) {
+            /* Return response employee has clocked in before */
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['ALREADY_CLOCKED_IN'];
+            $response['message'] = 'You have clocked out before at ' . $existingTimeSheet->clockOutTime;
+            return response()->json($response, 200);
+
+        } else {
+
+            $insert = AttendanceTimesheet::updateOrCreate(
+                [
+                    'employeeId' => $formRequest['employeeId'],
+                    'clockOutDate' => $formRequest['cDate'],
+                ],
+                [
+                    'shiftId' => $formRequest['shiftId'],
+                    'clockOutTime' => $formRequest['cTime'],
+                    'clockOutViaTypeId' => $formRequest['cViaTypeId'],
+                    'clockOutKioskId' => $formRequest['cKioskId'],
+                    'employeePhotoClockOut' => $formRequest['employeePhotoClockOut']
+                ]
+            );
+
+            //TODO: Trigger event to update dashboard
+
+            $response = array();
+            if ($insert) {
+                $response['isFailed'] = false;
+                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                $response['message'] = 'Success';
+
+            } else {
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                $response['message'] = 'Unknown server error';
+            }
+
+
+            return response()->json($response, 200);
+        }
+
     }
 
     public function handlePersonalDeviceClockIn($formRequest)

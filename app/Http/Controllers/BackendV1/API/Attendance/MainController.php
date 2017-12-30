@@ -56,18 +56,38 @@ class MainController extends Controller
 
             if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK']) {//by kiosk
 
-                $validator = Validator::make($request->all(), [
-                    'clockInKioskId' => 'required',
-                ]);
+                if($punchType=='in'){
+                    $validator = Validator::make($request->all(), [
+                        'clockInKioskId' => 'required',
+                    ]);
 
-                if ($validator->fails()) {
-                    $response['isFailed'] = true;
-                    $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
-                    $response['message'] = 'Kiosk ID Required';
-                    return response()->json($response, 200);
+                    if ($validator->fails()) {
+                        $response['isFailed'] = true;
+                        $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                        $response['message'] = 'Kiosk ID Required';
+                        return response()->json($response, 200);
+                    }
+
+                    /* Set clock in kiosk ID*/
+                    $formRequest['cKioskId'] = $request->clockInKioskId;
                 }
 
-                $formRequest['cKioskId'] = $request->cKioskId;
+                if($punchType=='out'){
+                    $validator = Validator::make($request->all(), [
+                        'clockOutKioskId' => 'required',
+                    ]);
+
+                    if ($validator->fails()) {
+                        $response['isFailed'] = true;
+                        $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                        $response['message'] = 'Kiosk ID Required';
+                        return response()->json($response, 200);
+                    }
+
+                    /* Set clock out kiosk ID*/
+                    $formRequest['cKioskId'] = $request->clockOutKioskId;
+                }
+
 
                 /*Handle photo uploads if exist*/
                 $formRequest['employeePhotoClockIn'] = $this->saveClockInPhoto($request);
@@ -154,7 +174,7 @@ class MainController extends Controller
             $employeeNo = MasterEmployee::find($request->employeeId)['employeeNo'];
             $filename = $employeeNo . Carbon::now()->format('dmYHis') . '.png';
 
-            $request->employeePhotoClockIn->move(base_path(Configs::$IMAGE_PATH['ATTENDANCE_PHOTO']), $filename);
+            $request->employeePhotoClockOut->move(base_path(Configs::$IMAGE_PATH['ATTENDANCE_PHOTO']), $filename);
 
             return $filename; // insert to form request
         } else  {
