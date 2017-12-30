@@ -31,6 +31,11 @@ class CheckAttendanceSchedule implements ShouldQueue
      */
     public function handle()
     {
+
+        /* Logs */
+        Log::useDailyFiles(storage_path().'/logs/attendance-checker.log');
+        Log::info('Checking attendance schedule at ' . Carbon::now());
+
         $nowTime = Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
         $shifts = Shifts::all();
 

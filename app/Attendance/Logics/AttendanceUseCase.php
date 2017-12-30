@@ -10,6 +10,8 @@
 namespace App\Attendance\Logics;
 
 
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
+
 abstract class AttendanceUseCase
 {
 
@@ -32,9 +34,9 @@ abstract class AttendanceUseCase
     {
         $punchType = $formRequest['punchType'];
 
-        $byKIosk = $formRequest['cViaTypeId'] == 1;
-        $byPersonalDevice = $formRequest['cViaTypeId'] == 2;
-        $byWebPortal = $formRequest['cViaTypeId'] == 3;
+        $byKIosk = $formRequest['cViaTypeId'] == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK'];
+        $byPersonalDevice = $formRequest['cViaTypeId'] == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_PERSONAL_DEVICE'];
+        $byWebPortal = $formRequest['cViaTypeId'] == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL'];
 
 
         if ($byKIosk) {

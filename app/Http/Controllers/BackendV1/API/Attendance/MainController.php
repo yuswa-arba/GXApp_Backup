@@ -5,10 +5,12 @@ namespace App\Http\Controllers\BackendV1\API\Attendance;
 use App\Account\Models\User;
 use App\Account\Traits\TokenUtils;
 use App\Attendance\Logics\AttendanceLogic;
+use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class MainController extends Controller
 {
@@ -18,11 +20,18 @@ class MainController extends Controller
     public function clock(Request $request, $punchType)
     {
         /* Validation Request*/
-        $request->validate([
+
+        $validator = Validator::make($request->all(), [
             'employeeId' => 'required',
             'cViaTypeId' => 'required'
-//            'employeePhotoClockIn' => 'required'
         ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+            $response['message'] = 'Missing required parameter';
+            return response()->json($response, 200);
+        }
 
         $checkAvailability = $this->isAvailableToClock($request->employeeId, $punchType);
 
@@ -71,7 +80,6 @@ class MainController extends Controller
             return AttendanceLogic::clocking($formRequest);
 
         } else {
-
             /* Return response */
             return $checkAvailability;
         }

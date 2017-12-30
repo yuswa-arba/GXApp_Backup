@@ -14,7 +14,7 @@ Route::prefix('v1/a')->group(function () {
     /*Attendance*/
     Route::namespace('BackendV1\API\Attendance')->prefix('attd')->group(function () {
 
-        Route::middleware('auth:api')->group(function () {
+        Route::middleware('client')->group(function () {
 
             Route::post('clock/{punchType}', 'MainController@clock');
 
@@ -38,21 +38,23 @@ Route::prefix('v1/a')->group(function () {
 
     /*Kiosk*/
     Route::namespace('BackendV1\API\Attendance')->prefix('kiosk')->group(function () {
-//        Route::middleware('client')->group(function () {
+        Route::middleware('client')->group(function () {
+        /* @header Authorization Bearer <kiosk_api_token> * */
 
-            /* @url api/v1/a/kiosk/clock/{punchType}
-             * @header Authorization Bearer <kiosk_api_token>
-             *
-             * @param punchType in/out
-             * @body cViaTypeId int
-             * @body employeeId uuid
-             * */
+        /*
+         * @param punchType in/out
+         * @body cViaTypeId int
+         * @body employeeId uuid
+         * */
+        Route::post('clock/{punchType}', 'MainController@clock');
 
-            Route::post('clock/{punchType}', 'MainController@clock');
+        /*
+         * @param id
+         * */
+        Route::get('detail/{id}', 'KioskController@detail');
+        Route::get('employee/pg/{personGroupId}/person/{personId}/activity','KioskController@getEmployeeActivity');
 
-            Route::get('detail/{id}', 'KioskController@detail');
-
-//        });
+        });
     });
 
 });

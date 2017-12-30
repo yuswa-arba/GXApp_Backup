@@ -22,7 +22,8 @@ class ResponseCodes{
         'HAS_BEEN_ACTIVATED' =>300005,
         'ACTIVATION_CODE_MISMATCH' =>300005,
         'UNDEFINED_PUNCH_TYPE' =>300006,
-        'EMPLOYEE_NOT_FOUND'=>300007
+        'EMPLOYEE_NOT_FOUND'=>300007,
+        'PERSON DATA NOT FOUND'=>300008,
     ];
 
     public static $HTTP_CODES = [
