@@ -34,8 +34,7 @@ class Kernel extends ConsoleKernel
 
     protected function scheduleInDayCommands(Schedule $schedule)
     {
-//        $schedule->job(new CheckAttendanceSchedule)->everyMinute();
-        $schedule->command('attendance:check-schedule')->everyMinute();
+        $schedule->command('attendance:check-schedule')->everyFiveMinutes();
     }
 
     protected function scheduleDailyCommands(Schedule $schedule)

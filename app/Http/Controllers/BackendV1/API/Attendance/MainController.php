@@ -5,6 +5,7 @@ namespace App\Http\Controllers\BackendV1\API\Attendance;
 use App\Account\Models\User;
 use App\Account\Traits\TokenUtils;
 use App\Attendance\Logics\AttendanceLogic;
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
@@ -29,7 +30,7 @@ class MainController extends Controller
         if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
-            $response['message'] = 'Missing required parameter';
+            $response['message'] = 'Employee ID and Via type required';
             return response()->json($response, 200);
         }
 
@@ -46,31 +47,54 @@ class MainController extends Controller
             $formRequest['punchType'] = $punchType;
             $formRequest['shiftId'] = $checkAvailability['shiftId']; // get shift ID from $checkAvailability response
 
-            if ($request->cViaTypeId == 1) {//by kiosk
+            if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK']) {//by kiosk
 
-                $request->validate(['cKioskId' => 'required']);
+                $validator = Validator::make($request->all(), [
+                    'cKioskId' => 'required',
+                ]);
+
+                if ($validator->fails()) {
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                    $response['message'] = 'Kiosk ID Required';
+                    return response()->json($response, 200);
+                }
 
                 $formRequest['cKioskId'] = $request->cKioskId;
             }
 
-            if ($request->cViaTypeId == 2) {//by personal device
-
-                $request->validate([
+            if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_PERSONAL_DEVICE']) {//by personal device
+                $validator = Validator::make($request->all(), [
                     'cValidGeofence' => 'required',
                     'cLatitude' => 'required',
                     'cLongitude' => 'required'
                 ]);
+
+                if ($validator->fails()) {
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                    $response['message'] = 'Valid user location required';
+                    return response()->json($response, 200);
+                }
 
                 $formRequest['cValidGeofence'] = $request->cValidGeofence;
                 $formRequest['cLatitude'] = $request->cLatitude;
                 $formRequest['cLongitude'] = $request->cLongitude;
             }
 
-            if ($request->cViaTypeId == 3) {//by web portal
-                $request->validate([
+            if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL']) {//by web portal
+
+                $validator = Validator::make($request->all(), [
                     'cIpAddress' => 'required',
                     'cBrowser' => 'required'
                 ]);
+
+                if ($validator->fails()) {
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                    $response['message'] = 'User IP Address and Browser required';
+                    return response()->json($response, 200);
+                }
 
                 $formRequest['cIpAddress'] = $request->cIpAddress;
                 $formRequest['cBrowser'] = $request->cBrowser;
