@@ -13,6 +13,7 @@ use App\Employee\Transformers\EmployeeEditTransfomer;
 use App\Employee\Transformers\EmploymentEditTransfomer;
 use App\Employee\Transformers\EmploymentTransfomer;
 use App\Employee\Transformers\FaceAPIDetailTransfomer;
+use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Requests\Employee\EditMasterEmployeeRequest;
 use App\Http\Requests\Employee\EmploymentRequest;
 use App\Http\Requests\Employee\MasterEmployeeRequest;
@@ -302,7 +303,7 @@ class AjaxController extends Controller
 //            $filename = $request->persistedFaceId . '.' . $request->facePhoto->extension();
             $filename = $request->persistedFaceId . '.png'; //use png
 
-            $request->facePhoto->move(base_path('public/images/faces'), $filename);
+            $request->facePhoto->move(base_path(Configs::$IMAGE_PATH['FACES_PHOTO']), $filename);
 
             $response['isFailed'] = false;
             $response['message'] = 'Save face photo success';
@@ -318,7 +319,7 @@ class AjaxController extends Controller
     public function deleteFacePhoto($persistedFaceId)
     {
         $filename = $persistedFaceId . '.png'; //use png
-        $imagePath = base_path('public/images/faces/'.$filename);
+        $imagePath = base_path(Configs::$IMAGE_PATH['FACES_PHOTO'].$filename);
          unlink($imagePath); //delete image
 
         return response()->json('',200);

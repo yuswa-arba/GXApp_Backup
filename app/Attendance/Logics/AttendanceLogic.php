@@ -49,24 +49,23 @@ class AttendanceLogic extends AttendanceUseCase
                     'shiftId' => $formRequest['shiftId'],
                     'clockInTime' => $formRequest['cTime'],
                     'clockInViaTypeId' => $formRequest['cViaTypeId'],
-                    'clockInKioskId' => $formRequest['cKioskId']
+                    'clockInKioskId' => $formRequest['cKioskId'],
+                    'employeePhotoClockIn' => $formRequest['employeePhotoClockIn']
                 ]
             );
 
-            //TODO: Save employee photo
             //TODO: Trigger event to update dashboard
-            //TODO: Return response + telling that employee has clocked in right in time/late/early , show clock out time
 
             $response = array();
-            if($insert){
+            if ($insert) {
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                 $response['message'] = 'Success';
+
             } else {
                 $response['isFailed'] = true;
                 $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
                 $response['message'] = 'Unknown server error';
-
             }
 
 
@@ -102,7 +101,8 @@ class AttendanceLogic extends AttendanceUseCase
 
 
     /*
-     * return result
+     * @description checking if allow to clocking
+     * return clocking availability  shift ID
      * */
     public function handleClockingAvailability($employeeId, $punchType)
     {
@@ -139,11 +139,13 @@ class AttendanceLogic extends AttendanceUseCase
             if ($punchType == 'in') {
 
                 if ($attdSchedule->allowedToCheckIn == 1) {
+
                     $response['isFailed'] = false;
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Allowed to Clock-In';
                     $response['isAllowed'] = $attdSchedule->allowedToCheckIn;
                     $response['shiftId'] = $shiftId;
+
                 } else {
                     $timeAvailable = Carbon::createFromFormat('H:i', Shifts::find($shiftId)->workStartAt)->subHours(1)->format('H:i');
 

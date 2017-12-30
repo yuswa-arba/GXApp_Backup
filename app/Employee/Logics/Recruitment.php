@@ -8,6 +8,7 @@ use App\Employee\Events\UserGenerated;
 use App\Employee\Models\EmployeeDataVerification;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
+use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Traits\GlobalUtils;
 use GuzzleHttp\Psr7\Request;
 
@@ -60,14 +61,14 @@ class Recruitment extends UseCase
         /*Handle image uploads*/
         if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
             $filename = $this->getImageName($request->idCardPhoto, $request->nickName);
-            $request->idCardPhoto->move(base_path('public/images/employee'), $filename);
+            $request->idCardPhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
             $requestData['idCardPhoto'] = $filename; //rename
         }
 
         /*Handle image uploads*/
         if ($request->hasFile('employeePhoto') && $request->file('employeePhoto')->isValid()) {
             $filename = $this->getImageName($request->employeePhoto, $request->nickName);
-            $request->employeePhoto->move(base_path('public/images/employee'), $filename);
+            $request->employeePhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
             $requestData['employeePhoto'] = $filename; // rename
         }
 

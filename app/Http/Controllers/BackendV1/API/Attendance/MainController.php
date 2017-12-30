@@ -5,18 +5,22 @@ namespace App\Http\Controllers\BackendV1\API\Attendance;
 use App\Account\Models\User;
 use App\Account\Traits\TokenUtils;
 use App\Attendance\Logics\AttendanceLogic;
+use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
+use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Controllers\Controller;
+use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use League\Flysystem\Config;
 
 class MainController extends Controller
 {
     use TokenUtils;
-
+    use GlobalUtils;
 
     public function clock(Request $request, $punchType)
     {
@@ -38,7 +42,8 @@ class MainController extends Controller
 
         if (!$checkAvailability['isFailed']
             && $checkAvailability['isAllowed'] == 1
-            && $checkAvailability['shiftId'] != null) {
+            && $checkAvailability['shiftId'] != null
+        ) {
 
             $formRequest['employeeId'] = $request->employeeId;
             $formRequest['cDate'] = Carbon::now()->format('d/m/Y');
@@ -99,6 +104,19 @@ class MainController extends Controller
                 $formRequest['cIpAddress'] = $request->cIpAddress;
                 $formRequest['cBrowser'] = $request->cBrowser;
             }
+
+
+            /*Save Photo if exist*/
+            if ($request->hasFile('employeePhotoClockIn') && $request->file('employeePhotoClockIn')->isValid()) {
+
+                $employeeNo = MasterEmployee::find($request->employeeId)['employeeNo'];
+                $filename = $employeeNo . Carbon::now()->format('dmYHis') . '.png';
+
+                $request->employeePhotoClockIn->move(base_path(Configs::$IMAGE_PATH['ATTENDANCE_PHOTO']), $filename);
+
+                $formRequest['employeePhotoClockIn'] = $filename; // insert to form request
+            }
+
 
             /* Run the logic */
             return AttendanceLogic::clocking($formRequest);
