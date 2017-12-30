@@ -14,6 +14,7 @@ use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use League\Flysystem\Config;
 
@@ -24,6 +25,7 @@ class MainController extends Controller
 
     public function clock(Request $request, $punchType)
     {
+
         /* Validation Request*/
 
         $validator = Validator::make($request->all(), [
@@ -55,7 +57,7 @@ class MainController extends Controller
             if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK']) {//by kiosk
 
                 $validator = Validator::make($request->all(), [
-                    'cKioskId' => 'required',
+                    'clockInKioskId' => 'required',
                 ]);
 
                 if ($validator->fails()) {
@@ -66,6 +68,12 @@ class MainController extends Controller
                 }
 
                 $formRequest['cKioskId'] = $request->cKioskId;
+
+                /*Handle photo uploads if exist*/
+                $formRequest['employeePhotoClockIn'] = $this->saveClockInPhoto($request);
+                $formRequest['employeePhotoClockOut'] = $this->saveClockOutPhoto($request);
+
+
             }
 
             if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_PERSONAL_DEVICE']) {//by personal device
@@ -106,24 +114,12 @@ class MainController extends Controller
             }
 
 
-            /*Save Photo if exist*/
-            if ($request->hasFile('employeePhotoClockIn') && $request->file('employeePhotoClockIn')->isValid()) {
-
-                $employeeNo = MasterEmployee::find($request->employeeId)['employeeNo'];
-                $filename = $employeeNo . Carbon::now()->format('dmYHis') . '.png';
-
-                $request->employeePhotoClockIn->move(base_path(Configs::$IMAGE_PATH['ATTENDANCE_PHOTO']), $filename);
-
-                $formRequest['employeePhotoClockIn'] = $filename; // insert to form request
-            }
-
-
             /* Run the logic */
             return AttendanceLogic::clocking($formRequest);
 
         } else {
             /* Return response */
-            return $checkAvailability;
+            return response()->json($checkAvailability, 200);
         }
 
     }
@@ -131,6 +127,40 @@ class MainController extends Controller
     private function isAvailableToClock($employeeId, $punchType)
     {
         return AttendanceLogic::checkAllowClocking($employeeId, $punchType);
+    }
+
+    private function saveClockInPhoto(Request $request)
+    {
+        /*Save Clock In Photo if exist*/
+        if ($request->hasFile('employeePhotoClockIn') && $request->file('employeePhotoClockIn')->isValid()) {
+
+            $employeeNo = MasterEmployee::find($request->employeeId)['employeeNo'];
+            $filename = $employeeNo . Carbon::now()->format('dmYHis') . '.png';
+
+            $request->employeePhotoClockIn->move(base_path(Configs::$IMAGE_PATH['ATTENDANCE_PHOTO']), $filename);
+
+            return $filename; // insert to form request
+        } else {
+            return "";
+        }
+
+    }
+
+    private function saveClockOutPhoto(Request $request){
+
+        /*Save Clock Out Photo if exist*/
+        if ($request->hasFile('employeePhotoClockOut') && $request->file('employeePhotoClockOut')->isValid()) {
+
+            $employeeNo = MasterEmployee::find($request->employeeId)['employeeNo'];
+            $filename = $employeeNo . Carbon::now()->format('dmYHis') . '.png';
+
+            $request->employeePhotoClockIn->move(base_path(Configs::$IMAGE_PATH['ATTENDANCE_PHOTO']), $filename);
+
+            return $filename; // insert to form request
+        } else  {
+            return "";
+        }
+
     }
 
 }
