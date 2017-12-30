@@ -42115,8 +42115,16 @@ var echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
     namespace: 'App'
 });
 
-echo.channel('attendance').listen('Attendance.Events.EmployeeClocked', function (e) {
-    console.log(e);
+echo.channel('attendance').listen('Attendance.Events.EmployeeClocked', function (data) {
+    console.log(data);
+
+    $('.page-container').pgNotification({
+        style: 'flip',
+        message: data.message,
+        position: 'top-right',
+        timeout: 3500,
+        type: 'info'
+    }).show();
 });
 
 /***/ }),

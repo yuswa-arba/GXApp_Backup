@@ -1,8 +1,12 @@
 <?php
 namespace App\Attendance\Events;
 
+use App\Employee\Models\MasterEmployee;
+use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
+use Carbon\Carbon;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
@@ -19,19 +23,26 @@ class EmployeeClocked implements ShouldBroadcast
 
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $tries = 5;
+    public $broadcastQueue = 'attendance';
 
-//    public $broadcastQueue = 'attendance-broadcast--queue';
+
     /**
      * @var
      */
-    public $person;
+    public $message;
 
-    public function __construct($person)
+    public function __construct($clockedData)
     {
+     $employeeName = MasterEmployee::find($clockedData['employeeId'])['givenName'];
 
-        $this->person = $person;
+        if ($clockedData['punchType'] == Configs::$PUNCH_TYPE['IN']) {
+            $this->message = $employeeName.' CLOCKED IN at ' . Carbon::now()->diffForHumans();
+        } elseif ($clockedData['punchType'] == Configs::$PUNCH_TYPE['OUT']) {
+            $this->message = $employeeName .' CLOCKED OUT at ' . Carbon::now()->diffForHumans();
+        }
+
     }
-
 
 
     /**

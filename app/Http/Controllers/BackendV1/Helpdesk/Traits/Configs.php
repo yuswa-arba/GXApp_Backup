@@ -15,4 +15,9 @@ class Configs
         'FACES_PHOTO' => 'public/images/faces/' ,
         'EMPLOYEE_PHOTO' => 'public/images/employee/' ,
     ];
+
+    public static $PUNCH_TYPE = [
+        'IN'=>'in',
+        'OUT'=>'out'
+    ];
 }

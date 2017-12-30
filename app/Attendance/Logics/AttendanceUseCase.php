@@ -11,6 +11,7 @@ namespace App\Attendance\Logics;
 
 
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
+use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 
 abstract class AttendanceUseCase
 {
@@ -40,15 +41,15 @@ abstract class AttendanceUseCase
 
 
         if ($byKIosk) {
-            if ($punchType == 'in') {
+            if ($punchType == Configs::$PUNCH_TYPE['IN']) {
                 return (new static)->handleKioskClockIn($formRequest);
-            } elseif ($punchType == 'out') {
+            } elseif ($punchType == Configs::$PUNCH_TYPE['OUT']) {
                 return (new static)->handleKioskClockOut($formRequest);
             }
         }
 
         if ($byPersonalDevice) {
-            if ($punchType == 'in') {
+            if ($punchType == Configs::$PUNCH_TYPE['IN']) {
                 return (new static)->handlePersonalDeviceClockIn($formRequest);
             } elseif ($punchType == 'out') {
                 return (new static)->handlePersonalDeviceClockOut($formRequest);
@@ -56,7 +57,7 @@ abstract class AttendanceUseCase
         }
 
         if ($byWebPortal) {
-            if ($punchType == 'in') {
+            if ($punchType == Configs::$PUNCH_TYPE['OUT']) {
                 return (new static)->handleWebPortalClockIn($formRequest);
             } elseif ($punchType == 'out') {
                 return (new static)->handleWebPortalClockOut($formRequest);

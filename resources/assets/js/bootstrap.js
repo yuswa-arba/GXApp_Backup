@@ -52,9 +52,16 @@ let echo = new Echo({
 })
 
 echo.channel('attendance')
-    .listen('Attendance.Events.EmployeeClocked', (e) => {
-        console.log(e)
+    .listen('Attendance.Events.EmployeeClocked', (data) => {
+        console.log(data)
 
+        $('.page-container').pgNotification({
+            style: 'flip',
+            message: data.message,
+            position: 'top-right',
+            timeout: 3500,
+            type: 'info'
+        }).show();
     })
 
 

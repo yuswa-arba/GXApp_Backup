@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AjaxController extends Controller
 {
-    public function masterEmploymentDetail($id)
+    public function masterEmployeeDetail($id)
     {
         if ($id != null && $id != '') {
             $employee = MasterEmployee::find($id);

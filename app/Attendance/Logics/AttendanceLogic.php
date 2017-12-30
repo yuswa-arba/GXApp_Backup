@@ -9,6 +9,7 @@
 
 namespace App\Attendance\Logics;
 
+use App\Attendance\Events\EmployeeClocked;
 use App\Attendance\Models\AttendanceSchedule;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\EmployeeSlotSchedule;
@@ -17,6 +18,7 @@ use App\Attendance\Models\Slots;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
+use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use Carbon\Carbon;
 
 class AttendanceLogic extends AttendanceUseCase
@@ -54,7 +56,8 @@ class AttendanceLogic extends AttendanceUseCase
                 ]
             );
 
-            //TODO: Trigger event to update dashboard
+            /*Trigger event to update dashboard*/
+            broadcast(new EmployeeClocked(['employeeId'=>$formRequest['employeeId'],'punchType'=>Configs::$PUNCH_TYPE['IN']]));
 
             $response = array();
             if ($insert) {
@@ -92,12 +95,14 @@ class AttendanceLogic extends AttendanceUseCase
 
         } else {
 
+            /* Save to where the employee clocked in else create a new one */
             $insert = AttendanceTimesheet::updateOrCreate(
                 [
                     'employeeId' => $formRequest['employeeId'],
-                    'clockOutDate' => $formRequest['cDate'],
+                    'clockInDate' => $formRequest['cDate'],
                 ],
                 [
+                    'clockOutDate' => $formRequest['cDate'],
                     'shiftId' => $formRequest['shiftId'],
                     'clockOutTime' => $formRequest['cTime'],
                     'clockOutViaTypeId' => $formRequest['cViaTypeId'],
@@ -106,7 +111,8 @@ class AttendanceLogic extends AttendanceUseCase
                 ]
             );
 
-            //TODO: Trigger event to update dashboard
+            /*Trigger event to update dashboard*/
+            broadcast(new EmployeeClocked(['employeeId'=>$formRequest['employeeId'],'punchType'=>Configs::$PUNCH_TYPE['OUT']]));
 
             $response = array();
             if ($insert) {
