@@ -23,23 +23,8 @@ Route::prefix('attendance')->namespace('Client\Attendance')->middleware('auth.ad
         return redirect()->route('attendance.dashboard');
     })->name('attendance');
 
-    /*
-     |--------------------------------------------------------------------------
-     | Path Configuration
-     |--------------------------------------------------------------------------
-     */
-    $client_path = 'routes/client/';
-    $client_setting_path = $client_path.'attendance/';
-
-    $backend_path = 'routes/backendV1/';
-
-    /*
-     |--------------------------------------------------------------------------
-     | Init setting routes
-     |--------------------------------------------------------------------------
-     */
-    include (base_path($client_setting_path .'dashboard.php'));
-    include (base_path($client_setting_path .'slot.php'));
-    include (base_path($client_setting_path .'setting.php'));
-
+    Route::get('dashboard/', 'ViewController@dashboard')->name('attendance.dashboard');
+    Route::get('setting/', 'ViewController@setting')->name('attendance.setting');
+    Route::get('slot/', 'ViewController@slot')->name('attendance.slot');
+    Route::get('timesheet', 'ViewController@timesheet')->name('attendance.timesheet');
 });

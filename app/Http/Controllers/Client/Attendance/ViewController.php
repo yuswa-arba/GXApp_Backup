@@ -22,5 +22,10 @@ class ViewController extends Controller
     {
         return view('pages.attendance.setting');
     }
-    
+
+    public function timesheet()
+    {
+        return view('pages.attendance.timesheet');
+    }
+
 }

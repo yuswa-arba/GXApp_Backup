@@ -10,7 +10,7 @@
             <span class="icon-thumbnail">db</span>
         </li>
         <li class="">
-            <a href="#">Timesheets</a>
+            <a href="{{route('attendance.timesheet')}}">Timesheets</a>
             <span class="icon-thumbnail">ts</span>
         </li>
         <li class="">
