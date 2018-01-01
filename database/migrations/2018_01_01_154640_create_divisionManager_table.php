@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateHeadOfDivisionTable extends Migration
+class CreateDivisionManagerTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateHeadOfDivisionTable extends Migration
      */
     public function up()
     {
-        Schema::create('headOfDivision', function (Blueprint $table) {
+        Schema::create('divisionManager', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('employeeId');
             $table->integer('divisionId');
@@ -28,6 +28,6 @@ class CreateHeadOfDivisionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('headOfDivision');
+        Schema::dropIfExists('divisionManager');
     }
 }

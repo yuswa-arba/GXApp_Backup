@@ -3,6 +3,7 @@
 namespace App\Components\Models;
 
 use App\Employee\Models\HeadOfDivison;
+use App\Employee\Models\MasterEmployee;
 use Illuminate\Database\Eloquent\Model;
 
 class Division extends Model
@@ -11,9 +12,9 @@ class Division extends Model
     protected $guarded = ['id'];
 
 
-    public function headOfDvision()
+    public function manager()
     {
-        return $this->hasMany(HeadOfDivison::class,'divisionId');
+        return $this->hasOne(DivisionManager::class,'divisionId');
     }
 
 }

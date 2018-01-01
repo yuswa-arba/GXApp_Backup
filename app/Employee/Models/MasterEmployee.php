@@ -5,6 +5,7 @@ namespace App\Employee\Models;
 use App\Account\Models\User;
 use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Components\Models\Bank;
+use App\Components\Models\DivisionManager;
 use App\Components\Models\EducationLevel;
 use App\Components\Models\MaritalStatus;
 use App\Components\Models\Religion;
@@ -80,6 +81,11 @@ class MasterEmployee extends Model
     public function facePerson()
     {
         return $this->hasOne(FacePerson::class,'employeeId');
+    }
+
+    public function divisionManager()
+    {
+        return $this->hasOne(DivisionManager::class,'employeeId');
     }
 
 }

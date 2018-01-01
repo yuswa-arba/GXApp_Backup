@@ -2507,7 +2507,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({});
 
@@ -21945,7 +21976,27 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container-fluid container-fixed-lg" },
-    [_c("router-view")],
+    [
+      _c("router-view", [
+        _c("div", { attrs: { slot: "go-back-menu" }, slot: "go-back-menu" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-primary m-r-15 m-b-10 pull-left",
+              on: {
+                click: function($event) {
+                  _vm.goBack()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "pg-arrow_left" }),
+              _vm._v("\n                Go Back\n            ")
+            ]
+          )
+        ])
+      ])
+    ],
     1
   )
 }
@@ -21968,9 +22019,83 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" })
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+          },
+          [
+            _c("div", { staticClass: "card-block" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table table-hover timesheetDT" }, [
+                  _c("thead", { staticClass: "bg-master-lighter" }, [
+                    _c("tr", [
+                      _c("th", { staticClass: "text-black" }, [_vm._v("ID")]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-black" }, [
+                        _vm._v("Employee")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-black" }, [
+                        _vm._v("Clock-In")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-black" }, [
+                        _vm._v("Clock-Out")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-black" }, [
+                        _vm._v("Approve Stats")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-black" }, [
+                        _vm._v("Valid Stats")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-black" }, [
+                        _vm._v("Actions")
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("tbody", [
+                    _c("tr", [
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td")
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -36422,9 +36547,9 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 
 $(document).ready(function () {
 
-    var slotDT = $('.slotDT');
+    var timesheetDT = $('.timesheetDT');
 
-    slotDT.dataTable({
+    timesheetDT.dataTable({
         "sDom": "t",
         "destroy": true,
         "paging": true,

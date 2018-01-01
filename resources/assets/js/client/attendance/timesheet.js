@@ -19,15 +19,14 @@ const app =  new Vue({
 
 $(document).ready(function(){
 
-    let slotDT = $('.slotDT');
+    let timesheetDT = $('.timesheetDT');
 
-    slotDT.dataTable({
+    timesheetDT.dataTable({
         "sDom": "t",
         "destroy": true,
         "paging": true,
         "scrollCollapse": false,
         "ordering": false
     })
-
 });
 
