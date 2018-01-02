@@ -10,7 +10,9 @@ use App\Attendance\Transformers\KioskListTransformer;
 use App\Attendance\Transformers\ShiftListTransformer;
 use App\Attendance\Transformers\SlotListTransformer;
 use App\Attendance\Transformers\SlotMakerListTransformer;
+use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
+use App\Components\Transformers\DivisionListTransfomer;
 use App\Components\Transformers\JobPositionListTransfomer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -68,4 +70,17 @@ class GetListController extends Controller
     {
         return fractal(Kiosks::where('isDeleted',0)->get(), new KioskListTransformer())->respond(200);
     }
+
+
+    public function division($id)
+    {
+        return fractal(Division::where('id',$id)->first(),new DivisionListTransfomer())->respond(200);
+    }
+
+
+    public function divisions()
+    {
+        return fractal(Division::all(),new DivisionListTransfomer())->respond(200);
+    }
+
 }

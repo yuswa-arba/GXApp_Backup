@@ -4,12 +4,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import slots from './modules/main'
+import timesheet from './modules/main'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     modules:{
-        slots
+        timesheet
     }
 })

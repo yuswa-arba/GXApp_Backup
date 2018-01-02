@@ -3,6 +3,7 @@
 namespace App\Employee\Models;
 
 use App\Account\Models\User;
+use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Components\Models\Bank;
 use App\Components\Models\DivisionManager;
@@ -86,6 +87,11 @@ class MasterEmployee extends Model
     public function divisionManager()
     {
         return $this->hasOne(DivisionManager::class,'employeeId');
+    }
+
+    public function timesheet()
+    {
+        return $this->hasMany(AttendanceTimesheet::class,'employeeId');
     }
 
 }

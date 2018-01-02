@@ -28,5 +28,16 @@ $(document).ready(function(){
         "scrollCollapse": false,
         "ordering": false
     })
+
+
+    $('#sortTimesheetDate').datepicker({
+        format: 'dd/mm/yyyy',
+        todayHighlight:true
+    });
+
+    $('#sortTimesheetDate').val(moment().format('DD/MM/YYYY'))
+
+    $('.dataTables_empty').hide()
+
 });
 

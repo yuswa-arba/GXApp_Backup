@@ -38,6 +38,8 @@ Route::prefix('v1/h')->group(function () {
         Route::post('kiosk/create','KioskController@create')->name('v1.kiosk.create');
         Route::post('kiosk/delete','KioskController@delete')->name('v1.kiosk.delete');
 
+        Route::get('timesheet/list','TimesheetController@list')->name('v1.timesheet.list');
+
 
     });
 

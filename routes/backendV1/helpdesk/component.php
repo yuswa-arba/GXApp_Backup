@@ -6,7 +6,6 @@
  * Time: 4:27 PM
  */
 
-
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,6 +28,9 @@ Route::prefix('v1/h')->group(function () {
 
         Route::get('kiosk/{id}','GetListController@kiosk')->name('v1.component.kiosk');
         Route::get('list/kiosks', 'GetListController@kiosks')->name('v1.component.list.kiosks');
+
+        Route::get('division/{id}','GetListController@division')->name('v1.component.division');
+        Route::get('list/divisions', 'GetListController@divisions')->name('v1.component.list.divisions');
 
     });
 

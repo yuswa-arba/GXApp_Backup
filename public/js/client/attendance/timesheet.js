@@ -2500,6 +2500,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2540,7 +2608,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            sortDivisionId: '',
+            sortShiftId: '',
+            sortDate: ''
+        };
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('timesheet', {
+        divisions: 'divisions',
+        shifts: 'shifts',
+        timesheetDatas: 'timesheetDatas'
+    })),
+    created: function created() {
+
+        var self = this;
+        this.$store.dispatch('timesheet/getDataOnCreate');
+    },
+
+    methods: {
+        sortTimesheet: function sortTimesheet() {
+
+            var self = this;
+            var sortDate = moment().format('DD/MM/YYYY');
+
+            if ($('#sortTimesheetDate').val()) {
+                sortDate = $('#sortTimesheetDate').val();
+            }
+
+            this.$store.dispatch({
+                type: 'timesheet/getSortedData',
+                divisionId: self.sortDivisionId,
+                shiftId: self.sortShiftId,
+                sortDate: sortDate
+            });
+        }
+    }
+});
 
 /***/ }),
 
@@ -22019,79 +22126,289 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+      _c("div", { staticClass: "pull-left m-r-15" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.sortDivisionId,
+                  expression: "sortDivisionId"
+                }
+              ],
+              staticClass: "btn btn-outline-primary h-35 w-150",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.sortDivisionId = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("Division")]),
+              _vm._v(" "),
+              _vm._l(_vm.divisions, function(division) {
+                return _c("option", { domProps: { value: division.id } }, [
+                  _vm._v(_vm._s(division.name) + "\n                    ")
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "pull-left m-r-15" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.sortShiftId,
+                  expression: "sortShiftId"
+                }
+              ],
+              staticClass: "btn btn-outline-primary h-35 ",
+              staticStyle: { width: "100px" },
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.sortShiftId = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("Shifts")]),
+              _vm._v(" "),
+              _vm._l(_vm.shifts, function(shift) {
+                return _c("option", { domProps: { value: shift.id } }, [
+                  _vm._v(_vm._s(shift.name) + "\n                    ")
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "pull-right m-r-15" }, [
+        _c("div", { staticClass: "form-group required" }, [
+          _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                id: "sortTimesheetDate",
+                type: "text",
+                name: "sortTimesheetDate",
+                required: ""
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "input-group-addon bg-primary text-white",
+                on: {
+                  click: function($event) {
+                    _vm.sortTimesheet()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-check" })]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block" }, [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover timesheetDT" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.timesheetDatas, function(timesheet) {
+                    return _c("tr", { staticClass: "filter-item" }, [
+                      _c("td", [
+                        _c(
+                          "p",
+                          { staticClass: "fs-16 bold text-black m-b-0" },
+                          [_vm._v(_vm._s(timesheet.employeeName))]
+                        ),
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(timesheet.divisionName) +
+                            "\n\n                            "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("p", { staticClass: "m-b-0 text-black bold" }, [
+                          _vm._v(" " + _vm._s(timesheet.shiftName))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "m-b-0" }, [
+                          _vm._v(
+                            " Start: " + _vm._s(timesheet.shiftWorkStartAt)
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "m-b-0" }, [
+                          _vm._v(" End: " + _vm._s(timesheet.shiftWorkEndAt))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        timesheet.clockInPhoto
+                          ? _c("img", {
+                              staticClass: "img-responsive",
+                              attrs: {
+                                height: "120px",
+                                src:
+                                  "/images/attendances/" +
+                                  timesheet.clockInPhoto,
+                                alt: ""
+                              }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        timesheet.clockInTime
+                          ? _c(
+                              "p",
+                              {
+                                staticClass:
+                                  "fs-16 m-t-10 text-primary text-center bold"
+                              },
+                              [_vm._v(_vm._s(timesheet.clockInTime))]
+                            )
+                          : _c("p", [_vm._v("-")])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        timesheet.clockOutPhoto
+                          ? _c("img", {
+                              staticClass: "img-responsive",
+                              attrs: {
+                                height: "120px",
+                                src:
+                                  "/images/attendances/" +
+                                  timesheet.clockOutPhoto,
+                                alt: ""
+                              }
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        timesheet.clockOutTime
+                          ? _c(
+                              "p",
+                              {
+                                staticClass:
+                                  "fs-16 m-t-10 text-primary text-center bold"
+                              },
+                              [_vm._v(" " + _vm._s(timesheet.clockOutTime))]
+                            )
+                          : _c("p", [_vm._v("-")])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        timesheet.attendanceApproveName
+                          ? _c("p", [
+                              _vm._v(_vm._s(timesheet.attendanceApproveName))
+                            ])
+                          : _c("p", [_vm._v("-")])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        timesheet.attendanceValidationName
+                          ? _c("p", [
+                              _vm._v(
+                                " " + _vm._s(timesheet.attendanceValidationName)
+                              )
+                            ])
+                          : _c("p", [_vm._v("-")])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(1, true)
+                    ])
+                  })
+                )
+              ])
+            ])
+          ])
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black w-150" }, [_vm._v("Employee")]),
+        _vm._v(" "),
         _c(
-          "div",
-          {
-            staticClass:
-              "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-          },
-          [
-            _c("div", { staticClass: "card-block" }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table table-hover timesheetDT" }, [
-                  _c("thead", { staticClass: "bg-master-lighter" }, [
-                    _c("tr", [
-                      _c("th", { staticClass: "text-black" }, [_vm._v("ID")]),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "text-black" }, [
-                        _vm._v("Employee")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "text-black" }, [
-                        _vm._v("Clock-In")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "text-black" }, [
-                        _vm._v("Clock-Out")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "text-black" }, [
-                        _vm._v("Approve Stats")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "text-black" }, [
-                        _vm._v("Valid Stats")
-                      ]),
-                      _vm._v(" "),
-                      _c("th", { staticClass: "text-black" }, [
-                        _vm._v("Actions")
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tbody", [
-                    _c("tr", [
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td"),
-                      _vm._v(" "),
-                      _c("td")
-                    ])
-                  ])
-                ])
-              ])
-            ])
-          ]
-        )
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "100px" } },
+          [_vm._v("Shift")]
+        ),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Clock-In")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Clock-Out")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Approve Stats")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Valid Stats")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Actions")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("button", { staticClass: "btn btn-outline-primary" }, [
+        _vm._v("Approve")
       ])
     ])
   }
@@ -36556,6 +36873,15 @@ $(document).ready(function () {
         "scrollCollapse": false,
         "ordering": false
     });
+
+    $('#sortTimesheetDate').datepicker({
+        format: 'dd/mm/yyyy',
+        todayHighlight: true
+    });
+
+    $('#sortTimesheetDate').val(moment().format('DD/MM/YYYY'));
+
+    $('.dataTables_empty').hide();
 });
 
 /***/ }),
@@ -36623,7 +36949,27 @@ module.exports = Component.exports
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = ({});
+/* harmony default export */ __webpack_exports__["a"] = ({
+    getDataOnCreate: function getDataOnCreate(_ref) {
+        var commit = _ref.commit;
+
+        commit({ type: 'getDivisions', divisionId: '' });
+        commit({ type: 'getShifts', shiftId: '' });
+
+        var currentDate = moment().format('DD/MM/YYYY');
+        commit({ type: 'getTimesheetData', sortDate: currentDate });
+    },
+    getSortedData: function getSortedData(_ref2, payload) {
+        var commit = _ref2.commit;
+
+        commit({
+            type: 'getTimesheetData',
+            sortDate: payload.sortDate,
+            divisionId: payload.divisionId,
+            shiftId: payload.shiftId
+        });
+    }
+});
 
 /***/ }),
 
@@ -36634,7 +36980,17 @@ module.exports = Component.exports
 /**
  * Created by kevinpurwono on 8/12/17.
  */
-/* harmony default export */ __webpack_exports__["a"] = ({});
+/* harmony default export */ __webpack_exports__["a"] = ({
+    divisions: function divisions(state) {
+        return state.divisions;
+    },
+    shifts: function shifts(state) {
+        return state.shifts;
+    },
+    timesheetDatas: function timesheetDatas(state) {
+        return state.timesheetsData;
+    }
+});
 
 /***/ }),
 
@@ -36655,7 +37011,11 @@ module.exports = Component.exports
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
-    state: {},
+    state: {
+        divisions: [],
+        shifts: [],
+        timesheetsData: []
+    },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
     actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */]
@@ -36677,7 +37037,54 @@ module.exports = Component.exports
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = ({});
+/* harmony default export */ __webpack_exports__["a"] = ({
+    getDivisions: function getDivisions(state, payload) {
+
+        if (!payload.divisionId) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/divisions').then(function (res) {
+                state.divisions = res.data.data;
+            });
+        } else {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/division/' + payload.divisionId).then(function (res) {
+                state.divisions = res.data.data;
+            });
+        }
+    },
+    getShifts: function getShifts(state, payload) {
+        if (!payload.shiftId) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/shifts').then(function (res) {
+                state.shifts = res.data.data;
+            });
+        } else {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/shift/' + payload.shiftId).then(function (res) {
+                state.shifts = res.data.data;
+            });
+        }
+    },
+    getTimesheetData: function getTimesheetData(state, payload) {
+        var divisionId = '';
+        var shiftId = '';
+        var sortDate = '';
+
+        if (payload.divisionId) divisionId = payload.divisionId;
+
+        if (payload.shiftId) shiftId = payload.shiftid;
+
+        if (payload.sortDate) sortDate = payload.sortDate;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId).then(function (res) {
+            if (res.data.data) state.timesheetsData = res.data.data;
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 0,
+                type: 'danger'
+            }).show();
+        });
+    }
+});
 
 /***/ }),
 
@@ -36702,7 +37109,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
-        slots: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
+        timesheet: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
     }
 });
 

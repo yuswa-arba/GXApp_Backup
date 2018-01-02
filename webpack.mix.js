@@ -152,15 +152,13 @@ mix.js('resources/assets/js/client/attendance/slot','public/js/client/attendance
 mix.js('resources/assets/js/client/attendance/timesheet','public/js/client/attendance');
 mix.js('resources/assets/js/client/doorAccess/main','public/js/client/doorAccess');
 mix.js('resources/assets/js/client/developer/face','public/js/client/developer');
+
 /*
  |--------------------------------------------------------------------------
  | Application JS
  |--------------------------------------------------------------------------
  */
-
 mix.js('resources/assets/js/app.js', 'public/js');
 mix.sass('resources/assets/sass/app.scss', 'public/css');
-
-
 
 mix.version();

@@ -9,6 +9,9 @@ import actions from './actions'
 export default {
     namespaced: true,
     state: {
+        divisions:[],
+        shifts:[],
+        timesheetsData:[]
     },
     getters,
     mutations,

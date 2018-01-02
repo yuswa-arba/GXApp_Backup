@@ -2,21 +2,22 @@
 
 namespace App\Components\Transformers;
 
+use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
 use League\Fractal\TransformerAbstract;
 
-class JobPositionListTransfomer extends TransformerAbstract
+class DivisionListTransfomer extends TransformerAbstract
 {
     /**
      * A Fractal transformer.
      *
      * @return array
      */
-    public function transform(JobPosition $jobPosition)
+    public function transform(Division $division)
     {
         return [
-            'id' => $jobPosition->id,
-            'name' => $jobPosition->name,
+            'id' => $division->id,
+            'name' => $division->name,
         ];
     }
 }

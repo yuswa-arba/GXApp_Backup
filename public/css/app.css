@@ -187,10 +187,6 @@
   left: 0 !important;
 }
 
-.w-150 {
-  width: 150px !important;
-}
-
 .h-35 {
   height: 35px !important;
 }
@@ -229,6 +225,24 @@
 
 .h-800 {
   height: 800px !important;
+}
+
+/* Width*/
+
+.w-150 {
+  width: 150px !important;
+}
+
+.w-200 {
+  width: 200px !important;
+}
+
+.w-250 {
+  width: 250px !important;
+}
+
+.w-300 {
+  width: 300px !important;
 }
 
 .italic {

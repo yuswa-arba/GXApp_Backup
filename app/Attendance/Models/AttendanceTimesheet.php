@@ -2,6 +2,7 @@
 
 namespace App\Attendance\Models;
 
+use App\Employee\Models\MasterEmployee;
 use Illuminate\Database\Eloquent\Model;
 
 class AttendanceTimesheet extends Model
@@ -29,9 +30,20 @@ class AttendanceTimesheet extends Model
         return $this->belongsTo(AttendanceValidation::class,'attendanceValidationId');
     }
 
+    public function attendanceApproval()
+    {
+        return $this->belongsTo(AttendanceApproval::class,'attendanceApproveId');
+
+    }
+
     public function shift()
     {
         return $this->belongsTo(Shifts::class,'shiftId');
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(MasterEmployee::class,'employeeId');
     }
 
 
