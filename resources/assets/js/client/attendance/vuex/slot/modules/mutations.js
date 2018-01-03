@@ -287,67 +287,92 @@ export default{
     },
     getCalendarDataForMapping(state, payload){
 
-        post(api_path + 'attendance/shift/mapping/calendar', {slotIds: payload.slotIds})
-            .then((res) => {
+        let slotIdsToGet = []
 
-                state.calendarShiftMappingEventSource = res.data.data
+        _.forEach(payload.slotIds, function (value, key) {
+            // insert slots except the plucked ones
+            if (!value.toString().startsWith('plucked_')) {
+                slotIdsToGet.push(value) // remove plucked ids to use in server request
+            }
+        })
 
-                //add color
-                let c = 0
-                _.forEach(payload.slotIds, function (value, key) {
+        if (!_.isEmpty(slotIdsToGet)) {
+            post(api_path + 'attendance/shift/mapping/calendar', {slotIds: slotIdsToGet})
+                .then((res) => {
 
-                    let filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, {slotId: value})
-                    for (let i = 0; i < filteredToAddColor.length; i++) {
-                        _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
-                    }
+                    state.calendarShiftMappingEventSource = res.data.data
 
-                    c++ //increment
+                    //add color
+                    let c = 0
+                    _.forEach(payload.slotIds, function (value, key) {
+
+                        let filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, {slotId: value})
+                        for (let i = 0; i < filteredToAddColor.length; i++) {
+                            _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
+                        }
+
+                        c++ //increment
+                    })
+
+                    $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource)
+
+
+                })
+                .catch((err) => {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
                 })
 
-                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource)
-
-
-            })
-            .catch((err) => {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            })
+        }
 
 
     },
     getShiftSchedule(state, payload){
 
-        post(api_path + 'attendance/shift/mapping/schedule', {slotIds: payload.slotIds})
-            .then((res) => {
-                state.calendarShiftScheduleEventSource = res.data.data
-                //add color
-                let c = 0
-                _.forEach(payload.slotIds, function (value, key) {
+        let slotIdsToGet = []
 
-                    let filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, {slotId: value})
-                    for (let i = 0; i < filteredToAddColor.length; i++) {
-                        _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
-                    }
+        _.forEach(payload.slotIds, function (value, key) {
+            // insert slots except the plucked ones
+            if (!value.toString().startsWith('plucked_')) {
+                slotIdsToGet.push(value) // remove plucked ids to use in server request
+            }
+        })
 
-                    c++ //increment
+        if (!_.isEmpty(slotIdsToGet)) {
+            post(api_path + 'attendance/shift/mapping/schedule', {slotIds: payload.slotIds})
+                .then((res) => {
+                    state.calendarShiftScheduleEventSource = res.data.data
+                    //add color
+                    let c = 0
+                    _.forEach(payload.slotIds, function (value, key) {
+
+                        let filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, {slotId: value})
+                        for (let i = 0; i < filteredToAddColor.length; i++) {
+                            _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
+                        }
+
+                        c++ //increment
+                    })
+                    $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource)
+
                 })
-                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource)
+                .catch((err) => {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                })
+        }
 
-            })
-            .catch((err) => {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            })
+
 
     },
     mapShift(state, payload){

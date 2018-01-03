@@ -59,14 +59,11 @@ export default{
             currentAffectedCbIndex = _.findIndex(state.cbSlotsBeingMap, {id: payload.affectedCbSlotId})
         }
 
-        let slotIdsToGet = []
-
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
             // insert slots except the plucked ones
             if (!value.toString().startsWith('plucked_')) {
                 state.slotsBeingMap.push(_.find(state.slots, {id: value}))
-                slotIdsToGet.push(value) // remove plucked ids to use in server request
             }
 
             if (payload.refreshCb) {
@@ -75,7 +72,7 @@ export default{
         })
 
 
-        if (!_.isEmpty(slotIdsToGet)) {
+        if (!_.isEmpty(payload.slotIds)) {
             series([
                 function (cb) {
                     //reset calendar
@@ -85,14 +82,14 @@ export default{
                 function (cb) {
                     commit({
                         type: 'getCalendarDataForMapping',
-                        slotIds: slotIdsToGet,
+                        slotIds: payload.slotIds,
                     })
                     cb(null)
                 },
                 function (cb) {
                     commit({
                         type: 'getShiftSchedule',
-                        slotIds: slotIdsToGet,
+                        slotIds: payload.slotIds,
                     })
                     cb(null)
                 }

@@ -39553,14 +39553,11 @@ module.exports = Component.exports
             currentAffectedCbIndex = _.findIndex(state.cbSlotsBeingMap, { id: payload.affectedCbSlotId });
         }
 
-        var slotIdsToGet = [];
-
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
             // insert slots except the plucked ones
             if (!value.toString().startsWith('plucked_')) {
                 state.slotsBeingMap.push(_.find(state.slots, { id: value }));
-                slotIdsToGet.push(value);
             }
 
             if (payload.refreshCb) {
@@ -39568,7 +39565,7 @@ module.exports = Component.exports
             }
         });
 
-        if (!_.isEmpty(slotIdsToGet)) {
+        if (!_.isEmpty(payload.slotIds)) {
             __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
                 //reset calendar
                 $('#calendar-shift-mapping').fullCalendar('removeEvents');
@@ -39576,13 +39573,13 @@ module.exports = Component.exports
             }, function (cb) {
                 commit({
                     type: 'getCalendarDataForMapping',
-                    slotIds: slotIdsToGet
+                    slotIds: payload.slotIds
                 });
                 cb(null);
             }, function (cb) {
                 commit({
                     type: 'getShiftSchedule',
-                    slotIds: slotIdsToGet
+                    slotIds: payload.slotIds
                 });
                 cb(null);
             }]);
@@ -40072,58 +40069,80 @@ module.exports = Component.exports
     },
     getCalendarDataForMapping: function getCalendarDataForMapping(state, payload) {
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/mapping/calendar', { slotIds: payload.slotIds }).then(function (res) {
+        var slotIdsToGet = [];
 
-            state.calendarShiftMappingEventSource = res.data.data;
-
-            //add color
-            var c = 0;
-            _.forEach(payload.slotIds, function (value, key) {
-
-                var filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, { slotId: value });
-                for (var i = 0; i < filteredToAddColor.length; i++) {
-                    _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
-                }
-
-                c++; //increment
-            });
-
-            $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource);
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
+        _.forEach(payload.slotIds, function (value, key) {
+            // insert slots except the plucked ones
+            if (!value.toString().startsWith('plucked_')) {
+                slotIdsToGet.push(value); // remove plucked ids to use in server request
+            }
         });
+
+        if (!_.isEmpty(slotIdsToGet)) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/mapping/calendar', { slotIds: slotIdsToGet }).then(function (res) {
+
+                state.calendarShiftMappingEventSource = res.data.data;
+
+                //add color
+                var c = 0;
+                _.forEach(payload.slotIds, function (value, key) {
+
+                    var filteredToAddColor = _.filter(state.calendarShiftMappingEventSource, { slotId: value });
+                    for (var i = 0; i < filteredToAddColor.length; i++) {
+                        _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
+                    }
+
+                    c++; //increment
+                });
+
+                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftMappingEventSource);
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        }
     },
     getShiftSchedule: function getShiftSchedule(state, payload) {
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/mapping/schedule', { slotIds: payload.slotIds }).then(function (res) {
-            state.calendarShiftScheduleEventSource = res.data.data;
-            //add color
-            var c = 0;
-            _.forEach(payload.slotIds, function (value, key) {
+        var slotIdsToGet = [];
 
-                var filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, { slotId: value });
-                for (var i = 0; i < filteredToAddColor.length; i++) {
-                    _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
-                }
-
-                c++; //increment
-            });
-            $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource);
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
+        _.forEach(payload.slotIds, function (value, key) {
+            // insert slots except the plucked ones
+            if (!value.toString().startsWith('plucked_')) {
+                slotIdsToGet.push(value); // remove plucked ids to use in server request
+            }
         });
+
+        if (!_.isEmpty(slotIdsToGet)) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/shift/mapping/schedule', { slotIds: payload.slotIds }).then(function (res) {
+                state.calendarShiftScheduleEventSource = res.data.data;
+                //add color
+                var c = 0;
+                _.forEach(payload.slotIds, function (value, key) {
+
+                    var filteredToAddColor = _.filter(state.calendarShiftScheduleEventSource, { slotId: value });
+                    for (var i = 0; i < filteredToAddColor.length; i++) {
+                        _.assign(filteredToAddColor[i], { backgroundColor: '#' + state.shiftMapPalette[c] });
+                    }
+
+                    c++; //increment
+                });
+                $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarShiftScheduleEventSource);
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        }
     },
     mapShift: function mapShift(state, payload) {
 
