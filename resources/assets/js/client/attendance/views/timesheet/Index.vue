@@ -40,6 +40,18 @@
                 </div>
             </div>
 
+            <div class="pull-right m-r-15">
+                <div class="form-group">
+                    <select class="btn btn-outline-primary h-35 w-150"
+                            v-model="sortAttdApprovalId"
+                            @change="sortTimesheet()">
+                        <option value="">All Approval</option>
+                        <option :value="attdApproval.id" v-for="attdApproval in attdApprovals">{{attdApproval.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
 
 
 
@@ -170,13 +182,15 @@
                 sortDivisionId: '',
                 sortShiftId: '',
                 showcInPhoto: true,
-                showcOutPhoto: true
+                showcOutPhoto: true,
+                sortAttdApprovalId:''
             }
         },
         computed: {
             ...mapGetters('timesheet', {
                 divisions: 'divisions',
                 shifts: 'shifts',
+                attdApprovals:'attdApprovals',
                 timesheetDatas: 'timesheetDatas'
             }),
 
@@ -202,7 +216,8 @@
                     type: 'timesheet/getSortedData',
                     divisionId: self.sortDivisionId,
                     shiftId: self.sortShiftId,
-                    sortDate: sortDate
+                    sortDate: sortDate,
+                    attdApprovalId:self.sortAttdApprovalId
                 })
             },
 

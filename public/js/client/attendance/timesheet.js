@@ -2667,6 +2667,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2675,13 +2687,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             sortDivisionId: '',
             sortShiftId: '',
             showcInPhoto: true,
-            showcOutPhoto: true
+            showcOutPhoto: true,
+            sortAttdApprovalId: ''
         };
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('timesheet', {
         divisions: 'divisions',
         shifts: 'shifts',
+        attdApprovals: 'attdApprovals',
         timesheetDatas: 'timesheetDatas'
     })),
     created: function created() {
@@ -2704,7 +2718,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 type: 'timesheet/getSortedData',
                 divisionId: self.sortDivisionId,
                 shiftId: self.sortShiftId,
-                sortDate: sortDate
+                sortDate: sortDate,
+                attdApprovalId: self.sortAttdApprovalId
             });
         },
         showHidecInPhoto: function showHidecInPhoto() {
@@ -22333,6 +22348,55 @@ var render = function() {
             2
           )
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "pull-right m-r-15" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.sortAttdApprovalId,
+                  expression: "sortAttdApprovalId"
+                }
+              ],
+              staticClass: "btn btn-outline-primary h-35 w-150",
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.sortAttdApprovalId = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    _vm.sortTimesheet()
+                  }
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Approval")]),
+              _vm._v(" "),
+              _vm._l(_vm.attdApprovals, function(attdApproval) {
+                return _c("option", { domProps: { value: attdApproval.id } }, [
+                  _vm._v(_vm._s(attdApproval.name) + "\n                    ")
+                ])
+              })
+            ],
+            2
+          )
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -37164,6 +37228,7 @@ module.exports = Component.exports
 
         commit({ type: 'getDivisions', divisionId: '' });
         commit({ type: 'getShifts', shiftId: '' });
+        commit({ type: 'getAttdApprovals', attdAprovalId: '' });
 
         var currentDate = moment().format('DD/MM/YYYY');
         commit({ type: 'getTimesheetData', sortDate: currentDate });
@@ -37175,7 +37240,8 @@ module.exports = Component.exports
             type: 'getTimesheetData',
             sortDate: payload.sortDate,
             divisionId: payload.divisionId,
-            shiftId: payload.shiftId
+            shiftId: payload.shiftId,
+            attdApprovalId: payload.attdApprovalId
         });
     }
 });
@@ -37195,6 +37261,9 @@ module.exports = Component.exports
     },
     shifts: function shifts(state) {
         return state.shifts;
+    },
+    attdApprovals: function attdApprovals(state) {
+        return state.attdApprovals;
     },
     timesheetDatas: function timesheetDatas(state) {
         return state.timesheetsData;
@@ -37223,6 +37292,7 @@ module.exports = Component.exports
     state: {
         divisions: [],
         shifts: [],
+        attdApprovals: [],
         timesheetsData: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
@@ -37270,10 +37340,22 @@ module.exports = Component.exports
             });
         }
     },
+    getAttdApprovals: function getAttdApprovals(state, payload) {
+        if (!payload.attdApprovalId) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/attdApprovals').then(function (res) {
+                state.attdApprovals = res.data.data;
+            });
+        } else {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/attdApproval/' + payload.attdApprovalId).then(function (res) {
+                state.attdApprovals = res.data.data;
+            });
+        }
+    },
     getTimesheetData: function getTimesheetData(state, payload) {
         var divisionId = '';
         var shiftId = '';
         var sortDate = '';
+        var attdApprovalId = '';
 
         if (payload.divisionId) divisionId = payload.divisionId;
 
@@ -37281,7 +37363,9 @@ module.exports = Component.exports
 
         if (payload.sortDate) sortDate = payload.sortDate;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId).then(function (res) {
+        if (payload.attdApprovalId) attdApprovalId = payload.attdApprovalId;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId + '&attdApprovalId=' + attdApprovalId).then(function (res) {
             if (res.data.data) state.timesheetsData = res.data.data;
         }).catch(function (err) {
             $('.page-container').pgNotification({

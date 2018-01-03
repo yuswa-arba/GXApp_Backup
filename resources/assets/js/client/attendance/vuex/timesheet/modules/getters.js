@@ -8,6 +8,9 @@ export default{
     shifts(state){
         return state.shifts
     },
+    attdApprovals(state){
+        return state.attdApprovals
+    },
     timesheetDatas(state){
         return state.timesheetsData
     }

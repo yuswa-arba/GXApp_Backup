@@ -11,6 +11,7 @@ export default {
     state: {
         divisions:[],
         shifts:[],
+        attdApprovals:[],
         timesheetsData:[]
     },
     getters,

@@ -8,6 +8,7 @@ export default{
     getDataOnCreate({commit}){
         commit({type:'getDivisions',divisionId:''})
         commit({type:'getShifts',shiftId:''})
+        commit({type:'getAttdApprovals',attdAprovalId:''})
 
         let currentDate = moment().format('DD/MM/YYYY');
         commit({type:'getTimesheetData',sortDate:currentDate})
@@ -17,7 +18,8 @@ export default{
             type:'getTimesheetData',
             sortDate:payload.sortDate,
             divisionId:payload.divisionId,
-            shiftId:payload.shiftId
+            shiftId:payload.shiftId,
+            attdApprovalId:payload.attdApprovalId
         })
     }
 

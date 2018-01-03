@@ -32,6 +32,9 @@ Route::prefix('v1/h')->group(function () {
         Route::get('division/{id}','GetListController@division')->name('v1.component.division');
         Route::get('list/divisions', 'GetListController@divisions')->name('v1.component.list.divisions');
 
+        Route::get('attdApproval/{id}','GetListController@attdApproval')->name('v1.component.attdApproval');
+        Route::get('list/attdApprovals','GetListController@attdApprovals')->name('v1.component.list.attdApprovals');
+
     });
 
 });

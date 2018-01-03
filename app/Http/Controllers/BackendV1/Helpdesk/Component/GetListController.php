@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Component;
 
+use App\Attendance\Models\AttendanceApproval;
 use App\Attendance\Models\Kiosks;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotMaker;
@@ -12,8 +13,9 @@ use App\Attendance\Transformers\SlotListTransformer;
 use App\Attendance\Transformers\SlotMakerListTransformer;
 use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
+use App\Components\Transformers\BasicComponentTrasnformer;
 use App\Components\Transformers\DivisionListTransfomer;
-use App\Components\Transformers\JobPositionListTransfomer;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -22,13 +24,13 @@ class GetListController extends Controller
 
     public function jobPosition($id)
     {
-        return fractal(JobPosition::find($id),new JobPositionListTransfomer())->respond(200);
+        return fractal(JobPosition::find($id),new BasicComponentTrasnformer())->respond(200);
     }
 
 
     public function jobPositions()
     {
-        return fractal(JobPosition::all(),new JobPositionListTransfomer())->respond(200);
+        return fractal(JobPosition::all(),new BasicComponentTrasnformer())->respond(200);
     }
 
     public function slotMaker($id)
@@ -74,13 +76,23 @@ class GetListController extends Controller
 
     public function division($id)
     {
-        return fractal(Division::where('id',$id)->first(),new DivisionListTransfomer())->respond(200);
+        return fractal(Division::where('id',$id)->first(),new BasicComponentTrasnformer())->respond(200);
     }
 
 
     public function divisions()
     {
-        return fractal(Division::all(),new DivisionListTransfomer())->respond(200);
+        return fractal(Division::all(),new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function attdApproval($id)
+    {
+        return fractal(AttendanceApproval::where('id',$id)->first(),new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function attdApprovals()
+    {
+        return fractal(AttendanceApproval::all(),new BasicComponentTrasnformer())->respond(200);
     }
 
 }

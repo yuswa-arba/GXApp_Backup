@@ -33,10 +33,24 @@ export default{
                 })
         }
     },
+    getAttdApprovals(state,payload){
+        if (!payload.attdApprovalId) {
+            get(api_path + 'component/list/attdApprovals')
+                .then((res) => {
+                    state.attdApprovals = res.data.data
+                })
+        } else {
+            get(api_path + 'component/attdApproval/' + payload.attdApprovalId)
+                .then((res) => {
+                    state.attdApprovals = res.data.data
+                })
+        }
+    },
     getTimesheetData(state, payload){
         let divisionId = ''
         let shiftId = ''
         let sortDate = ''
+        let attdApprovalId =''
 
         if (payload.divisionId)
             divisionId = payload.divisionId
@@ -47,7 +61,10 @@ export default{
         if (payload.sortDate)
             sortDate = payload.sortDate
 
-        get(api_path + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId)
+        if (payload.attdApprovalId)
+            attdApprovalId = payload.attdApprovalId
+
+        get(api_path + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId + '&attdApprovalId=' +attdApprovalId)
             .then((res) => {
                 if (res.data.data)
                     state.timesheetsData = res.data.data
