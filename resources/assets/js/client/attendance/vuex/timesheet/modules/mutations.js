@@ -42,7 +42,7 @@ export default{
             divisionId = payload.divisionId
 
         if (payload.shiftId)
-            shiftId = payload.shiftid
+            shiftId = payload.shiftId
 
         if (payload.sortDate)
             sortDate = payload.sortDate

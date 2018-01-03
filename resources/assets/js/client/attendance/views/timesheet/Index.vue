@@ -4,8 +4,10 @@
 
             <div class="pull-left m-r-15">
                 <div class="form-group">
-                    <select class="btn btn-outline-primary h-35 w-150" v-model="sortDivisionId">
-                        <option value="">Division</option>
+                    <select class="btn btn-outline-primary h-35 w-150"
+                            v-model="sortDivisionId"
+                            @change="sortTimesheet()">
+                        <option value="">All Division</option>
                         <option :value="division.id" v-for="division in divisions">{{division.name}}
                         </option>
                     </select>
@@ -14,8 +16,10 @@
 
             <div class="pull-left m-r-15">
                 <div class="form-group">
-                    <select class="btn btn-outline-primary h-35 " style="width:100px" v-model="sortShiftId">
-                        <option value="">Shifts</option>
+                    <select class="btn btn-outline-primary h-35 "
+                            style="width:100px" v-model="sortShiftId"
+                            @change="sortTimesheet()">
+                        <option value="">All Shifts</option>
                         <option :value="shift.id" v-for="shift in shifts">{{shift.name}}
                         </option>
                     </select>
@@ -92,7 +96,7 @@
                                     <button v-if="timesheet.clockInTime"
                                             class="btn btn-clock text-center m-t-10"
                                             style="width: 90px">
-                                            {{timesheet.clockInTime}}
+                                        {{timesheet.clockInTime}}
                                     </button>
                                     <p v-else="">-</p>
                                 </td>
@@ -112,6 +116,9 @@
                                 <td>
                                     <p v-if="timesheet.attendanceApproveName">{{timesheet.attendanceApproveName}}</p>
                                     <p v-else="">-</p>
+
+                                    <p v-if="timesheet.approvedBy">{{timesheet.approvedBy}}</p>
+
                                 </td>
                                 <td>
                                     <p v-if="timesheet.attendanceValidationName">
@@ -120,8 +127,17 @@
                                 </td>
                                 <td>
                                     <button class="btn btn-primary m-t-10" style="width: 80px">Details</button>
-                                    <button class="btn btn-outline-info m-t-10" style="width: 80px">Approve <i
-                                            class="fa fa-check"></i></button>
+
+                                    <!-- Manager approval button-->
+                                    <button class="btn btn-outline-info m-t-10"
+                                            v-if="timesheet.attendanceApproveId!=1"
+                                            style="width: 80px">
+                                        Approve <i class="fa fa-check"></i></button>
+                                    <button class="btn btn-complete m-t-10"
+                                            v-else=""
+                                            style="width: 80px">
+                                        Approved <i class="fa fa-check"></i></button>
+
                                 </td>
                             </tr>
                             </tbody>
@@ -140,9 +156,8 @@
             return {
                 sortDivisionId: '',
                 sortShiftId: '',
-                sortDate: '',
-                showcInPhoto:true,
-                showcOutPhoto:true
+                showcInPhoto: true,
+                showcOutPhoto: true
             }
         },
         computed: {
@@ -179,19 +194,19 @@
             },
 
             showHidecInPhoto(){
-              let self = this
-                if(self.showcInPhoto==true){
-                  self.showcInPhoto=false
+                let self = this
+                if (self.showcInPhoto == true) {
+                    self.showcInPhoto = false
                 } else {
-                    self.showcInPhoto=true
+                    self.showcInPhoto = true
                 }
             },
             showHidecOutPhoto(){
                 let self = this
-                if(self.showcOutPhoto==true){
-                    self.showcOutPhoto=false
+                if (self.showcOutPhoto == true) {
+                    self.showcOutPhoto = false
                 } else {
-                    self.showcOutPhoto=true
+                    self.showcOutPhoto = true
                 }
             }
 

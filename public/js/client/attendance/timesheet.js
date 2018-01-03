@@ -2638,6 +2638,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2645,7 +2661,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {
             sortDivisionId: '',
             sortShiftId: '',
-            sortDate: '',
             showcInPhoto: true,
             showcOutPhoto: true
         };
@@ -22192,23 +22207,28 @@ var render = function() {
               ],
               staticClass: "btn btn-outline-primary h-35 w-150",
               on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.sortDivisionId = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.sortDivisionId = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    _vm.sortTimesheet()
+                  }
+                ]
               }
             },
             [
-              _c("option", { attrs: { value: "" } }, [_vm._v("Division")]),
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Division")]),
               _vm._v(" "),
               _vm._l(_vm.divisions, function(division) {
                 return _c("option", { domProps: { value: division.id } }, [
@@ -22237,23 +22257,28 @@ var render = function() {
               staticClass: "btn btn-outline-primary h-35 ",
               staticStyle: { width: "100px" },
               on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.sortShiftId = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.sortShiftId = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    _vm.sortTimesheet()
+                  }
+                ]
               }
             },
             [
-              _c("option", { attrs: { value: "" } }, [_vm._v("Shifts")]),
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Shifts")]),
               _vm._v(" "),
               _vm._l(_vm.shifts, function(shift) {
                 return _c("option", { domProps: { value: shift.id } }, [
@@ -22437,7 +22462,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                                        " +
+                                  "\n                                    " +
                                     _vm._s(timesheet.clockInTime) +
                                     "\n                                "
                                 )
@@ -22483,7 +22508,11 @@ var render = function() {
                           ? _c("p", [
                               _vm._v(_vm._s(timesheet.attendanceApproveName))
                             ])
-                          : _c("p", [_vm._v("-")])
+                          : _c("p", [_vm._v("-")]),
+                        _vm._v(" "),
+                        timesheet.approvedBy
+                          ? _c("p", [_vm._v(_vm._s(timesheet.approvedBy))])
+                          : _vm._e()
                       ]),
                       _vm._v(" "),
                       _c("td", [
@@ -22497,7 +22526,44 @@ var render = function() {
                           : _c("p", [_vm._v("-")])
                       ]),
                       _vm._v(" "),
-                      _vm._m(0, true)
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary m-t-10",
+                            staticStyle: { width: "80px" }
+                          },
+                          [_vm._v("Details")]
+                        ),
+                        _vm._v(" "),
+                        timesheet.attendanceApproveId != 1
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-info m-t-10",
+                                staticStyle: { width: "80px" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                    Approve "
+                                ),
+                                _c("i", { staticClass: "fa fa-check" })
+                              ]
+                            )
+                          : _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-complete m-t-10",
+                                staticStyle: { width: "80px" }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                    Approved "
+                                ),
+                                _c("i", { staticClass: "fa fa-check" })
+                              ]
+                            )
+                      ])
                     ])
                   })
                 )
@@ -22509,32 +22575,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary m-t-10",
-          staticStyle: { width: "80px" }
-        },
-        [_vm._v("Details")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-info m-t-10",
-          staticStyle: { width: "80px" }
-        },
-        [_vm._v("Approve "), _c("i", { staticClass: "fa fa-check" })]
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -37190,7 +37231,7 @@ module.exports = Component.exports
 
         if (payload.divisionId) divisionId = payload.divisionId;
 
-        if (payload.shiftId) shiftId = payload.shiftid;
+        if (payload.shiftId) shiftId = payload.shiftId;
 
         if (payload.sortDate) sortDate = payload.sortDate;
 
