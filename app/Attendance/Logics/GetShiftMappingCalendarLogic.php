@@ -25,14 +25,17 @@ class GetShiftMappingCalendarLogic extends GetShiftCalendarUseCase
     public function handleDayOffs($request)
     {
         //get based on this current year
-        $dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->where('date', 'like', '%' . $this->currentYear())->get();
+        //$dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->where('date', 'like', '%' . $this->currentYear())->get();
+        $dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->get();
         return fractal($dayOffSchedule, new DayOffMappingCalendarTransformer())->respond(200);
     }
 
     public function handleShiftSchedules($request)
     {
         //get based on this current year
-        $shiftSchedule = SlotShiftSchedule::whereIn('slotId', $request->slotIds)->where('date', 'like', '%' . $this->currentYear())->get();
+        //$shiftSchedule = SlotShiftSchedule::whereIn('slotId', $request->slotIds)->where('date', 'like', '%' . $this->currentYear())->get();
+
+        $shiftSchedule = SlotShiftSchedule::whereIn('slotId', $request->slotIds)->get();
         return fractal($shiftSchedule, new ShiftScheduleMappingCalendarTransformer())->respond(200);
     }
 }

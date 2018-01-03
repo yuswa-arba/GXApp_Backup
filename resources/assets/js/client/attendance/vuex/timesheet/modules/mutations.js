@@ -61,8 +61,6 @@ export default{
                     type: 'danger'
                 }).show();
             })
-
-
     }
 
 }

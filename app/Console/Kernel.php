@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Attendance\Jobs\CheckAttendanceSchedule;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\App;
@@ -15,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Attendance\Console\Commands\AttendanceScheduleChecker::class
+        \App\Attendance\Console\Commands\AttendanceChecker::class
     ];
 
     /**
@@ -34,7 +33,7 @@ class Kernel extends ConsoleKernel
 
     protected function scheduleInDayCommands(Schedule $schedule)
     {
-        $schedule->command('attendance:check-schedule')->everyFiveMinutes();
+        $schedule->command('attendance:check')->everyFiveMinutes();
     }
 
     protected function scheduleDailyCommands(Schedule $schedule)

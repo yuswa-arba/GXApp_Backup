@@ -88,11 +88,9 @@ class MainController extends Controller
                     $formRequest['cKioskId'] = $request->clockOutKioskId;
                 }
 
-
                 /*Handle photo uploads if exist*/
                 $formRequest['employeePhotoClockIn'] = $this->saveClockInPhoto($request);
                 $formRequest['employeePhotoClockOut'] = $this->saveClockOutPhoto($request);
-
 
             }
 
@@ -133,7 +131,6 @@ class MainController extends Controller
                 $formRequest['cBrowser'] = $request->cBrowser;
             }
 
-
             /* Run the logic */
             return AttendanceLogic::clocking($formRequest);
 
@@ -151,7 +148,7 @@ class MainController extends Controller
 
     private function saveClockInPhoto(Request $request)
     {
-        /*Save Clock In Photo if exist*/
+        /* Save Clock In Photo if exist */
         if ($request->hasFile('employeePhotoClockIn') && $request->file('employeePhotoClockIn')->isValid()) {
 
             $employeeNo = MasterEmployee::find($request->employeeId)['employeeNo'];
@@ -168,7 +165,7 @@ class MainController extends Controller
 
     private function saveClockOutPhoto(Request $request){
 
-        /*Save Clock Out Photo if exist*/
+        /* Save Clock Out Photo if exist */
         if ($request->hasFile('employeePhotoClockOut') && $request->file('employeePhotoClockOut')->isValid()) {
 
             $employeeNo = MasterEmployee::find($request->employeeId)['employeeNo'];

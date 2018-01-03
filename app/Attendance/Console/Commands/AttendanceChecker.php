@@ -10,12 +10,13 @@ namespace App\Attendance\Console\Commands;
 
 
 use App\Attendance\Jobs\CheckAttendanceSchedule;
+use App\Attendance\Jobs\CheckAttendanceTimesheet;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 
-class AttendanceScheduleChecker extends Command
+class AttendanceChecker extends Command
 {
-    protected $signature ='attendance:check-schedule';
+    protected $signature ='attendance:check';
     protected $description = 'Check attendance schedule';
 
 
@@ -28,5 +29,6 @@ class AttendanceScheduleChecker extends Command
     {
         //php artisan queue:work --queue=checker
         CheckAttendanceSchedule::dispatch()->onConnection('database')->onQueue('checker');
+        CheckAttendanceTimesheet::dispatch()->onConnection('database')->onQueue('checker');
     }
 }

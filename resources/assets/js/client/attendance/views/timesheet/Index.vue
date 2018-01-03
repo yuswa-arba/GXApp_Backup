@@ -28,7 +28,8 @@
                     <div class="input-group bootstrap-timepicker">
                         <input id="sortTimesheetDate" type="text" class="form-control" name="sortTimesheetDate"
                                required>
-                        <span class="input-group-addon bg-primary text-white"  @click="sortTimesheet()"><i class="fa fa-check"></i></span>
+                        <span class="input-group-addon bg-primary text-white" @click="sortTimesheet()"><i
+                                class="fa fa-check"></i></span>
                     </div>
                 </div>
             </div>
@@ -43,8 +44,26 @@
                             <tr>
                                 <th class="text-black w-150">Employee</th>
                                 <th class="text-black" style="width:100px">Shift</th>
-                                <th class="text-black">Clock-In</th>
-                                <th class="text-black">Clock-Out</th>
+                                <th class="text-black">Clock-In
+                                    <i @click="showHidecInPhoto()"
+                                       class="fa fa-eye cursor"
+                                       v-if="showcInPhoto"
+                                       style="color: darkgrey"></i>
+                                    <i @click="showHidecInPhoto()"
+                                       class="fa fa-eye-slash cursor"
+                                       v-else=""
+                                       style="color: darkgrey"></i>
+                                </th>
+                                <th class="text-black">Clock-Out
+                                    <i @click="showHidecOutPhoto()"
+                                       class="fa fa-eye cursor"
+                                       v-if="showcOutPhoto"
+                                       style="color: darkgrey"></i>
+                                    <i @click="showHidecOutPhoto()"
+                                       class="fa fa-eye-slash cursor"
+                                       v-else=""
+                                       style="color: darkgrey"></i>
+                                </th>
                                 <th class="text-black">Approve Stats</th>
                                 <th class="text-black">Valid Stats</th>
                                 <th class="text-black">Actions</th>
@@ -64,21 +83,30 @@
 
                                 </td>
                                 <td>
-                                    <img v-if="timesheet.clockInPhoto"
+                                    <img v-if="timesheet.clockInPhoto && showcInPhoto"
                                          height="120px"
                                          class="img-responsive"
+                                         :id="'cInPhoto-'+timesheet.id"
                                          :src="'/images/attendances/'+timesheet.clockInPhoto" alt="">
 
-                                    <p v-if="timesheet.clockInTime" class="fs-16 m-t-10 text-primary text-center bold">{{timesheet.clockInTime}}</p>
+                                    <button v-if="timesheet.clockInTime"
+                                            class="btn btn-clock text-center m-t-10"
+                                            style="width: 90px">
+                                            {{timesheet.clockInTime}}
+                                    </button>
                                     <p v-else="">-</p>
                                 </td>
                                 <td>
-                                    <img v-if="timesheet.clockOutPhoto"
+                                    <img v-if="timesheet.clockOutPhoto && showcOutPhoto"
                                          height="120px"
                                          class="img-responsive"
+                                         :id="'cOutPhoto-'+timesheet.id"
                                          :src="'/images/attendances/'+timesheet.clockOutPhoto" alt="">
 
-                                    <p v-if="timesheet.clockOutTime" class="fs-16 m-t-10 text-primary text-center bold"> {{timesheet.clockOutTime}}</p>
+                                    <button v-if="timesheet.clockOutTime"
+                                            class="btn btn-clock text-center m-t-10"
+                                            style="width: 90px">{{timesheet.clockOutTime}}
+                                    </button>
                                     <p v-else="">-</p>
                                 </td>
                                 <td>
@@ -86,11 +114,14 @@
                                     <p v-else="">-</p>
                                 </td>
                                 <td>
-                                    <p v-if="timesheet.attendanceValidationName"> {{timesheet.attendanceValidationName}}</p>
+                                    <p v-if="timesheet.attendanceValidationName">
+                                        {{timesheet.attendanceValidationName}}</p>
                                     <p v-else="">-</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-outline-primary">Approve</button>
+                                    <button class="btn btn-primary m-t-10" style="width: 80px">Details</button>
+                                    <button class="btn btn-outline-info m-t-10" style="width: 80px">Approve <i
+                                            class="fa fa-check"></i></button>
                                 </td>
                             </tr>
                             </tbody>
@@ -107,33 +138,35 @@
     export default{
         data(){
             return {
-                sortDivisionId:'',
-                sortShiftId:'',
-                sortDate: ''
+                sortDivisionId: '',
+                sortShiftId: '',
+                sortDate: '',
+                showcInPhoto:true,
+                showcOutPhoto:true
             }
         },
-        computed:{
-            ...mapGetters('timesheet',{
-                divisions:'divisions',
-                shifts:'shifts',
-                timesheetDatas:'timesheetDatas'
+        computed: {
+            ...mapGetters('timesheet', {
+                divisions: 'divisions',
+                shifts: 'shifts',
+                timesheetDatas: 'timesheetDatas'
             }),
 
         },
         created(){
 
-            let self =this
+            let self = this
             this.$store.dispatch('timesheet/getDataOnCreate')
 
 
         },
-        methods:{
+        methods: {
             sortTimesheet(){
 
                 let self = this
                 let sortDate = moment().format('DD/MM/YYYY')
 
-                if($('#sortTimesheetDate').val()){
+                if ($('#sortTimesheetDate').val()) {
                     sortDate = $('#sortTimesheetDate').val()
                 }
 
@@ -141,9 +174,26 @@
                     type: 'timesheet/getSortedData',
                     divisionId: self.sortDivisionId,
                     shiftId: self.sortShiftId,
-                    sortDate:sortDate
+                    sortDate: sortDate
                 })
             },
+
+            showHidecInPhoto(){
+              let self = this
+                if(self.showcInPhoto==true){
+                  self.showcInPhoto=false
+                } else {
+                    self.showcInPhoto=true
+                }
+            },
+            showHidecOutPhoto(){
+                let self = this
+                if(self.showcOutPhoto==true){
+                    self.showcOutPhoto=false
+                } else {
+                    self.showcOutPhoto=true
+                }
+            }
 
         }
     }

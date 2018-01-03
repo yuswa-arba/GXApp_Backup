@@ -2607,6 +2607,37 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2614,7 +2645,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {
             sortDivisionId: '',
             sortShiftId: '',
-            sortDate: ''
+            sortDate: '',
+            showcInPhoto: true,
+            showcOutPhoto: true
         };
     },
 
@@ -2645,6 +2678,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 shiftId: self.sortShiftId,
                 sortDate: sortDate
             });
+        },
+        showHidecInPhoto: function showHidecInPhoto() {
+            var self = this;
+            if (self.showcInPhoto == true) {
+                self.showcInPhoto = false;
+            } else {
+                self.showcInPhoto = true;
+            }
+        },
+        showHidecOutPhoto: function showHidecOutPhoto() {
+            var self = this;
+            if (self.showcOutPhoto == true) {
+                self.showcOutPhoto = false;
+            } else {
+                self.showcOutPhoto = true;
+            }
         }
     }
 });
@@ -22258,7 +22307,78 @@ var render = function() {
           _c("div", { staticClass: "card-block" }, [
             _c("div", { staticClass: "table-responsive" }, [
               _c("table", { staticClass: "table table-hover timesheetDT" }, [
-                _vm._m(0),
+                _c("thead", { staticClass: "bg-master-lighter" }, [
+                  _c("tr", [
+                    _c("th", { staticClass: "text-black w-150" }, [
+                      _vm._v("Employee")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "th",
+                      {
+                        staticClass: "text-black",
+                        staticStyle: { width: "100px" }
+                      },
+                      [_vm._v("Shift")]
+                    ),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-black" }, [
+                      _vm._v("Clock-In\n                                "),
+                      _vm.showcInPhoto
+                        ? _c("i", {
+                            staticClass: "fa fa-eye cursor",
+                            staticStyle: { color: "darkgrey" },
+                            on: {
+                              click: function($event) {
+                                _vm.showHidecInPhoto()
+                              }
+                            }
+                          })
+                        : _c("i", {
+                            staticClass: "fa fa-eye-slash cursor",
+                            staticStyle: { color: "darkgrey" },
+                            on: {
+                              click: function($event) {
+                                _vm.showHidecInPhoto()
+                              }
+                            }
+                          })
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-black" }, [
+                      _vm._v("Clock-Out\n                                "),
+                      _vm.showcOutPhoto
+                        ? _c("i", {
+                            staticClass: "fa fa-eye cursor",
+                            staticStyle: { color: "darkgrey" },
+                            on: {
+                              click: function($event) {
+                                _vm.showHidecOutPhoto()
+                              }
+                            }
+                          })
+                        : _c("i", {
+                            staticClass: "fa fa-eye-slash cursor",
+                            staticStyle: { color: "darkgrey" },
+                            on: {
+                              click: function($event) {
+                                _vm.showHidecOutPhoto()
+                              }
+                            }
+                          })
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-black" }, [
+                      _vm._v("Approve Stats")
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-black" }, [
+                      _vm._v("Valid Stats")
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { staticClass: "text-black" }, [_vm._v("Actions")])
+                  ])
+                ]),
                 _vm._v(" "),
                 _c(
                   "tbody",
@@ -22294,11 +22414,12 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        timesheet.clockInPhoto
+                        timesheet.clockInPhoto && _vm.showcInPhoto
                           ? _c("img", {
                               staticClass: "img-responsive",
                               attrs: {
                                 height: "120px",
+                                id: "cInPhoto-" + timesheet.id,
                                 src:
                                   "/images/attendances/" +
                                   timesheet.clockInPhoto,
@@ -22309,22 +22430,29 @@ var render = function() {
                         _vm._v(" "),
                         timesheet.clockInTime
                           ? _c(
-                              "p",
+                              "button",
                               {
-                                staticClass:
-                                  "fs-16 m-t-10 text-primary text-center bold"
+                                staticClass: "btn btn-clock text-center m-t-10",
+                                staticStyle: { width: "90px" }
                               },
-                              [_vm._v(_vm._s(timesheet.clockInTime))]
+                              [
+                                _vm._v(
+                                  "\n                                        " +
+                                    _vm._s(timesheet.clockInTime) +
+                                    "\n                                "
+                                )
+                              ]
                             )
                           : _c("p", [_vm._v("-")])
                       ]),
                       _vm._v(" "),
                       _c("td", [
-                        timesheet.clockOutPhoto
+                        timesheet.clockOutPhoto && _vm.showcOutPhoto
                           ? _c("img", {
                               staticClass: "img-responsive",
                               attrs: {
                                 height: "120px",
+                                id: "cOutPhoto-" + timesheet.id,
                                 src:
                                   "/images/attendances/" +
                                   timesheet.clockOutPhoto,
@@ -22335,12 +22463,17 @@ var render = function() {
                         _vm._v(" "),
                         timesheet.clockOutTime
                           ? _c(
-                              "p",
+                              "button",
                               {
-                                staticClass:
-                                  "fs-16 m-t-10 text-primary text-center bold"
+                                staticClass: "btn btn-clock text-center m-t-10",
+                                staticStyle: { width: "90px" }
                               },
-                              [_vm._v(" " + _vm._s(timesheet.clockOutTime))]
+                              [
+                                _vm._v(
+                                  _vm._s(timesheet.clockOutTime) +
+                                    "\n                                "
+                                )
+                              ]
                             )
                           : _c("p", [_vm._v("-")])
                       ]),
@@ -22357,13 +22490,14 @@ var render = function() {
                         timesheet.attendanceValidationName
                           ? _c("p", [
                               _vm._v(
-                                " " + _vm._s(timesheet.attendanceValidationName)
+                                "\n                                    " +
+                                  _vm._s(timesheet.attendanceValidationName)
                               )
                             ])
                           : _c("p", [_vm._v("-")])
                       ]),
                       _vm._v(" "),
-                      _vm._m(1, true)
+                      _vm._m(0, true)
                     ])
                   })
                 )
@@ -22380,36 +22514,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c("th", { staticClass: "text-black w-150" }, [_vm._v("Employee")]),
-        _vm._v(" "),
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "100px" } },
-          [_vm._v("Shift")]
-        ),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Clock-In")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Clock-Out")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Approve Stats")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Valid Stats")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Actions")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("td", [
-      _c("button", { staticClass: "btn btn-outline-primary" }, [
-        _vm._v("Approve")
-      ])
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary m-t-10",
+          staticStyle: { width: "80px" }
+        },
+        [_vm._v("Details")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-outline-info m-t-10",
+          staticStyle: { width: "80px" }
+        },
+        [_vm._v("Approve "), _c("i", { staticClass: "fa fa-check" })]
+      )
     ])
   }
 ]

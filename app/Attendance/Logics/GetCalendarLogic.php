@@ -24,9 +24,13 @@ class GetCalendarLogic extends GetDataUseCase
 
         $response = array();
 
+        //TODO:
         //get based on current year
-        $dayOffSchedule = DayOffSchedule::where('slotId', $request->slotId)->where('date', 'like', '%' . $this->currentYear())->get();
-        $shiftSchedule = SlotShiftSchedule::where('slotId', $request->slotId)->where('date', 'like', '%' . $this->currentYear())->get();
+        //$dayOffSchedule = DayOffSchedule::where('slotId', $request->slotId)->where('date', 'like', '%' . $this->currentYear())->get();
+        //$shiftSchedule = SlotShiftSchedule::where('slotId', $request->slotId)->where('date', 'like', '%' . $this->currentYear())->get();
+
+        $dayOffSchedule = DayOffSchedule::where('slotId', $request->slotId)->get();
+        $shiftSchedule = SlotShiftSchedule::where('slotId', $request->slotId)->get();
 
         $response['dayOffs'] = fractal($dayOffSchedule, new DayOffSingleCalendarTransformer());
         $response['shiftSchedules'] = fractal($shiftSchedule, new ShiftScheduleSingleCalendarTransformer());

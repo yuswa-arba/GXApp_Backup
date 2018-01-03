@@ -11,13 +11,14 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Traits;
 class Configs
 {
     public static $IMAGE_PATH = [
-        'ATTENDANCE_PHOTO' => 'public/images/attendances/' ,
-        'FACES_PHOTO' => 'public/images/faces/' ,
-        'EMPLOYEE_PHOTO' => 'public/images/employee/' ,
+        'ATTENDANCE_PHOTO' => 'public/images/attendances/',
+        'FACES_PHOTO' => 'public/images/faces/',
+        'EMPLOYEE_PHOTO' => 'public/images/employee/',
     ];
 
     public static $PUNCH_TYPE = [
-        'IN'=>'in',
-        'OUT'=>'out'
+        'IN' => 'in',
+        'OUT' => 'out'
     ];
+
 }

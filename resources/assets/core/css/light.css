@@ -8750,7 +8750,7 @@ div.cs-skin-slide .cs-options ul li.cs-selected span {
   background: #fff;
   border-bottom: 1px solid rgba(234, 236, 238, 0.7);
   border-top: 0px;
-  padding: 20px;
+  /*padding: 20px;*/
   font-size: 13.5px;
 }
 .table tbody tr td .btn-tag {
