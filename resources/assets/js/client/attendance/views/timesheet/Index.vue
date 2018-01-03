@@ -134,11 +134,12 @@
                                     <label class="label label-lg fs-14"
                                            :class="{
                                            'label-default' : timesheet.attendanceApproveId==99,
-                                           'label-primary' : timesheet.attendanceApproveId!=99}"
+                                           'label-info' : timesheet.attendanceApproveId!=99}"
                                            v-if="timesheet.attendanceApproveName">{{timesheet.attendanceApproveName}}</label>
                                     <p v-else="">-</p>
 
-                                    <p v-if="timesheet.approvedBy">{{timesheet.approvedBy}}</p>
+                                    <p v-if="timesheet.approvedBy">by: <span class="bold">{{timesheet.approvedBy}}</span></p>
+
 
                                 </td>
                                 <td>
@@ -156,6 +157,7 @@
                                     <!-- Manager approval button-->
                                     <button class="btn btn-outline-info m-t-10"
                                             v-if="timesheet.attendanceApproveId!=1"
+                                            @click="approveTimesheet(timesheet.id)"
                                             style="width: 80px">
                                         Approve <i class="fa fa-check"></i></button>
                                     <button class="btn btn-complete m-t-10"
@@ -236,6 +238,9 @@
                 } else {
                     self.showcOutPhoto = true
                 }
+            },
+            approveTimesheet(timesheetId){
+                this.$store.commit('timesheet/saveApproveTimesheet',timesheetId)
             }
 
         }

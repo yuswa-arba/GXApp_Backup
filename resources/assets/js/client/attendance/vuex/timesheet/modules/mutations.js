@@ -33,7 +33,7 @@ export default{
                 })
         }
     },
-    getAttdApprovals(state,payload){
+    getAttdApprovals(state, payload){
         if (!payload.attdApprovalId) {
             get(api_path + 'component/list/attdApprovals')
                 .then((res) => {
@@ -50,7 +50,7 @@ export default{
         let divisionId = ''
         let shiftId = ''
         let sortDate = ''
-        let attdApprovalId =''
+        let attdApprovalId = ''
 
         if (payload.divisionId)
             divisionId = payload.divisionId
@@ -64,10 +64,43 @@ export default{
         if (payload.attdApprovalId)
             attdApprovalId = payload.attdApprovalId
 
-        get(api_path + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId + '&attdApprovalId=' +attdApprovalId)
+        get(api_path + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId + '&attdApprovalId=' + attdApprovalId)
             .then((res) => {
                 if (res.data.data)
                     state.timesheetsData = res.data.data
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    saveApproveTimesheet(state, timesheetId){
+        post(api_path + 'attendance/timesheet/approve', {timesheetId: timesheetId})
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    let timesheet = _.find(state.timesheetsData, {id: timesheetId})
+                    let timesheetIndex = _.findIndex(state.timesheetsData, timesheet)
+
+                    // Update data
+                    timesheet.attendanceApproveId = 1
+                    timesheet.attendanceApproveName = 'Manager Approved'
+                    timesheet.approvedBy = res.data.approvedBy
+                    state.timesheetsData.splice(timesheetIndex,1,timesheet)
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
             })
             .catch((err) => {
                 $('.page-container').pgNotification({

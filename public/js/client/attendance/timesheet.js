@@ -2679,6 +2679,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2737,6 +2739,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             } else {
                 self.showcOutPhoto = true;
             }
+        },
+        approveTimesheet: function approveTimesheet(timesheetId) {
+            this.$store.commit('timesheet/saveApproveTimesheet', timesheetId);
         }
     }
 });
@@ -22591,7 +22596,7 @@ var render = function() {
                                 class: {
                                   "label-default":
                                     timesheet.attendanceApproveId == 99,
-                                  "label-primary":
+                                  "label-info":
                                     timesheet.attendanceApproveId != 99
                                 }
                               },
@@ -22600,7 +22605,12 @@ var render = function() {
                           : _c("p", [_vm._v("-")]),
                         _vm._v(" "),
                         timesheet.approvedBy
-                          ? _c("p", [_vm._v(_vm._s(timesheet.approvedBy))])
+                          ? _c("p", [
+                              _vm._v("by: "),
+                              _c("span", { staticClass: "bold" }, [
+                                _vm._v(_vm._s(timesheet.approvedBy))
+                              ])
+                            ])
                           : _vm._e()
                       ]),
                       _vm._v(" "),
@@ -22642,7 +22652,12 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "btn btn-outline-info m-t-10",
-                                staticStyle: { width: "80px" }
+                                staticStyle: { width: "80px" },
+                                on: {
+                                  click: function($event) {
+                                    _vm.approveTimesheet(timesheet.id)
+                                  }
+                                }
                               },
                               [
                                 _vm._v(
@@ -37367,6 +37382,36 @@ module.exports = Component.exports
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId + '&attdApprovalId=' + attdApprovalId).then(function (res) {
             if (res.data.data) state.timesheetsData = res.data.data;
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 0,
+                type: 'danger'
+            }).show();
+        });
+    },
+    saveApproveTimesheet: function saveApproveTimesheet(state, timesheetId) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/approve', { timesheetId: timesheetId }).then(function (res) {
+            if (!res.data.isFailed) {
+                var timesheet = _.find(state.timesheetsData, { id: timesheetId });
+                var timesheetIndex = _.findIndex(state.timesheetsData, timesheet);
+
+                // Update data
+                timesheet.attendanceApproveId = 1;
+                timesheet.attendanceApproveName = 'Manager Approved';
+                timesheet.approvedBy = res.data.approvedBy;
+                state.timesheetsData.splice(timesheetIndex, 1, timesheet);
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            }
         }).catch(function (err) {
             $('.page-container').pgNotification({
                 style: 'flip',

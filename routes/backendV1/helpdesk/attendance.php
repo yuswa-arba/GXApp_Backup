@@ -39,6 +39,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('kiosk/delete','KioskController@delete')->name('v1.kiosk.delete');
 
         Route::get('timesheet/list','TimesheetController@list')->name('v1.timesheet.list');
+        Route::post('timesheet/approve','TimesheetController@approve')->name('v1.timesheet.approve');
 
 
     });
