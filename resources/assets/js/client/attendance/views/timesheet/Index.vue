@@ -3,29 +3,8 @@
         <div class="col-lg-12 m-b-10 m-t-10">
 
             <div class="pull-left m-r-15">
-                <div class="form-group">
-                    <select class="btn btn-outline-primary h-35 w-150"
-                            v-model="sortDivisionId"
-                            @change="sortTimesheet()">
-                        <option value="">All Division</option>
-                        <option :value="division.id" v-for="division in divisions">{{division.name}}
-                        </option>
-                    </select>
-                </div>
+                <button class="btn btn-info">Summary</button>
             </div>
-
-            <div class="pull-left m-r-15">
-                <div class="form-group">
-                    <select class="btn btn-outline-primary h-35 "
-                            style="width:100px" v-model="sortShiftId"
-                            @change="sortTimesheet()">
-                        <option value="">All Shifts</option>
-                        <option :value="shift.id" v-for="shift in shifts">{{shift.name}}
-                        </option>
-                    </select>
-                </div>
-            </div>
-
 
             <div class="pull-right m-r-15">
                 <div class="form-group required">
@@ -37,6 +16,32 @@
                     </div>
                 </div>
             </div>
+            <div class="pull-right m-r-15">
+                <div class="form-group">
+                    <select class="btn btn-outline-primary h-35 "
+                            style="width:100px" v-model="sortShiftId"
+                            @change="sortTimesheet()">
+                        <option value="">All Shifts</option>
+                        <option :value="shift.id" v-for="shift in shifts">{{shift.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="pull-right m-r-15">
+                <div class="form-group">
+                    <select class="btn btn-outline-primary h-35 w-150"
+                            v-model="sortDivisionId"
+                            @change="sortTimesheet()">
+                        <option value="">All Division</option>
+                        <option :value="division.id" v-for="division in divisions">{{division.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+
+
+
 
         </div>
         <div class="col-lg-12 m-b-10">

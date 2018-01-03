@@ -2662,6 +2662,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -22200,56 +22205,38 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
-      _c("div", { staticClass: "pull-left m-r-15" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.sortDivisionId,
-                  expression: "sortDivisionId"
-                }
-              ],
-              staticClass: "btn btn-outline-primary h-35 w-150",
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.sortDivisionId = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  function($event) {
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "pull-right m-r-15" }, [
+        _c("div", { staticClass: "form-group required" }, [
+          _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                id: "sortTimesheetDate",
+                type: "text",
+                name: "sortTimesheetDate",
+                required: ""
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "input-group-addon bg-primary text-white",
+                on: {
+                  click: function($event) {
                     _vm.sortTimesheet()
                   }
-                ]
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("All Division")]),
-              _vm._v(" "),
-              _vm._l(_vm.divisions, function(division) {
-                return _c("option", { domProps: { value: division.id } }, [
-                  _vm._v(_vm._s(division.name) + "\n                    ")
-                ])
-              })
-            ],
-            2
-          )
+                }
+              },
+              [_c("i", { staticClass: "fa fa-check" })]
+            )
+          ])
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "pull-left m-r-15" }, [
+      _c("div", { staticClass: "pull-right m-r-15" }, [
         _c("div", { staticClass: "form-group" }, [
           _c(
             "select",
@@ -22300,31 +22287,51 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "pull-right m-r-15" }, [
-        _c("div", { staticClass: "form-group required" }, [
-          _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
-            _c("input", {
-              staticClass: "form-control",
-              attrs: {
-                id: "sortTimesheetDate",
-                type: "text",
-                name: "sortTimesheetDate",
-                required: ""
-              }
-            }),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass: "input-group-addon bg-primary text-white",
-                on: {
-                  click: function($event) {
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.sortDivisionId,
+                  expression: "sortDivisionId"
+                }
+              ],
+              staticClass: "btn btn-outline-primary h-35 w-150",
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.sortDivisionId = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
                     _vm.sortTimesheet()
                   }
-                }
-              },
-              [_c("i", { staticClass: "fa fa-check" })]
-            )
-          ])
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Division")]),
+              _vm._v(" "),
+              _vm._l(_vm.divisions, function(division) {
+                return _c("option", { domProps: { value: division.id } }, [
+                  _vm._v(_vm._s(division.name) + "\n                    ")
+                ])
+              })
+            ],
+            2
+          )
         ])
       ])
     ]),
@@ -22605,7 +22612,16 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "pull-left m-r-15" }, [
+      _c("button", { staticClass: "btn btn-info" }, [_vm._v("Summary")])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

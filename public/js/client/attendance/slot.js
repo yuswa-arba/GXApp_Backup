@@ -39553,11 +39553,14 @@ module.exports = Component.exports
             currentAffectedCbIndex = _.findIndex(state.cbSlotsBeingMap, { id: payload.affectedCbSlotId });
         }
 
+        var slotIdsToGet = [];
+
         //insert slot data
         _.forEach(payload.slotIds, function (value, key) {
             // insert slots except the plucked ones
             if (!value.toString().startsWith('plucked_')) {
                 state.slotsBeingMap.push(_.find(state.slots, { id: value }));
+                slotIdsToGet.push(value);
             }
 
             if (payload.refreshCb) {
@@ -39565,7 +39568,7 @@ module.exports = Component.exports
             }
         });
 
-        if (!_.isEmpty(payload.slotIds)) {
+        if (!_.isEmpty(slotIdsToGet)) {
             __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
                 //reset calendar
                 $('#calendar-shift-mapping').fullCalendar('removeEvents');
@@ -39573,13 +39576,13 @@ module.exports = Component.exports
             }, function (cb) {
                 commit({
                     type: 'getCalendarDataForMapping',
-                    slotIds: payload.slotIds
+                    slotIds: slotIdsToGet
                 });
                 cb(null);
             }, function (cb) {
                 commit({
                     type: 'getShiftSchedule',
-                    slotIds: payload.slotIds
+                    slotIds: slotIdsToGet
                 });
                 cb(null);
             }]);
