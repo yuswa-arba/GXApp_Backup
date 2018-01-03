@@ -154,8 +154,8 @@ class CheckAttendanceTimesheet implements ShouldQueue
 
         /* If work time has ended */
         if ($currTime->gt($shiftWorkEndAt)) {
-            if ($timesheet->attendanceApproveId != 1 || // Microsoft Face API
-                $timesheet->attendanceApproveId != 2 || // Manager
+            if ($timesheet->attendanceApproveId != 1 && // Microsoft Face API
+                $timesheet->attendanceApproveId != 2 && // Manager
                 $timesheet->attendanceApproveId != 3    // Disapproved
             ) {
                 $timesheet->attendanceApproveId = 99 ; // Need Approval
