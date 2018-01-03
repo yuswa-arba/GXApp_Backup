@@ -114,19 +114,27 @@
                                     <p v-else="">-</p>
                                 </td>
                                 <td>
-                                    <p v-if="timesheet.attendanceApproveName">{{timesheet.attendanceApproveName}}</p>
+                                    <label class="label label-lg fs-14"
+                                           :class="{
+                                           'label-default' : timesheet.attendanceApproveId==99,
+                                           'label-primary' : timesheet.attendanceApproveId!=99}"
+                                           v-if="timesheet.attendanceApproveName">{{timesheet.attendanceApproveName}}</label>
                                     <p v-else="">-</p>
 
                                     <p v-if="timesheet.approvedBy">{{timesheet.approvedBy}}</p>
 
                                 </td>
                                 <td>
-                                    <p v-if="timesheet.attendanceValidationName">
-                                        {{timesheet.attendanceValidationName}}</p>
+                                    <label class="label label-lg fs-14"
+                                           :class="{
+                                           'label-danger' : timesheet.attendanceValidationId!=1,
+                                           'label-info' : timesheet.attendanceValidationId==1}"
+                                           v-if="timesheet.attendanceValidationName">
+                                        {{timesheet.attendanceValidationName}}</label>
                                     <p v-else="">-</p>
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary m-t-10" style="width: 80px">Details</button>
+                                    <button class="btn btn-primary" style="width: 80px">Details</button>
 
                                     <!-- Manager approval button-->
                                     <button class="btn btn-outline-info m-t-10"

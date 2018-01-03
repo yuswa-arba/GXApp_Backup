@@ -2654,6 +2654,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -22505,9 +22513,19 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         timesheet.attendanceApproveName
-                          ? _c("p", [
-                              _vm._v(_vm._s(timesheet.attendanceApproveName))
-                            ])
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "label label-lg fs-14",
+                                class: {
+                                  "label-default":
+                                    timesheet.attendanceApproveId == 99,
+                                  "label-primary":
+                                    timesheet.attendanceApproveId != 99
+                                }
+                              },
+                              [_vm._v(_vm._s(timesheet.attendanceApproveName))]
+                            )
                           : _c("p", [_vm._v("-")]),
                         _vm._v(" "),
                         timesheet.approvedBy
@@ -22517,12 +22535,24 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [
                         timesheet.attendanceValidationName
-                          ? _c("p", [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(timesheet.attendanceValidationName)
-                              )
-                            ])
+                          ? _c(
+                              "label",
+                              {
+                                staticClass: "label label-lg fs-14",
+                                class: {
+                                  "label-danger":
+                                    timesheet.attendanceValidationId != 1,
+                                  "label-info":
+                                    timesheet.attendanceValidationId == 1
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(timesheet.attendanceValidationName)
+                                )
+                              ]
+                            )
                           : _c("p", [_vm._v("-")])
                       ]),
                       _vm._v(" "),
@@ -22530,7 +22560,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-primary m-t-10",
+                            staticClass: "btn btn-primary",
                             staticStyle: { width: "80px" }
                           },
                           [_vm._v("Details")]

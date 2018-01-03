@@ -21,6 +21,8 @@ class CheckAttendanceSchedule implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $tries = 10;
+
     public function __construct()
     {
 

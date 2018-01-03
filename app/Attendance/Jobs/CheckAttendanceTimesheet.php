@@ -24,6 +24,8 @@ class CheckAttendanceTimesheet implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    public $tries = 10;
+
     public function __construct()
     {
 
@@ -41,7 +43,6 @@ class CheckAttendanceTimesheet implements ShouldQueue
             $this->checkValidation($timesheet);
             $this->checkApproval($timesheet);
         }
-
     }
 
     private function checkValidation($timesheet)
@@ -53,7 +54,7 @@ class CheckAttendanceTimesheet implements ShouldQueue
         $shift = Shifts::find($timesheet->shiftId);
         $shiftWorkStartAt = Carbon::createFromFormat('H:i', $shift->workStartAt);
         $shiftWorkEndAt = Carbon::createFromFormat('H:i', $shift->workEndAt);
-        $currTime = Carbon::now()->format('H:i');
+        $currTime =Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
 
         /* Clock In Time in Carbon*/
         if ($timesheet->clockInTime != null) {
@@ -149,7 +150,7 @@ class CheckAttendanceTimesheet implements ShouldQueue
         $shift = Shifts::find($timesheet->shiftId);
         $shiftWorkStartAt = Carbon::createFromFormat('H:i', $shift->workStartAt);
         $shiftWorkEndAt = Carbon::createFromFormat('H:i', $shift->workEndAt);
-        $currTime = Carbon::now()->format('H:i');
+        $currTime =Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
 
         /* If work time has ended */
         if ($currTime->gt($shiftWorkEndAt)) {
