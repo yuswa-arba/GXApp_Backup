@@ -4,9 +4,9 @@
         <div class="col-lg-12 m-b-10 m-t-10">
 
             <slot name="go-back-menu"></slot>
-            <div class="pull-right m-r-15">
-                <p><span class="bold text-black">From: </span> {{generateFromDate}} <span
-                        class="bold text-black"> &nbsp; To: </span>{{generateToDate}}</p>
+            <div class="pull-right">
+                <button class="btn btn-outline-info" @click="attemptGenerateSummary"><span class="bold text-black">From: </span> {{generateFromDate}} <span
+                        class="bold text-black"> &nbsp; To: </span>{{generateToDate}}</button>
             </div>
         </div>
 
@@ -28,7 +28,7 @@
                 <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                     <div class="card-block">
                         <div class="table-responsive">
-                            <table class="table table-striped table-hover table-text-center" id="summaryDT">
+                            <table class="table table-hover table-text-center" id="summaryDT">
                                 <thead class="bg-master-lighter">
                                 <tr>
                                     <th class="text-black">Date</th>
@@ -67,12 +67,17 @@
             </div>
 
         </div>
+        <attempt-inside-summary-modal></attempt-inside-summary-modal>
     </div>
 
 </template>
 <script type="text/javascript">
     import {mapState} from 'vuex'
+    import AttemptGenerateInsideSummaryModal from '../../components/timesheet/AttemptInsideSummaryModal.vue'
     export default{
+        components:{
+            'attempt-inside-summary-modal': AttemptGenerateInsideSummaryModal
+        },
         data(){
             return {}
         },
@@ -94,6 +99,12 @@
         },
         created(){
 
+        },
+        methods:{
+            attemptGenerateSummary(){
+                this.$store.dispatch('timesheet/attemptGenerateInsideSummary');
+            }
         }
+
     }
 </script>

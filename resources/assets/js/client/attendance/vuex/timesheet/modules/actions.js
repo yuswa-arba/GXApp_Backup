@@ -31,9 +31,14 @@ export default{
     attemptGenerateSummary({commit,state}){
         $('#modal-attempt-generate-summary').modal('show')
     },
+    attemptGenerateInsideSummary({commit,state}){
+        $('#modal-attempt-generate-inside-summary').modal('show')
+    },
     startGenerateSummary({commit,state},payload){
 
         $('#modal-attempt-generate-summary').modal('hide')
+        $('#modal-attempt-generate-inside-summary').modal('hide')
+
 
         state.generateFromDate = payload.fromDate
         state.generateToDate = payload.toDate
