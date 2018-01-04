@@ -161,15 +161,34 @@
                                     </button>
 
                                     <!-- Manager approval button-->
-                                    <button class="btn btn-outline-info m-t-10"
-                                            v-if="timesheet.attendanceApproveId!=1 && timesheet.attendanceApproveId!=0"
-                                            @click="approveTimesheet(timesheet.id)"
-                                    >
-                                        Approve <i class="fa fa-check"></i></button>
-                                    <button class="btn btn-complete m-t-10"
-                                            v-else-if="timesheet.attendanceApproveId==1"
-                                    >
-                                        Approved <i class="fa fa-check"></i></button>
+                                    <!--<button class="btn btn-outline-info m-t-10"-->
+                                            <!--v-if="timesheet.attendanceApproveId!=1 && timesheet.attendanceApproveId!=0"-->
+                                            <!--@click="approveTimesheet(timesheet.id)"-->
+                                    <!--&gt;-->
+                                        <!--Approve <i class="fa fa-check"></i></button>-->
+                                    <!--<button class="btn btn-complete m-t-10"-->
+                                            <!--v-else-if="timesheet.attendanceApproveId==1"-->
+                                    <!--&gt;-->
+                                        <!--Approved <i class="fa fa-check"></i></button>-->
+
+                                    <!-- Manager approval button-->
+                                    <div class="dropdown dropdown-default">
+                                        <button class="btn btn-outline-info dropdown-toggle text-center m-t-10"
+                                                type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span v-if="timesheet.attendanceApproveId==1">Approved</span>
+                                            <span v-else-if="timesheet.attendanceApproveId==98">Disapproved</span>
+                                            <span v-else="">Edit <i class="fa fa-pencil"></i></span>
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item pointer" @click="approveTimesheet(timesheet.id)">
+                                                Approve</a>
+                                            <a class="dropdown-item pointer" @click="disapproveTimesheet(timesheet.id)">
+                                                Disapprove</a>
+                                        </div>
+
+                                    </div>
 
                                 </td>
                             </tr>
@@ -254,6 +273,9 @@
             },
             approveTimesheet(timesheetId){
                 this.$store.commit('timesheet/approveTimesheet', timesheetId)
+            },
+            disapproveTimesheet(timesheetId){
+                this.$store.commit('timesheet/disapproveTimesheet', timesheetId)
             },
             detailTimsheet(timesheetId){
                 this.$router.push({name: 'detailTimesheet', params: {id: timesheetId}})

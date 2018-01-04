@@ -112,6 +112,39 @@ export default{
                 }).show();
             })
     },
+    disapproveTimesheet(state, timesheetId){
+        post(api_path + 'attendance/timesheet/disapprove', {timesheetId: timesheetId})
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    let timesheet = _.find(state.timesheetsData, {id: timesheetId})
+                    let timesheetIndex = _.findIndex(state.timesheetsData, timesheet)
+
+                    // Update data
+                    timesheet.attendanceApproveId = 98
+                    timesheet.attendanceApproveName = 'Disapproved'
+                    timesheet.approvedBy = res.data.approvedBy
+                    state.timesheetsData.splice(timesheetIndex, 1, timesheet)
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            })
+    },
     getTimesheetSummaryDataAll(state, payload){
         get(api_path + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate)
             .then((res) => {

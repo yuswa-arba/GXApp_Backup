@@ -3042,6 +3042,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3109,6 +3128,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         approveTimesheet: function approveTimesheet(timesheetId) {
             this.$store.commit('timesheet/approveTimesheet', timesheetId);
+        },
+        disapproveTimesheet: function disapproveTimesheet(timesheetId) {
+            this.$store.commit('timesheet/disapproveTimesheet', timesheetId);
         },
         detailTimsheet: function detailTimsheet(timesheetId) {
             this.$router.push({ name: 'detailTimesheet', params: { id: timesheetId } });
@@ -24078,37 +24100,73 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          timesheet.attendanceApproveId != 1 &&
-                          timesheet.attendanceApproveId != 0
-                            ? _c(
+                          _c(
+                            "div",
+                            { staticClass: "dropdown dropdown-default" },
+                            [
+                              _c(
                                 "button",
                                 {
-                                  staticClass: "btn btn-outline-info m-t-10",
-                                  on: {
-                                    click: function($event) {
-                                      _vm.approveTimesheet(timesheet.id)
-                                    }
+                                  staticClass:
+                                    "btn btn-outline-info dropdown-toggle text-center m-t-10",
+                                  attrs: {
+                                    type: "button",
+                                    "data-toggle": "dropdown",
+                                    "aria-haspopup": "true",
+                                    "aria-expanded": "false"
                                   }
                                 },
                                 [
-                                  _vm._v(
-                                    "\n                                    Approve "
-                                  ),
-                                  _c("i", { staticClass: "fa fa-check" })
+                                  timesheet.attendanceApproveId == 1
+                                    ? _c("span", [_vm._v("Approved")])
+                                    : timesheet.attendanceApproveId == 98
+                                      ? _c("span", [_vm._v("Disapproved")])
+                                      : _c("span", [
+                                          _vm._v("Edit "),
+                                          _c("i", {
+                                            staticClass: "fa fa-pencil"
+                                          })
+                                        ])
                                 ]
-                              )
-                            : timesheet.attendanceApproveId == 1
-                              ? _c(
-                                  "button",
-                                  { staticClass: "btn btn-complete m-t-10" },
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "dropdown-menu" }, [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item pointer",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.approveTimesheet(timesheet.id)
+                                      }
+                                    }
+                                  },
                                   [
                                     _vm._v(
-                                      "\n                                    Approved "
-                                    ),
-                                    _c("i", { staticClass: "fa fa-check" })
+                                      "\n                                            Approve"
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item pointer",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.disapproveTimesheet(timesheet.id)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                            Disapprove"
+                                    )
                                   ]
                                 )
-                              : _vm._e()
+                              ])
+                            ]
+                          )
                         ])
                       ])
                     })
@@ -39123,6 +39181,36 @@ module.exports = Component.exports
                 // Update data
                 timesheet.attendanceApproveId = 1;
                 timesheet.attendanceApproveName = 'Manager Approved';
+                timesheet.approvedBy = res.data.approvedBy;
+                state.timesheetsData.splice(timesheetIndex, 1, timesheet);
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 0,
+                type: 'danger'
+            }).show();
+        });
+    },
+    disapproveTimesheet: function disapproveTimesheet(state, timesheetId) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/disapprove', { timesheetId: timesheetId }).then(function (res) {
+            if (!res.data.isFailed) {
+                var timesheet = _.find(state.timesheetsData, { id: timesheetId });
+                var timesheetIndex = _.findIndex(state.timesheetsData, timesheet);
+
+                // Update data
+                timesheet.attendanceApproveId = 98;
+                timesheet.attendanceApproveName = 'Disapproved';
                 timesheet.approvedBy = res.data.approvedBy;
                 state.timesheetsData.splice(timesheetIndex, 1, timesheet);
             } else {

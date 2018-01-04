@@ -159,6 +159,8 @@ class CheckAttendanceTimesheet implements ShouldQueue
                 $timesheet->attendanceApproveId != 98   // Disapproved
             ) {
                 $timesheet->attendanceApproveId = 99 ; // Need Approval
+                $timesheet->approvedBy = '' ; // Need Approval
+
             }
         }
 
