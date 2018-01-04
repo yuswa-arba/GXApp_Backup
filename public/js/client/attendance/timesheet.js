@@ -3108,7 +3108,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         approveTimesheet: function approveTimesheet(timesheetId) {
-            this.$store.commit('timesheet/saveApproveTimesheet', timesheetId);
+            this.$store.commit('timesheet/approveTimesheet', timesheetId);
         },
         detailTimsheet: function detailTimsheet(timesheetId) {
             this.$router.push({ name: 'detailTimesheet', params: { id: timesheetId } });
@@ -3135,6 +3135,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3235,6 +3256,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 }, _defineProperty(_components$data$comp, 'created', function created() {}), _defineProperty(_components$data$comp, 'methods', {
     attemptGenerateSummary: function attemptGenerateSummary() {
         this.$store.dispatch('timesheet/attemptGenerateInsideSummary');
+    },
+    approveTimesheet: function approveTimesheet(timesheetId) {
+        if (timesheetId) this.$store.commit('timesheet/approveTimesheetFromSummary', timesheetId);
+    },
+    disapproveTimesheet: function disapproveTimesheet(timesheetId) {
+        if (timesheetId) this.$store.commit('timesheet/disapproveTimesheetFromSummary', timesheetId);
     }
 }), _components$data$comp);
 
@@ -22944,7 +22971,7 @@ var render = function() {
                 _c("span", { staticClass: "bold text-black" }, [
                   _vm._v("   To: ")
                 ]),
-                _vm._v(_vm._s(_vm.generateToDate))
+                _vm._v(_vm._s(_vm.generateToDate) + "\n            ")
               ]
             )
           ])
@@ -23111,9 +23138,7 @@ var render = function() {
                                 timesheet.detail.data[0]
                                   ? _c("span", [
                                       _vm._v(
-                                        _vm._s(
-                                          timesheet.detail.data[0].shiftName
-                                        )
+                                        _vm._s(timesheet.detail.data[0].shiftId)
                                       )
                                     ])
                                   : _c("span", [_vm._v("-")])
@@ -23121,7 +23146,7 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", [
                                 timesheet.detail.data[0]
-                                  ? _c("span", [
+                                  ? _c("span", { staticClass: "fs-10" }, [
                                       _vm._v(
                                         _vm._s(
                                           timesheet.detail.data[0]
@@ -23134,11 +23159,61 @@ var render = function() {
                               _vm._v(" "),
                               _c("td", [
                                 timesheet.detail.data[0]
-                                  ? _c("span", [
-                                      _c("i", { staticClass: "fa fa-check" })
+                                  ? _c("span", { staticClass: "fs-10" }, [
+                                      _vm._v(
+                                        _vm._s(
+                                          timesheet.detail.data[0]
+                                            .attendanceApproveName
+                                        )
+                                      )
                                     ])
                                   : _c("span", [_vm._v("-")])
-                              ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                {
+                                  class: {
+                                    "w-60":
+                                      timesheet.detail.data[0] &&
+                                      timesheet.detail.data[0]
+                                        .attendanceApproveId == 99
+                                  }
+                                },
+                                [
+                                  timesheet.detail.data[0] &&
+                                  timesheet.detail.data[0]
+                                    .attendanceApproveId == 99
+                                    ? _c("span", [
+                                        _c("i", {
+                                          staticClass:
+                                            "fa fa-check text-success cursor",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.approveTimesheet(
+                                                timesheet.detail.data[0].id
+                                              )
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(
+                                          "  \n                                    "
+                                        ),
+                                        _c("i", {
+                                          staticClass:
+                                            "fa fa-times text-danger cursor",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.disapproveTimesheet(
+                                                timesheet.detail.data[0].id
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ])
+                                    : _vm._e()
+                                ]
+                              )
                             ])
                           })
                         )
@@ -23164,7 +23239,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-master-lighter" }, [
       _c("tr", [
-        _c("th", { staticClass: "text-black" }, [_vm._v("Date")]),
+        _c("th", { staticClass: "text-black w-150" }, [_vm._v("Date")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Clock In")]),
         _vm._v(" "),
@@ -23180,9 +23255,11 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Shift")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Valid Stats.")]),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Valid")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
+        _c("th", { staticClass: "text-black" }, [_vm._v("Apprv")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" })
       ])
     ])
   }
@@ -38949,10 +39026,10 @@ module.exports = Component.exports
         divisions: [],
         shifts: [],
         attdApprovals: [],
-        timesheetsData: [],
         sortedDate: '',
         generateFromDate: '',
         generateToDate: '',
+        timesheetsData: [],
         timesheetSummaryData: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
@@ -39037,7 +39114,7 @@ module.exports = Component.exports
             }).show();
         });
     },
-    saveApproveTimesheet: function saveApproveTimesheet(state, timesheetId) {
+    approveTimesheet: function approveTimesheet(state, timesheetId) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/approve', { timesheetId: timesheetId }).then(function (res) {
             if (!res.data.isFailed) {
                 var timesheet = _.find(state.timesheetsData, { id: timesheetId });
@@ -39075,6 +39152,81 @@ module.exports = Component.exports
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: 'Error occured! Data not found',
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 0,
+                type: 'danger'
+            }).show();
+        });
+    },
+    approveTimesheetFromSummary: function approveTimesheetFromSummary(state, timesheetId) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/approve', { timesheetId: timesheetId }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                /* Update timesheet sumamry data*/
+                _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                    _.forEach(value['timesheet'], function (value, medKey) {
+                        _.forEach(value['detail']['data'], function (value, key) {
+                            if (value['id'] == timesheetId) {
+                                var timesheetNewData = state.timesheetSummaryData[parentKey];
+                                timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveId = 1;
+                                timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveName = 'Manager Approved';
+                            }
+                        });
+                    });
+                });
+
+                // timesheetSumData.attendanceApproveId = 1
+                // timesheetSumData.attendanceApproveName = 'Manager Approved'
+                // state.timesheetSummaryData.splice(timesheetSumDataIndex,1,timesheetSumData)
+
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 0,
+                type: 'danger'
+            }).show();
+        });
+    },
+    disapproveTimesheetFromSummary: function disapproveTimesheetFromSummary(state, timesheetId) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/disapprove', { timesheetId: timesheetId }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                /* Update timesheet sumamry data*/
+                _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                    _.forEach(value['timesheet'], function (value, medKey) {
+                        _.forEach(value['detail']['data'], function (value, key) {
+                            if (value['id'] == timesheetId) {
+                                var timesheetNewData = state.timesheetSummaryData[parentKey];
+                                timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveId = 98;
+                                timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveName = 'Disapproved';
+                            }
+                        });
+                    });
+                });
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
                     position: 'top-right',
                     timeout: 0,
                     type: 'danger'

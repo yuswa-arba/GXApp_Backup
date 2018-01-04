@@ -79,7 +79,7 @@ export default{
                 }).show();
             })
     },
-    saveApproveTimesheet(state, timesheetId){
+    approveTimesheet(state, timesheetId){
         post(api_path + 'attendance/timesheet/approve', {timesheetId: timesheetId})
             .then((res) => {
                 if (!res.data.isFailed) {
@@ -127,6 +127,87 @@ export default{
                     }).show();
                 }
 
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    approveTimesheetFromSummary(state, timesheetId){
+        post(api_path + 'attendance/timesheet/approve', {timesheetId: timesheetId})
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                    /* Update timesheet sumamry data*/
+                    _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                        _.forEach(value['timesheet'], function (value, medKey) {
+                            _.forEach(value['detail']['data'], function (value, key) {
+                                if(value['id']==timesheetId){
+                                    let timesheetNewData = state.timesheetSummaryData[parentKey];
+                                    timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveId = 1
+                                    timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveName = 'Manager Approved'
+                                }
+                            })
+                        })
+                    })
+
+
+                    // timesheetSumData.attendanceApproveId = 1
+                    // timesheetSumData.attendanceApproveName = 'Manager Approved'
+                    // state.timesheetSummaryData.splice(timesheetSumDataIndex,1,timesheetSumData)
+
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    disapproveTimesheetFromSummary(state, timesheetId){
+        post(api_path + 'attendance/timesheet/disapprove', {timesheetId: timesheetId})
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                    /* Update timesheet sumamry data*/
+                    _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                        _.forEach(value['timesheet'], function (value, medKey) {
+                            _.forEach(value['detail']['data'], function (value, key) {
+                                if(value['id']==timesheetId){
+                                    let timesheetNewData = state.timesheetSummaryData[parentKey];
+                                    timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveId = 98
+                                    timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveName = 'Disapproved'
+                                }
+                            })
+                        })
+                    })
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
             })
             .catch((err) => {
                 $('.page-container').pgNotification({

@@ -12,10 +12,10 @@ export default {
         divisions:[],
         shifts:[],
         attdApprovals:[],
-        timesheetsData:[],
         sortedDate:'',
         generateFromDate:'',
         generateToDate:'',
+        timesheetsData:[],
         timesheetSummaryData:[]
     },
     getters,

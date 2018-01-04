@@ -253,7 +253,7 @@
                 }
             },
             approveTimesheet(timesheetId){
-                this.$store.commit('timesheet/saveApproveTimesheet', timesheetId)
+                this.$store.commit('timesheet/approveTimesheet', timesheetId)
             },
             detailTimsheet(timesheetId){
                 this.$router.push({name: 'detailTimesheet', params: {id: timesheetId}})

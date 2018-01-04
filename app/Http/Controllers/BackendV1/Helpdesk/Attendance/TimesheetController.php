@@ -39,12 +39,43 @@ class TimesheetController extends Controller
 
         $approveTimesheet = AttendanceTimesheet::find($request->timesheetId);
         if ($approveTimesheet) {
-            $approveTimesheet->attendanceApproveId = 1;
+            $approveTimesheet->attendanceApproveId = 1; //APPROVED
             $approveTimesheet->approvedBy = !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '';
             $approveTimesheet->save();
 
             $response['isFailed'] = false;
             $response['message'] = 'Timesheet has been approved';
+            $response['approvedBy'] = !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Timesheet not found';
+            return response()->json($response, 200);
+        }
+
+    }
+
+
+    public function disapprove(Request $request)
+    {
+        $response = array();
+        $validator = Validator::make($request->all(), ['timesheetId' => 'required']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Timesheet ID Required';
+            return response()->json($response, 200);
+        }
+
+        $approveTimesheet = AttendanceTimesheet::find($request->timesheetId);
+        if ($approveTimesheet) {
+            $approveTimesheet->attendanceApproveId = 98; //DISAPPROVED
+            $approveTimesheet->approvedBy = !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '';
+            $approveTimesheet->save();
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Timesheet has been disapproved';
             $response['approvedBy'] = !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '';
             return response()->json($response, 200);
 

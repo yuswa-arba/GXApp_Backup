@@ -5,8 +5,10 @@
 
             <slot name="go-back-menu"></slot>
             <div class="pull-right">
-                <button class="btn btn-outline-info" @click="attemptGenerateSummary"><span class="bold text-black">From: </span> {{generateFromDate}} <span
-                        class="bold text-black"> &nbsp; To: </span>{{generateToDate}}</button>
+                <button class="btn btn-outline-info" @click="attemptGenerateSummary"><span
+                        class="bold text-black">From: </span> {{generateFromDate}} <span
+                        class="bold text-black"> &nbsp; To: </span>{{generateToDate}}
+                </button>
             </div>
         </div>
 
@@ -31,7 +33,7 @@
                             <table class="table table-hover table-text-center" id="summaryDT">
                                 <thead class="bg-master-lighter">
                                 <tr>
-                                    <th class="text-black">Date</th>
+                                    <th class="text-black w-150">Date</th>
                                     <th class="text-black">Clock In</th>
                                     <th class="text-black">Clock Out</th>
                                     <th class="text-black">Work Hours</th>
@@ -39,22 +41,41 @@
                                     <th class="text-black">c-Out Early(min)</th>
                                     <th class="text-black">c-Out Late(min)</th>
                                     <th class="text-black">Shift</th>
-                                    <th class="text-black">Valid Stats.</th>
-                                    <th class="text-black">Action</th>
+                                    <th class="text-black">Valid</th>
+                                    <th class="text-black">Apprv</th>
+                                    <th class="text-black"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr v-for="timesheet in summary.timesheet">
                                     <td>{{timesheet.date}} ({{timesheet.day}})</td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].clockInTime}}</span> <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].clockOutTime}}</span> <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].workHour}}</span> <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckInLate}}</span> <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckOutEarly}}</span> <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckOutLate}}</span> <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].shiftName}}</span> <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].attendanceValidationName}}</span> <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]"><i class="fa fa-check"></i></span> <span v-else="">-</span></td>
+                                    <td><span
+                                            v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].clockInTime}}</span>
+                                        <span v-else="">-</span></td>
+                                    <td><span
+                                            v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].clockOutTime}}</span>
+                                        <span v-else="">-</span></td>
+                                    <td><span
+                                            v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].workHour}}</span>
+                                        <span v-else="">-</span></td>
+                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckInLate}}</span>
+                                        <span v-else="">-</span></td>
+                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckOutEarly}}</span>
+                                        <span v-else="">-</span></td>
+                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckOutLate}}</span>
+                                        <span v-else="">-</span></td>
+                                    <td><span
+                                            v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].shiftId}}</span>
+                                        <span v-else="">-</span></td>
+                                    <td><span class="fs-10" v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].attendanceValidationName}}</span>
+                                        <span v-else="">-</span></td>
+                                    <td><span class="fs-10" v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].attendanceApproveName}}</span>
+                                        <span v-else="">-</span></td>
+                                    <td :class="{'w-60':timesheet.detail.data[0] && timesheet.detail.data[0].attendanceApproveId==99}"><span
+                                            v-if="timesheet.detail.data[0] && timesheet.detail.data[0].attendanceApproveId==99">
+                                        <i class="fa fa-check text-success cursor" @click="approveTimesheet(timesheet.detail.data[0].id)"></i> &nbsp;
+                                        <i class="fa fa-times text-danger cursor" @click="disapproveTimesheet(timesheet.detail.data[0].id)"></i>
+                                    </span></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -75,7 +96,7 @@
     import {mapState} from 'vuex'
     import AttemptGenerateInsideSummaryModal from '../../components/timesheet/AttemptInsideSummaryModal.vue'
     export default{
-        components:{
+        components: {
             'attempt-inside-summary-modal': AttemptGenerateInsideSummaryModal
         },
         data(){
@@ -100,9 +121,17 @@
         created(){
 
         },
-        methods:{
+        methods: {
             attemptGenerateSummary(){
                 this.$store.dispatch('timesheet/attemptGenerateInsideSummary');
+            },
+            approveTimesheet(timesheetId){
+                if (timesheetId)
+                    this.$store.commit('timesheet/approveTimesheetFromSummary', timesheetId)
+            },
+            disapproveTimesheet(timesheetId){
+                if (timesheetId)
+                    this.$store.commit('timesheet/disapproveTimesheetFromSummary', timesheetId)
             }
         }
 
