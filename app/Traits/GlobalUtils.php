@@ -56,6 +56,20 @@ trait GlobalUtils
         return $dates;
     }
 
+    public function generateDateRangeFromFormatToFormat($start_date, $end_date, $fromFormat,$toFormat)
+    {
+        $start_date = Carbon::createFromFormat($fromFormat, $start_date);
+        $end_date = Carbon::createFromFormat($fromFormat, $end_date);
+
+        $dates = [];
+
+        for ($date = $start_date; $date->lte($end_date); $date->addDay()) {
+            $dates[] = $date->format($toFormat);
+        }
+
+        return $dates;
+    }
+
     public function currentMonth()
     {
         return Carbon::now()->month;

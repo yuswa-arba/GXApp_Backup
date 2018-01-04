@@ -16,6 +16,12 @@ class ConfigCodes{
         'BY_WEB_PORTAL'=>3
     ];
 
+    public static $SUM_TYPE = [
+        'ALL' =>'all',
+        'EMPLOYEE' =>'employee',
+        'DIVISION'=>'division'
+    ];
+
 
 
 

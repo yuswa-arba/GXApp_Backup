@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
 use App\Attendance\Logics\GetTimesheetListLogic;
+use App\Attendance\Logics\SummaryTimesheetLogic;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Transformers\TimesheetDetailTransformer;
 use App\Http\Controllers\Controller;
@@ -27,7 +28,9 @@ class TimesheetController extends Controller
 
     public function approve(Request $request)
     {
+        $response = array();
         $validator = Validator::make($request->all(), ['timesheetId' => 'required']);
+
         if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Timesheet ID Required';
@@ -51,6 +54,21 @@ class TimesheetController extends Controller
             return response()->json($response, 200);
         }
 
+    }
+
+    public function summary(Request $request, $sumType)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), ['fromDate' => 'required', 'toDate' => 'required']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'From Date or To Date is missing';
+            return response()->json($response, 200);
+        }
+
+        return SummaryTimesheetLogic::getData($request, $sumType);
     }
 
 }

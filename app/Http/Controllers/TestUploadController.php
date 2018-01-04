@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Attendance\Events\EmployeeClocked;
+use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
@@ -388,6 +389,20 @@ class TestUploadController extends Controller
 //        event(new EmployeeClocked(['name' => 'Kevin', 'age' => 21]));
         broadcast(new EmployeeClocked(['name' => 'Kevin', 'age' => 21]))->toOthers();
 
+    }
+
+    public function cbdiff()
+    {
+        $clockInTime = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y') . ' ' . '08:25');
+        $shift = Shifts::find(1);
+        $shiftWorkStartAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y') . ' ' . '08:00');
+
+        // if its late then return minutes late
+        if($clockInTime->lt($shiftWorkStartAt)){
+            return $clockInTime->diffInMinutes($shiftWorkStartAt);
+        }
+
+        return 0;
     }
 
 }

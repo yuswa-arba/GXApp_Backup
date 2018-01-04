@@ -83,6 +83,7 @@ Route::prefix('testing')->group(function () {
 
     Route::get('broadcast', 'TestUploadController@broadcast');
     Route::get('rn/{length}', 'TestUploadController@randomNumber');
+    Route::get('cbdiff','TestUploadController@cbdiff');
 
 
 });
