@@ -17,7 +17,7 @@ class EmploymentTransfomer extends TransformerAbstract
     {
         $employee = MasterEmployee::where('id',$employment->employeeId)->first();
         return [
-            'employeeId' =>$employment->id,
+            'employeeId' =>$employment->employeeId,
             'employeeNo' => $employee->employeeNo,
             'employeeName'=> $employee->givenName,
             'jobPosition' => !is_null($employment->jobPosition)?$employment->jobPosition->name:'',

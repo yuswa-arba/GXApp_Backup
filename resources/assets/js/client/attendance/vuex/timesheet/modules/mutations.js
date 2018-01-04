@@ -90,7 +90,7 @@ export default{
                     timesheet.attendanceApproveId = 1
                     timesheet.attendanceApproveName = 'Manager Approved'
                     timesheet.approvedBy = res.data.approvedBy
-                    state.timesheetsData.splice(timesheetIndex,1,timesheet)
+                    state.timesheetsData.splice(timesheetIndex, 1, timesheet)
 
                 } else {
                     $('.page-container').pgNotification({
@@ -101,6 +101,32 @@ export default{
                         type: 'danger'
                     }).show();
                 }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    getTimesheetSummaryDataAll(state, payload){
+        get(api_path + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate)
+            .then((res) => {
+                if (res.data) {
+                    state.timesheetSummaryData = res.data
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Error occured! Data not found',
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
+
             })
             .catch((err) => {
                 $('.page-container').pgNotification({

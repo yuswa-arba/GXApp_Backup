@@ -27,6 +27,23 @@ export default{
         })
 
         state.sortedDate = payload.sortDate
+    },
+    attemptGenerateSummary({commit,state}){
+        $('#modal-attempt-generate-summary').modal('show')
+    },
+    startGenerateSummary({commit,state},payload){
+
+        $('#modal-attempt-generate-summary').modal('hide')
+
+        state.generateFromDate = payload.fromDate
+        state.generateToDate = payload.toDate
+
+        commit({
+            type:'getTimesheetSummaryDataAll',
+            fromDate:payload.fromDate,
+            toDate:payload.toDate
+        })
+
     }
 
 }

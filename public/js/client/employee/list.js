@@ -27189,7 +27189,7 @@ var render = function() {
                       staticClass: "dropdown-item pointer",
                       on: {
                         click: function($event) {
-                          _vm.viewFaceDetail()
+                          _vm.viewLoginDetail()
                         }
                       }
                     },

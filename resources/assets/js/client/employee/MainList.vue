@@ -21,7 +21,7 @@
                                 Employment</a>
                             <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">
                                 Face API</a>
-                            <a class="dropdown-item pointer" @click="viewFaceDetail()">
+                            <a class="dropdown-item pointer" @click="viewLoginDetail()">
                                 Login Details
                             </a>
                         </div>

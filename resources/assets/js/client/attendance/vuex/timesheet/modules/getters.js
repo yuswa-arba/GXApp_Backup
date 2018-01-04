@@ -13,5 +13,8 @@ export default{
     },
     timesheetDatas(state){
         return state.timesheetsData
+    },
+    timesheetSummaryData(state){
+        return state.timesheetSummaryData
     }
 }

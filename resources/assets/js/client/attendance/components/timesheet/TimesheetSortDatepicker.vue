@@ -6,6 +6,7 @@
     export default{
        mounted:function(){
            $('#sortTimesheetDate').datepicker({
+               autoclose:true,
                format: 'dd/mm/yyyy',
                todayHighlight:true
            });

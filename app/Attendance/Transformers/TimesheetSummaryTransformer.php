@@ -31,7 +31,11 @@ class TimesheetSummaryTransformer extends TransformerAbstract
             'workHour' => $this->countWorkHour($timesheet),
             'minutesCheckInLate' => $this->countMinutesCheckInLate($timesheet),
             'minutesCheckOutEarly' => $this->countMinutesChcekOutEarly($timesheet),
-            'minutesCheckOutLate' => $this->countMinutesCheckOutLate($timesheet)
+            'minutesCheckOutLate' => $this->countMinutesCheckOutLate($timesheet),
+            'attendanceApproveId' => $timesheet->attendanceApproveId,
+            'attendanceApproveName' => !is_null($timesheet->attendanceApproval) ? $timesheet->attendanceApproval->name : '',
+            'attendanceValidationId' => $timesheet->attendanceValidationId,
+            'attendanceValidationName' => !is_null($timesheet->attendanceValidation) ? $timesheet->attendanceValidation->name : '',
         ];
     }
 

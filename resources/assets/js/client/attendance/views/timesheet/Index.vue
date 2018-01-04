@@ -3,7 +3,7 @@
         <div class="col-lg-12 m-b-10 m-t-10">
 
             <div class="pull-left m-r-15">
-                <button class="btn btn-info">Summary</button>
+                <button class="btn btn-info" @click="attemptSummary()">Summary</button>
             </div>
 
             <div class="pull-right m-r-15">
@@ -164,11 +164,11 @@
                                     <button class="btn btn-outline-info m-t-10"
                                             v-if="timesheet.attendanceApproveId!=1 && timesheet.attendanceApproveId!=0"
                                             @click="approveTimesheet(timesheet.id)"
-                                            >
+                                    >
                                         Approve <i class="fa fa-check"></i></button>
                                     <button class="btn btn-complete m-t-10"
                                             v-else-if="timesheet.attendanceApproveId==1"
-                                            >
+                                    >
                                         Approved <i class="fa fa-check"></i></button>
 
                                 </td>
@@ -179,15 +179,19 @@
                 </div>
             </div>
         </div>
+        <attempt-summary-modal></attempt-summary-modal>
+
     </div>
 </template>
 
 <script>
     import {mapGetters} from 'vuex'
     import TimesheetSortDatepicker from '../../components/timesheet/TimesheetSortDatepicker.vue'
+    import AttemptGenerateSummaryModal from '../../components/timesheet/AttemptSummaryModal.vue'
     export default{
         components: {
-            'timesheet-sort-datepicker': TimesheetSortDatepicker
+            'timesheet-sort-datepicker': TimesheetSortDatepicker,
+            'attempt-summary-modal': AttemptGenerateSummaryModal
         },
         data(){
             return {
@@ -253,6 +257,9 @@
             },
             detailTimsheet(timesheetId){
                 this.$router.push({name: 'detailTimesheet', params: {id: timesheetId}})
+            },
+            attemptSummary(){
+                this.$store.dispatch('timesheet/attemptGenerateSummary');
             }
 
         }

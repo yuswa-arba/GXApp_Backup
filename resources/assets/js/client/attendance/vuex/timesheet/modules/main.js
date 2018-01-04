@@ -13,7 +13,10 @@ export default {
         shifts:[],
         attdApprovals:[],
         timesheetsData:[],
-        sortedDate:''
+        sortedDate:'',
+        generateFromDate:'',
+        generateToDate:'',
+        timesheetSummaryData:[]
     },
     getters,
     mutations,

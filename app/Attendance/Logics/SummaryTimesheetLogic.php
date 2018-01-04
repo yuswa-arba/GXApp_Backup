@@ -46,14 +46,13 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
 
                 $datedmy = Carbon::createFromFormat('Y-m-d', $date)->format('d/m/Y');
                 $response['timesheet'][$i]['date'] = $datedmy;
-                $response['timesheet'][$i]['day'] = Carbon::createFromFormat('Y-m-d', $date)->format('l');
+                $response['timesheet'][$i]['day'] = Carbon::createFromFormat('Y-m-d', $date)->format('D');
                 $response['timesheet'][$i]['detail'] = fractal($timesheet, new TimesheetSummaryTransformer());
                 $i++;
             }
 
             $summary[] = $response;
         }
-
 
         return $summary;
     }

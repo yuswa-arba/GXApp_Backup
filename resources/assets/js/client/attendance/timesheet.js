@@ -29,6 +29,16 @@ $(document).ready(function(){
         "ordering": false
     })
 
+    let summaryDT = $('#summaryDT');
+
+    summaryDT.dataTable({
+        "sDom": "t",
+        "destroy": true,
+        "paging": false,
+        "scrollCollapse": false,
+        "ordering": false
+    })
+
 
     $('.dataTables_empty').hide()
 
