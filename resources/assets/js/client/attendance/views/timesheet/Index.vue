@@ -9,8 +9,11 @@
             <div class="pull-right m-r-15">
                 <div class="form-group required">
                     <div class="input-group bootstrap-timepicker">
-                        <input id="sortTimesheetDate" type="text" class="form-control" name="sortTimesheetDate"
-                               required>
+
+
+                        <timesheet-sort-datepicker></timesheet-sort-datepicker>
+
+
                         <span class="input-group-addon bg-primary text-white" @click="sortTimesheet()"><i
                                 class="fa fa-check"></i></span>
                     </div>
@@ -51,8 +54,6 @@
                     </select>
                 </div>
             </div>
-
-
 
 
         </div>
@@ -109,10 +110,10 @@
                                          class="img-responsive"
                                          :id="'cInPhoto-'+timesheet.id"
                                          :src="'/images/attendances/'+timesheet.clockInPhoto" alt="">
-
+                                    <div class="clearfix"></div>
                                     <button v-if="timesheet.clockInTime"
-                                            class="btn btn-clock text-center m-t-10"
-                                            style="width: 90px">
+                                            style="width:110px"
+                                            class="btn btn-clock text-center m-t-10">
                                         {{timesheet.clockInTime}}
                                     </button>
                                     <p v-else="">-</p>
@@ -123,10 +124,11 @@
                                          class="img-responsive"
                                          :id="'cOutPhoto-'+timesheet.id"
                                          :src="'/images/attendances/'+timesheet.clockOutPhoto" alt="">
-
+                                    <div class="clearfix"></div>
                                     <button v-if="timesheet.clockOutTime"
-                                            class="btn btn-clock text-center m-t-10"
-                                            style="width: 90px">{{timesheet.clockOutTime}}
+                                            style="width: 110px"
+                                            class="btn btn-clock text-center m-t-10">
+                                        {{timesheet.clockOutTime}}
                                     </button>
                                     <p v-else="">-</p>
                                 </td>
@@ -138,7 +140,8 @@
                                            v-if="timesheet.attendanceApproveName">{{timesheet.attendanceApproveName}}</label>
                                     <p v-else="">-</p>
 
-                                    <p v-if="timesheet.approvedBy">by: <span class="bold">{{timesheet.approvedBy}}</span></p>
+                                    <p v-if="timesheet.approvedBy">by: <span
+                                            class="bold">{{timesheet.approvedBy}}</span></p>
 
 
                                 </td>
@@ -151,18 +154,21 @@
                                         {{timesheet.attendanceValidationName}}</label>
                                     <p v-else="">-</p>
                                 </td>
-                                <td>
-                                    <button class="btn btn-primary" style="width: 80px">Details</button>
+                                <td style="width: 100px">
+                                    <button class="btn btn-primary"
+                                            @click="detailTimsheet(timesheet.id)">
+                                        Details <i class="fa fa-search"></i>
+                                    </button>
 
                                     <!-- Manager approval button-->
                                     <button class="btn btn-outline-info m-t-10"
-                                            v-if="timesheet.attendanceApproveId!=1"
+                                            v-if="timesheet.attendanceApproveId!=1 && timesheet.attendanceApproveId!=0"
                                             @click="approveTimesheet(timesheet.id)"
-                                            style="width: 80px">
+                                            >
                                         Approve <i class="fa fa-check"></i></button>
                                     <button class="btn btn-complete m-t-10"
-                                            v-else=""
-                                            style="width: 80px">
+                                            v-else-if="timesheet.attendanceApproveId==1"
+                                            >
                                         Approved <i class="fa fa-check"></i></button>
 
                                 </td>
@@ -178,21 +184,25 @@
 
 <script>
     import {mapGetters} from 'vuex'
+    import TimesheetSortDatepicker from '../../components/timesheet/TimesheetSortDatepicker.vue'
     export default{
+        components: {
+            'timesheet-sort-datepicker': TimesheetSortDatepicker
+        },
         data(){
             return {
                 sortDivisionId: '',
                 sortShiftId: '',
                 showcInPhoto: true,
                 showcOutPhoto: true,
-                sortAttdApprovalId:''
+                sortAttdApprovalId: ''
             }
         },
         computed: {
             ...mapGetters('timesheet', {
                 divisions: 'divisions',
                 shifts: 'shifts',
-                attdApprovals:'attdApprovals',
+                attdApprovals: 'attdApprovals',
                 timesheetDatas: 'timesheetDatas'
             }),
 
@@ -219,7 +229,7 @@
                     divisionId: self.sortDivisionId,
                     shiftId: self.sortShiftId,
                     sortDate: sortDate,
-                    attdApprovalId:self.sortAttdApprovalId
+                    attdApprovalId: self.sortAttdApprovalId
                 })
             },
 
@@ -240,7 +250,10 @@
                 }
             },
             approveTimesheet(timesheetId){
-                this.$store.commit('timesheet/saveApproveTimesheet',timesheetId)
+                this.$store.commit('timesheet/saveApproveTimesheet', timesheetId)
+            },
+            detailTimsheet(timesheetId){
+                this.$router.push({name: 'detailTimesheet', params: {id: timesheetId}})
             }
 
         }

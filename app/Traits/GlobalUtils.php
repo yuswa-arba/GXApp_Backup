@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use Carbon\Carbon;
 use Faker\Provider\Uuid;
 
@@ -82,6 +83,26 @@ trait GlobalUtils
             $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+
+     function clockingVia($id)
+    {
+        $via = '';
+        switch ($id) {
+            case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK'] :
+                $via = 'Kiosk';
+                break;
+            case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL']:
+                $via = 'Web Portal';
+                break;
+            case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_PERSONAL_DEVICE']:
+                $via = 'Personal App';
+                break;
+            default:
+                break;
+        }
+
+        return $via;
     }
 
 }

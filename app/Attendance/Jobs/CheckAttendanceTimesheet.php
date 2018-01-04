@@ -66,10 +66,10 @@ class CheckAttendanceTimesheet implements ShouldQueue
         }
         /* Current Time in Carbon*/
 
-        $timesheet->attendanceValidationId = 99; // Default set to 'Invalid'
-
         /* If work time has ended */
         if ($currTime->gt($shiftWorkEndAt)) {
+
+            $timesheet->attendanceValidationId = 99; // Default set to 'Invalid'
 
             $isValid = 1;
 
@@ -147,9 +147,9 @@ class CheckAttendanceTimesheet implements ShouldQueue
 
     private function checkApproval($timesheet)
     {
+
         $shift = Shifts::find($timesheet->shiftId);
-        $shiftWorkStartAt = Carbon::createFromFormat('H:i', $shift->workStartAt);
-        $shiftWorkEndAt = Carbon::createFromFormat('H:i', $shift->workEndAt);
+        $shiftWorkEndAt = Carbon::createFromFormat('H:i',$shift->workEndAt);
         $currTime =Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
 
         /* If work time has ended */

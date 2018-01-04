@@ -34,22 +34,25 @@ class CheckAttendanceSchedule implements ShouldQueue
     public function handle()
     {
 
-        $nowTime = Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
+        $nowTime = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y H:i'));
         $shifts = Shifts::all();
 
         foreach ($shifts as $shift) {
 
-            $workStartAt = Carbon::createFromFormat('H:i', $shift->workStartAt);
-            $workEndAt = Carbon::createFromFormat('H:i', $shift->workEndAt);
-            $breakStartAt = Carbon::createFromFormat('H:i', $shift->breakStartAt);
-            $breakEndAt = Carbon::createFromFormat('H:i', $shift->breakEndAt);
+            $workStartAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y'). ' '. $shift->workStartAt);
+            $workEndAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y'). ' '. $shift->workEndAt);
+
+//            if($shift->isOvernight==1){
+//                $workEndAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->addDay()->format('d/m/Y'). ' '. $shift->workEndAt);
+//            }
+
+            $breakStartAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y'). ' '. $shift->breakStartAt);
+            $breakEndAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y'). ' '. $shift->breakEndAt);
 
 
             // allow check in before 1 hour
             if ($nowTime->gte($workStartAt->subHour(1))) {
                 AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToCheckIn' => 1,'allowedToCheckOut' => 0]);
-
-
             } else {
                 AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToCheckIn' => 0]);
             }

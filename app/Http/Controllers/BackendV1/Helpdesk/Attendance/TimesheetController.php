@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
 use App\Attendance\Logics\GetTimesheetListLogic;
 use App\Attendance\Models\AttendanceTimesheet;
+use App\Attendance\Transformers\TimesheetDetailTransformer;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -18,27 +19,33 @@ class TimesheetController extends Controller
         return GetTimesheetListLogic::getData($request);
     }
 
+    public function detail($timesheetId)
+    {
+        $attendance = AttendanceTimesheet::find($timesheetId);
+        return fractal($attendance, new TimesheetDetailTransformer())->respond(200);
+    }
+
     public function approve(Request $request)
     {
-        $validator = Validator::make($request->all(),['timesheetId'=>'required']);
+        $validator = Validator::make($request->all(), ['timesheetId' => 'required']);
         if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Timesheet ID Required';
             return response()->json($response, 200);
         }
 
-        $approveTimesheet  = AttendanceTimesheet::find($request->timesheetId);
-        if($approveTimesheet){
+        $approveTimesheet = AttendanceTimesheet::find($request->timesheetId);
+        if ($approveTimesheet) {
             $approveTimesheet->attendanceApproveId = 1;
             $approveTimesheet->approvedBy = !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '';
             $approveTimesheet->save();
 
             $response['isFailed'] = false;
             $response['message'] = 'Timesheet has been approved';
-            $response['approvedBy'] =!is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '';
+            $response['approvedBy'] = !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '';
             return response()->json($response, 200);
 
-        } else{
+        } else {
             $response['isFailed'] = true;
             $response['message'] = 'Timesheet not found';
             return response()->json($response, 200);
