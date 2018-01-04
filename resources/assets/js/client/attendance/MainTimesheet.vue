@@ -22,7 +22,7 @@
         methods: {
             goBack(){
                 $('#errors-container').addClass('hide');
-                this.$router.push('/')
+                this.$router.go(-1)
             }
         }
     }

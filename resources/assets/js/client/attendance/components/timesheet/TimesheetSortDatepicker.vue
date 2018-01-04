@@ -9,7 +9,12 @@
                format: 'dd/mm/yyyy',
                todayHighlight:true
            });
-           $('#sortTimesheetDate').val(moment().format('DD/MM/YYYY'))
+
+           let currentDate = moment().format('DD/MM/YYYY')
+           if(this.$store.state.timesheet.sortedDate){
+               currentDate = this.$store.state.timesheet.sortedDate
+           }
+           $('#sortTimesheetDate').val(currentDate)
        }
     }
 </script>

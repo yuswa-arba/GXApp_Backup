@@ -2488,7 +2488,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         goBack: function goBack() {
             $('#errors-container').addClass('hide');
-            this.$router.push('/');
+            this.$router.go(-1);
         }
     }
 });
@@ -2511,7 +2511,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             format: 'dd/mm/yyyy',
             todayHighlight: true
         });
-        $('#sortTimesheetDate').val(moment().format('DD/MM/YYYY'));
+
+        var currentDate = moment().format('DD/MM/YYYY');
+        if (this.$store.state.timesheet.sortedDate) {
+            currentDate = this.$store.state.timesheet.sortedDate;
+        }
+        $('#sortTimesheetDate').val(currentDate);
     }
 });
 
@@ -37638,7 +37643,6 @@ module.exports = Component.exports
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]);
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
-    // mode: 'history',
     routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_timesheet_Index_vue___default.a }, { path: '/detail/:id/', component: __WEBPACK_IMPORTED_MODULE_3__views_timesheet_DetailTimesheet_vue___default.a, name: 'detailTimesheet' }]
 });
 
@@ -37806,17 +37810,23 @@ module.exports = Component.exports
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     getDataOnCreate: function getDataOnCreate(_ref) {
-        var commit = _ref.commit;
+        var commit = _ref.commit,
+            state = _ref.state;
 
         commit({ type: 'getDivisions', divisionId: '' });
         commit({ type: 'getShifts', shiftId: '' });
         commit({ type: 'getAttdApprovals', attdAprovalId: '' });
 
         var currentDate = moment().format('DD/MM/YYYY');
+        if (state.sortedDate) {
+            currentDate = state.sortedDate;
+        }
         commit({ type: 'getTimesheetData', sortDate: currentDate });
     },
     getSortedData: function getSortedData(_ref2, payload) {
-        var commit = _ref2.commit;
+        var commit = _ref2.commit,
+            state = _ref2.state;
+
 
         commit({
             type: 'getTimesheetData',
@@ -37825,6 +37835,8 @@ module.exports = Component.exports
             shiftId: payload.shiftId,
             attdApprovalId: payload.attdApprovalId
         });
+
+        state.sortedDate = payload.sortDate;
     }
 });
 
@@ -37875,7 +37887,8 @@ module.exports = Component.exports
         divisions: [],
         shifts: [],
         attdApprovals: [],
-        timesheetsData: []
+        timesheetsData: [],
+        sortedDate: ''
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],

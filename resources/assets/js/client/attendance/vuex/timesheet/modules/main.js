@@ -12,7 +12,8 @@ export default {
         divisions:[],
         shifts:[],
         attdApprovals:[],
-        timesheetsData:[]
+        timesheetsData:[],
+        sortedDate:''
     },
     getters,
     mutations,

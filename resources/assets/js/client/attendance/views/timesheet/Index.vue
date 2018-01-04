@@ -212,7 +212,6 @@
             let self = this
             this.$store.dispatch('timesheet/getDataOnCreate')
 
-
         },
         methods: {
             sortTimesheet(){

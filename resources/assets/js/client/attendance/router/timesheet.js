@@ -10,7 +10,6 @@ import DetailTimesheet from '../views/timesheet/DetailTimesheet.vue'
 Vue.use(VueRouter)
 
 const router = new VueRouter({
-    // mode: 'history',
     routes: [
         {path:'/',component:Index},
         {path:'/detail/:id/',component:DetailTimesheet,name:'detailTimesheet'},
