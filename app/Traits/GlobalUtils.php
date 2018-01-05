@@ -79,6 +79,11 @@ trait GlobalUtils
         return Carbon::now()->year;
     }
 
+    public function lastYear()
+    {
+        return Carbon::now()->subYear()->year;
+    }
+
     public function randomNumber($length) {
         $result = '';
 

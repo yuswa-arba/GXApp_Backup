@@ -11,13 +11,14 @@ namespace App\Attendance\Logics;
 
 use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\SlotListTransformer;
+use App\Traits\GlobalUtils;
 
 class GetSlotListLogic extends GetSlotDataUseCase
 {
-
+    use GlobalUtils;
     public function handleGetAllSlot($request)
     {
-        $slots = Slots::all();
+        $slots = Slots::whereYear('created_at',$this->currentYear())->orWhere('id',1)->get();
         return fractal($slots, new SlotListTransformer())->respond(200);
     }
 
@@ -66,16 +67,17 @@ class GetSlotListLogic extends GetSlotDataUseCase
 
                 array_push($filterSlotIds, $this->filterSlotsRelation($slotWhereIn, $relatedBy));
 
-                $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+                $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at',$this->currentYear())->get();
 
                 break;
+
             case 'unassigned':
                 $filterSlotIds = array();
                 $slotWhereNotIn = Slots::whereNotIn('id', $assignedSlotsId)->get();
 
                 array_push($filterSlotIds, $this->filterSlotsRelation($slotWhereNotIn, $relatedBy));
 
-                $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+                $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at',$this->currentYear())->get();
 
                 break;
             default:
@@ -111,7 +113,7 @@ class GetSlotListLogic extends GetSlotDataUseCase
 
                 array_push($filterSlotIds, $this->filterSlots($slotWhereIn));
 
-                $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+                $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at',$this->currentYear())->get();
 
                 break;
             case 'unassigned':
@@ -121,7 +123,7 @@ class GetSlotListLogic extends GetSlotDataUseCase
                 array_push($filterSlotIds, $this->filterSlots($slotWhereNotIn));
 
 
-                $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+                $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at',$this->currentYear())->get();
 
                 break;
 

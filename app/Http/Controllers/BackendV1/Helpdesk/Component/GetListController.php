@@ -16,46 +16,48 @@ use App\Components\Models\JobPosition;
 use App\Components\Transformers\BasicComponentTrasnformer;
 use App\Components\Transformers\DivisionListTransfomer;
 
+use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class GetListController extends Controller
 {
+    use GlobalUtils;
 
     public function jobPosition($id)
     {
-        return fractal(JobPosition::find($id),new BasicComponentTrasnformer())->respond(200);
+        return fractal(JobPosition::find($id), new BasicComponentTrasnformer())->respond(200);
     }
 
 
     public function jobPositions()
     {
-        return fractal(JobPosition::all(),new BasicComponentTrasnformer())->respond(200);
+        return fractal(JobPosition::all(), new BasicComponentTrasnformer())->respond(200);
     }
 
     public function slotMaker($id)
     {
-        return fractal(SlotMaker::find($id),new SlotMakerListTransformer())->respond(200);
+        return fractal(SlotMaker::find($id), new SlotMakerListTransformer())->respond(200);
     }
 
     public function slotMakers()
     {
-        return fractal(SlotMaker::all(), new SlotMakerListTransformer())->respond(200);
+        return fractal(SlotMaker::whereYear('created_at', $this->currentYear())->get(), new SlotMakerListTransformer())->respond(200);
     }
 
     public function slot($id)
     {
-        return fractal(Slots::find($id),new SlotListTransformer())->respond(200);
+        return fractal(Slots::find($id), new SlotListTransformer())->respond(200);
     }
 
     public function slots()
     {
-        return fractal(Slots::all(), new SlotListTransformer())->respond(200);
+        return fractal(Slots::whereYear('created_at', $this->currentYear())->orWhere('id',1)->get(), new SlotListTransformer())->respond(200);
     }
 
     public function shift($id)
     {
-        return fractal(Shifts::find($id),new ShiftListTransformer())->respond(200);
+        return fractal(Shifts::find($id), new ShiftListTransformer())->respond(200);
     }
 
     public function shifts()
@@ -65,34 +67,34 @@ class GetListController extends Controller
 
     public function kiosk($id)
     {
-        return fractal(Kiosks::where('id',$id)->where('isDeleted',0)->first(),new KioskListTransformer())->respond(200);
+        return fractal(Kiosks::where('id', $id)->where('isDeleted', 0)->first(), new KioskListTransformer())->respond(200);
     }
 
     public function kiosks()
     {
-        return fractal(Kiosks::where('isDeleted',0)->get(), new KioskListTransformer())->respond(200);
+        return fractal(Kiosks::where('isDeleted', 0)->get(), new KioskListTransformer())->respond(200);
     }
 
 
     public function division($id)
     {
-        return fractal(Division::where('id',$id)->first(),new BasicComponentTrasnformer())->respond(200);
+        return fractal(Division::where('id', $id)->first(), new BasicComponentTrasnformer())->respond(200);
     }
 
 
     public function divisions()
     {
-        return fractal(Division::all(),new BasicComponentTrasnformer())->respond(200);
+        return fractal(Division::all(), new BasicComponentTrasnformer())->respond(200);
     }
 
     public function attdApproval($id)
     {
-        return fractal(AttendanceApproval::where('id',$id)->first(),new BasicComponentTrasnformer())->respond(200);
+        return fractal(AttendanceApproval::where('id', $id)->first(), new BasicComponentTrasnformer())->respond(200);
     }
 
     public function attdApprovals()
     {
-        return fractal(AttendanceApproval::all(),new BasicComponentTrasnformer())->respond(200);
+        return fractal(AttendanceApproval::all(), new BasicComponentTrasnformer())->respond(200);
     }
 
 }

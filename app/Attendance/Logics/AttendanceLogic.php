@@ -52,12 +52,13 @@ class AttendanceLogic extends AttendanceUseCase
                     'clockInTime' => $formRequest['cTime'],
                     'clockInViaTypeId' => $formRequest['cViaTypeId'],
                     'clockInKioskId' => $formRequest['cKioskId'],
-                    'employeePhotoClockIn' => $formRequest['employeePhotoClockIn']
+                    'employeePhotoClockIn' => $formRequest['employeePhotoClockIn'],
+                    'attendanceApproveId' => $formRequest['attendanceApproveId']
                 ]
             );
 
             /*Trigger event to update dashboard*/
-            broadcast(new EmployeeClocked(['employeeId'=>$formRequest['employeeId'],'punchType'=>Configs::$PUNCH_TYPE['IN']]));
+            broadcast(new EmployeeClocked(['employeeId' => $formRequest['employeeId'], 'punchType' => Configs::$PUNCH_TYPE['IN']]))->toOthers();
 
             $response = array();
             if ($insert) {
@@ -107,12 +108,13 @@ class AttendanceLogic extends AttendanceUseCase
                     'clockOutTime' => $formRequest['cTime'],
                     'clockOutViaTypeId' => $formRequest['cViaTypeId'],
                     'clockOutKioskId' => $formRequest['cKioskId'],
-                    'employeePhotoClockOut' => $formRequest['employeePhotoClockOut']
+                    'employeePhotoClockOut' => $formRequest['employeePhotoClockOut'],
+                    'attendanceApproveId' => $formRequest['attendanceApproveId']
                 ]
             );
 
             /*Trigger event to update dashboard*/
-            broadcast(new EmployeeClocked(['employeeId'=>$formRequest['employeeId'],'punchType'=>Configs::$PUNCH_TYPE['OUT']]));
+            broadcast(new EmployeeClocked(['employeeId' => $formRequest['employeeId'], 'punchType' => Configs::$PUNCH_TYPE['OUT']]))->toOthers();
 
             $response = array();
             if ($insert) {

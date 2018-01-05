@@ -25,8 +25,11 @@ class GetShiftMappingCalendarLogic extends GetShiftCalendarUseCase
     public function handleDayOffs($request)
     {
         //get based on this current year
-        //$dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->where('date', 'like', '%' . $this->currentYear())->get();
-        $dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->get();
+//        $dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->get();
+        $dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->where(function ($query) {
+            $query->where('date', 'like', '%' . $this->currentYear())->orWhere('date', 'like', '%' . $this->lastYear());
+        })->get();
+
         return fractal($dayOffSchedule, new DayOffMappingCalendarTransformer())->respond(200);
     }
 
@@ -35,7 +38,9 @@ class GetShiftMappingCalendarLogic extends GetShiftCalendarUseCase
         //get based on this current year
         //$shiftSchedule = SlotShiftSchedule::whereIn('slotId', $request->slotIds)->where('date', 'like', '%' . $this->currentYear())->get();
 
-        $shiftSchedule = SlotShiftSchedule::whereIn('slotId', $request->slotIds)->get();
+        $shiftSchedule = SlotShiftSchedule::whereIn('slotId', $request->slotIds)->where(function ($query) {
+            $query->where('date', 'like', '%' . $this->currentYear())->orWhere('date', 'like', '%' . $this->lastYear());
+        })->get();
         return fractal($shiftSchedule, new ShiftScheduleMappingCalendarTransformer())->respond(200);
     }
 }

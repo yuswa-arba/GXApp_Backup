@@ -4,18 +4,12 @@
         <div class="col-lg-12">
             <div class="card card-borderless">
                 <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
+
                     <li class="nav-item">
-                        <a class="active" data-toggle="tab" role="tab" data-target="#tabTimesheets"
-                           href="#">Timesheets</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#tabShifts">Shifts</a>
+                        <a class="active" href="#" data-toggle="tab" role="tab" data-target="#tabShifts">Shifts</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" data-toggle="tab" role="tab" data-target="#tabSlots">Slots</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#tabBreaks">Breaks</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" data-toggle="tab" role="tab" data-target="#tabDayOff">Dayoff</a>
@@ -35,17 +29,11 @@
 
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane active" id="tabTimesheets">
-                        <timesheet-tab></timesheet-tab>
-                    </div>
-                    <div class="tab-pane " id="tabShifts">
+                    <div class="tab-pane active" id="tabShifts">
                         <shift-tab></shift-tab>
                     </div>
                     <div class="tab-pane " id="tabSlots">
                         <slot-tab></slot-tab>
-                    </div>
-                    <div class="tab-pane" id="tabBreaks">
-                        <break-tab></break-tab>
                     </div>
                     <div class="tab-pane" id="tabDayOff">
                         <day-off-tab></day-off-tab>
@@ -74,10 +62,8 @@
 
 </template>
 <script type="text/javascript">
-    import TimesheetTab from '../../components/settings/TimesheetTab.vue'
     import ShiftTab from '../../components/settings/ShiftTab.vue'
     import SlotTab from '../../components/settings/SlotTab.vue'
-    import BreakTab from '../../components/settings/BreakTab.vue'
     import DayOffTab from '../../components/settings/DayOffTab.vue'
     import PublicHolidayTab from '../../components/settings/PublicHolidayTab.vue'
     import ManagerTab from '../../components/settings/ManagerTab.vue'
@@ -87,10 +73,8 @@
 
     export default{
         components: {
-            'timesheet-tab': TimesheetTab,
             'shift-tab': ShiftTab,
             'slot-tab': SlotTab,
-            'break-tab': BreakTab,
             'day-off-tab': DayOffTab,
             'public-holiday-tab': PublicHolidayTab,
             'manager-tab': ManagerTab,

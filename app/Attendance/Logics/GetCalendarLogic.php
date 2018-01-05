@@ -24,13 +24,16 @@ class GetCalendarLogic extends GetDataUseCase
 
         $response = array();
 
-        //TODO:
-        //get based on current year
-        //$dayOffSchedule = DayOffSchedule::where('slotId', $request->slotId)->where('date', 'like', '%' . $this->currentYear())->get();
-        //$shiftSchedule = SlotShiftSchedule::where('slotId', $request->slotId)->where('date', 'like', '%' . $this->currentYear())->get();
 
-        $dayOffSchedule = DayOffSchedule::where('slotId', $request->slotId)->get();
-        $shiftSchedule = SlotShiftSchedule::where('slotId', $request->slotId)->get();
+//        $dayOffSchedule = DayOffSchedule::where('slotId', $request->slotId)->get();
+//        $shiftSchedule = SlotShiftSchedule::where('slotId', $request->slotId)->get();
+
+        $dayOffSchedule = DayOffSchedule::where('slotId', $request->slotId)->where(function($query){
+            $query->where('date','like','%'.$this->currentYear())->orWhere('date','like','%'.$this->lastYear());
+        })->get();
+        $shiftSchedule = SlotShiftSchedule::where('slotId', $request->slotId)->where(function($query){
+            $query->where('date','like','%'.$this->currentYear())->orWhere('date','like','%'.$this->lastYear());
+        })->get();
 
         $response['dayOffs'] = fractal($dayOffSchedule, new DayOffSingleCalendarTransformer());
         $response['shiftSchedules'] = fractal($shiftSchedule, new ShiftScheduleSingleCalendarTransformer());

@@ -2,6 +2,10 @@
 
 namespace App\Console;
 
+use App\Attendance\Console\Commands\AttendanceRepeatSlotMaker;
+use App\Attendance\Console\Commands\AttendanceScheduleChecker;
+use App\Attendance\Console\Commands\AttendanceTimesheetChecker;
+use App\Attendance\Jobs\RepeatSlotMaker;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\App;
@@ -14,7 +18,9 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Attendance\Console\Commands\AttendanceChecker::class
+        \App\Attendance\Console\Commands\AttendanceScheduleChecker::class,
+        \App\Attendance\Console\Commands\AttendanceTimesheetChecker::class,
+        \App\Attendance\Console\Commands\AttendanceRepeatSlotMaker::class
     ];
 
     /**
@@ -28,12 +34,15 @@ class Kernel extends ConsoleKernel
         $this->scheduleInDayCommands($schedule);
 //        $this->scheduleDailyCommands($schedule);
 //        $this->scheduleOnDayCommands($schedule);
+        $this->scheduleYearlyCommands($schedule);
     }
 
 
     protected function scheduleInDayCommands(Schedule $schedule)
     {
-        $schedule->command('attendance:check')->everyFiveMinutes();
+        $schedule->command(AttendanceScheduleChecker::class)->everyMinute();
+        $schedule->command(AttendanceTimesheetChecker::class)->everyFiveMinutes();
+
     }
 
     protected function scheduleDailyCommands(Schedule $schedule)
@@ -46,6 +55,14 @@ class Kernel extends ConsoleKernel
     protected function scheduleOnDayCommands(Schedule $schedule)
     {
 //        $schedule->command('client:mail:send-bonus-notifications')->weekdays()->at('10:00');
+    }
+
+    protected function scheduleYearlyCommands(Schedule $schedule)
+    {
+        /*Cron generator : https://crontab.guru */
+
+        //At 00:00 on day-of-month 27 in December.
+        $schedule->command(AttendanceRepeatSlotMaker::class)->cron('0 0 27 12 *');
     }
 
 

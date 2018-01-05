@@ -12,12 +12,14 @@ namespace App\Attendance\Logics;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\SlotMaker;
 use App\Attendance\Models\Slots;
+use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class SlotMakerLogic extends ExecuteUseCase
 {
+    use GlobalUtils;
 
     public function handleExecution($request)
     {
@@ -35,6 +37,8 @@ class SlotMakerLogic extends ExecuteUseCase
                 $response['isFailed'] = false;
                 $response['message'] = 'Slot has been executed successfully';
                 $response['slotMakers'] = SlotMaker::all();
+                return response()->json($response, 200);
+
 
             } else {
 
@@ -46,16 +50,86 @@ class SlotMakerLogic extends ExecuteUseCase
                 /* Return error response */
                 $response['isFailed'] = true;
                 $response['message'] = 'Failed! Error during execution';
+                return response()->json($response, 200);
+
             }
 
         } else {
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to execute slot maker, undefined slot maker';
+            return response()->json($response, 200);
 
         }
-        return response()->json($response, 200);
     }
+
+    public function handleRepeat($request)
+    {
+
+        $response = array();
+        $slotMaker = SlotMaker::find($request->get('id'));
+
+        // Check year compatible
+        if(Carbon::createFromFormat('d/m/Y',$slotMaker->firstDate)->format('Y')==$this->currentYear()){
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Failed! Repeating must not be in the same year';
+            return response()->json($response, 200);
+        }
+
+        //Check if exist
+        if(SlotMaker::where('name',$slotMaker->name . '_' . $this->currentYear())->count()>0){
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Failed! This slot maker has been repeated once this year';
+            return response()->json($response, 200);
+        }
+
+        $repeatSlotMaker = SlotMaker::create([
+            'name' => $slotMaker->name . '_' . $this->currentYear(),
+            'firstDate' =>Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addYear()->format('d/m/Y'),
+            'relatedToJobPosition' =>$slotMaker->relatedToJobPosition,
+            'jobPositionId'=>$slotMaker->jobPositionId,
+            'totalDayLoop'=>$slotMaker->totalDayLoop,
+            'workingDays'=>$slotMaker->workingDays,
+            'allowMultipleAssign'=>$slotMaker->allowMultipleAssign
+        ]);
+
+        if ($repeatSlotMaker) {
+
+            $execute = $this->createDayOffSlots($repeatSlotMaker)->updateSlotMaker($repeatSlotMaker);
+
+            if ($execute) {
+
+                /* Return success response */
+                $response['isFailed'] = false;
+                $response['message'] = 'Slot has been executed successfully';
+                $response['slotMakers'] = SlotMaker::all();
+                return response()->json($response, 200);
+
+            } else {
+
+                /* Delete all data inserted during execution */
+                $getSlot = Slots::where('slotMakerId', $repeatSlotMaker->id)->first();
+                DayOffSchedule::where('slotId', $getSlot->id)->delete();
+                Slots::where('id', $getSlot->id)->delete();
+
+                /* Return error response */
+                $response['isFailed'] = true;
+                $response['message'] = 'Failed! Error during execution';
+                return response()->json($response, 200);
+
+            }
+
+        } else {
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to execute slot maker, undefined slot maker';
+            return response()->json($response, 200);
+
+        }
+    }
+
 
     private function createDayOffSlots($slotMaker)
     {
@@ -90,14 +164,14 @@ class SlotMakerLogic extends ExecuteUseCase
             }
 
             // add missing working days
-            if($i+1 > $workinDay){
-                for ($m=$i+1 ;$m > 0 ; $m-=$workinDay+1){
+            if ($i + 1 > $workinDay) {
+                for ($m = $i + 1; $m > 0; $m -= $workinDay + 1) {
 
-                    $date = Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addDays($m-1);
+                    $date = Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addDays($m - 1);
 
-                    if($date->day!=$i+1){
+                    if ($date->day != $i + 1) {
                         if (Carbon::createFromFormat('d/m/Y', $date->format('d/m/Y'))->year == Carbon::now()->year) {
-                            array_push($dayOffs, array('slotId' => $slot->id, 'date'=>$date->format('d/m/Y'), 'description' => 'Weekly Day Off'));
+                            array_push($dayOffs, array('slotId' => $slot->id, 'date' => $date->format('d/m/Y'), 'description' => 'Weekly Day Off'));
                         }
                     }
                 }
@@ -130,4 +204,5 @@ class SlotMakerLogic extends ExecuteUseCase
         return SlotMaker::where('id', $slotMaker->id)
             ->update(['isExecuted' => 1, 'executedAt' => Carbon::now(), 'executedBy' => !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '']);
     }
+
 }

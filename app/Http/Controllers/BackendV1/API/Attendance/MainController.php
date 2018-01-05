@@ -56,7 +56,7 @@ class MainController extends Controller
 
             if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK']) {//by kiosk
 
-                if($punchType=='in'){
+                if ($punchType == 'in') {
                     $validator = Validator::make($request->all(), [
                         'clockInKioskId' => 'required',
                     ]);
@@ -72,7 +72,7 @@ class MainController extends Controller
                     $formRequest['cKioskId'] = $request->clockInKioskId;
                 }
 
-                if($punchType=='out'){
+                if ($punchType == 'out') {
                     $validator = Validator::make($request->all(), [
                         'clockOutKioskId' => 'required',
                     ]);
@@ -86,6 +86,12 @@ class MainController extends Controller
 
                     /* Set clock out kiosk ID*/
                     $formRequest['cKioskId'] = $request->clockOutKioskId;
+                }
+
+                /* Set if its approved by microsoft */
+                $formRequest['attendanceApproveId'] = 0;
+                if ($request->isMicrosoftFaceAPIApproved == "yes") {
+                    $formRequest['attendanceApproveId'] = 2; //MICROSOFT FACE API APPROVAL
                 }
 
                 /*Handle photo uploads if exist*/
@@ -163,7 +169,8 @@ class MainController extends Controller
 
     }
 
-    private function saveClockOutPhoto(Request $request){
+    private function saveClockOutPhoto(Request $request)
+    {
 
         /* Save Clock Out Photo if exist */
         if ($request->hasFile('employeePhotoClockOut') && $request->file('employeePhotoClockOut')->isValid()) {
@@ -174,7 +181,7 @@ class MainController extends Controller
             $request->employeePhotoClockOut->move(base_path(Configs::$IMAGE_PATH['ATTENDANCE_PHOTO']), $filename);
 
             return $filename; // insert to form request
-        } else  {
+        } else {
             return "";
         }
 

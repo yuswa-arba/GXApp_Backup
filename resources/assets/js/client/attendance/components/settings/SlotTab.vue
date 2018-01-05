@@ -24,7 +24,8 @@
                     </div>
 
                     <div class="clearfix"></div>
-                    <p class="fs-12">If someone is not assigned to specific slot, he/she will be automatically assigned to default slot</p>
+                    <p class="fs-12">If someone is not assigned to specific slot, he/she will be automatically assigned
+                        to default slot</p>
                     <p class="fs-12">Creating slot maker means only creating the setting, slot maker needs to be
                         executed from the
                         table below </p>
@@ -174,7 +175,7 @@
                                             &nbsp;
 
                                             <i class="fs-14 text-success fa fa-refresh pointer"
-                                               v-if="slotMaker.isExecuted==1"></i>
+                                               v-if="slotMaker.isExecuted==1" @click="repeat(slotMaker.id)"></i>
                                             <i class="fs-14 fa fa-refresh pointer" v-else></i>
 
                                         </td>
@@ -209,14 +210,14 @@
                         <p><span class="bold">1. Name: </span>
                             It's basically just a name. However, we recommend this format:
                             <br>
-                            <div class="p-l-10">
-                                <span style="font-style: italic">JobPositionName_6D_17</span>
-                                <br>
-                                So you can use it like : <b>HouseHoldTrainee_5D_17</b>
-                                <br>
-                                It means this slot was made for <b>Household Trainee</b> on 20<b>17</b> and has <b>5</b>
-                                working days
-                            </div>
+                        <div class="p-l-10">
+                            <span style="font-style: italic">JobPositionName_6D_17</span>
+                            <br>
+                            So you can use it like : <b>HouseHoldTrainee_5D_17</b>
+                            <br>
+                            It means this slot was made for <b>Household Trainee</b> on 20<b>17</b> and has <b>5</b>
+                            working days
+                        </div>
 
                         </p>
                         <p><span class="bold">2. First Date: </span> Data will be generated starting from this date
@@ -224,24 +225,25 @@
                         <p><span class="bold">3. Total Day Loop: </span> Day offs loop through the given value and add
                             day by 1.
                             <br>
-                            <div class="p-l-10">
-                                Example:
-                                <br>
-                                - Total day loop = 3
-                                <br>
-                                It will generate 3 slots with the rule -> day off add by 1 day from previous slot.
-                                <br>
-                                <b>Dayoffs:</b> <br>
-                                Slot 1 : 12/01/2017,18/01/2017,25/01/2017... <br>
-                                Slot 2 : 13/01/2017,19/01/2017,26/01/2017... <br>
-                                Slot 3 : 14/01/2017,20/01/2017,27/01/2017... <br>
-                            </div>
+                        <div class="p-l-10">
+                            Example:
+                            <br>
+                            - Total day loop = 3
+                            <br>
+                            It will generate 3 slots with the rule -> day off add by 1 day from previous slot.
+                            <br>
+                            <b>Dayoffs:</b> <br>
+                            Slot 1 : 12/01/2017,18/01/2017,25/01/2017... <br>
+                            Slot 2 : 13/01/2017,19/01/2017,26/01/2017... <br>
+                            Slot 3 : 14/01/2017,20/01/2017,27/01/2017... <br>
+                        </div>
                         </p>
                         <p><span class="bold">4. Working Days: </span> Total working days before 1 day off</p>
                         <p><span class="bold">5. Allow multiple assign: </span> Can be assigned more than one individual
                         </p>
                         <p><span class="bold">6. Related to Job, Job Position: </span>
-                            If slot maker is related to specific job position, <b>Total loop day</b> will be sync to total of employees with that specific job position
+                            If slot maker is related to specific job position, <b>Total loop day</b> will be sync to
+                            total of employees with that specific job position
                         </p>
 
                     </div>
@@ -367,15 +369,26 @@
                     post(api_path + 'attendance/slotMaker/execute', {id: slotMakerId})
                         .then((res) => {
 
-                            $('.page-container').pgNotification({
-                                style: 'flip',
-                                message: res.data.message,
-                                position: 'top-right',
-                                timeout: 3500,
-                                type: 'info'
-                            }).show();
+                            if (!res.data.isFailed) {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
 
-                            self.slotMakers = res.data.slotMakers
+                                self.slotMakers = res.data.slotMakers
+                            } else {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            }
+
                         })
                         .catch((err) => {
                             $('.page-container').pgNotification({
@@ -387,6 +400,44 @@
                             }).show();
                         })
                 }
+            },
+            repeat(slotMakerId){
+
+                if (confirm('Are you sure to repeat this slot maker? (Make sure it\'s not in the same year)')) {
+                    post(api_path + 'attendance/slotMaker/repeat', {id: slotMakerId})
+                        .then((res) => {
+                            if(!res.data.isFailed){
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+                                self.slotMakers = res.data.slotMakers
+                            } else {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            }
+
+                        })
+                        .catch((err) => {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        })
+                }
+
             },
 
             seeHow(){

@@ -299,49 +299,52 @@ class TestUploadController extends Controller
 
     public function tryLogic()
     {
+        $maxLoopDay = 1;
+        $workinDay = 6;
+        $totalDaysInThisYear = (365 + Carbon::now()->format('L'));
 
-//        $turn = 23;
-//        $maxLoopDay = 3;
-//        $workinDay = 6;
-//        $totalDaysInThisYear = (365 + Carbon::now()->format('L'));
-//
-//        $dayOffs= array();
-//
-//        $slots = array();
-//
-//
-//        for ($i = 0; $i < $maxLoopDay; $i++) {
-//
-//            $w = 1;
-//            for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
-//                $week = $w++;
-//                $slots[$i + 1][$week] = Carbon::parse('first sunday of January')->addDays($i + ($workinDay + 1) * $week)->format('d-m-Y');
-//
-//            }
-//
-//            // add first day off
-//            $slots[$i + 1]["0"] = Carbon::parse('first sunday of January')->addDays($i)->format('d-m-Y');
-//
-//        }
-//
-//        echo json_encode($slots);
+        for ($i = 0; $i < $maxLoopDay; $i++) {
 
-//        $dayOffs = array();
-//        if (15 > 5) {
-//            for ($m = 15; $m >0; $m -= 5 + 1) {
-//
-//                $date = Carbon::createFromFormat('d/m/Y', "01/01/2017")->addDays($m - 1);
-//
-//                if ($date->day != 15) {
-//                    if (Carbon::createFromFormat('d/m/Y', $date->format('d/m/Y'))->year == Carbon::now()->year) {
-//                        array_push($dayOffs, array('date' => $date->format('d/m/Y'), 'description' => 'Weekly Day Off'));
-//                    }
-//                }
-//
-//            }
-//        }
-//
-//        echo json_encode($dayOffs);
+            $dayOffs = array();
+
+            $slot = Slots::find(1); // GENERAL SLOT
+
+            $w = 1;
+            for ($d = $totalDaysInThisYear; $d > 7; $d -= 6) {
+                $week = $w++;
+                $date = Carbon::parse('first sunday of January')->addDays($i + ($workinDay + 1) * $week)->format('d/m/Y');
+
+                // Check if date is in current year
+                if (Carbon::createFromFormat('d/m/Y', $date)->year == Carbon::now()->year) {
+                    array_push($dayOffs, array('slotId' => $slot->id, 'date' => $date, 'description' => 'Weekly Day Off'));
+                }
+            }
+
+            // add first day off
+            $firstDayOff = Carbon::parse('first sunday of January')->addDays($i)->format('d/m/Y');
+
+            // Check if date is in current year
+            if (Carbon::createFromFormat('d/m/Y', $firstDayOff)->year == Carbon::now()->year) {
+                array_push($dayOffs, array('slotId' => $slot->id, 'date' => $firstDayOff, 'description' => 'Weekly Day Off'));
+            }
+
+            // add missing working days
+            if ($i + 1 > $workinDay) {
+                for ($m = $i + 1; $m > 0; $m -= $workinDay + 1) {
+
+                    $date = Carbon::parse('first sunday of January')->addDays($m - 1);
+
+                    if ($date->day != $i + 1) {
+                        if (Carbon::createFromFormat('d/m/Y', $date->format('d/m/Y'))->year == Carbon::now()->year) {
+                            array_push($dayOffs, array('slotId' => $slot->id, 'date' => $date->format('d/m/Y'), 'description' => 'Weekly Day Off'));
+                        }
+                    }
+                }
+            }
+
+        }
+
+        echo json_encode($dayOffs);
 
     }
 

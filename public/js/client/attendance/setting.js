@@ -1639,34 +1639,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/BreakTab.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {}
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/DayOffTab.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2712,6 +2684,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -2808,15 +2782,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             if (confirm('Are you sure to execute slot maker : ' + slotMakerName + ' ?')) {
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/execute', { id: slotMakerId }).then(function (res) {
 
+                    if (!res.data.isFailed) {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        self.slotMakers = res.data.slotMakers;
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
                     $('.page-container').pgNotification({
                         style: 'flip',
-                        message: res.data.message,
+                        message: err.message,
                         position: 'top-right',
                         timeout: 3500,
-                        type: 'info'
+                        type: 'danger'
                     }).show();
+                });
+            }
+        },
+        repeat: function repeat(slotMakerId) {
 
-                    self.slotMakers = res.data.slotMakers;
+            if (confirm('Are you sure to repeat this slot maker? (Make sure it\'s not in the same year)')) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/repeat', { id: slotMakerId }).then(function (res) {
+                    if (!res.data.isFailed) {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        self.slotMakers = res.data.slotMakers;
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
                 }).catch(function (err) {
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -2839,192 +2857,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/TimesheetTab.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {}
-});
-
-/***/ }),
-
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/settings/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_TimesheetTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/TimesheetTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_TimesheetTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_TimesheetTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_ShiftTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/ShiftTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_ShiftTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_settings_ShiftTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_SlotTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/SlotTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_SlotTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_settings_SlotTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_settings_BreakTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/BreakTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_settings_BreakTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_settings_BreakTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_settings_DayOffTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/DayOffTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_settings_DayOffTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_settings_DayOffTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_settings_PublicHolidayTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/PublicHolidayTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_settings_PublicHolidayTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_settings_PublicHolidayTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_settings_ManagerTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/ManagerTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_settings_ManagerTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_settings_ManagerTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_settings_GeofenceTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/GeofenceTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_settings_GeofenceTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_settings_GeofenceTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_settings_KIoskTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/KIoskTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_settings_KIoskTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_settings_KIoskTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_settings_MiscTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/MiscTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_settings_MiscTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_settings_MiscTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_ShiftTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/ShiftTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_ShiftTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_ShiftTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_SlotTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/SlotTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_SlotTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_settings_SlotTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_DayOffTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/DayOffTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_DayOffTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_settings_DayOffTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_settings_PublicHolidayTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/PublicHolidayTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_settings_PublicHolidayTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_settings_PublicHolidayTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_settings_ManagerTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/ManagerTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_settings_ManagerTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_settings_ManagerTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_settings_GeofenceTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/GeofenceTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_settings_GeofenceTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_settings_GeofenceTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/KIoskTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/MiscTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue__);
 //
 //
 //
@@ -3088,20 +2941,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 
 
 
@@ -3114,16 +2953,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        'timesheet-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_TimesheetTab_vue___default.a,
-        'shift-tab': __WEBPACK_IMPORTED_MODULE_1__components_settings_ShiftTab_vue___default.a,
-        'slot-tab': __WEBPACK_IMPORTED_MODULE_2__components_settings_SlotTab_vue___default.a,
-        'break-tab': __WEBPACK_IMPORTED_MODULE_3__components_settings_BreakTab_vue___default.a,
-        'day-off-tab': __WEBPACK_IMPORTED_MODULE_4__components_settings_DayOffTab_vue___default.a,
-        'public-holiday-tab': __WEBPACK_IMPORTED_MODULE_5__components_settings_PublicHolidayTab_vue___default.a,
-        'manager-tab': __WEBPACK_IMPORTED_MODULE_6__components_settings_ManagerTab_vue___default.a,
-        'geofence-tab': __WEBPACK_IMPORTED_MODULE_7__components_settings_GeofenceTab_vue___default.a,
-        'kiosk-tab': __WEBPACK_IMPORTED_MODULE_8__components_settings_KIoskTab_vue___default.a,
-        'misc-tab': __WEBPACK_IMPORTED_MODULE_9__components_settings_MiscTab_vue___default.a
+        'shift-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_ShiftTab_vue___default.a,
+        'slot-tab': __WEBPACK_IMPORTED_MODULE_1__components_settings_SlotTab_vue___default.a,
+        'day-off-tab': __WEBPACK_IMPORTED_MODULE_2__components_settings_DayOffTab_vue___default.a,
+        'public-holiday-tab': __WEBPACK_IMPORTED_MODULE_3__components_settings_PublicHolidayTab_vue___default.a,
+        'manager-tab': __WEBPACK_IMPORTED_MODULE_4__components_settings_ManagerTab_vue___default.a,
+        'geofence-tab': __WEBPACK_IMPORTED_MODULE_5__components_settings_GeofenceTab_vue___default.a,
+        'kiosk-tab': __WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue___default.a,
+        'misc-tab': __WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue___default.a
 
     },
     mounted: function mounted() {}
@@ -30589,14 +30426,7 @@ var render = function() {
         _c("div", { staticClass: "tab-content" }, [
           _c(
             "div",
-            { staticClass: "tab-pane active", attrs: { id: "tabTimesheets" } },
-            [_c("timesheet-tab")],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "tab-pane ", attrs: { id: "tabShifts" } },
+            { staticClass: "tab-pane active", attrs: { id: "tabShifts" } },
             [_c("shift-tab")],
             1
           ),
@@ -30605,13 +30435,6 @@ var render = function() {
             "div",
             { staticClass: "tab-pane ", attrs: { id: "tabSlots" } },
             [_c("slot-tab")],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "tab-pane", attrs: { id: "tabBreaks" } },
-            [_c("break-tab")],
             1
           ),
           _vm._v(" "),
@@ -30679,21 +30502,6 @@ var staticRenderFns = [
             {
               staticClass: "active",
               attrs: {
-                "data-toggle": "tab",
-                role: "tab",
-                "data-target": "#tabTimesheets",
-                href: "#"
-              }
-            },
-            [_vm._v("Timesheets")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              attrs: {
                 href: "#",
                 "data-toggle": "tab",
                 role: "tab",
@@ -30716,21 +30524,6 @@ var staticRenderFns = [
               }
             },
             [_vm._v("Slots")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tab",
-                role: "tab",
-                "data-target": "#tabBreaks"
-              }
-            },
-            [_vm._v("Breaks")]
           )
         ]),
         _vm._v(" "),
@@ -30884,51 +30677,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-2af4b20f", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b55df86\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/BreakTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row column-seperation" }, [
-      _c("div", { staticClass: "col-lg-6" }, [
-        _c("h3", [
-          _c("span", { staticClass: "semi-bold" }, [_vm._v("Sometimes")]),
-          _vm._v(" Small things in life means the most\n        ")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-6" }, [
-        _c("h3", { staticClass: "semi-bold" }, [_vm._v("great tabs")]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Native boostrap tabs customized to Pages look and feel, simply changing class name\n            you can change color as well as its animations"
-          )
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2b55df86", module.exports)
   }
 }
 
@@ -31245,7 +30993,12 @@ var render = function() {
                             slotMaker.isExecuted == 1
                               ? _c("i", {
                                   staticClass:
-                                    "fs-14 text-success fa fa-refresh pointer"
+                                    "fs-14 text-success fa fa-refresh pointer",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.repeat(slotMaker.id)
+                                    }
+                                  }
                                 })
                               : _c("i", {
                                   staticClass: "fs-14 fa fa-refresh pointer"
@@ -31375,7 +31128,7 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("p", { staticClass: "fs-12" }, [
             _vm._v(
-              "If someone is not assigned to specific slot, he/she will be automatically assigned to default slot"
+              "If someone is not assigned to specific slot, he/she will be automatically assigned\n                    to default slot"
             )
           ]),
           _vm._v(" "),
@@ -31549,21 +31302,17 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("br"),
-        _vm._v("\n                            So you can use it like : "),
+        _vm._v("\n                        So you can use it like : "),
         _c("b", [_vm._v("HouseHoldTrainee_5D_17")]),
         _vm._v(" "),
         _c("br"),
-        _vm._v(
-          "\n                            It means this slot was made for "
-        ),
+        _vm._v("\n                        It means this slot was made for "),
         _c("b", [_vm._v("Household Trainee")]),
         _vm._v(" on 20"),
         _c("b", [_vm._v("17")]),
         _vm._v(" and has "),
         _c("b", [_vm._v("5")]),
-        _vm._v(
-          "\n                            working days\n                        "
-        )
+        _vm._v("\n                        working days\n                    ")
       ]),
       _vm._v(" "),
       _c("p"),
@@ -31583,16 +31332,14 @@ var staticRenderFns = [
         _c("br")
       ]),
       _c("div", { staticClass: "p-l-10" }, [
+        _vm._v("\n                        Example:\n                        "),
+        _c("br"),
         _vm._v(
-          "\n                            Example:\n                            "
+          "\n                        - Total day loop = 3\n                        "
         ),
         _c("br"),
         _vm._v(
-          "\n                            - Total day loop = 3\n                            "
-        ),
-        _c("br"),
-        _vm._v(
-          "\n                            It will generate 3 slots with the rule -> day off add by 1 day from previous slot.\n                            "
+          "\n                        It will generate 3 slots with the rule -> day off add by 1 day from previous slot.\n                        "
         ),
         _c("br"),
         _vm._v(" "),
@@ -31600,15 +31347,15 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("br"),
         _vm._v(
-          "\n                            Slot 1 : 12/01/2017,18/01/2017,25/01/2017... "
+          "\n                        Slot 1 : 12/01/2017,18/01/2017,25/01/2017... "
         ),
         _c("br"),
         _vm._v(
-          "\n                            Slot 2 : 13/01/2017,19/01/2017,26/01/2017... "
+          "\n                        Slot 2 : 13/01/2017,19/01/2017,26/01/2017... "
         ),
         _c("br"),
         _vm._v(
-          "\n                            Slot 3 : 14/01/2017,20/01/2017,27/01/2017... "
+          "\n                        Slot 3 : 14/01/2017,20/01/2017,27/01/2017... "
         ),
         _c("br")
       ]),
@@ -31638,7 +31385,7 @@ var staticRenderFns = [
         ),
         _c("b", [_vm._v("Total loop day")]),
         _vm._v(
-          " will be sync to total of employees with that specific job position\n                    "
+          " will be sync to\n                        total of employees with that specific job position\n                    "
         )
       ])
     ])
@@ -31937,380 +31684,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-5193e4b2", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7553f0ac\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/TimesheetTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-          },
-          [
-            _c("div", { staticClass: "card-header m-b-10" }, [
-              _c(
-                "h5",
-                { staticClass: "text-primary pull-left fs-14 bold no-margin" },
-                [_vm._v("Head of Divisions ")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "clearfix" })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "auto-overflow h-273" }, [
-              _c(
-                "table",
-                { staticClass: "table table-condensed table-hover" },
-                [
-                  _c("tbody", [
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("tr", [
-                      _c(
-                        "td",
-                        { staticClass: "font-montserrat all-caps fs-12 w-50" },
-                        [_vm._v("Purchase CODE #2345")]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "text-right hidden-lg" }, [
-                        _c("span", { staticClass: "hint-text small" }, [
-                          _vm._v("dewdrops")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "td",
-                        { staticClass: "text-right b-r b-dashed b-grey w-25" },
-                        [
-                          _c("span", { staticClass: "hint-text small" }, [
-                            _vm._v("Qty 1")
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("td", { staticClass: "w-25" }, [
-                        _c("span", { staticClass: "font-montserrat fs-18" }, [
-                          _vm._v("$27")
-                        ])
-                      ])
-                    ])
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "padding-25 mt-auto" }, [
-              _c("p", { staticClass: "small no-margin" }, [
-                _c("a", { attrs: { href: "#" } }, [
-                  _c("i", {
-                    staticClass:
-                      "fa fs-16 fa-arrow-circle-o-down text-success m-r-10"
-                  })
-                ]),
-                _vm._v(" "),
-                _c("span", { staticClass: "hint-text " }, [
-                  _vm._v("Show more details of APPLE . INC")
-                ])
-              ])
-            ])
-          ]
-        )
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7553f0ac", module.exports)
   }
 }
 
@@ -48114,55 +47487,6 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/components/settings/BreakTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/BreakTab.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b55df86\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/BreakTab.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/attendance/components/settings/BreakTab.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2b55df86", Component.options)
-  } else {
-    hotAPI.reload("data-v-2b55df86", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
 /***/ "./resources/assets/js/client/attendance/components/settings/DayOffTab.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -48544,55 +47868,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-40aea760", Component.options)
   } else {
     hotAPI.reload("data-v-40aea760", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/attendance/components/settings/TimesheetTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/TimesheetTab.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7553f0ac\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/TimesheetTab.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/attendance/components/settings/TimesheetTab.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7553f0ac", Component.options)
-  } else {
-    hotAPI.reload("data-v-7553f0ac", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true

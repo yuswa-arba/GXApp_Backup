@@ -19,6 +19,11 @@ abstract class ExecuteUseCase
         return (new static)->handleExecution($request);
     }
 
+    public static function repeat(Request $request){
+        return (new static)->handleRepeat($request);
+    }
+
     abstract public function handleExecution($request);
+    abstract public function handleRepeat($request);
 
 }

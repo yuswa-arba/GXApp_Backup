@@ -18,6 +18,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('slotMaker/list', 'SlotMakerController@list')->name('v1.slotMaker.list');
         Route::post('slotMaker/create', 'SlotMakerController@create')->name('v1.slotMaker.create');
         Route::post('slotMaker/execute','SlotMakerController@execute')->name('v1.slotMaker.execute');
+        Route::post('slotMaker/repeat','SlotMakerController@repeat')->name('v1.slotMaker.repeat');
 
         Route::get('slot/list','SlotController@list')->name('v1.slot.list');
         Route::get('slot/detail/calendar','SlotController@calendar')->name('v1.slot.calendar');
