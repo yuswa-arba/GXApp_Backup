@@ -1,6 +1,9 @@
 <?php
 namespace App\Attendance\Events;
 
+use App\Attendance\Models\AttendanceTimesheet;
+use App\Attendance\Transformers\LiveClockInFeedTransformer;
+use App\Attendance\Transformers\LiveClockOutFeedTransformer;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use Carbon\Carbon;
@@ -30,16 +33,18 @@ class EmployeeClocked implements ShouldBroadcast
     /**
      * @var
      */
-    public $message;
+    public $clockedData;
+    public $clockType;
 
-    public function __construct($clockedData)
+    public function __construct($clockedId, $clockType)
     {
-     $employeeName = MasterEmployee::find($clockedData['employeeId'])['givenName'];
+        $this->clockType = $clockType;
 
-        if ($clockedData['punchType'] == Configs::$PUNCH_TYPE['IN']) {
-            $this->message = $employeeName.' CLOCKED IN at ' . Carbon::now()->diffForHumans();
-        } elseif ($clockedData['punchType'] == Configs::$PUNCH_TYPE['OUT']) {
-            $this->message = $employeeName .' CLOCKED OUT at ' . Carbon::now()->diffForHumans();
+        $timesheet = AttendanceTimesheet::find($clockedId);
+        if ($clockType == 'in') {
+            $this->clockedData = fractal($timesheet,new LiveClockInFeedTransformer());
+        } elseif ($clockType == 'out') {
+            $this->clockedData = fractal($timesheet,new LiveClockOutFeedTransformer());
         }
 
     }

@@ -2679,16 +2679,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         listenToEcho: function listenToEcho() {
+            var self = this;
             echo.channel('attendance').listen('Attendance.Events.EmployeeClocked', function (data) {
-                console.log(data);
 
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
+                /* Clock in feed */
+                if (data.clockType == 'in') {
+                    if (data.clockedData.data) {
+                        self.$store.dispatch({
+                            type: 'dashboard/newClockInFeed',
+                            feedData: data.clockedData.data
+                        });
+                    }
+                }
+
+                /* Clock out feed */
+                if (data.clockType == 'out') {
+                    if (data.clockedData.data) {
+                        self.$store.dispatch({
+                            type: 'dashboard/newClockOutFeed',
+                            feedData: data.clockedData.data
+                        });
+                    }
+                }
             });
         },
         initTimes: function initTimes() {
@@ -37128,6 +37140,22 @@ module.exports = Component.exports
             state = _ref.state;
 
         commit('getLiveFeedData');
+    },
+    newClockInFeed: function newClockInFeed(_ref2, payload) {
+        var commit = _ref2.commit,
+            state = _ref2.state;
+
+        if (payload.feedData) {
+            state.liveClockInFeeds.unshift(payload.feedData);
+        }
+    },
+    newClockOutFeed: function newClockOutFeed(_ref3, payload) {
+        var commit = _ref3.commit,
+            state = _ref3.state;
+
+        if (payload.feedData) {
+            state.liveClockOutFeeds.unshift(payload.feedData);
+        }
     }
 });
 

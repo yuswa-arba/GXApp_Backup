@@ -40,8 +40,8 @@
 
     export default{
         components: {
-            'live-clock-in-feed':LiveClockInFeed,
-            'live-clock-out-feed':LiveClockOutFeed
+            'live-clock-in-feed': LiveClockInFeed,
+            'live-clock-out-feed': LiveClockOutFeed
 
         },
         data(){
@@ -61,17 +61,31 @@
         },
         methods: {
             listenToEcho(){
+                let self = this
                 echo.channel('attendance')
                     .listen('Attendance.Events.EmployeeClocked', (data) => {
-                        console.log(data)
 
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
+                        /* Clock in feed */
+                        if (data.clockType == 'in') {
+                            if (data.clockedData.data) {
+                                self.$store.dispatch({
+                                    type: 'dashboard/newClockInFeed',
+                                    feedData: data.clockedData.data
+                                })
+                            }
+                        }
+
+                        /* Clock out feed */
+                        if (data.clockType == 'out') {
+                            if (data.clockedData.data) {
+                                self.$store.dispatch({
+                                    type: 'dashboard/newClockOutFeed',
+                                    feedData: data.clockedData.data
+                                })
+                            }
+
+                        }
+
                     })
 
             },

@@ -58,11 +58,12 @@ class AttendanceLogic extends AttendanceUseCase
                 ]
             );
 
-            /*Trigger event to update dashboard*/
-            broadcast(new EmployeeClocked(['employeeId' => $formRequest['employeeId'], 'punchType' => Configs::$PUNCH_TYPE['IN']]))->toOthers();
-
             $response = array();
             if ($insert) {
+
+                /*Trigger event to update dashboard*/
+                broadcast(new EmployeeClocked($insert->id,'in'))->toOthers();
+
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                 $response['message'] = 'Success';
@@ -114,11 +115,12 @@ class AttendanceLogic extends AttendanceUseCase
                 ]
             );
 
-            /*Trigger event to update dashboard*/
-            broadcast(new EmployeeClocked(['employeeId' => $formRequest['employeeId'], 'punchType' => Configs::$PUNCH_TYPE['OUT']]))->toOthers();
-
             $response = array();
             if ($insert) {
+
+                /*Trigger event to update dashboard*/
+                broadcast(new EmployeeClocked($insert->id,'out'))->toOthers();
+
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                 $response['message'] = 'Success';
