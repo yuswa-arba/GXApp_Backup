@@ -34,6 +34,7 @@ class ResponseCodes
         'NOT_ALLOWED_TO_CLOCK_OUT'=>500004,
         'UNDEFINED_PUNCH_TYPE' => 500005,
         'EMPLOYEE_NOT_FOUND' => 500006,
+        'IS_DAY_OFF'=>500007
     ];
 
 

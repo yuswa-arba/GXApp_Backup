@@ -11,7 +11,8 @@ export default{
         commit({
             type: 'getSlots',
             statusById: '',
-            relatedById: ''
+            relatedById: '',
+            getOnlyCurrentYear:1
         })
         commit('getShifts')
 

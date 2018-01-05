@@ -3325,6 +3325,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3337,6 +3345,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     data: function data() {
         return {
             isTrue: true,
+            getOnlyCurrentYear: true,
             relatedBy: { id: '', name: 'All' },
             statusBy: { id: '', name: 'All' }
         };
@@ -3367,11 +3376,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 self.statusBy.name = 'All';
             }
 
+            // checkbox model
+            var getCurYearParam = 0;
+            if (self.getOnlyCurrentYear) {
+                getCurYearParam = 1;
+            }
+
             // get slot data
             this.$store.commit({
                 type: 'slots/getSlots',
                 statusById: statusById,
-                relatedById: relatedById
+                relatedById: relatedById,
+                getOnlyCurrentYear: getCurYearParam
+            });
+        },
+        sortByOnCbClick: function sortByOnCbClick() {
+
+            var self = this;
+
+            // checkbox model
+            var getCurYearParam = 0;
+            if (self.getOnlyCurrentYear) {
+                getCurYearParam = 1;
+            }
+
+            // get slot data
+            this.$store.commit({
+                type: 'slots/getSlots',
+                statusById: self.statusBy.id,
+                relatedById: self.relatedBy.id,
+                getOnlyCurrentYear: getCurYearParam
             });
         },
         viewSlotDetail: function viewSlotDetail(id) {
@@ -23420,6 +23454,57 @@ var render = function() {
               2
             )
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pull-right m-r-15 m-b-10" }, [
+          _c("div", { staticClass: "checkbox check-success " }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.getOnlyCurrentYear,
+                  expression: "getOnlyCurrentYear"
+                }
+              ],
+              attrs: { id: "cbGetOnlyCurrYear", type: "checkbox" },
+              domProps: {
+                checked: Array.isArray(_vm.getOnlyCurrentYear)
+                  ? _vm._i(_vm.getOnlyCurrentYear, null) > -1
+                  : _vm.getOnlyCurrentYear
+              },
+              on: {
+                change: [
+                  function($event) {
+                    var $$a = _vm.getOnlyCurrentYear,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.getOnlyCurrentYear = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.getOnlyCurrentYear = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.getOnlyCurrentYear = $$c
+                    }
+                  },
+                  function($event) {
+                    _vm.sortByOnCbClick()
+                  }
+                ]
+              }
+            }),
+            _vm._v(" "),
+            _c("label", { attrs: { for: "cbGetOnlyCurrYear" } }, [
+              _vm._v("Get only current year")
+            ])
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -39487,7 +39572,8 @@ module.exports = Component.exports
         commit({
             type: 'getSlots',
             statusById: '',
-            relatedById: ''
+            relatedById: '',
+            getOnlyCurrentYear: 1
         });
         commit('getShifts');
     },
@@ -39831,8 +39917,9 @@ module.exports = Component.exports
     getSlots: function getSlots(state, payload) {
         var statusById = payload.statusById;
         var relatedById = payload.relatedById;
+        var getOnlyCurrentYear = payload.getOnlyCurrentYear;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/list?' + 'statusBy=' + statusById + '&relatedBy=' + relatedById).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/list?' + 'statusBy=' + statusById + '&relatedBy=' + relatedById + '&getOnlyCurrentYear=' + getOnlyCurrentYear).then(function (res) {
             state.slots = res.data.data;
 
             // fix datatables Bug displaying "no data available"

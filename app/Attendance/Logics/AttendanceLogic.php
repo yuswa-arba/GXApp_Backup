@@ -12,6 +12,7 @@ namespace App\Attendance\Logics;
 use App\Attendance\Events\EmployeeClocked;
 use App\Attendance\Models\AttendanceSchedule;
 use App\Attendance\Models\AttendanceTimesheet;
+use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
@@ -171,7 +172,18 @@ class AttendanceLogic extends AttendanceUseCase
             $employeeSlotSchedule = EmployeeSlotSchedule::where('employeeId', $employeeId)->first();
 
             if ($employeeSlotSchedule != null) {
+
                 $slot = $employeeSlotSchedule->slot;
+
+                /* Check public holidays and day off for this slot */
+                $dayOffSchedule = DayOffSchedule::where('slotId', $slot->id)->where('date', Carbon::now()->format('d/m/Y'))->first();
+                if ($dayOffSchedule) {
+                    // return error response
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ATTD_ERR_CODES['IS_DAY_OFF'];
+                    $response['message'] = 'Error clocking. Day off: ' . $dayOffSchedule->description;
+                    return $response;
+                }
 
                 /* Get shift ID if exist*/
                 $slotShiftSchedule = SlotShiftSchedule::where('slotId', $slot->id)->where('date', Carbon::now()->format('d/m/Y'))->first(['shiftId']);
@@ -188,6 +200,7 @@ class AttendanceLogic extends AttendanceUseCase
 
             }
 
+
             $attdSchedule = AttendanceSchedule::where('shiftId', $shiftId)->first(); // get default shift attendance schedule (8 to 17)
 
             /* return result based on punch type */
@@ -200,6 +213,8 @@ class AttendanceLogic extends AttendanceUseCase
                     $response['message'] = 'Allowed to Clock-In';
                     $response['isAllowed'] = $attdSchedule->allowedToCheckIn;
                     $response['shiftId'] = $shiftId;
+                    return $response;
+
 
                 } else {
                     $timeAvailable = Carbon::createFromFormat('H:i', Shifts::find($shiftId)->workStartAt)->subHours(1)->format('H:i');
@@ -209,6 +224,8 @@ class AttendanceLogic extends AttendanceUseCase
                     $response['message'] = 'Not allowed to Clock-In yet until ' . $timeAvailable;
                     $response['isAllowed'] = $attdSchedule->allowedToCheckIn;
                     $response['shiftId'] = $shiftId;
+                    return $response;
+
                 }
 
             } elseif ($punchType == 'out') {
@@ -219,6 +236,8 @@ class AttendanceLogic extends AttendanceUseCase
                     $response['message'] = 'Allowed to Clock-Out';
                     $response['isAllowed'] = $attdSchedule->allowedToCheckOut;
                     $response['shiftId'] = $shiftId;
+                    return $response;
+
                 } else {
                     $timeAvailable = Carbon::createFromFormat('H:i', Shifts::find($shiftId)->workEndAt)->format('H:i');
                     $response['isFailed'] = true;
@@ -226,6 +245,8 @@ class AttendanceLogic extends AttendanceUseCase
                     $response['message'] = 'Not allowed to Clock-Out yet until ' . $timeAvailable;
                     $response['isAllowed'] = $attdSchedule->allowedToCheckOut;
                     $response['shiftId'] = $shiftId;
+                    return $response;
+
                 }
 
             } else {
@@ -233,6 +254,8 @@ class AttendanceLogic extends AttendanceUseCase
                 $response['isFailed'] = true;
                 $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNDEFINED_PUNCH_TYPE'];
                 $response['message'] = 'Undefined punch type';
+                return $response;
+
             }
 
         } else {
@@ -240,8 +263,9 @@ class AttendanceLogic extends AttendanceUseCase
             $response['isFailed'] = true;
             $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
             $response['message'] = 'Unable to find employee data';
+            return $response;
+
         }
 
-        return $response;
     }
 }

@@ -20,8 +20,9 @@ export default{
     getSlots(state, payload){
         const statusById = payload.statusById
         const relatedById = payload.relatedById
+        const getOnlyCurrentYear = payload.getOnlyCurrentYear
 
-        get(api_path + 'attendance/slot/list?' + 'statusBy=' + statusById + '&relatedBy=' + relatedById)
+        get(api_path + 'attendance/slot/list?' + 'statusBy=' + statusById + '&relatedBy=' + relatedById + '&getOnlyCurrentYear=' + getOnlyCurrentYear)
             .then((res) => {
                 state.slots = res.data.data
 
@@ -371,7 +372,6 @@ export default{
                     }).show();
                 })
         }
-
 
 
     },

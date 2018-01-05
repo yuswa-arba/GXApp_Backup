@@ -16,31 +16,54 @@ use App\Traits\GlobalUtils;
 class GetSlotListLogic extends GetSlotDataUseCase
 {
     use GlobalUtils;
+
     public function handleGetAllSlot($request)
     {
-        $slots = Slots::whereYear('created_at',$this->currentYear())->orWhere('id',1)->get();
+        $getOnlyCurrentYear = false;
+        if($request->getOnlyCurrentYear==1){
+            $getOnlyCurrentYear = true;
+        }
+
+        if ($getOnlyCurrentYear) {
+            $slots = Slots::whereYear('created_at', $this->currentYear())->orWhere('id', 1)->get();
+        } else {
+            $slots = Slots::orderBy('created_at', 'desc')->get();
+        }
+
         return fractal($slots, new SlotListTransformer())->respond(200);
     }
 
     public function handleStatusAndRelation($request)
     {
-        $slots = $this->getSlotByStatusAndRelation($request->get('statusBy'), $request->get('relatedBy'));
+        $getOnlyCurrentYear = false;
+        if($request->getOnlyCurrentYear==1){
+            $getOnlyCurrentYear = true;
+        }
+        $slots = $this->getSlotByStatusAndRelation($request->get('statusBy'), $request->get('relatedBy'), $getOnlyCurrentYear);
         return fractal($slots, new SlotListTransformer())->respond(200);
     }
 
     public function handleSlotWithSpecificStatus($request)
     {
-        $slots = $this->getSlotBySpecificStatus($request->get('statusBy'));
+        $getOnlyCurrentYear = false;
+        if($request->getOnlyCurrentYear==1){
+            $getOnlyCurrentYear = true;
+        }
+        $slots = $this->getSlotBySpecificStatus($request->get('statusBy'), $getOnlyCurrentYear);
         return fractal($slots, new SlotListTransformer())->respond(200);
     }
 
     public function handleSlotWithSpecificRelation($request)
     {
-        $slots = $this->getSlotBySpecificRelation($request->get('relatedBy'));
+        $getOnlyCurrentYear = false;
+        if($request->getOnlyCurrentYear==1){
+            $getOnlyCurrentYear = true;
+        }
+        $slots = $this->getSlotBySpecificRelation($request->get('relatedBy'), $getOnlyCurrentYear);
         return fractal($slots, new SlotListTransformer())->respond(200);
     }
 
-    private function getSlotByStatusAndRelation($statusBy, $relatedBy)
+    private function getSlotByStatusAndRelation($statusBy, $relatedBy, $getOnlyCurrentYear)
     {
 
         $assignedSlotsId = array();
@@ -67,7 +90,12 @@ class GetSlotListLogic extends GetSlotDataUseCase
 
                 array_push($filterSlotIds, $this->filterSlotsRelation($slotWhereIn, $relatedBy));
 
-                $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at',$this->currentYear())->get();
+
+                if ($getOnlyCurrentYear) {
+                    $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at', $this->currentYear())->get();
+                } else {
+                    $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+                }
 
                 break;
 
@@ -77,7 +105,11 @@ class GetSlotListLogic extends GetSlotDataUseCase
 
                 array_push($filterSlotIds, $this->filterSlotsRelation($slotWhereNotIn, $relatedBy));
 
-                $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at',$this->currentYear())->get();
+                if ($getOnlyCurrentYear) {
+                    $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at', $this->currentYear())->get();
+                } else {
+                    $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+                }
 
                 break;
             default:
@@ -88,7 +120,7 @@ class GetSlotListLogic extends GetSlotDataUseCase
 
     }
 
-    private function getSlotBySpecificStatus($statusBy)
+    private function getSlotBySpecificStatus($statusBy, $getOnlyCurrentYear)
     {
         $assignedSlotsId = array();
         $slots = Slots::all();
@@ -113,7 +145,11 @@ class GetSlotListLogic extends GetSlotDataUseCase
 
                 array_push($filterSlotIds, $this->filterSlots($slotWhereIn));
 
-                $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at',$this->currentYear())->get();
+                if ($getOnlyCurrentYear) {
+                    $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at', $this->currentYear())->get();
+                } else {
+                    $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+                }
 
                 break;
             case 'unassigned':
@@ -122,8 +158,11 @@ class GetSlotListLogic extends GetSlotDataUseCase
 
                 array_push($filterSlotIds, $this->filterSlots($slotWhereNotIn));
 
-
-                $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at',$this->currentYear())->get();
+                if ($getOnlyCurrentYear) {
+                    $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at', $this->currentYear())->get();
+                } else {
+                    $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+                }
 
                 break;
 
@@ -135,15 +174,18 @@ class GetSlotListLogic extends GetSlotDataUseCase
 
     }
 
-    private function getSlotBySpecificRelation($relatedBy)
+    private function getSlotBySpecificRelation($relatedBy, $getOnlyCurrentYear)
     {
         $filterSlotIds = array();
         $slots = Slots::all();
 
         array_push($filterSlotIds, $this->filterSlotsRelation($slots, $relatedBy));
 
-
-        $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+        if($getOnlyCurrentYear){
+            $slots = Slots::whereIn('id', $filterSlotIds[0])->whereYear('created_at',$this->currentYear())->get();
+        } else{
+            $slots = Slots::whereIn('id', $filterSlotIds[0])->get();
+        }
 
         return $slots;
     }

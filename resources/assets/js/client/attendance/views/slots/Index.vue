@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-lg-12 m-b-10 m-t-10">
             <!--<div class="pull-left m-r-15 m-b-10">-->
-                <!--<button class="btn btn-primary all-caps">Calendar <i class="fa fa-calendar"></i></button>-->
+            <!--<button class="btn btn-primary all-caps">Calendar <i class="fa fa-calendar"></i></button>-->
             <!--</div>-->
             <div class="pull-left m-r-15 m-b-10">
                 <button class="btn btn-info all-caps" @click="shiftMapping()">Shift Mapping <i
@@ -37,6 +37,14 @@
                         <option :value="jobPosition.id" v-for="jobPosition in jobPositions">{{jobPosition.name}}
                         </option>
                     </select>
+                </div>
+            </div>
+
+            <div class="pull-right m-r-15 m-b-10">
+                <div class="checkbox check-success ">
+                    <input id="cbGetOnlyCurrYear" type="checkbox" v-model="getOnlyCurrentYear"
+                           @change="sortByOnCbClick()">
+                    <label for="cbGetOnlyCurrYear">Get only current year</label>
                 </div>
             </div>
 
@@ -146,6 +154,7 @@
         data(){
             return {
                 isTrue: true,
+                getOnlyCurrentYear: true,
                 relatedBy: {id: '', name: 'All'},
                 statusBy: {id: '', name: 'All'},
             }
@@ -160,7 +169,6 @@
             this.$store.dispatch('slots/getDataOnCreate')
         },
         methods: {
-
             sortBy(relatedById, statusById){
 
                 let self = this;
@@ -177,11 +185,37 @@
                     self.statusBy.name = 'All'
                 }
 
+                // checkbox model
+                let getCurYearParam = 0
+                if(self.getOnlyCurrentYear){
+                    getCurYearParam = 1
+                }
+
                 // get slot data
                 this.$store.commit({
                     type: 'slots/getSlots',
                     statusById: statusById,
-                    relatedById: relatedById
+                    relatedById: relatedById,
+                    getOnlyCurrentYear:getCurYearParam
+                })
+
+            },
+            sortByOnCbClick(){
+
+                let self = this;
+
+                // checkbox model
+                let getCurYearParam = 0
+                if(self.getOnlyCurrentYear){
+                    getCurYearParam = 1
+                }
+
+                // get slot data
+                this.$store.commit({
+                    type: 'slots/getSlots',
+                    statusById: self.statusBy.id,
+                    relatedById: self.relatedBy.id,
+                    getOnlyCurrentYear: getCurYearParam
                 })
 
             },
