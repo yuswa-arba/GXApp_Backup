@@ -3090,33 +3090,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         var self = this;
         this.$store.dispatch('timesheet/getDataOnCreate');
-        this.listenToEcho();
     },
 
     methods: {
-        listenToEcho: function listenToEcho() {
-            echo.channel('attendance').listen('Attendance.Events.EmployeeClocked', function (data) {
-                console.log(data);
-
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-            }).listen('Attendance.Events.AndroidTest', function (data) {
-                console.log(data);
-
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-            });
-        },
         sortTimesheet: function sortTimesheet() {
 
             var self = this;
