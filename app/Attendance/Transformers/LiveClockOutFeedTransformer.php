@@ -53,7 +53,7 @@ class LiveClockOutFeedTransformer extends TransformerAbstract
 
     private function getClockOutViaDesc($timesheet)
     {
-        switch ($timesheet->clockInViaTypeId) {
+        switch ($timesheet->clockOutViaTypeId) {
             case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK']:
                 return !is_null($timesheet->clockOutKiosk) ? $timesheet->clockOutKiosk->codeName : '';
                 break;

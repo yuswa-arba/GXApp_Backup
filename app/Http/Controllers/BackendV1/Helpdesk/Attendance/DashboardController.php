@@ -20,8 +20,8 @@ class DashboardController extends Controller
 
     public function livefeed()
     {
-        $timesheetIn = AttendanceTimesheet::where('clockInDate',Carbon::now()->format('d/m/Y'))->where('clockInTime','!=','')->orderBy('clockInTime','asdesc')->get();
-        $timesheetOut = AttendanceTimesheet::where('clockOutDate',Carbon::now()->format('d/m/Y'))->where('clockOutTime','!=','')->orderBy('clockOutTime','asdesc')->get();
+        $timesheetIn = AttendanceTimesheet::where('clockInDate',Carbon::now()->format('d/m/Y'))->where('clockInTime','!=','')->orderBy('clockInTime','desc')->get();
+        $timesheetOut = AttendanceTimesheet::where('clockOutDate',Carbon::now()->format('d/m/Y'))->where('clockOutTime','!=','')->orderBy('clockOutTime','desc')->get();
 
         $response = array();
         $response['in'] = fractal($timesheetIn,new LiveClockInFeedTransformer());
