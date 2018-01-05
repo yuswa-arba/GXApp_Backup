@@ -26,6 +26,16 @@
 <script src="{{mix('core/js/core-theme.js')}}" type="text/javascript"></script> <!-- core theme -->
 
 <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script> <!-- socket io client -->
+<script>
+    let socketio = io( window.location.hostname +':6001')
+
+    socketio.on('connect',function(){
+        console.log('connected')
+    })
+
+</script>
+
+
 
 @stack('child-page-controller')
 <script src="{{mix('js/app.js')}}" type="text/javascript"></script> <!-- app -->

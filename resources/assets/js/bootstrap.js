@@ -42,17 +42,21 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
+
 import Echo from 'laravel-echo'
 
-let echo = new Echo({
+window.echo = new Echo({
     broadcaster: 'socket.io',
     connector: 'socket.io',
     host: window.location.hostname + ':6001',
     namespace: 'App'
 })
 
-echo.channel('attendance')
-    .listen('Attendance.Events.EmployeeClocked', (data) => {
+
+
+
+echo.channel('kiosk')
+    .listen('Clocking', (data) => {
         console.log(data)
 
         $('.page-container').pgNotification({
@@ -63,6 +67,10 @@ echo.channel('attendance')
             type: 'info'
         }).show();
     })
+
+
+
+
 
 
 

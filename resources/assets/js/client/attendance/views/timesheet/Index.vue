@@ -234,9 +234,36 @@
 
             let self = this
             this.$store.dispatch('timesheet/getDataOnCreate')
+            this.listenToEcho()
 
         },
         methods: {
+            listenToEcho(){
+                echo.channel('attendance')
+                    .listen('Attendance.Events.EmployeeClocked', (data) => {
+                        console.log(data)
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+                    })
+                    .listen('Attendance.Events.AndroidTest', (data) => {
+                        console.log(data)
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+                    })
+
+            },
             sortTimesheet(){
 
                 let self = this

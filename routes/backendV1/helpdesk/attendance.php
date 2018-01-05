@@ -45,6 +45,9 @@ Route::prefix('v1/h')->group(function () {
         Route::post('timesheet/disapprove','TimesheetController@disapprove')->name('v1.timesheet.disapprove');
         Route::get('timesheet/summary/{sumType}','TimesheetController@summary')->name('v1.timesheet.summary');
 
+
+        Route::get('dashboard/livefeed','DashboardController@livefeed')->name('v1.timesheet.livefeed');
+
     });
 
 

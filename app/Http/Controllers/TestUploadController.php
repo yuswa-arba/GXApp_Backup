@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Attendance\Events\AndroidTest;
 use App\Attendance\Events\EmployeeClocked;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
@@ -390,8 +391,8 @@ class TestUploadController extends Controller
     public function broadcast()
     {
 //        event(new EmployeeClocked(['name' => 'Kevin', 'age' => 21]));
-        broadcast(new EmployeeClocked(['name' => 'Kevin', 'age' => 21]))->toOthers();
-
+//        broadcast(new EmployeeClocked(['name' => 'Kevin', 'age' => 21]))->toOthers();
+        broadcast(new AndroidTest());
     }
 
     public function cbdiff()
@@ -401,7 +402,7 @@ class TestUploadController extends Controller
         $shiftWorkStartAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y') . ' ' . '08:00');
 
         // if its late then return minutes late
-        if($clockInTime->lt($shiftWorkStartAt)){
+        if ($clockInTime->lt($shiftWorkStartAt)) {
             return $clockInTime->diffInMinutes($shiftWorkStartAt);
         }
 

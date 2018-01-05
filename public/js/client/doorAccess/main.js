@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 8);
+/******/ 	return __webpack_require__(__webpack_require__.s = 9);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -33541,14 +33541,14 @@ if (token) {
 
 
 
-var echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
+window.echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
     broadcaster: 'socket.io',
     connector: 'socket.io',
     host: window.location.hostname + ':6001',
     namespace: 'App'
 });
 
-echo.channel('attendance').listen('Attendance.Events.EmployeeClocked', function (data) {
+echo.channel('kiosk').listen('Clocking', function (data) {
     console.log(data);
 
     $('.page-container').pgNotification({
@@ -33922,7 +33922,7 @@ var faceSubKey = 'e498335112c8402a82967303033da0a4';
 
 /***/ }),
 
-/***/ 8:
+/***/ 9:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/assets/js/client/doorAccess/main.js");

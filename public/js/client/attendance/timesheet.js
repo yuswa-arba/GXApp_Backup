@@ -3090,9 +3090,33 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
         var self = this;
         this.$store.dispatch('timesheet/getDataOnCreate');
+        this.listenToEcho();
     },
 
     methods: {
+        listenToEcho: function listenToEcho() {
+            echo.channel('attendance').listen('Attendance.Events.EmployeeClocked', function (data) {
+                console.log(data);
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            }).listen('Attendance.Events.AndroidTest', function (data) {
+                console.log(data);
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            });
+        },
         sortTimesheet: function sortTimesheet() {
 
             var self = this;
@@ -38506,14 +38530,14 @@ if (token) {
 
 
 
-var echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
+window.echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
     broadcaster: 'socket.io',
     connector: 'socket.io',
     host: window.location.hostname + ':6001',
     namespace: 'App'
 });
 
-echo.channel('attendance').listen('Attendance.Events.EmployeeClocked', function (data) {
+echo.channel('kiosk').listen('Clocking', function (data) {
     console.log(data);
 
     $('.page-container').pgNotification({
