@@ -51,6 +51,15 @@ mix.copy([
         'resources/assets/plugins/google-palette/palette.js',
     ], 'public/plugins/js/');
 
+
+/*
+ |--------------------------------------------------------------------------
+ | Socket Io
+ |--------------------------------------------------------------------------
+ */
+
+mix.copyDirectory('resources/assets/plugins/socketioclient', 'public/plugins/socketioclient');
+
 /*
  |--------------------------------------------------------------------------
  | Font awesome
