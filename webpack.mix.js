@@ -57,7 +57,7 @@ mix.copy([
  | Socket Io
  |--------------------------------------------------------------------------
  */
-
+// mix.copyDirectory('node_modules/socket.io-client', 'public/plugins/socketioclient');
 mix.copyDirectory('resources/assets/plugins/socketioclient', 'public/plugins/socketioclient');
 
 /*
