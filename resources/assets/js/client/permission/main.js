@@ -21,6 +21,7 @@ Object.defineProperties(Vue.prototype, {
 
 Vue.component('roles-card', require('./components/RolesCard.vue'));
 Vue.component('permissions-card',require('./components/PermissionCard.vue'));
+Vue.component('user-card',require('./components/UserCard.vue'));
 Vue.component('create-new-menus',require('./components/CreateNewMenus.vue'));
 
 const app = new Vue({

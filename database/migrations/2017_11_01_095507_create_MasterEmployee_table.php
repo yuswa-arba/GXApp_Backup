@@ -58,7 +58,7 @@ class CreateMasterEmployeeTable extends Migration
             $table->string('emergencyCity');
             $table->string('emergencyPhoneNo');
             $table->string('emergencyAltPhoneNo')->nullable();
-            $table->string('emergencyEmailAddress');
+            $table->string('emergencyEmailAddress')->nullable();
             $table->string('prevCompanyName')->nullable();
             $table->string('prevCompanyAddress')->nullable();
             $table->string('prevCompanyPhoneNo')->nullable();

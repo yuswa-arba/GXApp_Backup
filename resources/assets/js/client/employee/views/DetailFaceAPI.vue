@@ -132,7 +132,7 @@
 </template>
 <script type="text/javascript">
     import {get, post, del, faceGet, facePut, facePost, faceDel, facePostOctet} from '../../helpers/api'
-    import {api_path, faceBaseUrl, faceSubKey} from '../../helpers/const'
+    import {api_path, faceBaseUrl, faceSubKey , microsoftPersonGroupId} from '../../helpers/const'
     import {makeBlob, objectToFormData} from'../../helpers/utils'
     export default{
         data(){
@@ -158,7 +158,7 @@
                 let self = this
 
                 //TODO : change this personGroupId when on production!
-                let personGroupId = 'gx_development';
+                let personGroupId = microsoftPersonGroupId;
 
                 if (self.detail.employeeId && self.detail.employeeFullName) {
 
@@ -350,7 +350,7 @@
             },
             getPersonDetail(){
                 let self = this
-                if (self.detail.personGroupId && self.detail.personId) {
+                if (self.detail.personGroupId!='-' && self.detail.personId) {
                     faceGet(faceBaseUrl + 'persongroups/' + self.detail.personGroupId + '/persons/' + self.detail.personId)
                         .then((res) => {
                             if (res.data) {

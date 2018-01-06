@@ -28,7 +28,7 @@
 
                     <p class="hint-text fade small pull-left">
                         Total : {{role.permissions.length}}
-                        / {{role.totalPermission}} </p>
+                        / {{role.totalPermission}} Permissions</p>
                     <div class="clearfix"></div>
                     <div class="progress progress-small m-b-15 m-t-10">
                         <!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->

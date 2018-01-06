@@ -40585,6 +40585,7 @@ function facePostOctet(url, data) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return microsoftPersonGroupId; });
 /**
  * Created by kevinpurwono on 9/11/17.
  */
@@ -40592,6 +40593,7 @@ function facePostOctet(url, data) {
 var api_path = '/v1/h/';
 var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
 var faceSubKey = 'e498335112c8402a82967303033da0a4';
+var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 

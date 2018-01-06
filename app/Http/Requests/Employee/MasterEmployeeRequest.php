@@ -59,10 +59,7 @@ class MasterEmployeeRequest extends FormRequest
             'emergencyAddress' => 'required',
             'emergencyCity' => 'required',
 
-
-
         ];
-
-
     }
+
 }

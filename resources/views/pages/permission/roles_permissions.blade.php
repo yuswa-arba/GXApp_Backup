@@ -74,11 +74,11 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs nav-tabs-fillup" data-init-reponsive-tabs="dropdownfx">
                         <li class="nav-item">
-                            <a href="#" class="active" data-toggle="tab"
-                               data-target="#by-roles"><span>Roles</span></a>
+                            <a href="#" class="active" data-toggle="tab" data-target="#by-users"><span>Users</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="" data-toggle="tab" data-target="#by-users"><span>Users</span></a>
+                            <a href="#" class="" data-toggle="tab"
+                               data-target="#by-roles"><span>Roles</span></a>
                         </li>
                         <li class="nav-item">
                             <a href="#" data-toggle="tab" data-target="#by-permissions"><span>Permission</span></a>
@@ -87,70 +87,18 @@
 
                     <!-- Tab panes -->
                     <div class="tab-content bg-transparent filter-container">
-                        <div class="tab-pane active" id="by-roles">
+                        <div class="tab-pane active" id="by-users">
+                            <div class="card-block " id="">
+                                <user-card></user-card>
+                            </div>
+                        </div>
+                        <div class="tab-pane " id="by-roles">
                             <div class="card-block " id="">
                                 <roles-card></roles-card>
                             </div>
                         </div>
 
-                        <div class="tab-pane " id="by-users">
-                            <div class="card-block " id="">
-                                <div class="row">
 
-                                    @foreach($users as $user)
-                                        <div class="col-lg-4  filter-item">
-                                            <div class="card card-default ">
-                                                <div class="card-header ">
-                                                    <div class="card-title">
-                                                        {{$user->email}}
-                                                        &nbsp;
-
-                                                    </div>
-                                                    <div class="card-controls">
-                                                        <ul>
-                                                            <li><a data-toggle="collapse" class="card-collapse"
-                                                                   href="#"><i
-                                                                            class="card-icon card-icon-collapse"></i></a>
-                                                            </li>
-                                                            <li><a data-toggle="refresh" class="card-refresh"
-                                                                   href="#"><i
-                                                                            class="card-icon card-icon-refresh"></i></a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                                <div class="card-block">
-                                                    <p class="hint-text fade small pull-left">
-                                                        Total : {{count($user->permissions)}}
-                                                        / {{count($permissions)}} Permissions</p>
-                                                    <div class="clearfix"></div>
-                                                    <div class="progress progress-small m-b-15 m-t-10">
-                                                        <!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->
-                                                        <div class="progress-bar progress-bar-primary"
-                                                             style="width:{{round((int)count($user->permissions)/count($permissions) * 100)}}%"></div>
-                                                        <!-- END BOOTSTRAP PROGRESS -->
-                                                        <div class="scrollable">
-                                                            <div class="scroll-h-70">
-                                                                <p class="all-caps font-montserrat text-success fs-8 bold no-margin">
-                                                                    @foreach($user->permissions as $permission)
-                                                                        <i class="fa fa-circle smaller "></i> {{$permission->name}}
-                                                                        <br>
-                                                                    @endforeach
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <button class="btn btn-block btn-vd-user" value="">View Details
-                                                    </button>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="tab-pane" id="by-permissions">
                             <div class="card-block">

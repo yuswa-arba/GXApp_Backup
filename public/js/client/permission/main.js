@@ -1832,6 +1832,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -1845,6 +1850,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             permissions: [],
             roles: [],
             assignedRoles: [],
+            users: [],
             assignedUsers: []
         };
     },
@@ -1881,7 +1887,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.permissionName = res.data.data.name;
                 _this2.roles = res.data.data.allRoles.data;
                 _this2.assignedRoles = res.data.data.assignedRoles.data;
-                _this2.permission.roles = _this2.assignedRoles; // update card list
+                _this2.users = res.data.data.allUsers.data;
+                _this2.assignedUsers = res.data.data.assignedUsers.data;
+                _this2.permission.roles = _this2.assignedRoles;
+                _this2.permission.users = _this2.assignedUsers;
                 $('#newRole' + permission.id).addClass('hide'); // hide badge if there is any
             });
 
@@ -1891,10 +1900,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.role = '';
             $('#modal-permission-detail').modal("toggle"); // close modal
         },
-        assign: function assign(permissionName, role) {
+        assignPermission: function assignPermission(permissionName, role) {
             var _this3 = this;
-
-            /*TODO ASSIGN USER IS NOT YET CREATED*/
 
             var assignRoleIdArr = [];
 
@@ -1904,11 +1911,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var data = { permissionName: permissionName, assignRoleIdArr: assignRoleIdArr };
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/assign/by_permission', data).then(function (res) {
-                /* TODO Create response for User too*/
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/assign/by_permission/role', data).then(function (res) {
+
                 _this3.permission.roles = res.data.assigned.data;
 
                 _this3.$bus.$emit('assign:by_permission', role);
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            });
+        },
+        assignUser: function assignUser(permissionName, user) {
+            var _this4 = this;
+
+            var assignUserIdArr = [];
+
+            _.forEach(this.assignedUsers, function (value, key) {
+                assignUserIdArr.push(value.employeeId); // push role ID to array
+            });
+
+            var data = { permissionName: permissionName, assignUserIdArr: assignUserIdArr };
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/permission/assign/by_permission/user', data).then(function (res) {
+
+                _this4.permission.users = res.data.assigned.data;
 
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -2120,6 +2159,197 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this2.role.permissions = res.data.assigned.data;
 
                 _this2.$bus.$emit('assign:by_role', permission);
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            }).catch(function (err) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            });
+        }
+    },
+    mounted: function mounted() {
+        //            console.log('Role Card Component mounted')
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/permission/components/UserCard.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            role: '',
+            userName: '',
+            users: [],
+            roles: [],
+            assignedRoles: []
+
+        };
+    },
+    created: function created() {
+
+        var self = this;
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/user/list').then(function (res) {
+            self.users = res.data.data;
+        });
+    },
+
+    methods: {
+        percent: function percent(permission, totalPermission) {
+            return permission / totalPermission * 100;
+        },
+        upperCase: function upperCase(text) {
+            return _.upperCase(text);
+        },
+        showModal: function showModal(user) {
+            var _this = this;
+
+            var self = this;
+
+            this.user = user;
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/user/assigned/' + user.employeeId).then(function (res) {
+                _this.userName = res.data.data.name;
+                _this.roles = res.data.data.allRoles.data;
+                _this.assignedRoles = res.data.data.assignedRoles.data;
+                _this.user.roles = _this.assignedRoles; // update card list
+            });
+
+            $('#modal-user-detail').modal('show');
+        },
+        closeModal: function closeModal() {
+            this.role = '';
+            $('#modal-user-detail').modal("toggle"); // close modal
+        },
+        assign: function assign(employeeId, role) {
+            var _this2 = this;
+
+            var assignRoleIdArr = [];
+
+            _.forEach(this.assignedRoles, function (value, key) {
+                assignRoleIdArr.push(value.id); // push permission ID to array
+            });
+
+            var data = { employeeId: employeeId, assignRoleIdArr: assignRoleIdArr };
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/user/assign/by_user', data).then(function (res) {
+
+                _this2.user.roles = res.data.assigned.data;
 
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -20921,9 +21151,80 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "col-lg-12" }),
                       _vm._v(" "),
-                      _vm._m(3),
+                      _vm._l(_vm.users, function(user, index) {
+                        return _c(
+                          "div",
+                          { staticClass: "col-lg-3 sm-m-t-10" },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "checkbox check-primary checkbox-circle"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.assignedUsers,
+                                      expression: "assignedUsers"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "checkbox",
+                                    id: "cbUser" + index
+                                  },
+                                  domProps: {
+                                    value: user,
+                                    checked: Array.isArray(_vm.assignedUsers)
+                                      ? _vm._i(_vm.assignedUsers, user) > -1
+                                      : _vm.assignedUsers
+                                  },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$a = _vm.assignedUsers,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = user,
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.assignedUsers = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.assignedUsers = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.assignedUsers = $$c
+                                        }
+                                      },
+                                      function($event) {
+                                        _vm.assignUser(_vm.permissionName, user)
+                                      }
+                                    ]
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  { attrs: { for: "cbUser" + index } },
+                                  [_vm._v(_vm._s(user.name))]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      }),
                       _vm._v(" "),
-                      _vm._m(4),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c("div", { staticClass: "col-lg-12" }),
                       _vm._v(" "),
@@ -20985,7 +21286,10 @@ var render = function() {
                                         }
                                       },
                                       function($event) {
-                                        _vm.assign(_vm.permissionName, role)
+                                        _vm.assignPermission(
+                                          _vm.permissionName,
+                                          role
+                                        )
                                       }
                                     ]
                                   }
@@ -21106,25 +21410,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-3 sm-m-t-10" }, [
-      _c("div", { staticClass: "checkbox check-primary checkbox-circle" }, [
-        _c("input", {
-          attrs: {
-            type: "checkbox",
-            checked: "checked",
-            value: "1",
-            id: "checkbox9"
-          }
-        }),
-        _vm._v(" "),
-        _c("label", { attrs: { for: "checkbox9" } }, [_vm._v("Mark")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-lg-12" }, [
       _c("h4", { staticClass: "text-left p-b-5" }, [
         _c("span", { staticClass: "label label-important" }, [
@@ -21140,6 +21425,292 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-7a84abfa", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-8939c794\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/permission/components/UserCard.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _vm._l(_vm.users, function(user, index) {
+        return _c("div", { staticClass: "col-lg-4  filter-item" }, [
+          _c("div", { staticClass: "card card-default " }, [
+            _c("div", { staticClass: "card-header " }, [
+              _c("div", { staticClass: "card-title" }, [
+                _vm._v(
+                  "\n                    #" +
+                    _vm._s(index) +
+                    " " +
+                    _vm._s(user.name) +
+                    " "
+                ),
+                _c(
+                  "span",
+                  {
+                    staticClass: "text-alert hide",
+                    attrs: { id: "newRole" + user.employeeId }
+                  },
+                  [_vm._v("*")]
+                ),
+                _vm._v("\n                     \n                ")
+              ]),
+              _vm._v(" "),
+              _vm._m(0, true)
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-block" }, [
+              _c("p", { staticClass: "hint-text fade small pull-left" }, [
+                _vm._v(
+                  "\n                    Total : " +
+                    _vm._s(user.roles.length) +
+                    "\n                    / " +
+                    _vm._s(user.totalRoles) +
+                    " Roles"
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "clearfix" }),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "progress progress-small m-b-15 m-t-10" },
+                [
+                  _c("div", {
+                    staticClass: "progress-bar progress-bar-primary",
+                    style: {
+                      width:
+                        _vm.percent(user.roles.length, user.totalRoles) + "%"
+                    }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "scrollable" }, [
+                _c("div", { staticClass: "scroll-h-70" }, [
+                  _c(
+                    "p",
+                    {
+                      staticClass:
+                        "all-caps font-montserrat text-success fs-8 bold no-margin"
+                    },
+                    _vm._l(user.roles, function(roles) {
+                      return _c("span", [
+                        _c("i", { staticClass: "fa fa-circle smaller" }),
+                        _vm._v(
+                          " " +
+                            _vm._s(roles.name) +
+                            "\n                            "
+                        ),
+                        _c("br")
+                      ])
+                    })
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-block btn-vd-role",
+                  attrs: { value: user.name },
+                  on: {
+                    click: function($event) {
+                      _vm.showModal(user)
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    View\n                    Details\n                "
+                  )
+                ]
+              )
+            ])
+          ])
+        ])
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade stick-up",
+          attrs: {
+            id: "modal-user-detail",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-hidden": "true"
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog modal-lg role-permission-modal" },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _c("div", { staticClass: "modal-header" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+                    _vm._v("#" + _vm._s(_vm.upperCase(_vm.userName)))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    [
+                      _c("div", { staticClass: "col-lg-12" }),
+                      _vm._v(" "),
+                      _vm._l(_vm.roles, function(role) {
+                        return _c(
+                          "div",
+                          {
+                            staticClass: "col-lg-3 col-md-3 col-sm-3 sm-m-t-10"
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "checkbox check-danger checkbox-circle"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.assignedRoles,
+                                      expression: "assignedRoles"
+                                    }
+                                  ],
+                                  attrs: {
+                                    type: "checkbox",
+                                    id: "cbroles" + role.id
+                                  },
+                                  domProps: {
+                                    value: role,
+                                    checked: Array.isArray(_vm.assignedRoles)
+                                      ? _vm._i(_vm.assignedRoles, role) > -1
+                                      : _vm.assignedRoles
+                                  },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$a = _vm.assignedRoles,
+                                          $$el = $event.target,
+                                          $$c = $$el.checked ? true : false
+                                        if (Array.isArray($$a)) {
+                                          var $$v = role,
+                                            $$i = _vm._i($$a, $$v)
+                                          if ($$el.checked) {
+                                            $$i < 0 &&
+                                              (_vm.assignedRoles = $$a.concat([
+                                                $$v
+                                              ]))
+                                          } else {
+                                            $$i > -1 &&
+                                              (_vm.assignedRoles = $$a
+                                                .slice(0, $$i)
+                                                .concat($$a.slice($$i + 1)))
+                                          }
+                                        } else {
+                                          _vm.assignedRoles = $$c
+                                        }
+                                      },
+                                      function($event) {
+                                        _vm.assign(_vm.user.employeeId, role)
+                                      }
+                                    ]
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  { attrs: { for: "cbroles" + role.id } },
+                                  [_vm._v(_vm._s(role.name))]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-12 m-b-15" })
+                    ],
+                    2
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass:
+                        "p-t-5 p-b-5 btn text-primary bold all-caps btn-block",
+                      on: {
+                        click: function($event) {
+                          _vm.closeModal()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Close\n                    "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ]
+          )
+        ]
+      )
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-controls" }, [_c("ul")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-hidden": "true"
+        }
+      },
+      [_c("i", { staticClass: "pg-close" })]
+    )
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-8939c794", module.exports)
   }
 }
 
@@ -21189,7 +21760,7 @@ var render = function() {
                     _vm._s(role.permissions.length) +
                     "\n                    / " +
                     _vm._s(role.totalPermission) +
-                    " "
+                    " Permissions"
                 )
               ]),
               _vm._v(" "),
@@ -32389,6 +32960,7 @@ function facePostOctet(url, data) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return microsoftPersonGroupId; });
 /**
  * Created by kevinpurwono on 9/11/17.
  */
@@ -32396,6 +32968,7 @@ function facePostOctet(url, data) {
 var api_path = '/v1/h/';
 var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
 var faceSubKey = 'e498335112c8402a82967303033da0a4';
+var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
@@ -32546,6 +33119,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/permission/components/UserCard.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/permission/components/UserCard.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-8939c794\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/permission/components/UserCard.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/permission/components/UserCard.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8939c794", Component.options)
+  } else {
+    hotAPI.reload("data-v-8939c794", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/permission/main.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -32576,6 +33198,7 @@ Object.defineProperties(__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype, {
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('roles-card', __webpack_require__("./resources/assets/js/client/permission/components/RolesCard.vue"));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('permissions-card', __webpack_require__("./resources/assets/js/client/permission/components/PermissionCard.vue"));
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('user-card', __webpack_require__("./resources/assets/js/client/permission/components/UserCard.vue"));
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.component('create-new-menus', __webpack_require__("./resources/assets/js/client/permission/components/CreateNewMenus.vue"));
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({

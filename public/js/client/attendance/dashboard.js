@@ -2533,6 +2533,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2552,6 +2553,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
 //
 //
 //
@@ -22334,13 +22336,17 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "padding-25 mt-auto" }, [
       _c("p", { staticClass: "small no-margin" }, [
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", {
-            staticClass: "fa fs-16 fa-arrow-circle-o-down text-success m-r-10"
-          })
-        ]),
-        _vm._v(" "),
-        _c("span", { staticClass: "hint-text " }, [_vm._v("Show all")])
+        _c(
+          "a",
+          { attrs: { href: "/attendance/timesheet", target: "_blank" } },
+          [
+            _c("i", {
+              staticClass: "fa fs-16 fa-arrow-circle-o-down text-success m-r-10"
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "hint-text " }, [_vm._v("Show all")])
+          ]
+        )
       ])
     ])
   }
@@ -22497,13 +22503,17 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "padding-25 mt-auto" }, [
       _c("p", { staticClass: "small no-margin" }, [
-        _c("a", { attrs: { href: "#" } }, [
-          _c("i", {
-            staticClass: "fa fs-16 fa-arrow-circle-o-down text-success m-r-10"
-          })
-        ]),
-        _vm._v(" "),
-        _c("span", { staticClass: "hint-text " }, [_vm._v("Show all")])
+        _c(
+          "a",
+          { attrs: { href: "/attendance/timesheet", target: "_blank" } },
+          [
+            _c("i", {
+              staticClass: "fa fs-16 fa-arrow-circle-o-down text-success m-r-10"
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "hint-text " }, [_vm._v("Show all")])
+          ]
+        )
       ])
     ])
   }
@@ -37426,6 +37436,7 @@ function facePostOctet(url, data) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return microsoftPersonGroupId; });
 /**
  * Created by kevinpurwono on 9/11/17.
  */
@@ -37433,6 +37444,7 @@ function facePostOctet(url, data) {
 var api_path = '/v1/h/';
 var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
 var faceSubKey = 'e498335112c8402a82967303033da0a4';
+var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 

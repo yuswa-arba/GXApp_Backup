@@ -32,7 +32,7 @@ require(base_path($client_path . 'developer/main.php'));
 | Init Backend routes
 |--------------------------------------------------------------------------
 */
-require(base_path($backend_path . $type_helpdesk . 'settings/main.php'));
+require(base_path($backend_path . $type_helpdesk . 'setting.php'));
 require(base_path($backend_path . $type_helpdesk . 'employee.php'));
 require(base_path($backend_path . $type_helpdesk . 'attendance.php'));
 require(base_path($backend_path . $type_helpdesk . 'developer.php'));

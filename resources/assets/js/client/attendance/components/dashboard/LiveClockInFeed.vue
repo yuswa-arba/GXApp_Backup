@@ -29,8 +29,9 @@
             </div>
             <div class="padding-25 mt-auto">
                 <p class="small no-margin">
-                    <a href="#"><i class="fa fs-16 fa-arrow-circle-o-down text-success m-r-10"></i></a>
+                    <a href="/attendance/timesheet" target="_blank"><i class="fa fs-16 fa-arrow-circle-o-down text-success m-r-10"></i>
                     <span class="hint-text ">Show all</span>
+                    </a>
                 </p>
             </div>
         </div>

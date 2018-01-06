@@ -26,34 +26,37 @@ class EmployeeLastActivityTransfomer extends TransformerAbstract
 
     private function getEmployeeLastActivity($employeeId)
     {
-
         $latestTimeSheetRecord = AttendanceTimesheet::where('employeeId', $employeeId)->latest()->first();
 
-        /* Logic */
-        $clockedIn = ($latestTimeSheetRecord->clockInDate != '' && $latestTimeSheetRecord->clockInTime != ''
-            && $latestTimeSheetRecord->clockOutDate == '' && $latestTimeSheetRecord->clockOutTime == '');
 
-        $clockedOut = ($latestTimeSheetRecord->clockInDate != '' && $latestTimeSheetRecord->clockInTime != ''
-            && $latestTimeSheetRecord->clockOutDate != '' && $latestTimeSheetRecord->clockOutTime != '');
+        if($latestTimeSheetRecord){
+            /* Logic */
+            $clockedIn = ($latestTimeSheetRecord->clockInDate != '' && $latestTimeSheetRecord->clockInTime != ''
+                && $latestTimeSheetRecord->clockOutDate == '' && $latestTimeSheetRecord->clockOutTime == '');
 
-        /* Last activity type*/
-        $type = ConfigCodes::$LAST_ACTIVITY_TYPE['UNDEFINED'];
-        if ($clockedOut) {
-            $type = ConfigCodes::$LAST_ACTIVITY_TYPE['CLOCKED_OUT'];
-        } else if ($clockedIn) {
-            $type = ConfigCodes::$LAST_ACTIVITY_TYPE['CLOCKED_IN'];
+            $clockedOut = ($latestTimeSheetRecord->clockOutDate != '' && $latestTimeSheetRecord->clockOutTime != '');
+
+            /* Last activity type*/
+            $type = ConfigCodes::$LAST_ACTIVITY_TYPE['UNDEFINED'];
+
+            if ($clockedOut) {
+                $type = ConfigCodes::$LAST_ACTIVITY_TYPE['CLOCKED_OUT'];
+            } else if ($clockedIn) {
+                $type = ConfigCodes::$LAST_ACTIVITY_TYPE['CLOCKED_IN'];
+            }
+
+            /* Last activity time*/
+            $time = '';
+            if ($type == ConfigCodes::$LAST_ACTIVITY_TYPE['CLOCKED_IN']) {
+                $time = $latestTimeSheetRecord->clockInDate . ' at ' . $latestTimeSheetRecord->clockInTime;
+            } else if ($type == ConfigCodes::$LAST_ACTIVITY_TYPE['CLOCKED_OUT']) {
+                $time = $latestTimeSheetRecord->clockOutDate . ' at ' . $latestTimeSheetRecord->clockOutTime;
+
+            }
+            return ['type' => $type, 'time' => $time];
+        } else {
+            return ['type'=>ConfigCodes::$LAST_ACTIVITY_TYPE['UNDEFINED'],'time'=>''];
         }
-
-        /* Last activity time*/
-        $time = '';
-        if ($type == ConfigCodes::$LAST_ACTIVITY_TYPE['CLOCKED_IN']) {
-            $time = $latestTimeSheetRecord->clockInDate . ' at ' . $latestTimeSheetRecord->clockInTime;
-        } else if ($type == ConfigCodes::$LAST_ACTIVITY_TYPE['CLOCKED_OUT']) {
-            $time = $latestTimeSheetRecord->clockOutDate . ' at ' . $latestTimeSheetRecord->clockOutTime;
-
-        }
-
-        return ['type' => $type, 'time' => $time];
 
     }
 
