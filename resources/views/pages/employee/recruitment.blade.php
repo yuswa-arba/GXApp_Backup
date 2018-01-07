@@ -169,7 +169,7 @@
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>Phone Number</label>
-                                                <input type="number" class="form-control" name="phoneNo"
+                                                <input type="number" min="0" class="form-control" name="phoneNo"
                                                        value="{{old('phoneNo')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
@@ -206,7 +206,7 @@
                                             </div>
                                             <div class="form-group form-group-default">
                                                 <label>Number of Children</label>
-                                                <input type="number" class="form-control" name="totalChildren"
+                                                <input type="number" min="0" class="form-control" name="totalChildren"
                                                        value="{{old('totalChildren')}}">
                                             </div>
 
@@ -231,7 +231,7 @@
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>Father's Phone Number</label>
-                                                <input type="number" class="form-control" name="fatherPhoneNo"
+                                                <input type="number" min="0" class="form-control" name="fatherPhoneNo"
                                                        value="{{old('fatherPhoneNo')}}" required>
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
@@ -266,7 +266,7 @@
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>Mother's Phone Number</label>
-                                                <input type="number" class="form-control" name="motherPhoneNo"
+                                                <input type="number" min="0" class="form-control" name="motherPhoneNo"
                                                        value="{{old('motherPhoneNo')}}" required>
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
@@ -286,7 +286,7 @@
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default">
                                                 <label>Number of Siblings</label>
-                                                <input type="number" class="form-control" name="siblingPhoneNo"
+                                                <input type="number" min="0" class="form-control" name="siblingPhoneNo"
                                                        value="{{old('siblingPhoneNo')}}">
                                             </div>
                                             <div class="form-group form-group-default">
@@ -306,7 +306,7 @@
                                             </div>
                                             <div class="form-group form-group-default">
                                                 <label>Sibling's Phone Number</label>
-                                                <input type="number" class="form-control" name="siblingPhoneNo"
+                                                <input type="number" min="0" class="form-control" name="siblingPhoneNo"
                                                        value="{{old('siblingPhoneNo')}}">
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2">
@@ -331,7 +331,7 @@
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default required">
                                                 <label>ID Card Number</label>
-                                                <input type="text" class="form-control" name="idCardNumber"
+                                                <input type="number" min="0" maxlength="16" class="form-control" name="idCardNumber"
                                                        value="{{old('idCardNumber')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
@@ -385,7 +385,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-default required">
                                                         <label>Phone Number</label>
-                                                        <input type="number" class="form-control"
+                                                        <input type="number" min="0" class="form-control"
                                                                name="emergencyPhoneNo"
                                                                value="{{old('emergencyPhoneNo')}}" required>
                                                     </div>
@@ -393,7 +393,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-default ">
                                                         <label>Alt. Phone Number</label>
-                                                        <input type="number" class="form-control"
+                                                        <input type="number" min="0" class="form-control"
                                                                name="emergencyAltPhoneNo"
                                                                value="{{old('emergencyAltPhoneNo')}}">
                                                     </div>
@@ -427,7 +427,7 @@
                                             </div>
                                             <div class="form-group form-group-default ">
                                                 <label>Bank Account Number</label>
-                                                <input type="number" class="form-control" name="bankAccNo"
+                                                <input type="number" min="0" class="form-control" name="bankAccNo"
                                                        value="{{old('bankAccNo')}}">
                                             </div>
                                             <div class="form-group form-group-default ">
@@ -456,7 +456,7 @@
                                             </div>
                                             <div class="form-group form-group-default ">
                                                 <label>Company Phone Number</label>
-                                                <input type="number" class="form-control" name="prevCompanyPhoneNo"
+                                                <input type="number" min="0" class="form-control" name="prevCompanyPhoneNo"
                                                        value="{{old('prevCompanyPhoneNo')}}">
                                             </div>
                                             <div class="row">

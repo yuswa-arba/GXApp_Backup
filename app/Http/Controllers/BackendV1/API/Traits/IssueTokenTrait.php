@@ -43,16 +43,7 @@ trait IssueTokenTrait
 
         $guzzle = new Client();
 
-//        $response = $guzzle->post(URL::to('/').'/oauth/token', [
-//            'form_params' => [
-//                'grant_type' => $grantType,
-//                'client_id' => $this->client->id,
-//                'client_secret' => $this->client->secret,
-//                'scope' => '',
-//            ],
-//        ]);
-
-        $response = $guzzle->post('http://localhost:8080'.'/oauth/token', [
+        $response = $guzzle->post(URL::to('/').'/oauth/token', [
             'form_params' => [
                 'grant_type' => $grantType,
                 'client_id' => $this->client->id,
@@ -60,8 +51,6 @@ trait IssueTokenTrait
                 'scope' => '',
             ],
         ]);
-
-
 
         return json_decode((string) $response->getBody(), true);
 

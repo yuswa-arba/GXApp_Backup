@@ -61,9 +61,6 @@ class AttendanceLogic extends AttendanceUseCase
             $response = array();
             if ($insert) {
 
-                /*Trigger event to update dashboard*/
-                broadcast(new EmployeeClocked($insert->id,'in'))->toOthers();
-
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                 $response['message'] = 'Success';
@@ -73,7 +70,6 @@ class AttendanceLogic extends AttendanceUseCase
                 $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
                 $response['message'] = 'Unknown server error';
             }
-
 
             return response()->json($response, 200);
         }
@@ -117,9 +113,6 @@ class AttendanceLogic extends AttendanceUseCase
 
             $response = array();
             if ($insert) {
-
-                /*Trigger event to update dashboard*/
-                broadcast(new EmployeeClocked($insert->id,'out'))->toOthers();
 
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
