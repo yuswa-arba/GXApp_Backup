@@ -1,6 +1,6 @@
 {
     "/js/client/attendance/setting.js": "/js/client/attendance/setting.js?id=8ae098dfc0c88110ec02",
-    "/js/client/employee/list.js": "/js/client/employee/list.js?id=823b91b9c68ec0d5c815",
+    "/js/client/employee/list.js": "/js/client/employee/list.js?id=2a18aaa17f2446aceb19",
     "/js/client/attendance/slot.js": "/js/client/attendance/slot.js?id=ec35b8a82dbaa9705874",
     "/js/client/attendance/timesheet.js": "/js/client/attendance/timesheet.js?id=ae9aa7e1478cdd9f2f81",
     "/js/client/attendance/dashboard.js": "/js/client/attendance/dashboard.js?id=1c7a40dc2cb7ca78affc",
@@ -48,6 +48,6 @@
     "/plugins/js/bootstrap-timepicker.min.js": "/plugins/js/bootstrap-timepicker.min.js?id=fc69c5083b8b23da8d5c",
     "/plugins/js/jquery.sieve.min.js": "/plugins/js/jquery.sieve.min.js?id=b41d7126dd6a8b5d851d",
     "/plugins/js/palette.js": "/plugins/js/palette.js?id=cd7be5e269d637ded1c7",
-    "/core/css/core-theme.css": "/core/css/core-theme.css?id=040970228ff4cec22f20",
+    "/core/css/core-theme.css": "/core/css/core-theme.css?id=5aee7bd4572841c4f83a",
     "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537"
 }

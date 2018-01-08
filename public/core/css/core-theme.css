@@ -3255,6 +3255,9 @@ hr.dotted {
 .fs-16 {
   font-size: 16px !important;
 }
+.fs-18 {
+  font-size: 18px !important;
+}
 /* Line-heights
 ------------------------------------
 */
@@ -9782,10 +9785,11 @@ input.list-view-search {
   border-radius: 50%;
   overflow: hidden;
   margin-right: 10px;
+  margin-top:3px;
 }
 .social-card.share .card-header .user-pic > img {
-  width: 38px;
-  height: 38px;
+  width: 42px;
+  height: 42px;
 }
 .social-card.share .card-header h5 {
   font-weight: bold;
@@ -9800,7 +9804,7 @@ input.list-view-search {
   font-size: 12px;
   margin: 0;
   font-family: arial;
-  opacity: .6;
+  /*opacity: .6;*/
 }
 .social-card.share .card-description {
   padding: 12px 16px 11px;

@@ -26803,27 +26803,38 @@ var render = function() {
                         attrs: {
                           alt: "None",
                           src: "/images/employee/" + employee.employeePhoto,
-                          width: "33",
-                          height: "33"
+                          width: "38",
+                          height: "38"
                         }
                       })
                     : _c("img", {
                         attrs: {
                           alt: "None",
                           src: "/core/img/profiles/avatar_small2x.jpg",
-                          width: "33",
-                          height: "33"
+                          width: "38",
+                          height: "38"
                         }
                       })
                 ]),
                 _vm._v(" "),
-                _c("h5", [_vm._v(_vm._s(employee.givenName))]),
-                _vm._v(" "),
-                _c("p", { staticClass: "hide" }, [
-                  _vm._v(_vm._s(employee.surname))
+                _c("h5", { staticClass: "fs-18" }, [
+                  _vm._v(_vm._s(employee.givenName))
                 ]),
                 _vm._v(" "),
-                _c("h6", [_vm._v(_vm._s(employee.jobPosition))])
+                _c(
+                  "h6",
+                  { staticClass: "fs-14", staticStyle: { opacity: ".7" } },
+                  [_vm._v(_vm._s(employee.surname))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h6",
+                  {
+                    staticClass: "text-primary",
+                    staticStyle: { "margin-top": "3px" }
+                  },
+                  [_vm._v(_vm._s(employee.jobPosition))]
+                )
               ])
             ]
           )

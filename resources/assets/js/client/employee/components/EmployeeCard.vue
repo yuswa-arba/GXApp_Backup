@@ -12,17 +12,17 @@
                         <img v-if="employee.employeePhoto"
                              alt="None"
                              :src="`/images/employee/${employee.employeePhoto}`"
-                             width="33" height="33"/>
+                             width="38" height="38"/>
 
                         <img v-else
                              alt="None"
                              src="/core/img/profiles/avatar_small2x.jpg"
-                             width="33" height="33"
+                             width="38" height="38"
                         />
                     </div>
-                    <h5>{{employee.givenName}}</h5>
-                    <p class="hide">{{employee.surname}}</p>
-                    <h6>{{employee.jobPosition}}</h6>
+                    <h5 class="fs-18">{{employee.givenName}}</h5>
+                    <h6 class="fs-14" style="opacity: .7">{{employee.surname}}</h6>
+                    <h6 class="text-primary" style="margin-top: 3px">{{employee.jobPosition}}</h6>
                 </div>
             </div>
             <!-- END ITEM -->

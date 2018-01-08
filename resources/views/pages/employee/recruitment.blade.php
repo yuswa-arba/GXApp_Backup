@@ -174,7 +174,7 @@
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>E-mail Address<span
-                                                            class="help fs-10">(Company e-mail address)</span></label>
+                                                            class="help fs-10">(Active e-mail address)</span></label>
                                                 <input type="email" class="form-control" name="email"
                                                        value="{{old('email')}}" required>
                                             </div>
@@ -347,7 +347,7 @@
                                         <p class="form-title">Contact Photo</p>
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default required">
-                                                <label>Contact Photo</label>
+                                                <label>Contact Photo <span class="help fs-10">(Best Display : 158px x 158px)</span></label>
                                                 <input type="file" name="employeePhoto" id="employeePhoto"
                                                        value="" required/>
                                             </div>
