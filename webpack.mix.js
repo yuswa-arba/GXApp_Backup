@@ -162,7 +162,7 @@ mix.js('resources/assets/js/client/attendance/timesheet','public/js/client/atten
 mix.js('resources/assets/js/client/attendance/dashboard','public/js/client/attendance');
 mix.js('resources/assets/js/client/doorAccess/main','public/js/client/doorAccess');
 mix.js('resources/assets/js/client/developer/face','public/js/client/developer');
-
+mix.js('resources/assets/js/client/developer/test','public/js/client/developer');
 /*
  |--------------------------------------------------------------------------
  | Application JS

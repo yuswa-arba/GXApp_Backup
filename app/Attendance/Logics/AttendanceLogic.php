@@ -21,6 +21,7 @@ use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class AttendanceLogic extends AttendanceUseCase
 {
@@ -60,6 +61,8 @@ class AttendanceLogic extends AttendanceUseCase
 
             $response = array();
             if ($insert) {
+
+                broadcast(new EmployeeClocked($insert->id,'in'));
 
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
@@ -113,6 +116,8 @@ class AttendanceLogic extends AttendanceUseCase
 
             $response = array();
             if ($insert) {
+
+              broadcast(new EmployeeClocked($insert->id,'out'));
 
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];

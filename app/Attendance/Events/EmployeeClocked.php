@@ -23,18 +23,11 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
  */
 class EmployeeClocked implements ShouldBroadcast
 {
-
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $tries = 5;
-    public $broadcastQueue = 'attendance';
-
-
-    /**
-     * @var
-     */
     public $clockedData;
     public $clockType;
+    public $broadcastQueue = 'broadcaster';
 
     public function __construct($clockedId, $clockType)
     {
@@ -42,13 +35,11 @@ class EmployeeClocked implements ShouldBroadcast
 
         $timesheet = AttendanceTimesheet::find($clockedId);
         if ($clockType == 'in') {
-            $this->clockedData = fractal($timesheet,new LiveClockInFeedTransformer());
+            $this->clockedData = fractal($timesheet, new LiveClockInFeedTransformer());
         } elseif ($clockType == 'out') {
-            $this->clockedData = fractal($timesheet,new LiveClockOutFeedTransformer());
+            $this->clockedData = fractal($timesheet, new LiveClockOutFeedTransformer());
         }
-
     }
-
 
     /**
      * Get the channels the event should broadcast on.
@@ -64,5 +55,10 @@ class EmployeeClocked implements ShouldBroadcast
 //    {
 //        return 'employee.clocked';
 //    }
+
+    public function broadcastWhen()
+    {
+        return $this->clockedData != null;
+    }
 
 }

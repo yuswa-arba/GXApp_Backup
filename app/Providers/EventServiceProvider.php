@@ -29,6 +29,8 @@ class EventServiceProvider extends ServiceProvider
         'Illuminate\Mail\Events\MessageSent' => [
             'App\Mail\Listeners\SentMessageListener',
         ]
+
+
     ];
 
     /**

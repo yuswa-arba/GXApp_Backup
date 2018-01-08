@@ -29,5 +29,9 @@
             <a href="">Reports</a>
             <span class="icon-thumbnail">r</span>
         </li>
+        <li class="">
+            <a href="{{route('developer.test')}}">Test</a>
+            <span class="icon-thumbnail">t</span>
+        </li>
     </ul>
 </li>

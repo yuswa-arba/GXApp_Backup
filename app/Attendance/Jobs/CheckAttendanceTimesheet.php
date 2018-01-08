@@ -54,7 +54,7 @@ class CheckAttendanceTimesheet implements ShouldQueue
         $shift = Shifts::find($timesheet->shiftId);
         $shiftWorkStartAt = Carbon::createFromFormat('H:i', $shift->workStartAt);
         $shiftWorkEndAt = Carbon::createFromFormat('H:i', $shift->workEndAt);
-        $currTime =Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
+        $currTime = Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
 
         /* Clock In Time in Carbon*/
         if ($timesheet->clockInTime != null) {
@@ -149,8 +149,8 @@ class CheckAttendanceTimesheet implements ShouldQueue
     {
 
         $shift = Shifts::find($timesheet->shiftId);
-        $shiftWorkEndAt = Carbon::createFromFormat('H:i',$shift->workEndAt);
-        $currTime =Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
+        $shiftWorkEndAt = Carbon::createFromFormat('H:i', $shift->workEndAt);
+        $currTime = Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
 
         /* If work time has ended */
         if ($currTime->gt($shiftWorkEndAt)) {
@@ -158,8 +158,8 @@ class CheckAttendanceTimesheet implements ShouldQueue
                 $timesheet->attendanceApproveId != 2 && // Manager
                 $timesheet->attendanceApproveId != 98   // Disapproved
             ) {
-                $timesheet->attendanceApproveId = 99 ; // Need Approval
-                $timesheet->approvedBy = '' ; // Need Approval
+                $timesheet->attendanceApproveId = 99; // Need Approval
+                $timesheet->approvedBy = ''; // Need Approval
 
             }
         }
