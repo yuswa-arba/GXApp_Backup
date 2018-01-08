@@ -17,6 +17,7 @@ use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Requests\Employee\EditMasterEmployeeRequest;
 use App\Http\Requests\Employee\EmploymentRequest;
 use App\Http\Requests\Employee\MasterEmployeeRequest;
+use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
@@ -24,6 +25,9 @@ use Illuminate\Support\Facades\Hash;
 
 class AjaxController extends Controller
 {
+
+    use GlobalUtils;
+
     public function masterEmployeeDetail($id)
     {
         if ($id != null && $id != '') {
@@ -70,7 +74,34 @@ class AjaxController extends Controller
 
         if ($employee) {
 
-            $employee->update($request->all());
+            $requestData = $request->all();
+
+            /*Handle image uploads*/
+            if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
+
+                /*Remove previous image*/
+
+                unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto);
+
+                /*Save new image*/
+                $filename = $this->getImageName($request->idCardPhoto, $request->nickName);
+                $request->idCardPhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
+                $requestData['idCardPhoto'] = $filename; //rename
+            }
+
+            /*Handle image uploads*/
+            if ($request->hasFile('employeePhoto') && $request->file('employeePhoto')->isValid()) {
+
+                /*Remove previous image*/
+                unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto);
+
+                /*Save new image*/
+                $filename = $this->getImageName($request->employeePhoto, $request->nickName);
+                $request->employeePhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
+                $requestData['employeePhoto'] = $filename; // rename
+            }
+
+            $employee->update($requestData);
 
             /* Return success response */
             $response['isFailed'] = false;

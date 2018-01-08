@@ -51,7 +51,6 @@ class Recruitment extends UseCase
 
     private function submitToMasterEmployee($request)
     {
-
         /*Add unique ID param*/
         $request->request->add(['id' => $this->generateUUID()]);
         $request->request->add(['employeeNo' => str_random(6)]);
@@ -60,6 +59,8 @@ class Recruitment extends UseCase
 
         /*Handle image uploads*/
         if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
+
+            /*Save new image*/
             $filename = $this->getImageName($request->idCardPhoto, $request->nickName);
             $request->idCardPhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
             $requestData['idCardPhoto'] = $filename; //rename
@@ -67,6 +68,8 @@ class Recruitment extends UseCase
 
         /*Handle image uploads*/
         if ($request->hasFile('employeePhoto') && $request->file('employeePhoto')->isValid()) {
+
+            /*Save new image*/
             $filename = $this->getImageName($request->employeePhoto, $request->nickName);
             $request->employeePhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
             $requestData['employeePhoto'] = $filename; // rename

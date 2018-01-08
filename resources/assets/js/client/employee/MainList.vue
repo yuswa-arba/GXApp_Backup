@@ -79,6 +79,8 @@
 <script type="text/javascript">
     import {get, post} from '../helpers/api'
     import {api_path} from '../helpers/const'
+    import {objectToFormData} from '../helpers/utils'
+
     export default{
         created(){
             let self = this;
@@ -165,7 +167,7 @@
             },
             saveMaster(form){
                 let self = this;
-                post(api_path + 'employee/edit/master', form)
+                post(api_path + 'employee/edit/master', objectToFormData(form))
                     .then((res) => {
                         if (!res.data.isFailed) {
 

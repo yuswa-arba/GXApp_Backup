@@ -38,10 +38,14 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-lg-4">
-                            <div style="">
-                                <img :src="`/images/employee/${form.employeePhoto}`"
-                                     alt="No Image" class="img-responsive" style="width:100%; height:auto;">
-                            </div>
+                            <!--<div style="">-->
+                                <!--<img :src="`/images/employee/${form.employeePhoto}`"-->
+                                     <!--alt="No Image" class="img-responsive" style="width:100%; height:auto;">-->
+                            <!--</div>-->
+
+                            <input type="file" name="employeePhoto" id="editEmployeePhoto"
+                                   @change="insertEmployeePhotoToForm($event)"
+                                   value="" required/>
 
                         </div>
                         <div class="clearfix"></div>
@@ -124,10 +128,17 @@
                     <div class="row">
                         <div class="col-lg-4 employee-details">
 
-                            <div style="">
-                                <img :src="`/images/employee/${form.idCardPhoto}`"
-                                     alt="No Image" class="img-responsive" style="width:100%; height:auto;">
-                            </div>
+                            <!--<div style="">-->
+                                <!--<img :src="`/images/employee/${form.idCardPhoto}`"-->
+                                     <!--alt="No Image" class="img-responsive" style="width:100%; height:auto;">-->
+                            <!--</div>-->
+
+                            <input id="editIdCardPhoto"
+                                   type="file"
+                                   name="idCardPhoto"
+                                   @change="insertIDCardPhotoToForm($event)"
+                                   accept="image/*"
+                                   required/>
 
                         </div>
                         <div class="clearfix"></div>
@@ -443,6 +454,14 @@
                 let self = this
                 delete self.form.formComponents // remove form components during submit
                 self.$bus.$emit('save:master_detail',this.form)
+            },
+            insertEmployeePhotoToForm(e){
+                this.form.employeePhoto = e.target.files[0]
+                console.log(e.target.files[0])
+            },
+            insertIDCardPhotoToForm(e){
+                this.form.idCardPhoto = e.target.files[0]
+                console.log(e.target.files[0])
             }
         }
     }

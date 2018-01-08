@@ -2465,6 +2465,7 @@ module.exports = {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_utils__ = __webpack_require__("./resources/assets/js/client/helpers/utils.js");
 //
 //
 //
@@ -2543,6 +2544,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
+
 
 
 
@@ -2631,7 +2634,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         saveMaster: function saveMaster(form) {
             var self = this;
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master', form).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/master', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["b" /* objectToFormData */])(form)).then(function (res) {
                 if (!res.data.isFailed) {
 
                     // remove errors alert
@@ -4625,6 +4628,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4660,6 +4674,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
             delete self.form.formComponents; // remove form components during submit
             self.$bus.$emit('save:master_detail', this.form);
+        },
+        insertEmployeePhotoToForm: function insertEmployeePhotoToForm(e) {
+            this.form.employeePhoto = e.target.files[0];
+            console.log(e.target.files[0]);
+        },
+        insertIDCardPhotoToForm: function insertIDCardPhotoToForm(e) {
+            this.form.idCardPhoto = e.target.files[0];
+            console.log(e.target.files[0]);
         }
     }
 });
@@ -24834,16 +24856,20 @@ var render = function() {
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4" }, [
-              _c("div", {}, [
-                _c("img", {
-                  staticClass: "img-responsive",
-                  staticStyle: { width: "100%", height: "auto" },
-                  attrs: {
-                    src: "/images/employee/" + _vm.form.employeePhoto,
-                    alt: "No Image"
+              _c("input", {
+                attrs: {
+                  type: "file",
+                  name: "employeePhoto",
+                  id: "editEmployeePhoto",
+                  value: "",
+                  required: ""
+                },
+                on: {
+                  change: function($event) {
+                    _vm.insertEmployeePhotoToForm($event)
                   }
-                })
-              ])
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "clearfix" }),
@@ -25087,16 +25113,20 @@ var render = function() {
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
-              _c("div", {}, [
-                _c("img", {
-                  staticClass: "img-responsive",
-                  staticStyle: { width: "100%", height: "auto" },
-                  attrs: {
-                    src: "/images/employee/" + _vm.form.idCardPhoto,
-                    alt: "No Image"
+              _c("input", {
+                attrs: {
+                  id: "editIdCardPhoto",
+                  type: "file",
+                  name: "idCardPhoto",
+                  accept: "image/*",
+                  required: ""
+                },
+                on: {
+                  change: function($event) {
+                    _vm.insertIDCardPhotoToForm($event)
                   }
-                })
-              ])
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "clearfix" }),
