@@ -20,6 +20,12 @@ $(document).ready(function () {
         let serializeForm = personalInfoForm.serializeArray();
 
        _.forEach(serializeForm,function (value,key) {
+
+           /* Previous length of employment value fix */
+           if(value.name == 'prevLengthEmployment' && value.value!=''){
+               value.value = value.value + ' ' + $('input[name="lengthEmploymentTimeFormat"]:checked').val()
+           }
+
            formObject[value.name] = value.value
        })
 

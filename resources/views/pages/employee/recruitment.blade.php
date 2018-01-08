@@ -470,10 +470,17 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-default ">
                                                         <label>Length of Employment</label>
-                                                        <input type="text" class="form-control"
+                                                        <input type="radio" name="lengthEmploymentTimeFormat" value="years" checked> Year(s)
+                                                        <input type="radio" name="lengthEmploymentTimeFormat" value="months"> Month(s)
+                                                        <br>
+                                                        <input type="number" class="form-control"
+                                                               placeholder="1"
+                                                               min="0"
                                                                name="prevLengthEmployment"
                                                                value="{{old('prevLengthEmployment')}}">
+
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
