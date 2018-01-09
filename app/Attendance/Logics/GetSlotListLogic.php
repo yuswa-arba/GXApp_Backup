@@ -25,9 +25,9 @@ class GetSlotListLogic extends GetSlotDataUseCase
         }
 
         if ($getOnlyCurrentYear) {
-            $slots = Slots::whereYear('created_at', $this->currentYear())->orWhere('id', 1)->get();
+            $slots = Slots::whereYear('created_at', $this->currentYear())->orWhere('id', 1)->where('isDeleted','!=',1)->get();
         } else {
-            $slots = Slots::orderBy('created_at', 'desc')->get();
+            $slots = Slots::orderBy('created_at', 'desc')->where('isDeleted','!=',1)->get();
         }
 
         return fractal($slots, new SlotListTransformer())->respond(200);

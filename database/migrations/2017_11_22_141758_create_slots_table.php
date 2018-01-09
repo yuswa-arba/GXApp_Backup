@@ -18,7 +18,9 @@ class CreateSlotsTable extends Migration
             $table->string('name');
             $table->integer('positionOrder');
             $table->tinyInteger('allowMultipleAssign')->default(0);
-            $table->tinyInteger('slotMakerId');
+            $table->integer('slotMakerId');
+            $table->tinyInteger('isUsingMapping')->default(1);
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }

@@ -2295,6 +2295,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -2878,6 +2880,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/MiscTab.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue__);
+//
+//
 //
 //
 //
@@ -29849,6 +29853,8 @@ var render = function() {
                         "tbody",
                         _vm._l(_vm.shifts, function(shift) {
                           return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(shift.id))]),
+                            _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(shift.name))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(shift.workStartAt))]),
@@ -30110,6 +30116,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-master-lighter" }, [
       _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("ID")]),
+        _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Work Start")]),
@@ -30440,6 +30448,13 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
+            { staticClass: "tab-pane", attrs: { id: "tabKiosk" } },
+            [_c("kiosk-tab")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
             { staticClass: "tab-pane", attrs: { id: "tabDayOff" } },
             [_c("day-off-tab")],
             1
@@ -30463,13 +30478,6 @@ var render = function() {
             "div",
             { staticClass: "tab-pane", attrs: { id: "tabGeofence" } },
             [_c("geofence-tab")],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "tab-pane", attrs: { id: "tabKiosk" } },
-            [_c("kiosk-tab")],
             1
           ),
           _vm._v(" "),
@@ -30535,6 +30543,21 @@ var staticRenderFns = [
                 href: "#",
                 "data-toggle": "tab",
                 role: "tab",
+                "data-target": "#tabKiosk"
+              }
+            },
+            [_vm._v("Kiosk")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                "data-toggle": "tab",
+                role: "tab",
                 "data-target": "#tabDayOff"
               }
             },
@@ -30584,21 +30607,6 @@ var staticRenderFns = [
               }
             },
             [_vm._v("Geofence")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tab",
-                role: "tab",
-                "data-target": "#tabKiosk"
-              }
-            },
-            [_vm._v("Kiosk")]
           )
         ])
       ]

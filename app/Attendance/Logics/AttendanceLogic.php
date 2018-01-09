@@ -193,8 +193,8 @@ class AttendanceLogic extends AttendanceUseCase
                     $shiftId = $slotShiftSchedule->shiftId;
                 }
 
-                /* If slot is not using Mapping set to default shift */
-                if (!$slot->isUsingMapping) {
+                /* If slot is not using Mapping or is Deleted set to default shift */
+                if (!$slot->isUsingMapping || $slot->isDeleted) {
                     $shiftId = 1; // use default shift ID
                 }
 

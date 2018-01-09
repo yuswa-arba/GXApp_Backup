@@ -10,6 +10,7 @@ use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\SlotListTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Validator;
 
 class SlotController extends Controller
 {
@@ -47,6 +48,31 @@ class SlotController extends Controller
         ]);
 
         return AssignSlotLogic::remove($request);
+    }
+
+    public function delete(Request $request)
+    {
+        /* Validate */
+        $validator = Validator::make($request->all(),['slotId'=>'required']);
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Slot ID required';
+            return response()->json($response,200);
+        }
+
+        // is valid
+
+        $slot = Slots::find($request->slotId);
+
+        if($slot->update(['isDeleted'=>1])){
+            $response['isFailed'] = false;
+            $response['message'] = 'Slot has been deleted successfully';
+            return response()->json($response,200);
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Failed! Unable to delete slot';
+            return response()->json($response,200);
+        }
     }
 
     public function editShiftOption(Request $request)

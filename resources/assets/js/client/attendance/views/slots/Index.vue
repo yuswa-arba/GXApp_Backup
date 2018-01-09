@@ -118,7 +118,6 @@
                                 <td class="padding-10">
 
                                     <i class="fs-14 fa fa-calendar pointer" @click="viewSlotDetail(slot.id)"></i>
-
                                     &nbsp;
                                     <!--if its not general then show assign button-->
                                     <i v-if="slot.id!=1"
@@ -127,8 +126,17 @@
                                        @click="assignSlot(slot.id)"
                                        @dblclick.prevent=""></i>
 
+                                    &nbsp;
+                                    <!--if its not general then show delete button-->
+                                    <i v-if="slot.id!=1"
+                                       class="fs-14 fa fa-times text-danger pointer"
+                                       @click="deleteSlot(slot.id)"
+                                       @dblclick.prevent=""
+                                    ></i>
+
 
                                 </td>
+
                             </tr>
 
                             </tbody>
@@ -225,6 +233,11 @@
             },
             assignSlot(slotId){
                 this.$store.dispatch('slots/getDataOnAssignSlot', slotId)
+            },
+            deleteSlot(slotId){
+                if(confirm("Are you sure to delete this slot?")){
+                    this.$store.commit('slots/deleteSlot',slotId)
+                }
             },
             shiftMapping(){
                 this.$store.dispatch('slots/attempShiftMapping')

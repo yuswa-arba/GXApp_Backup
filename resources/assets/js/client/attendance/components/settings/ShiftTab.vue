@@ -9,6 +9,7 @@
                                 <table class="table table-striped table-hover settingDT">
                                     <thead class="bg-master-lighter">
                                     <tr>
+                                        <th class="text-black">ID</th>
                                         <th class="text-black">Name</th>
                                         <th class="text-black">Work Start</th>
                                         <th class="text-black">Work End</th>
@@ -19,6 +20,7 @@
                                     </thead>
                                     <tbody>
                                     <tr v-for="shift in shifts">
+                                        <td>{{shift.id}}</td>
                                         <td>{{shift.name}}</td>
                                         <td>{{shift.workStartAt}}</td>
                                         <td>{{shift.workEndAt}}</td>

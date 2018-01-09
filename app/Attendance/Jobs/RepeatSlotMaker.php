@@ -3,6 +3,7 @@ namespace App\Attendance\Jobs;
 
 use App\Attendance\Models\AttendanceSchedule;
 use App\Attendance\Models\Shifts;
+use App\Attendance\Models\Slots;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,7 +34,9 @@ class RepeatSlotMaker implements ShouldQueue
      */
     public function handle()
     {
-        //TODO  REPEAT SLOT MAKER LOGIC
+       $slots = Slots::where('id','!=',1)->get(); //all slot except General
     }
+
+
 
 }

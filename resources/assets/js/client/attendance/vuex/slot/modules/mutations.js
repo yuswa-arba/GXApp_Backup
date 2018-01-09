@@ -559,5 +559,46 @@ export default{
                     type: 'danger'
                 }).show();
             })
+    },
+    deleteSlot(state, slotId){
+        post(api_path + 'attendance/slot/delete', {slotId: slotId})
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    /* Show success notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    // remove from array
+                    let slotIndex = _.findIndex(state.slots,{id:slotId})
+                    state.slots.splice(slotIndex,1)
+
+
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
     }
+
 }

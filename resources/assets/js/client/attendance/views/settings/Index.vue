@@ -12,6 +12,9 @@
                         <a href="#" data-toggle="tab" role="tab" data-target="#tabSlots">Slots</a>
                     </li>
                     <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#tabKiosk">Kiosk</a>
+                    </li>
+                    <li class="nav-item">
                         <a href="#" data-toggle="tab" role="tab" data-target="#tabDayOff">Dayoff</a>
                     </li>
                     <li class="nav-item">
@@ -23,9 +26,7 @@
                     <li class="nav-item">
                         <a href="#" data-toggle="tab" role="tab" data-target="#tabGeofence">Geofence</a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#tabKiosk">Kiosk</a>
-                    </li>
+
 
                 </ul>
                 <div class="tab-content">
@@ -34,6 +35,9 @@
                     </div>
                     <div class="tab-pane " id="tabSlots">
                         <slot-tab></slot-tab>
+                    </div>
+                    <div class="tab-pane" id="tabKiosk">
+                        <kiosk-tab></kiosk-tab>
                     </div>
                     <div class="tab-pane" id="tabDayOff">
                         <day-off-tab></day-off-tab>
@@ -47,9 +51,7 @@
                     <div class="tab-pane" id="tabGeofence">
                         <geofence-tab></geofence-tab>
                     </div>
-                    <div class="tab-pane" id="tabKiosk">
-                        <kiosk-tab></kiosk-tab>
-                    </div>
+
                     <div class="tab-pane" id="tabMisc">
                         <misc-tab></misc-tab>
                     </div>

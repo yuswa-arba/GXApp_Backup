@@ -3333,6 +3333,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3413,6 +3421,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         assignSlot: function assignSlot(slotId) {
             this.$store.dispatch('slots/getDataOnAssignSlot', slotId);
+        },
+        deleteSlot: function deleteSlot(slotId) {
+            if (confirm("Are you sure to delete this slot?")) {
+                this.$store.commit('slots/deleteSlot', slotId);
+            }
         },
         shiftMapping: function shiftMapping() {
             this.$store.dispatch('slots/attempShiftMapping');
@@ -23654,7 +23667,7 @@ var render = function() {
                             }
                           }),
                           _vm._v(
-                            "\n\n                                 \n                                "
+                            "\n                                 \n                                "
                           ),
                           _vm._v(" "),
                           slot.id != 1
@@ -23666,6 +23679,24 @@ var render = function() {
                                 on: {
                                   click: function($event) {
                                     _vm.assignSlot(slot.id)
+                                  },
+                                  dblclick: function($event) {
+                                    $event.preventDefault()
+                                  }
+                                }
+                              })
+                            : _vm._e(),
+                          _vm._v(
+                            "\n\n                                 \n                                "
+                          ),
+                          _vm._v(" "),
+                          slot.id != 1
+                            ? _c("i", {
+                                staticClass:
+                                  "fs-14 fa fa-times text-danger pointer",
+                                on: {
+                                  click: function($event) {
+                                    _vm.deleteSlot(slot.id)
                                   },
                                   dblclick: function($event) {
                                     $event.preventDefault()
@@ -40376,6 +40407,42 @@ module.exports = Component.exports
                 $('#calendar-shift-mapping').fullCalendar('updateEvent', calendarEvent); //add event
 
                 state.calendarShiftScheduleEventSource.splice(shiftEventIndex, 1, slotShiftData);
+            } else {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            /* Show error notification */
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    deleteSlot: function deleteSlot(state, slotId) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/delete', { slotId: slotId }).then(function (res) {
+            if (!res.data.isFailed) {
+                /* Show success notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                // remove from array
+                var slotIndex = _.findIndex(state.slots, { id: slotId });
+                state.slots.splice(slotIndex, 1);
             } else {
                 /* Show error notification */
                 $('.page-container').pgNotification({

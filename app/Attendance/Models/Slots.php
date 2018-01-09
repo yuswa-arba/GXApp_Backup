@@ -14,11 +14,13 @@ class Slots extends Model
         'allowMultipleAssign',
         'slotMakerId',
         'isUsingMapping',
+        'isDeleted'
     ];
 
     protected $casts = [
         'allowMultipleAssign' => 'boolean',
-        'isUsingMapping'=>'boolean'
+        'isUsingMapping'=>'boolean',
+        'isDeleted'=>'boolean'
     ];
 
     public function slotMaker()

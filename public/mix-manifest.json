@@ -1,7 +1,7 @@
 {
-    "/js/client/attendance/setting.js": "/js/client/attendance/setting.js?id=8ae098dfc0c88110ec02",
+    "/js/client/attendance/setting.js": "/js/client/attendance/setting.js?id=f8b457a22acd902480ae",
     "/js/client/employee/list.js": "/js/client/employee/list.js?id=2a18aaa17f2446aceb19",
-    "/js/client/attendance/slot.js": "/js/client/attendance/slot.js?id=ec35b8a82dbaa9705874",
+    "/js/client/attendance/slot.js": "/js/client/attendance/slot.js?id=a94e8596bc5c0536519d",
     "/js/client/attendance/timesheet.js": "/js/client/attendance/timesheet.js?id=ae9aa7e1478cdd9f2f81",
     "/js/client/attendance/dashboard.js": "/js/client/attendance/dashboard.js?id=1c7a40dc2cb7ca78affc",
     "/js/client/passport/main.js": "/js/client/passport/main.js?id=7e7df56bbb77547c825f",
@@ -48,6 +48,6 @@
     "/plugins/js/bootstrap-timepicker.min.js": "/plugins/js/bootstrap-timepicker.min.js?id=fc69c5083b8b23da8d5c",
     "/plugins/js/jquery.sieve.min.js": "/plugins/js/jquery.sieve.min.js?id=b41d7126dd6a8b5d851d",
     "/plugins/js/palette.js": "/plugins/js/palette.js?id=cd7be5e269d637ded1c7",
-    "/core/css/core-theme.css": "/core/css/core-theme.css?id=5aee7bd4572841c4f83a",
+    "/core/css/core-theme.css": "/core/css/core-theme.css?id=4b5f97c53e4f4a6ef02f",
     "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537"
 }
