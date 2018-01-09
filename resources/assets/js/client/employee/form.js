@@ -165,7 +165,6 @@ $(document).ready(function () {
         $('#item-employment').addClass('active')
         $('#tab-employment').addClass('active')
 
-
     }
 
     function goToPersonalInfoTab() {
