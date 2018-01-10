@@ -66,21 +66,21 @@
                                     <td>
                                         <span v-if="timesheet.detail.data[0] && !timesheet.editing">{{timesheet.detail.data[0].clockInTime}}</span>
                                         <input :name="'cInTime'+summary.employee.data.employeeNo+index"
-                                               class="form-control time-mask"
+                                               class="form-control text-center w-80"
                                                v-else-if="timesheet.editing && timesheet.detail.data[0] && timesheet.detail.data[0].clockInTime"
                                                :value="timesheet.detail.data[0].clockInTime"/>
                                         <input :name="'cInTime'+summary.employee.data.employeeNo+index"
-                                               class="form-control time-mask" v-else-if="timesheet.editing"/>
+                                               class="form-control text-center w-80" v-else-if="timesheet.editing"/>
                                         <span v-else="">-</span>
                                     </td>
                                     <td>
                                         <span v-if="timesheet.detail.data[0] && !timesheet.editing">{{timesheet.detail.data[0].clockOutTime}}</span>
                                         <input :name="'cOutTime'+summary.employee.data.employeeNo+index"
-                                               class="form-control time-mask"
+                                               class="form-control text-center w-80"
                                                v-else-if="timesheet.editing && timesheet.detail.data[0] && timesheet.detail.data[0].clockOutTime"
                                                :value="timesheet.detail.data[0].clockOutTime"/>
                                         <input :name="'cOutTime'+summary.employee.data.employeeNo+index"
-                                               class="form-control time-mask" v-else-if="timesheet.editing"/>
+                                               class="form-control text-center w-80" v-else-if="timesheet.editing"/>
                                         <span v-else="">-</span>
                                     </td>
                                     <td>
@@ -120,8 +120,15 @@
                                         </span>
                                         <i class="fa fa-pencil cursor" v-if="!timesheet.editing"
                                            @click="editTimesheet(index,summary.employee.data.employeeNo)"></i>
-                                        <span class="fs-12 text-danger cursor" v-else="timesheet.editing"
-                                              @click="doneEditTimesheet(index,summary.employee.data.employeeNo)">DONE</span>
+                                        <div v-else="timesheet.editing">
+                                             <span class="fs-12 text-danger cursor"
+                                                   v-if="timesheet.detail.data[0] && timesheet.detail.data[0].id"
+                                                   @click="doneEditTimesheet(index,summary.employee.data.employeeNo,timesheet.detail.data[0].id)">DONE</span>
+                                            <span class="fs-12 text-danger cursor"
+                                                  v-else=""
+                                                  @click="doneEditTimesheet(index,summary.employee.data.employeeNo,'')">DONE</span>
+                                        </div>
+
                                     </td>
                                 </tr>
                                 </tbody>
@@ -186,7 +193,7 @@
                     employeeNo: employeeNo
                 })
             },
-            doneEditTimesheet(index, employeeNo){
+            doneEditTimesheet(index, employeeNo,timesheetId){
 
                 let cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val()
                 let cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val()
@@ -219,15 +226,28 @@
                 }
 
                 if(cInValid && cOutValid){
-                    alert('Dispatch action!')
+
+                    if(timesheetId){
+                        this.$store.dispatch({
+                            type:'timesheet/saveEditTimesheet',
+                            index : index,
+                            employeeNo : employeeNo,
+                            clockInTime:cInTime,
+                            clockOutTime:cOutTime,
+                            timesheetId:timesheetId
+                        })
+                    } else {
+                        this.$store.dispatch({
+                            type:'timesheet/createNewTimesheet',
+                            index : index,
+                            employeeNo : employeeNo,
+                            clockInTime:cInTime,
+                            clockOutTime:cOutTime
+                        })
+                    }
+
                 }
 
-
-//                this.$store.dispatch({
-//                    type:'timesheet/saveEditTimesheet',
-//                    index : index,
-//                    employeeNo : employeeNo
-//                })
             }
         }
 

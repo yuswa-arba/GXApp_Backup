@@ -3298,6 +3298,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3339,7 +3346,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             employeeNo: employeeNo
         });
     },
-    doneEditTimesheet: function doneEditTimesheet(index, employeeNo) {
+    doneEditTimesheet: function doneEditTimesheet(index, employeeNo, timesheetId) {
 
         var cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val();
         var cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val();
@@ -3371,14 +3378,26 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
 
         if (cInValid && cOutValid) {
-            alert('Dispatch action!');
-        }
 
-        //                this.$store.dispatch({
-        //                    type:'timesheet/saveEditTimesheet',
-        //                    index : index,
-        //                    employeeNo : employeeNo
-        //                })
+            if (timesheetId) {
+                this.$store.dispatch({
+                    type: 'timesheet/saveEditTimesheet',
+                    index: index,
+                    employeeNo: employeeNo,
+                    clockInTime: cInTime,
+                    clockOutTime: cOutTime,
+                    timesheetId: timesheetId
+                });
+            } else {
+                this.$store.dispatch({
+                    type: 'timesheet/createNewTimesheet',
+                    index: index,
+                    employeeNo: employeeNo,
+                    clockInTime: cInTime,
+                    clockOutTime: cOutTime
+                });
+            }
+        }
     }
 }), _components$data$comp);
 
@@ -23191,7 +23210,8 @@ var render = function() {
                                     timesheet.detail.data[0] &&
                                     timesheet.detail.data[0].clockInTime
                                     ? _c("input", {
-                                        staticClass: "form-control time-mask",
+                                        staticClass:
+                                          "form-control text-center w-80",
                                         attrs: {
                                           name:
                                             "cInTime" +
@@ -23205,7 +23225,8 @@ var render = function() {
                                       })
                                     : timesheet.editing
                                       ? _c("input", {
-                                          staticClass: "form-control time-mask",
+                                          staticClass:
+                                            "form-control text-center w-80",
                                           attrs: {
                                             name:
                                               "cInTime" +
@@ -23229,7 +23250,8 @@ var render = function() {
                                     timesheet.detail.data[0] &&
                                     timesheet.detail.data[0].clockOutTime
                                     ? _c("input", {
-                                        staticClass: "form-control time-mask",
+                                        staticClass:
+                                          "form-control text-center w-80",
                                         attrs: {
                                           name:
                                             "cOutTime" +
@@ -23244,7 +23266,8 @@ var render = function() {
                                       })
                                     : timesheet.editing
                                       ? _c("input", {
-                                          staticClass: "form-control time-mask",
+                                          staticClass:
+                                            "form-control text-center w-80",
                                           attrs: {
                                             name:
                                               "cOutTime" +
@@ -23397,22 +23420,47 @@ var render = function() {
                                           }
                                         }
                                       })
-                                    : _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "fs-12 text-danger cursor",
-                                          on: {
-                                            click: function($event) {
-                                              _vm.doneEditTimesheet(
-                                                index,
-                                                summary.employee.data.employeeNo
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("DONE")]
-                                      )
+                                    : _c("div", [
+                                        timesheet.detail.data[0] &&
+                                        timesheet.detail.data[0].id
+                                          ? _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "fs-12 text-danger cursor",
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.doneEditTimesheet(
+                                                      index,
+                                                      summary.employee.data
+                                                        .employeeNo,
+                                                      timesheet.detail.data[0]
+                                                        .id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("DONE")]
+                                            )
+                                          : _c(
+                                              "span",
+                                              {
+                                                staticClass:
+                                                  "fs-12 text-danger cursor",
+                                                on: {
+                                                  click: function($event) {
+                                                    _vm.doneEditTimesheet(
+                                                      index,
+                                                      summary.employee.data
+                                                        .employeeNo,
+                                                      ""
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("DONE")]
+                                            )
+                                      ])
                                 ]
                               )
                             ])
@@ -39256,6 +39304,49 @@ module.exports = Component.exports
                 }
             });
         }
+    },
+    saveEditTimesheet: function saveEditTimesheet(_ref7, payload) {
+        var commit = _ref7.commit,
+            state = _ref7.state;
+
+
+        if (payload.employeeNo) {
+            _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
+                    var timesheetNewData = state.timesheetSummaryData[parentKey];
+                    timesheetNewData.timesheet[payload.index].editing = false;
+                }
+            });
+        }
+
+        if (payload.timesheetId) {
+            commit({
+                type: 'saveTimesheet',
+                timesheetId: payload.timesheetId,
+                clockInTime: payload.clockInTime,
+                clockOutTime: payload.clockOutTime
+            });
+        }
+    },
+    createNewTimesheet: function createNewTimesheet(_ref8, payload) {
+        var commit = _ref8.commit,
+            state = _ref8.state;
+
+
+        if (payload.employeeNo) {
+            _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
+                    var timesheetNewData = state.timesheetSummaryData[parentKey];
+                    timesheetNewData.timesheet[payload.index].editing = false;
+                }
+            });
+        }
+
+        commit({
+            type: 'createTimesheet',
+            clockInTime: payload.clockInTime,
+            clockOutTime: payload.clockOutTime
+        });
     }
 });
 
@@ -39554,7 +39645,9 @@ module.exports = Component.exports
                 type: 'danger'
             }).show();
         });
-    }
+    },
+    saveTimesheet: function saveTimesheet(state, payload) {},
+    createTimesheet: function createTimesheet(state, payload) {}
 });
 
 /***/ }),

@@ -61,6 +61,44 @@ export default{
             })
 
         }
+    },
+    saveEditTimesheet({commit,state},payload){
+
+        if (payload.employeeNo) {
+            _.forEach(state.timesheetSummaryData,function(value,parentKey){
+                if(value['employee']['data']['employeeNo'] == payload.employeeNo){
+                    let timesheetNewData  = state.timesheetSummaryData[parentKey]
+                    timesheetNewData.timesheet[payload.index].editing = false;
+                }
+            })
+        }
+
+        if(payload.timesheetId){
+            commit({
+                type:'saveTimesheet',
+                timesheetId : payload.timesheetId,
+                clockInTime : payload.clockInTime,
+                clockOutTime: payload.clockOutTime
+            });
+        }
+    },
+    createNewTimesheet({commit,state},payload){
+
+
+        if (payload.employeeNo) {
+            _.forEach(state.timesheetSummaryData,function(value,parentKey){
+                if(value['employee']['data']['employeeNo'] == payload.employeeNo){
+                    let timesheetNewData  = state.timesheetSummaryData[parentKey]
+                    timesheetNewData.timesheet[payload.index].editing = false;
+                }
+            })
+        }
+
+        commit({
+            type:'createTimesheet',
+            clockInTime : payload.clockInTime,
+            clockOutTime: payload.clockOutTime
+        });
     }
 
 }
