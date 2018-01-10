@@ -3346,7 +3346,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             employeeNo: employeeNo
         });
     },
-    doneEditTimesheet: function doneEditTimesheet(index, employeeNo, timesheetId) {
+    doneEditTimesheet: function doneEditTimesheet(index, employeeNo, timesheetId, date) {
 
         var cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val();
         var cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val();
@@ -3386,6 +3386,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     employeeNo: employeeNo,
                     clockInTime: cInTime,
                     clockOutTime: cOutTime,
+                    date: date,
                     timesheetId: timesheetId
                 });
             } else {
@@ -3394,7 +3395,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                     index: index,
                     employeeNo: employeeNo,
                     clockInTime: cInTime,
-                    clockOutTime: cOutTime
+                    clockOutTime: cOutTime,
+                    date: date
                 });
             }
         }
@@ -23435,7 +23437,8 @@ var render = function() {
                                                       summary.employee.data
                                                         .employeeNo,
                                                       timesheet.detail.data[0]
-                                                        .id
+                                                        .id,
+                                                      timesheet.date
                                                     )
                                                   }
                                                 }
@@ -23453,7 +23456,8 @@ var render = function() {
                                                       index,
                                                       summary.employee.data
                                                         .employeeNo,
-                                                      ""
+                                                      "",
+                                                      timesheet.date
                                                     )
                                                   }
                                                 }
@@ -39324,7 +39328,8 @@ module.exports = Component.exports
                 type: 'saveTimesheet',
                 timesheetId: payload.timesheetId,
                 clockInTime: payload.clockInTime,
-                clockOutTime: payload.clockOutTime
+                clockOutTime: payload.clockOutTime,
+                date: payload.date
             });
         }
     },
@@ -39345,7 +39350,8 @@ module.exports = Component.exports
         commit({
             type: 'createTimesheet',
             clockInTime: payload.clockInTime,
-            clockOutTime: payload.clockOutTime
+            clockOutTime: payload.clockOutTime,
+            date: payload.date
         });
     }
 });
@@ -39483,7 +39489,7 @@ module.exports = Component.exports
                 style: 'flip',
                 message: err.message,
                 position: 'top-right',
-                timeout: 0,
+                timeout: 3500,
                 type: 'danger'
             }).show();
         });
@@ -39504,7 +39510,7 @@ module.exports = Component.exports
                     style: 'flip',
                     message: res.data.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             }
@@ -39513,7 +39519,7 @@ module.exports = Component.exports
                 style: 'flip',
                 message: err.message,
                 position: 'top-right',
-                timeout: 0,
+                timeout: 3500,
                 type: 'danger'
             }).show();
         });
@@ -39534,7 +39540,7 @@ module.exports = Component.exports
                     style: 'flip',
                     message: res.data.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             }
@@ -39543,7 +39549,7 @@ module.exports = Component.exports
                 style: 'flip',
                 message: err.message,
                 position: 'top-right',
-                timeout: 0,
+                timeout: 3500,
                 type: 'danger'
             }).show();
         });
@@ -39557,7 +39563,7 @@ module.exports = Component.exports
                     style: 'flip',
                     message: 'Error occured! Data not found',
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             }
@@ -39566,7 +39572,7 @@ module.exports = Component.exports
                 style: 'flip',
                 message: err.message,
                 position: 'top-right',
-                timeout: 0,
+                timeout: 3500,
                 type: 'danger'
             }).show();
         });
@@ -39597,7 +39603,7 @@ module.exports = Component.exports
                     style: 'flip',
                     message: res.data.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             }
@@ -39606,7 +39612,7 @@ module.exports = Component.exports
                 style: 'flip',
                 message: err.message,
                 position: 'top-right',
-                timeout: 0,
+                timeout: 3500,
                 type: 'danger'
             }).show();
         });
@@ -39632,7 +39638,7 @@ module.exports = Component.exports
                     style: 'flip',
                     message: res.data.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             }
@@ -39641,12 +39647,60 @@ module.exports = Component.exports
                 style: 'flip',
                 message: err.message,
                 position: 'top-right',
-                timeout: 0,
+                timeout: 3500,
                 type: 'danger'
             }).show();
         });
     },
-    saveTimesheet: function saveTimesheet(state, payload) {},
+    saveTimesheet: function saveTimesheet(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/update', {
+            timesheetId: payload.timesheetId,
+            clockInTime: payload.clockInTime,
+            clockOutTime: payload.clockOutTime,
+            date: payload.date
+        }).then(function (res) {
+            console.log(JSON.stringify(res.data.timesheet.data));
+            if (!res.data.isFailed) {
+
+                /* Update timesheet summary data*/
+                _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                    _.forEach(value['timesheet'], function (value, medKey) {
+                        _.forEach(value['detail']['data'], function (value, key) {
+                            if (value['id'] == payload.timesheetId) {
+                                /* Update data */
+                                state.timesheetSummaryData[parentKey].timesheet[medKey].detail.data.splice(0, 1, res.data.timesheet.data);
+                            }
+                        });
+                    });
+                });
+
+                /* Success notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
     createTimesheet: function createTimesheet(state, payload) {}
 });
 

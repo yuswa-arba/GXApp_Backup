@@ -6,6 +6,8 @@ use App\Attendance\Logics\GetTimesheetListLogic;
 use App\Attendance\Logics\SummaryTimesheetLogic;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Transformers\TimesheetDetailTransformer;
+use App\Attendance\Transformers\TimesheetSummaryTransformer;
+use App\Attendance\Traits\AttendanceCheckerUtil;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 class TimesheetController extends Controller
 {
 
+    use AttendanceCheckerUtil;
     public function list(Request $request)
     {
         return GetTimesheetListLogic::getData($request);
@@ -100,6 +103,38 @@ class TimesheetController extends Controller
         }
 
         return SummaryTimesheetLogic::getData($request, $sumType);
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), ['timesheetId' => 'required']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Timesheet ID is required';
+            return response()->json($response, 200);
+        }
+
+        $timesheet = AttendanceTimesheet::find($request->timesheetId);
+        $timesheet->clockInTime = $request->clockInTime;
+        $timesheet->clockOutTime = $request->clockOutTime;
+        $timesheet->clockInDate = $request->date;
+        $timesheet->clockOutDate = $request->date;
+        $timesheet->attendanceApproveId = 3; // Edited By Manager
+
+        if ($timesheet->save()) {
+
+            $this->checkValidation($timesheet);
+            $response['isFailed'] = false;
+            $response['message'] = 'Timesheet has been updated successfully';
+            $response['timesheet'] = fractal($timesheet, new TimesheetSummaryTransformer());
+
+            return response()->json($response, 200);
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Timesheet not found';
+            return response()->json($response, 200);
+        }
     }
 
 }

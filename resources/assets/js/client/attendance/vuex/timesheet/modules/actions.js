@@ -78,7 +78,8 @@ export default{
                 type:'saveTimesheet',
                 timesheetId : payload.timesheetId,
                 clockInTime : payload.clockInTime,
-                clockOutTime: payload.clockOutTime
+                clockOutTime: payload.clockOutTime,
+                date:payload.date
             });
         }
     },
@@ -97,7 +98,8 @@ export default{
         commit({
             type:'createTimesheet',
             clockInTime : payload.clockInTime,
-            clockOutTime: payload.clockOutTime
+            clockOutTime: payload.clockOutTime,
+            date:payload.date
         });
     }
 

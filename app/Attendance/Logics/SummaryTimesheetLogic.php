@@ -34,7 +34,8 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
 
         $fromDate = Carbon::createFromFormat('d/m/Y H:i', $request->fromDate . '00:00')->toDateTimeString();
         $toDate = Carbon::createFromFormat('d/m/Y H:i', $request->toDate . '23:59')->toDateTimeString();
-        $dateRange = $this->generateDateRangeFromFormatToFormat($request->fromDate, $request->toDate, 'd/m/Y', 'Y-m-d');
+        // $dateRange = $this->generateDateRangeFromFormatToFormat($request->fromDate, $request->toDate, 'd/m/Y', 'Y-m-d');
+        $dateRange = $this->generateDateRange($request->fromDate, $request->toDate, 'd/m/Y');
 
         $response = array();
         $summary = array();
@@ -42,13 +43,16 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
             $response['employee'] = fractal($employee, new EmployeeSummaryTransformer());
             $i = 0;
             foreach ($dateRange as $date) {
-                $timesheet = AttendanceTimesheet::where('employeeId', $employee->id)->whereDate('created_at', $date)->get();
+                //$timesheet = AttendanceTimesheet::where('employeeId', $employee->id)->whereDate('created_at', $date)->get();
+                $timesheet = AttendanceTimesheet::where('employeeId', $employee->id)->where(function ($query) use ($date) {
+                    $query->where('clockInDate','=',$date)->orWhere('clockOutDate','=',$date);
+                })->get();
 
-                $datedmy = Carbon::createFromFormat('Y-m-d', $date)->format('d/m/Y');
+                $datedmy = Carbon::createFromFormat('d/m/Y', $date)->format('d/m/Y');
                 $response['timesheet'][$i]['date'] = $datedmy;
-                $response['timesheet'][$i]['day'] = Carbon::createFromFormat('Y-m-d', $date)->format('D');
+                $response['timesheet'][$i]['day'] = Carbon::createFromFormat('d/m/Y', $date)->format('D');
                 $response['timesheet'][$i]['detail'] = fractal($timesheet, new TimesheetSummaryTransformer());
-                $response['timesheet'][$i]['editing'] =false;
+                $response['timesheet'][$i]['editing'] = false;
 
                 $i++;
             }

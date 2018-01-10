@@ -123,10 +123,10 @@
                                         <div v-else="timesheet.editing">
                                              <span class="fs-12 text-danger cursor"
                                                    v-if="timesheet.detail.data[0] && timesheet.detail.data[0].id"
-                                                   @click="doneEditTimesheet(index,summary.employee.data.employeeNo,timesheet.detail.data[0].id)">DONE</span>
+                                                   @click="doneEditTimesheet(index,summary.employee.data.employeeNo,timesheet.detail.data[0].id,timesheet.date)">DONE</span>
                                             <span class="fs-12 text-danger cursor"
                                                   v-else=""
-                                                  @click="doneEditTimesheet(index,summary.employee.data.employeeNo,'')">DONE</span>
+                                                  @click="doneEditTimesheet(index,summary.employee.data.employeeNo,'',timesheet.date)">DONE</span>
                                         </div>
 
                                     </td>
@@ -193,7 +193,7 @@
                     employeeNo: employeeNo
                 })
             },
-            doneEditTimesheet(index, employeeNo,timesheetId){
+            doneEditTimesheet(index, employeeNo,timesheetId,date){
 
                 let cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val()
                 let cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val()
@@ -234,6 +234,7 @@
                             employeeNo : employeeNo,
                             clockInTime:cInTime,
                             clockOutTime:cOutTime,
+                            date:date,
                             timesheetId:timesheetId
                         })
                     } else {
@@ -242,7 +243,8 @@
                             index : index,
                             employeeNo : employeeNo,
                             clockInTime:cInTime,
-                            clockOutTime:cOutTime
+                            clockOutTime:cOutTime,
+                            date:date
                         })
                     }
 

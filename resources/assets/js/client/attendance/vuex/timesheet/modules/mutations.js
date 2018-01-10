@@ -74,7 +74,7 @@ export default{
                     style: 'flip',
                     message: err.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             })
@@ -97,7 +97,7 @@ export default{
                         style: 'flip',
                         message: res.data.message,
                         position: 'top-right',
-                        timeout: 0,
+                        timeout: 3500,
                         type: 'danger'
                     }).show();
                 }
@@ -107,7 +107,7 @@ export default{
                     style: 'flip',
                     message: err.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             })
@@ -130,7 +130,7 @@ export default{
                         style: 'flip',
                         message: res.data.message,
                         position: 'top-right',
-                        timeout: 0,
+                        timeout: 3500,
                         type: 'danger'
                     }).show();
                 }
@@ -140,7 +140,7 @@ export default{
                     style: 'flip',
                     message: err.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             })
@@ -155,7 +155,7 @@ export default{
                         style: 'flip',
                         message: 'Error occured! Data not found',
                         position: 'top-right',
-                        timeout: 0,
+                        timeout: 3500,
                         type: 'danger'
                     }).show();
                 }
@@ -166,7 +166,7 @@ export default{
                     style: 'flip',
                     message: err.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             })
@@ -180,7 +180,7 @@ export default{
                     _.forEach(state.timesheetSummaryData, function (value, parentKey) {
                         _.forEach(value['timesheet'], function (value, medKey) {
                             _.forEach(value['detail']['data'], function (value, key) {
-                                if(value['id']==timesheetId){
+                                if (value['id'] == timesheetId) {
                                     let timesheetNewData = state.timesheetSummaryData[parentKey];
                                     timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveId = 1
                                     timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveName = 'Manager Approved'
@@ -200,7 +200,7 @@ export default{
                         style: 'flip',
                         message: res.data.message,
                         position: 'top-right',
-                        timeout: 0,
+                        timeout: 3500,
                         type: 'danger'
                     }).show();
                 }
@@ -210,7 +210,7 @@ export default{
                     style: 'flip',
                     message: err.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             })
@@ -224,7 +224,7 @@ export default{
                     _.forEach(state.timesheetSummaryData, function (value, parentKey) {
                         _.forEach(value['timesheet'], function (value, medKey) {
                             _.forEach(value['detail']['data'], function (value, key) {
-                                if(value['id']==timesheetId){
+                                if (value['id'] == timesheetId) {
                                     let timesheetNewData = state.timesheetSummaryData[parentKey];
                                     timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveId = 98
                                     timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveName = 'Disapproved'
@@ -238,7 +238,7 @@ export default{
                         style: 'flip',
                         message: res.data.message,
                         position: 'top-right',
-                        timeout: 0,
+                        timeout: 3500,
                         type: 'danger'
                     }).show();
                 }
@@ -248,15 +248,64 @@ export default{
                     style: 'flip',
                     message: err.message,
                     position: 'top-right',
-                    timeout: 0,
+                    timeout: 3500,
                     type: 'danger'
                 }).show();
             })
     },
-    saveTimesheet(state,payload){
+    saveTimesheet(state, payload){
+        post(api_path + 'attendance/timesheet/update', {
+            timesheetId: payload.timesheetId,
+            clockInTime: payload.clockInTime,
+            clockOutTime: payload.clockOutTime,
+            date: payload.date
+        })
+            .then((res) => {
+                console.log(JSON.stringify(res.data.timesheet.data))
+                if (!res.data.isFailed) {
 
+                    /* Update timesheet summary data*/
+                    _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                        _.forEach(value['timesheet'], function (value, medKey) {
+                            _.forEach(value['detail']['data'], function (value, key) {
+                                if (value['id'] == payload.timesheetId) {
+                                    /* Update data */
+                                    state.timesheetSummaryData[parentKey].timesheet[medKey].detail.data.splice(0,1,res.data.timesheet.data)
+                                }
+                            })
+                        })
+                    })
+
+                    /* Success notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
     },
-    createTimesheet(state,payload){
+    createTimesheet(state, payload){
 
     }
 
