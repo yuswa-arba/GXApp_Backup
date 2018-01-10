@@ -126,7 +126,7 @@ class TimesheetController extends Controller
 
         if ($timesheet->save()) {
 
-            $this->checkValidation($timesheet);
+            $this->checkValidationNow($timesheet);
 
             $response['isFailed'] = false;
             $response['message'] = 'Timesheet has been updated successfully';

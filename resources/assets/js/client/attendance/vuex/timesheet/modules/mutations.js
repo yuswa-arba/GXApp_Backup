@@ -316,7 +316,6 @@ export default{
             date: payload.date
         })
             .then((res) => {
-                console.log(JSON.stringify(res.data.timesheet.data))
                 if (!res.data.isFailed) {
 
                     /* Update timesheet summary data*/
