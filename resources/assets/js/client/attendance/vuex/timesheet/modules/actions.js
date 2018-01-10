@@ -102,6 +102,9 @@ export default{
 
         commit({
             type:'createTimesheet',
+            index:payload.index,
+            employeeNo:payload.employeeNo,
+            employeeId:payload.employeeId,
             clockInTime : payload.clockInTime,
             clockOutTime: payload.clockOutTime,
             shiftId:payload.shiftId,

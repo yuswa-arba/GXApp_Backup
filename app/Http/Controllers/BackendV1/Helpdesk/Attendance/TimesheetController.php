@@ -107,7 +107,7 @@ class TimesheetController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), ['timesheetId' => 'required']);
+        $validator = Validator::make($request->all(), ['timesheetId' => 'required','date'=>'required']);
 
         if ($validator->fails()) {
             $response['isFailed'] = true;
@@ -138,6 +138,47 @@ class TimesheetController extends Controller
             $response['message'] = 'Timesheet not found';
             return response()->json($response, 200);
         }
+    }
+
+    public function createManually(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'employeeId' => 'required',
+            'clockInTime'=>'required',
+            'clockOutTime'=>'required',
+            'shiftId'=>'required',
+            'date'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Required params missing';
+            return response()->json($response, 200);
+        }
+
+        $create = AttendanceTimesheet::create([
+            'employeeId'=>$request->employeeId,
+            'shiftId'=>$request->shiftId,
+            'clockInTime'=>$request->clockInTime,
+            'clockOutTime'=>$request->clockOutTime,
+            'clockInDate'=>$request->date,
+            'clockOutDate'=>$request->date,
+            'attendanceValidationId'=>98, // Manually Input
+            'attendanceApproveId'=>3,// Edited By Manager
+            'approvedBy'=>!is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : ''
+        ]);
+
+        if($create){
+            $response['isFailed'] = false;
+            $response['message'] = 'Timesheet has been created successfully';
+            $response['timesheet'] = fractal($create, new TimesheetSummaryTransformer());
+            return response()->json($response, 200);
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Failed! Unable to create timesheet';
+            return response()->json($response, 200);
+        }
+
     }
 
 }

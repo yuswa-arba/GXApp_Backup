@@ -134,10 +134,10 @@
                                         <div v-else="timesheet.editing">
                                              <span class="fs-12 text-danger cursor"
                                                    v-if="timesheet.detail.data[0] && timesheet.detail.data[0].id"
-                                                   @click="doneEditTimesheet(index,summary.employee.data.employeeNo,timesheet.detail.data[0].id,timesheet.date)">DONE</span>
+                                                   @click="doneEditTimesheet(index,summary.employee.data.id,summary.employee.data.employeeNo,timesheet.detail.data[0].id,timesheet.date)">DONE</span>
                                             <span class="fs-12 text-danger cursor"
                                                   v-else=""
-                                                  @click="doneEditTimesheet(index,summary.employee.data.employeeNo,'',timesheet.date)">DONE</span>
+                                                  @click="doneEditTimesheet(index,summary.employee.data.id,summary.employee.data.employeeNo,'',timesheet.date)">DONE</span>
                                         </div>
 
                                     </td>
@@ -201,7 +201,7 @@
                     employeeNo: employeeNo
                 })
             },
-            doneEditTimesheet(index, employeeNo, timesheetId, date){
+            doneEditTimesheet(index, employeeId,employeeNo, timesheetId, date){
 
                 let cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val()
                 let cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val()
@@ -218,7 +218,7 @@
                         alert('Clock In time format is not valid (use 00:00 - 23:59 format)')
                     }
                 } else {
-                    cInValid = true
+                    alert('Clock In time cannot be empty')
                 }
 
 
@@ -228,13 +228,13 @@
                         cOutValid = true
                     } else {
                         cOutValid = false
-                        alert('Clock In time format is not valid (use 00:00 - 23:59 format)')
+                        alert('Clock Out time format is not valid (use 00:00 - 23:59 format)')
                     }
                 } else {
-                    cOutValid = true
+                    alert('Clock Out time cannot be empty')
                 }
 
-                if (cInValid && cOutValid && selectedShift) {
+                if (cInValid && cOutValid && selectedShift && employeeId && date && employeeNo) {
 
 
                     if (timesheetId) {
@@ -252,6 +252,7 @@
                         this.$store.dispatch({
                             type: 'timesheet/createNewTimesheet',
                             index: index,
+                            employeeId:employeeId,
                             employeeNo: employeeNo,
                             clockInTime: cInTime,
                             clockOutTime: cOutTime,
@@ -260,6 +261,8 @@
                         })
                     }
 
+                } else {
+                    alert('Something is missing')
                 }
 
             }

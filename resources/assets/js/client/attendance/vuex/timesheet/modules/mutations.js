@@ -307,7 +307,56 @@ export default{
             })
     },
     createTimesheet(state, payload){
+        post(api_path + 'attendance/timesheet/createManually', {
+            employeeId:payload.employeeId,
+            timesheetId: payload.timesheetId,
+            clockInTime: payload.clockInTime,
+            clockOutTime: payload.clockOutTime,
+            shiftId:payload.shiftId,
+            date: payload.date
+        })
+            .then((res) => {
+                console.log(JSON.stringify(res.data.timesheet.data))
+                if (!res.data.isFailed) {
 
+                    /* Update timesheet summary data*/
+                    _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                        if(value['employee']['data']['employeeNo'] == payload.employeeNo){
+                            let timesheetNewData  = state.timesheetSummaryData[parentKey]
+                            timesheetNewData.timesheet[payload.index].editing = false;
+                            timesheetNewData.timesheet[payload.index].detail = {data:[]};
+                            timesheetNewData.timesheet[payload.index].detail.data.push(res.data.timesheet.data)
+                        }
+                    })
+
+                    /* Success notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
     }
 
 }

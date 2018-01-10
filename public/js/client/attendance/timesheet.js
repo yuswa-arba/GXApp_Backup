@@ -3350,7 +3350,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 employeeNo: employeeNo
             });
         },
-        doneEditTimesheet: function doneEditTimesheet(index, employeeNo, timesheetId, date) {
+        doneEditTimesheet: function doneEditTimesheet(index, employeeId, employeeNo, timesheetId, date) {
 
             var cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val();
             var cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val();
@@ -3367,7 +3367,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     alert('Clock In time format is not valid (use 00:00 - 23:59 format)');
                 }
             } else {
-                cInValid = true;
+                alert('Clock In time cannot be empty');
             }
 
             /* Validate time format */
@@ -3376,13 +3376,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     cOutValid = true;
                 } else {
                     cOutValid = false;
-                    alert('Clock In time format is not valid (use 00:00 - 23:59 format)');
+                    alert('Clock Out time format is not valid (use 00:00 - 23:59 format)');
                 }
             } else {
-                cOutValid = true;
+                alert('Clock Out time cannot be empty');
             }
 
-            if (cInValid && cOutValid && selectedShift) {
+            if (cInValid && cOutValid && selectedShift && employeeId && date && employeeNo) {
 
                 if (timesheetId) {
                     this.$store.dispatch({
@@ -3399,6 +3399,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     this.$store.dispatch({
                         type: 'timesheet/createNewTimesheet',
                         index: index,
+                        employeeId: employeeId,
                         employeeNo: employeeNo,
                         clockInTime: cInTime,
                         clockOutTime: cOutTime,
@@ -3406,6 +3407,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         date: date
                     });
                 }
+            } else {
+                alert('Something is missing');
             }
         }
     }
@@ -23511,6 +23514,7 @@ var render = function() {
                                                   click: function($event) {
                                                     _vm.doneEditTimesheet(
                                                       index,
+                                                      summary.employee.data.id,
                                                       summary.employee.data
                                                         .employeeNo,
                                                       timesheet.detail.data[0]
@@ -23531,6 +23535,7 @@ var render = function() {
                                                   click: function($event) {
                                                     _vm.doneEditTimesheet(
                                                       index,
+                                                      summary.employee.data.id,
                                                       summary.employee.data
                                                         .employeeNo,
                                                       "",
@@ -39432,6 +39437,9 @@ module.exports = Component.exports
 
         commit({
             type: 'createTimesheet',
+            index: payload.index,
+            employeeNo: payload.employeeNo,
+            employeeId: payload.employeeId,
             clockInTime: payload.clockInTime,
             clockOutTime: payload.clockOutTime,
             shiftId: payload.shiftId,
@@ -39786,7 +39794,55 @@ module.exports = Component.exports
             }).show();
         });
     },
-    createTimesheet: function createTimesheet(state, payload) {}
+    createTimesheet: function createTimesheet(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/createManually', {
+            employeeId: payload.employeeId,
+            timesheetId: payload.timesheetId,
+            clockInTime: payload.clockInTime,
+            clockOutTime: payload.clockOutTime,
+            shiftId: payload.shiftId,
+            date: payload.date
+        }).then(function (res) {
+            console.log(JSON.stringify(res.data.timesheet.data));
+            if (!res.data.isFailed) {
+
+                /* Update timesheet summary data*/
+                _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                    if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
+                        var timesheetNewData = state.timesheetSummaryData[parentKey];
+                        timesheetNewData.timesheet[payload.index].editing = false;
+                        timesheetNewData.timesheet[payload.index].detail = { data: [] };
+                        timesheetNewData.timesheet[payload.index].detail.data.push(res.data.timesheet.data);
+                    }
+                });
+
+                /* Success notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    }
 });
 
 /***/ }),

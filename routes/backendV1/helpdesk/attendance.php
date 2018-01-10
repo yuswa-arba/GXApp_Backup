@@ -45,6 +45,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('timesheet/approve','TimesheetController@approve')->name('v1.timesheet.approve');
         Route::post('timesheet/disapprove','TimesheetController@disapprove')->name('v1.timesheet.disapprove');
         Route::post('timesheet/update','TimesheetController@update')->name('v1.timesheet.update');
+        Route::post('timesheet/createManually','TimesheetController@createManually')->name('v1.timesheet.createManually');
         Route::get('timesheet/summary/{sumType}','TimesheetController@summary')->name('v1.timesheet.summary');
 
 
