@@ -42,5 +42,6 @@ $(document).ready(function(){
 
     $('.dataTables_empty').hide()
 
+
 });
 

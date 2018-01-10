@@ -4,6 +4,20 @@
         <div class="col-lg-12 m-b-10 m-t-10">
 
             <slot name="go-back-menu"></slot>
+            <div class="pull-left m-r-15 m-b-10">
+                <div class="dropdown dropdown-default">
+                    <button class="btn btn-info dropdown-toggle text-center" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Actions
+                    </button>
+
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item pointer">Send to Managers</a>
+                        <a class="dropdown-item pointer">Generate PDF</a>
+                    </div>
+
+                </div>
+            </div>
             <div class="pull-right">
                 <button class="btn btn-outline-info" @click="attemptGenerateSummary"><span
                         class="bold text-black">From: </span> {{generateFromDate}} <span
@@ -47,35 +61,68 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="timesheet in summary.timesheet">
+                                <tr v-for="(timesheet,index) in summary.timesheet">
                                     <td>{{timesheet.date}} ({{timesheet.day}})</td>
-                                    <td><span
-                                            v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].clockInTime}}</span>
-                                        <span v-else="">-</span></td>
-                                    <td><span
-                                            v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].clockOutTime}}</span>
-                                        <span v-else="">-</span></td>
-                                    <td><span
-                                            v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].workHour}}</span>
-                                        <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckInLate}}</span>
-                                        <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckOutEarly}}</span>
-                                        <span v-else="">-</span></td>
-                                    <td><span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckOutLate}}</span>
-                                        <span v-else="">-</span></td>
-                                    <td><span
-                                            v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].shiftId}}</span>
-                                        <span v-else="">-</span></td>
-                                    <td><span class="fs-10" v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].attendanceValidationName}}</span>
-                                        <span v-else="">-</span></td>
-                                    <td><span class="fs-10" v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].attendanceApproveName}}</span>
-                                        <span v-else="">-</span></td>
-                                    <td :class="{'w-60':timesheet.detail.data[0] && timesheet.detail.data[0].attendanceApproveId==99}"><span
-                                            v-if="timesheet.detail.data[0] && timesheet.detail.data[0].attendanceApproveId==99">
-                                        <i class="fa fa-check text-success cursor" @click="approveTimesheet(timesheet.detail.data[0].id)"></i> &nbsp;
-                                        <i class="fa fa-times text-danger cursor" @click="disapproveTimesheet(timesheet.detail.data[0].id)"></i>
-                                    </span></td>
+                                    <td>
+                                        <span v-if="timesheet.detail.data[0] && !timesheet.editing">{{timesheet.detail.data[0].clockInTime}}</span>
+                                        <input :name="'cInTime'+summary.employee.data.employeeNo+index"
+                                               class="form-control time-mask"
+                                               v-else-if="timesheet.editing && timesheet.detail.data[0] && timesheet.detail.data[0].clockInTime"
+                                               :value="timesheet.detail.data[0].clockInTime"/>
+                                        <input :name="'cInTime'+summary.employee.data.employeeNo+index"
+                                               class="form-control time-mask" v-else-if="timesheet.editing"/>
+                                        <span v-else="">-</span>
+                                    </td>
+                                    <td>
+                                        <span v-if="timesheet.detail.data[0] && !timesheet.editing">{{timesheet.detail.data[0].clockOutTime}}</span>
+                                        <input :name="'cOutTime'+summary.employee.data.employeeNo+index"
+                                               class="form-control time-mask"
+                                               v-else-if="timesheet.editing && timesheet.detail.data[0] && timesheet.detail.data[0].clockOutTime"
+                                               :value="timesheet.detail.data[0].clockOutTime"/>
+                                        <input :name="'cOutTime'+summary.employee.data.employeeNo+index"
+                                               class="form-control time-mask" v-else-if="timesheet.editing"/>
+                                        <span v-else="">-</span>
+                                    </td>
+                                    <td>
+                                        <span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].workHour}}</span>
+                                        <span v-else="">-</span>
+                                    </td>
+                                    <td>
+                                        <span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckInLate}}</span>
+                                        <span v-else="">-</span>
+                                    </td>
+                                    <td>
+                                        <span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckOutEarly}}</span>
+                                        <span v-else="">-</span>
+                                    </td>
+                                    <td>
+                                        <span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].minutesCheckOutLate}}</span>
+                                        <span v-else="">-</span>
+                                    </td>
+                                    <td>
+                                        <span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].shiftId}}</span>
+                                        <span v-else="">-</span>
+                                    </td>
+                                    <td>
+                                        <span class="fs-10" v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].attendanceValidationName}}</span>
+                                        <span v-else="">-</span>
+                                    </td>
+                                    <td>
+                                        <span class="fs-10" v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].attendanceApproveName}}</span>
+                                        <span v-else="">-</span>
+                                    </td>
+                                    <td :class="{'w-60':timesheet.detail.data[0] && timesheet.detail.data[0].attendanceApproveId==99}">
+                                        <span v-if="timesheet.detail.data[0] && timesheet.detail.data[0].attendanceApproveId==99">
+                                        <i class="fa fa-check text-success cursor"
+                                           @click="approveTimesheet(timesheet.detail.data[0].id)"></i> &nbsp;
+                                        <i class="fa fa-times text-danger cursor"
+                                           @click="disapproveTimesheet(timesheet.detail.data[0].id)"></i>
+                                        </span>
+                                        <i class="fa fa-pencil cursor" v-if="!timesheet.editing"
+                                           @click="editTimesheet(index,summary.employee.data.employeeNo)"></i>
+                                        <span class="fs-12 text-danger cursor" v-else="timesheet.editing"
+                                              @click="doneEditTimesheet(index,summary.employee.data.employeeNo)">DONE</span>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -116,7 +163,6 @@
             }
         },
         mounted: function () {
-
         },
         created(){
 
@@ -132,6 +178,56 @@
             disapproveTimesheet(timesheetId){
                 if (timesheetId)
                     this.$store.commit('timesheet/disapproveTimesheetFromSummary', timesheetId)
+            },
+            editTimesheet(index, employeeNo){
+                this.$store.dispatch({
+                    type: 'timesheet/editTimesheet',
+                    index: index,
+                    employeeNo: employeeNo
+                })
+            },
+            doneEditTimesheet(index, employeeNo){
+
+                let cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val()
+                let cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val()
+                let cInValid = false
+                let cOutValid = false
+
+                /* Validate time format */
+                if (cInTime) {
+                    if (moment(cInTime, "HH:mm", true).isValid()) {
+                        cInValid = true
+                    } else {
+                        cInValid = false
+                        alert('Clock In time format is not valid (use 00:00 - 23:59 format)')
+                    }
+                } else {
+                    cInValid = true
+                }
+
+
+                /* Validate time format */
+                if (cOutTime) {
+                    if (moment(cOutTime, "HH:mm", true).isValid()) {
+                        cOutValid = true
+                    } else {
+                        cOutValid = false
+                        alert('Clock In time format is not valid (use 00:00 - 23:59 format)')
+                    }
+                } else {
+                    cOutValid = true
+                }
+
+                if(cInValid && cOutValid){
+                    alert('Dispatch action!')
+                }
+
+
+//                this.$store.dispatch({
+//                    type:'timesheet/saveEditTimesheet',
+//                    index : index,
+//                    employeeNo : employeeNo
+//                })
             }
         }
 

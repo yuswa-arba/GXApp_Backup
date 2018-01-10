@@ -232,6 +232,7 @@ export default{
                             })
                         })
                     })
+
                 } else {
                     $('.page-container').pgNotification({
                         style: 'flip',

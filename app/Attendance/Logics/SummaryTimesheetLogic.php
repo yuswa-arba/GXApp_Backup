@@ -48,6 +48,8 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
                 $response['timesheet'][$i]['date'] = $datedmy;
                 $response['timesheet'][$i]['day'] = Carbon::createFromFormat('Y-m-d', $date)->format('D');
                 $response['timesheet'][$i]['detail'] = fractal($timesheet, new TimesheetSummaryTransformer());
+                $response['timesheet'][$i]['editing'] =false;
+
                 $i++;
             }
 
