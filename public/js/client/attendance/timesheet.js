@@ -3151,164 +3151,171 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_timesheet_AttemptInsideSummaryModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/timesheet/AttemptInsideSummaryModal.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_timesheet_AttemptInsideSummaryModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_timesheet_AttemptInsideSummaryModal_vue__);
-var _components$data$comp;
-
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
-
-/* harmony default export */ __webpack_exports__["default"] = (_components$data$comp = {
+/* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         'attempt-inside-summary-modal': __WEBPACK_IMPORTED_MODULE_1__components_timesheet_AttemptInsideSummaryModal_vue___default.a
     },
@@ -3320,88 +3327,90 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         generateFromDate: 'generateFromDate',
         generateToDate: 'generateToDate',
         timesheetSummaryData: 'timesheetSummaryData'
+    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('timesheet', {
+        shifts: 'shifts'
     })),
-    created: function created() {
-        // if date is empty return back
-        if (this.$store.state.timesheet.generateFromDate == '' || !this.$store.state.timesheet.generateToDate == '') {
-            this.$router.push('/');
-        }
-    },
+    created: function created() {},
+    mounted: function mounted() {},
 
-    mounted: function mounted() {}
-}, _defineProperty(_components$data$comp, 'created', function created() {}), _defineProperty(_components$data$comp, 'methods', {
-    attemptGenerateSummary: function attemptGenerateSummary() {
-        this.$store.dispatch('timesheet/attemptGenerateInsideSummary');
-    },
-    approveTimesheet: function approveTimesheet(timesheetId) {
-        if (timesheetId) this.$store.commit('timesheet/approveTimesheetFromSummary', timesheetId);
-    },
-    disapproveTimesheet: function disapproveTimesheet(timesheetId) {
-        if (timesheetId) this.$store.commit('timesheet/disapproveTimesheetFromSummary', timesheetId);
-    },
-    editTimesheet: function editTimesheet(index, employeeNo) {
-        this.$store.dispatch({
-            type: 'timesheet/editTimesheet',
-            index: index,
-            employeeNo: employeeNo
-        });
-    },
-    doneEditTimesheet: function doneEditTimesheet(index, employeeNo, timesheetId, date) {
+    methods: {
+        attemptGenerateSummary: function attemptGenerateSummary() {
+            this.$store.dispatch('timesheet/attemptGenerateInsideSummary');
+        },
+        approveTimesheet: function approveTimesheet(timesheetId) {
+            if (timesheetId) this.$store.commit('timesheet/approveTimesheetFromSummary', timesheetId);
+        },
+        disapproveTimesheet: function disapproveTimesheet(timesheetId) {
+            if (timesheetId) this.$store.commit('timesheet/disapproveTimesheetFromSummary', timesheetId);
+        },
+        editTimesheet: function editTimesheet(index, employeeNo) {
+            this.$store.dispatch({
+                type: 'timesheet/editTimesheet',
+                index: index,
+                employeeNo: employeeNo
+            });
+        },
+        doneEditTimesheet: function doneEditTimesheet(index, employeeNo, timesheetId, date) {
 
-        var cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val();
-        var cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val();
-        var cInValid = false;
-        var cOutValid = false;
+            var cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val();
+            var cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val();
+            var selectedShift = $('select[name="' + 'selectShift' + employeeNo + index + '"]').val();
+            var cInValid = false;
+            var cOutValid = false;
 
-        /* Validate time format */
-        if (cInTime) {
-            if (moment(cInTime, "HH:mm", true).isValid()) {
+            /* Validate time format */
+            if (cInTime) {
+                if (moment(cInTime, "HH:mm", true).isValid()) {
+                    cInValid = true;
+                } else {
+                    cInValid = false;
+                    alert('Clock In time format is not valid (use 00:00 - 23:59 format)');
+                }
+            } else {
                 cInValid = true;
-            } else {
-                cInValid = false;
-                alert('Clock In time format is not valid (use 00:00 - 23:59 format)');
             }
-        } else {
-            cInValid = true;
-        }
 
-        /* Validate time format */
-        if (cOutTime) {
-            if (moment(cOutTime, "HH:mm", true).isValid()) {
+            /* Validate time format */
+            if (cOutTime) {
+                if (moment(cOutTime, "HH:mm", true).isValid()) {
+                    cOutValid = true;
+                } else {
+                    cOutValid = false;
+                    alert('Clock In time format is not valid (use 00:00 - 23:59 format)');
+                }
+            } else {
                 cOutValid = true;
-            } else {
-                cOutValid = false;
-                alert('Clock In time format is not valid (use 00:00 - 23:59 format)');
             }
-        } else {
-            cOutValid = true;
-        }
 
-        if (cInValid && cOutValid) {
+            if (cInValid && cOutValid && selectedShift) {
 
-            if (timesheetId) {
-                this.$store.dispatch({
-                    type: 'timesheet/saveEditTimesheet',
-                    index: index,
-                    employeeNo: employeeNo,
-                    clockInTime: cInTime,
-                    clockOutTime: cOutTime,
-                    date: date,
-                    timesheetId: timesheetId
-                });
-            } else {
-                this.$store.dispatch({
-                    type: 'timesheet/createNewTimesheet',
-                    index: index,
-                    employeeNo: employeeNo,
-                    clockInTime: cInTime,
-                    clockOutTime: cOutTime,
-                    date: date
-                });
+                if (timesheetId) {
+                    this.$store.dispatch({
+                        type: 'timesheet/saveEditTimesheet',
+                        index: index,
+                        employeeNo: employeeNo,
+                        clockInTime: cInTime,
+                        clockOutTime: cOutTime,
+                        shiftId: selectedShift,
+                        date: date,
+                        timesheetId: timesheetId
+                    });
+                } else {
+                    this.$store.dispatch({
+                        type: 'timesheet/createNewTimesheet',
+                        index: index,
+                        employeeNo: employeeNo,
+                        clockInTime: cInTime,
+                        clockOutTime: cOutTime,
+                        shiftId: selectedShift,
+                        date: date
+                    });
+                }
             }
         }
     }
-}), _components$data$comp);
+
+});
 
 /***/ }),
 
@@ -23332,13 +23341,81 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("td", [
-                                timesheet.detail.data[0]
+                                timesheet.detail.data[0] && !timesheet.editing
                                   ? _c("span", [
                                       _vm._v(
                                         _vm._s(timesheet.detail.data[0].shiftId)
                                       )
                                     ])
-                                  : _c("span", [_vm._v("-")])
+                                  : timesheet.editing &&
+                                    !timesheet.detail.data[0]
+                                    ? _c(
+                                        "select",
+                                        {
+                                          staticClass: "form-control w-70",
+                                          attrs: {
+                                            name:
+                                              "selectShift" +
+                                              summary.employee.data.employeeNo +
+                                              index
+                                          }
+                                        },
+                                        _vm._l(_vm.shifts, function(shift) {
+                                          return _c(
+                                            "option",
+                                            { domProps: { value: shift.id } },
+                                            [_vm._v(_vm._s(shift.name))]
+                                          )
+                                        })
+                                      )
+                                    : timesheet.editing &&
+                                      timesheet.detail.data[0]
+                                      ? _c(
+                                          "select",
+                                          {
+                                            staticClass: "form-control w-70",
+                                            attrs: {
+                                              name:
+                                                "selectShift" +
+                                                summary.employee.data
+                                                  .employeeNo +
+                                                index
+                                            }
+                                          },
+                                          [
+                                            _c(
+                                              "option",
+                                              {
+                                                attrs: { readonly: "" },
+                                                domProps: {
+                                                  value:
+                                                    timesheet.detail.data[0]
+                                                      .shiftId
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    timesheet.detail.data[0]
+                                                      .shiftName
+                                                  )
+                                                )
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _vm._l(_vm.shifts, function(shift) {
+                                              return _c(
+                                                "option",
+                                                {
+                                                  domProps: { value: shift.id }
+                                                },
+                                                [_vm._v(_vm._s(shift.name))]
+                                              )
+                                            })
+                                          ],
+                                          2
+                                        )
+                                      : _c("span", [_vm._v("-")])
                               ]),
                               _vm._v(" "),
                               _c("td", [
@@ -39286,6 +39363,11 @@ module.exports = Component.exports
         $('#modal-attempt-generate-summary').modal('hide');
         $('#modal-attempt-generate-inside-summary').modal('hide');
 
+        /* Get shifts if empty*/
+        if (!state.shifts) {
+            commit({ type: 'getShifts', shiftId: '' });
+        }
+
         state.generateFromDate = payload.fromDate;
         state.generateToDate = payload.toDate;
 
@@ -39329,6 +39411,7 @@ module.exports = Component.exports
                 timesheetId: payload.timesheetId,
                 clockInTime: payload.clockInTime,
                 clockOutTime: payload.clockOutTime,
+                shiftId: payload.shiftId,
                 date: payload.date
             });
         }
@@ -39351,6 +39434,7 @@ module.exports = Component.exports
             type: 'createTimesheet',
             clockInTime: payload.clockInTime,
             clockOutTime: payload.clockOutTime,
+            shiftId: payload.shiftId,
             date: payload.date
         });
     }
@@ -39657,6 +39741,7 @@ module.exports = Component.exports
             timesheetId: payload.timesheetId,
             clockInTime: payload.clockInTime,
             clockOutTime: payload.clockOutTime,
+            shiftId: payload.shiftId,
             date: payload.date
         }).then(function (res) {
             console.log(JSON.stringify(res.data.timesheet.data));

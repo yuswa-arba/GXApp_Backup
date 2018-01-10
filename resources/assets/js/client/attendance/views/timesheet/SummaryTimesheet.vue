@@ -100,7 +100,18 @@
                                         <span v-else="">-</span>
                                     </td>
                                     <td>
-                                        <span v-if="timesheet.detail.data[0]">{{timesheet.detail.data[0].shiftId}}</span>
+                                        <span v-if="timesheet.detail.data[0] && !timesheet.editing">{{timesheet.detail.data[0].shiftId}}</span>
+                                        <select :name="'selectShift'+summary.employee.data.employeeNo+index"
+                                                class="form-control w-70"
+                                                v-else-if="timesheet.editing && !timesheet.detail.data[0]">
+                                            <option :value="shift.id" v-for="shift in shifts">{{shift.name}}</option>
+                                        </select>
+                                        <select :name="'selectShift'+summary.employee.data.employeeNo+index"
+                                                class="form-control w-70"
+                                                v-else-if="timesheet.editing && timesheet.detail.data[0]">
+                                            <option :value="timesheet.detail.data[0].shiftId" readonly>{{timesheet.detail.data[0].shiftName}}</option>
+                                            <option :value="shift.id" v-for="shift in shifts">{{shift.name}}</option>
+                                        </select>
                                         <span v-else="">-</span>
                                     </td>
                                     <td>
@@ -147,7 +158,7 @@
 
 </template>
 <script type="text/javascript">
-    import {mapState} from 'vuex'
+    import {mapState,mapGetters} from 'vuex'
     import AttemptGenerateInsideSummaryModal from '../../components/timesheet/AttemptInsideSummaryModal.vue'
     export default{
         components: {
@@ -161,17 +172,14 @@
                 generateFromDate: 'generateFromDate',
                 generateToDate: 'generateToDate',
                 timesheetSummaryData: 'timesheetSummaryData'
+            }),
+            ...mapGetters('timesheet',{
+                shifts:'shifts'
             })
         },
         created(){
-            // if date is empty return back
-            if (this.$store.state.timesheet.generateFromDate == '' || !this.$store.state.timesheet.generateToDate == '') {
-                this.$router.push('/')
-            }
         },
-        mounted: function () {
-        },
-        created(){
+        mounted() {
 
         },
         methods: {
@@ -193,10 +201,11 @@
                     employeeNo: employeeNo
                 })
             },
-            doneEditTimesheet(index, employeeNo,timesheetId,date){
+            doneEditTimesheet(index, employeeNo, timesheetId, date){
 
                 let cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val()
                 let cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val()
+                let selectedShift = $('select[name="'+'selectShift'+employeeNo+index+'"]').val()
                 let cInValid = false
                 let cOutValid = false
 
@@ -225,26 +234,29 @@
                     cOutValid = true
                 }
 
-                if(cInValid && cOutValid){
+                if (cInValid && cOutValid && selectedShift) {
 
-                    if(timesheetId){
+
+                    if (timesheetId) {
                         this.$store.dispatch({
-                            type:'timesheet/saveEditTimesheet',
-                            index : index,
-                            employeeNo : employeeNo,
-                            clockInTime:cInTime,
-                            clockOutTime:cOutTime,
-                            date:date,
-                            timesheetId:timesheetId
+                            type: 'timesheet/saveEditTimesheet',
+                            index: index,
+                            employeeNo: employeeNo,
+                            clockInTime: cInTime,
+                            clockOutTime: cOutTime,
+                            shiftId:selectedShift,
+                            date: date,
+                            timesheetId: timesheetId
                         })
                     } else {
                         this.$store.dispatch({
-                            type:'timesheet/createNewTimesheet',
-                            index : index,
-                            employeeNo : employeeNo,
-                            clockInTime:cInTime,
-                            clockOutTime:cOutTime,
-                            date:date
+                            type: 'timesheet/createNewTimesheet',
+                            index: index,
+                            employeeNo: employeeNo,
+                            clockInTime: cInTime,
+                            clockOutTime: cOutTime,
+                            shiftId:selectedShift,
+                            date: date
                         })
                     }
 

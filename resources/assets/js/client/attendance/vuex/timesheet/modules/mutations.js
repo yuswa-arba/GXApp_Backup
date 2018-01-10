@@ -258,6 +258,7 @@ export default{
             timesheetId: payload.timesheetId,
             clockInTime: payload.clockInTime,
             clockOutTime: payload.clockOutTime,
+            shiftId:payload.shiftId,
             date: payload.date
         })
             .then((res) => {

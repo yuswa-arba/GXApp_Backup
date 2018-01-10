@@ -39,6 +39,10 @@ export default{
         $('#modal-attempt-generate-summary').modal('hide')
         $('#modal-attempt-generate-inside-summary').modal('hide')
 
+        /* Get shifts if empty*/
+        if(!state.shifts){
+            commit({type: 'getShifts', shiftId: ''})
+        }
 
         state.generateFromDate = payload.fromDate
         state.generateToDate = payload.toDate
@@ -79,6 +83,7 @@ export default{
                 timesheetId : payload.timesheetId,
                 clockInTime : payload.clockInTime,
                 clockOutTime: payload.clockOutTime,
+                shiftId:payload.shiftId,
                 date:payload.date
             });
         }
@@ -99,6 +104,7 @@ export default{
             type:'createTimesheet',
             clockInTime : payload.clockInTime,
             clockOutTime: payload.clockOutTime,
+            shiftId:payload.shiftId,
             date:payload.date
         });
     }

@@ -120,11 +120,14 @@ class TimesheetController extends Controller
         $timesheet->clockOutTime = $request->clockOutTime;
         $timesheet->clockInDate = $request->date;
         $timesheet->clockOutDate = $request->date;
+        $timesheet->shiftId = $request->shiftId;
         $timesheet->attendanceApproveId = 3; // Edited By Manager
+        $timesheet->approvedBy = !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '';
 
         if ($timesheet->save()) {
 
             $this->checkValidation($timesheet);
+
             $response['isFailed'] = false;
             $response['message'] = 'Timesheet has been updated successfully';
             $response['timesheet'] = fractal($timesheet, new TimesheetSummaryTransformer());
