@@ -43,5 +43,8 @@ export default{
     },
     selectedShiftDetail(state){
         return state.selectedShiftDetail
+    },
+    defaultCopiedSlotName(state){
+        return state.copyFromSlotName+'_copy'
     }
 }

@@ -2865,13 +2865,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             copyAddBy: 0,
             slotNameEmpty: false,
             addDayEmpty: false
+
         };
     },
-    created: function created() {},
+    created: function created() {
+        var self = this;
+    },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('slots', {
         copyFromSlotId: 'copyFromSlotId',
         copyFromSlotName: 'copyFromSlotName'
+    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('slots', {
+        defaultCopiedSlotName: 'defaultCopiedSlotName'
     })),
     mounted: function mounted() {},
 
@@ -23304,7 +23309,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Copy to")]),
+                    _c("label", [_vm._v("Copy to ")]),
                     _vm._v(" "),
                     _vm.slotNameEmpty
                       ? _c("p", { staticClass: "text-danger fs-12" }, [
@@ -23322,7 +23327,11 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      attrs: { type: "text", placeholder: "Enter Slot Name" },
+                      attrs: {
+                        type: "text",
+                        placeholder:
+                          _vm.defaultCopiedSlotName + " or add last number by 1"
+                      },
                       domProps: { value: _vm.copyToName },
                       on: {
                         input: function($event) {
@@ -40313,6 +40322,9 @@ module.exports = Component.exports
     },
     selectedShiftDetail: function selectedShiftDetail(state) {
         return state.selectedShiftDetail;
+    },
+    defaultCopiedSlotName: function defaultCopiedSlotName(state) {
+        return state.copyFromSlotName + '_copy';
     }
 });
 

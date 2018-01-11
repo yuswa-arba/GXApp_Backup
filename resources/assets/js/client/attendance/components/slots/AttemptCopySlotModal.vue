@@ -18,9 +18,9 @@
                                     <h4 class="no-margin">{{copyFromSlotName}}</h4>
                                 </div>
                                 <div class="form-group">
-                                    <label>Copy to</label>
+                                    <label>Copy to </label>
                                     <p class="text-danger fs-12" v-if="slotNameEmpty">Slot name cannot be empty</p>
-                                    <input type="text" placeholder="Enter Slot Name" class="form-control"
+                                    <input type="text" :placeholder="defaultCopiedSlotName + ' or add last number by 1'" class="form-control"
                                            v-model="copyToName">
                                 </div>
                                 <div class="form-group">
@@ -63,16 +63,21 @@
                 copyToName: '',
                 copyAddBy:0,
                 slotNameEmpty: false,
-                addDayEmpty:false
+                addDayEmpty:false,
+
             }
         },
         created(){
+            let self = this
         },
         computed: {
             ...mapState('slots', {
                 copyFromSlotId: 'copyFromSlotId',
                 copyFromSlotName: 'copyFromSlotName'
             }),
+            ...mapGetters('slots',{
+                defaultCopiedSlotName:'defaultCopiedSlotName'
+            })
         },
         mounted(){
 
