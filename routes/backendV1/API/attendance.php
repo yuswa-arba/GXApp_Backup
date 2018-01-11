@@ -52,7 +52,10 @@ Route::prefix('v1/a')->group(function () {
          * @param id
          * */
         Route::get('detail/{id}', 'KioskController@detail');
+
         Route::get('employee/pg/{personGroupId}/person/{personId}/activity','KioskController@getEmployeeActivity');
+
+        Route::get('employee/setting/access/{employeeId}','KioskController@getEmployeeAccess');
 
         });
     });

@@ -25,6 +25,8 @@ class ResponseCodes
         'UNDEFINED_PUNCH_TYPE' => 300006,
         'EMPLOYEE_NOT_FOUND' => 300007,
         'PERSON DATA NOT FOUND' => 300008,
+        'USER NOT FOUND' => 300009,
+        'UNAUTHORIZED_ACCESS'=>300010
     ];
 
     public static $ATTD_ERR_CODES = [

@@ -28,21 +28,21 @@ class KioskController extends Controller
 
     public function detail($id)
     {
-        return fractal(Kiosks::find($id),new KioskTransformer())->includeKioskActivity()->respond(200);
+        return fractal(Kiosks::find($id), new KioskTransformer())->includeKioskActivity()->respond(200);
     }
 
-    public function getEmployeeActivity($personGroupId,$personId)
+    public function getEmployeeActivity($personGroupId, $personId)
     {
-        $response=  array();
-        $person = FacePerson::where('personId',$personId)->where('personGroupId',$personGroupId)->first();
-        if($person){
+        $response = array();
+        $person = FacePerson::where('personId', $personId)->where('personGroupId', $personGroupId)->first();
+        if ($person) {
             $employee = $person->employee;
-            if($employee){
+            if ($employee) {
 
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                 $response['message'] = 'Success';
-                $response['employeeActivityData'] = fractal($employee,new EmployeeLastActivityTransfomer());
+                $response['employeeActivityData'] = fractal($employee, new EmployeeLastActivityTransfomer());
 
             } else {
                 $response['isFailed'] = true;
@@ -55,10 +55,31 @@ class KioskController extends Controller
             $response['message'] = 'Unable to find person data';
         }
 
+        return response()->json($response, 200);
+    }
+
+    public function getEmployeeAccess($employeeId)
+    {
+        $response =array();
+        $user = User::where('employeeId',$employeeId)->first();
+        if($user){
+            if($user->hasPermissionTo('access kiosk setting')){
+                $response['isFailed'] = false;
+                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                $response['message'] = 'Access granted';
+            } else {
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['UNAUTHORIZED_ACCESS'];
+                $response['message'] = 'User has no access';
+            }
+        }
+        else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['USER NOT FOUND'];
+            $response['message'] = 'Unable to find user data';
+        }
+
         return response()->json($response,200);
-
-
-
     }
 
 }
