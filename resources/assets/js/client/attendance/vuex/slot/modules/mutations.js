@@ -603,7 +603,7 @@ export default{
     copySlot(state, payload){
         post(api_path + 'attendance/slot/copy', {
             copyFromSlotId: state.copyFromSlotId,
-            slotName: payload.slotName,
+            name: payload.slotName,
             addBy: payload.addBy
         })
             .then((res) => {
@@ -626,15 +626,27 @@ export default{
                         state.slots.push(res.data.copiedSlot.data)
                     }
 
+                    /* Clear data*/
+                    state.copyFromSlotId = ''
+                    state.copyFromSlotName= ''
+
                 } else {
+
+                    /* Close modal */
+                    $('#modal-attempt-copy-slot').modal('toggle')
+
                     /* Show error notification */
                     $('.page-container').pgNotification({
                         style: 'flip',
                         message: res.data.message,
                         position: 'top-right',
-                        timeout: 3500,
+                        timeout: 5000,
                         type: 'danger'
                     }).show();
+
+                    /* Clear data*/
+                    state.copyFromSlotId = ''
+                    state.copyFromSlotName= ''
                 }
             })
             .catch((err) => {

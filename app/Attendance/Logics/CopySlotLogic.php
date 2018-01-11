@@ -26,7 +26,7 @@ class CopySlotLogic extends CopySlotUseCase
         if ($slot) {
 
             $copy = Slots::create([
-                'name' => $formRequest->slotName,
+                'name' => $formRequest->name,
                 'positionOrder' => $slot->positionOrder + 1,
                 'alllowMultipleAssign' => $slot->alllowMultipleAssign,
                 'slotMakerId' => $slot->slotMakerId,

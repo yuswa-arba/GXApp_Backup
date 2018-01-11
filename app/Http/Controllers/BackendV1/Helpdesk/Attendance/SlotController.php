@@ -22,11 +22,11 @@ class SlotController extends Controller
 
     public function copySlot(Request $request)
     {
-        $validator = Validator::make($request->all(), ['copyFromSlotId' => 'required', 'slotName' => 'required','addBy'=>'required']);
+        $validator = Validator::make($request->all(), ['copyFromSlotId' => 'required', 'name' => 'required|unique:slots','addBy'=>'required']);
 
         if($validator->fails()){
             $response['isFailed'] = true;
-            $response['message'] = 'Slot Id and name required';
+            $response['message'] = 'Slot Id, name, and add by required. Make sure name is unique';
             return response()->json($response,200);
         }
 

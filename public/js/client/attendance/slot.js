@@ -40924,7 +40924,7 @@ module.exports = Component.exports
     copySlot: function copySlot(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/copy', {
             copyFromSlotId: state.copyFromSlotId,
-            slotName: payload.slotName,
+            name: payload.slotName,
             addBy: payload.addBy
         }).then(function (res) {
             if (!res.data.isFailed) {
@@ -40945,15 +40945,27 @@ module.exports = Component.exports
                 if (res.data.copiedSlot.data) {
                     state.slots.push(res.data.copiedSlot.data);
                 }
+
+                /* Clear data*/
+                state.copyFromSlotId = '';
+                state.copyFromSlotName = '';
             } else {
+
+                /* Close modal */
+                $('#modal-attempt-copy-slot').modal('toggle');
+
                 /* Show error notification */
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: res.data.message,
                     position: 'top-right',
-                    timeout: 3500,
+                    timeout: 5000,
                     type: 'danger'
                 }).show();
+
+                /* Clear data*/
+                state.copyFromSlotId = '';
+                state.copyFromSlotName = '';
             }
         }).catch(function (err) {
             /* Show error notification */
