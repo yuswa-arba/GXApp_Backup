@@ -32,6 +32,13 @@
                     <p class="fs-12">Slot maker only generates day off based on the settings, it means working days is
                         all days(in the year
                         of the slot maker executed) EXCEPT the day-off days</p>
+                    <p class="fs-12">
+                        Repeating slot maker SHOULD NOT be in the same year. <br>
+                        Repeated slot maker will follow the source slot maker
+                        first date and add by 1 year (ex. B is a copy of A. A first date is 01/02/2017, B first date will be 01/02/2018),
+                        therefore it will follow the same date pattern but not the day. If the day is important for this slot, it is
+                        recommended to generate a new slot maker instead of repeating the previous one.
+                    </p>
                 </div>
             </div>
         </div>

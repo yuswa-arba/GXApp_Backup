@@ -189,7 +189,6 @@ export default{
         })
     },
     editShift({commit, state}, payload){
-
         series([
             function (cb) {
                 commit({
@@ -206,6 +205,51 @@ export default{
                 cb(null)
             }
         ])
+    },
+    attemptCopySlot({commit,state},payload){
+
+        state.copyFromSlotId = payload.slotId
+        state.copyFromSlotName = payload.slotName
+
+        $('#modal-attempt-copy-slot').modal('show')
+    },
+    startCopySlot({commit,state},payload){
+
+        if(payload.slotName){
+
+            commit({
+                type:'copySlot',
+                slotName:payload.slotName,
+                addBy:payload.addBy
+            })
+
+            /* Show please wait notification */
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'Copying slot please wait...',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'success'
+            }).show();
+
+        } else {
+
+            /* Close modal */
+            $('#modal-attempt-copy-slot').modal('toggle')
+
+            /* Show error notification */
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'Error occured. Name not found',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+
+
+        }
+        
+
 
     }
 

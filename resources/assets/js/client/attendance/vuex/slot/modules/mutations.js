@@ -574,9 +574,57 @@ export default{
                     }).show();
 
                     // remove from array
-                    let slotIndex = _.findIndex(state.slots,{id:slotId})
-                    state.slots.splice(slotIndex,1)
+                    let slotIndex = _.findIndex(state.slots, {id: slotId})
+                    state.slots.splice(slotIndex, 1)
 
+
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    copySlot(state, payload){
+        post(api_path + 'attendance/slot/copy', {
+            copyFromSlotId: state.copyFromSlotId,
+            slotName: payload.slotName,
+            addBy: payload.addBy
+        })
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                    /* Show success notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    /* Close modal */
+                    $('#modal-attempt-copy-slot').modal('toggle')
+
+                    /* Update data in array*/
+                    if(res.data.copiedSlot.data){
+                        state.slots.push(res.data.copiedSlot.data)
+                    }
 
                 } else {
                     /* Show error notification */

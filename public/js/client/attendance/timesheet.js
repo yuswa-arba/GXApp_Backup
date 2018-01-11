@@ -39803,7 +39803,6 @@ module.exports = Component.exports
             shiftId: payload.shiftId,
             date: payload.date
         }).then(function (res) {
-            console.log(JSON.stringify(res.data.timesheet.data));
             if (!res.data.isFailed) {
 
                 /* Update timesheet summary data*/

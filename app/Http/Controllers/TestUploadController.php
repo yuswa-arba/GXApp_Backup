@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Attendance\Events\AndroidTest;
 use App\Attendance\Events\EmployeeClocked;
+use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
 use App\Traits\GlobalUtils;
@@ -407,6 +408,20 @@ class TestUploadController extends Controller
         }
 
         return 0;
+    }
+
+    public function dayoff()
+    {
+        $dayOffs = DayOffSchedule::select('date','description')->where('slotId', 1)->get();
+
+        $copyOfDaysOffs = array();
+
+        foreach ($dayOffs as $dayOff) {
+            $dayOffDate = Carbon::createFromFormat('d/m/Y',$dayOff->date)->addDay()->format('d/m/Y');
+            array_push($copyOfDaysOffs,array('slotId'=>2,'date'=>$dayOffDate,'description'=>$dayOff->description));
+        }
+
+        echo json_encode($copyOfDaysOffs);
     }
 
 }

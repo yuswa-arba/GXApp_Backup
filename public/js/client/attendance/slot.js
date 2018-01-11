@@ -2791,6 +2791,126 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AttemptCopySlotModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            copyToName: '',
+            copyAddBy: 0,
+            slotNameEmpty: false,
+            addDayEmpty: false
+        };
+    },
+    created: function created() {},
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('slots', {
+        copyFromSlotId: 'copyFromSlotId',
+        copyFromSlotName: 'copyFromSlotName'
+    })),
+    mounted: function mounted() {},
+
+
+    methods: {
+        closeModal: function closeModal() {
+            $('#modal-attempt-copy-slot').modal("toggle"); // close modal
+        },
+        copySlotNow: function copySlotNow() {
+            var self = this;
+
+            /* Reset error */
+            self.slotNameEmpty = false;
+            self.addDayEmpty = false;
+
+            /* Check name */
+            if (self.copyToName == '') {
+                self.slotNameEmpty = true;
+            }
+
+            /* Check add by */
+            if (self.copyAddBy == '' && self.copyAddBy != 0) {
+                self.addDayEmpty = true;
+            }
+
+            /* All field is filled*/
+            if (!self.addDayEmpty && !self.slotNameEmpty) {
+                self.$store.dispatch({
+                    type: 'slots/startCopySlot',
+                    slotName: self.copyToName,
+                    addBy: self.copyAddBy
+                });
+            }
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3187,6 +3307,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AttemptShiftMappingModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_slots_AttemptShiftMappingModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_slots_AttemptShiftMappingModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_slots_AttemptCopySlotModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/slots/AttemptCopySlotModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_slots_AttemptCopySlotModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_slots_AttemptCopySlotModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -3341,6 +3463,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -3348,7 +3479,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         "assign-slot-quickview": __WEBPACK_IMPORTED_MODULE_1__components_slots_AssignSlotQuickview_vue___default.a,
-        "attempt-shift-mapping-modal": __WEBPACK_IMPORTED_MODULE_2__components_slots_AttemptShiftMappingModal_vue___default.a
+        "attempt-shift-mapping-modal": __WEBPACK_IMPORTED_MODULE_2__components_slots_AttemptShiftMappingModal_vue___default.a,
+        "attempt-copy-slot-modal": __WEBPACK_IMPORTED_MODULE_3__components_slots_AttemptCopySlotModal_vue___default.a
     },
     data: function data() {
         return {
@@ -3426,6 +3558,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (confirm("Are you sure to delete this slot?")) {
                 this.$store.commit('slots/deleteSlot', slotId);
             }
+        },
+        copySlot: function copySlot(slotId, slotName) {
+            this.$store.dispatch({
+                type: 'slots/attemptCopySlot',
+                slotId: slotId,
+                slotName: slotName
+            });
         },
         shiftMapping: function shiftMapping() {
             this.$store.dispatch('slots/attempShiftMapping');
@@ -23129,6 +23268,181 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-23bfffbc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AttemptCopySlotModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade stick-up",
+      attrs: {
+        id: "modal-attempt-copy-slot",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("form", { attrs: { role: "form" } }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Copy from ")]),
+                    _vm._v(" "),
+                    _c("h4", { staticClass: "no-margin" }, [
+                      _vm._v(_vm._s(_vm.copyFromSlotName))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Copy to")]),
+                    _vm._v(" "),
+                    _vm.slotNameEmpty
+                      ? _c("p", { staticClass: "text-danger fs-12" }, [
+                          _vm._v("Slot name cannot be empty")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.copyToName,
+                          expression: "copyToName"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", placeholder: "Enter Slot Name" },
+                      domProps: { value: _vm.copyToName },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.copyToName = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Add days by: ")]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "help fs-12" }, [
+                      _vm._v("(Day off add by _ from the source being copied)")
+                    ]),
+                    _vm._v(" "),
+                    _vm.addDayEmpty
+                      ? _c("p", { staticClass: "text-danger fs-12" }, [
+                          _vm._v("Add day cannot be empty")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.copyAddBy,
+                          expression: "copyAddBy"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "number",
+                        min: "0",
+                        placeholder: "Enter Slot Name"
+                      },
+                      domProps: { value: _vm.copyAddBy },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.copyAddBy = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-8" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-block m-t-5",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.copySlotNow()
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Copy\n                        "
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close" })]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+        _vm._v("Copy Slot")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-23bfffbc", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2ecf4864\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/EditShiftModal.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23703,6 +24017,23 @@ var render = function() {
                                   }
                                 }
                               })
+                            : _vm._e(),
+                          _vm._v(
+                            "\n                                 \n                                "
+                          ),
+                          _vm._v(" "),
+                          slot.id != 1
+                            ? _c("i", {
+                                staticClass: "fs-14 fa fa-clipboard pointer",
+                                on: {
+                                  click: function($event) {
+                                    _vm.copySlot(slot.id, slot.name)
+                                  },
+                                  dblclick: function($event) {
+                                    $event.preventDefault()
+                                  }
+                                }
+                              })
                             : _vm._e()
                         ])
                       ])
@@ -23717,7 +24048,9 @@ var render = function() {
       _vm._v(" "),
       _c("assign-slot-quickview"),
       _vm._v(" "),
-      _c("attempt-shift-mapping-modal")
+      _c("attempt-shift-mapping-modal"),
+      _vm._v(" "),
+      _c("attempt-copy-slot-modal")
     ],
     1
   )
@@ -23737,13 +24070,29 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Job Related")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Allow Multiple")]),
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "100px" } },
+          [_vm._v("Allow Multiple")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Assigned to")]),
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "100px" } },
+          [_vm._v("Assigned to")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Shift Option")]),
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "100px" } },
+          [_vm._v("Shift Option")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "120px" } },
+          [_vm._v("Action")]
+        )
       ])
     ])
   }
@@ -39257,6 +39606,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/attendance/components/slots/AttemptCopySlotModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AttemptCopySlotModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-23bfffbc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/slots/AttemptCopySlotModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/attendance/components/slots/AttemptCopySlotModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-23bfffbc", Component.options)
+  } else {
+    hotAPI.reload("data-v-23bfffbc", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/attendance/components/slots/AttemptShiftMappingModal.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -39802,7 +40200,6 @@ module.exports = Component.exports
         var commit = _ref14.commit,
             state = _ref14.state;
 
-
         __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
             commit({
                 type: 'editShiftSchedule',
@@ -39816,6 +40213,52 @@ module.exports = Component.exports
             state.selectedCalendarEvent = '';
             cb(null);
         }]);
+    },
+    attemptCopySlot: function attemptCopySlot(_ref15, payload) {
+        var commit = _ref15.commit,
+            state = _ref15.state;
+
+
+        state.copyFromSlotId = payload.slotId;
+        state.copyFromSlotName = payload.slotName;
+
+        $('#modal-attempt-copy-slot').modal('show');
+    },
+    startCopySlot: function startCopySlot(_ref16, payload) {
+        var commit = _ref16.commit,
+            state = _ref16.state;
+
+
+        if (payload.slotName) {
+
+            commit({
+                type: 'copySlot',
+                slotName: payload.slotName,
+                addBy: payload.addBy
+            });
+
+            /* Show please wait notification */
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'Copying slot please wait...',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'success'
+            }).show();
+        } else {
+
+            /* Close modal */
+            $('#modal-attempt-copy-slot').modal('toggle');
+
+            /* Show error notification */
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'Error occured. Name not found',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        }
     }
 });
 
@@ -39911,7 +40354,9 @@ module.exports = Component.exports
         dateEndToAssign: '',
         isSavingShift: false,
         selectedShiftDetail: {},
-        selectedCalendarEvent: []
+        selectedCalendarEvent: [],
+        copyFromSlotId: '',
+        copyFromSlotName: ''
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -40443,6 +40888,51 @@ module.exports = Component.exports
                 // remove from array
                 var slotIndex = _.findIndex(state.slots, { id: slotId });
                 state.slots.splice(slotIndex, 1);
+            } else {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            /* Show error notification */
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    copySlot: function copySlot(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slot/copy', {
+            copyFromSlotId: state.copyFromSlotId,
+            slotName: payload.slotName,
+            addBy: payload.addBy
+        }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                /* Show success notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                /* Close modal */
+                $('#modal-attempt-copy-slot').modal('toggle');
+
+                /* Update data in array*/
+                if (res.data.copiedSlot.data) {
+                    state.slots.push(res.data.copiedSlot.data);
+                }
             } else {
                 /* Show error notification */
                 $('.page-container').pgNotification({

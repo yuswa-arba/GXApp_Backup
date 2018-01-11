@@ -61,10 +61,10 @@
                                 <th class="text-black">Name</th>
                                 <th class="text-black">Order</th>
                                 <th class="text-black">Job Related</th>
-                                <th class="text-black">Allow Multiple</th>
-                                <th class="text-black">Assigned to</th>
-                                <th class="text-black">Shift Option</th>
-                                <th class="text-black">Action</th>
+                                <th class="text-black" style="width: 100px;">Allow Multiple</th>
+                                <th class="text-black" style="width: 100px">Assigned to</th>
+                                <th class="text-black" style="width: 100px">Shift Option</th>
+                                <th class="text-black" style="width:120px">Action</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -133,6 +133,13 @@
                                        @click="deleteSlot(slot.id)"
                                        @dblclick.prevent=""
                                     ></i>
+                                    &nbsp;
+                                    <!--if its not general then show copy button-->
+                                    <i v-if="slot.id!=1"
+                                       class="fs-14 fa fa-clipboard pointer"
+                                       @click="copySlot(slot.id,slot.name)"
+                                       @dblclick.prevent=""
+                                    ></i>
 
 
                                 </td>
@@ -147,6 +154,7 @@
         </div>
         <assign-slot-quickview></assign-slot-quickview>
         <attempt-shift-mapping-modal></attempt-shift-mapping-modal>
+        <attempt-copy-slot-modal></attempt-copy-slot-modal>
     </div>
 </template>
 
@@ -154,10 +162,12 @@
     import {mapGetters} from 'vuex'
     import AssignSlotQuickview from '../../components/slots/AssignSlotQuickview.vue'
     import AttemptShiftMappingModal from '../../components/slots/AttemptShiftMappingModal.vue'
+    import AttemptCopySlotModal from '../../components/slots/AttemptCopySlotModal.vue'
     export default{
         components: {
             "assign-slot-quickview": AssignSlotQuickview,
-            "attempt-shift-mapping-modal": AttemptShiftMappingModal
+            "attempt-shift-mapping-modal": AttemptShiftMappingModal,
+            "attempt-copy-slot-modal" : AttemptCopySlotModal
         },
         data(){
             return {
@@ -238,6 +248,13 @@
                 if(confirm("Are you sure to delete this slot?")){
                     this.$store.commit('slots/deleteSlot',slotId)
                 }
+            },
+            copySlot(slotId,slotName){
+              this.$store.dispatch({
+                  type:'slots/attemptCopySlot',
+                  slotId:slotId,
+                  slotName:slotName
+              });
             },
             shiftMapping(){
                 this.$store.dispatch('slots/attempShiftMapping')

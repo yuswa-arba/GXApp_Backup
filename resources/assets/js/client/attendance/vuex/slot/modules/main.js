@@ -75,7 +75,9 @@ export default {
         dateEndToAssign:'',
         isSavingShift:false,
         selectedShiftDetail:{},
-        selectedCalendarEvent:[]
+        selectedCalendarEvent:[],
+        copyFromSlotId:'',
+        copyFromSlotName:''
     },
     getters,
     mutations,

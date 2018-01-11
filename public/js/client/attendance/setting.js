@@ -2688,6 +2688,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -31149,6 +31156,16 @@ var staticRenderFns = [
           _c("p", { staticClass: "fs-12" }, [
             _vm._v(
               "Slot maker only generates day off based on the settings, it means working days is\n                    all days(in the year\n                    of the slot maker executed) EXCEPT the day-off days"
+            )
+          ]),
+          _vm._v(" "),
+          _c("p", { staticClass: "fs-12" }, [
+            _vm._v(
+              "\n                    Repeating slot maker SHOULD NOT be in the same year. "
+            ),
+            _c("br"),
+            _vm._v(
+              "\n                    Repeated slot maker will follow the source slot maker\n                    first date and add by 1 year (ex. B is a copy of A. A first date is 01/02/2017, B first date will be 01/02/2018),\n                    therefore it will follow the same date pattern but not the day. If the day is important for this slot, it is\n                    recommended to generate a new slot maker instead of repeating the previous one.\n                "
             )
           ])
         ])

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
 use App\Attendance\Logics\AssignSlotLogic;
+use App\Attendance\Logics\CopySlotLogic;
 use App\Attendance\Logics\GetCalendarLogic;
 use App\Attendance\Logics\GetEmployeeListLogic;
 use App\Attendance\Logics\GetSlotListLogic;
@@ -19,33 +20,70 @@ class SlotController extends Controller
         return GetSlotListLogic::getData($request);
     }
 
+    public function copySlot(Request $request)
+    {
+        $validator = Validator::make($request->all(), ['copyFromSlotId' => 'required', 'slotName' => 'required','addBy'=>'required']);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Slot Id and name required';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        return CopySlotLogic::copy($request);
+    }
+
     public function calendar(Request $request)
     {
-        $request->validate(['slotId' => 'required']);
+        $validator = Validator::make($request->all(), ['slotId' => 'required']);
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Slot ID required';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
         return GetCalendarLogic::getData($request);
     }
 
     public function employeeList(Request $request)
     {
-        $request->validate(['slotId' => 'required']);
+        $validator = Validator::make($request->all(), ['slotId' => 'required']);
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Slot ID required';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
         return GetEmployeeListLogic::getData($request);
     }
 
     public function assign(Request $request)
     {
-        $request->validate([
-            'employeeId' => 'required|unique:employeeSlotSchedule',
-            'slotId' => 'required'
-        ]);
+        $validator = Validator::make($request->all(), ['slotId' => 'required','employeeId' => 'required|unique:employeeSlotSchedule']);
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'An error occured!';
+            return response()->json($response, 200);
+        }
 
         return AssignSlotLogic::assign($request);
     }
 
     public function remove(Request $request)
     {
-        $request->validate([
-            'employeeId' => 'required'
-        ]);
+        $validator = Validator::make($request->all(), ['employeeId' => 'required']);
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Employee ID required';
+            return response()->json($response, 200);
+        }
+
 
         return AssignSlotLogic::remove($request);
     }
@@ -53,25 +91,25 @@ class SlotController extends Controller
     public function delete(Request $request)
     {
         /* Validate */
-        $validator = Validator::make($request->all(),['slotId'=>'required']);
-        if($validator->fails()){
+        $validator = Validator::make($request->all(), ['slotId' => 'required']);
+        if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Slot ID required';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         // is valid
 
         $slot = Slots::find($request->slotId);
 
-        if($slot->update(['isDeleted'=>1])){
+        if ($slot->update(['isDeleted' => 1])) {
             $response['isFailed'] = false;
             $response['message'] = 'Slot has been deleted successfully';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         } else {
             $response['isFailed'] = true;
             $response['message'] = 'Failed! Unable to delete slot';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
     }
 
@@ -86,7 +124,7 @@ class SlotController extends Controller
             /* Return success response */
             $response['isFailed'] = false;
             $response['message'] = 'Slot has been edit successfully';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         } else {
             /* Return error response */
             $response['isFailed'] = true;
