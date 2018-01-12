@@ -92,27 +92,19 @@ class KioskAuthLogic extends AuthUseCase
         $kiosk = Kiosks::find($request->kioskId);
 
         if ($kiosk) {
-            if ($kiosk->passcode == $request->passcode) {
-                if ($kiosk->update(['apiToken' => ''])) {
-                    $response = array();
-                    $response['isFailed'] = false;
-                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
-                    $response['message'] = 'Logout successfully';
 
-                    return response()->json($response, 200);
-                } else {
-                    $response = array();
-                    $response['isFailed'] = true;
-                    $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
-                    $response['message'] = 'Unable to logout . Try again later';
+            if ($kiosk->update(['apiToken' => ''])) {
+                $response = array();
+                $response['isFailed'] = false;
+                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                $response['message'] = 'Logout successfully';
 
-                    return response()->json($response, 200);
-                }
+                return response()->json($response, 200);
             } else {
                 $response = array();
                 $response['isFailed'] = true;
-                $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['PASSCODE_NOT_MATCH'];
-                $response['message'] = 'Passcode does not match';
+                $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                $response['message'] = 'Unable to logout . Try again later';
 
                 return response()->json($response, 200);
             }

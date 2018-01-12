@@ -210,32 +210,40 @@
                 let cOutValid = false
 
                 /* Validate time format */
-                if (cInTime) {
+                if (cInTime && cOutTime) {
                     if (moment(cInTime, "HH:mm", true).isValid()) {
                         cInValid = true
                     } else {
                         cInValid = false
                         alert('Clock In time format is not valid (use 00:00 - 23:59 format)')
                     }
-                } else {
-                    alert('Clock In time cannot be empty')
-                }
 
-
-                /* Validate time format */
-                if (cOutTime) {
                     if (moment(cOutTime, "HH:mm", true).isValid()) {
                         cOutValid = true
                     } else {
                         cOutValid = false
                         alert('Clock Out time format is not valid (use 00:00 - 23:59 format)')
                     }
+
                 } else {
-                    alert('Clock Out time cannot be empty')
+
+                    this.$store.dispatch({
+                        type:'timesheet/cancelEditTimesheet',
+                        index: index,
+                        employeeNo: employeeNo,
+                    })
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Clock In & Clock Out cannot be empty. Edit canceled.',
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
                 }
 
-                if (cInValid && cOutValid && selectedShift && employeeId && date && employeeNo) {
 
+                if (cInValid && cOutValid && selectedShift && employeeId && date && employeeNo) {
 
                     if (timesheetId) {
                         this.$store.dispatch({
@@ -261,8 +269,6 @@
                         })
                     }
 
-                } else {
-                    alert('Something is missing')
                 }
 
             }

@@ -44,7 +44,6 @@ class KioskAuthController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'kioskId' => 'required',
-            'passcode' => 'required',
         ]);
 
         if ($validator->fails()) {

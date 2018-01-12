@@ -3359,19 +3359,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var cOutValid = false;
 
             /* Validate time format */
-            if (cInTime) {
+            if (cInTime && cOutTime) {
                 if (moment(cInTime, "HH:mm", true).isValid()) {
                     cInValid = true;
                 } else {
                     cInValid = false;
                     alert('Clock In time format is not valid (use 00:00 - 23:59 format)');
                 }
-            } else {
-                alert('Clock In time cannot be empty');
-            }
 
-            /* Validate time format */
-            if (cOutTime) {
                 if (moment(cOutTime, "HH:mm", true).isValid()) {
                     cOutValid = true;
                 } else {
@@ -3379,7 +3374,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     alert('Clock Out time format is not valid (use 00:00 - 23:59 format)');
                 }
             } else {
-                alert('Clock Out time cannot be empty');
+
+                this.$store.dispatch({
+                    type: 'timesheet/cancelEditTimesheet',
+                    index: index,
+                    employeeNo: employeeNo
+                });
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'Clock In & Clock Out cannot be empty. Edit canceled.',
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
             }
 
             if (cInValid && cOutValid && selectedShift && employeeId && date && employeeNo) {
@@ -3407,8 +3415,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         date: date
                     });
                 }
-            } else {
-                alert('Something is missing');
             }
         }
     }
@@ -39396,9 +39402,22 @@ module.exports = Component.exports
             });
         }
     },
-    saveEditTimesheet: function saveEditTimesheet(_ref7, payload) {
+    cancelEditTimesheet: function cancelEditTimesheet(_ref7, payload) {
         var commit = _ref7.commit,
             state = _ref7.state;
+
+        if (payload.employeeNo) {
+            _.forEach(state.timesheetSummaryData, function (value, parentKey) {
+                if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
+                    var timesheetNewData = state.timesheetSummaryData[parentKey];
+                    timesheetNewData.timesheet[payload.index].editing = false;
+                }
+            });
+        }
+    },
+    saveEditTimesheet: function saveEditTimesheet(_ref8, payload) {
+        var commit = _ref8.commit,
+            state = _ref8.state;
 
 
         if (payload.employeeNo) {
@@ -39421,9 +39440,9 @@ module.exports = Component.exports
             });
         }
     },
-    createNewTimesheet: function createNewTimesheet(_ref8, payload) {
-        var commit = _ref8.commit,
-            state = _ref8.state;
+    createNewTimesheet: function createNewTimesheet(_ref9, payload) {
+        var commit = _ref9.commit,
+            state = _ref9.state;
 
 
         if (payload.employeeNo) {

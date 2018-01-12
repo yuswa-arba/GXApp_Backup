@@ -66,6 +66,16 @@ export default{
 
         }
     },
+    cancelEditTimesheet({commit,state},payload){
+        if (payload.employeeNo) {
+            _.forEach(state.timesheetSummaryData,function(value,parentKey){
+                if(value['employee']['data']['employeeNo'] == payload.employeeNo){
+                    let timesheetNewData  = state.timesheetSummaryData[parentKey]
+                    timesheetNewData.timesheet[payload.index].editing = false;
+                }
+            })
+        }
+    },
     saveEditTimesheet({commit,state},payload){
 
         if (payload.employeeNo) {

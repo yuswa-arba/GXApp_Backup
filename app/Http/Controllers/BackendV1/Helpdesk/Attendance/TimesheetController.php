@@ -107,11 +107,11 @@ class TimesheetController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), ['timesheetId' => 'required','date'=>'required']);
+        $validator = Validator::make($request->all(), ['timesheetId' => 'required','date'=>'required','clockInTime'=>'required', 'clockOutTime'=>'required']);
 
         if ($validator->fails()) {
             $response['isFailed'] = true;
-            $response['message'] = 'Timesheet ID is required';
+            $response['message'] = 'Required params missing';
             return response()->json($response, 200);
         }
 
@@ -120,7 +120,12 @@ class TimesheetController extends Controller
         $timesheet->clockOutTime = $request->clockOutTime;
         $timesheet->clockInDate = $request->date;
         $timesheet->clockOutDate = $request->date;
-        $timesheet->shiftId = $request->shiftId;
+
+        /* if shift id exist. edit it*/
+        if($request->shiftId){
+            $timesheet->shiftId = $request->shiftId;
+        }
+
         $timesheet->attendanceApproveId = 3; // Edited By Manager
         $timesheet->approvedBy = !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '';
 
@@ -146,7 +151,6 @@ class TimesheetController extends Controller
             'employeeId' => 'required',
             'clockInTime'=>'required',
             'clockOutTime'=>'required',
-            'shiftId'=>'required',
             'date'=>'required'
         ]);
 
@@ -156,9 +160,15 @@ class TimesheetController extends Controller
             return response()->json($response, 200);
         }
 
+        /* Set default shift id */
+        $shiftId = 1;// general 8to17
+        if($request->shiftId!=''){
+            $shiftId = $request->shiftId;
+        }
+
         $create = AttendanceTimesheet::create([
             'employeeId'=>$request->employeeId,
-            'shiftId'=>$request->shiftId,
+            'shiftId'=>$shiftId,
             'clockInTime'=>$request->clockInTime,
             'clockOutTime'=>$request->clockOutTime,
             'clockInDate'=>$request->date,
