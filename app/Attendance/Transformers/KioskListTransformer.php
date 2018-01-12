@@ -29,7 +29,8 @@ class KioskListTransformer extends TransformerAbstract
             'batteryPower' => $kiosks->batteryPower,
             'isCharging' => $kiosks->isCharging,
             'isActivated' => $kiosks->isActivated,
-            'isInMaintenanceMode' => $kiosks->isInMaintenanceMode
+            'isInMaintenanceMode' => $kiosks->isInMaintenanceMode,
+            'editing' => false
         ];
     }
 }

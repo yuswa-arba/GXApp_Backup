@@ -55,10 +55,23 @@
                                     <tbody>
                                     <tr v-for="kiosk in kiosks">
                                         <td>{{kiosk.id}}</td>
-                                        <td>{{kiosk.codeName}}</td>
-                                        <td>{{kiosk.description}}</td>
+                                        <td>
+                                            <span v-if="!kiosk.editing">{{kiosk.codeName}}</span>
+                                            <input class="" :value="kiosk.codeName" type="text" v-else=""
+                                                   :name="'kioskCodeName'+kiosk.id">
+                                        </td>
+                                        <td>
+                                            <span v-if="!kiosk.editing">{{kiosk.description}}</span>
+                                            <input class="" :value="kiosk.description" type="text" v-else=""
+                                                   :name="'kioskDesc'+kiosk.id">
+                                        </td>
                                         <td>{{kiosk.activationCode}}</td>
-                                        <td>{{kiosk.passcode}}</td>
+                                        <td>
+                                            <span v-if="!kiosk.editing"> {{kiosk.passcode}}</span>
+                                            <input class="w-80" :value="kiosk.passcode" type="text" v-else=""
+                                                   :name="'kioskPasscode'+kiosk.id">
+
+                                        </td>
                                         <td>{{kiosk.batteryPower}}</td>
                                         <td>
                                             <i class="fs-16 text-complete fa fa-check" v-if="kiosk.isCharging==1"></i>
@@ -72,7 +85,10 @@
                                             <i class="fs-16 text-complete fa fa-check" v-if="kiosk.isActivated==1"></i>
                                             <i class="fs-16 text-danger fa fa-times" v-else=""></i></td>
                                         <td>
-                                            <i class="fs-14 text-success fa fa-refresh pointer"></i>
+                                            <i v-if="!kiosk.editing" class="fs-14 fa fa-pencil pointer"
+                                               @click="editKiosk(kiosk.id)"></i>
+                                            <span v-else="" class="fs-12 text-danger cursor"
+                                                  @click="saveEditingKiosk(kiosk.id)">DONE</span>
                                             &nbsp; &nbsp;
                                             <i class="fs-14 text-danger fa fa-trash pointer"
                                                @click="deleteKiosk(kiosk.id)"></i>
@@ -180,7 +196,7 @@
 //            },
             deleteKiosk(kioskId){
                 let self = this
-                if(confirm('Are you sure to delete this Kiosk?')){
+                if (confirm('Are you sure to delete this Kiosk?')) {
                     post(api_path + 'attendance/kiosk/delete', {id: kioskId})
                         .then((res) => {
                             if (!res.data.isFailed) {
@@ -194,8 +210,8 @@
                                 }).show();
 
                                 // remove kiosk from array
-                                let kioskIndex = _.findIndex(self.kiosks, {id:kioskId})
-                                self.kiosks.splice(kioskIndex, 1 )
+                                let kioskIndex = _.findIndex(self.kiosks, {id: kioskId})
+                                self.kiosks.splice(kioskIndex, 1)
 
                             } else {
                                 /* Show error notification */
@@ -219,6 +235,76 @@
                         })
 
                 }
+            },
+            editKiosk(kioskId){
+                let self = this
+
+                let kiosk = _.find(self.kiosks, {id: kioskId})
+                kiosk.editing = true
+
+            },
+            saveEditingKiosk(kioskId){
+                let self = this
+
+                let newPasscode = $('input[name="kioskPasscode' + kioskId+'"]').val()
+                let newDescription = $('input[name="kioskDesc' + kioskId+'"]').val()
+                let newCodeName = $('input[name="kioskCodeName' + kioskId+'"]').val()
+
+
+                post(api_path + 'attendance/kiosk/edit', {
+                    kioskId: kioskId,
+                    passcode: newPasscode,
+                    description: newDescription,
+                    codeName: newCodeName
+                })
+                    .then((res) => {
+
+                            let kiosk = _.find(self.kiosks, {id: kioskId})
+                            if (!res.data.isFailed) {
+
+                                //success notification
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+
+                                //insert new data
+                                kiosk.passcode = newPasscode
+                                kiosk.codeName = newCodeName
+                                kiosk.description = newDescription
+                                // close edit
+                                kiosk.editing = false
+                            } else {
+                                //error notification
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+
+                                //close edit
+                                kiosk.editing = false
+                            }
+                        }
+                    )
+                    .catch((err) => {
+                        //error notification
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    })
+
+
             }
         }
     }

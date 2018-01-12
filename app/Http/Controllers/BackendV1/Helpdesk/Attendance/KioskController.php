@@ -20,6 +20,7 @@ use App\Http\Controllers\Controller;
 class KioskController extends Controller
 {
     use GlobalUtils;
+
     public function create(Request $request)
     {
         $response = array();
@@ -54,8 +55,8 @@ class KioskController extends Controller
 
     public function delete(Request $request)
     {
-        $request->validate(['id'=>'required']);
-        $delete = Kiosks::where('id',$request->id)->update(['isDeleted'=>1]);
+        $request->validate(['id' => 'required']);
+        $delete = Kiosks::where('id', $request->id)->update(['isDeleted' => 1]);
         if ($delete) {
             $response['isFailed'] = false;
             $response['message'] = 'Kiosk has been deleted successfully';
@@ -67,6 +68,45 @@ class KioskController extends Controller
             return response()->json($response, 200);
 
         }
+    }
+
+    public function edit(Request $request)
+    {
+        $request->validate(['kioskId' => 'required']);
+
+        $kiosk = Kiosks::find($request->kioskId);
+        if ($kiosk) {
+
+            if($request->passcode){
+                $kiosk->passcode = $request->passcode;
+            }
+
+            if($request->description){
+                $kiosk->description = $request->description;
+            }
+
+            if($request->codeName){
+                $kiosk->codeName = $request->codeName;
+            }
+
+            if($kiosk->save()){
+                $response['isFailed'] = false;
+                $response['message'] = 'Kiosk has been saved successfully';
+                return response()->json($response, 200);
+            } else {
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to save kiosk';
+                return response()->json($response, 200);
+            }
+
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Kiosk not found';
+            return response()->json($response, 200);
+        }
+
+
     }
 
 }

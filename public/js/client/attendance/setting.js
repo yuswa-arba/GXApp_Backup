@@ -1893,6 +1893,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2010,6 +2026,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }).show();
                 });
             }
+        },
+        editKiosk: function editKiosk(kioskId) {
+            var self = this;
+
+            var kiosk = _.find(self.kiosks, { id: kioskId });
+            kiosk.editing = true;
+        },
+        saveEditingKiosk: function saveEditingKiosk(kioskId) {
+            var self = this;
+
+            var newPasscode = $('input[name="kioskPasscode' + kioskId + '"]').val();
+            var newDescription = $('input[name="kioskDesc' + kioskId + '"]').val();
+            var newCodeName = $('input[name="kioskCodeName' + kioskId + '"]').val();
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/kiosk/edit', {
+                kioskId: kioskId,
+                passcode: newPasscode,
+                description: newDescription,
+                codeName: newCodeName
+            }).then(function (res) {
+
+                var kiosk = _.find(self.kiosks, { id: kioskId });
+                if (!res.data.isFailed) {
+
+                    //success notification
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    //insert new data
+                    kiosk.passcode = newPasscode;
+                    kiosk.codeName = newCodeName;
+                    kiosk.description = newDescription;
+                    // close edit
+                    kiosk.editing = false;
+                } else {
+                    //error notification
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+
+                    //close edit
+                    kiosk.editing = false;
+                }
+            }).catch(function (err) {
+                //error notification
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
         }
     }
 });
@@ -31498,13 +31576,48 @@ var render = function() {
                           return _c("tr", [
                             _c("td", [_vm._v(_vm._s(kiosk.id))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(kiosk.codeName))]),
+                            _c("td", [
+                              !kiosk.editing
+                                ? _c("span", [_vm._v(_vm._s(kiosk.codeName))])
+                                : _c("input", {
+                                    attrs: {
+                                      type: "text",
+                                      name: "kioskCodeName" + kiosk.id
+                                    },
+                                    domProps: { value: kiosk.codeName }
+                                  })
+                            ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(kiosk.description))]),
+                            _c("td", [
+                              !kiosk.editing
+                                ? _c("span", [
+                                    _vm._v(_vm._s(kiosk.description))
+                                  ])
+                                : _c("input", {
+                                    attrs: {
+                                      type: "text",
+                                      name: "kioskDesc" + kiosk.id
+                                    },
+                                    domProps: { value: kiosk.description }
+                                  })
+                            ]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(kiosk.activationCode))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(kiosk.passcode))]),
+                            _c("td", [
+                              !kiosk.editing
+                                ? _c("span", [
+                                    _vm._v(" " + _vm._s(kiosk.passcode))
+                                  ])
+                                : _c("input", {
+                                    staticClass: "w-80",
+                                    attrs: {
+                                      type: "text",
+                                      name: "kioskPasscode" + kiosk.id
+                                    },
+                                    domProps: { value: kiosk.passcode }
+                                  })
+                            ]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(kiosk.batteryPower))]),
                             _vm._v(" "),
@@ -31542,10 +31655,27 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("td", [
-                              _c("i", {
-                                staticClass:
-                                  "fs-14 text-success fa fa-refresh pointer"
-                              }),
+                              !kiosk.editing
+                                ? _c("i", {
+                                    staticClass: "fs-14 fa fa-pencil pointer",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.editKiosk(kiosk.id)
+                                      }
+                                    }
+                                  })
+                                : _c(
+                                    "span",
+                                    {
+                                      staticClass: "fs-12 text-danger cursor",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.saveEditingKiosk(kiosk.id)
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("DONE")]
+                                  ),
                               _vm._v(
                                 "\n                                           \n                                        "
                               ),

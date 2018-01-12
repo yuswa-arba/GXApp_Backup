@@ -121,7 +121,6 @@ class KioskAuthLogic extends AuthUseCase
 
     public function handleActivation($request)
     {
-
         //is valid
 
         $kiosk = Kiosks::find($request->kioskId);
