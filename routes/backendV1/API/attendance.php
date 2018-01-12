@@ -57,6 +57,8 @@ Route::prefix('v1/a')->group(function () {
 
         Route::get('employee/setting/access/{employeeId}','KioskController@getEmployeeAccess');
 
+        Route::post('setting/access','KioskController@checkKioskPasscode');
+
         });
     });
 

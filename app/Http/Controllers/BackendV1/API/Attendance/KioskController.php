@@ -82,4 +82,48 @@ class KioskController extends Controller
         return response()->json($response,200);
     }
 
+    public function checkKioskPasscode(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'kioskId' => 'required',
+            'passcode' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            $response = array();
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        // is valid
+
+        $response = array();
+
+        $kiosk = Kiosks::find($request->kioskId);
+
+        if($kiosk){
+
+            if($kiosk->passcode == $request->passcode){
+                $response['isFailed'] = false;
+                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                $response['message'] = 'Success';
+            } else {
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['PASSCODE_NOT_MATCH'];
+                $response['message'] = 'Kiosk passcode does not match';
+            }
+
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['KIOSK_NOT_FOUND'];
+            $response['message'] = 'Kiosk not found';
+        }
+
+        return response()->json($response, 200);
+
+    }
+
 }
