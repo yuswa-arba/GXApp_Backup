@@ -80,8 +80,10 @@ class AjaxController extends Controller
             if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
 
                 /*Remove previous image*/
-                if(file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto)){
-                    unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto);
+                if($employee->idCardPhoto!='' && $employee->idCardPhoto!=null){
+                    if(file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto)){
+                        unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto);
+                    }
                 }
 
                 /*Save new image*/
@@ -94,8 +96,10 @@ class AjaxController extends Controller
             if ($request->hasFile('employeePhoto') && $request->file('employeePhoto')->isValid()) {
 
                 /*Remove previous image*/
-                if(file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto)){
-                    unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto);
+                if($employee->employeePhoto!=''&&$employee->employeePhoto!=null){
+                    if(file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto)){
+                        unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto);
+                    }
                 }
 
                 /*Save new image*/
