@@ -80,8 +80,9 @@ class AjaxController extends Controller
             if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
 
                 /*Remove previous image*/
-
-                unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto);
+                if(file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto)){
+                    unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto);
+                }
 
                 /*Save new image*/
                 $filename = $this->getImageName($request->idCardPhoto, $request->nickName);
@@ -93,7 +94,9 @@ class AjaxController extends Controller
             if ($request->hasFile('employeePhoto') && $request->file('employeePhoto')->isValid()) {
 
                 /*Remove previous image*/
-                unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto);
+                if(file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto)){
+                    unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto);
+                }
 
                 /*Save new image*/
                 $filename = $this->getImageName($request->employeePhoto, $request->nickName);
