@@ -115,7 +115,7 @@
                                 message: "Schedule is being refreshed and checked",
                                 position: 'top-right',
                                 timeout: 3500,
-                                type: 'danger'
+                                type: 'success'
                             }).show();
                         }
                     })
