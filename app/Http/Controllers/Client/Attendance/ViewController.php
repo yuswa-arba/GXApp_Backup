@@ -17,6 +17,11 @@ class ViewController extends Controller
         return view('pages.attendance.slot');
     }
 
+    public function schedule()
+    {
+        return view('pages.attendance.schedule');
+    }
+
 
     public function setting()
     {

@@ -26,5 +26,6 @@ Route::prefix('attendance')->namespace('Client\Attendance')->middleware('auth.ad
     Route::get('dashboard/', 'ViewController@dashboard')->name('attendance.dashboard');
     Route::get('setting/', 'ViewController@setting')->name('attendance.setting');
     Route::get('slot/', 'ViewController@slot')->name('attendance.slot');
+    Route::get('schedule/', 'ViewController@schedule')->name('attendance.schedule');
     Route::get('timesheet', 'ViewController@timesheet')->name('attendance.timesheet');
 });

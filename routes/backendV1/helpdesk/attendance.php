@@ -29,6 +29,8 @@ Route::prefix('v1/h')->group(function () {
         Route::post('slot/delete','SlotController@delete')->name('v1.slot.delete');
         Route::post('slot/copy','SlotController@copySlot')->name('v1.slot.copySlot');
 
+        Route::get('schedule','ScheduleController@getSchedule')->name('v1.schedule');
+        Route::get('schedule/check','ScheduleController@checkSchedule')->name('v1.check.schedule');
 
         Route::post('shift/create','ShiftController@create')->name('v1.shift.create');
         Route::post('shift/delete','ShiftController@delete')->name('v1.shift.delete');

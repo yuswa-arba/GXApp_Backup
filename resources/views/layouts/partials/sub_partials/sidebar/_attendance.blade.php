@@ -14,8 +14,8 @@
                 <span class="icon-thumbnail">ts</span>
             </li>
             <li class="">
-                <a href="#">Calendar & Leave</a>
-                <span class="icon-thumbnail">cl</span>
+                <a href="{{route('attendance.schedule')}}">Schedule</a>
+                <span class="icon-thumbnail">sc</span>
             </li>
             <li class="">
                 <a href="{{route('attendance.slot')}}">Slots</a>

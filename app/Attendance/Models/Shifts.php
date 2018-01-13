@@ -15,4 +15,9 @@ class Shifts extends Model
         'breakEndAt',
         'isOvernight',
     ];
+
+    public function attdSchedule()
+    {
+        return $this->hasOne(AttendanceSchedule::class,'shiftId');
+    }
 }
