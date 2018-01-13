@@ -1765,7 +1765,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         message: "Schedule is being refreshed and checked",
                         position: 'top-right',
                         timeout: 3500,
-                        type: 'danger'
+                        type: 'success'
                     }).show();
                 }
             }).catch(function (err) {
