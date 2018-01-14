@@ -40,5 +40,10 @@ class ViewController extends Controller
         );
     }
 
+    public function resignation()
+    {
+        return view('pages.employee.resignation');
+    }
+
 
 }

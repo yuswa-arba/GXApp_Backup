@@ -10,8 +10,12 @@
             <span class="icon-thumbnail">l</span>
         </li>
         <li class="">
-            <a href="{{route('employee.recruitment.form')}}">Recruitment</a>
+            <a href="{{route('employee.recruitment')}}">Recruitment</a>
             <span class="icon-thumbnail">r</span>
+        </li>
+        <li class="">
+            <a href="{{route('employee.resignation')}}">Resignation</a>
+            <span class="icon-thumbnail">rg</span>
         </li>
     </ul>
 </li>

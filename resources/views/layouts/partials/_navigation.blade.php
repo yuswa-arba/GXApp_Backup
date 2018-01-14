@@ -29,7 +29,7 @@
             <li class="p-r-10 inline">
                 <div class="dropdown">
                     <a href="javascript:;" id="notification-center" class="header-icon pg pg-world"
-                       data-toggle="dropdown">
+                       data-toggle="quickview" data-toggle-element="#quickview">
                         <span class="bubble"></span>
                     </a>
                     <!-- START Notification Dropdown -->
@@ -164,9 +164,9 @@
             <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
               <span class="thumbnail-wrapper d32 circular inline">
-              <img src="{{asset('core/img/profiles/avatar.jpg')}}" alt=""
-                   data-src="{{asset('core/img/profiles/avatar.jpg')}}"
-                   data-src-retina="{{asset('core/img/profiles/avatar_small2x.jpg')}}" width="32" height="32">
+              <img src="/images/employee/{{!is_null(Auth::user()->employee) ? Auth::user()->employee->employeePhoto : ''}}" alt=""
+                   data-src="/images/employee/{{!is_null(Auth::user()->employee) ? Auth::user()->employee->employeePhoto : ''}}"
+                   data-src-retina="/images/employee/{{!is_null(Auth::user()->employee) ? Auth::user()->employee->employeePhoto : ''}}" width="32" height="32">
               </span>
             </button>
             <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
@@ -180,8 +180,9 @@
             </div>
         </div>
         <!-- END User Info-->
-        <a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block"
-           data-toggle="quickview" data-toggle-element="#quickview"></a>
+        {{--<a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block"--}}
+           {{--data-toggle="quickview" data-toggle-element="#quickview"></a>--}}
+
 
         <form id="logout-form" action="{{route('logout')}}" method="post" style="display: none">
             {{csrf_field()}}

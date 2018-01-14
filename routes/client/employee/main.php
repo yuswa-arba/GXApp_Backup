@@ -18,5 +18,7 @@ Route::namespace('Client\Employee')->prefix('employee')->middleware('auth.admin'
     })->name('employee');
 
     Route::get('list', 'ViewController@index')->name('employee.list');
-    Route::get('recruitment', 'ViewController@recruitment')->name('employee.recruitment.form');
+    Route::get('recruitment', 'ViewController@recruitment')->name('employee.recruitment');
+    Route::get('resignation', 'ViewController@resignation')->name('employee.resignation');
+
 });

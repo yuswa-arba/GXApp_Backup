@@ -89,9 +89,9 @@ class AttendanceLogic extends AttendanceUseCase
             ->first();
 
         if ($existingTimeSheet != null) {
-            /* Return response employee has clocked in before */
+            /* Return response employee has clocked out before */
             $response['isFailed'] = true;
-            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['ALREADY_CLOCKED_IN'];
+            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['ALREADY_CLOCKED_OUT'];
             $response['message'] = 'You have clocked out before at ' . $existingTimeSheet->clockOutTime;
             return response()->json($response, 200);
 
@@ -168,22 +168,14 @@ class AttendanceLogic extends AttendanceUseCase
         if ($employee != null) {
 
             $shiftId = 1;//default shiftId
+            $slotId = 1;//default slotId
 
             $employeeSlotSchedule = EmployeeSlotSchedule::where('employeeId', $employeeId)->first();
 
             if ($employeeSlotSchedule != null) {
 
                 $slot = $employeeSlotSchedule->slot;
-
-                /* Check public holidays and day off for this slot */
-                $dayOffSchedule = DayOffSchedule::where('slotId', $slot->id)->where('date', Carbon::now()->format('d/m/Y'))->first();
-                if ($dayOffSchedule) {
-                    // return error response
-                    $response['isFailed'] = true;
-                    $response['code'] = ResponseCodes::$ATTD_ERR_CODES['IS_DAY_OFF'];
-                    $response['message'] = 'Error clocking. Day off: ' . $dayOffSchedule->description;
-                    return $response;
-                }
+                $slotId = $slot->id;
 
                 /* Get shift ID if exist*/
                 $slotShiftSchedule = SlotShiftSchedule::where('slotId', $slot->id)->where('date', Carbon::now()->format('d/m/Y'))->first(['shiftId']);
@@ -198,6 +190,18 @@ class AttendanceLogic extends AttendanceUseCase
                     $shiftId = 1; // use default shift ID
                 }
 
+            }
+
+            /* Check public holidays and day off for this slot */
+            $dayOffSchedule = DayOffSchedule::where('slotId', $slotId)->where('date', Carbon::now()->format('d/m/Y'))->first();
+
+            if ($dayOffSchedule!=null) {
+                // return error response
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['IS_DAY_OFF'];
+                $response['message'] = 'Error clocking. Day off: ' . $dayOffSchedule->description;
+                $response['isAllowed'] = false;
+                return $response;
             }
 
 
@@ -231,6 +235,7 @@ class AttendanceLogic extends AttendanceUseCase
             } elseif ($punchType == 'out') {
 
                 if ($attdSchedule->allowedToCheckOut == 1) {
+
                     $response['isFailed'] = false;
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Allowed to Clock-Out';
