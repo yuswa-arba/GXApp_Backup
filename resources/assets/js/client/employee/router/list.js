@@ -4,15 +4,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Index from '../views/Index.vue'
-import DetailMaster from '../views/DetailMaster.vue'
-import DetailEmployment from '../views/DetailEmployment.vue'
-import DetailFaceAPI from '../views/DetailFaceAPI.vue'
-import DetailLogin from '../views/DetailLogin.vue'
+import Index from '../views/list/Index.vue'
+import DetailMaster from '../views/list/DetailMaster.vue'
+import DetailEmployment from '../views/list/DetailEmployment.vue'
+import DetailFaceAPI from '../views/list/DetailFaceAPI.vue'
+import DetailLogin from '../views/list/DetailLogin.vue'
 
-import EditMaster from '../views/EditMaster.vue'
-import EditEmployment from '../views/EditEmployment.vue'
-import EditLogin from '../views/EditLogin.vue'
+import EditMaster from '../views/list/EditMaster.vue'
+import EditEmployment from '../views/list/EditEmployment.vue'
+import EditLogin from '../views/list/EditLogin.vue'
 import NotFound from '../../helpers/NotFound.vue'
 
 Vue.use(VueRouter)

@@ -40,31 +40,44 @@
 
             <div class="card card-default filter-item">
                 <div class="card-header ">
-                    <div class="card-title">Login Details</div>
+                    <div class="card-title">Employment Details</div>
 
                 </div>
                 <div class="card-block">
                     <div class="row">
-                        <div class="col-lg-6 employee-details">
-                            <label>Username / E-mail</label>
-                            <h5>{{detail.email}}</h5>
+                        <div class="col-lg-12 employee-details">
+                            <label>Job Position</label>
+                            <h5>{{detail.jobPosition}}</h5>
                         </div>
 
-                        <div class="col-lg-6 employee-details">
-                            <label>Access Status</label>
-                            <h5>{{detail.accessStatus}}</h5>
+                        <div class="col-lg-12 employee-details">
+                            <label>Division</label>
+                            <h5>{{detail.division}}</h5>
                         </div>
 
-                        <div class="col-lg-6 employee-details">
-                            <label>Allow Super Admin</label>
-                            <h5 v-if="detail.allowSuperAdminAccess">True</h5>
-                            <h5 v-else>False</h5>
+                        <div class="col-lg-12 employee-details">
+                            <label>Branch Office</label>
+                            <h5>{{detail.branchOffice}}</h5>
                         </div>
 
-                        <div class="col-lg-6 employee-details">
-                            <label>Allow Admin</label>
-                            <h5 v-if="detail.allowAdminAccess">True</h5>
-                            <h5 v-else>False</h5>
+                        <div class="col-lg-12 employee-details">
+                            <label>Recruitment Status</label>
+                            <h5>{{detail.recruitmentStatus}}</h5>
+                        </div>
+
+                        <div class="col-lg-12 employee-details">
+                            <label>Date of Entry</label>
+                            <h5>{{detail.dateOfEntry}}</h5>
+                        </div>
+
+                        <div class="col-lg-12 employee-details">
+                            <label>Date of Start</label>
+                            <h5>{{detail.dateOfStart}}</h5>
+                        </div>
+
+                        <div class="col-lg-12 employee-details">
+                            <label>Date of Resignation</label>
+                            <h5>{{detail.dateOfResignation}}</h5>
                         </div>
 
                     </div>
@@ -76,8 +89,8 @@
     </div>
 </template>
 <script type="text/javascript">
-    import {get, post} from '../../helpers/api'
-    import {api_path} from '../../helpers/const'
+    import {get, post} from '../../../helpers/api'
+    import {api_path} from '../../../helpers/const'
     export default{
         data(){
             return {
@@ -85,15 +98,10 @@
             }
         },
         created(){
-            get(api_path + 'employee/detail/login/' + this.$route.params.id)
+            get(api_path + 'employee/detail/employment/' + this.$route.params.id)
                 .then((res) => {
-                    this.detail = res.data.detail.data
-                })
-        },
-        methods:{
-            save(){
-                this.$bus.$emit('save:login_detail',this.form)
-            }
+                this.detail = res.data.detail.data
+            })
         }
     }
 </script>

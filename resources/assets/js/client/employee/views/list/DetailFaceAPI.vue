@@ -131,9 +131,9 @@
     </div>
 </template>
 <script type="text/javascript">
-    import {get, post, del, faceGet, facePut, facePost, faceDel, facePostOctet} from '../../helpers/api'
-    import {api_path, faceBaseUrl, faceSubKey , microsoftPersonGroupId} from '../../helpers/const'
-    import {makeBlob, objectToFormData} from'../../helpers/utils'
+    import {get, post, del, faceGet, facePut, facePost, faceDel, facePostOctet} from '../../../helpers/api'
+    import {api_path, faceBaseUrl, faceSubKey , microsoftPersonGroupId} from '../../../helpers/const'
+    import {makeBlob, objectToFormData} from'../../../helpers/utils'
     export default{
         data(){
             return {

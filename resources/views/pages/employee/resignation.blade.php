@@ -15,7 +15,9 @@
 @endpush
 
 @push('child-page-controller')
-@include('layouts.partials.snippets._notification_to_zoom_out')
+<script src="{{mix('js/client/employee/resignation.js')}}"></script>
+
+
 @endpush
 
 @section('content')
@@ -36,23 +38,19 @@
             </div>
         </div>
         <!-- END JUMBOTRON -->
-        <!-- START CONTAINER FLUID -->
+
         <div class="container-fluid container-fixed-lg">
-            <!-- BEGIN PlACE PAGE CONTENT HERE -->
-            <div id="" class="m-t-50">
-                <!-- Nav tabs -->
-
-                <!-- Error Response -->
-                <div id="errors-container" class="alert alert-danger hide" role="alert">
-                    <strong>Error: </strong> <span id="errors-value"></span>
-                </div>
-                <!-- End of Error Response -->
-
-                <!-- Tab panes -->
+            <!-- Error Response -->
+            <div id="errors-container" class="alert alert-danger hide" role="alert">
+                <strong>Error: </strong> <span id="errors-value"></span>
             </div>
-            <!-- END PLACE PAGE CONTENT HERE -->
+            <!-- End of Error Response -->
         </div>
-        <!-- END CONTAINER FLUID -->
+
+        <div class="filter-container">
+            <div id="vc-employee-resignation"></div>
+        </div>
+
     </div>
     <!-- END PAGE CONTENT -->
 

@@ -5,8 +5,8 @@
 require('../../bootstrap'); // axio, vue , vue-router, lodash, etc
 
 import Vue from 'vue'
-import MainList from './MainList.vue'
-import router from './router/list'
+import MainResignation from './MainResignation.vue'
+import router from './router/resignation'
 
 // Create a global Event Bus
 let EventBus = new Vue()
@@ -21,8 +21,8 @@ Object.defineProperties(Vue.prototype, {
 })
 
 const app = new Vue({
-    el:'#vc-employee-list',
-    template:`<main-list></main-list>`,
-    components:{MainList},
+    el:'#vc-employee-resignation',
+    template:`<main-resignation></main-resignation>`,
+    components:{MainResignation},
     router
 })

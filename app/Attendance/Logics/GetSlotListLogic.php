@@ -17,6 +17,10 @@ class GetSlotListLogic extends GetSlotDataUseCase
 {
     use GlobalUtils;
 
+    /*
+     * @description : get Slots where it is created on current year / all, and its not deleted
+     * */
+
     public function handleGetAllSlot($request)
     {
         $getOnlyCurrentYear = false;

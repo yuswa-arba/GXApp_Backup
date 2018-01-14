@@ -20,6 +20,12 @@ class CopySlotLogic extends CopySlotUseCase
     use GlobalUtils;
 
 
+    /*
+     * @body : copyFromSlotId (int) , name (string), addBy (int)
+     * @description : copy slots from an existing one and add by specific day,
+     *                if not it will be duplicated
+     *
+     * */
     public function handleCopy($formRequest)
     {
         $slot = Slots::find($formRequest->copyFromSlotId);

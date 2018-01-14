@@ -18,10 +18,15 @@ use Illuminate\Support\Facades\Validator;
 class DashboardController extends Controller
 {
 
+    /*
+     *  @description  : get timesheet feeds on current date, where clock time is not empty,
+     *                  its not manually input (attendanceValidation != 98 )
+     *
+     * */
     public function livefeed()
     {
-        $timesheetIn = AttendanceTimesheet::where('clockInDate',Carbon::now()->format('d/m/Y'))->where('clockInTime','!=','')->orderBy('clockInTime','desc')->get();
-        $timesheetOut = AttendanceTimesheet::where('clockOutDate',Carbon::now()->format('d/m/Y'))->where('clockOutTime','!=','')->orderBy('clockOutTime','desc')->get();
+        $timesheetIn = AttendanceTimesheet::where('clockInDate',Carbon::now()->format('d/m/Y'))->where('clockInTime','!=','')->where('attendanceValidationId','!=',98)->orderBy('clockInTime','desc')->get();
+        $timesheetOut = AttendanceTimesheet::where('clockOutDate',Carbon::now()->format('d/m/Y'))->where('clockOutTime','!=','')->where('attendanceValidationId','!=',98)->orderBy('clockOutTime','desc')->get();
 
         $response = array();
         $response['in'] = fractal($timesheetIn,new LiveClockInFeedTransformer());
