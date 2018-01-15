@@ -14,6 +14,7 @@ class Configs
         'ATTENDANCE_PHOTO' => 'public/images/attendances/',
         'FACES_PHOTO' => 'public/images/faces/',
         'EMPLOYEE_PHOTO' => 'public/images/employee/',
+        'RESIGNATION_PHOTO' => 'public/images/resignation/',
     ];
 
     public static $PUNCH_TYPE = [

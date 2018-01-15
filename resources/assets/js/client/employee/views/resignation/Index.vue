@@ -1,5 +1,12 @@
 <template>
-    <div class="row row-same-height">
+    <div class="row">
+
+        <div class="col-lg-12 m-b-10 m-t-10">
+
+            <button class="btn btn-danger pull-right" @click="goToResignList()">Resigned List</button>
+
+        </div>
+
         <div class="col-lg-6">
 
             <div class="card card-default">
@@ -239,16 +246,25 @@
                 self.formObject.effectiveDate = $('#effectiveDate').val()
 
                 if (self.formObject.employeeId
-                    && self.formObject.submissionDate
                     && self.formObject.effectiveDate
-                    && self.formObject.resignationLetter
-                    && self.formObject.reason
                     && self.formObject.professionalism
                 ) {
                     post(api_path + 'employee/resignation', objectToFormData(self.formObject))
                         .then((res) => {
 
                             if (!res.data.isFailed) {
+
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+                                /* Reset forms */
+                                /* Go to resignation list detail */
+                                self.goToResignList()
 
                             } else {
                                 $('.page-container').pgNotification({
@@ -280,6 +296,9 @@
                         type: 'danger'
                     }).show();
                 }
+            },
+            goToResignList(){
+                this.$router.push('/list')
             }
 
         },

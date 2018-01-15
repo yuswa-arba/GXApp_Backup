@@ -25,6 +25,7 @@ Route::prefix('v1/h')->group(function (){
         Route::get('search/{searchText}','ListController@searchEmployee')->name('v1.list.search');
 
         Route::get('list','ListController@mainList');
+        Route::get('list/resigned','ListController@resignedList');
         Route::get('detail/master/{id}','AjaxController@masterEmployeeDetail');
         Route::get('detail/faceapi/{employeeId}','AjaxController@faceAPIDetail');
         Route::get('detail/employment/{employeeId}','AjaxController@employmentDetail');

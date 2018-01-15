@@ -43,7 +43,7 @@ class VdByPermissionTransformer extends TransformerAbstract
 
     public function includeAllUsers(Permission $permission)
     {
-        $users =User::all();
+        $users =User::where('accessStatusId',1)->get();
         return $this->collection($users,new UserTransformer,'users');
     }
 

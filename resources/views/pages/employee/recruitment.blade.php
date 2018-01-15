@@ -40,7 +40,7 @@
         <!-- START CONTAINER FLUID -->
         <div class="container-fluid container-fixed-lg">
             <!-- BEGIN PlACE PAGE CONTENT HERE -->
-            <div id="rootwizard" class="m-t-50">
+            <div id="rootwizard" class="">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm no-click" role="tablist"
                     data-init-reponsive-tabs="dropdownfx">

@@ -69,6 +69,7 @@ class CreateMasterEmployeeTable extends Migration
             $table->string('bankHolderName')->nullable();
             $table->string('bankBranch')->nullable();
             $table->string('bankCity')->nullable();
+            $table->tinyInteger('hasResigned')->default(0);
             $table->timestamps();
         });
     }

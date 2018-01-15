@@ -15,6 +15,14 @@ class CreateResignationTable extends Migration
     {
         Schema::create('resignation', function (Blueprint $table) {
             $table->increments('id');
+            $table->uuid('employeeId');
+            $table->string('submissionDate')->nullable();
+            $table->string('effectiveDate');
+            $table->string('resignationLetter')->nullable();
+            $table->string('professionalism');
+            $table->string('reason')->nullable();
+            $table->string('notes')->nullable();
+            $table->string('submittedBy')->nullable();
             $table->timestamps();
         });
     }
