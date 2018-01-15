@@ -20,6 +20,7 @@ Route::prefix('v1/h')->group(function (){
 //        Route::post('create','RecruitmentController@create')->name('v1.recruitment.create');
         Route::post('create','RecruitmentController@createEmployee')->name('v1.recruitment.create');
         Route::post('employment','RecruitmentController@submitEmployment')->name('v1.recruitment.employment');
+        Route::post('resignation','ResignationController@resign')->name('v1.resignation');
         Route::post('upload','RecruitmentController@uploadImage')->name('v1.recruitment.upload');
         Route::get('search/{searchText}','ListController@searchEmployee')->name('v1.list.search');
 

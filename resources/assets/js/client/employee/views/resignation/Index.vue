@@ -71,50 +71,71 @@
                                        :value="employeeData.givenName+' '+employeeData.surname +' ('+ employeeData.employeeNo +') '">
                             </div>
                         </div>
-                        <div class="col-lg-6">
-                            <div class="form-group form-group-default required">
-                                <label>Submission Date</label>
-                                <input type="text"
-                                       class="form-control datepicker"
-                                       required>
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="form-group form-group-default required">
-                                <label>Effective Resignation Date</label>
-                                <input type="text"
-                                       class="form-control datepicker"
-                                       required>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group form-group-default required">
-                                <label> Resignation Letter </label>
-                                <input id="resignationLetter"
-                                       type="file"
-                                       name="resignationLetter"
-                                       accept="image/*"
-                                       required/>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group form-group-default required">
-                                <label> Reason of Resignation </label>
-                                <input type="text" class="form-control" required>
-                            </div>
-
-                        </div>
                         <div class="col-lg-12">
                             <div class="form-group form-group-default required">
                                 <label> Professionalism </label>
-                                <select class="form-control">
+                                <select class="form-control" v-model="formObject.professionalism">
                                     <option value="professional">Professional</option>
                                     <option value="unprofessional">Unprofessional</option>
                                 </select>
                             </div>
                         </div>
+                        <div class="col-lg-6"
+                             :class="{hide:formObject.professionalism=='unprofessional'}">
+
+                            <div class="form-group form-group-default required">
+                                <label>Submission Date</label>
+                                <input type="text"
+                                       id="submissionDate"
+                                       class="form-control datepicker"
+                                       required>
+                            </div>
+                        </div>
+                        <div :class="{'col-lg-12':formObject.professionalism=='unprofessional','col-lg-6':formObject.professionalism=='professional'}"
+                             class="col-lg-6">
+                            <div class="form-group form-group-default required">
+                                <label>Effective Resignation Date</label>
+                                <input type="text"
+                                       id="effectiveDate"
+                                       class="form-control datepicker"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" :class="{hide:formObject.professionalism=='unprofessional'}">
+                            <div class="form-group form-group-default required">
+                                <label> Resignation Letter </label>
+                                <input id="resignationLetter"
+                                       type="file"
+                                       @change="insertLetterToForm($event)"
+                                       name="resignationLetter"
+                                       accept="image/*"
+                                       required/>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" :class="{hide:formObject.professionalism=='unprofessional'}">
+                            <div class="form-group form-group-default required">
+                                <label> Reason of Resignation </label>
+                                <input type="text"
+                                       v-model="formObject.reason"
+                                       class="form-control"
+                                       required>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" :class="{hide:formObject.professionalism!='unprofessional'}">
+                            <div class="form-group form-group-default required">
+                                <label> Notes </label>
+                                <input type="text"
+                                       v-model="formObject.notes"
+                                       class="form-control"
+                                       required>
+                            </div>
+                        </div>
                         <div class="col-lg-12">
-                            <button class="pull-right btn btn-primary" :disabled="formNotComplete">Save</button>
+                            <button class="pull-right btn btn-primary"
+                                    @click="saveResignation()"
+                                    :disabled="disableSaveBtn"
+                            >Save
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -125,12 +146,13 @@
 </template>
 <script type="text/javascript">
     import {get, post} from '../../../helpers/api'
+    import {objectToFormData} from '../../../helpers/utils'
     import {api_path} from '../../../helpers/const'
     export default{
         data(){
             return {
                 searchText: '',
-                formNotComplete: true,
+                disableSaveBtn: true,
                 candidates: [],
                 employeeData: {
                     employeeId: '',
@@ -138,7 +160,16 @@
                     givenName: '',
                     surname: ''
                 },
-                employeePicked: false
+                employeePicked: false,
+                formObject: {
+                    employeeId: '',
+                    submissionDate: '',
+                    effectiveDate: '',
+                    resignationLetter: {},
+                    reason: '',
+                    professionalism: 'professional',
+                    notes: ''
+                }
             }
         },
         methods: {
@@ -192,7 +223,65 @@
                 self.employeeData.surname = candidateSurname
 
                 self.employeePicked = true
+                self.disableSaveBtn = false
+
+                self.formObject.employeeId = self.employeeData.employeeId
+            },
+            insertLetterToForm(e){
+                let self = this
+                self.formObject.resignationLetter = e.target.files[0]
+            },
+
+            saveResignation(){
+                let self = this
+
+                self.formObject.submissionDate = $('#submissionDate').val()
+                self.formObject.effectiveDate = $('#effectiveDate').val()
+
+                if (self.formObject.employeeId
+                    && self.formObject.submissionDate
+                    && self.formObject.effectiveDate
+                    && self.formObject.resignationLetter
+                    && self.formObject.reason
+                    && self.formObject.professionalism
+                ) {
+                    post(api_path + 'employee/resignation', objectToFormData(self.formObject))
+                        .then((res) => {
+
+                            if (!res.data.isFailed) {
+
+                            } else {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            }
+
+                        })
+                        .catch((err) => {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        })
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: "Form has to be completed",
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
             }
+
         },
         mounted(){
 

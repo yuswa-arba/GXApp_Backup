@@ -21,10 +21,16 @@ abstract class ResignationUseCase
 
     public static function resign(Request $request)
     {
-        return (new static)->handleResignation($request);
+        if ($request->professionalism == 'professional'){
+            return (new static)->handleProfessionalResignation($request);
+        } else {
+            return (new static)->handleUnprofessionalResignation($request);
+        }
+
     }
 
-    abstract public function handleResignation($string);
+    abstract public function handleProfessionalResignation($request);
+    abstract public function handleUnprofessionalResignation($request);
 
 
 }

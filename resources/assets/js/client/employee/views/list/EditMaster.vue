@@ -457,11 +457,9 @@
             },
             insertEmployeePhotoToForm(e){
                 this.form.employeePhoto = e.target.files[0]
-                console.log(e.target.files[0])
             },
             insertIDCardPhotoToForm(e){
                 this.form.idCardPhoto = e.target.files[0]
-                console.log(e.target.files[0])
             }
         }
     }

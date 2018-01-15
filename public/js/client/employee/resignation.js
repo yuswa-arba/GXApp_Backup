@@ -1641,7 +1641,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_utils__ = __webpack_require__("./resources/assets/js/client/helpers/utils.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 //
 //
 //
@@ -1767,6 +1768,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -1774,7 +1797,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             searchText: '',
-            formNotComplete: true,
+            disableSaveBtn: true,
             candidates: [],
             employeeData: {
                 employeeId: '',
@@ -1782,7 +1805,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 givenName: '',
                 surname: ''
             },
-            employeePicked: false
+            employeePicked: false,
+            formObject: {
+                employeeId: '',
+                submissionDate: '',
+                effectiveDate: '',
+                resignationLetter: {},
+                reason: '',
+                professionalism: 'professional',
+                notes: ''
+            }
         };
     },
 
@@ -1791,7 +1823,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var self = this;
             if (self.searchText) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/search/' + self.searchText).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_2__helpers_const__["a" /* api_path */] + 'employee/search/' + self.searchText).then(function (res) {
                     if (!res.data.isFailed) {
                         if (res.data.candidates.data) {
                             self.candidates = res.data.candidates.data;
@@ -1833,6 +1865,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.employeeData.surname = candidateSurname;
 
             self.employeePicked = true;
+            self.disableSaveBtn = false;
+
+            self.formObject.employeeId = self.employeeData.employeeId;
+        },
+        insertLetterToForm: function insertLetterToForm(e) {
+            var self = this;
+            self.formObject.resignationLetter = e.target.files[0];
+        },
+        saveResignation: function saveResignation() {
+            var self = this;
+
+            self.formObject.submissionDate = $('#submissionDate').val();
+            self.formObject.effectiveDate = $('#effectiveDate').val();
+
+            if (self.formObject.employeeId && self.formObject.submissionDate && self.formObject.effectiveDate && self.formObject.resignationLetter && self.formObject.reason && self.formObject.professionalism) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_2__helpers_const__["a" /* api_path */] + 'employee/resignation', Object(__WEBPACK_IMPORTED_MODULE_1__helpers_utils__["b" /* objectToFormData */])(self.formObject)).then(function (res) {
+
+                    if (!res.data.isFailed) {} else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: "Form has to be completed",
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
         }
     },
     mounted: function mounted() {}
@@ -20525,24 +20601,216 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(3),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c(
+                "div",
+                { staticClass: "form-group form-group-default required" },
+                [
+                  _c("label", [_vm._v(" Professionalism ")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formObject.professionalism,
+                          expression: "formObject.professionalism"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.formObject,
+                            "professionalism",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "professional" } }, [
+                        _vm._v("Professional")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "unprofessional" } }, [
+                        _vm._v("Unprofessional")
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(4),
+            _c(
+              "div",
+              {
+                staticClass: "col-lg-6",
+                class: {
+                  hide: _vm.formObject.professionalism == "unprofessional"
+                }
+              },
+              [_vm._m(3)]
+            ),
             _vm._v(" "),
-            _vm._m(5),
+            _c(
+              "div",
+              {
+                staticClass: "col-lg-6",
+                class: {
+                  "col-lg-12":
+                    _vm.formObject.professionalism == "unprofessional",
+                  "col-lg-6": _vm.formObject.professionalism == "professional"
+                }
+              },
+              [_vm._m(4)]
+            ),
             _vm._v(" "),
-            _vm._m(6),
+            _c(
+              "div",
+              {
+                staticClass: "col-lg-12",
+                class: {
+                  hide: _vm.formObject.professionalism == "unprofessional"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "form-group form-group-default required" },
+                  [
+                    _c("label", [_vm._v(" Resignation Letter ")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      attrs: {
+                        id: "resignationLetter",
+                        type: "file",
+                        name: "resignationLetter",
+                        accept: "image/*",
+                        required: ""
+                      },
+                      on: {
+                        change: function($event) {
+                          _vm.insertLetterToForm($event)
+                        }
+                      }
+                    })
+                  ]
+                )
+              ]
+            ),
             _vm._v(" "),
-            _vm._m(7),
+            _c(
+              "div",
+              {
+                staticClass: "col-lg-12",
+                class: {
+                  hide: _vm.formObject.professionalism == "unprofessional"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "form-group form-group-default required" },
+                  [
+                    _c("label", [_vm._v(" Reason of Resignation ")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formObject.reason,
+                          expression: "formObject.reason"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", required: "" },
+                      domProps: { value: _vm.formObject.reason },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.formObject,
+                            "reason",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "col-lg-12",
+                class: {
+                  hide: _vm.formObject.professionalism != "unprofessional"
+                }
+              },
+              [
+                _c(
+                  "div",
+                  { staticClass: "form-group form-group-default required" },
+                  [
+                    _c("label", [_vm._v(" Notes ")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formObject.notes,
+                          expression: "formObject.notes"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", required: "" },
+                      domProps: { value: _vm.formObject.notes },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.formObject, "notes", $event.target.value)
+                        }
+                      }
+                    })
+                  ]
+                )
+              ]
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-12" }, [
               _c(
                 "button",
                 {
                   staticClass: "pull-right btn btn-primary",
-                  attrs: { disabled: _vm.formNotComplete }
+                  attrs: { disabled: _vm.disableSaveBtn },
+                  on: {
+                    click: function($event) {
+                      _vm.saveResignation()
+                    }
+                  }
                 },
-                [_vm._v("Save")]
+                [_vm._v("Save\n                        ")]
               )
             ])
           ])
@@ -20583,86 +20851,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6" }, [
-      _c("div", { staticClass: "form-group form-group-default required" }, [
+    return _c(
+      "div",
+      { staticClass: "form-group form-group-default required" },
+      [
         _c("label", [_vm._v("Submission Date")]),
         _vm._v(" "),
         _c("input", {
           staticClass: "form-control datepicker",
-          attrs: { type: "text", required: "" }
+          attrs: { type: "text", id: "submissionDate", required: "" }
         })
-      ])
-    ])
+      ]
+    )
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6" }, [
-      _c("div", { staticClass: "form-group form-group-default required" }, [
+    return _c(
+      "div",
+      { staticClass: "form-group form-group-default required" },
+      [
         _c("label", [_vm._v("Effective Resignation Date")]),
         _vm._v(" "),
         _c("input", {
           staticClass: "form-control datepicker",
-          attrs: { type: "text", required: "" }
+          attrs: { type: "text", id: "effectiveDate", required: "" }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "form-group form-group-default required" }, [
-        _c("label", [_vm._v(" Resignation Letter ")]),
-        _vm._v(" "),
-        _c("input", {
-          attrs: {
-            id: "resignationLetter",
-            type: "file",
-            name: "resignationLetter",
-            accept: "image/*",
-            required: ""
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "form-group form-group-default required" }, [
-        _c("label", [_vm._v(" Reason of Resignation ")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", required: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "form-group form-group-default required" }, [
-        _c("label", [_vm._v(" Professionalism ")]),
-        _vm._v(" "),
-        _c("select", { staticClass: "form-control" }, [
-          _c("option", { attrs: { value: "professional" } }, [
-            _vm._v("Professional")
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "unprofessional" } }, [
-            _vm._v("Unprofessional")
-          ])
-        ])
-      ])
-    ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -34397,6 +34614,75 @@ var api_path = '/v1/h/';
 var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
 var faceSubKey = 'e498335112c8402a82967303033da0a4';
 var microsoftPersonGroupId = 'gx_development';
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/helpers/utils.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = objectToFormData;
+/* harmony export (immutable) */ __webpack_exports__["a"] = makeBlob;
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Created by kevinpurwono on 16/11/17.
+ */
+// export function toMulipartedForm(form, mode) {
+//     if(mode === 'edit' && typeof form.image === 'string') {
+//         const temp = JSON.parse(JSON.stringify(form))
+//         delete temp.image
+//         return temp
+//     } else {
+//         return objectToFormData(form)
+//     }
+// }
+
+function objectToFormData(obj, form, namespace) {
+    var fd = form || new FormData();
+    var formKey = void 0;
+    for (var property in obj) {
+        if (obj.hasOwnProperty(property)) {
+            if (namespace) {
+                formKey = namespace + '[' + property + ']';
+            } else {
+                formKey = property;
+            }
+            if (obj[property] instanceof Array) {
+                for (var i = 0; i < obj[property].length; i++) {
+                    objectToFormData(obj[property][i], fd, property + '[' + i + ']');
+                }
+            } else if (_typeof(obj[property]) === 'object' && !(obj[property] instanceof File)) {
+                objectToFormData(obj[property], fd, property);
+            } else {
+                fd.append(formKey, obj[property]);
+            }
+        }
+    }
+    return fd;
+}
+
+function makeBlob(dataURL) {
+    var BASE64_MARKER = ';base64,';
+    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+        var _parts = dataURL.split(',');
+        var _contentType = _parts[0].split(':')[1];
+        var _raw = decodeURIComponent(_parts[1]);
+        return new Blob([_raw], { type: _contentType });
+    }
+    var parts = dataURL.split(BASE64_MARKER);
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+
+    var uInt8Array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], { type: contentType });
+}
 
 /***/ }),
 

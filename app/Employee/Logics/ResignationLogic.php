@@ -2,24 +2,27 @@
 
 namespace App\Employee\Logics;
 
-use App\Account\Models\User;
-use App\Employee\Events\EmployeeCreated;
-use App\Employee\Events\UserGenerated;
-use App\Employee\Models\EmployeeDataVerification;
-use App\Employee\Models\Employment;
-use App\Employee\Models\MasterEmployee;
-use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Traits\GlobalUtils;
-use GuzzleHttp\Psr7\Request;
 
-class Resignation extends ResignationUseCase
+class ResignationLogic extends ResignationUseCase
 {
 
     use GlobalUtils;
 
-
-    public function handleResignation($string)
+    public function handleProfessionalResignation($request)
     {
-        // TODO: Implement handleResignation() method.
+        // Insert data to resignation table
+        // Save resignation letter
+        // Deactivate employee in user table
+        // Update date of resignation in employment table
+        // Send email (?)
+    }
+
+    public function handleUnprofessionalResignation($request)
+    {
+        // Insert data to resignation table
+        // Deactivate employee in user table
+        // Update date of resignation in employment table
+        // Send email (?)
     }
 }
