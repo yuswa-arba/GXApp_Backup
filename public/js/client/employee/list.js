@@ -3061,6 +3061,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/master/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
+    },
+
+    methods: {
+        viewImage: function viewImage(url) {
+            window.open(url, '_blank');
+        }
     }
 });
 
@@ -22371,16 +22377,29 @@ var render = function() {
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4" }, [
-              _c("div", {}, [
-                _c("img", {
-                  staticClass: "img-responsive",
-                  staticStyle: { width: "100%", height: "auto" },
-                  attrs: {
-                    src: "/images/employee/" + _vm.detail.employeePhoto,
-                    alt: "No Image"
+              _c(
+                "div",
+                {
+                  staticClass: "cursor",
+                  on: {
+                    click: function($event) {
+                      _vm.viewImage(
+                        "/images/employee/" + _vm.detail.employeePhoto
+                      )
+                    }
                   }
-                })
-              ])
+                },
+                [
+                  _c("img", {
+                    staticClass: "img-responsive",
+                    staticStyle: { width: "100%", height: "auto" },
+                    attrs: {
+                      src: "/images/employee/" + _vm.detail.employeePhoto,
+                      alt: "No Image"
+                    }
+                  })
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "clearfix" }),
@@ -22462,16 +22481,29 @@ var render = function() {
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
-              _c("div", {}, [
-                _c("img", {
-                  staticClass: "img-responsive",
-                  staticStyle: { width: "100%", height: "auto" },
-                  attrs: {
-                    src: "/images/employee/" + _vm.detail.idCardPhoto,
-                    alt: "No Image"
+              _c(
+                "div",
+                {
+                  staticClass: "cursor",
+                  on: {
+                    click: function($event) {
+                      _vm.viewImage(
+                        "/images/employee/" + _vm.detail.idCardPhoto
+                      )
+                    }
                   }
-                })
-              ])
+                },
+                [
+                  _c("img", {
+                    staticClass: "img-responsive",
+                    staticStyle: { width: "100%", height: "auto" },
+                    attrs: {
+                      src: "/images/employee/" + _vm.detail.idCardPhoto,
+                      alt: "No Image"
+                    }
+                  })
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "clearfix" }),

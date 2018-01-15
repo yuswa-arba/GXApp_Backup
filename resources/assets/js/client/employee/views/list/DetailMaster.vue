@@ -34,7 +34,7 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-lg-4">
-                            <div style="">
+                            <div style="" class="cursor" @click="viewImage('/images/employee/'+detail.employeePhoto)">
                                 <img :src="`/images/employee/${detail.employeePhoto}`"
                                      alt="No Image" class="img-responsive" style="width:100%; height:auto;">
                             </div>
@@ -111,7 +111,7 @@
                     <div class="row">
                         <div class="col-lg-4 employee-details">
 
-                            <div style="">
+                            <div style="" class="cursor" @click="viewImage('/images/employee/'+detail.idCardPhoto)">
                                 <img :src="`/images/employee/${detail.idCardPhoto}`"
                                      alt="No Image" class="img-responsive" style="width:100%; height:auto;">
                             </div>
@@ -405,6 +405,11 @@
                 .then((res) => {
                 this.detail = res.data.detail.data
             })
+        },
+        methods:{
+            viewImage(url){
+                window.open(url,'_blank')
+            }
         }
     }
 </script>

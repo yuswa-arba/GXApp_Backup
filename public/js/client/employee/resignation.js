@@ -2119,13 +2119,56 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            detail: []
+            detail: [],
+            resignationDetail: []
         };
     },
     created: function created() {
@@ -2134,11 +2177,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/master/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
         });
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/resignation/' + this.$route.params.id).then(function (res) {
+            _this.resignationDetail = res.data.detail.data;
+        });
     },
 
     methods: {
         goBackToResignedList: function goBackToResignedList() {
             this.$router.push('/list');
+        },
+        viewImage: function viewImage(url) {
+            window.open(url, '_blank');
         }
     }
 });
@@ -2153,6 +2203,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_utils__ = __webpack_require__("./resources/assets/js/client/helpers/utils.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
 //
 //
 //
@@ -20968,6 +21020,99 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-6" }, [
       _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4 m-b-10" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "cursor",
+                  on: {
+                    click: function($event) {
+                      _vm.viewImage(
+                        "/images/resignation/" +
+                          _vm.resignationDetail.resignationLetter
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("img", {
+                    staticClass: "img-responsive",
+                    staticStyle: { width: "100%", height: "auto" },
+                    attrs: {
+                      src:
+                        "/images/resignation/" +
+                        _vm.resignationDetail.resignationLetter,
+                      alt: "No Image"
+                    }
+                  })
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Submission Date")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.resignationDetail.submissionDate))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Effective Date")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.resignationDetail.effectiveDate))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Professionalism")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.resignationDetail.professionalism))
+              ])
+            ]),
+            _vm._v(" "),
+            _vm.resignationDetail.reason
+              ? _c("div", { staticClass: "col-lg-4 employee-details" }, [
+                  _c("label", [_vm._v("Reason")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.resignationDetail.reason))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.resignationDetail.notes
+              ? _c("div", { staticClass: "col-lg-4 employee-details" }, [
+                  _c("label", [_vm._v("Notes")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.resignationDetail.notes))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Submitted By")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.resignationDetail.submittedBy))
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-12 employee-details" }, [
@@ -20990,21 +21135,34 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(0),
+        _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4" }, [
-              _c("div", {}, [
-                _c("img", {
-                  staticClass: "img-responsive",
-                  staticStyle: { width: "100%", height: "auto" },
-                  attrs: {
-                    src: "/images/employee/" + _vm.detail.employeePhoto,
-                    alt: "No Image"
+              _c(
+                "div",
+                {
+                  staticClass: "cursor",
+                  on: {
+                    click: function($event) {
+                      _vm.viewImage(
+                        "/images/employee/" + _vm.detail.employeePhoto
+                      )
+                    }
                   }
-                })
-              ])
+                },
+                [
+                  _c("img", {
+                    staticClass: "img-responsive",
+                    staticStyle: { width: "100%", height: "auto" },
+                    attrs: {
+                      src: "/images/employee/" + _vm.detail.employeePhoto,
+                      alt: "No Image"
+                    }
+                  })
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "clearfix" }),
@@ -21047,7 +21205,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(1),
+        _vm._m(2),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -21081,21 +21239,34 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(2),
+        _vm._m(3),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
-              _c("div", {}, [
-                _c("img", {
-                  staticClass: "img-responsive",
-                  staticStyle: { width: "100%", height: "auto" },
-                  attrs: {
-                    src: "/images/employee/" + _vm.detail.idCardPhoto,
-                    alt: "No Image"
+              _c(
+                "div",
+                {
+                  staticClass: "cursor",
+                  on: {
+                    click: function($event) {
+                      _vm.viewImage(
+                        "/images/employee/" + _vm.detail.idCardPhoto
+                      )
+                    }
                   }
-                })
-              ])
+                },
+                [
+                  _c("img", {
+                    staticClass: "img-responsive",
+                    staticStyle: { width: "100%", height: "auto" },
+                    attrs: {
+                      src: "/images/employee/" + _vm.detail.idCardPhoto,
+                      alt: "No Image"
+                    }
+                  })
+                ]
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "clearfix" }),
@@ -21110,7 +21281,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(3),
+        _vm._m(4),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -21160,7 +21331,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-6" }, [
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(4),
+        _vm._m(5),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -21190,7 +21361,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(5),
+        _vm._m(6),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -21306,7 +21477,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(6),
+        _vm._m(7),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -21364,7 +21535,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(7),
+        _vm._m(8),
         _vm._v(" "),
         _c("div", { staticClass: "card-block" }, [
           _c("div", { staticClass: "row" }, [
@@ -21420,6 +21591,16 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [
+        _vm._v("Resignation Information")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -22135,7 +22316,12 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("input", {
           staticClass: "form-control datepicker",
-          attrs: { type: "text", id: "submissionDate", required: "" }
+          attrs: {
+            type: "text",
+            id: "submissionDate",
+            placeholder: "format: dd/mm/yyyy",
+            required: ""
+          }
         })
       ]
     )
@@ -22152,7 +22338,12 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("input", {
           staticClass: "form-control datepicker",
-          attrs: { type: "text", id: "effectiveDate", required: "" }
+          attrs: {
+            type: "text",
+            id: "effectiveDate",
+            placeholder: "format: dd/mm/yyyy",
+            required: ""
+          }
         })
       ]
     )

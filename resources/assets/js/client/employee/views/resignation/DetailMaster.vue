@@ -10,7 +10,49 @@
 
         </div>
 
+        <div class="col-lg-6">
 
+            <div class="card card-default filter-item">
+                <div class="card-header ">
+                    <div class="card-title">Resignation Information</div>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-lg-4 m-b-10">
+                            <div class="cursor" style="" @click="viewImage('/images/resignation/'+resignationDetail.resignationLetter)">
+                                <img :src="`/images/resignation/${resignationDetail.resignationLetter}`"
+                                     alt="No Image" class="img-responsive" style="width:100%; height:auto;">
+                            </div>
+                        </div>
+                        <div class="col-lg-4 employee-details">
+                            <label>Submission Date</label>
+                            <p class="text-primary">{{resignationDetail.submissionDate}}</p>
+                        </div>
+                        <div class="col-lg-4 employee-details">
+                            <label>Effective Date</label>
+                            <p class="text-primary">{{resignationDetail.effectiveDate}}</p>
+                        </div>
+                        <div class="col-lg-12 employee-details">
+                            <label>Professionalism</label>
+                            <p class="text-primary">{{resignationDetail.professionalism}}</p>
+                        </div>
+                        <div class="col-lg-4 employee-details" v-if="resignationDetail.reason">
+                            <label>Reason</label>
+                            <p class="text-primary">{{resignationDetail.reason}}</p>
+                        </div>
+                        <div class="col-lg-4 employee-details" v-if="resignationDetail.notes">
+                            <label>Notes</label>
+                            <p class="text-primary">{{resignationDetail.notes}}</p>
+                        </div>
+                        <div class="col-lg-4 employee-details">
+                            <label>Submitted By</label>
+                            <p class="text-primary">{{resignationDetail.submittedBy}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6"></div>
         <div class="col-lg-6">
 
             <div class="card card-default filter-item">
@@ -37,7 +79,7 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-lg-4">
-                            <div style="">
+                            <div class="cursor" style="" @click="viewImage('/images/employee/'+detail.employeePhoto)">
                                 <img :src="`/images/employee/${detail.employeePhoto}`"
                                      alt="No Image" class="img-responsive" style="width:100%; height:auto;">
                             </div>
@@ -114,7 +156,7 @@
                     <div class="row">
                         <div class="col-lg-4 employee-details">
 
-                            <div style="">
+                            <div class="cursor" style="" @click="viewImage('/images/employee/'+detail.idCardPhoto)">
                                 <img :src="`/images/employee/${detail.idCardPhoto}`"
                                      alt="No Image" class="img-responsive" style="width:100%; height:auto;">
                             </div>
@@ -401,17 +443,26 @@
         data(){
             return {
                 detail: [],
+                resignationDetail: []
             }
         },
         created(){
             get(api_path + 'employee/detail/master/' + this.$route.params.id)
                 .then((res) => {
-                this.detail = res.data.detail.data
-            })
+                    this.detail = res.data.detail.data
+                })
+
+            get(api_path + 'employee/detail/resignation/' + this.$route.params.id)
+                .then((res) => {
+                    this.resignationDetail = res.data.detail.data
+                })
         },
-        methods:{
+        methods: {
             goBackToResignedList(){
                 this.$router.push('/list')
+            },
+            viewImage(url){
+                window.open(url,'_blank')
             }
         }
     }

@@ -25,8 +25,8 @@ class ResignationController extends Controller
             if ($request->professionalism == 'professional') {
                 $rules = [
                     'employeeId' => 'required',
-                    'submissionDate' => 'required',
-                    'effectiveDate' => 'required',
+                    'submissionDate' => 'required|date_format:d/m/Y',
+                    'effectiveDate' => 'required|date_format:d/m/Y',
                     'resignationLetter' => 'required',
                     'reason' => 'required',
                     'professionalism' => 'required'
@@ -34,7 +34,7 @@ class ResignationController extends Controller
             } elseif ($request->professionalism == 'unprofessional') {
                 $rules = [
                     'employeeId' => 'required',
-                    'effectiveDate' => 'required',
+                    'effectiveDate' => 'required|date_format:d/m/Y',
                     'notes' => 'required',
                     'professionalism' => 'required'
                 ];

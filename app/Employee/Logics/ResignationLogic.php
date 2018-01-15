@@ -50,7 +50,7 @@ class ResignationLogic extends ResignationUseCase
 
             /*Save new image*/
             $employeeNo = MasterEmployee::find($request->employeeId)['employeeNo'];
-            $filename = 'RL_' . $employeeNo . Carbon::now()->format('dmYHi') . $request->resignationLetter->extension();
+            $filename = 'RL_' . $employeeNo . Carbon::now()->format('dmYHi') .'.'. $request->resignationLetter->extension();
             $request->resignationLetter->move(base_path(Configs::$IMAGE_PATH['RESIGNATION_PHOTO']), $filename);
             $requestData['resignationLetter'] = $filename; //rename
 

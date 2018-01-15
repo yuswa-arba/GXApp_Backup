@@ -8,11 +8,13 @@ use App\Account\Transformers\LoginEditTransfomer;
 use App\Employee\Models\Employment;
 use App\Employee\Models\FacePerson;
 use App\Employee\Models\MasterEmployee;
+use App\Employee\Models\Resignation;
 use App\Employee\Transformers\EmployeeDetailTransfomer;
 use App\Employee\Transformers\EmployeeEditTransfomer;
 use App\Employee\Transformers\EmploymentEditTransfomer;
 use App\Employee\Transformers\EmploymentTransfomer;
 use App\Employee\Transformers\FaceAPIDetailTransfomer;
+use App\Employee\Transformers\ResignationTransformer;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Requests\Employee\EditMasterEmployeeRequest;
 use App\Http\Requests\Employee\EmploymentRequest;
@@ -362,5 +364,25 @@ class AjaxController extends Controller
 
         return response()->json('',200);
 
+    }
+
+    public function resignationDetail($employeeId)
+    {
+        if ($employeeId != null && $employeeId != '') {
+
+            $employment = Resignation::where('employeeId', $employeeId)->first();
+
+            if ($employment) {
+                return response()->json([
+                    'message' => 'Successful',
+                    'detail' => fractal($employment, new ResignationTransformer())
+                ], 200);
+
+            } else {
+                return response()->json(['message' => 'Error occured! Unable to find employee data'], 200);
+            }
+        } else {
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
+        }
     }
 }

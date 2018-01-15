@@ -94,6 +94,7 @@
                                 <label>Submission Date</label>
                                 <input type="text"
                                        id="submissionDate"
+                                       placeholder="format: dd/mm/yyyy"
                                        class="form-control datepicker"
                                        required>
                             </div>
@@ -104,6 +105,7 @@
                                 <label>Effective Resignation Date</label>
                                 <input type="text"
                                        id="effectiveDate"
+                                       placeholder="format: dd/mm/yyyy"
                                        class="form-control datepicker"
                                        required>
                             </div>
