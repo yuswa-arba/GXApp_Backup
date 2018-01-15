@@ -1640,12 +1640,201 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            searchText: '',
+            formNotComplete: true,
+            candidates: [],
+            employeeData: {
+                employeeId: '',
+                employeeNo: '',
+                givenName: '',
+                surname: ''
+            },
+            employeePicked: false
+        };
+    },
+
+    methods: {
+        searchEmployee: function searchEmployee() {
+
+            var self = this;
+            if (self.searchText) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/search/' + self.searchText).then(function (res) {
+                    if (!res.data.isFailed) {
+                        if (res.data.candidates.data) {
+                            self.candidates = res.data.candidates.data;
+                        }
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: "Search box cannot be empty",
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        },
+        pickEmployee: function pickEmployee(candidateId, candidateNo, candidateGivenName, candidateSurname) {
+            var self = this;
+
+            self.employeeData.employeeId = candidateId;
+            self.employeeData.employeeNo = candidateNo;
+            self.employeeData.givenName = candidateGivenName;
+            self.employeeData.surname = candidateSurname;
+
+            self.employeePicked = true;
+        }
+    },
     mounted: function mounted() {}
 });
 
@@ -20147,9 +20336,335 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", { staticClass: "row row-same-height" }, [
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "input-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.searchText,
+                      expression: "searchText"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  staticStyle: { height: "40px" },
+                  attrs: {
+                    type: "text",
+                    id: "search-employee-box",
+                    placeholder:
+                      "Search Employee Number / Name / Surname / Nickname"
+                  },
+                  domProps: { value: _vm.searchText },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.searchText = $event.target.value
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticClass: "input-group-addon primary",
+                    on: {
+                      click: function($event) {
+                        _vm.searchEmployee()
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fa fa-search cursor" })]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-lg-12" },
+              [
+                _vm.candidates.length > 0
+                  ? _c("label", { staticClass: "p-t-10" }, [
+                      _vm._v(" Choose employee")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.candidates, function(candidate) {
+                  return _c(
+                    "div",
+                    {
+                      staticClass:
+                        "d-flex-not-important flex-column p-t-0 filter-employee"
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "card social-card share  full-width m-b-0 d-flex flex-1 full-height no-border sm-vh-75",
+                          attrs: { "data-social": "item" },
+                          on: {
+                            click: function($event) {
+                              _vm.pickEmployee(
+                                candidate.id,
+                                candidate.employeeNo,
+                                candidate.givenName,
+                                candidate.surname
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("div", { staticClass: "card-header clearfix" }, [
+                            _c("h5", { staticStyle: { float: "right" } }, [
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "fs-14",
+                                  staticStyle: {
+                                    "font-weight": "normal!important"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "(" + _vm._s(candidate.employeeNo) + ")"
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "user-pic" }, [
+                              _c("img", {
+                                attrs: {
+                                  alt: "None",
+                                  src:
+                                    "/images/employee/" +
+                                    candidate.employeePhoto,
+                                  width: "38",
+                                  height: "38"
+                                }
+                              })
+                            ]),
+                            _vm._v(" "),
+                            _c("h5", { staticClass: "fs-18" }, [
+                              _vm._v(_vm._s(candidate.givenName) + " ")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "h6",
+                              {
+                                staticClass: "fs-14",
+                                staticStyle: { opacity: ".7" }
+                              },
+                              [_vm._v(_vm._s(candidate.surname))]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "h6",
+                              {
+                                staticClass: "text-primary",
+                                staticStyle: { "margin-top": "3px" }
+                              },
+                              [_vm._v(_vm._s(candidate.jobPosition))]
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c(
+                "div",
+                { staticClass: "form-group form-group-default required" },
+                [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  !_vm.employeePicked
+                    ? _c("input", {
+                        staticClass: "form-control",
+                        attrs: { type: "text", readonly: "" }
+                      })
+                    : _c("input", {
+                        staticClass: "form-control text-true-black bold",
+                        attrs: { type: "text", readonly: "" },
+                        domProps: {
+                          value:
+                            _vm.employeeData.givenName +
+                            " " +
+                            _vm.employeeData.surname +
+                            " (" +
+                            _vm.employeeData.employeeNo +
+                            ") "
+                        }
+                      })
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4),
+            _vm._v(" "),
+            _vm._m(5),
+            _vm._v(" "),
+            _vm._m(6),
+            _vm._v(" "),
+            _vm._m(7),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "pull-right btn btn-primary",
+                  attrs: { disabled: _vm.formNotComplete }
+                },
+                [_vm._v("Save")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Search Employee")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v(" Resignation Form")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticStyle: { opacity: "1!important" } }, [
+      _vm._v(" Employee "),
+      _c("span", { staticClass: "help fs-10" }, [
+        _vm._v("(Choose employee from search table)")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "form-group form-group-default required" }, [
+        _c("label", [_vm._v("Submission Date")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control datepicker",
+          attrs: { type: "text", required: "" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "form-group form-group-default required" }, [
+        _c("label", [_vm._v("Effective Resignation Date")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control datepicker",
+          attrs: { type: "text", required: "" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "form-group form-group-default required" }, [
+        _c("label", [_vm._v(" Resignation Letter ")]),
+        _vm._v(" "),
+        _c("input", {
+          attrs: {
+            id: "resignationLetter",
+            type: "file",
+            name: "resignationLetter",
+            accept: "image/*",
+            required: ""
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "form-group form-group-default required" }, [
+        _c("label", [_vm._v(" Reason of Resignation ")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", required: "" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "form-group form-group-default required" }, [
+        _c("label", [_vm._v(" Professionalism ")]),
+        _vm._v(" "),
+        _c("select", { staticClass: "form-control" }, [
+          _c("option", { attrs: { value: "professional" } }, [
+            _vm._v("Professional")
+          ]),
+          _vm._v(" "),
+          _c("option", { attrs: { value: "unprofessional" } }, [
+            _vm._v("Unprofessional")
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -33635,6 +34150,8 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     router: __WEBPACK_IMPORTED_MODULE_2__router_resignation__["a" /* default */]
 });
 
+$(document).ready(function () {});
+
 /***/ }),
 
 /***/ "./resources/assets/js/client/employee/router/resignation.js":
@@ -33711,6 +34228,202 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/helpers/api.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["g"] = get;
+/* harmony export (immutable) */ __webpack_exports__["h"] = post;
+/* unused harmony export multipartPost */
+/* harmony export (immutable) */ __webpack_exports__["a"] = del;
+/* unused harmony export interceptors */
+/* harmony export (immutable) */ __webpack_exports__["c"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["f"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceDel;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePost;
+/* unused harmony export facePutOctet */
+/* harmony export (immutable) */ __webpack_exports__["e"] = facePostOctet;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/**
+ * Created by kevinpurwono on 9/11/17.
+ */
+
+
+
+function get(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
+        }
+    });
+}
+
+function post(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
+        }
+    });
+}
+
+function multipartPost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+
+// delete is reserved keyword
+function del(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
+        }
+    });
+}
+
+function interceptors(cb) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (res) {
+        return res;
+    }, function (err) {
+        cb(err);
+        return Promise.reject(err);
+    });
+}
+
+function faceGet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePut(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function faceDel(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+function facePutOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePostOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/helpers/const.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return microsoftPersonGroupId; });
+/**
+ * Created by kevinpurwono on 9/11/17.
+ */
+
+var api_path = '/v1/h/';
+var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
+var faceSubKey = 'e498335112c8402a82967303033da0a4';
+var microsoftPersonGroupId = 'gx_development';
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/store/auth.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony default export */ var _unused_webpack_default_export = ({
+	state: {
+		api_token: null,
+		user_id: null
+	},
+	initialize: function initialize() {
+		this.state.api_token = localStorage.getItem('api_token');
+		this.state.user_id = parseInt(localStorage.getItem('user_id'));
+	},
+	set: function set(api_token, user_id) {
+		localStorage.setItem('api_token', api_token);
+		localStorage.setItem('user_id', user_id);
+		this.initialize();
+	},
+	remove: function remove() {
+		localStorage.removeItem('api_token');
+		localStorage.removeItem('user_id');
+		this.initialize();
+	}
+});
 
 /***/ }),
 

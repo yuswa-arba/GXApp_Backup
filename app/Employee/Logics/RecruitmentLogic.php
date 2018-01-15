@@ -12,7 +12,7 @@ use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Traits\GlobalUtils;
 use GuzzleHttp\Psr7\Request;
 
-class Recruitment extends UseCase
+class RecruitmentLogic extends RecruitmentUseCase
 {
 
     use GlobalUtils;

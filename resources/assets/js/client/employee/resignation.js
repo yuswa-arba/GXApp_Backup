@@ -26,3 +26,9 @@ const app = new Vue({
     components:{MainResignation},
     router
 })
+
+
+
+$(document).ready(function () {
+
+})

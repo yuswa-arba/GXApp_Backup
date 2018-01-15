@@ -62,7 +62,8 @@ class AttendanceLogic extends AttendanceUseCase
             $response = array();
             if ($insert) {
 
-                broadcast(new EmployeeClocked($insert->id,'in'));
+                /* Broacast event to update Dashboard feed */
+                broadcast(new EmployeeClocked($insert->id, 'in'));
 
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
@@ -117,7 +118,8 @@ class AttendanceLogic extends AttendanceUseCase
             $response = array();
             if ($insert) {
 
-              broadcast(new EmployeeClocked($insert->id,'out'));
+                /* Broacast event to update Dashboard feed */
+                broadcast(new EmployeeClocked($insert->id, 'out'));
 
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
@@ -195,7 +197,7 @@ class AttendanceLogic extends AttendanceUseCase
             /* Check public holidays and day off for this slot */
             $dayOffSchedule = DayOffSchedule::where('slotId', $slotId)->where('date', Carbon::now()->format('d/m/Y'))->first();
 
-            if ($dayOffSchedule!=null) {
+            if ($dayOffSchedule != null) {
                 // return error response
                 $response['isFailed'] = true;
                 $response['code'] = ResponseCodes::$ATTD_ERR_CODES['IS_DAY_OFF'];

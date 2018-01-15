@@ -40,6 +40,7 @@ class MainController extends Controller
             return response()->json($response, 200);
         }
 
+        /* Check if employee available to clock right now*/
         $checkAvailability = $this->isAvailableToClock($request->employeeId, $punchType);
 
         if (!$checkAvailability['isFailed']

@@ -15,11 +15,11 @@ use App\Http\Requests\Employee\EmploymentRequest;
 use App\Http\Requests\Employee\MasterEmployeeRequest;
 use Illuminate\Http\Request;
 
-abstract class UseCase
+abstract class RecruitmentUseCase
 {
 
 
-    public static function createEmployeeLogic(MasterEmployeeRequest $request)
+    public static function createEmployee(MasterEmployeeRequest $request)
     {
         return (new static)->handleNewEmployeeForm($request);
     }
@@ -28,7 +28,7 @@ abstract class UseCase
 
 
 
-    public static function submitEmploymentLogic(EmploymentRequest $request)
+    public static function submitEmployment(EmploymentRequest $request)
     {
         return (new static)->handleEmployment($request);
     }

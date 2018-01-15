@@ -16,6 +16,7 @@ class EmployeeListTransfomer extends TransformerAbstract
     {
         return [
             'id' => $employee->id,
+            'employeeNo'=>$employee->employeeNo,
             'surname' => $employee->surname,
             'givenName' => $employee->givenName,
             'nickName' => $employee->nickName,
