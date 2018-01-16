@@ -12,6 +12,11 @@ use App\Http\Controllers\Controller;
 class RecruitmentController extends Controller
 {
 
+//    public function __construct()
+//    {
+//        $this->middleware(['role:admin','permission:create employee']);
+//    }
+
     public function createEmployee(MasterEmployeeRequest $request)
     {
         return RecruitmentLogic::createEmployee($request);

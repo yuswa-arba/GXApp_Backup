@@ -21,8 +21,8 @@ class EmployeeSummaryTransformer extends TransformerAbstract
             'id' => $employee->id,
             'employeeNo' => $employee->employeeNo,
             'employeeName' => $employee->givenName . ' ' . $employee->surname,
-            'divisionName' => !is_null($employee->employment->division) ? $employee->employment->division->name : '',
-            'branchOfficeName' => !is_null($employee->employment->branchOffice) ? $employee->employment->branchOffice->name : ''
+            'divisionName' => !is_null($employee->employment)?!is_null($employee->employment->division) ? $employee->employment->division->name : '':'',
+            'branchOfficeName' => !is_null($employee->employment)?!is_null($employee->employment->branchOffice) ? $employee->employment->branchOffice->name : '':''
         ];
     }
 

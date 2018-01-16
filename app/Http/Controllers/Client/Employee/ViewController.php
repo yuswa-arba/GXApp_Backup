@@ -18,6 +18,12 @@ use App\Http\Controllers\Controller;
 class ViewController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['permission:view employee']);
+    }
+
     public function index()
     {
         return view('pages.employee.list');

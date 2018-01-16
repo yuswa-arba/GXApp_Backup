@@ -21,7 +21,7 @@
             @include('layouts.partials.sub_partials.sidebar._divisions')
             @include('layouts.partials.sub_partials.sidebar._general')
             @include('layouts.partials.sub_partials.sidebar._attendance')
-            @include('layouts.partials.sub_partials.sidebar._payroll')
+            @include('layouts.partials.sub_partials.sidebar._salary')
             @include('layouts.partials.sub_partials.sidebar._employee')
             @include('layouts.partials.sub_partials.sidebar._kspgs')
             @include('layouts.partials.sub_partials.sidebar._transport')

@@ -18,6 +18,11 @@ use Illuminate\Support\Facades\Validator;
 class DashboardController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware(['permission:view attendance']);
+    }
+
     /*
      *  @description  : get timesheet feeds on current date, where clock time is not empty,
      *                  its not manually input (attendanceValidation != 98 )

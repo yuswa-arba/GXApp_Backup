@@ -16,6 +16,12 @@ use Illuminate\Support\Facades\Validator;
 class ResignationController extends Controller
 {
 
+
+//    public function __construct()
+//    {
+//        $this->middleware(['role:admin','permission:edit employee']);
+//    }
+
     public function resign(Request $request)
     {
 

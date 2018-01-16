@@ -10,6 +10,13 @@ use App\Http\Controllers\Controller;
 
 class ListController extends Controller
 {
+
+
+//    public function __construct()
+//    {
+//        $this->middleware(['role:admin','permission:view employee']);
+//    }
+
     public function mainList()
     {
         $employees = MasterEmployee::where('hasResigned','!=',1)->get();

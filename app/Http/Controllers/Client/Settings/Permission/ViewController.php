@@ -10,6 +10,13 @@ use Spatie\Permission\Models\Role;
 
 class ViewController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['permission:view setting']);
+    }
+
     public function index()
     {
         $roles = Role::all();

@@ -17,6 +17,12 @@ use App\Http\Controllers\Controller;
 
 class ShiftController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['role:attendance operator']);
+    }
+
     public function create(Request $request)
     {
 

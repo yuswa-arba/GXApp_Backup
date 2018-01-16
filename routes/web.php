@@ -27,6 +27,7 @@ require(base_path($client_path . 'settings/main.php'));
 require(base_path($client_path . 'attendance/main.php'));
 require(base_path($client_path . 'doorAccess/main.php'));
 require(base_path($client_path . 'developer/main.php'));
+require(base_path($client_path . 'salary/main.php'));
 /*
 |--------------------------------------------------------------------------
 | Init Backend routes

@@ -7,6 +7,13 @@ use App\Http\Controllers\Controller;
 
 class ViewController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['permission:view attendance']);
+    }
+
     public function dashboard()
     {
         return view('pages.attendance.dashboard');

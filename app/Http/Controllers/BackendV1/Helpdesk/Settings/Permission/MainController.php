@@ -14,6 +14,10 @@ use Spatie\Permission\Models\Role;
 
 class MainController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:edit setting|view setting']);
+    }
 
     public function createRole(Request $request)
     {

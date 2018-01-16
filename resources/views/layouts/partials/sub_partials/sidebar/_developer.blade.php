@@ -1,3 +1,4 @@
+@role('developer')
 <li class="">
     <a  href="javascript:;"class="">
         <span class="title">Developer</span>
@@ -35,3 +36,4 @@
         </li>
     </ul>
 </li>
+@endrole

@@ -21,6 +21,11 @@ class KioskController extends Controller
 {
     use GlobalUtils;
 
+    public function __construct()
+    {
+        $this->middleware(['role:attendance operator']);
+    }
+
     public function create(Request $request)
     {
         $response = array();

@@ -30,6 +30,11 @@ class AjaxController extends Controller
 
     use GlobalUtils;
 
+//    public function __construct()
+//    {
+//        $this->middleware(['role:admin','permission:create employee|edit employee|view employee']);
+//    }
+
     public function masterEmployeeDetail($id)
     {
         if ($id != null && $id != '') {

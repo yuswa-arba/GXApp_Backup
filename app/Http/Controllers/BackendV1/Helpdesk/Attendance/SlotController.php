@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Validator;
 
 class SlotController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['role:attendance operator']);
+    }
+
     public function list(Request $request)
     {
         return GetSlotListLogic::getData($request);

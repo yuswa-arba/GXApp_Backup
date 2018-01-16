@@ -16,6 +16,12 @@ use Spatie\Permission\Models\Permission;
 
 class AjaxController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['permission:edit setting|view setting']);
+    }
+
     public function vdByPermission($permissionName)
     {
         if ($permissionName == "" || $permissionName == null) {

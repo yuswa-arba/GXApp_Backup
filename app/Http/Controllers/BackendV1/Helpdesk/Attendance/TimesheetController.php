@@ -18,6 +18,14 @@ class TimesheetController extends Controller
 {
 
     use AttendanceCheckerUtil;
+
+
+    public function __construct()
+    {
+        $this->middleware(['permission:view attendance']);
+    }
+
+
     public function list(Request $request)
     {
         return GetTimesheetListLogic::getData($request);
@@ -92,17 +100,29 @@ class TimesheetController extends Controller
 
     public function summary(Request $request, $sumType)
     {
+
         $response = array();
 
-        $validator = Validator::make($request->all(), ['fromDate' => 'required', 'toDate' => 'required']);
+        if(Auth::user()->hasPermissionTo('generate attendance')){
 
-        if ($validator->fails()) {
+            $validator = Validator::make($request->all(), ['fromDate' => 'required', 'toDate' => 'required']);
+
+            if ($validator->fails()) {
+                $response['isFailed'] = true;
+                $response['message'] = 'From Date or To Date is missing';
+                return response()->json($response, 200);
+            }
+
+            return SummaryTimesheetLogic::getData($request, $sumType);
+
+        } else {
+
             $response['isFailed'] = true;
-            $response['message'] = 'From Date or To Date is missing';
+            $response['message'] = 'You don\'t have permission to generate summary';
             return response()->json($response, 200);
+
         }
 
-        return SummaryTimesheetLogic::getData($request, $sumType);
     }
 
     public function update(Request $request)

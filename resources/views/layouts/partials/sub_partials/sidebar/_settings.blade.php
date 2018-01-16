@@ -1,3 +1,4 @@
+@can('view setting')
 <li class="">
     <a  href="javascript:;"class="">
         <span class="title">Settings</span>
@@ -15,3 +16,4 @@
         </li>
     </ul>
 </li>
+@endcan

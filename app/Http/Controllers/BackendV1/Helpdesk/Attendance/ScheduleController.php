@@ -9,6 +9,11 @@ use App\Http\Controllers\Controller;
 
 class ScheduleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:view attendance']);
+    }
+
     public function getSchedule()
     {
         $response = array();
