@@ -55,7 +55,7 @@ class RecruitmentLogic extends RecruitmentUseCase
         $request->request->add(['id' => $this->generateUUID()]);
         $request->request->add(['employeeNo' => str_random(6)]);
 
-        $requestData = $request->all();
+        $requestData = $request->except('lengthEmploymentTimeFormat'); // remove from request
 
         /*Handle image uploads*/
         if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
