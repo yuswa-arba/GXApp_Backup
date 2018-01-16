@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class GeneratePayroll extends Model
 {
-    //
+    protected $table=  'generatePayroll';
+    protected $guarded = ['id'];
 }

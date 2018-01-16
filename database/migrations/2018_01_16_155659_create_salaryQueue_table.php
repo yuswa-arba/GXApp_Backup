@@ -16,7 +16,7 @@ class CreateSalaryQueueTable extends Migration
         Schema::create('salaryQueue', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('employeeId');
-            $table->integer('salarybonuseCutTypeId');
+            $table->integer('salaryBonusCutTypeId');
             $table->string('value');
             $table->integer('applyAtMonth');
             $table->integer('applyAtYear');

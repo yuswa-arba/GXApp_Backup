@@ -15,7 +15,7 @@ class CreateEmployeeSalaryTable extends Migration
     {
         Schema::create('employeeSalary', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('employeeId');
+            $table->uuid('employeeId')->unique();
             $table->string('basicSalary');
             $table->string('insertedDate');
             $table->string('insertedBy');

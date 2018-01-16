@@ -10,6 +10,8 @@ use App\Components\Models\DivisionManager;
 use App\Components\Models\EducationLevel;
 use App\Components\Models\MaritalStatus;
 use App\Components\Models\Religion;
+use App\Salary\Models\EmployeeBonusesCuts;
+use App\Salary\Models\EmployeeSalary;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
@@ -92,6 +94,16 @@ class MasterEmployee extends Model
     public function timesheet()
     {
         return $this->hasMany(AttendanceTimesheet::class,'employeeId');
+    }
+
+    public function salary()
+    {
+        return $this->hasOne(EmployeeSalary::class,'employeeId');
+    }
+
+    public function bonusesCuts()
+    {
+        return $this->hasMany(EmployeeBonusesCuts::class,'employeeId');
     }
 
 }

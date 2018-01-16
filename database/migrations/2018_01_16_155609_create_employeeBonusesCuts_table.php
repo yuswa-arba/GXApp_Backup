@@ -16,7 +16,7 @@ class CreateEmployeeBonusesCutsTable extends Migration
         Schema::create('employeeBonusesCuts', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('employeeId');
-            $table->integer('salaryBonusesCutTypeId');
+            $table->integer('salaryBonusCutTypeId');
             $table->string('value');
             $table->string('insertedDate');
             $table->string('insertedBy');

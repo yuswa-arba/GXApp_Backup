@@ -21,9 +21,9 @@ class EmployeeListTransfomer extends TransformerAbstract
             'givenName' => $employee->givenName,
             'nickName' => $employee->nickName,
             'employeePhoto' =>$employee->employeePhoto,
-            'branchOffice' => !is_null($employee->employment->branchOffice) ? $employee->employment->branchOffice->name : '',
-            'division' => !is_null($employee->employment->division) ? $employee->employment->division->name : '',
-            'jobPosition' => !is_null($employee->employment->jobPosition) ? $employee->employment->jobPosition->name : '',
+            'branchOffice' => !is_null($employee->employment)?!is_null($employee->employment->branchOffice) ? $employee->employment->branchOffice->name : '':'',
+            'division' => !is_null($employee->employment)?!is_null($employee->employment->division) ? $employee->employment->division->name : '':'',
+            'jobPosition' => !is_null($employee->employment)?!is_null($employee->employment->jobPosition) ? $employee->employment->jobPosition->name : '':'',
         ];
     }
 }
