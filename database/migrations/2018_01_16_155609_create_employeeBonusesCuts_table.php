@@ -17,7 +17,10 @@ class CreateEmployeeBonusesCutsTable extends Migration
             $table->increments('id');
             $table->uuid('employeeId');
             $table->integer('salaryBonusCutTypeId');
-            $table->string('value');
+            $table->string('value')->nullable();
+            $table->tinyInteger('isUsingFormula')->default(0);
+            $table->string('formula')->nullable();
+            $table->tinyInteger('isActive')->default(0);
             $table->string('insertedDate');
             $table->string('insertedBy');
             $table->timestamps();

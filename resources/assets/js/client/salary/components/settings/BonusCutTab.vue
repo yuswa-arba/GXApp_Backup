@@ -21,11 +21,13 @@
                                         <td>{{bonuscut.id}}</td>
                                         <td>
                                             <span class="fs-14" v-if="!bonuscut.editing">{{bonuscut.name}}</span>
-                                            <input v-else="" type="text" :name="'bonusCutName_'+bonuscut.id" :value="bonuscut.name">
+                                            <input v-else="" type="text" :name="'bonusCutName_'+bonuscut.id"
+                                                   :value="bonuscut.name">
                                         </td>
                                         <td>
                                             <label v-if="bonuscut.addOrSub=='add'" class="label label-success fs-14">{{bonuscut.addOrSub}}</label>
-                                            <label v-else-if="bonuscut.addOrSub=='sub'" class="label label-danger fs-14">{{bonuscut.addOrSub}}</label>
+                                            <label v-else-if="bonuscut.addOrSub=='sub'"
+                                                   class="label label-danger fs-14">{{bonuscut.addOrSub}}</label>
                                             <label v-else=""></label>
                                         </td>
                                         <td>
@@ -33,10 +35,13 @@
                                             <span v-else="">-</span>
                                         </td>
                                         <td>
-                                            <i v-if="!bonuscut.editing" class="fa fa-pencil fs-16 cursor" @click="editBonusCutType(index)"></i>
-                                            <span v-else="" class="fs-12 text-primary cursor" @click="doneEditing(bonuscut.id,index)">DONE</span>
+                                            <i v-if="!bonuscut.editing" class="fa fa-pencil fs-16 cursor"
+                                               @click="editBonusCutType(index)"></i>
+                                            <span v-else="" class="fs-12 text-primary cursor"
+                                                  @click="doneEditing(bonuscut.id,index)">DONE</span>
                                             &nbsp;&nbsp;
-                                            <i class="fa fa-times text-danger fs-16 cursor" @click="deleteBonusCutType(bonuscut.id,index)"></i>
+                                            <i class="fa fa-times text-danger fs-16 cursor"
+                                               @click="deleteBonusCutType(bonuscut.id,index)"></i>
                                         </td>
 
                                     </tr>
@@ -114,7 +119,7 @@
         data(){
             return {
                 divisions: [],
-                bonuscuts:[],
+                bonuscuts: [],
                 bonusCutForm: {
                     name: '',
                     addOrSub: 'add',
@@ -134,9 +139,9 @@
                 })
 
             // get bonus cut tab data
-            get(api_path+'salary/bonuscut/list')
-                .then((res)=>{
-                    self.bonuscuts =res.data.bonuscut.data
+            get(api_path + 'salary/bonuscut/list')
+                .then((res) => {
+                    self.bonuscuts = res.data.bonuscut.data
                 })
 
 
@@ -241,12 +246,12 @@
                 }
             },
 
-            deleteBonusCutType(bonusCutTypeId,bonusCutTypeIndex){
-                let self  = this
-                if(confirm('Are you sure to delete this?')){
-                    post(api_path+'salary/bonuscut/delete',{bonusCutTypeId:bonusCutTypeId})
-                        .then((res)=>{
-                            if(!res.data.isFailed){
+            deleteBonusCutType(bonusCutTypeId, bonusCutTypeIndex){
+                let self = this
+                if (confirm('Are you sure to delete this?')) {
+                    post(api_path + 'salary/bonuscut/delete', {bonusCutTypeId: bonusCutTypeId})
+                        .then((res) => {
+                            if (!res.data.isFailed) {
 
                                 /* Success notification */
                                 $('.page-container').pgNotification({
@@ -258,7 +263,7 @@
                                 }).show();
 
                                 /* remove from array */
-                                self.bonuscuts.splice(bonusCutTypeIndex,1)
+                                self.bonuscuts.splice(bonusCutTypeIndex, 1)
 
                             } else {
                                 /* Error notification */
@@ -271,7 +276,7 @@
                                 }).show();
                             }
                         })
-                        .catch((err)=>{
+                        .catch((err) => {
                             /* Error notification */
                             $('.page-container').pgNotification({
                                 style: 'flip',
@@ -287,18 +292,21 @@
                 let self = this
                 self.bonuscuts[bonusCutTypeIndex].editing = true
             },
-            doneEditing(bonusCutTypeId,bonusCutTypeIndex){
+            doneEditing(bonusCutTypeId, bonusCutTypeIndex){
                 let self = this
 
                 let oldBonusCutName = self.bonuscuts[bonusCutTypeIndex].name
-                let bonusCutName = $('input[name="' + 'bonusCutName_' + bonusCutTypeId+ '"]').val()
+                let bonusCutName = $('input[name="' + 'bonusCutName_' + bonusCutTypeId + '"]').val()
 
-                if(bonusCutName!=oldBonusCutName){ // if its different then submit to server
-                    if(bonusCutTypeId && bonusCutName){
+                if (bonusCutName != oldBonusCutName) { // if its different then submit to server
+                    if (bonusCutTypeId && bonusCutName) {
 
-                        post(api_path+'salary/bonuscut/edit',{bonusCutTypeId:bonusCutTypeId,bonusCutName:bonusCutName})
-                            .then((res)=>{
-                                if(!res.data.isFailed){
+                        post(api_path + 'salary/bonuscut/edit', {
+                            bonusCutTypeId: bonusCutTypeId,
+                            bonusCutName: bonusCutName
+                        })
+                            .then((res) => {
+                                if (!res.data.isFailed) {
 
                                     /* Succeess notification */
                                     $('.page-container').pgNotification({
@@ -312,8 +320,8 @@
                                     /*Change name*/
                                     self.bonuscuts[bonusCutTypeIndex].name = bonusCutName
 
-
                                 } else {
+
                                     /* Error notification */
                                     $('.page-container').pgNotification({
                                         style: 'flip',
@@ -322,9 +330,11 @@
                                         timeout: 3500,
                                         type: 'danger'
                                     }).show();
+
                                 }
                             })
-                            .catch((err)=>{
+                            .catch((err) => {
+
                                 /* Error notification */
                                 $('.page-container').pgNotification({
                                     style: 'flip',
@@ -334,7 +344,6 @@
                                     type: 'danger'
                                 }).show();
                             })
-
                     }
                 }
 

@@ -2611,6 +2611,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -2785,7 +2790,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 // if its different then submit to server
                 if (bonusCutTypeId && bonusCutName) {
 
-                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/edit', { bonusCutTypeId: bonusCutTypeId, bonusCutName: bonusCutName }).then(function (res) {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/edit', {
+                        bonusCutTypeId: bonusCutTypeId,
+                        bonusCutName: bonusCutName
+                    }).then(function (res) {
                         if (!res.data.isFailed) {
 
                             /* Succeess notification */
@@ -2800,6 +2808,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             /*Change name*/
                             self.bonuscuts[bonusCutTypeIndex].name = bonusCutName;
                         } else {
+
                             /* Error notification */
                             $('.page-container').pgNotification({
                                 style: 'flip',
@@ -2810,6 +2819,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             }).show();
                         }
                     }).catch(function (err) {
+
                         /* Error notification */
                         $('.page-container').pgNotification({
                             style: 'flip',
@@ -2830,13 +2840,155 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/BonusCutTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2861,9 +3013,158 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        'bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default.a
+    data: function data() {
+        return {
+            generalBCs: [],
+            bonuscuts: [],
+            bonusCutTypeIdToUse: '',
+            editGeneralBonusCutForm: {
+                id: '',
+                bonusCutTypeName: '',
+                value: '',
+                isActive: 0,
+                isUsingFormula: 0,
+                formula: ''
+            }
+        };
+    },
+    created: function created() {
+        var self = this;
 
+        // get bonus cut data
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/bonuscut/list').then(function (res) {
+            self.bonuscuts = res.data.bonuscut.data;
+        });
+
+        // get general bonus cut data
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/list').then(function (res) {
+            self.generalBCs = res.data.generalBC.data;
+        });
+    },
+
+    methods: {
+        createGeneralBonusCut: function createGeneralBonusCut() {
+            var self = this;
+            if (self.bonusCutTypeIdToUse) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/create', { bonusCutTypeId: self.bonusCutTypeIdToUse }).then(function (res) {
+                    if (!res.data.isFailed) {
+
+                        /* success notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        //push to array
+                        self.generalBCs.push(res.data.generalBC.data);
+
+                        //remove from array
+                        var bonusCutIndex = _.findIndex(self.bonuscuts, { id: self.bonusCutTypeIdToUse });
+                        self.bonuscuts.splice(bonusCutIndex, 1);
+
+                        //reset
+                        self.bonusCutTypeIdToUse = '';
+                    } else {
+
+                        /* Error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            } else {
+                /* Error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'Bonus cut cannot be empty',
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        },
+        attempEditGeneralBonusCut: function attempEditGeneralBonusCut(generalBonusCutId) {
+
+            var self = this;
+            var generalBonusCut = _.find(self.generalBCs, { id: generalBonusCutId });
+
+            // Inser to form
+            self.editGeneralBonusCutForm.id = generalBonusCutId;
+            self.editGeneralBonusCutForm.bonusCutTypeName = generalBonusCut.bonusCutTypeName;
+            self.editGeneralBonusCutForm.value = generalBonusCut.value;
+            self.editGeneralBonusCutForm.isActive = generalBonusCut.isActive;
+            self.editGeneralBonusCutForm.isUsingFormula = generalBonusCut.isUsingFormula;
+            self.editGeneralBonusCutForm.formula = generalBonusCut.formula;
+
+            $('#modal-edit-general-bonus-cut').modal('show');
+        }
+    },
+    computed: {}
+
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/BonusCutTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        'bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default.a,
+        'general-bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue___default.a
     },
     mounted: function mounted() {}
 });
@@ -22292,6 +22593,530 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-16c2d3d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block" }, [
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticClass: " h-500" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table table-hover bonusCutDT" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.generalBCs, function(generalBC, index) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(generalBC.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "\n                                        " +
+                                _vm._s(generalBC.bonusCutTypeName) +
+                                " (" +
+                                _vm._s(generalBC.bonusCutTypeAddOrSub) +
+                                ")\n                                    "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            generalBC.value != null
+                              ? _c("span", { staticClass: "fs-14" }, [
+                                  _vm._v(_vm._s(generalBC.value))
+                                ])
+                              : _c("span", [_vm._v("-")])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            generalBC.isUsingFormula
+                              ? _c("span", [
+                                  _vm._v("  " + _vm._s(generalBC.formula))
+                                ])
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            generalBC.isActive
+                              ? _c("i", {
+                                  staticClass: "fa fa-check text-primary fs-16"
+                                })
+                              : _c("i", {
+                                  staticClass: "fa fa-times text-danger fs-16"
+                                })
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("i", {
+                              staticClass: "fa fa-pencil fs-16 cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.attempEditGeneralBonusCut(generalBC.id)
+                                }
+                              }
+                            })
+                          ])
+                        ])
+                      })
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "help pull-right m-t-10",
+                staticStyle: { opacity: "0.7" },
+                attrs: { for: "" }
+              },
+              [_vm._v("Scroll for more")]
+            )
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4 m-b-10" }, [
+      _c("div", { staticClass: "card card-transparent" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("form", { attrs: { id: "bonus-cut-form" } }, [
+            _c("h4", [_vm._v("Apply Bonus Cut")]),
+            _vm._v(" "),
+            _c("div", [
+              _c("div", { staticClass: "row clearfix" }, [
+                _c("div", { staticClass: "col-md-9" }, [
+                  _c("div", { staticClass: "form-group required" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.bonusCutTypeIdToUse,
+                            expression: "bonusCutTypeIdToUse"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "", id: "" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.bonusCutTypeIdToUse = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "option",
+                          {
+                            attrs: {
+                              value: "",
+                              disabled: "",
+                              hidden: "",
+                              selected: ""
+                            }
+                          },
+                          [_vm._v("Select Bonus Cut")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.bonuscuts, function(bonuscut) {
+                          return _c(
+                            "option",
+                            { domProps: { value: bonuscut.id } },
+                            [
+                              _vm._v(
+                                _vm._s(bonuscut.name) +
+                                  "\n                                            (" +
+                                  _vm._s(bonuscut.addOrSub) +
+                                  ")\n                                        "
+                              )
+                            ]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", { attrs: { for: "" } }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary fs-16",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.createGeneralBonusCut()
+                          }
+                        }
+                      },
+                      [_vm._v("Use\n                                    ")]
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "Bonus cut can only be use once, but you may edit it later"
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade stick-up",
+        attrs: {
+          id: "modal-edit-general-bonus-cut",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("form", { attrs: { role: "form" } }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v(" Bonus Cut Type Name")]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "fs-16 bold" }, [
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(
+                              _vm.editGeneralBonusCutForm.bonusCutTypeName
+                            ) +
+                            "\n                                    "
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "checkbox check-success  " }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editGeneralBonusCutForm.isUsingFormula,
+                            expression: "editGeneralBonusCutForm.isUsingFormula"
+                          }
+                        ],
+                        attrs: { type: "checkbox", id: "using-formula-cb" },
+                        domProps: {
+                          value: 1,
+                          checked: Array.isArray(
+                            _vm.editGeneralBonusCutForm.isUsingFormula
+                          )
+                            ? _vm._i(
+                                _vm.editGeneralBonusCutForm.isUsingFormula,
+                                1
+                              ) > -1
+                            : _vm.editGeneralBonusCutForm.isUsingFormula
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a =
+                                _vm.editGeneralBonusCutForm.isUsingFormula,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = 1,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.editGeneralBonusCutForm.isUsingFormula = $$a.concat(
+                                    [$$v]
+                                  ))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.editGeneralBonusCutForm.isUsingFormula = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.$set(
+                                _vm.editGeneralBonusCutForm,
+                                "isUsingFormula",
+                                $$c
+                              )
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "fs-16",
+                          attrs: { for: "using-formula-cb" }
+                        },
+                        [_vm._v("With Formula")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm.editGeneralBonusCutForm.isUsingFormula
+                      ? _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("Formula")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editGeneralBonusCutForm.formula,
+                                expression: "editGeneralBonusCutForm.formula"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.editGeneralBonusCutForm.formula
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.editGeneralBonusCutForm,
+                                  "formula",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.editGeneralBonusCutForm.isUsingFormula
+                      ? _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Value")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editGeneralBonusCutForm.value,
+                                expression: "editGeneralBonusCutForm.value"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: {
+                              value: _vm.editGeneralBonusCutForm.value
+                            },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.editGeneralBonusCutForm,
+                                  "value",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "checkbox check-success " }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editGeneralBonusCutForm.isActive,
+                            expression: "editGeneralBonusCutForm.isActive"
+                          }
+                        ],
+                        attrs: { type: "checkbox", id: "active-cb" },
+                        domProps: {
+                          value: 1,
+                          checked: Array.isArray(
+                            _vm.editGeneralBonusCutForm.isActive
+                          )
+                            ? _vm._i(_vm.editGeneralBonusCutForm.isActive, 1) >
+                              -1
+                            : _vm.editGeneralBonusCutForm.isActive
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.editGeneralBonusCutForm.isActive,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = 1,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.editGeneralBonusCutForm.isActive = $$a.concat(
+                                    [$$v]
+                                  ))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.editGeneralBonusCutForm.isActive = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.$set(
+                                _vm.editGeneralBonusCutForm,
+                                "isActive",
+                                $$c
+                              )
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        { staticClass: "fs-16", attrs: { for: "active-cb" } },
+                        [_vm._v("Active")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-8" }),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "80px" } },
+          [_vm._v("ID")]
+        ),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Bonus Cut Type")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Value")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("With Formula")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Active")]),
+        _vm._v(" "),
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "150px" } },
+          [_vm._v("Action")]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close" })]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+        _vm._v("Edit General Bonus Cut")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-primary btn-block m-t-5",
+          attrs: { type: "button" }
+        },
+        [
+          _vm._v(
+            "\n                                    Save\n                                "
+          )
+        ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-16c2d3d0", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3babfafc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22724,6 +23549,13 @@ var render = function() {
             { staticClass: "tab-pane active", attrs: { id: "tabBonusCut" } },
             [_c("bonus-cut-tab")],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "tab-pane", attrs: { id: "tabGeneralBonusCut" } },
+            [_c("general-bonus-cut-tab")],
+            1
           )
         ])
       ])
@@ -22755,6 +23587,21 @@ var staticRenderFns = [
               }
             },
             [_vm._v("Bonus Cut")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                "data-toggle": "tab",
+                role: "tab",
+                "data-target": "#tabGeneralBonusCut"
+              }
+            },
+            [_vm._v("General Bonus Cut")]
           )
         ])
       ]
@@ -37406,6 +38253,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-3babfafc", Component.options)
   } else {
     hotAPI.reload("data-v-3babfafc", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-16c2d3d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-16c2d3d0", Component.options)
+  } else {
+    hotAPI.reload("data-v-16c2d3d0", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true

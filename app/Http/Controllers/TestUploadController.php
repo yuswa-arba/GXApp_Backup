@@ -7,6 +7,8 @@ use App\Attendance\Events\EmployeeClocked;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
+use App\Salary\Models\GeneralBonusesCuts;
+use App\Salary\Models\SalaryBonusCutType;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
@@ -422,6 +424,11 @@ class TestUploadController extends Controller
         }
 
         echo json_encode($copyOfDaysOffs);
+    }
+
+    public function pluck()
+    {
+        return GeneralBonusesCuts::all()->pluck('salaryBonusCutTypeId');
     }
 
 }

@@ -6,11 +6,17 @@
                     <li class="nav-item">
                         <a href="#" data-toggle="tab" role="tab" data-target="#tabBonusCut" class="active">Bonus Cut</a>
                     </li>
+                    <li class="nav-item">
+                        <a href="#" data-toggle="tab" role="tab" data-target="#tabGeneralBonusCut">General Bonus Cut</a>
+                    </li>
                 </ul>
 
             <div class="tab-content">
                 <div class="tab-pane active" id="tabBonusCut">
                     <bonus-cut-tab></bonus-cut-tab>
+                </div>
+                <div class="tab-pane" id="tabGeneralBonusCut">
+                    <general-bonus-cut-tab></general-bonus-cut-tab>
                 </div>
             </div>
         </div>
@@ -21,10 +27,11 @@
 <script type="text/javascript">
 
     import BonusCutTab from '../../components/settings/BonusCutTab.vue'
+    import GeneralBonusCutTab from '../../components/settings/GeneralBonusCutTab.vue'
     export default{
         components: {
-            'bonus-cut-tab': BonusCutTab
-
+            'bonus-cut-tab': BonusCutTab,
+            'general-bonus-cut-tab': GeneralBonusCutTab
         },
         mounted(){
 
