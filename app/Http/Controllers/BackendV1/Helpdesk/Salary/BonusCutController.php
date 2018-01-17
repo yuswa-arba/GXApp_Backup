@@ -83,4 +83,29 @@ class BonusCutController extends Controller
 
     }
 
+    public function edit(Request $request)
+    {
+        $validator = Validator::make($request->all(),['bonusCutTypeId'=>'required','bonusCutName'=>'required']);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Bonus Cut Type Id or name is not defined';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $update = SalaryBonusCutType::where('id',$request->bonusCutTypeId)->update(['name'=>$request->bonusCutName]);
+        if($update){
+            $response['isFailed'] = false;
+            $response['message'] = 'Bonus Cut Type has been edited successfully';
+            return response()->json($response,200);
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Error! Unable to edit Bonus Cut Type';
+            return response()->json($response,200);
+        }
+
+    }
+
 }

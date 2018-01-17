@@ -10,16 +10,19 @@
                                     <thead class="bg-master-lighter">
                                     <tr>
                                         <th class="text-black" style="width: 100px">ID</th>
-                                        <th class="text-black">Name</th>
+                                        <th class="text-black" style="width: 300px;">Name</th>
                                         <th class="text-black">Add/Sub</th>
                                         <th class="text-black">Division Related</th>
-                                        <th class="text-black">Action</th>
+                                        <th class="text-black" style="width:150px">Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="bonuscut in bonuscuts">
+                                    <tr v-for="(bonuscut,index) in bonuscuts">
                                         <td>{{bonuscut.id}}</td>
-                                        <td class="fs-14">{{bonuscut.name}}</td>
+                                        <td>
+                                            <span class="fs-14" v-if="!bonuscut.editing">{{bonuscut.name}}</span>
+                                            <input v-else="" type="text" :name="'bonusCutName_'+bonuscut.id" :value="bonuscut.name">
+                                        </td>
                                         <td>
                                             <label v-if="bonuscut.addOrSub=='add'" class="label label-success fs-14">{{bonuscut.addOrSub}}</label>
                                             <label v-else-if="bonuscut.addOrSub=='sub'" class="label label-danger fs-14">{{bonuscut.addOrSub}}</label>
@@ -30,9 +33,10 @@
                                             <span v-else="">-</span>
                                         </td>
                                         <td>
-                                            <i class="fa fa-pencil fs-16 cursor"></i>
+                                            <i v-if="!bonuscut.editing" class="fa fa-pencil fs-16 cursor" @click="editBonusCutType(index)"></i>
+                                            <span v-else="" class="fs-12 text-primary cursor" @click="doneEditing(bonuscut.id,index)">DONE</span>
                                             &nbsp;&nbsp;
-                                            <i class="fa fa-times text-danger fs-16 cursor" @click="deleteBonusCutType(bonuscut.id)"></i>
+                                            <i class="fa fa-times text-danger fs-16 cursor" @click="deleteBonusCutType(bonuscut.id,index)"></i>
                                         </td>
 
                                     </tr>
@@ -237,7 +241,7 @@
                 }
             },
 
-            deleteBonusCutType(bonusCutTypeId){
+            deleteBonusCutType(bonusCutTypeId,bonusCutTypeIndex){
                 let self  = this
                 if(confirm('Are you sure to delete this?')){
                     post(api_path+'salary/bonuscut/delete',{bonusCutTypeId:bonusCutTypeId})
@@ -254,9 +258,7 @@
                                 }).show();
 
                                 /* remove from array */
-                                let bonusCutTypeIndex = _.findIndex(self.bonuscuts,{id:bonusCutTypeId})
                                 self.bonuscuts.splice(bonusCutTypeIndex,1)
-
 
                             } else {
                                 /* Error notification */
@@ -280,7 +282,64 @@
                             }).show();
                         })
                 }
+            },
+            editBonusCutType(bonusCutTypeIndex){
+                let self = this
+                self.bonuscuts[bonusCutTypeIndex].editing = true
+            },
+            doneEditing(bonusCutTypeId,bonusCutTypeIndex){
+                let self = this
 
+                let oldBonusCutName = self.bonuscuts[bonusCutTypeIndex].name
+                let bonusCutName = $('input[name="' + 'bonusCutName_' + bonusCutTypeId+ '"]').val()
+
+                if(bonusCutName!=oldBonusCutName){ // if its different then submit to server
+                    if(bonusCutTypeId && bonusCutName){
+
+                        post(api_path+'salary/bonuscut/edit',{bonusCutTypeId:bonusCutTypeId,bonusCutName:bonusCutName})
+                            .then((res)=>{
+                                if(!res.data.isFailed){
+
+                                    /* Succeess notification */
+                                    $('.page-container').pgNotification({
+                                        style: 'flip',
+                                        message: res.data.message,
+                                        position: 'top-right',
+                                        timeout: 3500,
+                                        type: 'info'
+                                    }).show();
+
+                                    /*Change name*/
+                                    self.bonuscuts[bonusCutTypeIndex].name = bonusCutName
+
+
+                                } else {
+                                    /* Error notification */
+                                    $('.page-container').pgNotification({
+                                        style: 'flip',
+                                        message: res.data.message,
+                                        position: 'top-right',
+                                        timeout: 3500,
+                                        type: 'danger'
+                                    }).show();
+                                }
+                            })
+                            .catch((err)=>{
+                                /* Error notification */
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: err.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            })
+
+                    }
+                }
+
+
+                self.bonuscuts[bonusCutTypeIndex].editing = false
             }
 
         },

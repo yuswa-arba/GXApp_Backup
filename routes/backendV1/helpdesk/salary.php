@@ -21,6 +21,7 @@ Route::prefix('v1/h')->group(function () {
 
         Route::get('bonuscut/list', 'BonusCutController@list');
         Route::post('bonuscut/create', 'BonusCutController@create');
+        Route::post('bonuscut/edit','BonusCutController@edit');
         Route::post('bonuscut/delete','BonusCutController@delete');
 
     });

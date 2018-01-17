@@ -2607,6 +2607,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -2728,7 +2732,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             }
         },
-        deleteBonusCutType: function deleteBonusCutType(bonusCutTypeId) {
+        deleteBonusCutType: function deleteBonusCutType(bonusCutTypeId, bonusCutTypeIndex) {
             var self = this;
             if (confirm('Are you sure to delete this?')) {
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/delete', { bonusCutTypeId: bonusCutTypeId }).then(function (res) {
@@ -2744,7 +2748,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         }).show();
 
                         /* remove from array */
-                        var bonusCutTypeIndex = _.findIndex(self.bonuscuts, { id: bonusCutTypeId });
                         self.bonuscuts.splice(bonusCutTypeIndex, 1);
                     } else {
                         /* Error notification */
@@ -2767,6 +2770,59 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }).show();
                 });
             }
+        },
+        editBonusCutType: function editBonusCutType(bonusCutTypeIndex) {
+            var self = this;
+            self.bonuscuts[bonusCutTypeIndex].editing = true;
+        },
+        doneEditing: function doneEditing(bonusCutTypeId, bonusCutTypeIndex) {
+            var self = this;
+
+            var oldBonusCutName = self.bonuscuts[bonusCutTypeIndex].name;
+            var bonusCutName = $('input[name="' + 'bonusCutName_' + bonusCutTypeId + '"]').val();
+
+            if (bonusCutName != oldBonusCutName) {
+                // if its different then submit to server
+                if (bonusCutTypeId && bonusCutName) {
+
+                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/edit', { bonusCutTypeId: bonusCutTypeId, bonusCutName: bonusCutName }).then(function (res) {
+                        if (!res.data.isFailed) {
+
+                            /* Succeess notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            /*Change name*/
+                            self.bonuscuts[bonusCutTypeIndex].name = bonusCutName;
+                        } else {
+                            /* Error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        }
+                    }).catch(function (err) {
+                        /* Error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    });
+                }
+            }
+
+            self.bonuscuts[bonusCutTypeIndex].editing = false;
         }
     },
     computed: {}
@@ -22261,12 +22317,22 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "tbody",
-                      _vm._l(_vm.bonuscuts, function(bonuscut) {
+                      _vm._l(_vm.bonuscuts, function(bonuscut, index) {
                         return _c("tr", [
                           _c("td", [_vm._v(_vm._s(bonuscut.id))]),
                           _vm._v(" "),
-                          _c("td", { staticClass: "fs-14" }, [
-                            _vm._v(_vm._s(bonuscut.name))
+                          _c("td", [
+                            !bonuscut.editing
+                              ? _c("span", { staticClass: "fs-14" }, [
+                                  _vm._v(_vm._s(bonuscut.name))
+                                ])
+                              : _c("input", {
+                                  attrs: {
+                                    type: "text",
+                                    name: "bonusCutName_" + bonuscut.id
+                                  },
+                                  domProps: { value: bonuscut.name }
+                                })
                           ]),
                           _vm._v(" "),
                           _c("td", [
@@ -22294,9 +22360,27 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("td", [
-                            _c("i", {
-                              staticClass: "fa fa-pencil fs-16 cursor"
-                            }),
+                            !bonuscut.editing
+                              ? _c("i", {
+                                  staticClass: "fa fa-pencil fs-16 cursor",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.editBonusCutType(index)
+                                    }
+                                  }
+                                })
+                              : _c(
+                                  "span",
+                                  {
+                                    staticClass: "fs-12 text-primary cursor",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.doneEditing(bonuscut.id, index)
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("DONE")]
+                                ),
                             _vm._v(
                               "\n                                          \n                                        "
                             ),
@@ -22305,7 +22389,7 @@ var render = function() {
                                 "fa fa-times text-danger fs-16 cursor",
                               on: {
                                 click: function($event) {
-                                  _vm.deleteBonusCutType(bonuscut.id)
+                                  _vm.deleteBonusCutType(bonuscut.id, index)
                                 }
                               }
                             })
@@ -22592,13 +22676,21 @@ var staticRenderFns = [
           [_vm._v("ID")]
         ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "300px" } },
+          [_vm._v("Name")]
+        ),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Add/Sub")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Division Related")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "150px" } },
+          [_vm._v("Action")]
+        )
       ])
     ])
   }
