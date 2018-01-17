@@ -3010,6 +3010,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3187,6 +3196,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }).show();
                 }
             }
+        },
+        insertSalaryOperator: function insertSalaryOperator() {
+            var self = this;
+            self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_';
         }
     },
     computed: {}
@@ -22971,6 +22984,28 @@ var render = function() {
                       ? _c("div", { staticClass: "form-group" }, [
                           _c("label", [_vm._v("Formula")]),
                           _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "label label-default fs-12 cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.insertSalaryOperator()
+                                }
+                              }
+                            },
+                            [
+                              _vm._v("insert "),
+                              _c("b", { staticClass: "text-true-black" }, [
+                                _vm._v("_salary_")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm._m(2),
+                          _vm._v(" "),
                           _c("input", {
                             directives: [
                               {
@@ -22981,7 +23016,11 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
-                            attrs: { type: "text" },
+                            staticStyle: { height: "55px" },
+                            attrs: {
+                              type: "text",
+                              placeholder: "e.g: _salary_/25*8/60"
+                            },
                             domProps: {
                               value: _vm.editGeneralBonusCutForm.formula
                             },
@@ -22997,7 +23036,9 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _c("br")
                         ])
                       : _vm._e(),
                     _vm._v(" "),
@@ -23175,6 +23216,15 @@ var staticRenderFns = [
       _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
         _vm._v("Edit General Bonus Cut")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("Available operators : "),
+      _c("span", { staticClass: "bold fs-16" }, [_vm._v("/ , * , + , -")])
     ])
   }
 ]

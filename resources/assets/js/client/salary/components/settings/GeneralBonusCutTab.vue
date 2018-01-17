@@ -125,8 +125,17 @@
 
                                     <div class="form-group" v-if="editGeneralBonusCutForm.isUsingFormula">
                                         <label>Formula</label>
+                                        <br>
+                                        <label class="label label-default fs-12 cursor" @click="insertSalaryOperator()">insert <b class="text-true-black">_salary_</b></label>
+                                        <p>Available operators : <span class="bold fs-16">/ , * , + , -</span></p>
+
                                         <input type="text" class="form-control"
+                                               style="height: 55px"
+                                               placeholder="e.g: _salary_/25*8/60"
                                                v-model="editGeneralBonusCutForm.formula">
+                                        <br>
+
+
                                     </div>
 
                                     <div class="form-group" v-if="!editGeneralBonusCutForm.isUsingFormula">
@@ -352,6 +361,10 @@
 
                 }
 
+            },
+            insertSalaryOperator(){
+                let self = this
+                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_'
             }
 
 
