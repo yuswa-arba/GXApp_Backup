@@ -3009,6 +3009,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -3019,13 +3020,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             bonuscuts: [],
             bonusCutTypeIdToUse: '',
             editGeneralBonusCutForm: {
-                id: '',
+                generalBonusCutId: '',
                 bonusCutTypeName: '',
                 value: '',
                 isActive: 0,
                 isUsingFormula: 0,
                 formula: ''
-            }
+            },
+            formIsValid: false
         };
     },
     created: function created() {
@@ -3105,8 +3107,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
             var generalBonusCut = _.find(self.generalBCs, { id: generalBonusCutId });
 
-            // Inser to form
-            self.editGeneralBonusCutForm.id = generalBonusCutId;
+            // Insert to form
+            self.editGeneralBonusCutForm.generalBonusCutId = generalBonusCutId;
             self.editGeneralBonusCutForm.bonusCutTypeName = generalBonusCut.bonusCutTypeName;
             self.editGeneralBonusCutForm.value = generalBonusCut.value;
             self.editGeneralBonusCutForm.isActive = generalBonusCut.isActive;
@@ -3114,6 +3116,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.editGeneralBonusCutForm.formula = generalBonusCut.formula;
 
             $('#modal-edit-general-bonus-cut').modal('show');
+        },
+        doneEditingGeneralBonusCut: function doneEditingGeneralBonusCut() {
+
+            var self = this;
+            if (self.formIsValid) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/edit', self.editGeneralBonusCutForm).then(function (res) {
+                    if (!res.data.isFailed) {
+
+                        /* success notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        /* Update general BC array*/
+                        if (res.data.generalBC.data) {
+                            var generalBonusCutIndex = _.findIndex(self.generalBCs, { id: self.editGeneralBonusCutForm.generalBonusCutId });
+                            self.generalBCs.splice(generalBonusCutIndex, 1, res.data.generalBC.data);
+                        }
+
+                        /* Close modal */
+                        $('#modal-edit-general-bonus-cut').modal('toggle');
+                    } else {
+
+                        /* Error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            } else {
+
+                if (self.editGeneralBonusCutForm.isUsingFormula && self.editGeneralBonusCutForm.formula) {
+                    /* If using formula, formula is required*/
+
+                    self.formIsValid = true;
+                    self.doneEditingGeneralBonusCut();
+                } else if (!self.editGeneralBonusCutForm.isUsingFormula && self.editGeneralBonusCutForm.value) {
+                    /* If not using formula , value is required */
+
+                    self.formIsValid = true;
+                    self.doneEditingGeneralBonusCut();
+                } else {
+
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Unable to submit, form is not valid',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }
         }
     },
     computed: {}
@@ -22645,7 +22718,7 @@ var render = function() {
                               ? _c("span", [
                                   _vm._v("  " + _vm._s(generalBC.formula))
                                 ])
-                              : _vm._e()
+                              : _c("span", [_vm._v("-")])
                           ]),
                           _vm._v(" "),
                           _c("td", [
@@ -23024,7 +23097,25 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-8" }),
                   _vm._v(" "),
-                  _vm._m(2)
+                  _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary btn-block m-t-5",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.doneEditingGeneralBonusCut()
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                    Save\n                                "
+                        )
+                      ]
+                    )
+                  ])
                 ])
               ])
             ])
@@ -23084,25 +23175,6 @@ var staticRenderFns = [
       _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
         _vm._v("Edit General Bonus Cut")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-block m-t-5",
-          attrs: { type: "button" }
-        },
-        [
-          _vm._v(
-            "\n                                    Save\n                                "
-          )
-        ]
-      )
     ])
   }
 ]

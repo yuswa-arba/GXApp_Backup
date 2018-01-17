@@ -31,6 +31,7 @@
 
                                         <td>
                                             <span v-if="generalBC.isUsingFormula">  {{generalBC.formula}}</span>
+                                            <span v-else="">-</span>
 
                                         </td>
                                         <td>
@@ -143,7 +144,7 @@
 
                                 </div>
                                 <div class="col-md-4 m-t-10 sm-m-t-10">
-                                    <button type="button" class="btn btn-primary btn-block m-t-5">
+                                    <button type="button" class="btn btn-primary btn-block m-t-5" @click="doneEditingGeneralBonusCut()">
                                         Save
                                     </button>
                                 </div>
@@ -170,13 +171,14 @@
                 bonuscuts: [],
                 bonusCutTypeIdToUse: '',
                 editGeneralBonusCutForm: {
-                    id: '',
+                    generalBonusCutId: '',
                     bonusCutTypeName: '',
                     value: '',
                     isActive: 0,
                     isUsingFormula: 0,
                     formula: ''
-                }
+                },
+                formIsValid: false
             }
         },
         created(){
@@ -261,8 +263,8 @@
                 let self = this
                 let generalBonusCut = _.find(self.generalBCs, {id: generalBonusCutId})
 
-                // Inser to form
-                self.editGeneralBonusCutForm.id = generalBonusCutId
+                // Insert to form
+                self.editGeneralBonusCutForm.generalBonusCutId = generalBonusCutId
                 self.editGeneralBonusCutForm.bonusCutTypeName = generalBonusCut.bonusCutTypeName
                 self.editGeneralBonusCutForm.value = generalBonusCut.value
                 self.editGeneralBonusCutForm.isActive = generalBonusCut.isActive
@@ -270,7 +272,89 @@
                 self.editGeneralBonusCutForm.formula = generalBonusCut.formula
 
                 $('#modal-edit-general-bonus-cut').modal('show')
+            },
+            doneEditingGeneralBonusCut(){
+
+                let self = this
+                if (self.formIsValid) {
+                    post(api_path + 'salary/generalBC/edit', self.editGeneralBonusCutForm)
+                        .then((res) => {
+                            if (!res.data.isFailed) {
+
+                                /* success notification */
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+                                /* Update general BC array*/
+                                if(res.data.generalBC.data){
+                                    let generalBonusCutIndex = _.findIndex(self.generalBCs,{id:self.editGeneralBonusCutForm.generalBonusCutId})
+                                    self.generalBCs.splice(generalBonusCutIndex,1,res.data.generalBC.data)
+                                }
+
+                                /* Close modal */
+                                $('#modal-edit-general-bonus-cut').modal('toggle')
+
+
+                            } else {
+
+                                /* Error notification */
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+
+                            }
+                        })
+                        .catch((err) => {
+
+                            /* Error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        })
+                } else {
+
+                    if (self.editGeneralBonusCutForm.isUsingFormula && self.editGeneralBonusCutForm.formula) { /* If using formula, formula is required*/
+
+                        self.formIsValid = true
+                        self.doneEditingGeneralBonusCut()
+
+                    } else if (!self.editGeneralBonusCutForm.isUsingFormula && self.editGeneralBonusCutForm.value) { /* If not using formula , value is required */
+
+                        self.formIsValid = true
+                        self.doneEditingGeneralBonusCut()
+
+                    } else {
+
+                        /* Error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: 'Unable to submit, form is not valid',
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+
+                    }
+
+
+                }
+
             }
+
+
         },
         computed: {}
 
