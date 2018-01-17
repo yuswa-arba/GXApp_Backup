@@ -19,6 +19,7 @@ class CreateSalaryBonusCutTypeTable extends Migration
             $table->string('addOrSub'); // "add" / "sub"
             $table->tinyInteger('isRelatedToDivision')->default(0);
             $table->integer('divisionId')->nullable();
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }

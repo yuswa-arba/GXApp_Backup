@@ -20,5 +20,15 @@ const app =  new Vue({
 $(document).ready(function(){
 
 
+    let bonusCutDT = $('.bonusCutDT');
+    bonusCutDT.dataTable({
+        "sDom": "t",
+        "destroy": true,
+        "paging": false,
+        "scrollCollapse": false,
+        "ordering": false
+    })
+    $('.dataTables_empty').hide();
+
 });
 

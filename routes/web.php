@@ -36,6 +36,7 @@ require(base_path($client_path . 'salary/main.php'));
 require(base_path($backend_path . $type_helpdesk . 'setting.php'));
 require(base_path($backend_path . $type_helpdesk . 'employee.php'));
 require(base_path($backend_path . $type_helpdesk . 'attendance.php'));
+require(base_path($backend_path . $type_helpdesk . 'salary.php'));
 require(base_path($backend_path . $type_helpdesk . 'developer.php'));
 require(base_path($backend_path . $type_helpdesk . 'component.php'));
 

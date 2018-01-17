@@ -2495,11 +2495,292 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            divisions: [],
+            bonuscuts: [],
+            bonusCutForm: {
+                name: '',
+                addOrSub: 'add',
+                isRelatedToDivision: 0,
+                divisionId: ''
+            },
+            formIsValid: false
+        };
+    },
+    created: function created() {
+        var self = this;
+
+        // get division data
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/divisions').then(function (res) {
+            self.divisions = res.data.data;
+        });
+
+        // get bonus cut tab data
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/list').then(function (res) {
+            self.bonuscuts = res.data.bonuscut.data;
+        });
+    },
+
+    methods: {
+        saveBonusCutForm: function saveBonusCutForm() {
+
+            var self = this;
+
+            if (self.formIsValid) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/create', self.bonusCutForm).then(function (res) {
+                    self.formIsValid = false;
+
+                    if (!res.data.isFailed) {
+
+                        /* Success notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        self.bonuscuts.push(res.data.bonuscut.data);
+
+                        //reset form
+                        self.bonusCutForm = {
+                            name: '',
+                            addOrSub: 'add',
+                            isRelatedToDivision: false,
+                            divisionId: ''
+                        };
+                    } else {
+                        /* Error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+
+                    self.formIsValid = false;
+
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            } else {
+                if (self.bonusCutForm.name && self.bonusCutForm.addOrSub) {
+                    if (self.bonusCutForm.isRelatedToDivision) {
+                        if (self.bonusCutForm.divisionId) {
+
+                            self.formIsValid = true;
+                            self.saveBonusCutForm();
+                        } else {
+
+                            self.formIsValid = false;
+
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: 'Division cannot be empty',
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        }
+                    } else {
+
+                        self.formIsValid = true;
+                        self.saveBonusCutForm();
+                    }
+                } else {
+
+                    self.formIsValid = false;
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Name and add/sub cannot be empty',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }
+        },
+        deleteBonusCutType: function deleteBonusCutType(bonusCutTypeId) {
+            var self = this;
+            if (confirm('Are you sure to delete this?')) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/delete', { bonusCutTypeId: bonusCutTypeId }).then(function (res) {
+                    if (!res.data.isFailed) {
+
+                        /* Success notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        /* remove from array */
+                        var bonusCutTypeIndex = _.findIndex(self.bonuscuts, { id: bonusCutTypeId });
+                        self.bonuscuts.splice(bonusCutTypeIndex, 1);
+                    } else {
+                        /* Error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            }
+        }
+    },
+    computed: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/BonusCutTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__);
 //
 //
 //
@@ -2509,10 +2790,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {},
+    components: {
+        'bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default.a
+
+    },
     mounted: function mounted() {}
 });
 
@@ -21940,6 +22236,384 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3babfafc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block" }, [
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticClass: " h-500" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table table-hover bonusCutDT" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.bonuscuts, function(bonuscut) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(bonuscut.id))]),
+                          _vm._v(" "),
+                          _c("td", { staticClass: "fs-14" }, [
+                            _vm._v(_vm._s(bonuscut.name))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            bonuscut.addOrSub == "add"
+                              ? _c(
+                                  "label",
+                                  { staticClass: "label label-success fs-14" },
+                                  [_vm._v(_vm._s(bonuscut.addOrSub))]
+                                )
+                              : bonuscut.addOrSub == "sub"
+                                ? _c(
+                                    "label",
+                                    { staticClass: "label label-danger fs-14" },
+                                    [_vm._v(_vm._s(bonuscut.addOrSub))]
+                                  )
+                                : _c("label")
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            bonuscut.isRelatedToDivision
+                              ? _c("span", [
+                                  _vm._v("  " + _vm._s(bonuscut.divisionName))
+                                ])
+                              : _c("span", [_vm._v("-")])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("i", {
+                              staticClass: "fa fa-pencil fs-16 cursor"
+                            }),
+                            _vm._v(
+                              "\n                                          \n                                        "
+                            ),
+                            _c("i", {
+                              staticClass:
+                                "fa fa-times text-danger fs-16 cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteBonusCutType(bonuscut.id)
+                                }
+                              }
+                            })
+                          ])
+                        ])
+                      })
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "help pull-right m-t-10",
+                staticStyle: { opacity: "0.7" },
+                attrs: { for: "" }
+              },
+              [_vm._v("Scroll for more")]
+            )
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4 m-b-10" }, [
+      _c("div", { staticClass: "card card-transparent" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("form", { attrs: { id: "bonus-cut-form" } }, [
+            _c("h4", [_vm._v("Bonus Cut Form")]),
+            _vm._v(" "),
+            _c("div", [
+              _c("div", { staticClass: "row clearfix" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group required" }, [
+                    _c("label", [_vm._v("Name")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.bonusCutForm.name,
+                          expression: "bonusCutForm.name"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { id: "name", type: "text", name: "name" },
+                      domProps: { value: _vm.bonusCutForm.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.bonusCutForm,
+                            "name",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c("div", { staticClass: "form-group required" }, [
+                    _c("label", [_vm._v("Add / Sub")]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.bonusCutForm.addOrSub,
+                            expression: "bonusCutForm.addOrSub"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "", id: "" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.bonusCutForm,
+                              "addOrSub",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("option", { attrs: { value: "add" } }, [
+                          _vm._v("Add")
+                        ]),
+                        _vm._v(" "),
+                        _c("option", { attrs: { value: "sub" } }, [
+                          _vm._v("Sub")
+                        ])
+                      ]
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row clearfix" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("div", { staticClass: "checkbox check-success  " }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.bonusCutForm.isRelatedToDivision,
+                          expression: "bonusCutForm.isRelatedToDivision"
+                        }
+                      ],
+                      attrs: { type: "checkbox", id: "related-to-division" },
+                      domProps: {
+                        value: 1,
+                        checked: Array.isArray(
+                          _vm.bonusCutForm.isRelatedToDivision
+                        )
+                          ? _vm._i(_vm.bonusCutForm.isRelatedToDivision, 1) > -1
+                          : _vm.bonusCutForm.isRelatedToDivision
+                      },
+                      on: {
+                        change: function($event) {
+                          var $$a = _vm.bonusCutForm.isRelatedToDivision,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = 1,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 &&
+                                (_vm.bonusCutForm.isRelatedToDivision = $$a.concat(
+                                  [$$v]
+                                ))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.bonusCutForm.isRelatedToDivision = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.$set(
+                              _vm.bonusCutForm,
+                              "isRelatedToDivision",
+                              $$c
+                            )
+                          }
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("label", { attrs: { for: "related-to-division" } }, [
+                      _vm._v("Related to Division")
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _vm.bonusCutForm.isRelatedToDivision
+                  ? _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "form-group required" }, [
+                        _c("label", [_vm._v("Division")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.bonusCutForm.divisionId,
+                                expression: "bonusCutForm.divisionId"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { name: "" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.bonusCutForm,
+                                  "divisionId",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: {
+                                  value: "",
+                                  disabled: "",
+                                  hidden: "",
+                                  selected: ""
+                                }
+                              },
+                              [_vm._v("Select Division")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.divisions, function(division) {
+                              return _c(
+                                "option",
+                                { domProps: { value: division.id } },
+                                [
+                                  _vm._v(
+                                    "\n                                            " +
+                                      _vm._s(division.name) +
+                                      "\n                                        "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ])
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _c("p", [
+              _vm._v(
+                "If bonus/cut is related to division, it can only be given to employee within that\n                        division"
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-complete pull-right",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.saveBonusCutForm()
+                  }
+                }
+              },
+              [_vm._v("Save\n                    ")]
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "100px" } },
+          [_vm._v("ID")]
+        ),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Add/Sub")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Division Related")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3babfafc", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-40db1a1a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21947,16 +22621,52 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "card card-borderless" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "tab-content" }, [
+          _c(
+            "div",
+            { staticClass: "tab-pane active", attrs: { id: "tabBonusCut" } },
+            [_c("bonus-cut-tab")],
+            1
+          )
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-12" })
-    ])
+    return _c(
+      "ul",
+      {
+        staticClass: "nav nav-tabs nav-tabs-simple",
+        attrs: { role: "tablist", "data-init-reponsive-tabs": "dropdownfx" }
+      },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "active",
+              attrs: {
+                href: "#",
+                "data-toggle": "tab",
+                role: "tab",
+                "data-target": "#tabBonusCut"
+              }
+            },
+            [_vm._v("Bonus Cut")]
+          )
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -36566,6 +37276,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3babfafc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/salary/components/settings/BonusCutTab.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3babfafc", Component.options)
+  } else {
+    hotAPI.reload("data-v-3babfafc", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/salary/router/setting.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -36623,7 +37382,18 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     store: __WEBPACK_IMPORTED_MODULE_3__vuex_setting_store__["a" /* store */]
 });
 
-$(document).ready(function () {});
+$(document).ready(function () {
+
+    var bonusCutDT = $('.bonusCutDT');
+    bonusCutDT.dataTable({
+        "sDom": "t",
+        "destroy": true,
+        "paging": false,
+        "scrollCollapse": false,
+        "ordering": false
+    });
+    $('.dataTables_empty').hide();
+});
 
 /***/ }),
 
