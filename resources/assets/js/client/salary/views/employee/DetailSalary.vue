@@ -114,19 +114,22 @@
                                                 <table class="table table-hover employeeBonusCutDT">
                                                     <thead class="bg-master-lighter">
                                                     <tr>
-                                                        <th class="text-black padding-10">ID</th>
-                                                        <th class="text-black padding-10">Bonus Cut Type</th>
+                                                        <th class="text-black padding-10" style="width:60px">ID</th>
+                                                        <th class="text-black padding-10" style="width:200px">Bonus Cut Type</th>
                                                         <th class="text-black padding-10">Value</th>
                                                         <th class="text-black padding-10">With Formula</th>
                                                         <th class="text-black padding-10">Active</th>
-                                                        <th class="text-black padding-10">Action</th>
                                                     </tr>
                                                     </thead>
                                                     <tbody>
                                                     <tr v-for="(bonusCutDetail,index) in bonusCutDetails">
                                                         <td>{{bonusCutDetail.id}}</td>
                                                         <td>
-                                                            {{bonusCutDetail.bonusCutTypeName}} ({{bonusCutDetail.bonusCutTypeAddOrSub}})
+                                                            {{bonusCutDetail.bonusCutTypeName}}
+                                                            <label v-if="bonusCutDetail.bonusCutTypeAddOrSub=='add'" class="label label-success fs-14">{{bonusCutDetail.bonusCutTypeAddOrSub}}</label>
+                                                            <label v-else-if="bonusCutDetail.bonusCutTypeAddOrSub=='sub'"
+                                                                   class="label label-danger fs-14">{{bonusCutDetail.bonusCutTypeAddOrSub}}</label>
+                                                            <label v-else=""></label>
                                                         </td>
 
                                                         <td>
@@ -142,9 +145,6 @@
                                                         <td>
                                                             <i class="fa fa-check text-primary fs-16" v-if="bonusCutDetail.isActive"></i>
                                                             <i class="fa fa-times text-danger fs-16" v-else=""></i>
-                                                        </td>
-                                                        <td>
-                                                            <i class="fa fa-pencil fs-16 cursor"></i>
                                                         </td>
 
                                                     </tr>

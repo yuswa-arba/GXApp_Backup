@@ -32,7 +32,9 @@ Route::prefix('v1/h')->group(function () {
         Route::get('employee/detail/{employeeId}','EmployeeController@detail');
         Route::get('employee/availableBC/list/{employeeId}','EmployeeController@availableBonusCutList');
         Route::post('employee/save/basicSalary/{employeeId}','EmployeeController@saveSalary');
-        Route::post('employee/save/bonusCut/{employeeId}','EmployeecOntroller@saveBonusCut');
+        Route::post('employee/use/bonusCut/{employeeId}','EmployeeController@useBonusCut');
+        Route::post('employee/save/bonusCut/{employeeId}','EmployeeController@saveBonusCut');
+        Route::post('employee/remove/bonusCut/{employeeId}','EmployeeController@removeBonusCut');
 
     });
 });

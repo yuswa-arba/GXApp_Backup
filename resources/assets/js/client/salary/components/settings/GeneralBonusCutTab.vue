@@ -21,7 +21,11 @@
                                     <tr v-for="(generalBC,index) in generalBCs">
                                         <td>{{generalBC.id}}</td>
                                         <td>
-                                            {{generalBC.bonusCutTypeName}} ({{generalBC.bonusCutTypeAddOrSub}})
+                                            {{generalBC.bonusCutTypeName}}
+                                            <label v-if="generalBC.bonusCutTypeAddOrSub=='add'" class="label label-success fs-14">{{generalBC.bonusCutTypeAddOrSub}}</label>
+                                            <label v-else-if="generalBC.bonusCutTypeAddOrSub=='sub'"
+                                                   class="label label-danger fs-14">{{generalBC.bonusCutTypeAddOrSub}}</label>
+                                            <label v-else=""></label>
                                         </td>
 
                                         <td>
@@ -313,6 +317,17 @@
                                     self.generalBCs.splice(generalBonusCutIndex,1,res.data.generalBC.data)
                                 }
 
+
+                                /* Reset form values */
+                                self.editGeneralBonusCutForm = {
+                                        generalBonusCutId: '',
+                                        bonusCutTypeName: '',
+                                        value: '',
+                                        isActive: 0,
+                                        isUsingFormula: 0,
+                                        formula: ''
+                                }
+
                                 /* Close modal */
                                 $('#modal-edit-general-bonus-cut').modal('toggle')
 
@@ -329,6 +344,8 @@
                                 }).show();
 
                             }
+
+                            self.formIsValid = false
                         })
                         .catch((err) => {
 
@@ -340,6 +357,8 @@
                                 timeout: 3500,
                                 type: 'danger'
                             }).show();
+
+                            self.formIsValid = false
                         })
                 } else {
 
@@ -372,7 +391,11 @@
             },
             insertSalaryOperator(){
                 let self = this
-                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_'
+                if( self.editGeneralBonusCutForm.formula){
+                    self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_'
+                } else {
+                    self.editGeneralBonusCutForm.formula = '_salary_'
+                }
             }
 
 

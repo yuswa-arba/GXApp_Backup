@@ -110,13 +110,13 @@ class GeneralBonusCutController extends Controller
             $request->formula = "";
         }
 
-        //is valid
-
         if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Required parameter is missing';
             return response()->json($response, 200);
         }
+
+        //is valid
 
         /* Get general bonus cut model */
         $generalBonusCut = GeneralBonusesCuts::find($request->generalBonusCutId);

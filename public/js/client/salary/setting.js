@@ -2739,7 +2739,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         deleteBonusCutType: function deleteBonusCutType(bonusCutTypeId, bonusCutTypeIndex) {
             var self = this;
-            if (confirm('Are you sure to delete this?')) {
+            if (confirm('Are you sure to delete this? It will remove all general and employee bonus cut that use this')) {
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/delete', { bonusCutTypeId: bonusCutTypeId }).then(function (res) {
                     if (!res.data.isFailed) {
 
@@ -2847,6 +2847,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
 //
 //
 //
@@ -3156,8 +3160,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             self.generalBCs.splice(generalBonusCutIndex, 1, res.data.generalBC.data);
                         }
 
-                        /* Close modal */
-                        $('#modal-edit-general-bonus-cut').modal('toggle');
+                        /* Reset form values */
+                        self.editGeneralBonusCutForm = {
+                            generalBonusCutId: '',
+                            bonusCutTypeName: '',
+                            value: '',
+                            isActive: 0,
+                            isUsingFormula: 0,
+                            formula: ''
+
+                            /* Close modal */
+                        };$('#modal-edit-general-bonus-cut').modal('toggle');
                     } else {
 
                         /* Error notification */
@@ -3169,6 +3182,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             type: 'danger'
                         }).show();
                     }
+
+                    self.formIsValid = false;
                 }).catch(function (err) {
 
                     /* Error notification */
@@ -3179,6 +3194,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         timeout: 3500,
                         type: 'danger'
                     }).show();
+
+                    self.formIsValid = false;
                 });
             } else {
 
@@ -3207,7 +3224,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         insertSalaryOperator: function insertSalaryOperator() {
             var self = this;
-            self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_';
+            if (self.editGeneralBonusCutForm.formula) {
+                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_';
+            } else {
+                self.editGeneralBonusCutForm.formula = '_salary_';
+            }
         }
     },
     computed: {}
@@ -22720,10 +22741,29 @@ var render = function() {
                             _vm._v(
                               "\n                                        " +
                                 _vm._s(generalBC.bonusCutTypeName) +
-                                " (" +
-                                _vm._s(generalBC.bonusCutTypeAddOrSub) +
-                                ")\n                                    "
-                            )
+                                "\n                                        "
+                            ),
+                            generalBC.bonusCutTypeAddOrSub == "add"
+                              ? _c(
+                                  "label",
+                                  { staticClass: "label label-success fs-14" },
+                                  [
+                                    _vm._v(
+                                      _vm._s(generalBC.bonusCutTypeAddOrSub)
+                                    )
+                                  ]
+                                )
+                              : generalBC.bonusCutTypeAddOrSub == "sub"
+                                ? _c(
+                                    "label",
+                                    { staticClass: "label label-danger fs-14" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(generalBC.bonusCutTypeAddOrSub)
+                                      )
+                                    ]
+                                  )
+                                : _c("label")
                           ]),
                           _vm._v(" "),
                           _c("td", [

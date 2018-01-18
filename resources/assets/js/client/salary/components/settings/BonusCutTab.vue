@@ -248,7 +248,7 @@
 
             deleteBonusCutType(bonusCutTypeId, bonusCutTypeIndex){
                 let self = this
-                if (confirm('Are you sure to delete this?')) {
+                if (confirm('Are you sure to delete this? It will remove all general and employee bonus cut that use this')) {
                     post(api_path + 'salary/bonuscut/delete', {bonusCutTypeId: bonusCutTypeId})
                         .then((res) => {
                             if (!res.data.isFailed) {

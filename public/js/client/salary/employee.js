@@ -2987,6 +2987,96 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3000,7 +3090,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 basicSalary: ''
             },
             bonuscuts: [],
-            bonusCutTypeIdToUse: ''
+            bonusCutTypeIdToUse: '',
+            editBonusCutForm: {
+                bonusCutId: '',
+                bonusCutTypeName: '',
+                value: '',
+                isActive: 0,
+                isUsingFormula: 0,
+                formula: ''
+            },
+            editBonusCutFormIsValid: false
         };
     },
     created: function created() {
@@ -3073,6 +3172,212 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     timeout: 3500,
                     type: 'danger'
                 }).show();
+            }
+        },
+        useBonusCut: function useBonusCut() {
+            var self = this;
+            if (self.bonusCutTypeIdToUse) {
+
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/employee/use/bonusCut/' + self.$route.params.id, { bonusCutTypeId: self.bonusCutTypeIdToUse }).then(function (res) {
+                    if (!res.data.isFailed) {
+
+                        /* success notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        //push to array
+                        self.bonusCutDetails.push(res.data.bonusCut.data);
+
+                        //remove from array
+                        var bonusCutIndex = _.findIndex(self.bonuscuts, { id: self.bonusCutTypeIdToUse });
+                        self.bonuscuts.splice(bonusCutIndex, 1);
+
+                        //reset
+                        self.bonusCutTypeIdToUse = '';
+                    } else {
+
+                        /* Error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            } else {
+                /* Error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'Bonus cut cannot be empty',
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        },
+        attemptEditBonusCutType: function attemptEditBonusCutType(bonusCutId) {
+
+            var self = this;
+            var bonusCutType = _.find(self.bonusCutDetails, { id: bonusCutId });
+
+            //insert to form
+            self.editBonusCutForm.bonusCutId = bonusCutId;
+            self.editBonusCutForm.bonusCutTypeName = bonusCutType.bonusCutTypeName;
+            self.editBonusCutForm.bonusCutTypeAddOrSub = bonusCutType.bonusCutTypeAddOrSub;
+            self.editBonusCutForm.value = bonusCutType.value;
+            self.editBonusCutForm.isActive = bonusCutType.isActive;
+            self.editBonusCutForm.isUsingFormula = bonusCutType.isUsingFormula;
+            self.editBonusCutForm.formula = bonusCutType.formula;
+
+            $('#modal-edit-bonus-cut').modal('show');
+        },
+        saveEditBonusCut: function saveEditBonusCut() {
+            var self = this;
+
+            if (self.editBonusCutFormIsValid) {
+
+                // remove from object before submit bcs its not needed
+                delete self.editBonusCutForm.bonusCutTypeName;
+                delete self.editBonusCutForm.addOrSub;
+
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/employee/save/bonusCut/' + self.$route.params.id, self.editBonusCutForm).then(function (res) {
+                    if (!res.data.isFailed) {
+                        /* success notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        /* Update general BC array*/
+                        if (res.data.bonusCut.data) {
+                            var bonusCutIndex = _.findIndex(self.bonusCutDetails, { id: self.editBonusCutForm.bonusCutId });
+                            self.bonusCutDetails.splice(bonusCutIndex, 1, res.data.bonusCut.data);
+                        }
+
+                        /* Reset form value */
+                        self.editBonusCutForm = {
+                            bonusCutId: '',
+                            bonusCutTypeName: '',
+                            value: '',
+                            isActive: 0,
+                            isUsingFormula: 0,
+                            formula: ''
+
+                            /* Close modal */
+                        };$('#modal-edit-bonus-cut').modal('toggle');
+                    } else {
+                        /* Error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+
+                    self.editBonusCutFormIsValid = false;
+                }).catch(function (err) {
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Unable to submit, form is not valid',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+
+                    self.editBonusCutFormIsValid = false;
+                });
+            } else {
+
+                if (self.editBonusCutForm.isUsingFormula && self.editBonusCutForm.formula) {
+                    /* If using formula, formula is required*/
+
+                    self.editBonusCutFormIsValid = true;
+                    self.saveEditBonusCut();
+                } else if (!self.editBonusCutForm.isUsingFormula && self.editBonusCutForm.value) {
+                    /* If not using formula , value is required */
+
+                    self.editBonusCutFormIsValid = true;
+                    self.saveEditBonusCut();
+                } else {
+
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Unable to submit, form is not valid',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }
+        },
+        insertSalaryOperator: function insertSalaryOperator() {
+            var self = this;
+            if (self.editBonusCutForm.formula) {
+                self.editBonusCutForm.formula = self.editBonusCutForm.formula + '_salary_';
+            } else {
+                self.editBonusCutForm.formula = '_salary_';
+            }
+        },
+        removeBonusCutType: function removeBonusCutType(bonusCutId, index) {
+            var self = this;
+            if (confirm('Are you sure to remove this bonus cut ?')) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/employee/remove/bonusCut/' + self.$route.params.id, { bonusCutId: bonusCutId }).then(function (res) {
+                    if (!res.data.isFailed) {
+
+                        /* Success notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        //remove from array
+                        self.bonusCutDetails.splice(index, 1);
+                    } else {
+                        /* Error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
             }
         }
     }
@@ -22912,12 +23217,41 @@ var render = function() {
                                           _vm._s(
                                             bonusCutDetail.bonusCutTypeName
                                           ) +
-                                          " (" +
-                                          _vm._s(
-                                            bonusCutDetail.bonusCutTypeAddOrSub
-                                          ) +
-                                          ")\n                                                    "
-                                      )
+                                          "\n                                                        "
+                                      ),
+                                      bonusCutDetail.bonusCutTypeAddOrSub ==
+                                      "add"
+                                        ? _c(
+                                            "label",
+                                            {
+                                              staticClass:
+                                                "label label-success fs-14"
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  bonusCutDetail.bonusCutTypeAddOrSub
+                                                )
+                                              )
+                                            ]
+                                          )
+                                        : bonusCutDetail.bonusCutTypeAddOrSub ==
+                                          "sub"
+                                          ? _c(
+                                              "label",
+                                              {
+                                                staticClass:
+                                                  "label label-danger fs-14"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    bonusCutDetail.bonusCutTypeAddOrSub
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          : _c("label")
                                     ]),
                                     _vm._v(" "),
                                     _c("td", [
@@ -22950,9 +23284,7 @@ var render = function() {
                                             staticClass:
                                               "fa fa-times text-danger fs-16"
                                           })
-                                    ]),
-                                    _vm._v(" "),
-                                    _vm._m(4, true)
+                                    ])
                                   ])
                                 })
                               )
@@ -23011,11 +23343,23 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-master-lighter" }, [
       _c("tr", [
-        _c("th", { staticClass: "text-black padding-10" }, [_vm._v("ID")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black padding-10",
+            staticStyle: { width: "60px" }
+          },
+          [_vm._v("ID")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black padding-10" }, [
-          _vm._v("Bonus Cut Type")
-        ]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black padding-10",
+            staticStyle: { width: "200px" }
+          },
+          [_vm._v("Bonus Cut Type")]
+        ),
         _vm._v(" "),
         _c("th", { staticClass: "text-black padding-10" }, [_vm._v("Value")]),
         _vm._v(" "),
@@ -23023,17 +23367,9 @@ var staticRenderFns = [
           _vm._v("With Formula")
         ]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black padding-10" }, [_vm._v("Active")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black padding-10" }, [_vm._v("Action")])
+        _c("th", { staticClass: "text-black padding-10" }, [_vm._v("Active")])
       ])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [_c("i", { staticClass: "fa fa-pencil fs-16 cursor" })])
   }
 ]
 render._withStripped = true
@@ -23315,7 +23651,7 @@ var render = function() {
                                 attrs: { type: "button" },
                                 on: {
                                   click: function($event) {
-                                    _vm.createGeneralBonusCut()
+                                    _vm.useBonusCut()
                                   }
                                 }
                               },
@@ -23378,12 +23714,41 @@ var render = function() {
                                           _vm._s(
                                             bonusCutDetail.bonusCutTypeName
                                           ) +
-                                          "\n                                                        (" +
-                                          _vm._s(
-                                            bonusCutDetail.bonusCutTypeAddOrSub
-                                          ) +
-                                          ")\n                                                    "
-                                      )
+                                          "\n                                                        "
+                                      ),
+                                      bonusCutDetail.bonusCutTypeAddOrSub ==
+                                      "add"
+                                        ? _c(
+                                            "label",
+                                            {
+                                              staticClass:
+                                                "label label-success fs-14"
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  bonusCutDetail.bonusCutTypeAddOrSub
+                                                )
+                                              )
+                                            ]
+                                          )
+                                        : bonusCutDetail.bonusCutTypeAddOrSub ==
+                                          "sub"
+                                          ? _c(
+                                              "label",
+                                              {
+                                                staticClass:
+                                                  "label label-danger fs-14"
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    bonusCutDetail.bonusCutTypeAddOrSub
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          : _c("label")
                                     ]),
                                     _vm._v(" "),
                                     _c("td", [
@@ -23418,7 +23783,34 @@ var render = function() {
                                           })
                                     ]),
                                     _vm._v(" "),
-                                    _vm._m(4, true)
+                                    _c("td", [
+                                      _c("i", {
+                                        staticClass:
+                                          "fa fa-pencil fs-16 cursor",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.attemptEditBonusCutType(
+                                              bonusCutDetail.id
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(
+                                        "\n                                                         \n                                                        "
+                                      ),
+                                      _c("i", {
+                                        staticClass:
+                                          "fa fa-trash fs-16 text-danger cursor",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.removeBonusCutType(
+                                              bonusCutDetail.id,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ])
                                   ])
                                 })
                               )
@@ -23443,7 +23835,298 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade stick-up",
+        attrs: {
+          id: "modal-edit-bonus-cut",
+          tabindex: "-10",
+          role: "dialog",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c("div", { staticClass: "modal-dialog" }, [
+          _c("div", { staticClass: "modal-content" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "modal-body" }, [
+              _c("form", { attrs: { role: "form" } }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v(" Bonus Cut Type Name")]),
+                      _vm._v(" "),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "fs-16 bold" }, [
+                        _vm._v(
+                          "\n                                          " +
+                            _vm._s(_vm.editBonusCutForm.bonusCutTypeName) +
+                            " "
+                        ),
+                        _c("span", { staticClass: "text-primary" }, [
+                          _vm._v(
+                            "(" +
+                              _vm._s(
+                                _vm.editBonusCutForm.bonusCutTypeAddOrSub
+                              ) +
+                              ")"
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "checkbox check-success  " }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editBonusCutForm.isUsingFormula,
+                            expression: "editBonusCutForm.isUsingFormula"
+                          }
+                        ],
+                        attrs: { type: "checkbox", id: "using-formula-cb" },
+                        domProps: {
+                          value: 1,
+                          checked: Array.isArray(
+                            _vm.editBonusCutForm.isUsingFormula
+                          )
+                            ? _vm._i(_vm.editBonusCutForm.isUsingFormula, 1) >
+                              -1
+                            : _vm.editBonusCutForm.isUsingFormula
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.editBonusCutForm.isUsingFormula,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = 1,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.editBonusCutForm.isUsingFormula = $$a.concat(
+                                    [$$v]
+                                  ))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.editBonusCutForm.isUsingFormula = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.$set(
+                                _vm.editBonusCutForm,
+                                "isUsingFormula",
+                                $$c
+                              )
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "fs-16",
+                          attrs: { for: "using-formula-cb" }
+                        },
+                        [_vm._v("With Formula")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm.editBonusCutForm.isUsingFormula
+                      ? _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v("Formula")]),
+                          _vm._v(" "),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "label label-default fs-12 cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.insertSalaryOperator()
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "insert\n                                        "
+                              ),
+                              _c("b", { staticClass: "text-true-black" }, [
+                                _vm._v("_salary_")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm._m(5),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editBonusCutForm.formula,
+                                expression: "editBonusCutForm.formula"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            staticStyle: { height: "55px" },
+                            attrs: {
+                              type: "text",
+                              placeholder: "e.g: _salary_/25*8/60"
+                            },
+                            domProps: { value: _vm.editBonusCutForm.formula },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.editBonusCutForm,
+                                  "formula",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-danger" }, [
+                            _vm._v(
+                              "Make sure to insert a valid format in order for the\n                                        formula to work, system is case sensitive"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-danger" }, [
+                            _vm._v(
+                              'Please note that this should returns value that will then\n                                        be "added/subtracted" to/from the salary based on the Bonus Cut type'
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("br")
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.editBonusCutForm.isUsingFormula
+                      ? _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Value")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.editBonusCutForm.value,
+                                expression: "editBonusCutForm.value"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: { type: "text" },
+                            domProps: { value: _vm.editBonusCutForm.value },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.editBonusCutForm,
+                                  "value",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "checkbox check-success " }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.editBonusCutForm.isActive,
+                            expression: "editBonusCutForm.isActive"
+                          }
+                        ],
+                        attrs: { type: "checkbox", id: "active-cb" },
+                        domProps: {
+                          value: 1,
+                          checked: Array.isArray(_vm.editBonusCutForm.isActive)
+                            ? _vm._i(_vm.editBonusCutForm.isActive, 1) > -1
+                            : _vm.editBonusCutForm.isActive
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = _vm.editBonusCutForm.isActive,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = 1,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  (_vm.editBonusCutForm.isActive = $$a.concat([
+                                    $$v
+                                  ]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.editBonusCutForm.isActive = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.$set(_vm.editBonusCutForm, "isActive", $$c)
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        { staticClass: "fs-16", attrs: { for: "active-cb" } },
+                        [_vm._v("Active")]
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-8" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary btn-block m-t-5",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.saveEditBonusCut()
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                    Save\n                                "
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -23477,11 +24160,27 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-master-lighter" }, [
       _c("tr", [
-        _c("th", { staticClass: "text-black padding-10" }, [_vm._v("ID")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black padding-10",
+            staticStyle: { width: "50px" }
+          },
+          [_vm._v("ID")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black padding-10" }, [
-          _vm._v("Bonus Cut Type")
-        ]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black padding-10",
+            staticStyle: { width: "210px" }
+          },
+          [
+            _vm._v(
+              "Bonus Cut\n                                                        Type\n                                                    "
+            )
+          ]
+        ),
         _vm._v(" "),
         _c("th", { staticClass: "text-black padding-10" }, [_vm._v("Value")]),
         _vm._v(" "),
@@ -23499,7 +24198,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [_c("i", { staticClass: "fa fa-pencil fs-16 cursor" })])
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close" })]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+        _vm._v("Edit Bonus Cut")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("Available operators : "),
+      _c("span", { staticClass: "bold fs-16" }, [
+        _vm._v("/ , * , + , - , ( , )")
+      ])
+    ])
   }
 ]
 render._withStripped = true

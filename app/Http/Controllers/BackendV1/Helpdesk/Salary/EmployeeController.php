@@ -5,6 +5,10 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Salary;
 
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeBriefDetailTransfomer;
+use App\Salary\Logics\InsertEmployeeBonusCutLogic;
+use App\Salary\Logics\InsertEmployeeSalaryLogic;
+use App\Salary\Logics\RemoveBonusCutLogic;
+use App\Salary\Logics\UseBonusCutLogic;
 use App\Salary\Models\EmployeeBonusesCuts;
 use App\Salary\Models\EmployeeSalary;
 use App\Salary\Models\GeneralBonusesCuts;
@@ -70,63 +74,28 @@ class EmployeeController extends Controller
         return response()->json($response, 200);
     }
 
+    /* @desc Save basic salary for employee*/
     public function saveSalary(Request $request, $employeeId)
     {
-        $response = array();
-        if ($employeeId != null && $employeeId != '') {
-
-            // validate basic salary cannot be empty
-            if ($request->basicSalary==null||$request->basicSalary=='') {
-                $response['isFailed'] = true;
-                $response['message'] = 'Salary cannot be empty';
-
-                return response()->json($response, 200);
-            }
-
-            // is valid
-            $insert = EmployeeSalary::updateOrCreate(
-                ['employeeId' => $employeeId], // if this employee is found update it instead create a new one
-                [
-                    'basicSalary' => $request->basicSalary,
-                    'insertedDate' => Carbon::now()->format('d/m/Y'),
-                    'insertedBy' => !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : ''
-                ]
-            );
-
-            /* Insert it to database */
-            if ($insert) {
-
-                $response = array();
-                $response['isFailed'] = false;
-                $response['message'] = 'Salary has been inserted successfully';
-                $response['salary'] = fractal($insert,new EmployeeSalaryTransformer());
-
-                return response()->json($response, 200);
-
-            } else {
-                $response['isFailed'] = true;
-                $response['message'] = 'Unable to insert employee salary';
-                return response()->json($response, 200);
-            }
-
-
-        } else {
-            $response['isFailed'] = true;
-            $response['message'] = 'Parameter employee ID is missing';
-            return response()->json($response, 200);
-        }
+        return InsertEmployeeSalaryLogic::save($request,$employeeId);
     }
 
+    /* @desc Insert bonus cut to employee for the first time*/
+    public function useBonusCut(Request $request,$employeeId)
+    {
+        return UseBonusCutLogic::use($request,$employeeId);
+    }
+
+    /* @desc Edit/Save inserted bonus cut for this employee*/
     public function saveBonusCut(Request $request, $employeeId)
     {
-        $response = array();
-        if ($employeeId != null && $employeeId != '') {
+       return InsertEmployeeBonusCutLogic::save($request,$employeeId);
+    }
 
-        } else {
-            $response['isFailed'] = true;
-            $response['message'] = 'Parameter employee ID is missing';
-            return response()->json($response, 200);
-        }
+    /* @desc Remove inserted bonus cut for this employee*/
+    public function removeBonusCut(Request $request, $employeeId)
+    {
+        return RemoveBonusCutLogic::remove($request,$employeeId);
     }
 
 }

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\BackendV1\Helpdesk\Salary;
 
 
+use App\Salary\Models\EmployeeBonusesCuts;
+use App\Salary\Models\GeneralBonusesCuts;
 use App\Salary\Models\SalaryBonusCutType;
 use App\Salary\Transformers\SalaryBonusCutTransformer;
 use App\Traits\GlobalUtils;
@@ -71,7 +73,14 @@ class BonusCutController extends Controller
 
         //is valid
 
+        //remove from employee bonus cut
+        EmployeeBonusesCuts::where('salaryBonusCutTypeId',$request->bonusCutTypeId)->delete();
+
+        //remove from general bonus cut
+        GeneralBonusesCuts::where('salaryBonusCutTypeId',$request->bonusCutTypeId)->delete();
+
         $delete = SalaryBonusCutType::where('id',$request->bonusCutTypeId)->update(['isDeleted'=>1]);
+
         if($delete){
             $response['isFailed'] = false;
             $response['message'] = 'Bonus Cut Type has been deleted successfully';
