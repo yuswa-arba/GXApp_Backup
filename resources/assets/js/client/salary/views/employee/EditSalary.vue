@@ -3,11 +3,11 @@
 
         <div class="col-lg-12 m-b-10 m-t-10">
 
-            <slot name="go-back-menu"></slot>
-            <button class="btn btn-danger m-b-10 pull-right"
-                    @click="edit()">
-                Edit
+            <button class="btn btn-outline-primary m-r-15 m-b-10 pull-left"
+                    @click="done()"><i class="fa fa-check"></i>
+                Done
             </button>
+
 
         </div>
         <div class="col-lg-6">
@@ -55,7 +55,6 @@
                             <h5>{{employeeDetail.bankAccNo}} ({{employeeDetail.bankName}})</h5>
 
 
-
                         </div>
                         <div class="col-lg-4 employee-details">
                             <label>Division</label>
@@ -80,21 +79,18 @@
                 </div>
                 <div class="card-block">
                     <div class="row">
-                        <div class="col-lg-12 employee-details">
+                        <div class="col-lg-6 employee-details m-b-10">
                             <label>Basic Salary</label>
-                            <p class="text-primary" v-if="salaryDetail.basicSalary">{{salaryDetail.basicSalary}}</p>
-                            <span v-else="">-</span>
+                            <input min="0" type="number" class="form-control" v-model="editSalaryForm.basicSalary">
                         </div>
-                        <div class="col-lg-12 employee-details">
-                            <label>Inserted Date</label>
-                            <p class="text-primary" v-if="salaryDetail.insertedDate">{{salaryDetail.insertedDate}}</p>
-                            <span v-else="">-</span>
+
+                        <div class="col-lg-6">
+                            <button class="btn btn-complete pull-left m-t-20"
+                                    @click="saveSalary()">
+                                Save
+                            </button>
                         </div>
-                        <div class="col-lg-12 employee-details">
-                            <label>Inserted By</label>
-                            <p class="text-primary" v-if="salaryDetail.insertedBy">{{salaryDetail.insertedBy}}</p>
-                            <span v-else="">-</span>
-                        </div>
+
 
                     </div>
                 </div>
@@ -105,6 +101,47 @@
                 </div>
                 <div class="card-block">
                     <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card card-transparent">
+                                <div class="card-block">
+                                    <form id="bonus-cut-form">
+                                        <h4>Apply Bonus Cut</h4>
+                                        <div>
+                                            <div class="row clearfix">
+                                                <div class="col-md-9">
+                                                    <div class="form-group required">
+                                                        <select name="" id="" class="form-control"
+                                                                v-model="bonusCutTypeIdToUse">
+                                                            <option value="" disabled hidden selected>Select Bonus Cut
+                                                            </option>
+                                                            <option :value="bonuscut.id" v-for="bonuscut in bonuscuts">
+                                                                {{bonuscut.name}}
+                                                                ({{bonuscut.addOrSub}})
+                                                            </option>
+                                                        </select>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="form-group">
+                                                        <label for=""></label>
+                                                        <button class="btn btn-primary fs-16" type="button"
+                                                                @click="createGeneralBonusCut()">Use
+                                                        </button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <p>Bonus cut can only be use once, but you may edit it later</p>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="col-lg-12 employee-details">
                             <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                                 <div class="card-block no-padding">
@@ -126,7 +163,8 @@
                                                     <tr v-for="(bonusCutDetail,index) in bonusCutDetails">
                                                         <td>{{bonusCutDetail.id}}</td>
                                                         <td>
-                                                            {{bonusCutDetail.bonusCutTypeName}} ({{bonusCutDetail.bonusCutTypeAddOrSub}})
+                                                            {{bonusCutDetail.bonusCutTypeName}}
+                                                            ({{bonusCutDetail.bonusCutTypeAddOrSub}})
                                                         </td>
 
                                                         <td>
@@ -140,7 +178,8 @@
 
                                                         </td>
                                                         <td>
-                                                            <i class="fa fa-check text-primary fs-16" v-if="bonusCutDetail.isActive"></i>
+                                                            <i class="fa fa-check text-primary fs-16"
+                                                               v-if="bonusCutDetail.isActive"></i>
                                                             <i class="fa fa-times text-danger fs-16" v-else=""></i>
                                                         </td>
                                                         <td>
@@ -172,23 +211,91 @@
         data(){
             return {
                 employeeDetail: [],
-                salaryDetail:[],
-                bonusCutDetails:[]
+                salaryDetail: [],
+                bonusCutDetails: [],
+                editSalaryForm: {
+                    basicSalary: ''
+                },
+                bonuscuts: [],
+                bonusCutTypeIdToUse: ''
             }
         },
         created(){
-            let self =this
+            let self = this
+
+            // get employee salary detail
             get(api_path + 'salary/employee/detail/' + self.$route.params.id)
                 .then((res) => {
                     self.employeeDetail = res.data.employee.data
                     self.salaryDetail = res.data.salary.data
                     self.bonusCutDetails = res.data.bonusCut.data
+
+                    self.editSalaryForm.basicSalary = self.salaryDetail.basicSalary
+                })
+
+            // get bonus cut data
+            get(api_path + 'salary/employee/availableBC/list/' + self.$route.params.id)
+                .then((res) => {
+                    self.bonuscuts = res.data.bonuscut.data
                 })
         },
-        methods:{
-            edit(){
-                let self =this
-                this.$router.push({name: 'editSalary', params: {id: self.$route.params.id}})
+        methods: {
+            done(){
+                //return back to detail
+                let self = this
+                this.$router.push({name: 'detailSalary', params: {id: self.$route.params.id}})
+            },
+            saveSalary(){
+                let self = this
+                if (self.editSalaryForm.basicSalary) {
+
+                    post(api_path + 'salary/employee/save/basicSalary/'+self.$route.params.id,{basicSalary:self.editSalaryForm.basicSalary})
+                        .then((res) => {
+                            if (!res.data.isFailed) {
+
+                                /* Success notification */
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+                            } else {
+
+                                /* Error notification */
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            }
+                        })
+                        .catch((err) => {
+
+                            /* Error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        })
+
+                } else {
+                    /* Error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Salary cannot be empty, insert 0 instead',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
             }
         }
     }

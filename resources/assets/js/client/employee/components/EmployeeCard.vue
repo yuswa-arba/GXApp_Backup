@@ -1,5 +1,13 @@
 <template>
     <div class="row">
+        <div class="col-lg-12 m-b-10">
+            <p>
+                <i class="fa fa-info-circle"></i>
+                To search employee you may use the search box on the header &nbsp;
+                <i class="fa fa-info-circle"></i>
+                You may search by typing their Name / Employee No / Job Position
+            </p>
+        </div>
         <div class="col-lg-3 col-sm-6 d-flex-not-important flex-column filter-item"
              v-for="employee in employees">
             <!-- START ITEM -->

@@ -6,6 +6,7 @@ import VueRouter from 'vue-router'
 
 import Index from '../views/employee/Index.vue'
 import DetailSalary from '../views/employee/DetailSalary.vue'
+import EditSalary from '../views/employee/EditSalary.vue'
 
 
 Vue.use(VueRouter)
@@ -15,6 +16,8 @@ const router = new VueRouter({
     routes: [
         {path:'/',component:Index},
         {path:'/detail/:id',component:DetailSalary,name:'detailSalary'},
+        {path:'/detail/:id/edit',component:EditSalary,name:'editSalary'},
+
     ]
 })
 

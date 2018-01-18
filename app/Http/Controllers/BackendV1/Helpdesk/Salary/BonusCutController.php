@@ -18,6 +18,7 @@ class BonusCutController extends Controller
 
     public function __construct()
     {
+        $this->middleware(['permission:access salary']);
     }
 
 

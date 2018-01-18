@@ -1968,6 +1968,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -23035,84 +23043,107 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "row" },
-    _vm._l(_vm.employees, function(employee) {
-      return _c(
-        "div",
-        {
-          staticClass:
-            "col-lg-3 col-sm-6 d-flex-not-important flex-column filter-item"
-        },
-        [
-          _c(
-            "div",
-            {
-              staticClass:
-                "card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75",
-              attrs: { "data-social": "item" },
-              on: {
-                click: function($event) {
-                  _vm.viewDetail(employee.id)
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._l(_vm.employees, function(employee) {
+        return _c(
+          "div",
+          {
+            staticClass:
+              "col-lg-3 col-sm-6 d-flex-not-important flex-column filter-item"
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75",
+                attrs: { "data-social": "item" },
+                on: {
+                  click: function($event) {
+                    _vm.viewDetail(employee.id)
+                  }
                 }
-              }
-            },
-            [
-              _c("div", { staticClass: "card-header clearfix" }, [
-                _c("div", { staticClass: "user-pic" }, [
-                  employee.employeePhoto
-                    ? _c("img", {
-                        attrs: {
-                          alt: "None",
-                          src: "/images/employee/" + employee.employeePhoto,
-                          width: "38",
-                          height: "38"
-                        }
-                      })
-                    : _c("img", {
-                        attrs: {
-                          alt: "None",
-                          src: "/core/img/profiles/avatar_small2x.jpg",
-                          width: "38",
-                          height: "38"
-                        }
-                      })
-                ]),
-                _vm._v(" "),
-                _c(
-                  "h5",
-                  {
-                    staticClass: "fs-14 pull-right",
-                    staticStyle: { opacity: "0.7" }
-                  },
-                  [_vm._v(_vm._s(employee.employeeNo))]
-                ),
-                _vm._v(" "),
-                _c("h5", { staticClass: "fs-18" }, [
-                  _vm._v(_vm._s(employee.givenName))
-                ]),
-                _vm._v(" "),
-                _c(
-                  "h6",
-                  { staticClass: "fs-14", staticStyle: { opacity: ".7" } },
-                  [_vm._v(_vm._s(employee.surname))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "h6",
-                  {
-                    staticClass: "text-primary",
-                    staticStyle: { "margin-top": "3px" }
-                  },
-                  [_vm._v(_vm._s(employee.jobPosition))]
-                )
-              ])
-            ]
-          )
-        ]
-      )
-    })
+              },
+              [
+                _c("div", { staticClass: "card-header clearfix" }, [
+                  _c("div", { staticClass: "user-pic" }, [
+                    employee.employeePhoto
+                      ? _c("img", {
+                          attrs: {
+                            alt: "None",
+                            src: "/images/employee/" + employee.employeePhoto,
+                            width: "38",
+                            height: "38"
+                          }
+                        })
+                      : _c("img", {
+                          attrs: {
+                            alt: "None",
+                            src: "/core/img/profiles/avatar_small2x.jpg",
+                            width: "38",
+                            height: "38"
+                          }
+                        })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "h5",
+                    {
+                      staticClass: "fs-14 pull-right",
+                      staticStyle: { opacity: "0.7" }
+                    },
+                    [_vm._v(_vm._s(employee.employeeNo))]
+                  ),
+                  _vm._v(" "),
+                  _c("h5", { staticClass: "fs-18" }, [
+                    _vm._v(_vm._s(employee.givenName))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "h6",
+                    { staticClass: "fs-14", staticStyle: { opacity: ".7" } },
+                    [_vm._v(_vm._s(employee.surname))]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "h6",
+                    {
+                      staticClass: "text-primary",
+                      staticStyle: { "margin-top": "3px" }
+                    },
+                    [_vm._v(_vm._s(employee.jobPosition))]
+                  )
+                ])
+              ]
+            )
+          ]
+        )
+      })
+    ],
+    2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+      _c("p", [
+        _c("i", { staticClass: "fa fa-info-circle" }),
+        _vm._v(
+          "\n            To search employee you may use the search box on the header  \n            "
+        ),
+        _c("i", { staticClass: "fa fa-info-circle" }),
+        _vm._v(
+          "\n            You may search by typing their Name / Employee No / Job Position\n        "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

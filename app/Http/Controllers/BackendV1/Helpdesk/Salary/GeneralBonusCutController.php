@@ -20,9 +20,8 @@ class GeneralBonusCutController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['permission:access salary']);
     }
-
 
     /* @desc: Get bonus cut list that is not yet being used in general bonus cut */
 
@@ -126,17 +125,17 @@ class GeneralBonusCutController extends Controller
 
             // update to database
             $update = $generalBonusCut->update([
-                'isUsingFormula'=>$request->isUsingFormula,
-                'formula'=>$request->formula,
-                'value'=>$request->value,
-                'isActive'=>$request->isActive
+                'isUsingFormula' => $request->isUsingFormula,
+                'formula' => $request->formula,
+                'value' => $request->value,
+                'isActive' => $request->isActive
             ]);
 
-            if($update){
+            if ($update) {
                 /* Success now return response with data */
                 $response['isFailed'] = false;
                 $response['message'] = 'General bonus cut has been edited successfully';
-                $response['generalBC'] = fractal($generalBonusCut,new GeneralBonusCutTransformer());
+                $response['generalBC'] = fractal($generalBonusCut, new GeneralBonusCutTransformer());
                 return response()->json($response, 200);
 
             } else {

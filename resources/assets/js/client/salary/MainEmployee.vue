@@ -9,13 +9,6 @@
                 </button>
             </div>
 
-            <div slot="edit-menu">
-                <button class="btn btn-danger m-b-10 pull-right"
-                        @click="edit()">
-                    Edit
-                </button>
-            </div>
-
         </router-view>
     </div>
 </template>
@@ -28,15 +21,12 @@
         methods: {
             goBack(){
                 $('#errors-container').addClass('hide');
-                this.$router.go(-1)
+                this.$router.push('/')
             },
             edit(){
 
             },
             save(){
-
-            },
-            cancel(){
 
             }
         }
