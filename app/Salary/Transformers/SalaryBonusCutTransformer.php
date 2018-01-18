@@ -18,7 +18,7 @@ class SalaryBonusCutTransformer extends TransformerAbstract
             'addOrSub' => $bonusCutType->addOrSub,
             'isRelatedToDivision' => $bonusCutType->isRelatedToDivision,
             'divisionId' => $bonusCutType->divisionId,
-            'divisionName' => !is_null($bonusCutType->divison) ? $bonusCutType->divison->name : '',
+            'divisionName' => !is_null($bonusCutType->division) ? $bonusCutType->division->name : '',
             'editing'=>false
         ];
     }

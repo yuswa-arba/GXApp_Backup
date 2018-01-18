@@ -58,44 +58,62 @@ class EmployeeController extends Controller
 
     public function availableBonusCutList($employeeId)
     {
+        $employee = MasterEmployee::find($employeeId);
 
-        $usedBonusCutInGeneral = GeneralBonusesCuts::all()->pluck('salaryBonusCutTypeId');
-        $usedBonusCutByEmployee = EmployeeBonusesCuts::where('employeeId', $employeeId)->get()->pluck('salaryBonusCutTypeId');
+        if ($employee) {
 
-        $salaryBonusCut = SalaryBonusCutType::where('isDeleted', '!=', 1)
-            ->whereNotIn('id', $usedBonusCutByEmployee)
-            ->whereNotIn('id', $usedBonusCutInGeneral)
-            ->get();
+            $employeeDivisionId = !is_null($employee->employment) ? $employee->employment->divisionId : '';
 
-        $response['isFailed'] = false;
-        $response['message'] = 'Success';
-        $response['bonuscut'] = fractal($salaryBonusCut, new SalaryBonusCutTransformer());
+            $usedBonusCutInGeneral = GeneralBonusesCuts::all()->pluck('salaryBonusCutTypeId');
 
-        return response()->json($response, 200);
+            $usedBonusCutByEmployee = EmployeeBonusesCuts::where('employeeId', $employeeId)->get()->pluck('salaryBonusCutTypeId');
+
+            $salaryBonusCut = SalaryBonusCutType::where('isDeleted', '!=', 1)
+                ->whereNotIn('id', $usedBonusCutByEmployee)
+                ->whereNotIn('id', $usedBonusCutInGeneral)
+                ->where(function ($query) use ($employeeDivisionId) {
+                    $query->where('isRelatedToDivision',0)->orWhere(function($query)use($employeeDivisionId){
+                        $query->where('isRelatedToDivision',1)->where('divisionId',$employeeDivisionId);// get where Division is related and same with this employee
+                    });
+                })
+                ->get();
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            $response['bonuscut'] = fractal($salaryBonusCut, new SalaryBonusCutTransformer());
+
+            return response()->json($response, 200);
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find employee data. An error might occurred';
+
+            return response()->json($response, 200);
+        }
+
     }
 
-    /* @desc Save basic salary for employee*/
+    /* @desc Save basic salary for employee */
     public function saveSalary(Request $request, $employeeId)
     {
-        return InsertEmployeeSalaryLogic::save($request,$employeeId);
+        return InsertEmployeeSalaryLogic::save($request, $employeeId);
     }
 
-    /* @desc Insert bonus cut to employee for the first time*/
-    public function useBonusCut(Request $request,$employeeId)
+    /* @desc Insert bonus cut to employee for the first time */
+    public function useBonusCut(Request $request, $employeeId)
     {
-        return UseBonusCutLogic::use($request,$employeeId);
+        return UseBonusCutLogic::use ($request, $employeeId);
     }
 
-    /* @desc Edit/Save inserted bonus cut for this employee*/
+    /* @desc Edit/Save inserted bonus cut for this employee */
     public function saveBonusCut(Request $request, $employeeId)
     {
-       return InsertEmployeeBonusCutLogic::save($request,$employeeId);
+        return InsertEmployeeBonusCutLogic::save($request, $employeeId);
     }
 
-    /* @desc Remove inserted bonus cut for this employee*/
+    /* @desc Remove inserted bonus cut for this employee */
     public function removeBonusCut(Request $request, $employeeId)
     {
-        return RemoveBonusCutLogic::remove($request,$employeeId);
+        return RemoveBonusCutLogic::remove($request, $employeeId);
     }
 
 }

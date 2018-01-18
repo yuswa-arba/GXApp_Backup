@@ -31,7 +31,7 @@
                                             <label v-else=""></label>
                                         </td>
                                         <td>
-                                            <span v-if="bonuscut.isRelatedToDivision">  {{bonuscut.divisionName}}</span>
+                                            <span v-if="bonuscut.isRelatedToDivision"> {{bonuscut.divisionName}}</span>
                                             <span v-else="">-</span>
                                         </td>
                                         <td>

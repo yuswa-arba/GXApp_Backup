@@ -2,6 +2,7 @@
 
 namespace App\Salary\Models;
 
+use App\Components\Models\Division;
 use Illuminate\Database\Eloquent\Model;
 
 class SalaryBonusCutType extends Model
@@ -19,6 +20,11 @@ class SalaryBonusCutType extends Model
     public function generalBonusesCuts()
     {
         return $this->hasMany(GeneralBonusesCuts::class,'salaryBonusCutTypeId');
+    }
+
+    public function division()
+    {
+        return $this->belongsTo(Division::class,'divisionId');
     }
 
 
