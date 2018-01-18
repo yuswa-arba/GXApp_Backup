@@ -85,7 +85,6 @@ class GeneralBonusCutController extends Controller
             $response['message'] = 'Error! Unable to create general bonus cut';
             return response()->json($response, 200);
         }
-
     }
 
     public function edit(Request $request)

@@ -101,7 +101,7 @@ class MasterEmployee extends Model
         return $this->hasOne(EmployeeSalary::class,'employeeId');
     }
 
-    public function bonusesCuts()
+    public function bonusCut()
     {
         return $this->hasMany(EmployeeBonusesCuts::class,'employeeId');
     }

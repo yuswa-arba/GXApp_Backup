@@ -25,12 +25,12 @@
                                         </td>
 
                                         <td>
-                                            <span class="fs-14" v-if="generalBC.value!=null">{{generalBC.value}}</span>
+                                            <span class="fs-14" v-if="generalBC.value">{{generalBC.value}}</span>
                                             <span v-else="">-</span>
                                         </td>
 
                                         <td>
-                                            <span v-if="generalBC.isUsingFormula">  {{generalBC.formula}}</span>
+                                            <span v-if="generalBC.isUsingFormula && generalBC.formula">  {{generalBC.formula}}</span>
                                             <span v-else="">-</span>
 
                                         </td>
@@ -113,7 +113,7 @@
                                         <label> Bonus Cut Type Name</label>
                                         <br>
                                         <span class="fs-16 bold">
-                                              {{editGeneralBonusCutForm.bonusCutTypeName}}
+                                              {{editGeneralBonusCutForm.bonusCutTypeName}} <span class="text-primary">({{editGeneralBonusCutForm.bonusCutTypeAddOrSub}})</span>
                                         </span>
 
                                     </div>
@@ -127,14 +127,15 @@
                                         <label>Formula</label>
                                         <br>
                                         <label class="label label-default fs-12 cursor" @click="insertSalaryOperator()">insert <b class="text-true-black">_salary_</b></label>
-                                        <p>Available operators : <span class="bold fs-16">/ , * , + , -</span></p>
+                                        <p>Available operators : <span class="bold fs-16">/ , * , + , - , ( , )</span></p>
 
                                         <input type="text" class="form-control"
                                                style="height: 55px"
                                                placeholder="e.g: _salary_/25*8/60"
                                                v-model="editGeneralBonusCutForm.formula">
+                                        <p class="text-danger">Make sure to insert a valid format in order for the formula to work, system is case sensitive</p>
+                                        <p class="text-danger">Please note that this should returns value that will then be "added/subtracted" to/from the salary based on the Bonus Cut type</p>
                                         <br>
-
 
                                     </div>
 
@@ -211,6 +212,7 @@
             createGeneralBonusCut(){
                 let self = this
                 if (self.bonusCutTypeIdToUse) {
+
                     post(api_path + 'salary/generalBC/create', {bonusCutTypeId: self.bonusCutTypeIdToUse})
                         .then((res) => {
                             if (!res.data.isFailed) {
@@ -275,6 +277,7 @@
                 // Insert to form
                 self.editGeneralBonusCutForm.generalBonusCutId = generalBonusCutId
                 self.editGeneralBonusCutForm.bonusCutTypeName = generalBonusCut.bonusCutTypeName
+                self.editGeneralBonusCutForm.bonusCutTypeAddOrSub = generalBonusCut.bonusCutTypeAddOrSub
                 self.editGeneralBonusCutForm.value = generalBonusCut.value
                 self.editGeneralBonusCutForm.isActive = generalBonusCut.isActive
                 self.editGeneralBonusCutForm.isUsingFormula = generalBonusCut.isUsingFormula
@@ -286,6 +289,11 @@
 
                 let self = this
                 if (self.formIsValid) {
+
+                    // remove from object before submit bcs its not needed
+                    delete self.editGeneralBonusCutForm.bonusCutTypeName
+                    delete self.editGeneralBonusCutForm.addOrSub
+
                     post(api_path + 'salary/generalBC/edit', self.editGeneralBonusCutForm)
                         .then((res) => {
                             if (!res.data.isFailed) {

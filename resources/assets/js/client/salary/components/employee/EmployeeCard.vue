@@ -5,7 +5,8 @@
             <!-- START ITEM -->
             <div class="card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75"
                  data-social="item"
-                 @click="viewDetail(employee.id)">
+                 @click="viewDetail(employee.id)"
+            >
                 <div class="card-header clearfix">
                     <div class="user-pic">
                         <img v-if="employee.employeePhoto"
@@ -31,8 +32,8 @@
 </template>
 
 <script type="text/javascript">
-    import {get} from '../../helpers/api'
-    import {api_path} from '../../helpers/const'
+    import {get} from '../../../helpers/api'
+    import {api_path} from '../../../helpers/const'
     export default{
         data(){
             return {
@@ -48,7 +49,7 @@
         },
         methods: {
             viewDetail(id){
-                this.$router.push({name: 'detailMaster', params: {id: id}})
+                this.$router.push({name: 'detailSalary', params: {id: id}})
             }
 
         },

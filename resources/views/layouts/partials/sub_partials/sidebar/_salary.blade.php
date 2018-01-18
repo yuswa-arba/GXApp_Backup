@@ -11,7 +11,7 @@
                 <span class="icon-thumbnail">rg</span>
             </li>
             <li class="">
-                <a href="#">Employee</a>
+                <a href="{{route('salary.employee')}}">Employee</a>
                 <span class="icon-thumbnail">e</span>
             </li>
             <li class="">

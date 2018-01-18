@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 15);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2458,13 +2458,11 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainSetting.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainEmployee.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 //
 //
 //
@@ -2479,8 +2477,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
-
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {},
@@ -2489,13 +2493,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         goBack: function goBack() {
             $('#errors-container').addClass('hide');
             this.$router.go(-1);
-        }
+        },
+        edit: function edit() {},
+        save: function save() {},
+        cancel: function cancel() {}
     }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/employee/EmployeeCard.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2535,312 +2542,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            divisions: [],
-            bonuscuts: [],
-            bonusCutForm: {
-                name: '',
-                addOrSub: 'add',
-                isRelatedToDivision: 0,
-                divisionId: ''
-            },
-            formIsValid: false
+            employees: []
         };
     },
     created: function created() {
+        var _this = this;
+
         var self = this;
-
-        // get division data
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/divisions').then(function (res) {
-            self.divisions = res.data.data;
-        });
-
-        // get bonus cut tab data
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/list').then(function (res) {
-            self.bonuscuts = res.data.bonuscut.data;
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/list').then(function (res) {
+            _this.employees = res.data.data;
         });
     },
 
     methods: {
-        saveBonusCutForm: function saveBonusCutForm() {
-
-            var self = this;
-
-            if (self.formIsValid) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/create', self.bonusCutForm).then(function (res) {
-                    self.formIsValid = false;
-
-                    if (!res.data.isFailed) {
-
-                        /* Success notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        self.bonuscuts.push(res.data.bonuscut.data);
-
-                        //reset form
-                        self.bonusCutForm = {
-                            name: '',
-                            addOrSub: 'add',
-                            isRelatedToDivision: false,
-                            divisionId: ''
-                        };
-                    } else {
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    }
-                }).catch(function (err) {
-
-                    self.formIsValid = false;
-
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                });
-            } else {
-                if (self.bonusCutForm.name && self.bonusCutForm.addOrSub) {
-                    if (self.bonusCutForm.isRelatedToDivision) {
-                        if (self.bonusCutForm.divisionId) {
-
-                            self.formIsValid = true;
-                            self.saveBonusCutForm();
-                        } else {
-
-                            self.formIsValid = false;
-
-                            $('.page-container').pgNotification({
-                                style: 'flip',
-                                message: 'Division cannot be empty',
-                                position: 'top-right',
-                                timeout: 3500,
-                                type: 'danger'
-                            }).show();
-                        }
-                    } else {
-
-                        self.formIsValid = true;
-                        self.saveBonusCutForm();
-                    }
-                } else {
-
-                    self.formIsValid = false;
-
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: 'Name and add/sub cannot be empty',
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
-            }
-        },
-        deleteBonusCutType: function deleteBonusCutType(bonusCutTypeId, bonusCutTypeIndex) {
-            var self = this;
-            if (confirm('Are you sure to delete this?')) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/delete', { bonusCutTypeId: bonusCutTypeId }).then(function (res) {
-                    if (!res.data.isFailed) {
-
-                        /* Success notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        /* remove from array */
-                        self.bonuscuts.splice(bonusCutTypeIndex, 1);
-                    } else {
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    }
-                }).catch(function (err) {
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                });
-            }
-        },
-        editBonusCutType: function editBonusCutType(bonusCutTypeIndex) {
-            var self = this;
-            self.bonuscuts[bonusCutTypeIndex].editing = true;
-        },
-        doneEditing: function doneEditing(bonusCutTypeId, bonusCutTypeIndex) {
-            var self = this;
-
-            var oldBonusCutName = self.bonuscuts[bonusCutTypeIndex].name;
-            var bonusCutName = $('input[name="' + 'bonusCutName_' + bonusCutTypeId + '"]').val();
-
-            if (bonusCutName != oldBonusCutName) {
-                // if its different then submit to server
-                if (bonusCutTypeId && bonusCutName) {
-
-                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/edit', {
-                        bonusCutTypeId: bonusCutTypeId,
-                        bonusCutName: bonusCutName
-                    }).then(function (res) {
-                        if (!res.data.isFailed) {
-
-                            /* Succeess notification */
-                            $('.page-container').pgNotification({
-                                style: 'flip',
-                                message: res.data.message,
-                                position: 'top-right',
-                                timeout: 3500,
-                                type: 'info'
-                            }).show();
-
-                            /*Change name*/
-                            self.bonuscuts[bonusCutTypeIndex].name = bonusCutName;
-                        } else {
-
-                            /* Error notification */
-                            $('.page-container').pgNotification({
-                                style: 'flip',
-                                message: res.data.message,
-                                position: 'top-right',
-                                timeout: 3500,
-                                type: 'danger'
-                            }).show();
-                        }
-                    }).catch(function (err) {
-
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: err.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    });
-                }
-            }
-
-            self.bonuscuts[bonusCutTypeIndex].editing = false;
+        viewDetail: function viewDetail(id) {
+            this.$router.push({ name: 'detailSalary', params: { id: id } });
         }
     },
-    computed: {}
+    mounted: function mounted() {}
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/employee/DetailSalary.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -3011,254 +2741,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            generalBCs: [],
-            bonuscuts: [],
-            bonusCutTypeIdToUse: '',
-            editGeneralBonusCutForm: {
-                generalBonusCutId: '',
-                bonusCutTypeName: '',
-                value: '',
-                isActive: 0,
-                isUsingFormula: 0,
-                formula: ''
-            },
-            formIsValid: false
+            employeeDetail: [],
+            salaryDetail: [],
+            bonusCutDetails: []
         };
     },
     created: function created() {
         var self = this;
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/employee/detail/' + self.$route.params.id).then(function (res) {
+            self.employeeDetail = res.data.employee.data;
+            self.salaryDetail = res.data.salary.data;
+            self.bonusCutDetails = res.data.bonusCut.data;
 
-        // get bonus cut data
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/bonuscut/list').then(function (res) {
-            self.bonuscuts = res.data.bonuscut.data;
+            console.log(JSON.stringify(res.data));
         });
-
-        // get general bonus cut data
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/list').then(function (res) {
-            self.generalBCs = res.data.generalBC.data;
-        });
-    },
-
-    methods: {
-        createGeneralBonusCut: function createGeneralBonusCut() {
-            var self = this;
-            if (self.bonusCutTypeIdToUse) {
-
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/create', { bonusCutTypeId: self.bonusCutTypeIdToUse }).then(function (res) {
-                    if (!res.data.isFailed) {
-
-                        /* success notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        //push to array
-                        self.generalBCs.push(res.data.generalBC.data);
-
-                        //remove from array
-                        var bonusCutIndex = _.findIndex(self.bonuscuts, { id: self.bonusCutTypeIdToUse });
-                        self.bonuscuts.splice(bonusCutIndex, 1);
-
-                        //reset
-                        self.bonusCutTypeIdToUse = '';
-                    } else {
-
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    }
-                }).catch(function (err) {
-
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                });
-            } else {
-                /* Error notification */
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: 'Bonus cut cannot be empty',
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        },
-        attempEditGeneralBonusCut: function attempEditGeneralBonusCut(generalBonusCutId) {
-
-            var self = this;
-            var generalBonusCut = _.find(self.generalBCs, { id: generalBonusCutId });
-
-            // Insert to form
-            self.editGeneralBonusCutForm.generalBonusCutId = generalBonusCutId;
-            self.editGeneralBonusCutForm.bonusCutTypeName = generalBonusCut.bonusCutTypeName;
-            self.editGeneralBonusCutForm.bonusCutTypeAddOrSub = generalBonusCut.bonusCutTypeAddOrSub;
-            self.editGeneralBonusCutForm.value = generalBonusCut.value;
-            self.editGeneralBonusCutForm.isActive = generalBonusCut.isActive;
-            self.editGeneralBonusCutForm.isUsingFormula = generalBonusCut.isUsingFormula;
-            self.editGeneralBonusCutForm.formula = generalBonusCut.formula;
-
-            $('#modal-edit-general-bonus-cut').modal('show');
-        },
-        doneEditingGeneralBonusCut: function doneEditingGeneralBonusCut() {
-
-            var self = this;
-            if (self.formIsValid) {
-
-                // remove from object before submit bcs its not needed
-                delete self.editGeneralBonusCutForm.bonusCutTypeName;
-                delete self.editGeneralBonusCutForm.addOrSub;
-
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/edit', self.editGeneralBonusCutForm).then(function (res) {
-                    if (!res.data.isFailed) {
-
-                        /* success notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        /* Update general BC array*/
-                        if (res.data.generalBC.data) {
-                            var generalBonusCutIndex = _.findIndex(self.generalBCs, { id: self.editGeneralBonusCutForm.generalBonusCutId });
-                            self.generalBCs.splice(generalBonusCutIndex, 1, res.data.generalBC.data);
-                        }
-
-                        /* Close modal */
-                        $('#modal-edit-general-bonus-cut').modal('toggle');
-                    } else {
-
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    }
-                }).catch(function (err) {
-
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                });
-            } else {
-
-                if (self.editGeneralBonusCutForm.isUsingFormula && self.editGeneralBonusCutForm.formula) {
-                    /* If using formula, formula is required*/
-
-                    self.formIsValid = true;
-                    self.doneEditingGeneralBonusCut();
-                } else if (!self.editGeneralBonusCutForm.isUsingFormula && self.editGeneralBonusCutForm.value) {
-                    /* If not using formula , value is required */
-
-                    self.formIsValid = true;
-                    self.doneEditingGeneralBonusCut();
-                } else {
-
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: 'Unable to submit, form is not valid',
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
-            }
-        },
-        insertSalaryOperator: function insertSalaryOperator() {
-            var self = this;
-            self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_';
-        }
-    },
-    computed: {}
-
+    }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/employee/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/BonusCutTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_employee_EmployeeCard_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/employee/EmployeeCard.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_employee_EmployeeCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_employee_EmployeeCard_vue__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        'bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default.a,
-        'general-bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue___default.a
+        "employee-card": __WEBPACK_IMPORTED_MODULE_0__components_employee_EmployeeCard_vue___default.a
     },
     mounted: function mounted() {}
 });
@@ -22687,1092 +22209,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-16c2d3d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-        },
-        [
-          _c("div", { staticClass: "card-block" }, [
-            _c("div", { staticClass: "scrollable" }, [
-              _c("div", { staticClass: " h-500" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table table-hover bonusCutDT" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.generalBCs, function(generalBC, index) {
-                        return _c("tr", [
-                          _c("td", [_vm._v(_vm._s(generalBC.id))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(generalBC.bonusCutTypeName) +
-                                " (" +
-                                _vm._s(generalBC.bonusCutTypeAddOrSub) +
-                                ")\n                                    "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            generalBC.value
-                              ? _c("span", { staticClass: "fs-14" }, [
-                                  _vm._v(_vm._s(generalBC.value))
-                                ])
-                              : _c("span", [_vm._v("-")])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            generalBC.isUsingFormula && generalBC.formula
-                              ? _c("span", [
-                                  _vm._v("  " + _vm._s(generalBC.formula))
-                                ])
-                              : _c("span", [_vm._v("-")])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            generalBC.isActive
-                              ? _c("i", {
-                                  staticClass: "fa fa-check text-primary fs-16"
-                                })
-                              : _c("i", {
-                                  staticClass: "fa fa-times text-danger fs-16"
-                                })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("i", {
-                              staticClass: "fa fa-pencil fs-16 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.attempEditGeneralBonusCut(generalBC.id)
-                                }
-                              }
-                            })
-                          ])
-                        ])
-                      })
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "help pull-right m-t-10",
-                staticStyle: { opacity: "0.7" },
-                attrs: { for: "" }
-              },
-              [_vm._v("Scroll for more")]
-            )
-          ])
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4 m-b-10" }, [
-      _c("div", { staticClass: "card card-transparent" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("form", { attrs: { id: "bonus-cut-form" } }, [
-            _c("h4", [_vm._v("Apply Bonus Cut")]),
-            _vm._v(" "),
-            _c("div", [
-              _c("div", { staticClass: "row clearfix" }, [
-                _c("div", { staticClass: "col-md-9" }, [
-                  _c("div", { staticClass: "form-group required" }, [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.bonusCutTypeIdToUse,
-                            expression: "bonusCutTypeIdToUse"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { name: "", id: "" },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.bonusCutTypeIdToUse = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      [
-                        _c(
-                          "option",
-                          {
-                            attrs: {
-                              value: "",
-                              disabled: "",
-                              hidden: "",
-                              selected: ""
-                            }
-                          },
-                          [_vm._v("Select Bonus Cut")]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.bonuscuts, function(bonuscut) {
-                          return _c(
-                            "option",
-                            { domProps: { value: bonuscut.id } },
-                            [
-                              _vm._v(
-                                _vm._s(bonuscut.name) +
-                                  "\n                                            (" +
-                                  _vm._s(bonuscut.addOrSub) +
-                                  ")\n                                        "
-                              )
-                            ]
-                          )
-                        })
-                      ],
-                      2
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "" } }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary fs-16",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.createGeneralBonusCut()
-                          }
-                        }
-                      },
-                      [_vm._v("Use\n                                    ")]
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "Bonus cut can only be use once, but you may edit it later"
-              )
-            ])
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade stick-up",
-        attrs: {
-          id: "modal-edit-general-bonus-cut",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c("form", { attrs: { role: "form" } }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v(" Bonus Cut Type Name")]),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "fs-16 bold" }, [
-                        _vm._v(
-                          "\n                                          " +
-                            _vm._s(
-                              _vm.editGeneralBonusCutForm.bonusCutTypeName
-                            ) +
-                            " "
-                        ),
-                        _c("span", { staticClass: "text-primary" }, [
-                          _vm._v(
-                            "(" +
-                              _vm._s(
-                                _vm.editGeneralBonusCutForm.bonusCutTypeAddOrSub
-                              ) +
-                              ")"
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "checkbox check-success  " }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.editGeneralBonusCutForm.isUsingFormula,
-                            expression: "editGeneralBonusCutForm.isUsingFormula"
-                          }
-                        ],
-                        attrs: { type: "checkbox", id: "using-formula-cb" },
-                        domProps: {
-                          value: 1,
-                          checked: Array.isArray(
-                            _vm.editGeneralBonusCutForm.isUsingFormula
-                          )
-                            ? _vm._i(
-                                _vm.editGeneralBonusCutForm.isUsingFormula,
-                                1
-                              ) > -1
-                            : _vm.editGeneralBonusCutForm.isUsingFormula
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$a =
-                                _vm.editGeneralBonusCutForm.isUsingFormula,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = 1,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  (_vm.editGeneralBonusCutForm.isUsingFormula = $$a.concat(
-                                    [$$v]
-                                  ))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.editGeneralBonusCutForm.isUsingFormula = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.$set(
-                                _vm.editGeneralBonusCutForm,
-                                "isUsingFormula",
-                                $$c
-                              )
-                            }
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "label",
-                        {
-                          staticClass: "fs-16",
-                          attrs: { for: "using-formula-cb" }
-                        },
-                        [_vm._v("With Formula")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm.editGeneralBonusCutForm.isUsingFormula
-                      ? _c("div", { staticClass: "form-group" }, [
-                          _c("label", [_vm._v("Formula")]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "label label-default fs-12 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.insertSalaryOperator()
-                                }
-                              }
-                            },
-                            [
-                              _vm._v("insert "),
-                              _c("b", { staticClass: "text-true-black" }, [
-                                _vm._v("_salary_")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm._m(2),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.editGeneralBonusCutForm.formula,
-                                expression: "editGeneralBonusCutForm.formula"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            staticStyle: { height: "55px" },
-                            attrs: {
-                              type: "text",
-                              placeholder: "e.g: _salary_/25*8/60"
-                            },
-                            domProps: {
-                              value: _vm.editGeneralBonusCutForm.formula
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.editGeneralBonusCutForm,
-                                  "formula",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-danger" }, [
-                            _vm._v(
-                              "Make sure to insert a valid format in order for the formula to work, system is case sensitive"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-danger" }, [
-                            _vm._v(
-                              'Please note that this should returns value that will then be "added/subtracted" to/from the salary based on the Bonus Cut type'
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    !_vm.editGeneralBonusCutForm.isUsingFormula
-                      ? _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "" } }, [
-                            _vm._v("Value")
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.editGeneralBonusCutForm.value,
-                                expression: "editGeneralBonusCutForm.value"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text" },
-                            domProps: {
-                              value: _vm.editGeneralBonusCutForm.value
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.editGeneralBonusCutForm,
-                                  "value",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "checkbox check-success " }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.editGeneralBonusCutForm.isActive,
-                            expression: "editGeneralBonusCutForm.isActive"
-                          }
-                        ],
-                        attrs: { type: "checkbox", id: "active-cb" },
-                        domProps: {
-                          value: 1,
-                          checked: Array.isArray(
-                            _vm.editGeneralBonusCutForm.isActive
-                          )
-                            ? _vm._i(_vm.editGeneralBonusCutForm.isActive, 1) >
-                              -1
-                            : _vm.editGeneralBonusCutForm.isActive
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$a = _vm.editGeneralBonusCutForm.isActive,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = 1,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  (_vm.editGeneralBonusCutForm.isActive = $$a.concat(
-                                    [$$v]
-                                  ))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.editGeneralBonusCutForm.isActive = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.$set(
-                                _vm.editGeneralBonusCutForm,
-                                "isActive",
-                                $$c
-                              )
-                            }
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "label",
-                        { staticClass: "fs-16", attrs: { for: "active-cb" } },
-                        [_vm._v("Active")]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-8" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary btn-block m-t-5",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.doneEditingGeneralBonusCut()
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    Save\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "80px" } },
-          [_vm._v("ID")]
-        ),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Bonus Cut Type")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Value")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("With Formula")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Active")]),
-        _vm._v(" "),
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "150px" } },
-          [_vm._v("Action")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
-        },
-        [_c("i", { staticClass: "pg-close" })]
-      ),
-      _vm._v(" "),
-      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-        _vm._v("Edit General Bonus Cut")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("Available operators : "),
-      _c("span", { staticClass: "bold fs-16" }, [
-        _vm._v("/ , * , + , - , ( , )")
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-16c2d3d0", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3babfafc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-        },
-        [
-          _c("div", { staticClass: "card-block" }, [
-            _c("div", { staticClass: "scrollable" }, [
-              _c("div", { staticClass: " h-500" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table table-hover bonusCutDT" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.bonuscuts, function(bonuscut, index) {
-                        return _c("tr", [
-                          _c("td", [_vm._v(_vm._s(bonuscut.id))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            !bonuscut.editing
-                              ? _c("span", { staticClass: "fs-14" }, [
-                                  _vm._v(_vm._s(bonuscut.name))
-                                ])
-                              : _c("input", {
-                                  attrs: {
-                                    type: "text",
-                                    name: "bonusCutName_" + bonuscut.id
-                                  },
-                                  domProps: { value: bonuscut.name }
-                                })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            bonuscut.addOrSub == "add"
-                              ? _c(
-                                  "label",
-                                  { staticClass: "label label-success fs-14" },
-                                  [_vm._v(_vm._s(bonuscut.addOrSub))]
-                                )
-                              : bonuscut.addOrSub == "sub"
-                                ? _c(
-                                    "label",
-                                    { staticClass: "label label-danger fs-14" },
-                                    [_vm._v(_vm._s(bonuscut.addOrSub))]
-                                  )
-                                : _c("label")
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            bonuscut.isRelatedToDivision
-                              ? _c("span", [
-                                  _vm._v("  " + _vm._s(bonuscut.divisionName))
-                                ])
-                              : _c("span", [_vm._v("-")])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            !bonuscut.editing
-                              ? _c("i", {
-                                  staticClass: "fa fa-pencil fs-16 cursor",
-                                  on: {
-                                    click: function($event) {
-                                      _vm.editBonusCutType(index)
-                                    }
-                                  }
-                                })
-                              : _c(
-                                  "span",
-                                  {
-                                    staticClass: "fs-12 text-primary cursor",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.doneEditing(bonuscut.id, index)
-                                      }
-                                    }
-                                  },
-                                  [_vm._v("DONE")]
-                                ),
-                            _vm._v(
-                              "\n                                          \n                                        "
-                            ),
-                            _c("i", {
-                              staticClass:
-                                "fa fa-times text-danger fs-16 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.deleteBonusCutType(bonuscut.id, index)
-                                }
-                              }
-                            })
-                          ])
-                        ])
-                      })
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "help pull-right m-t-10",
-                staticStyle: { opacity: "0.7" },
-                attrs: { for: "" }
-              },
-              [_vm._v("Scroll for more")]
-            )
-          ])
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4 m-b-10" }, [
-      _c("div", { staticClass: "card card-transparent" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("form", { attrs: { id: "bonus-cut-form" } }, [
-            _c("h4", [_vm._v("Bonus Cut Form")]),
-            _vm._v(" "),
-            _c("div", [
-              _c("div", { staticClass: "row clearfix" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group required" }, [
-                    _c("label", [_vm._v("Name")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.bonusCutForm.name,
-                          expression: "bonusCutForm.name"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { id: "name", type: "text", name: "name" },
-                      domProps: { value: _vm.bonusCutForm.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.bonusCutForm,
-                            "name",
-                            $event.target.value
-                          )
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group required" }, [
-                    _c("label", [_vm._v("Add / Sub")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.bonusCutForm.addOrSub,
-                            expression: "bonusCutForm.addOrSub"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { name: "", id: "" },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.bonusCutForm,
-                              "addOrSub",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          }
-                        }
-                      },
-                      [
-                        _c("option", { attrs: { value: "add" } }, [
-                          _vm._v("Add")
-                        ]),
-                        _vm._v(" "),
-                        _c("option", { attrs: { value: "sub" } }, [
-                          _vm._v("Sub")
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row clearfix" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "checkbox check-success  " }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.bonusCutForm.isRelatedToDivision,
-                          expression: "bonusCutForm.isRelatedToDivision"
-                        }
-                      ],
-                      attrs: { type: "checkbox", id: "related-to-division" },
-                      domProps: {
-                        value: 1,
-                        checked: Array.isArray(
-                          _vm.bonusCutForm.isRelatedToDivision
-                        )
-                          ? _vm._i(_vm.bonusCutForm.isRelatedToDivision, 1) > -1
-                          : _vm.bonusCutForm.isRelatedToDivision
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = _vm.bonusCutForm.isRelatedToDivision,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = 1,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                (_vm.bonusCutForm.isRelatedToDivision = $$a.concat(
-                                  [$$v]
-                                ))
-                            } else {
-                              $$i > -1 &&
-                                (_vm.bonusCutForm.isRelatedToDivision = $$a
-                                  .slice(0, $$i)
-                                  .concat($$a.slice($$i + 1)))
-                            }
-                          } else {
-                            _vm.$set(
-                              _vm.bonusCutForm,
-                              "isRelatedToDivision",
-                              $$c
-                            )
-                          }
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("label", { attrs: { for: "related-to-division" } }, [
-                      _vm._v("Related to Division")
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm.bonusCutForm.isRelatedToDivision
-                  ? _c("div", { staticClass: "col-md-12" }, [
-                      _c("div", { staticClass: "form-group required" }, [
-                        _c("label", [_vm._v("Division")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.bonusCutForm.divisionId,
-                                expression: "bonusCutForm.divisionId"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { name: "" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.bonusCutForm,
-                                  "divisionId",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "option",
-                              {
-                                attrs: {
-                                  value: "",
-                                  disabled: "",
-                                  hidden: "",
-                                  selected: ""
-                                }
-                              },
-                              [_vm._v("Select Division")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.divisions, function(division) {
-                              return _c(
-                                "option",
-                                { domProps: { value: division.id } },
-                                [
-                                  _vm._v(
-                                    "\n                                            " +
-                                      _vm._s(division.name) +
-                                      "\n                                        "
-                                  )
-                                ]
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      ])
-                    ])
-                  : _vm._e()
-              ])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "If bonus/cut is related to division, it can only be given to employee within that\n                        division"
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-complete pull-right",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.saveBonusCutForm()
-                  }
-                }
-              },
-              [_vm._v("Save\n                    ")]
-            )
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "100px" } },
-          [_vm._v("ID")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "300px" } },
-          [_vm._v("Name")]
-        ),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Add/Sub")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Division Related")]),
-        _vm._v(" "),
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "150px" } },
-          [_vm._v("Action")]
-        )
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3babfafc", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-40db1a1a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "card card-borderless" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "tab-content" }, [
-          _c(
-            "div",
-            { staticClass: "tab-pane active", attrs: { id: "tabBonusCut" } },
-            [_c("bonus-cut-tab")],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "tab-pane", attrs: { id: "tabGeneralBonusCut" } },
-            [_c("general-bonus-cut-tab")],
-            1
-          )
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-tabs nav-tabs-simple",
-        attrs: { role: "tablist", "data-init-reponsive-tabs": "dropdownfx" }
-      },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "active",
-              attrs: {
-                href: "#",
-                "data-toggle": "tab",
-                role: "tab",
-                "data-target": "#tabBonusCut"
-              }
-            },
-            [_vm._v("Bonus Cut")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tab",
-                role: "tab",
-                "data-target": "#tabGeneralBonusCut"
-              }
-            },
-            [_vm._v("General Bonus Cut")]
-          )
-        ])
-      ]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-40db1a1a", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6aee0518\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainSetting.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-03643f3a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainEmployee.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -23800,6 +22237,21 @@ var render = function() {
               _vm._v("\n                Go Back\n            ")
             ]
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { attrs: { slot: "edit-menu" }, slot: "edit-menu" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger m-b-10 pull-right",
+              on: {
+                click: function($event) {
+                  _vm.edit()
+                }
+              }
+            },
+            [_vm._v("\n                Edit\n            ")]
+          )
         ])
       ])
     ],
@@ -23812,7 +22264,447 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6aee0518", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-03643f3a", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-07fbd2e5\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/employee/Index.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("employee-card")
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-07fbd2e5", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-45b0bb19\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/employee/EmployeeCard.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row" },
+    _vm._l(_vm.employees, function(employee) {
+      return _c(
+        "div",
+        {
+          staticClass:
+            "col-lg-3 col-sm-6 d-flex-not-important flex-column filter-item"
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass:
+                "card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75",
+              attrs: { "data-social": "item" },
+              on: {
+                click: function($event) {
+                  _vm.viewDetail(employee.id)
+                }
+              }
+            },
+            [
+              _c("div", { staticClass: "card-header clearfix" }, [
+                _c("div", { staticClass: "user-pic" }, [
+                  employee.employeePhoto
+                    ? _c("img", {
+                        attrs: {
+                          alt: "None",
+                          src: "/images/employee/" + employee.employeePhoto,
+                          width: "38",
+                          height: "38"
+                        }
+                      })
+                    : _c("img", {
+                        attrs: {
+                          alt: "None",
+                          src: "/core/img/profiles/avatar_small2x.jpg",
+                          width: "38",
+                          height: "38"
+                        }
+                      })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    staticClass: "fs-14 pull-right",
+                    staticStyle: { opacity: "0.7" }
+                  },
+                  [_vm._v(_vm._s(employee.employeeNo))]
+                ),
+                _vm._v(" "),
+                _c("h5", { staticClass: "fs-18" }, [
+                  _vm._v(_vm._s(employee.givenName))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h6",
+                  { staticClass: "fs-14", staticStyle: { opacity: ".7" } },
+                  [_vm._v(_vm._s(employee.surname))]
+                ),
+                _vm._v(" "),
+                _c(
+                  "h6",
+                  {
+                    staticClass: "text-primary",
+                    staticStyle: { "margin-top": "3px" }
+                  },
+                  [_vm._v(_vm._s(employee.jobPosition))]
+                )
+              ])
+            ]
+          )
+        ]
+      )
+    })
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-45b0bb19", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4b342c90\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/employee/DetailSalary.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row row-same-height" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 m-t-10" },
+      [_vm._t("go-back-menu"), _vm._v(" "), _vm._t("edit-menu")],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee ID")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.$route.params.id))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Employee No")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.employeeDetail.employeeNo))
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "cursor" }, [
+                _c("img", {
+                  staticClass: "img-responsive",
+                  staticStyle: { width: "100%", height: "auto" },
+                  attrs: {
+                    src: "/images/employee/" + _vm.employeeDetail.employeePhoto,
+                    alt: "No Image"
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Surname/Given name")]),
+              _vm._v(" "),
+              _c("h5", [
+                _vm._v(
+                  _vm._s(_vm.employeeDetail.surname) +
+                    "/" +
+                    _vm._s(_vm.employeeDetail.givenName)
+                )
+              ]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Email")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.employeeDetail.email))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Bank Account")]),
+              _vm._v(" "),
+              _c("h5", [
+                _vm._v(
+                  _vm._s(_vm.employeeDetail.bankAccNo) +
+                    " (" +
+                    _vm._s(_vm.employeeDetail.bankName) +
+                    ")"
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Division")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.employeeDetail.divisionName))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Job Position")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.employeeDetail.jobPositionName))]),
+              _vm._v(" "),
+              _c("label", [_vm._v("Branch Office")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.employeeDetail.branchOfficeName))])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Basic Salary")]),
+              _vm._v(" "),
+              _vm.salaryDetail.basicSalary
+                ? _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.salaryDetail.basicSalary))
+                  ])
+                : _c("span", [_vm._v("-")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Inserted Date")]),
+              _vm._v(" "),
+              _vm.salaryDetail.insertedDate
+                ? _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.salaryDetail.insertedDate))
+                  ])
+                : _c("span", [_vm._v("-")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Inserted By")]),
+              _vm._v(" "),
+              _vm.salaryDetail.insertedBy
+                ? _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.salaryDetail.insertedBy))
+                  ])
+                : _c("span", [_vm._v("-")])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+                },
+                [
+                  _c("div", { staticClass: "card-block no-padding" }, [
+                    _c("div", { staticClass: "scrollable" }, [
+                      _c("div", { staticClass: " h-500" }, [
+                        _c("div", { staticClass: "table-responsive" }, [
+                          _c(
+                            "table",
+                            {
+                              staticClass:
+                                "table table-hover employeeBonusCutDT"
+                            },
+                            [
+                              _vm._m(3),
+                              _vm._v(" "),
+                              _c(
+                                "tbody",
+                                _vm._l(_vm.bonusCutDetails, function(
+                                  bonusCutDetail,
+                                  index
+                                ) {
+                                  return _c("tr", [
+                                    _c("td", [
+                                      _vm._v(_vm._s(bonusCutDetail.id))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        "\n                                                        " +
+                                          _vm._s(
+                                            bonusCutDetail.bonusCutTypeName
+                                          ) +
+                                          " (" +
+                                          _vm._s(
+                                            bonusCutDetail.bonusCutTypeAddOrSub
+                                          ) +
+                                          ")\n                                                    "
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      bonusCutDetail.value
+                                        ? _c("span", { staticClass: "fs-14" }, [
+                                            _vm._v(_vm._s(bonusCutDetail.value))
+                                          ])
+                                        : _c("span", [_vm._v("-")])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      bonusCutDetail.isUsingFormula &&
+                                      bonusCutDetail.formula
+                                        ? _c("span", [
+                                            _vm._v(
+                                              "  " +
+                                                _vm._s(bonusCutDetail.formula)
+                                            )
+                                          ])
+                                        : _c("span", [_vm._v("-")])
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      bonusCutDetail.isActive
+                                        ? _c("i", {
+                                            staticClass:
+                                              "fa fa-check text-primary fs-16"
+                                          })
+                                        : _c("i", {
+                                            staticClass:
+                                              "fa fa-times text-danger fs-16"
+                                          })
+                                    ]),
+                                    _vm._v(" "),
+                                    _vm._m(4, true)
+                                  ])
+                                })
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "help pull-right m-t-10",
+                        staticStyle: { opacity: "0.7" }
+                      },
+                      [_vm._v("Scroll for more")]
+                    )
+                  ])
+                ]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Employee Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Salary Information")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Bonus Cut")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black padding-10" }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black padding-10" }, [
+          _vm._v("Bonus Cut Type")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black padding-10" }, [_vm._v("Value")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black padding-10" }, [
+          _vm._v("With Formula")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black padding-10" }, [_vm._v("Active")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black padding-10" }, [_vm._v("Action")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [_c("i", { staticClass: "fa fa-pencil fs-16 cursor" })])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4b342c90", module.exports)
   }
 }
 
@@ -38319,15 +37211,15 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/MainSetting.vue":
+/***/ "./resources/assets/js/client/salary/MainEmployee.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainSetting.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainEmployee.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6aee0518\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainSetting.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-03643f3a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainEmployee.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -38344,7 +37236,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/salary/MainSetting.vue"
+Component.options.__file = "resources/assets/js/client/salary/MainEmployee.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -38354,9 +37246,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6aee0518", Component.options)
+    hotAPI.createRecord("data-v-03643f3a", Component.options)
   } else {
-    hotAPI.reload("data-v-6aee0518", Component.options)
+    hotAPI.reload("data-v-03643f3a", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -38368,15 +37260,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
+/***/ "./resources/assets/js/client/salary/components/employee/EmployeeCard.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/employee/EmployeeCard.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3babfafc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-45b0bb19\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/employee/EmployeeCard.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -38393,7 +37285,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/salary/components/settings/BonusCutTab.vue"
+Component.options.__file = "resources/assets/js/client/salary/components/employee/EmployeeCard.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -38403,9 +37295,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3babfafc", Component.options)
+    hotAPI.createRecord("data-v-45b0bb19", Component.options)
   } else {
-    hotAPI.reload("data-v-3babfafc", Component.options)
+    hotAPI.reload("data-v-45b0bb19", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -38417,94 +37309,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-16c2d3d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-16c2d3d0", Component.options)
-  } else {
-    hotAPI.reload("data-v-16c2d3d0", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/router/setting.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_settings_Index_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/settings/Index.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_settings_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_settings_Index_vue__);
-/**
- * Created by kevinpurwono on 23/11/17.
- */
-
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]);
-
-var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
-    // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_settings_Index_vue___default.a }]
-});
-
-/* harmony default export */ __webpack_exports__["a"] = (router);
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/setting.js":
+/***/ "./resources/assets/js/client/salary/employee.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_setting__ = __webpack_require__("./resources/assets/js/client/salary/router/setting.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainSetting_vue__ = __webpack_require__("./resources/assets/js/client/salary/MainSetting.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainSetting_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainSetting_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_setting_store__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/store.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_employee__ = __webpack_require__("./resources/assets/js/client/salary/router/employee.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainEmployee_vue__ = __webpack_require__("./resources/assets/js/client/salary/MainEmployee.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainEmployee_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainEmployee_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_employee_store__ = __webpack_require__("./resources/assets/js/client/salary/vuex/employee/store.js");
 /**
  * Created by kevinpurwono on 6/12/17.
  */
@@ -38516,17 +37331,16 @@ __webpack_require__("./resources/assets/js/bootstrap.js");
 
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#vc-salary-setting',
-    template: '<main-setting></main-setting>',
-    components: { MainSetting: __WEBPACK_IMPORTED_MODULE_2__MainSetting_vue___default.a },
-    router: __WEBPACK_IMPORTED_MODULE_1__router_setting__["a" /* default */],
-    store: __WEBPACK_IMPORTED_MODULE_3__vuex_setting_store__["a" /* store */]
+    el: '#vc-salary-employee',
+    template: '<main-employee></main-employee>',
+    components: { MainEmployee: __WEBPACK_IMPORTED_MODULE_2__MainEmployee_vue___default.a },
+    router: __WEBPACK_IMPORTED_MODULE_1__router_employee__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_3__vuex_employee_store__["a" /* store */]
 });
 
 $(document).ready(function () {
-
-    var bonusCutDT = $('.bonusCutDT');
-    bonusCutDT.dataTable({
+    var employeeBonusCutDT = $('.employeeBonusCutDT');
+    employeeBonusCutDT.dataTable({
         "sDom": "t",
         "destroy": true,
         "paging": false,
@@ -38538,15 +37352,46 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/views/settings/Index.vue":
+/***/ "./resources/assets/js/client/salary/router/employee.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_employee_Index_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/employee/Index.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_employee_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_employee_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_employee_DetailSalary_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/employee/DetailSalary.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_employee_DetailSalary_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_employee_DetailSalary_vue__);
+/**
+ * Created by kevinpurwono on 23/11/17.
+ */
+
+
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]);
+
+var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
+    // mode: 'history',
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_employee_Index_vue___default.a }, { path: '/detail/:id', component: __WEBPACK_IMPORTED_MODULE_3__views_employee_DetailSalary_vue___default.a, name: 'detailSalary' }]
+});
+
+/* harmony default export */ __webpack_exports__["a"] = (router);
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/salary/views/employee/DetailSalary.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/employee/DetailSalary.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-40db1a1a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4b342c90\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/employee/DetailSalary.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -38563,7 +37408,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/salary/views/settings/Index.vue"
+Component.options.__file = "resources/assets/js/client/salary/views/employee/DetailSalary.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -38573,9 +37418,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-40db1a1a", Component.options)
+    hotAPI.createRecord("data-v-4b342c90", Component.options)
   } else {
-    hotAPI.reload("data-v-40db1a1a", Component.options)
+    hotAPI.reload("data-v-4b342c90", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -38587,7 +37432,56 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/setting/modules/actions.js":
+/***/ "./resources/assets/js/client/salary/views/employee/Index.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/employee/Index.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-07fbd2e5\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/employee/Index.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/salary/views/employee/Index.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-07fbd2e5", Component.options)
+  } else {
+    hotAPI.reload("data-v-07fbd2e5", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/salary/vuex/employee/modules/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38605,7 +37499,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/setting/modules/getters.js":
+/***/ "./resources/assets/js/client/salary/vuex/employee/modules/getters.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38616,13 +37510,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/setting/modules/main.js":
+/***/ "./resources/assets/js/client/salary/vuex/employee/modules/main.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/modules/getters.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/modules/mutations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/modules/actions.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/salary/vuex/employee/modules/getters.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/salary/vuex/employee/modules/mutations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/salary/vuex/employee/modules/actions.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -38641,7 +37535,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/setting/modules/mutations.js":
+/***/ "./resources/assets/js/client/salary/vuex/employee/modules/mutations.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38659,7 +37553,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/setting/store.js":
+/***/ "./resources/assets/js/client/salary/vuex/employee/store.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38667,7 +37561,7 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/modules/main.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/salary/vuex/employee/modules/main.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -38713,10 +37607,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 /***/ }),
 
-/***/ 16:
+/***/ 15:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/salary/setting.js");
+module.exports = __webpack_require__("./resources/assets/js/client/salary/employee.js");
 
 
 /***/ })

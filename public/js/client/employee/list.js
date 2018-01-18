@@ -23077,6 +23077,15 @@ var render = function() {
                       })
                 ]),
                 _vm._v(" "),
+                _c(
+                  "h5",
+                  {
+                    staticClass: "fs-14 pull-right",
+                    staticStyle: { opacity: "0.7" }
+                  },
+                  [_vm._v(_vm._s(employee.employeeNo))]
+                ),
+                _vm._v(" "),
                 _c("h5", { staticClass: "fs-18" }, [
                   _vm._v(_vm._s(employee.givenName))
                 ]),

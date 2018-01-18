@@ -19,6 +19,11 @@ class ViewController extends Controller
         return view('pages.salary.report');
     }
 
+    public function employee()
+    {
+        return view('pages.salary.employee');
+    }
+
     public function setting()
     {
         return view('pages.salary.setting');

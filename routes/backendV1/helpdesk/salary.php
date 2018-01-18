@@ -29,5 +29,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('generalBC/create','GeneralBonusCutController@create');
         Route::post('generalBC/edit','GeneralBonusCutController@edit');
 
+        Route::get('employee/detail/{employeeId}','EmployeeController@detail');
+
     });
 });

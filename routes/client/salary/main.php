@@ -16,7 +16,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('salary')->namespace('Client\Salary')->middleware('permission:access salary')->group(function () {
+Route::prefix('salary')->namespace('Client\Salary')->group(function () {
 
 
     Route::get('/', function(){
@@ -25,5 +25,7 @@ Route::prefix('salary')->namespace('Client\Salary')->middleware('permission:acce
     })->name('salary');
 
     Route::get('report/', 'ViewController@report')->name('salary.report');
+    Route::get('employee/', 'ViewController@employee')->name('salary.employee');
     Route::get('setting/', 'ViewController@setting')->name('salary.setting');
+
 });
