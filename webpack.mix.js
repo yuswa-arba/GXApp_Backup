@@ -160,6 +160,7 @@ mix.js('resources/assets/js/client/attendance/setting','public/js/client/attenda
 mix.js('resources/assets/js/client/attendance/slot','public/js/client/attendance');
 mix.js('resources/assets/js/client/attendance/timesheet','public/js/client/attendance');
 mix.js('resources/assets/js/client/attendance/schedule','public/js/client/attendance');
+mix.js('resources/assets/js/client/attendance/leave','public/js/client/attendance');
 mix.js('resources/assets/js/client/attendance/dashboard','public/js/client/attendance');
 mix.js('resources/assets/js/client/doorAccess/main','public/js/client/doorAccess');
 mix.js('resources/assets/js/client/developer/face','public/js/client/developer');

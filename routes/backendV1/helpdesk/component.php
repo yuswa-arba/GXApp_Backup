@@ -35,6 +35,12 @@ Route::prefix('v1/h')->group(function () {
         Route::get('attdApproval/{id}','GetListController@attdApproval')->name('v1.component.attdApproval');
         Route::get('list/attdApprovals','GetListController@attdApprovals')->name('v1.component.list.attdApprovals');
 
+        Route::get('leaveApproval/{id}','GetListController@leaveApproval')->name('v1.component.leaveApproval');
+        Route::get('list/leaveApprovals','GetListController@leaveApprovals')->name('v1.component.list.leaveApprovals');
+
+        Route::get('leaveType/{id}','GetListController@leaveType')->name('v1.component.leaveType');
+        Route::get('list/leaveTypes','GetListController@leaveTypes')->name('v1.component.list.leaveTypes');
+
     });
 
 });

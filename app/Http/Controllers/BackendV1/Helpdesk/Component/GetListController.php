@@ -4,6 +4,8 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Component;
 
 use App\Attendance\Models\AttendanceApproval;
 use App\Attendance\Models\Kiosks;
+use App\Attendance\Models\LeaveApproval;
+use App\Attendance\Models\LeaveType;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotMaker;
 use App\Attendance\Models\Slots;
@@ -95,6 +97,27 @@ class GetListController extends Controller
     public function attdApprovals()
     {
         return fractal(AttendanceApproval::all(), new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function leaveApproval($id)
+    {
+        return fractal(LeaveApproval::where('id', $id)->first(), new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function leaveApprovals()
+    {
+        return fractal(LeaveApproval::all(), new BasicComponentTrasnformer())->respond(200);
+
+    }
+
+    public function leaveType($id)
+    {
+        return fractal(LeaveType::where('id',$id),new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function leaveTypes()
+    {
+        return fractal(LeaveType::all(),new BasicComponentTrasnformer())->respond(200);
     }
 
 }

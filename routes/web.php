@@ -89,6 +89,8 @@ Route::prefix('testing')->group(function () {
     Route::get('dayoff','TestUploadController@dayoff');
     Route::get('pluck','TestUploadController@pluck');
 
+    Route::get('td','TestUploadController@td');
+
 
 });
 

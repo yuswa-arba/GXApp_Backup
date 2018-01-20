@@ -84,6 +84,22 @@ trait GlobalUtils
         return Carbon::now()->subYear()->year;
     }
 
+    function diffDay($fromDate, $toDate)
+    {
+        $fromDate = Carbon::createFromFormat('d/m/Y',$fromDate);
+        $toDate = Carbon::createFromFormat('d/m/Y',$toDate);
+
+        return $fromDate->diffInDays($toDate);
+    }
+
+    function totalDays($fromDate, $toDate)
+    {
+        $fromDate = Carbon::createFromFormat('d/m/Y',$fromDate);
+        $toDate = Carbon::createFromFormat('d/m/Y',$toDate);
+
+        return $fromDate->diffInDays($toDate->addDay());
+    }
+
     public function randomNumber($length) {
         $result = '';
 
@@ -104,6 +120,8 @@ trait GlobalUtils
         return $randomString;
     }
 
+
+
      function clockingVia($id)
     {
         $via = '';
@@ -123,5 +141,22 @@ trait GlobalUtils
 
         return $via;
     }
+
+
+    /* ex: return $this->getResultWithNullChecker(MasterEmployee::find('d4fb30a0-fc11-3e13-83e9-fa3890e0134e'),'employment','divisionId'); */
+    function getResultWithNullChecker1Connection($collection, $a, $result){
+        return !is_null($collection->$a)?$collection->$a->$result:'';
+    }
+
+    /* ex: return $this->getResultWithNullChecker(MasterEmployee::find('d4fb30a0-fc11-3e13-83e9-fa3890e0134e'),'employment','division','name'); */
+    function getResultWithNullChecker2Connection($collection, $a, $b, $result){
+        return !is_null($collection->$a)?!is_null($collection->$a->$b)?$collection->$a->$b->$result:'':'';
+    }
+
+    function getResultWithNullChecker3Connection($collection, $a, $b,$c, $result){
+        return !is_null($collection->$a)?!is_null($collection->$a->$b)?!is_null($collection->$a->$b->$c)?$collection->$a->$b->$c->$result:'':'':'';
+    }
+
+
 
 }

@@ -40,4 +40,9 @@ class ViewController extends Controller
         return view('pages.attendance.timesheet');
     }
 
+    public function leave()
+    {
+        return view('pages.attendance.leave');
+    }
+
 }

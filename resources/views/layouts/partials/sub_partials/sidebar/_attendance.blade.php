@@ -19,6 +19,10 @@
                 <a href="{{route('attendance.schedule')}}">Schedule</a>
                 <span class="icon-thumbnail">sc</span>
             </li>
+            <li class="">
+                <a href="{{route('attendance.leave')}}">Leave</a>
+                <span class="icon-thumbnail">lv</span>
+            </li>
             @role('attendance operator')
             <li class="">
                 <a href="{{route('attendance.slot')}}">Slots</a>

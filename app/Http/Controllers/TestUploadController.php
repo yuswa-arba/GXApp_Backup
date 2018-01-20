@@ -7,6 +7,7 @@ use App\Attendance\Events\EmployeeClocked;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
+use App\Employee\Models\MasterEmployee;
 use App\Salary\Models\GeneralBonusesCuts;
 use App\Salary\Models\SalaryBonusCutType;
 use App\Traits\GlobalUtils;
@@ -430,5 +431,14 @@ class TestUploadController extends Controller
     {
         return GeneralBonusesCuts::all()->pluck('salaryBonusCutTypeId');
     }
+
+    public function td()
+    {
+        return $this->totalDays('01/01/2018','5/01/2018');
+    }
+
+
+
+
 
 }

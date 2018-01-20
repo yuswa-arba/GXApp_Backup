@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 10);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1615,7 +1615,40 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/doorAccess/Main.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/MainLeave.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {},
+
+    methods: {
+        goBack: function goBack() {
+            $('#errors-container').addClass('hide');
+            this.$router.push('/');
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/leave/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1628,33 +1661,125 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {},
+    data: function data() {
+        return {
+            leaveSchedules: [],
+            divisions: [],
+            leaveApprovals: [],
+            leaveTypes: [],
+            sortDivisionId: '',
+            sortLeaveTypeId: '',
+            sortLeaveApprovalId: ''
+        };
+    },
 
-    methods: {}
-});
+    computed: {},
+    created: function created() {
+        var self = this;
 
-/***/ }),
+        // get Divisions
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/divisions').then(function (res) {
+            self.divisions = res.data.data;
+        });
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/doorAccess/views/Index.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+        // get Leave Approvals
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/leaveApprovals').then(function (res) {
+            self.leaveApprovals = res.data.data;
+        });
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
+        // get Leave Types
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/leaveTypes').then(function (res) {
+            self.leaveTypes = res.data.data;
+        });
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {},
+        // get employee leave schedules
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/leave/list').then(function (res) {
+            self.leaveSchedules = res.data.data;
+        });
+    },
 
-    methods: {}
+    methods: {
+        sortLeaveSchedule: function sortLeaveSchedule() {
+            var self = this;
+        }
+    }
+
 });
 
 /***/ }),
@@ -20122,7 +20247,255 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-360a4884\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/doorAccess/Main.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-20f2f295\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/leave/Index.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+      _c("div", { staticClass: "pull-right m-r-15" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.sortDivisionId,
+                  expression: "sortDivisionId"
+                }
+              ],
+              staticClass: "btn btn-outline-primary h-35 w-150",
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.sortDivisionId = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    _vm.sortLeaveSchedule()
+                  }
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Division")]),
+              _vm._v(" "),
+              _vm._l(_vm.divisions, function(division) {
+                return _c("option", { domProps: { value: division.id } }, [
+                  _vm._v(_vm._s(division.name) + "\n                    ")
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "pull-right m-r-15" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.sortLeaveApprovalId,
+                  expression: "sortLeaveApprovalId"
+                }
+              ],
+              staticClass: "btn btn-outline-primary h-35 w-150",
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.sortLeaveApprovalId = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    _vm.sortLeaveSchedule()
+                  }
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Approvals")]),
+              _vm._v(" "),
+              _vm._l(_vm.leaveApprovals, function(approval) {
+                return _c("option", { domProps: { value: approval.id } }, [
+                  _vm._v(_vm._s(approval.name) + "\n                    ")
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "pull-right m-r-15" }, [
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.sortLeaveTypeId,
+                  expression: "sortLeaveTypeId"
+                }
+              ],
+              staticClass: "btn btn-outline-primary h-35 w-150",
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.sortLeaveTypeId = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  function($event) {
+                    _vm.sortLeaveSchedule()
+                  }
+                ]
+              }
+            },
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("All Types")]),
+              _vm._v(" "),
+              _vm._l(_vm.leaveTypes, function(type) {
+                return _c("option", { domProps: { value: type.id } }, [
+                  _vm._v(_vm._s(type.name) + "\n                    ")
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block" }, [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table table-hover leaveDT" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.leaveSchedules, function(leave) {
+                    return _c("tr", [
+                      _c("td", [_vm._v(_vm._s(leave.id))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(leave.employeeName) +
+                            " (" +
+                            _vm._s(leave.employeeDivisionName) +
+                            ")"
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(leave.fromDate) + " - " + _vm._s(leave.toDate)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(leave.totalDays))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(leave.description))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(leave.leaveTypeName))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(leave.leaveApprovalName))]),
+                      _vm._v(" "),
+                      _c("td")
+                    ])
+                  })
+                )
+              ])
+            ])
+          ])
+        ]
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Employee")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Total Day(s)")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Desc.")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Apprv")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-20f2f295", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-f881d18c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/MainLeave.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -20132,7 +20505,27 @@ var render = function() {
   return _c(
     "div",
     { staticClass: "container-fluid container-fixed-lg" },
-    [_c("router-view")],
+    [
+      _c("router-view", [
+        _c("div", { attrs: { slot: "go-back-menu" }, slot: "go-back-menu" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-outline-primary m-r-15 m-b-10 pull-left",
+              on: {
+                click: function($event) {
+                  _vm.goBack()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "pg-arrow_left" }),
+              _vm._v("\n                Go Back\n            ")
+            ]
+          )
+        ])
+      ])
+    ],
     1
   )
 }
@@ -20142,35 +20535,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-360a4884", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d1c6f814\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/doorAccess/views/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [_c("h5", [_vm._v("TEST")])])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-d1c6f814", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-f881d18c", module.exports)
   }
 }
 
@@ -33562,15 +33927,15 @@ echo.channel('kiosk').listen('Clocking', function (data) {
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/doorAccess/Main.vue":
+/***/ "./resources/assets/js/client/attendance/MainLeave.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/doorAccess/Main.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/MainLeave.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-360a4884\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/doorAccess/Main.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-f881d18c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/MainLeave.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -33587,7 +33952,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/doorAccess/Main.vue"
+Component.options.__file = "resources/assets/js/client/attendance/MainLeave.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -33597,9 +33962,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-360a4884", Component.options)
+    hotAPI.createRecord("data-v-f881d18c", Component.options)
   } else {
-    hotAPI.reload("data-v-360a4884", Component.options)
+    hotAPI.reload("data-v-f881d18c", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -33611,59 +33976,61 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/doorAccess/main.js":
+/***/ "./resources/assets/js/client/attendance/leave.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_index__ = __webpack_require__("./resources/assets/js/client/doorAccess/router/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Main_vue__ = __webpack_require__("./resources/assets/js/client/doorAccess/Main.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Main_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Main_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_leave__ = __webpack_require__("./resources/assets/js/client/attendance/router/leave.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainLeave_vue__ = __webpack_require__("./resources/assets/js/client/attendance/MainLeave.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainLeave_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainLeave_vue__);
 /**
- * Created by kevinpurwono on 8/11/17.
+ * Created by kevinpurwono on 6/12/17.
  */
-
-__webpack_require__("./resources/assets/js/bootstrap.js"); // axio, vue , vue-router, lodash, etc
-
+__webpack_require__("./resources/assets/js/bootstrap.js");
 
 
 
 
-// Create a global Event Bus
-var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
-
-// Add to Vue properties by exposing a getter for $bus
-Object.defineProperties(__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype, {
-    $bus: {
-        get: function get() {
-            return EventBus;
-        }
-    }
-});
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#vc-door-access',
-    template: '<main-door-access></main-door-access>',
-    components: { MainDoorAccess: __WEBPACK_IMPORTED_MODULE_2__Main_vue___default.a },
-    router: __WEBPACK_IMPORTED_MODULE_1__router_index__["a" /* default */]
+    el: '#vc-attendance-leave',
+    template: '<main-leave></main-leave>',
+    components: { MainLeave: __WEBPACK_IMPORTED_MODULE_2__MainLeave_vue___default.a },
+    router: __WEBPACK_IMPORTED_MODULE_1__router_leave__["a" /* default */]
+});
+
+$(document).ready(function () {
+
+    var leaveDT = $('.leaveDT');
+
+    leaveDT.dataTable({
+        "sDom": "t",
+        "destroy": true,
+        "paging": true,
+        "scrollCollapse": false,
+        "ordering": false
+    });
+    $('.dataTables_empty').hide();
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/doorAccess/router/index.js":
+/***/ "./resources/assets/js/client/attendance/router/leave.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_Index_vue__ = __webpack_require__("./resources/assets/js/client/doorAccess/views/Index.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_leave_Index_vue__ = __webpack_require__("./resources/assets/js/client/attendance/views/leave/Index.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_leave_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_leave_Index_vue__);
 /**
  * Created by kevinpurwono on 23/11/17.
  */
+
 
 
 
@@ -33672,22 +34039,22 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_Index_vue___default.a }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_leave_Index_vue___default.a }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/doorAccess/views/Index.vue":
+/***/ "./resources/assets/js/client/attendance/views/leave/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/doorAccess/views/Index.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/leave/Index.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d1c6f814\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/doorAccess/views/Index.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-20f2f295\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/leave/Index.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -33704,7 +34071,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/doorAccess/views/Index.vue"
+Component.options.__file = "resources/assets/js/client/attendance/views/leave/Index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -33714,9 +34081,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d1c6f814", Component.options)
+    hotAPI.createRecord("data-v-20f2f295", Component.options)
   } else {
-    hotAPI.reload("data-v-d1c6f814", Component.options)
+    hotAPI.reload("data-v-20f2f295", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -33924,10 +34291,10 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ 12:
+/***/ 10:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/doorAccess/main.js");
+module.exports = __webpack_require__("./resources/assets/js/client/attendance/leave.js");
 
 
 /***/ })
