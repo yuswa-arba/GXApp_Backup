@@ -7,7 +7,7 @@
  * Time: 11:13 AM
  */
 
-namespace App\Attendance\Logics;
+namespace App\Attendance\Logics\Timesheet;
 
 
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;

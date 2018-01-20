@@ -7,20 +7,14 @@
  * Time: 11:12 AM
  */
 
-namespace App\Attendance\Logics;
+namespace App\Attendance\Logics\Timesheet;
 
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
-use App\Attendance\Models\SlotShiftSchedule;
 use App\Attendance\Transformers\EmployeeSummaryTransformer;
-use App\Attendance\Transformers\ShiftScheduleSingleCalendarTransformer;
-use App\Attendance\Transformers\DayOffSingleCalendarTransformer;
-use App\Attendance\Transformers\TimesheetListTransformer;
 use App\Attendance\Transformers\TimesheetSummaryTransformer;
-use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
-use App\Employee\Transformers\EmployeeDetailTransfomer;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;

@@ -7,15 +7,17 @@
  * Time: 11:13 AM
  */
 
-namespace App\Attendance\Logics;
+namespace App\Attendance\Logics\LeaveSchedule;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
-abstract class GetDataUseCase
+abstract class InsertELSUseCase
 {
-    public static function getData(Request $request)
+    public static function insert(Request $request)
     {
+
         return (new static)->handle($request);
     }
 

@@ -7,7 +7,7 @@
  * Time: 11:12 AM
  */
 
-namespace App\Attendance\Logics;
+namespace App\Attendance\Logics\Slot;
 
 use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\SlotListTransformer;

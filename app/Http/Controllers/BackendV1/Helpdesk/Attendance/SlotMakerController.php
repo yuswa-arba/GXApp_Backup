@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
-use App\Attendance\Logics\SlotMakerLogic;
+use App\Attendance\Logics\SlotMaker\SlotMakerLogic;
 use App\Attendance\Models\SlotMaker;
 use App\Attendance\Transformers\SlotMakerListTransformer;
 use Illuminate\Http\Request;

@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
-use App\Attendance\Logics\AssignSlotLogic;
-use App\Attendance\Logics\GetCalendarLogic;
-use App\Attendance\Logics\GetEmployeeListLogic;
-use App\Attendance\Logics\GetShiftMappingCalendarLogic;
-use App\Attendance\Logics\GetSlotListLogic;
-use App\Attendance\Logics\MappingShiftLogic;
+use App\Attendance\Logics\Shift\GetShiftMappingCalendarLogic;
+use App\Attendance\Logics\Shift\MappingShiftLogic;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Attendance\Transformers\ShiftScheduleSingleCalendarTransformer;
@@ -20,7 +16,7 @@ class ShiftController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['role:attendance operator']);
+        $this->middleware(['permission:view attendance']);
     }
 
     public function create(Request $request)

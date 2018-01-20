@@ -3,16 +3,10 @@
 namespace App\Http\Controllers\BackendV1\API\Attendance;
 
 use App\Account\Models\User;
-use App\Account\Traits\TokenUtils;
-use App\Attendance\Logics\AttendanceLogic;
-use App\Attendance\Logics\Kiosk\AuthenticationLogic;
-use App\Attendance\Logics\Kiosk\KioskAuthLogic;
-use App\Attendance\Models\KioskActivity;
 use App\Attendance\Models\Kiosks;
 use App\Attendance\Transformers\KioskTransformer;
 use App\Employee\Models\FacePerson;
 use App\Employee\Transformers\EmployeeLastActivityTransfomer;
-use App\Http\Controllers\BackendV1\API\Traits\IssueTokenTrait;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;

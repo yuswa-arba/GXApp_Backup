@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
-use App\Attendance\Logics\AssignSlotLogic;
-use App\Attendance\Logics\CopySlotLogic;
-use App\Attendance\Logics\GetCalendarLogic;
-use App\Attendance\Logics\GetEmployeeListLogic;
-use App\Attendance\Logics\GetSlotListLogic;
+
+use App\Attendance\Logics\Slot\CopySlotLogic;
+use App\Attendance\Logics\Misc\GetCalendarLogic;
+use App\Attendance\Logics\Misc\GetEmployeeListLogic;
+use App\Attendance\Logics\Slot\GetSlotListLogic;
+use App\Attendance\Logics\Slot\AssignSlotLogic;
 use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\SlotListTransformer;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class SlotController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['role:attendance operator']);
+        $this->middleware(['permission:view attendance']);
     }
 
     public function list(Request $request)
@@ -137,6 +138,5 @@ class SlotController extends Controller
             $response['message'] = 'Failed! Unable to edit slot';
             return response()->json($response, 500);
         }
-
     }
 }

@@ -7,7 +7,7 @@
  * Time: 11:12 AM
  */
 
-namespace App\Attendance\Logics;
+namespace App\Attendance\Logics\Timesheet;
 
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
@@ -85,7 +85,7 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
 
     public function handleTimesheetWithSpecificDivision($request)
     {
-        //TODO : get data based on users permission
+        //TODO : get data based on users is division manager of what
 
         $request->validate(['sortDate' => 'date_format:d/m/Y']);
 

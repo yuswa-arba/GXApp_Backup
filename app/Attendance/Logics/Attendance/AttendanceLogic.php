@@ -7,7 +7,7 @@
  * Time: 11:12 AM
  */
 
-namespace App\Attendance\Logics;
+namespace App\Attendance\Logics\Attendance;
 
 use App\Attendance\Events\EmployeeClocked;
 use App\Attendance\Models\AttendanceSchedule;
@@ -15,13 +15,10 @@ use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\Shifts;
-use App\Attendance\Models\Slots;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
-use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class AttendanceLogic extends AttendanceUseCase
 {

@@ -7,7 +7,7 @@
  * Time: 11:12 AM
  */
 
-namespace App\Attendance\Logics;
+namespace App\Attendance\Logics\Shift;
 
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Traits\GlobalUtils;

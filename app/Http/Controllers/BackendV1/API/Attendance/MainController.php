@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\BackendV1\API\Attendance;
 
-use App\Account\Models\User;
 use App\Account\Traits\TokenUtils;
-use App\Attendance\Logics\AttendanceLogic;
+use App\Attendance\Logics\Attendance\AttendanceLogic;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
@@ -13,10 +12,8 @@ use App\Http\Controllers\Controller;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use League\Flysystem\Config;
+
 
 class MainController extends Controller
 {

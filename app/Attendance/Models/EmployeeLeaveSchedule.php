@@ -8,15 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class EmployeeLeaveSchedule extends Model
 {
     protected $table='employeeLeaveSchedule';
-    protected $fillable = [
-        'employeeId',
-        'leaveTypeId',
-        'description',
-        'leaveApprovalId',
-    ];
+
+    protected $guarded = ['id'];
 
     public function employee()
     {
         return $this->belongsTo(MasterEmployee::class,'employeeId');
+    }
+
+    public function leaveApproval()
+    {
+        return $this->belongsTo(LeaveApproval::class,'leaveApprovalId');
+    }
+
+    public function leaveType()
+    {
+        return $this->belongsTo(LeaveType::class,'leaveTypeId');
     }
 }

@@ -7,7 +7,7 @@
  * Time: 11:13 AM
  */
 
-namespace App\Attendance\Logics;
+namespace App\Attendance\Logics\SlotMaker;
 
 
 use Illuminate\Http\Request;

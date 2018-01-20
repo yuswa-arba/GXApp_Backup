@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
-use App\Attendance\Logics\GetTimesheetListLogic;
-use App\Attendance\Logics\SummaryTimesheetLogic;
+use App\Attendance\Logics\Timesheet\GetTimesheetListLogic;
+use App\Attendance\Logics\Timesheet\SummaryTimesheetLogic;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Transformers\TimesheetDetailTransformer;
 use App\Attendance\Transformers\TimesheetSummaryTransformer;
