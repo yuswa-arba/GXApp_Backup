@@ -7,14 +7,10 @@
  * Time: 11:12 AM
  */
 
-namespace App\Salary\Logics;
+namespace App\Salary\Logics\BonusCut;
 
 use App\Salary\Models\EmployeeBonusesCuts;
-use App\Salary\Models\EmployeeSalary;
 use App\Salary\Transformers\EmployeeBonusCutTransformer;
-use App\Salary\Transformers\EmployeeSalaryTransformer;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 
 class UseBonusCutLogic extends UseBonusCutUseCase

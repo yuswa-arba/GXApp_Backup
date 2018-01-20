@@ -7,7 +7,7 @@
  * Time: 11:12 AM
  */
 
-namespace App\Salary\Logics;
+namespace App\Salary\Logics\Salary;
 
 use App\Salary\Models\EmployeeSalary;
 use App\Salary\Transformers\EmployeeSalaryTransformer;

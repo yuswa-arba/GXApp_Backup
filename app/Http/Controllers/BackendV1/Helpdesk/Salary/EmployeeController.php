@@ -5,10 +5,10 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Salary;
 
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeBriefDetailTransfomer;
-use App\Salary\Logics\InsertEmployeeBonusCutLogic;
-use App\Salary\Logics\InsertEmployeeSalaryLogic;
-use App\Salary\Logics\RemoveBonusCutLogic;
-use App\Salary\Logics\UseBonusCutLogic;
+use App\Salary\Logics\BonusCut\InsertEmployeeBonusCutLogic;
+use App\Salary\Logics\Salary\InsertEmployeeSalaryLogic;
+use App\Salary\Logics\BonusCut\RemoveBonusCutLogic;
+use App\Salary\Logics\BonusCut\UseBonusCutLogic;
 use App\Salary\Models\EmployeeBonusesCuts;
 use App\Salary\Models\EmployeeSalary;
 use App\Salary\Models\GeneralBonusesCuts;

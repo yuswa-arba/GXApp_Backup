@@ -7,7 +7,7 @@
  * Time: 11:12 AM
  */
 
-namespace App\Salary\Logics;
+namespace App\Salary\Logics\BonusCut;
 
 use App\Attendance\Models\Slots;
 use App\Salary\Models\EmployeeBonusesCuts;

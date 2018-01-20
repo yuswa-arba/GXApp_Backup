@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\BackendV1\Helpdesk\Salary;
 
 
-use App\Salary\Logics\GenerateSalaryLogic;
+use App\Salary\Logics\Salary\GenerateSalaryLogic;
 use App\Traits\GlobalUtils;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

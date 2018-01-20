@@ -7,7 +7,7 @@
  * Time: 11:12 AM
  */
 
-namespace App\Salary\Logics;
+namespace App\Salary\Logics\Salary;
 
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;

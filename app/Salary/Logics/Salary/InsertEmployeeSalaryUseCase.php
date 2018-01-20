@@ -7,26 +7,24 @@
  * Time: 11:13 AM
  */
 
-namespace App\Salary\Logics;
+namespace App\Salary\Logics\Salary;
 
 
-use App\Salary\Models\EmployeeBonusesCuts;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
-abstract class RemoveBonusCutUseCase
+abstract class InsertEmployeeSalaryUseCase
 {
-    public static function remove(Request $request, $employeeId)
+    public static function save(Request $request, $employeeId)
     {
         $response = array();
 
         if ($employeeId != null && $employeeId != '') {
 
-            $validator = Validator::make($request->all(), ['bonusCutId' => 'required']);
-
-            if ($validator->fails()) {
+            // validate basic salary cannot be empty
+            if ($request->basicSalary == null || $request->basicSalary == '') {
                 $response['isFailed'] = true;
-                $response['message'] = 'Required parameter is missing';
+                $response['message'] = 'Salary cannot be empty';
+
                 return response()->json($response, 200);
             }
 
