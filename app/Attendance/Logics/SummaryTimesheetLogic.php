@@ -63,7 +63,11 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
             $summary[] = $response;
         }
 
-        return $summary;
+        $response = array();
+        $response['isFailed'] = false;
+        $response['message'] = 'success';
+        $response['summary'] = $summary;
+        return response()->json($response,200);
     }
 
     public function handleSummaryWithSpecificEmployee($request)

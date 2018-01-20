@@ -148,12 +148,13 @@ export default{
     getTimesheetSummaryDataAll(state, payload){
         get(api_path + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate)
             .then((res) => {
-                if (res.data) {
-                    state.timesheetSummaryData = res.data
+
+                if (!res.data.isFailed) {
+                    state.timesheetSummaryData = res.data.summary
                 } else {
                     $('.page-container').pgNotification({
                         style: 'flip',
-                        message: 'Error occured! Data not found',
+                        message: res.data.message,
                         position: 'top-right',
                         timeout: 3500,
                         type: 'danger'
@@ -258,7 +259,7 @@ export default{
             timesheetId: payload.timesheetId,
             clockInTime: payload.clockInTime,
             clockOutTime: payload.clockOutTime,
-            shiftId:payload.shiftId,
+            shiftId: payload.shiftId,
             date: payload.date
         })
             .then((res) => {
@@ -271,7 +272,7 @@ export default{
                             _.forEach(value['detail']['data'], function (value, key) {
                                 if (value['id'] == payload.timesheetId) {
                                     /* Update data */
-                                    state.timesheetSummaryData[parentKey].timesheet[medKey].detail.data.splice(0,1,res.data.timesheet.data)
+                                    state.timesheetSummaryData[parentKey].timesheet[medKey].detail.data.splice(0, 1, res.data.timesheet.data)
                                 }
                             })
                         })
@@ -308,11 +309,11 @@ export default{
     },
     createTimesheet(state, payload){
         post(api_path + 'attendance/timesheet/createManually', {
-            employeeId:payload.employeeId,
+            employeeId: payload.employeeId,
             timesheetId: payload.timesheetId,
             clockInTime: payload.clockInTime,
             clockOutTime: payload.clockOutTime,
-            shiftId:payload.shiftId,
+            shiftId: payload.shiftId,
             date: payload.date
         })
             .then((res) => {
@@ -320,10 +321,10 @@ export default{
 
                     /* Update timesheet summary data*/
                     _.forEach(state.timesheetSummaryData, function (value, parentKey) {
-                        if(value['employee']['data']['employeeNo'] == payload.employeeNo){
-                            let timesheetNewData  = state.timesheetSummaryData[parentKey]
+                        if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
+                            let timesheetNewData = state.timesheetSummaryData[parentKey]
                             timesheetNewData.timesheet[payload.index].editing = false;
-                            timesheetNewData.timesheet[payload.index].detail = {data:[]};
+                            timesheetNewData.timesheet[payload.index].detail = {data: []};
                             timesheetNewData.timesheet[payload.index].detail.data.push(res.data.timesheet.data)
                         }
                     })

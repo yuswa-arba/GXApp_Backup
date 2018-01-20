@@ -39684,12 +39684,13 @@ module.exports = Component.exports
     },
     getTimesheetSummaryDataAll: function getTimesheetSummaryDataAll(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate).then(function (res) {
-            if (res.data) {
-                state.timesheetSummaryData = res.data;
+
+            if (!res.data.isFailed) {
+                state.timesheetSummaryData = res.data.summary;
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',
-                    message: 'Error occured! Data not found',
+                    message: res.data.message,
                     position: 'top-right',
                     timeout: 3500,
                     type: 'danger'
