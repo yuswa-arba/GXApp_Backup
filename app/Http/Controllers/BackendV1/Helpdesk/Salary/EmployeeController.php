@@ -51,8 +51,11 @@ class EmployeeController extends Controller
             } else {
                 return response()->json(['isFailed' => true, 'message' => 'Error occured! Unable to find employee data'], 200);
             }
+
         } else {
+
             return response()->json(['isFailed' => true, 'message' => 'Parameter ID is missing'], 200);
+
         }
     }
 

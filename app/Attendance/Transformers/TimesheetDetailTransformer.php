@@ -46,9 +46,14 @@ class TimesheetDetailTransformer extends TransformerAbstract
             'clockInIpAddress'=>$timesheet->clockInInAddress,
             'clockOutIpAddress'=>$timesheet->clockOutIpAddress,
             'clockInBrowser'=>$timesheet->clockInBrowser,
-            'clockOutBrowser'=>$timesheet->clockOutBrowser
+            'clockOutBrowser'=>$timesheet->clockOutBrowser,
+
+
         ];
     }
+
+
+
 
 
 }

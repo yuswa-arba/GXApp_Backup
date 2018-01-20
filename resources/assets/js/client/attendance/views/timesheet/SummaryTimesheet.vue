@@ -48,6 +48,7 @@
                                 <thead class="bg-master-lighter">
                                 <tr>
                                     <th class="text-black w-150">Date</th>
+                                    <th class="text-black"></th>
                                     <th class="text-black">Clock In</th>
                                     <th class="text-black">Clock Out</th>
                                     <th class="text-black">Work Hours</th>
@@ -63,6 +64,9 @@
                                 <tbody>
                                 <tr v-for="(timesheet,index) in summary.timesheet">
                                     <td>{{timesheet.date}} ({{timesheet.day}})</td>
+                                    <td v-if="timesheet.type.isHoliday" class="holiday-cell">{{timesheet.type.notes}}</td><!--holiday-->
+                                    <td v-else-if="!timesheet.detail.data[0]&&!timesheet.type.isHoliday" class="absence-cell">A</td> <!--absence-->
+                                    <td v-else=""></td><!--normal day-->
                                     <td>
                                         <span v-if="timesheet.detail.data[0] && !timesheet.editing">{{timesheet.detail.data[0].clockInTime}}</span>
                                         <input :name="'cInTime'+summary.employee.data.employeeNo+index"

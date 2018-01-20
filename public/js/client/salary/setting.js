@@ -23372,7 +23372,7 @@ var render = function() {
                           _c("td", [
                             bonuscut.isRelatedToDivision
                               ? _c("span", [
-                                  _vm._v("  " + _vm._s(bonuscut.divisionName))
+                                  _vm._v(" " + _vm._s(bonuscut.divisionName))
                                 ])
                               : _c("span", [_vm._v("-")])
                           ]),

@@ -103,5 +103,4 @@ class TimesheetSummaryTransformer extends TransformerAbstract
         return 0;
     }
 
-
 }

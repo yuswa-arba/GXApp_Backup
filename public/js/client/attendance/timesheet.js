@@ -3312,6 +3312,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -23217,6 +23221,17 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
+                              timesheet.type.isHoliday
+                                ? _c("td", { staticClass: "holiday-cell" }, [
+                                    _vm._v(_vm._s(timesheet.type.notes))
+                                  ])
+                                : !timesheet.detail.data[0] &&
+                                  !timesheet.type.isHoliday
+                                  ? _c("td", { staticClass: "absence-cell" }, [
+                                      _vm._v("A")
+                                    ])
+                                  : _c("td"),
+                              _vm._v(" "),
                               _c("td", [
                                 timesheet.detail.data[0] && !timesheet.editing
                                   ? _c("span", [
@@ -23613,6 +23628,8 @@ var staticRenderFns = [
     return _c("thead", { staticClass: "bg-master-lighter" }, [
       _c("tr", [
         _c("th", { staticClass: "text-black w-150" }, [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Clock In")]),
         _vm._v(" "),

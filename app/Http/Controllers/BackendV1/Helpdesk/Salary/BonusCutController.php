@@ -37,7 +37,7 @@ class BonusCutController extends Controller
 
     public function create(Request $request)
     {
-        $validator = Validator::make($request->all(),['name'=>'required|unique:salaryBonusCutType','addOrSub'=>'required']);
+        $validator = Validator::make($request->all(),['name'=>'required','addOrSub'=>'required']);
 
         if($validator->fails()){
             $response['isFailed'] = true;

@@ -19,8 +19,8 @@ class CreateSalaryCalculationTable extends Migration
             $table->uuid('employeeId');
             $table->integer('salaryBonusCutTypeId');
             $table->string('value');
-            $table->integer('appliedAtMonth');
-            $table->integer('appliedAtYear');
+            $table->string('fromDate');
+            $table->string('toDate');
             $table->string('notes');
             $table->string('insertedDate');
             $table->string('insertedBy');

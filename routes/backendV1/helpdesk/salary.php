@@ -17,7 +17,8 @@
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/h')->group(function () {
-    Route::prefix('salary')->namespace('BackendV1\Helpdesk\Salary')->middleware('auth.admin')->group(function () {
+//    Route::prefix('salary')->namespace('BackendV1\Helpdesk\Salary')->middleware('auth.admin')->group(function () {
+Route::prefix('salary')->namespace('BackendV1\Helpdesk\Salary')->group(function () {
 
         Route::get('bonuscut/list', 'BonusCutController@list');
         Route::post('bonuscut/create', 'BonusCutController@create');
@@ -35,6 +36,8 @@ Route::prefix('v1/h')->group(function () {
         Route::post('employee/use/bonusCut/{employeeId}','EmployeeController@useBonusCut');
         Route::post('employee/save/bonusCut/{employeeId}','EmployeeController@saveBonusCut');
         Route::post('employee/remove/bonusCut/{employeeId}','EmployeeController@removeBonusCut');
+
+        Route::get('generate','GenerateController@generate');
 
     });
 });
