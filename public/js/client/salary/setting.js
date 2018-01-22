@@ -3024,6 +3024,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3228,6 +3243,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_';
             } else {
                 self.editGeneralBonusCutForm.formula = '_salary_';
+            }
+        },
+        insertMinLateInOperator: function insertMinLateInOperator() {
+
+            var self = this;
+            if (self.editGeneralBonusCutForm.formula) {
+                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_min_late_in_';
+            } else {
+                self.editGeneralBonusCutForm.formula = '_min_late_in_';
+            }
+        },
+        insertMinEarlyOutOperator: function insertMinEarlyOutOperator() {
+
+            var self = this;
+            if (self.editGeneralBonusCutForm.formula) {
+                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_min_early_out_';
+            } else {
+                self.editGeneralBonusCutForm.formula = '_min_early_out_';
+            }
+        },
+        insertMinLateOutOperator: function insertMinLateOutOperator() {
+
+            var self = this;
+            if (self.editGeneralBonusCutForm.formula) {
+                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_min_late_out_';
+            } else {
+                self.editGeneralBonusCutForm.formula = '_min_late_out_';
+            }
+        },
+        insertDayAbsenceOperator: function insertDayAbsenceOperator() {
+
+            var self = this;
+            if (self.editGeneralBonusCutForm.formula) {
+                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_day_absence_';
+            } else {
+                self.editGeneralBonusCutForm.formula = '_day_absence_';
             }
         }
     },
@@ -23054,9 +23105,83 @@ var render = function() {
                               }
                             },
                             [
-                              _vm._v("insert "),
+                              _vm._v(
+                                "insert\n                                        "
+                              ),
                               _c("b", { staticClass: "text-true-black" }, [
                                 _vm._v("_salary_")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "label label-default fs-12 cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.insertMinLateInOperator()
+                                }
+                              }
+                            },
+                            [
+                              _vm._v("insert "),
+                              _c("b", { staticClass: "text-true-black" }, [
+                                _vm._v("_min_late_in_")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "label label-default fs-12 cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.insertMinEarlyOutOperator()
+                                }
+                              }
+                            },
+                            [
+                              _vm._v("insert "),
+                              _c("b", { staticClass: "text-true-black" }, [
+                                _vm._v("_min_early_out_")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "label label-default fs-12 cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.insertMinLateOutOperator()
+                                }
+                              }
+                            },
+                            [
+                              _vm._v("insert "),
+                              _c("b", { staticClass: "text-true-black" }, [
+                                _vm._v("_min_late_out_")
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "label label-default fs-12 cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.insertDayAbsenceOperator()
+                                }
+                              }
+                            },
+                            [
+                              _vm._v("insert "),
+                              _c("b", { staticClass: "text-true-black" }, [
+                                _vm._v("_day_absence_")
                               ])
                             ]
                           ),
@@ -23097,13 +23222,13 @@ var render = function() {
                           _vm._v(" "),
                           _c("p", { staticClass: "text-danger" }, [
                             _vm._v(
-                              "Make sure to insert a valid format in order for the formula to work, system is case sensitive"
+                              "Make sure to insert a valid format in order for the\n                                        formula to work, system is case sensitive"
                             )
                           ]),
                           _vm._v(" "),
                           _c("p", { staticClass: "text-danger" }, [
                             _vm._v(
-                              'Please note that this should returns value that will then be "added/subtracted" to/from the salary based on the Bonus Cut type'
+                              'Please note that this should returns value that will then\n                                        be "added/subtracted" to/from the salary based on the Bonus Cut type'
                             )
                           ]),
                           _vm._v(" "),

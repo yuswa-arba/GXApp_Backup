@@ -28,4 +28,12 @@ class Configs
         'ABSENCE'=>'A'
     ];
 
+    public static $SALARY_FORMULA_OPEARTOR = [
+        'SALARY' => '_salary_',
+        'MIN_LATE_IN' =>'_min_late_in_',
+        'MIN_EARLY_OUT'=>'_min_early_out_',
+        'MIN_LATE_OUT'=>'_min_late_out_',
+        'DAY_ABSENCE' =>'_day_absence_'
+    ];
+
 }

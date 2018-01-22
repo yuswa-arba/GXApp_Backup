@@ -22,7 +22,8 @@
                                         <td>{{generalBC.id}}</td>
                                         <td>
                                             {{generalBC.bonusCutTypeName}}
-                                            <label v-if="generalBC.bonusCutTypeAddOrSub=='add'" class="label label-success fs-14">{{generalBC.bonusCutTypeAddOrSub}}</label>
+                                            <label v-if="generalBC.bonusCutTypeAddOrSub=='add'"
+                                                   class="label label-success fs-14">{{generalBC.bonusCutTypeAddOrSub}}</label>
                                             <label v-else-if="generalBC.bonusCutTypeAddOrSub=='sub'"
                                                    class="label label-danger fs-14">{{generalBC.bonusCutTypeAddOrSub}}</label>
                                             <label v-else=""></label>
@@ -130,15 +131,28 @@
                                     <div class="form-group" v-if="editGeneralBonusCutForm.isUsingFormula">
                                         <label>Formula</label>
                                         <br>
-                                        <label class="label label-default fs-12 cursor" @click="insertSalaryOperator()">insert <b class="text-true-black">_salary_</b></label>
-                                        <p>Available operators : <span class="bold fs-16">/ , * , + , - , ( , )</span></p>
+                                        <label class="label label-default fs-12 cursor" @click="insertSalaryOperator()">insert
+                                            <b class="text-true-black">_salary_</b></label>
+                                        <label class="label label-default fs-12 cursor"
+                                               @click="insertMinLateInOperator()">insert <b class="text-true-black">_min_late_in_</b></label>
+                                        <label class="label label-default fs-12 cursor"
+                                               @click="insertMinEarlyOutOperator()">insert <b class="text-true-black">_min_early_out_</b></label>
+                                        <label class="label label-default fs-12 cursor"
+                                               @click="insertMinLateOutOperator()">insert <b class="text-true-black">_min_late_out_</b></label>
+                                        <label class="label label-default fs-12 cursor"
+                                               @click="insertDayAbsenceOperator()">insert <b class="text-true-black">_day_absence_</b></label>
+
+                                        <p>Available operators : <span class="bold fs-16">/ , * , + , - , ( , )</span>
+                                        </p>
 
                                         <input type="text" class="form-control"
                                                style="height: 55px"
                                                placeholder="e.g: _salary_/25*8/60"
                                                v-model="editGeneralBonusCutForm.formula">
-                                        <p class="text-danger">Make sure to insert a valid format in order for the formula to work, system is case sensitive</p>
-                                        <p class="text-danger">Please note that this should returns value that will then be "added/subtracted" to/from the salary based on the Bonus Cut type</p>
+                                        <p class="text-danger">Make sure to insert a valid format in order for the
+                                            formula to work, system is case sensitive</p>
+                                        <p class="text-danger">Please note that this should returns value that will then
+                                            be "added/subtracted" to/from the salary based on the Bonus Cut type</p>
                                         <br>
 
                                     </div>
@@ -158,7 +172,8 @@
 
                                 </div>
                                 <div class="col-md-4 m-t-10 sm-m-t-10">
-                                    <button type="button" class="btn btn-primary btn-block m-t-5" @click="doneEditingGeneralBonusCut()">
+                                    <button type="button" class="btn btn-primary btn-block m-t-5"
+                                            @click="doneEditingGeneralBonusCut()">
                                         Save
                                     </button>
                                 </div>
@@ -312,20 +327,20 @@
                                 }).show();
 
                                 /* Update general BC array*/
-                                if(res.data.generalBC.data){
-                                    let generalBonusCutIndex = _.findIndex(self.generalBCs,{id:self.editGeneralBonusCutForm.generalBonusCutId})
-                                    self.generalBCs.splice(generalBonusCutIndex,1,res.data.generalBC.data)
+                                if (res.data.generalBC.data) {
+                                    let generalBonusCutIndex = _.findIndex(self.generalBCs, {id: self.editGeneralBonusCutForm.generalBonusCutId})
+                                    self.generalBCs.splice(generalBonusCutIndex, 1, res.data.generalBC.data)
                                 }
 
 
                                 /* Reset form values */
                                 self.editGeneralBonusCutForm = {
-                                        generalBonusCutId: '',
-                                        bonusCutTypeName: '',
-                                        value: '',
-                                        isActive: 0,
-                                        isUsingFormula: 0,
-                                        formula: ''
+                                    generalBonusCutId: '',
+                                    bonusCutTypeName: '',
+                                    value: '',
+                                    isActive: 0,
+                                    isUsingFormula: 0,
+                                    formula: ''
                                 }
 
                                 /* Close modal */
@@ -391,12 +406,54 @@
             },
             insertSalaryOperator(){
                 let self = this
-                if( self.editGeneralBonusCutForm.formula){
+                if (self.editGeneralBonusCutForm.formula) {
                     self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_'
                 } else {
                     self.editGeneralBonusCutForm.formula = '_salary_'
                 }
-            }
+            },
+            insertMinLateInOperator(){
+
+                let self = this
+                if (self.editGeneralBonusCutForm.formula) {
+                    self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_min_late_in_'
+                } else {
+                    self.editGeneralBonusCutForm.formula = '_min_late_in_'
+                }
+
+            },
+            insertMinEarlyOutOperator(){
+
+                let self = this
+                if (self.editGeneralBonusCutForm.formula) {
+                    self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_min_early_out_'
+                } else {
+                    self.editGeneralBonusCutForm.formula = '_min_early_out_'
+                }
+
+            },
+            insertMinLateOutOperator(){
+
+                let self = this
+                if (self.editGeneralBonusCutForm.formula) {
+                    self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_min_late_out_'
+                } else {
+                    self.editGeneralBonusCutForm.formula = '_min_late_out_'
+                }
+
+            },
+            insertDayAbsenceOperator(){
+
+                let self = this
+                if (self.editGeneralBonusCutForm.formula) {
+                    self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_day_absence_'
+                } else {
+                    self.editGeneralBonusCutForm.formula = '_day_absence_'
+                }
+
+            },
+
+
 
 
         },

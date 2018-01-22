@@ -2500,6 +2500,106 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2513,7 +2613,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {},
-    mounted: function mounted() {}
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('report', {
+        branchOffices: 'branchOffices',
+        generatedSalaryLogs: 'generatedSalaryLogs',
+        salaryLogDetails: 'salaryLogDetails'
+    })),
+    created: function created() {
+        this.$store.dispatch('report/getDataOnCreate');
+    },
+
+    mounted: function mounted() {
+        $('#summary-datepicker-range').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
+    }
 });
 
 /***/ }),
@@ -21993,15 +22104,249 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-5 m-b-10 m-t-10" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("form", { attrs: { action: "", id: "generate-salary-form" } }, [
+            _c("h4", [_vm._v("Generate Salary")]),
+            _vm._v(" "),
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Branch Office")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                { staticClass: "form-control" },
+                [
+                  _c(
+                    "option",
+                    {
+                      attrs: {
+                        value: "",
+                        disabled: "",
+                        hidden: "",
+                        selected: ""
+                      }
+                    },
+                    [_vm._v(" Select Branch Office")]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.branchOffices, function(branchOffice) {
+                    return _c(
+                      "option",
+                      { domProps: { value: branchOffice.id } },
+                      [
+                        _vm._v(
+                          "\n                                " +
+                            _vm._s(branchOffice.name) +
+                            "\n                            "
+                        )
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("button", { staticClass: "btn btn-primary pull-right" }, [
+              _vm._v("Generate")
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-7 m-b-10 m-t-10" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("h4", [_vm._v("Log Details")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.salaryLogDetails, function(logDetail) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(logDetail.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(logDetail.employeeName))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(logDetail.fromDate) +
+                          " - " +
+                          _vm._s(logDetail.toDate)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(logDetail.confirmationStatusName))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(logDetail.confirmationDate))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      logDetail.isPostponed
+                        ? _c("span", { staticClass: "bold text-danger" }, [
+                            _vm._v("Yes")
+                          ])
+                        : _c("span", { staticClass: "bold text-primary" }, [
+                            _vm._v("No")
+                          ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      logDetail.isSFP
+                        ? _c("span", { staticClass: "bold text-primary" }, [
+                            _vm._v("Yes")
+                          ])
+                        : _c("span", { staticClass: "bold text-danger" }, [
+                            _vm._v("No")
+                          ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td")
+                  ])
+                })
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-5" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("h4", [_vm._v("Generate Logs")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-hover" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.generatedSalaryLogs, function(salaryLog) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(salaryLog.id))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(salaryLog.fromDate) +
+                          " - " +
+                          _vm._s(salaryLog.toDate)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(salaryLog.branchOfficeName))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(salaryLog.generatedDate) +
+                          " by {{salaryLog.generatedBy"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(3, true)
+                  ])
+                })
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-12" })
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Date Start - Date End ")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "input-daterange input-group",
+          attrs: { id: "summary-datepicker-range" }
+        },
+        [
+          _c("input", {
+            staticClass: "input-sm form-control",
+            attrs: { type: "text", name: "start", id: "generateFromDate" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-addon" }, [_vm._v("to")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "input-sm form-control",
+            attrs: { type: "text", name: "end", id: "generateToDate" }
+          })
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black fs-9" }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black fs-9" }, [_vm._v("Employee")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black fs-9" }, [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black fs-9" }, [
+          _vm._v("Confirmation Status")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black fs-9" }, [
+          _vm._v("Confirmation Date")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black fs-9" }, [_vm._v("Postponed")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black fs-9" }, [
+          _vm._v("Submitted For Payroll")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black fs-9" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Branch")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("At/By")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("i", { staticClass: "fa fa-info text-primary fs-16 cursor" })
     ])
   }
 ]
@@ -36690,7 +37035,16 @@ module.exports = Component.exports
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = ({});
+/* harmony default export */ __webpack_exports__["a"] = ({
+    getDataOnCreate: function getDataOnCreate(_ref) {
+        var commit = _ref.commit,
+            state = _ref.state;
+
+
+        commit({ type: 'getBranchOffices' });
+        commit({ type: 'getGeneratedSalaryLogs' });
+    }
+});
 
 /***/ }),
 
@@ -36722,7 +37076,12 @@ module.exports = Component.exports
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
-    state: {},
+    state: {
+        branchOffices: [],
+        salaryReports: [],
+        generatedSalaryLogs: [],
+        salaryLogDetails: []
+    },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
     actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */]
@@ -36744,7 +37103,44 @@ module.exports = Component.exports
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = ({});
+/* harmony default export */ __webpack_exports__["a"] = ({
+    getBranchOffices: function getBranchOffices(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/branchOffices').then(function (res) {
+            state.branchOffices = res.data.data;
+        });
+    },
+    getGeneratedSalaryLogs: function getGeneratedSalaryLogs(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/logs').then(function (res) {
+            state.generatedSalaryLogs = res.data.data;
+        });
+    },
+    getSalaryLogDetails: function getSalaryLogDetails(state, payload) {
+        if (payload.generateSalaryLogId) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/logs/detail/' + payload.generateSalaryLogId).then(function (res) {
+                if (!res.data.isFailed) {
+
+                    state.salaryLogDetails = res.data.salaryLogDetails.data;
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        }
+    }
+});
 
 /***/ }),
 

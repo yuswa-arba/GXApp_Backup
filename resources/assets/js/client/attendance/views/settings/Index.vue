@@ -15,10 +15,10 @@
                         <a href="#" data-toggle="tab" role="tab" data-target="#tabKiosk">Kiosk</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#tabDayOff">Dayoff</a>
+                        <a href="#" data-toggle="tab" role="tab" data-target="#tabPublicHoliday">Holidays</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#tabPublicHoliday">Holidays</a>
+                        <a href="#" data-toggle="tab" role="tab" data-target="#tabDayOff">Dayoff</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" data-toggle="tab" role="tab" data-target="#tabManagers">Managers</a>
@@ -39,11 +39,11 @@
                     <div class="tab-pane" id="tabKiosk">
                         <kiosk-tab></kiosk-tab>
                     </div>
-                    <div class="tab-pane" id="tabDayOff">
-                        <day-off-tab></day-off-tab>
-                    </div>
                     <div class="tab-pane" id="tabPublicHoliday">
                         <public-holiday-tab></public-holiday-tab>
+                    </div>
+                    <div class="tab-pane" id="tabDayOff">
+                        <day-off-tab></day-off-tab>
                     </div>
                     <div class="tab-pane" id="tabManagers">
                         <manager-tab></manager-tab>

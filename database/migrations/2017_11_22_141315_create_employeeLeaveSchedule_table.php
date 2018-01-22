@@ -17,10 +17,14 @@ class CreateEmployeeLeaveScheduleTable extends Migration
             $table->increments('id');
             $table->uuid('employeeId');
             $table->tinyInteger('leaveTypeId');
+            $table->tinyInteger('leaveApprovalId');
+            $table->string('description');
             $table->string('fromDate');
             $table->string('toDate');
-            $table->string('description');
-            $table->tinyInteger('leaveApprovalId');
+            $table->integer('totalDays');
+            $table->integer('year');
+            $table->string('answer');
+            $table->string('answeredBy');
             $table->timestamps();
         });
     }

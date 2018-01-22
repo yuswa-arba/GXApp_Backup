@@ -13,6 +13,7 @@ use App\Attendance\Transformers\KioskListTransformer;
 use App\Attendance\Transformers\ShiftListTransformer;
 use App\Attendance\Transformers\SlotListTransformer;
 use App\Attendance\Transformers\SlotMakerListTransformer;
+use App\Components\Models\BranchOffice;
 use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
 use App\Components\Transformers\BasicComponentTrasnformer;
@@ -87,6 +88,17 @@ class GetListController extends Controller
     public function divisions()
     {
         return fractal(Division::all(), new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function branchOffice($id)
+    {
+        return fractal(BranchOffice::where('id', $id)->first(), new BasicComponentTrasnformer())->respond(200);
+    }
+
+
+    public function branchOffices()
+    {
+        return fractal(BranchOffice::all(), new BasicComponentTrasnformer())->respond(200);
     }
 
     public function attdApproval($id)

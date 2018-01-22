@@ -12,6 +12,8 @@ use App\Components\Models\MaritalStatus;
 use App\Components\Models\Religion;
 use App\Salary\Models\EmployeeBonusesCuts;
 use App\Salary\Models\EmployeeSalary;
+use App\Salary\Models\SalaryCalculation;
+use App\Salary\Models\SalaryQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
@@ -106,4 +108,13 @@ class MasterEmployee extends Model
         return $this->hasMany(EmployeeBonusesCuts::class,'employeeId');
     }
 
+    public function salaryQueue()
+    {
+        return $this->hasMany(SalaryQueue::class,'employeeId');
+    }
+
+    public function salaryCalculation()
+    {
+        return $this->hasMany(SalaryCalculation::class,'employeeId');
+    }
 }

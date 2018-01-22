@@ -30540,15 +30540,15 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "tab-pane", attrs: { id: "tabDayOff" } },
-            [_c("day-off-tab")],
+            { staticClass: "tab-pane", attrs: { id: "tabPublicHoliday" } },
+            [_c("public-holiday-tab")],
             1
           ),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "tab-pane", attrs: { id: "tabPublicHoliday" } },
-            [_c("public-holiday-tab")],
+            { staticClass: "tab-pane", attrs: { id: "tabDayOff" } },
+            [_c("day-off-tab")],
             1
           ),
           _vm._v(" "),
@@ -30643,10 +30643,10 @@ var staticRenderFns = [
                 href: "#",
                 "data-toggle": "tab",
                 role: "tab",
-                "data-target": "#tabDayOff"
+                "data-target": "#tabPublicHoliday"
               }
             },
-            [_vm._v("Dayoff")]
+            [_vm._v("Holidays")]
           )
         ]),
         _vm._v(" "),
@@ -30658,10 +30658,10 @@ var staticRenderFns = [
                 href: "#",
                 "data-toggle": "tab",
                 role: "tab",
-                "data-target": "#tabPublicHoliday"
+                "data-target": "#tabDayOff"
               }
             },
-            [_vm._v("Holidays")]
+            [_vm._v("Dayoff")]
           )
         ]),
         _vm._v(" "),

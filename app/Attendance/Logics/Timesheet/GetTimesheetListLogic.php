@@ -57,15 +57,7 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
             $sortDate = $request->sortDate;
         }
 
-
-        // Get employees with specific division
-        $employments = Employment::where('divisionId', $request->divisionId)->get();
-        $employeeIds = array();
-
-        foreach ($employments as $employment) {
-            //push employee id to array
-            array_push($employeeIds, $employment->employeeId);
-        }
+        $employeeIds =Employment::where('divisionId', $request->divisionId)->get()->pluck('employeeId');
 
 
         /* Get timesheet */
@@ -94,14 +86,7 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
             $sortDate = $request->sortDate;
         }
 
-        // Get employees with specific division
-        $employments = Employment::where('divisionId', $request->divisionId)->get();
-        $employeeIds = array();
-
-        foreach ($employments as $employment) {
-            //push employee id to array
-            array_push($employeeIds, $employment->employeeId);
-        }
+        $employeeIds =Employment::where('divisionId', $request->divisionId)->get()->pluck('employeeId');
 
         /* Get timesheet */
         if ($request->attdApprovalId != '') {

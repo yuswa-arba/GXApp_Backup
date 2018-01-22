@@ -21,7 +21,8 @@ abstract class GenerateUseCase
 
          $validator = Validator::make($request->all(),[
              'fromDate'=>'required',
-             'toDate'=>'required'
+             'toDate'=>'required',
+             'branchOfficeId'=>'required'
          ]);
 
          if($validator->fails()){

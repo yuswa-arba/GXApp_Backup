@@ -6,5 +6,9 @@ import series from 'async/series';
 
 export default{
 
+    getDataOnCreate({commit, state}){
 
+        commit({type: 'getBranchOffices'})
+        commit({type: 'getGeneratedSalaryLogs'})
+    }
 }

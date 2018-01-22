@@ -9,6 +9,10 @@ import actions from './actions'
 export default {
     namespaced: true,
     state: {
+        branchOffices:[],
+        salaryReports:[],
+        generatedSalaryLogs:[],
+        salaryLogDetails:[]
     },
     getters,
     mutations,

@@ -30,7 +30,7 @@ class TimesheetSummaryTransformer extends TransformerAbstract
             'clockOutTime' => $timesheet->clockOutTime,
             'workHour' => $this->countWorkHour($timesheet),
             'minutesCheckInLate' => $this->countMinutesCheckInLate($timesheet),
-            'minutesCheckOutEarly' => $this->countMinutesChcekOutEarly($timesheet),
+            'minutesCheckOutEarly' => $this->countMinutesCheckOutEarly($timesheet),
             'minutesCheckOutLate' => $this->countMinutesCheckOutLate($timesheet),
             'attendanceApproveId' => $timesheet->attendanceApproveId,
             'attendanceApproveName' => !is_null($timesheet->attendanceApproval) ? $timesheet->attendanceApproval->name : '',
@@ -71,7 +71,7 @@ class TimesheetSummaryTransformer extends TransformerAbstract
     }
 
 
-    private function countMinutesChcekOutEarly($timesheet)
+    private function countMinutesCheckOutEarly($timesheet)
     {
         if ($timesheet->clockOutDate != '' && $timesheet->clockOutTime != '') {
             $clockOutTime = Carbon::createFromFormat('d/m/Y H:i', $timesheet->clockOutDate . ' ' . $timesheet->clockOutTime);

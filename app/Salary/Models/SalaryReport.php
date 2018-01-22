@@ -21,4 +21,9 @@ class SalaryReport extends Model
         return $this->belongsTo(GeneratePayroll::class,'generatedPayrollId');
     }
 
+    public function confirmationStatus()
+    {
+        return $this->belongsTo(SalaryReportConfirmationStatus::class,'confirmationStatusId');
+    }
+
 }
