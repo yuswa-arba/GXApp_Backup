@@ -30,6 +30,13 @@ class GenerateSalaryLogic extends GenerateUseCase
 
     public function handle($request)
     {
+
+    }
+
+
+
+    public function handleAttempt($request)
+    {
         /* Date range array*/
         $dateRange = $this->generateDateRange($request->fromDate, $request->toDate, 'd/m/Y');
 
@@ -125,6 +132,7 @@ class GenerateSalaryLogic extends GenerateUseCase
                         $formula = str_replace(Configs::$SALARY_FORMULA_OPEARTOR['DAY_ABSENCE'], $totalDayAbsence, $formula); // day absence
 
                         $calculation = eval('return ' . $formula . ';');
+
                     } else {
                         $calculation = $generalBonusCut->value; // not using formula so get value instead
                     }
@@ -205,10 +213,9 @@ class GenerateSalaryLogic extends GenerateUseCase
 
         }
 
-
         echo json_encode($employeeAttdTimesheet);
-
     }
+
 
     private function getEmployeeSlotId($employeeId)
     {
@@ -282,5 +289,6 @@ class GenerateSalaryLogic extends GenerateUseCase
 
         return 0;
     }
+
 
 }

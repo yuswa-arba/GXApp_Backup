@@ -15,6 +15,28 @@ use Illuminate\Support\Facades\Validator;
 
 abstract class GenerateUseCase
 {
+
+    public function attemptGenerate(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(),[
+            'fromDate'=>'required',
+            'toDate'=>'required',
+            'branchOfficeId'=>'required'
+        ]);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Required parameter is missing';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        return (new static)->handleAttempt($request);
+    }
+
     public static function generate(Request $request)
     {
          $response = array();
@@ -36,6 +58,7 @@ abstract class GenerateUseCase
          return (new static)->handle($request);
     }
 
-    abstract public function handle($request);
 
+    abstract public function handleAttempt($request);
+    abstract public function handle($request);
 }

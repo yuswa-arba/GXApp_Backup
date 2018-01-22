@@ -3288,6 +3288,130 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/PayrollTab.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            payrollSettings: []
+        };
+    },
+    created: function created() {
+        var self = this;
+
+        // get payroll setting data
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payrollSetting/list').then(function (res) {
+            self.payrollSettings = res.data.payrollSettings.data;
+        });
+    },
+
+    methods: {
+        startEditing: function startEditing(id, index) {
+
+            var self = this;
+            self.payrollSettings[index].editing = true;
+        },
+        doneEditing: function doneEditing(id, index) {
+            var self = this;
+
+            var value = $('input[name="' + 'editValue' + id + '"]').val();
+
+            if (value) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payrollSetting/edit', { id: id, value: value }).then(function (res) {
+
+                    if (!res.data.isFailed) {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        //update array
+                        self.payrollSettings.splice(index, 1, res.data.payrollSetting.data);
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'Update canceled. Value cannot be empty',
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+
+            self.payrollSettings[index].editing = false;
+        }
+    },
+    computed: {}
+
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3297,6 +3421,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_PayrollTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/PayrollTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_PayrollTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_settings_PayrollTab_vue__);
 //
 //
 //
@@ -3323,6 +3449,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -3330,7 +3464,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         'bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default.a,
-        'general-bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue___default.a
+        'general-bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue___default.a,
+        'payroll-tab': __WEBPACK_IMPORTED_MODULE_2__components_settings_PayrollTab_vue___default.a
     },
     mounted: function mounted() {}
 });
@@ -23874,6 +24009,13 @@ var render = function() {
             { staticClass: "tab-pane", attrs: { id: "tabGeneralBonusCut" } },
             [_c("general-bonus-cut-tab")],
             1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "tab-pane", attrs: { id: "tabPayroll" } },
+            [_c("payroll-tab")],
+            1
           )
         ])
       ])
@@ -23920,6 +24062,21 @@ var staticRenderFns = [
               }
             },
             [_vm._v("General Bonus Cut")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              attrs: {
+                href: "#",
+                "data-toggle": "tab",
+                role: "tab",
+                "data-target": "#tabPayroll"
+              }
+            },
+            [_vm._v("Payroll")]
           )
         ])
       ]
@@ -23978,6 +24135,102 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-6aee0518", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a143e3d4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/PayrollTab.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-6 m-b-10" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("h4", [_vm._v(" Payroll Setting")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.payrollSettings, function(setting, index) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(setting.name))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      !setting.editing
+                        ? _c("span", [_vm._v(_vm._s(setting.value))])
+                        : _c("input", {
+                            attrs: {
+                              type: "text",
+                              name: "editValue" + setting.id
+                            },
+                            domProps: { value: setting.value }
+                          })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      !setting.editing
+                        ? _c("i", {
+                            staticClass:
+                              "fa fa-pencil text-primary fs-16 cursor",
+                            on: {
+                              click: function($event) {
+                                _vm.startEditing(setting.id, index)
+                              }
+                            }
+                          })
+                        : _c(
+                            "i",
+                            {
+                              staticClass: "text-danger cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.doneEditing(setting.id, index)
+                                }
+                              }
+                            },
+                            [_vm._v("DONE")]
+                          )
+                    ])
+                  ])
+                })
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Value")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a143e3d4", module.exports)
   }
 }
 
@@ -38620,6 +38873,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-16c2d3d0", Component.options)
   } else {
     hotAPI.reload("data-v-16c2d3d0", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/salary/components/settings/PayrollTab.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/PayrollTab.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a143e3d4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/PayrollTab.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/salary/components/settings/PayrollTab.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a143e3d4", Component.options)
+  } else {
+    hotAPI.reload("data-v-a143e3d4", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true

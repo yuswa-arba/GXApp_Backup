@@ -17,8 +17,10 @@ use App\Components\Models\BranchOffice;
 use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
 use App\Components\Transformers\BasicComponentTrasnformer;
+use App\Components\Transformers\BasicSettingTrasnformer;
 use App\Components\Transformers\DivisionListTransfomer;
 
+use App\Salary\Models\PayrollSetting;
 use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
