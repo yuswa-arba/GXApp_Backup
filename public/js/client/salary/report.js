@@ -2617,6 +2617,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         branchOffices: 'branchOffices',
         generatedSalaryLogs: 'generatedSalaryLogs',
         salaryLogDetails: 'salaryLogDetails'
+    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('report', {
+        defaultFromDate: 'defaultFromDate',
+        defaultToDate: 'defaultToDate'
     })),
     created: function created() {
         this.$store.dispatch('report/getDataOnCreate');
@@ -22111,7 +22114,38 @@ var render = function() {
           _c("form", { attrs: { action: "", id: "generate-salary-form" } }, [
             _c("h4", [_vm._v("Generate Salary")]),
             _vm._v(" "),
-            _vm._m(0),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Date Start - Date End ")]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "input-daterange input-group",
+                  attrs: { id: "summary-datepicker-range" }
+                },
+                [
+                  _c("input", {
+                    staticClass: "input-sm form-control",
+                    attrs: {
+                      type: "text",
+                      name: "start",
+                      id: "generateFromDate"
+                    },
+                    domProps: { value: _vm.defaultFromDate }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group-addon" }, [
+                    _vm._v("to")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "input-sm form-control",
+                    attrs: { type: "text", name: "end", id: "generateToDate" },
+                    domProps: { value: _vm.defaultToDate }
+                  })
+                ]
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c("label", [_vm._v("Branch Office")]),
@@ -22166,7 +22200,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table table-hover" }, [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -22227,7 +22261,7 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table table-hover" }, [
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -22252,7 +22286,7 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(3, true)
+                    _vm._m(2, true)
                   ])
                 })
               )
@@ -22264,35 +22298,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Date Start - Date End ")]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "input-daterange input-group",
-          attrs: { id: "summary-datepicker-range" }
-        },
-        [
-          _c("input", {
-            staticClass: "input-sm form-control",
-            attrs: { type: "text", name: "start", id: "generateFromDate" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-addon" }, [_vm._v("to")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "input-sm form-control",
-            attrs: { type: "text", name: "end", id: "generateToDate" }
-          })
-        ]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -37043,6 +37048,7 @@ module.exports = Component.exports
 
         commit({ type: 'getBranchOffices' });
         commit({ type: 'getGeneratedSalaryLogs' });
+        commit({ type: 'getDefaultGenerateDate' });
     }
 });
 
@@ -37055,7 +37061,14 @@ module.exports = Component.exports
 /**
  * Created by kevinpurwono on 8/12/17.
  */
-/* harmony default export */ __webpack_exports__["a"] = ({});
+/* harmony default export */ __webpack_exports__["a"] = ({
+    defaultFromDate: function defaultFromDate(state) {
+        return state.defaultFromDate + '/' + (moment().month() + 1) + '/' + moment().year();
+    },
+    defaultToDate: function defaultToDate(state) {
+        return state.defaultToDate + '/' + (moment().month() + 1) + '/' + moment().year();
+    }
+});
 
 /***/ }),
 
@@ -37080,7 +37093,9 @@ module.exports = Component.exports
         branchOffices: [],
         salaryReports: [],
         generatedSalaryLogs: [],
-        salaryLogDetails: []
+        salaryLogDetails: [],
+        defaultFromDate: '',
+        defaultToDate: ''
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -37114,9 +37129,16 @@ module.exports = Component.exports
             state.generatedSalaryLogs = res.data.data;
         });
     },
+    getDefaultGenerateDate: function getDefaultGenerateDate(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payrollSetting/defaultGenerateDate').then(function (res) {
+            state.defaultFromDate = res.data.fromDate;
+            state.defaultToDate = res.data.toDate;
+        });
+    },
     getSalaryLogDetails: function getSalaryLogDetails(state, payload) {
         if (payload.generateSalaryLogId) {
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/logs/detail/' + payload.generateSalaryLogId).then(function (res) {
+
                 if (!res.data.isFailed) {
 
                     state.salaryLogDetails = res.data.salaryLogDetails.data;

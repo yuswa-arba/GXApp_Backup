@@ -64,8 +64,17 @@ class PayrollSettingController extends Controller
             $response['message'] = 'Unable to find update payroll setting';
             return response()->json($response, 200);
         }
+    }
 
+    public function getDefaultGenerateDate()
+    {
 
+        $response = array();
+        $response['isFailed'] = false;
+        $response['fromDate'] = PayrollSetting::where('name','generate-salary-from-date')->first()['value'];
+        $response['toDate'] = PayrollSetting::where('name','generate-salary-to-date')->first()['value'];
+
+        return response()->json($response,200);
     }
 
 }

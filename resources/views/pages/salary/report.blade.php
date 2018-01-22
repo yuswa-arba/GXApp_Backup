@@ -4,6 +4,7 @@
 @endpush
 
 @push('child-scripts-plugins')
+<script src="{{mix('plugins/js/moment.min.js')}}"></script>
 @endpush
 
 @push('child-page-controller')

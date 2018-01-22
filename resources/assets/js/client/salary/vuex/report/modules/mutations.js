@@ -18,10 +18,18 @@ export default{
                 state.generatedSalaryLogs = res.data.data
             })
     },
+    getDefaultGenerateDate(state, payload){
+        get(api_path + 'salary/payrollSetting/defaultGenerateDate')
+            .then((res) => {
+                state.defaultFromDate = res.data.fromDate
+                state.defaultToDate = res.data.toDate
+            })
+    },
     getSalaryLogDetails(state, payload){
         if (payload.generateSalaryLogId) {
-            get(api_path + 'salary/generate/logs/detail/'+ payload.generateSalaryLogId)
+            get(api_path + 'salary/generate/logs/detail/' + payload.generateSalaryLogId)
                 .then((res) => {
+
                     if (!res.data.isFailed) {
 
                         state.salaryLogDetails = res.data.salaryLogDetails.data

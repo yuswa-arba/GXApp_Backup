@@ -8,9 +8,9 @@
                         <div class="form-group">
                             <label>Date Start - Date End </label>
                             <div class="input-daterange input-group" id="summary-datepicker-range">
-                                <input type="text" class="input-sm form-control" name="start" id="generateFromDate"/>
+                                <input type="text" class="input-sm form-control" name="start" id="generateFromDate" :value="defaultFromDate"/>
                                 <div class="input-group-addon">to</div>
-                                <input type="text" class="input-sm form-control" name="end" id="generateToDate"/>
+                                <input type="text" class="input-sm form-control" name="end" id="generateToDate" :value="defaultToDate"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -112,7 +112,11 @@
             ...mapState('report', {
                 branchOffices: 'branchOffices',
                 generatedSalaryLogs: 'generatedSalaryLogs',
-                salaryLogDetails: 'salaryLogDetails'
+                salaryLogDetails: 'salaryLogDetails',
+            }),
+            ...mapGetters('report',{
+                defaultFromDate:'defaultFromDate',
+                defaultToDate:'defaultToDate'
             })
         },
         created(){

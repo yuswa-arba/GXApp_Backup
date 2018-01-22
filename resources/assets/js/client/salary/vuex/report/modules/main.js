@@ -12,7 +12,9 @@ export default {
         branchOffices:[],
         salaryReports:[],
         generatedSalaryLogs:[],
-        salaryLogDetails:[]
+        salaryLogDetails:[],
+        defaultFromDate:'',
+        defaultToDate:''
     },
     getters,
     mutations,

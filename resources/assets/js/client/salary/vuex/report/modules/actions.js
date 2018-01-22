@@ -10,5 +10,6 @@ export default{
 
         commit({type: 'getBranchOffices'})
         commit({type: 'getGeneratedSalaryLogs'})
+        commit({type: 'getDefaultGenerateDate'})
     }
 }
