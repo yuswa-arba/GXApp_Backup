@@ -30,6 +30,8 @@ export default{
             get(api_path + 'salary/generate/logs/detail/' + payload.generateSalaryLogId)
                 .then((res) => {
 
+                console.log(res.data)
+
                     if (!res.data.isFailed) {
 
                         state.salaryLogDetails = res.data.salaryLogDetails.data

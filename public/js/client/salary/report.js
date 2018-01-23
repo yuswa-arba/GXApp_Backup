@@ -2741,7 +2741,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2771,6 +2770,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2926,6 +2953,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     type: 'danger'
                 }).show();
             }
+        },
+        getGeneratedSalaryLogDetails: function getGeneratedSalaryLogDetails(id) {
+            this.$store.commit({
+                type: 'report/getSalaryLogDetails',
+                generateSalaryLogId: id
+            });
         }
     }
 });
@@ -22898,220 +22931,261 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-5 m-b-10 m-t-10" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("form", { attrs: { action: "", id: "generate-salary-form" } }, [
-            _c("h4", [_vm._v("Generate Salary")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Date Start - Date End ")]),
-              _vm._v(" "),
+    _c("div", { staticClass: "col-lg-5" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+          _c("div", { staticClass: "card card-bordered" }, [
+            _c("div", { staticClass: "card-block" }, [
               _c(
-                "div",
-                {
-                  staticClass: "input-daterange input-group",
-                  attrs: { id: "summary-datepicker-range" }
-                },
+                "form",
+                { attrs: { action: "", id: "generate-salary-form" } },
                 [
-                  _c("input", {
-                    staticClass: "input-sm form-control",
-                    attrs: { type: "text", name: "generateFromDate" },
-                    domProps: { value: _vm.defaultFromDate }
-                  }),
+                  _c("h4", [_vm._v("Generate Salary")]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "input-group-addon" }, [
-                    _vm._v("to")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    staticClass: "input-sm form-control",
-                    attrs: { type: "text", name: "generateToDate" },
-                    domProps: { value: _vm.defaultToDate }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Branch Office")]),
-              _vm._v(" "),
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.selectedBranchOfficeId,
-                      expression: "selectedBranchOfficeId"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.selectedBranchOfficeId = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c(
-                    "option",
-                    {
-                      attrs: {
-                        value: "",
-                        disabled: "",
-                        hidden: "",
-                        selected: ""
-                      }
-                    },
-                    [_vm._v(" Select Branch Office")]
-                  ),
-                  _vm._v(" "),
-                  _vm._l(_vm.branchOffices, function(branchOffice) {
-                    return _c(
-                      "option",
-                      { domProps: { value: branchOffice.id } },
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Date Start - Date End ")]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "input-daterange input-group",
+                        attrs: { id: "summary-datepicker-range" }
+                      },
                       [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(branchOffice.name) +
-                            "\n                            "
-                        )
+                        _c("input", {
+                          staticClass: "input-sm form-control",
+                          attrs: { type: "text", name: "generateFromDate" },
+                          domProps: { value: _vm.defaultFromDate }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group-addon" }, [
+                          _vm._v("to")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "input-sm form-control",
+                          attrs: { type: "text", name: "generateToDate" },
+                          domProps: { value: _vm.defaultToDate }
+                        })
                       ]
                     )
-                  })
-                ],
-                2
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Branch Office")]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.selectedBranchOfficeId,
+                            expression: "selectedBranchOfficeId"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.selectedBranchOfficeId = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "option",
+                          {
+                            attrs: {
+                              value: "",
+                              disabled: "",
+                              hidden: "",
+                              selected: ""
+                            }
+                          },
+                          [_vm._v(" Select Branch Office")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.branchOffices, function(branchOffice) {
+                          return _c(
+                            "option",
+                            { domProps: { value: branchOffice.id } },
+                            [
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(branchOffice.name) +
+                                  "\n                                    "
+                              )
+                            ]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary pull-right",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.attemptGenerate()
+                        }
+                      }
+                    },
+                    [_vm._v("Generate")]
+                  )
+                ]
               )
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary pull-right",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.attemptGenerate()
-                  }
-                }
-              },
-              [_vm._v("Generate")]
-            )
+            ])
           ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-7 m-b-10 m-t-10" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("h4", [_vm._v("Log Details")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover" }, [
-              _vm._m(0),
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-lg-12" }, [
+          _c("div", { staticClass: "card card-bordered" }, [
+            _c("div", { staticClass: "card-block" }, [
+              _c("h4", [_vm._v("Generate Logs")]),
               _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.salaryLogDetails, function(logDetail) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(logDetail.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(logDetail.employeeName))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(logDetail.fromDate) +
-                          " - " +
-                          _vm._s(logDetail.toDate)
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(logDetail.confirmationStatusName))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(logDetail.confirmationDate))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      logDetail.isPostponed
-                        ? _c("span", { staticClass: "bold text-danger" }, [
-                            _vm._v("Yes")
-                          ])
-                        : _c("span", { staticClass: "bold text-primary" }, [
-                            _vm._v("No")
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      logDetail.isSFP
-                        ? _c("span", { staticClass: "bold text-primary" }, [
-                            _vm._v("Yes")
-                          ])
-                        : _c("span", { staticClass: "bold text-danger" }, [
-                            _vm._v("No")
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td")
-                  ])
-                })
-              )
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table table-hover" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.generatedSalaryLogs, function(salaryLog) {
+                      return _c("tr", [
+                        _c("td", [_vm._v(_vm._s(salaryLog.id))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(salaryLog.fromDate) +
+                              " - " +
+                              _vm._s(salaryLog.toDate)
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(salaryLog.branchOfficeName))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(salaryLog.generatedDate) +
+                              " by " +
+                              _vm._s(salaryLog.generatedBy)
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("i", {
+                            staticClass: "fa fa-info text-primary fs-16 cursor",
+                            on: {
+                              click: function($event) {
+                                _vm.getGeneratedSalaryLogDetails(salaryLog.id)
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    })
+                  )
+                ])
+              ])
             ])
           ])
         ])
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-5" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("h4", [_vm._v("Generate Logs")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table table-hover" }, [
+    _c("div", { staticClass: "col-lg-7" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+          _c("div", { staticClass: "card card-bordered" }, [
+            _c("div", { staticClass: "card-block" }, [
               _vm._m(1),
               _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.generatedSalaryLogs, function(salaryLog) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(salaryLog.id))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(salaryLog.fromDate) +
-                          " - " +
-                          _vm._s(salaryLog.toDate)
+              _c("div", { staticClass: "scrollable" }, [
+                _c("div", { staticStyle: { height: "700px" } }, [
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c("table", { staticClass: "table table-hover" }, [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.salaryLogDetails, function(logDetail) {
+                          return _c(
+                            "tr",
+                            { staticClass: "filter-log-details" },
+                            [
+                              _c("td", [_vm._v(_vm._s(logDetail.id))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(logDetail.employeeName))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(logDetail.fromDate) +
+                                    " - " +
+                                    _vm._s(logDetail.toDate)
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(logDetail.confirmationStatusName))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(logDetail.confirmationDate))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                logDetail.isPostponed
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "bold text-danger" },
+                                      [_vm._v("Yes")]
+                                    )
+                                  : _c(
+                                      "span",
+                                      { staticClass: "bold text-primary" },
+                                      [_vm._v("No")]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                logDetail.isSFP
+                                  ? _c(
+                                      "span",
+                                      { staticClass: "bold text-primary" },
+                                      [_vm._v("Yes")]
+                                    )
+                                  : _c(
+                                      "span",
+                                      { staticClass: "bold text-danger" },
+                                      [_vm._v("No")]
+                                    )
+                              ]),
+                              _vm._v(" "),
+                              _c("td")
+                            ]
+                          )
+                        })
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(salaryLog.branchOfficeName))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(salaryLog.generatedDate) +
-                          " by " +
-                          _vm._s(salaryLog.generatedBy)
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(2, true)
+                    ])
                   ])
-                })
-              )
+                ])
+              ])
             ])
           ])
         ])
@@ -23120,82 +23194,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { padding: "5px 5px" }
-          },
-          [_vm._v("ID")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { padding: "5px 5px" }
-          },
-          [_vm._v("Employee")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { padding: "5px 5px" }
-          },
-          [_vm._v("Date")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { padding: "5px 5px" }
-          },
-          [_vm._v("Status")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { padding: "5px 5px" }
-          },
-          [_vm._v("Confirm Date")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { padding: "5px 5px" }
-          },
-          [_vm._v("Postponed")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { padding: "5px 5px" }
-          },
-          [_vm._v("Submitted")]
-        ),
-        _vm._v(" "),
-        _c("th", {
-          staticClass: "text-black fs-9",
-          staticStyle: { padding: "5px 5px" }
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -23218,8 +23216,104 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("i", { staticClass: "fa fa-info text-primary fs-16 cursor" })
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-6" }, [
+        _c("h4", { staticClass: "pull-left" }, [_vm._v("Log Details")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-6" }, [
+        _c(
+          "div",
+          { staticClass: "form-group", staticStyle: { "padding-top": "5px" } },
+          [
+            _c("input", {
+              staticClass: "pull-right form-control",
+              staticStyle: { width: "250px" },
+              attrs: {
+                type: "text",
+                id: "search-log-details",
+                placeholder: "Search"
+              }
+            })
+          ]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+          },
+          [_vm._v("ID")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+          },
+          [_vm._v("Employee")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+          },
+          [_vm._v("Date")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+          },
+          [_vm._v("Status")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+          },
+          [_vm._v("Confirm Date")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+          },
+          [_vm._v("Postponed")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+          },
+          [_vm._v("Submitted")]
+        ),
+        _vm._v(" "),
+        _c("th", {
+          staticClass: "text-black fs-9",
+          staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+        })
+      ])
     ])
   }
 ]
@@ -37813,7 +37907,13 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     store: __WEBPACK_IMPORTED_MODULE_3__vuex_report_store__["a" /* store */]
 });
 
-$(document).ready(function () {});
+$(document).ready(function () {
+
+    $('.filter-container').sieve({
+        searchInput: $('#search-log-details'),
+        itemSelector: ".filter-log-details"
+    });
+});
 
 /***/ }),
 
@@ -38163,6 +38263,8 @@ module.exports = Component.exports
     getSalaryLogDetails: function getSalaryLogDetails(state, payload) {
         if (payload.generateSalaryLogId) {
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/logs/detail/' + payload.generateSalaryLogId).then(function (res) {
+
+                console.log(res.data);
 
                 if (!res.data.isFailed) {
 

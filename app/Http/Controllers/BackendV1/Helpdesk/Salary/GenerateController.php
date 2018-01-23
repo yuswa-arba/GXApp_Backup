@@ -39,19 +39,19 @@ class GenerateController extends Controller
      * */
     public function getLogs()
     {
-        return fractal(GenerateSalaryReportLogs::all()->sortBy('created_at'), new GeneratedSalaryLogsTransformer());
+        return fractal(GenerateSalaryReportLogs::all()->sortByDesc('created_at'), new GeneratedSalaryLogsTransformer());
     }
 
     public function getLogDetails($id)
     {
-
+        
         $response = array();
         if ($id != null && $id != '') {
 
             $generatedLog = GenerateSalaryReportLogs::find($id);
             if ($generatedLog) {
 
-                $salaryReports = SalaryReport::whereIn('id', $generatedLog->salaryReportIds)->get();
+                $salaryReports = SalaryReport::whereIn('id',explode(' ',$generatedLog->salaryReportIds))->get();
 
                 if ($salaryReports) {
 
@@ -66,6 +66,8 @@ class GenerateController extends Controller
                     $response['message'] = 'Unable to find details';
                     return response()->json($response, 200);
                 }
+
+
 
             } else {
                 $response['isFailed'] = false;
