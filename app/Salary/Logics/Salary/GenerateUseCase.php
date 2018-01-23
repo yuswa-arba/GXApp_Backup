@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Validator;
 abstract class GenerateUseCase
 {
 
-    public function attemptGenerate(Request $request)
+    public static function attemptGenerate(Request $request)
     {
         $response = array();
 

@@ -13,12 +13,10 @@ use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\Shifts;
-use App\Attendance\Models\Slots;
+use App\Components\Models\BranchOffice;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
-use App\Salary\Models\EmployeeBonusesCuts;
 use App\Salary\Models\GeneralBonusesCuts;
-use App\Salary\Transformers\EmployeeBonusCutTransformer;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 
@@ -34,7 +32,10 @@ class GenerateSalaryLogic extends GenerateUseCase
     }
 
 
-
+    /*
+     * @desc return data before generate
+     * @return mixed
+     * */
     public function handleAttempt($request)
     {
         /* Date range array*/
@@ -48,8 +49,11 @@ class GenerateSalaryLogic extends GenerateUseCase
         /* GENERAL bonus cuts*/
         $generalBonusCuts = GeneralBonusesCuts::all();
 
-        /* Get attendance timesheet Ids*/
-        $employeeAttdTimesheet = array();
+        /* Salary report array*/
+        $salaryReport = array();
+
+        /* Employee Salary Report arr*/
+        $employeeSalaryReport = array();
 
 
         $i = 0;
@@ -57,9 +61,10 @@ class GenerateSalaryLogic extends GenerateUseCase
 
             $employeeId = $employee->id;
 
-            $employeeAttdTimesheet[$i]['employeeId'] = $employeeId; // employee ID
-            $employeeAttdTimesheet[$i]['employeeNo'] = $employee->employeeNo; // employee no
-            $employeeAttdTimesheet[$i]['employeeName'] = $employee->givenName . ' ' . $employee->surname; // employee name
+            $employeeSalaryReport[$i]['employeeId'] = $employeeId; // employee ID
+            $employeeSalaryReport[$i]['employeeNo'] = $employee->employeeNo; // employee no
+            $employeeSalaryReport[$i]['employeeName'] = $employee->givenName . ' ' . $employee->surname; // employee name
+            $employeeSalaryReport[$i]['divisionName'] = $this->getResultWithNullChecker2Connection($employee,'employment','division','name');
 
             $totalDayAbsence = 0; //absence
             $totalMinLate = 0; // min late
@@ -86,7 +91,10 @@ class GenerateSalaryLogic extends GenerateUseCase
                 // if its not day off and not employee leave schedule then insert date to array
                 if (!$this->isDayOffForThisSlot($slotId, $date) && !$this->employeeLeaveSchedule($employeeId, $date)) {
 
-                    $timesheetId = AttendanceTimesheet::where('employeeId', $employeeId)->where('clockInDate', $date)->first()['id'];
+                    $timesheetId = AttendanceTimesheet::where('employeeId', $employeeId)
+                        ->where('clockInDate', $date)
+                        ->whereNotNull('clockOutDate')
+                        ->first()['id'];
 
                     if (!$timesheetId) {
                         $totalDayAbsence++; // add absence
@@ -100,9 +108,9 @@ class GenerateSalaryLogic extends GenerateUseCase
             }
 
             /* Set values */
-            $employeeAttdTimesheet[$i]['timesheetSummary']['totalDayAbsence'] = $totalDayAbsence;
-            $employeeAttdTimesheet[$i]['timesheetSummary']['totalMinLate'] = $totalMinLate;
-            $employeeAttdTimesheet[$i]['timesheetSummary']['totalMinEarlyOut'] = $totalMinEarlyOut;
+            $employeeSalaryReport[$i]['timesheetSummary']['totalDayAbsence'] = $totalDayAbsence;
+            $employeeSalaryReport[$i]['timesheetSummary']['totalMinLate'] = $totalMinLate;
+            $employeeSalaryReport[$i]['timesheetSummary']['totalMinEarlyOut'] = $totalMinEarlyOut;
 
 
             /* get employee salary*/
@@ -137,10 +145,10 @@ class GenerateSalaryLogic extends GenerateUseCase
                         $calculation = $generalBonusCut->value; // not using formula so get value instead
                     }
 
-                    $employeeAttdTimesheet[$i]['generalBonusCuts'][$x]['id'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'id');
-                    $employeeAttdTimesheet[$i]['generalBonusCuts'][$x]['name'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'name');
-                    $employeeAttdTimesheet[$i]['generalBonusCuts'][$x]['addOrSub'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'addOrSub');
-                    $employeeAttdTimesheet[$i]['generalBonusCuts'][$x]['value'] = $calculation;
+                    $employeeSalaryReport[$i]['generalBonusCuts'][$x]['id'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'id');
+                    $employeeSalaryReport[$i]['generalBonusCuts'][$x]['name'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'name');
+                    $employeeSalaryReport[$i]['generalBonusCuts'][$x]['addOrSub'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'addOrSub');
+                    $employeeSalaryReport[$i]['generalBonusCuts'][$x]['value'] = $calculation;
 
 
                     // total bonus & cuts
@@ -182,10 +190,10 @@ class GenerateSalaryLogic extends GenerateUseCase
 
                     }
 
-                    $employeeAttdTimesheet[$i]['employeeBonusCut'][$y]['id'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'id');
-                    $employeeAttdTimesheet[$i]['employeeBonusCut'][$y]['name'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'name');
-                    $employeeAttdTimesheet[$i]['employeeBonusCut'][$y]['addOrSub'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'addOrSub');
-                    $employeeAttdTimesheet[$i]['employeeBonusCut'][$y]['value'] = $calculation;
+                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['id'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'id');
+                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['name'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'name');
+                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['addOrSub'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'addOrSub');
+                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['value'] = $calculation;
 
 
                     // total bonus & cuts
@@ -202,18 +210,33 @@ class GenerateSalaryLogic extends GenerateUseCase
 
             }
 
-            $employeeAttdTimesheet[$i]['salarySummary']['basicSalary'] = $employeeSalary;
-            $employeeAttdTimesheet[$i]['salarySummary']['totalBonus'] = $totalBonus;
-            $employeeAttdTimesheet[$i]['salarySummary']['totalCut'] = $totalCut;
-            $employeeAttdTimesheet[$i]['salarySummary']['salaryReceived'] = (float)$employeeSalary + (float)$totalBonus - (float)$totalCut;
+            $employeeSalaryReport[$i]['salarySummary']['basicSalary'] = (float)$employeeSalary;
+            $employeeSalaryReport[$i]['salarySummary']['totalBonus'] = $totalBonus;
+            $employeeSalaryReport[$i]['salarySummary']['totalCut'] = $totalCut;
+            $employeeSalaryReport[$i]['salarySummary']['salaryReceived'] = (float)$employeeSalary + (float)$totalBonus - (float)$totalCut;
 
             /* Incrementing array */
             $i++;
 
-
         }
 
-        echo json_encode($employeeAttdTimesheet);
+
+        /* Insert to Salary Report*/
+        $salaryReport['summary']['totalEmployees'] = count($employees);
+        $salaryReport['summary']['branchOfficeId'] = $request->branchOfficeId;
+        $salaryReport['summary']['branchOfficeName'] = BranchOffice::find($request->branchOfficeId)->name;
+        $salaryReport['summary']['fromDate'] = $request->fromDate;
+        $salaryReport['summary']['toDate'] = $request->toDate;
+        $salaryReport['employeesSalaryReport'] = $employeeSalaryReport;
+
+
+        /* RETURN RESPONSE */
+        $response = array();
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['salaryReport'] = $salaryReport;
+
+        return response()->json($response, 200);
     }
 
 

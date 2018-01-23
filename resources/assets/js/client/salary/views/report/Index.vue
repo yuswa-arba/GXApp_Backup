@@ -8,21 +8,21 @@
                         <div class="form-group">
                             <label>Date Start - Date End </label>
                             <div class="input-daterange input-group" id="summary-datepicker-range">
-                                <input type="text" class="input-sm form-control" name="start" id="generateFromDate" :value="defaultFromDate"/>
+                                <input type="text" class="input-sm form-control" name="generateFromDate" :value="defaultFromDate"/>
                                 <div class="input-group-addon">to</div>
-                                <input type="text" class="input-sm form-control" name="end" id="generateToDate" :value="defaultToDate"/>
+                                <input type="text" class="input-sm form-control" name="generateToDate" :value="defaultToDate"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Branch Office</label>
-                            <select class="form-control">
+                            <select class="form-control" v-model="selectedBranchOfficeId">
                                 <option value="" disabled hidden selected> Select Branch Office</option>
                                 <option :value="branchOffice.id" v-for="branchOffice in branchOffices">
                                     {{branchOffice.name}}
                                 </option>
                             </select>
                         </div>
-                        <button class="btn btn-primary pull-right">Generate</button>
+                        <button type="button" class="btn btn-primary pull-right" @click="attemptGenerate()">Generate</button>
                     </form>
                 </div>
             </div>
@@ -107,7 +107,11 @@
 <script type="text/javascript">
     import {mapGetters, mapState} from 'vuex'
     export default{
-        components: {},
+        data() {
+            return{
+                selectedBranchOfficeId:''
+            }
+        },
         computed: {
             ...mapState('report', {
                 branchOffices: 'branchOffices',
@@ -120,10 +124,38 @@
             })
         },
         created(){
-            this.$store.dispatch('report/getDataOnCreate');
+            this.$store.dispatch('report/getDataOnCreate')
         },
         mounted: function () {
             $('#summary-datepicker-range').datepicker({format: 'dd/mm/yyyy', autoclose: true})
         },
+        methods:{
+            attemptGenerate(){
+                let self  = this
+
+                let fromDate = $('input[name="generateFromDate"]').val()
+                let toDate = $('input[name="generateToDate"]').val()
+
+                if(fromDate&&toDate&&self.selectedBranchOfficeId){
+
+                    self.$store.dispatch({
+                        type:'report/attemptGenerateSalaryData',
+                        fromDate:fromDate,
+                        toDate:toDate,
+                        branchOfficeId:self.selectedBranchOfficeId
+                    })
+                    self.$router.push({name: 'attemptGenerate'})
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Something missing. Please check your generate form',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+
+            }
+        }
     }
 </script>

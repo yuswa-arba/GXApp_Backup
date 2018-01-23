@@ -14,7 +14,9 @@ export default {
         generatedSalaryLogs:[],
         salaryLogDetails:[],
         defaultFromDate:'',
-        defaultToDate:''
+        defaultToDate:'',
+        isFetchingSalaryData:false,
+        attemptGenerateSalaryData:[]
     },
     getters,
     mutations,

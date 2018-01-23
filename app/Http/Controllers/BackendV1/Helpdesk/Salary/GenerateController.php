@@ -22,6 +22,12 @@ class GenerateController extends Controller
 //        $this->middleware(['permission:access salary']);
     }
 
+
+    public function attemptGenerate(Request $request)
+    {
+        return GenerateSalaryLogic::attemptGenerate($request);
+    }
+
     public function generate(Request $request)
     {
         return GenerateSalaryLogic::generate($request);
