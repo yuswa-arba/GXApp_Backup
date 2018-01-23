@@ -24,10 +24,14 @@ class CreateSalaryCalculationTable extends Migration
             $table->string('notes');
             $table->string('insertedDate');
             $table->string('insertedBy');
+            $table->tinyInteger('isEdited')->default(0);
+            $table->string('editedDate')->nullable();
+            $table->string('editedBy')->nullable();
+            $table->tinyInteger('isDeleted')->default(0);
+            $table->string('deletedDate')->nullable();
+            $table->string('deletedBy')->nullable();
+            $table->tinyInteger('isProcessed')->default(0);
             $table->string('processedDate')->nullable();
-            $table->tinyInteger('isCanceled')->default(0);
-            $table->string('canceledDate')->nullable();
-            $table->string('canceledBy')->nullable();
             $table->timestamps();
         });
     }

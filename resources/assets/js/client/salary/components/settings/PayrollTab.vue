@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-lg-6 m-b-10">
+        <div class="col-lg-8 m-b-10">
             <div class="card card-bordered">
                 <div class="card-block">
                     <h4> Payroll Setting</h4>
@@ -10,6 +10,7 @@
                             <tr>
                                 <th class="text-black">Name</th>
                                 <th class="text-black">Value</th>
+                                <th class="text-black">Description</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -19,6 +20,10 @@
                                 <td>
                                     <span v-if="!setting.editing">{{setting.value}}</span>
                                     <input v-else="" type="text" :name="'editValue'+setting.id" :value="setting.value">
+                                </td>
+                                <td>
+                                    <span v-if="!setting.editing">{{setting.description}}</span>
+                                    <input v-else="" type="text" :name="'editDescription'+setting.id" :value="setting.description" style="width: 380px">
                                 </td>
                                 <td>
                                     <i v-if="!setting.editing" class="fa fa-pencil text-primary fs-16 cursor"
@@ -67,9 +72,10 @@
                 let self = this
 
                 let value = $('input[name="' + 'editValue' + id + '"]').val()
+                let description = $('input[name="' + 'editDescription' + id + '"]').val()
 
                 if(value){
-                    post(api_path + 'salary/payrollSetting/edit', {id: id, value: value})
+                    post(api_path + 'salary/payrollSetting/edit', {id: id, value: value,description:description})
                         .then((res) => {
 
                             if (!res.data.isFailed) {

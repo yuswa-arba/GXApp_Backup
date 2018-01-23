@@ -52,7 +52,7 @@ class PayrollSettingController extends Controller
 
         //is valid
 
-        $update = PayrollSetting::where('id',$request->id)->update(['value'=>$request->value]);
+        $update = PayrollSetting::where('id',$request->id)->update(['value'=>$request->value,'description'=>$request->description]);
 
         if($update){
             $response['isFailed'] = false;

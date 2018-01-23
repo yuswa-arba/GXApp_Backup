@@ -2739,7 +2739,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         deleteBonusCutType: function deleteBonusCutType(bonusCutTypeId, bonusCutTypeIndex) {
             var self = this;
-            if (confirm('Are you sure to delete this? It will remove all general and employee bonus cut that use this')) {
+            if (confirm('Are you sure to delete this? It will remove all general and employee bonus/cut that use this')) {
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/delete', { bonusCutTypeId: bonusCutTypeId }).then(function (res) {
                     if (!res.data.isFailed) {
 
@@ -3125,7 +3125,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 /* Error notification */
                 $('.page-container').pgNotification({
                     style: 'flip',
-                    message: 'Bonus cut cannot be empty',
+                    message: 'Bonus/cut cannot be empty',
                     position: 'top-right',
                     timeout: 3500,
                     type: 'danger'
@@ -3332,6 +3332,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -3360,9 +3365,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var self = this;
 
             var value = $('input[name="' + 'editValue' + id + '"]').val();
+            var description = $('input[name="' + 'editDescription' + id + '"]').val();
 
             if (value) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payrollSetting/edit', { id: id, value: value }).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payrollSetting/edit', { id: id, value: value, description: description }).then(function (res) {
 
                     if (!res.data.isFailed) {
                         $('.page-container').pgNotification({
@@ -23014,7 +23020,7 @@ var render = function() {
       _c("div", { staticClass: "card card-transparent" }, [
         _c("div", { staticClass: "card-block" }, [
           _c("form", { attrs: { id: "bonus-cut-form" } }, [
-            _c("h4", [_vm._v("Apply Bonus Cut")]),
+            _c("h4", [_vm._v("Apply Bonus/Cut")]),
             _vm._v(" "),
             _c("div", [
               _c("div", { staticClass: "row clearfix" }, [
@@ -23060,7 +23066,7 @@ var render = function() {
                               selected: ""
                             }
                           },
-                          [_vm._v("Select Bonus Cut")]
+                          [_vm._v("Select Bonus/Cut")]
                         ),
                         _vm._v(" "),
                         _vm._l(_vm.bonuscuts, function(bonuscut) {
@@ -23107,7 +23113,7 @@ var render = function() {
             _vm._v(" "),
             _c("p", [
               _vm._v(
-                "Bonus cut can only be use once, but you may edit it later"
+                "Bonus/cut can only be use once, but you may edit it later"
               )
             ])
           ])
@@ -23136,7 +23142,7 @@ var render = function() {
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-12" }, [
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v(" Bonus Cut Type Name")]),
+                      _c("label", [_vm._v(" Bonus/Cut Type Name")]),
                       _vm._v(" "),
                       _c("br"),
                       _vm._v(" "),
@@ -23363,7 +23369,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("p", { staticClass: "text-danger" }, [
                             _vm._v(
-                              'Please note that this should returns value that will then\n                                        be "added/subtracted" to/from the salary based on the Bonus Cut type'
+                              'Please note that this should returns value that will then\n                                        be "added/subtracted" to/from the salary based on the Bonus/Cut type'
                             )
                           ]),
                           _vm._v(" "),
@@ -23508,7 +23514,7 @@ var staticRenderFns = [
           [_vm._v("ID")]
         ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Bonus Cut Type")]),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Bonus/Cut Type")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Value")]),
         _vm._v(" "),
@@ -23543,7 +23549,7 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-        _vm._v("Edit General Bonus Cut")
+        _vm._v("Edit General Bonus/Cut")
       ])
     ])
   },
@@ -23698,7 +23704,7 @@ var render = function() {
       _c("div", { staticClass: "card card-transparent" }, [
         _c("div", { staticClass: "card-block" }, [
           _c("form", { attrs: { id: "bonus-cut-form" } }, [
-            _c("h4", [_vm._v("Bonus Cut Form")]),
+            _c("h4", [_vm._v("Bonus/Cut Form")]),
             _vm._v(" "),
             _c("div", [
               _c("div", { staticClass: "row clearfix" }, [
@@ -24046,7 +24052,7 @@ var staticRenderFns = [
                 "data-target": "#tabBonusCut"
               }
             },
-            [_vm._v("Bonus Cut")]
+            [_vm._v("Bonus/Cut")]
           )
         ]),
         _vm._v(" "),
@@ -24061,7 +24067,7 @@ var staticRenderFns = [
                 "data-target": "#tabGeneralBonusCut"
               }
             },
-            [_vm._v("General Bonus Cut")]
+            [_vm._v("General Bonus/Cut")]
           )
         ]),
         _vm._v(" "),
@@ -24148,7 +24154,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-6 m-b-10" }, [
+    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
       _c("div", { staticClass: "card card-bordered" }, [
         _c("div", { staticClass: "card-block" }, [
           _c("h4", [_vm._v(" Payroll Setting")]),
@@ -24172,6 +24178,19 @@ var render = function() {
                               name: "editValue" + setting.id
                             },
                             domProps: { value: setting.value }
+                          })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      !setting.editing
+                        ? _c("span", [_vm._v(_vm._s(setting.description))])
+                        : _c("input", {
+                            staticStyle: { width: "380px" },
+                            attrs: {
+                              type: "text",
+                              name: "editDescription" + setting.id
+                            },
+                            domProps: { value: setting.description }
                           })
                     ]),
                     _vm._v(" "),
@@ -24219,6 +24238,8 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Value")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Description")]),
         _vm._v(" "),
         _c("th")
       ])

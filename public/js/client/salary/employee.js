@@ -3224,7 +3224,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 /* Error notification */
                 $('.page-container').pgNotification({
                     style: 'flip',
-                    message: 'Bonus cut cannot be empty',
+                    message: 'Bonus/cut cannot be empty',
                     position: 'top-right',
                     timeout: 3500,
                     type: 'danger'
@@ -3343,7 +3343,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         removeBonusCutType: function removeBonusCutType(bonusCutId, index) {
             var self = this;
-            if (confirm('Are you sure to remove this bonus cut ?')) {
+            if (confirm('Are you sure to remove this bonus/cut ?')) {
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/employee/remove/bonusCut/' + self.$route.params.id, { bonusCutId: bonusCutId }).then(function (res) {
                     if (!res.data.isFailed) {
 
@@ -23334,7 +23334,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header " }, [
-      _c("div", { staticClass: "card-title" }, [_vm._v("Bonus Cut")])
+      _c("div", { staticClass: "card-title" }, [_vm._v("Bonus/Cut")])
     ])
   },
   function() {
@@ -23358,7 +23358,7 @@ var staticRenderFns = [
             staticClass: "text-black padding-10",
             staticStyle: { width: "200px" }
           },
-          [_vm._v("Bonus Cut Type")]
+          [_vm._v("Bonus/Cut Type")]
         ),
         _vm._v(" "),
         _c("th", { staticClass: "text-black padding-10" }, [_vm._v("Value")]),
@@ -23564,7 +23564,7 @@ var render = function() {
               _c("div", { staticClass: "card card-transparent" }, [
                 _c("div", { staticClass: "card-block" }, [
                   _c("form", { attrs: { id: "bonus-cut-form" } }, [
-                    _c("h4", [_vm._v("Apply Bonus Cut")]),
+                    _c("h4", [_vm._v("Apply Bonus/Cut")]),
                     _vm._v(" "),
                     _c("div", [
                       _c("div", { staticClass: "row clearfix" }, [
@@ -23614,7 +23614,7 @@ var render = function() {
                                   },
                                   [
                                     _vm._v(
-                                      "Select Bonus Cut\n                                                        "
+                                      "Select Bonus/Cut\n                                                        "
                                     )
                                   ]
                                 ),
@@ -23668,7 +23668,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("p", [
                       _vm._v(
-                        "Bonus cut can only be use once, but you may edit it later"
+                        "Bonus/cut can only be use once, but you may edit it later"
                       )
                     ])
                   ])
@@ -23858,7 +23858,7 @@ var render = function() {
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-12" }, [
                     _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v(" Bonus Cut Type Name")]),
+                      _c("label", [_vm._v(" Bonus/Cut Type Name")]),
                       _vm._v(" "),
                       _c("br"),
                       _vm._v(" "),
@@ -24006,7 +24006,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("p", { staticClass: "text-danger" }, [
                             _vm._v(
-                              'Please note that this should returns value that will then\n                                        be "added/subtracted" to/from the salary based on the Bonus Cut type'
+                              'Please note that this should returns value that will then\n                                        be "added/subtracted" to/from the salary based on the Bonus/Cut type'
                             )
                           ]),
                           _vm._v(" "),
@@ -24151,7 +24151,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header " }, [
-      _c("div", { staticClass: "card-title" }, [_vm._v("Bonus Cut")])
+      _c("div", { staticClass: "card-title" }, [_vm._v("Bonus/Cut")])
     ])
   },
   function() {
@@ -24177,7 +24177,7 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "Bonus Cut\n                                                        Type\n                                                    "
+              "Bonus/Cut\n                                                        Type\n                                                    "
             )
           ]
         ),
@@ -24213,7 +24213,7 @@ var staticRenderFns = [
       ),
       _vm._v(" "),
       _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-        _vm._v("Edit Bonus Cut")
+        _vm._v("Edit Bonus/Cut")
       ])
     ])
   },

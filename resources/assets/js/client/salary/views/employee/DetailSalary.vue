@@ -101,7 +101,7 @@
             </div>
             <div class="card card-default filter-item">
                 <div class="card-header ">
-                    <div class="card-title">Bonus Cut</div>
+                    <div class="card-title">Bonus/Cut</div>
                 </div>
                 <div class="card-block">
                     <div class="row">
@@ -115,7 +115,7 @@
                                                     <thead class="bg-master-lighter">
                                                     <tr>
                                                         <th class="text-black padding-10" style="width:60px">ID</th>
-                                                        <th class="text-black padding-10" style="width:200px">Bonus Cut Type</th>
+                                                        <th class="text-black padding-10" style="width:200px">Bonus/Cut Type</th>
                                                         <th class="text-black padding-10">Value</th>
                                                         <th class="text-black padding-10">With Formula</th>
                                                         <th class="text-black padding-10">Active</th>

@@ -39,7 +39,7 @@ class GenerateController extends Controller
      * */
     public function getLogs()
     {
-        return fractal(GenerateSalaryReportLogs::all(), new GeneratedSalaryLogsTransformer());
+        return fractal(GenerateSalaryReportLogs::all()->sortBy('created_at'), new GeneratedSalaryLogsTransformer());
     }
 
     public function getLogDetails($id)

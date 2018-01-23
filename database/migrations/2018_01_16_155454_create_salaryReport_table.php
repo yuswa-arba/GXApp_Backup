@@ -15,17 +15,18 @@ class CreateSalaryReportTable extends Migration
     {
         Schema::create('salaryReport', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('employeId');
-            $table->integer('month');
+            $table->uuid('employeeId');
             $table->string('fromDate');
             $table->string('toDate');
             $table->string('basicSalary');
-            $table->string('totalEarnings');
+            $table->string('totalSalaryBonus');
             $table->string('totalSalaryCut');
-            $table->tinyInteger('isConfirmed')->default(0);
-            $table->string('confirmedDate')->nullable();
+            $table->string('salaryReceived');
+            $table->tinyInteger('confirmationStatusId')->default(3);
+            $table->string('confirmationDate')->nullable();
+            $table->tinyInteger('isPostponed')->default(0);
             $table->tinyInteger('isSubmittedForPayroll')->default(0);
-            $table->integer('generatePayrollId');
+            $table->integer('generatePayrollId')->nullable();
             $table->timestamps();
         });
     }

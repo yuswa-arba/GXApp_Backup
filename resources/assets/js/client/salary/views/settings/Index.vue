@@ -4,10 +4,10 @@
             <div class="card card-borderless">
                 <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="dropdownfx">
                     <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#tabBonusCut" class="active">Bonus Cut</a>
+                        <a href="#" data-toggle="tab" role="tab" data-target="#tabBonusCut" class="active">Bonus/Cut</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" data-toggle="tab" role="tab" data-target="#tabGeneralBonusCut">General Bonus Cut</a>
+                        <a href="#" data-toggle="tab" role="tab" data-target="#tabGeneralBonusCut">General Bonus/Cut</a>
                     </li>
                     <li class="nav-item">
                         <a href="#" data-toggle="tab" role="tab" data-target="#tabPayroll">Payroll</a>

@@ -32,7 +32,13 @@
                         <div class="center-margin">
                             <h3>
                                 <button class="btn btn-outline-danger"><i class="fa fa-times"></i> No</button>
-                                <button class="btn btn-outline-primary"><i class="fa fa-check"></i> Yes</button>
+                                <button class="btn btn-outline-primary"
+                                        @click="generateSalaryReports(
+                                        attemptGenerateSalaryData.summary.fromDate,
+                                        attemptGenerateSalaryData.summary.toDate,
+                                        attemptGenerateSalaryData.summary.branchOfficeId)">
+                                    <i class="fa fa-check" ></i> Yes
+                                </button>
                             </h3>
                         </div>
 
@@ -59,7 +65,7 @@
                     <div class="col-lg-2" v-if="report.timesheetSummary">
                         <div class="card-block">
                             <h5 class="bold">Timesheet Summary</h5>
-                            <p class="fs-16">Total Day Absence : <b class="text-primary">{{report.timesheetSummary.totalDayAbsence}}</b></p>
+                            <p class="fs-16">Total Days of Absence : <b class="text-primary">{{report.timesheetSummary.totalDayAbsence}}</b></p>
                             <p class="fs-16">Total Min. Late: <b class="text-primary">{{report.timesheetSummary.totalMinLate}}</b></p>
                             <p class="fs-16">Total Min. Early Out : <b class="text-primary">{{report.timesheetSummary.totalMinEarlyOut}}</b></p>
                         </div>
@@ -75,7 +81,7 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-4" v-if="report.generalBonusCuts">
+                    <div class="col-lg-4" v-if="report.generalBonusCut">
                         <div class="card-block bordered">
                             <h5 class="bold">General Bonus/Cut</h5>
                             <div class="table-responsive">
@@ -88,10 +94,10 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="gbc in report.generalBonusCuts">
+                                    <tr v-for="gbc in report.generalBonusCut">
                                         <td>{{gbc.name}}</td>
                                         <td>
-                                            <label v-if="gbc.addOrSub=='add'" class="label label-primary">{{gbc.addOrSub}}</label>
+                                            <label v-if="gbc.addOrSub=='add'" class="label label-success">{{gbc.addOrSub}}</label>
                                             <label v-else="" class="label label-danger">{{gbc.addOrSub}}</label>
                                         </td>
                                         <td>{{gbc.value}}</td>
@@ -118,7 +124,7 @@
                                     <tr v-for="ebc in report.employeeBonusCut">
                                         <td>{{ebc.name}}</td>
                                         <td>
-                                            <label v-if="ebc.addOrSub=='add'" class="label label-primary">{{ebc.addOrSub}}</label>
+                                            <label v-if="ebc.addOrSub=='add'" class="label label-success">{{ebc.addOrSub}}</label>
                                             <label v-else="" class="label label-danger">{{ebc.addOrSub}}</label>
                                         </td>
                                         <td>{{ebc.value}}</td>
@@ -163,6 +169,35 @@
 
         },
         mounted: function () {
+
         },
+        methods:{
+            generateSalaryReports(fromDate,toDate,branchOfficeId){
+
+                let self = this
+
+                if(fromDate&&toDate&&branchOfficeId){
+
+                    self.$store.dispatch({
+                        type:'report/generateSalary',
+                        fromDate:fromDate,
+                        toDate:toDate,
+                        branchOfficeId:branchOfficeId
+                    })
+
+                    self.$router.push({name: 'generateSalary'})
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Something is missing. Unable to generate salary',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+
+            }
+        }
     }
 </script>

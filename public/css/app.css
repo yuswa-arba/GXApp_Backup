@@ -285,6 +285,10 @@
   padding-top: 250px !important;
 }
 
+.padding-1 {
+  padding: 1px !important;
+}
+
 .italic {
   font-style: italic !important;
 }

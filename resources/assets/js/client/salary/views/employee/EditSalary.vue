@@ -97,7 +97,7 @@
             </div>
             <div class="card card-default filter-item">
                 <div class="card-header ">
-                    <div class="card-title">Bonus Cut</div>
+                    <div class="card-title">Bonus/Cut</div>
                 </div>
                 <div class="card-block">
                     <div class="row">
@@ -105,14 +105,14 @@
                             <div class="card card-transparent">
                                 <div class="card-block">
                                     <form id="bonus-cut-form">
-                                        <h4>Apply Bonus Cut</h4>
+                                        <h4>Apply Bonus/Cut</h4>
                                         <div>
                                             <div class="row clearfix">
                                                 <div class="col-md-9">
                                                     <div class="form-group required">
                                                         <select name="" id="" class="form-control"
                                                                 v-model="bonusCutTypeIdToUse">
-                                                            <option value="" disabled hidden selected>Select Bonus Cut
+                                                            <option value="" disabled hidden selected>Select Bonus/Cut
                                                             </option>
                                                             <option :value="bonuscut.id" v-for="bonuscut in bonuscuts">
                                                                 {{bonuscut.name}}
@@ -134,7 +134,7 @@
                                             </div>
 
                                         </div>
-                                        <p>Bonus cut can only be use once, but you may edit it later</p>
+                                        <p>Bonus/cut can only be use once, but you may edit it later</p>
 
                                     </form>
 
@@ -152,7 +152,7 @@
                                                     <thead class="bg-master-lighter">
                                                     <tr>
                                                         <th class="text-black padding-10" style="width: 50px">ID</th>
-                                                        <th class="text-black padding-10" style="width:210px;">Bonus Cut
+                                                        <th class="text-black padding-10" style="width:210px;">Bonus/Cut
                                                             Type
                                                         </th>
                                                         <th class="text-black padding-10">Value</th>
@@ -223,14 +223,14 @@
                             <i class="pg-close"></i>
                         </button>
                         <!--<div id="mh-role"></div>-->
-                        <h5 class="text-left dark-title p-b-5">Edit Bonus Cut</h5>
+                        <h5 class="text-left dark-title p-b-5">Edit Bonus/Cut</h5>
                     </div>
                     <div class="modal-body">
                         <form role="form">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label> Bonus Cut Type Name</label>
+                                        <label> Bonus/Cut Type Name</label>
                                         <br>
                                         <span class="fs-16 bold">
                                               {{editBonusCutForm.bonusCutTypeName}} <span class="text-primary">({{editBonusCutForm.bonusCutTypeAddOrSub}})</span>
@@ -258,7 +258,7 @@
                                         <p class="text-danger">Make sure to insert a valid format in order for the
                                             formula to work, system is case sensitive</p>
                                         <p class="text-danger">Please note that this should returns value that will then
-                                            be "added/subtracted" to/from the salary based on the Bonus Cut type</p>
+                                            be "added/subtracted" to/from the salary based on the Bonus/Cut type</p>
                                         <br>
 
                                     </div>
@@ -450,7 +450,7 @@
                     /* Error notification */
                     $('.page-container').pgNotification({
                         style: 'flip',
-                        message: 'Bonus cut cannot be empty',
+                        message: 'Bonus/cut cannot be empty',
                         position: 'top-right',
                         timeout: 3500,
                         type: 'danger'
@@ -578,7 +578,7 @@
             },
             removeBonusCutType(bonusCutId,index){
                 let self = this
-                if(confirm('Are you sure to remove this bonus cut ?')){
+                if(confirm('Are you sure to remove this bonus/cut ?')){
                     post(api_path + 'salary/employee/remove/bonusCut/' + self.$route.params.id,{bonusCutId:bonusCutId})
                         .then((res) => {
                             if (!res.data.isFailed) {

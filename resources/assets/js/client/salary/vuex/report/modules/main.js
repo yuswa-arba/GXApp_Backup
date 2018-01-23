@@ -16,6 +16,8 @@ export default {
         defaultFromDate:'',
         defaultToDate:'',
         isFetchingSalaryData:false,
+        isGeneratingSalary:false,
+        isGenerateSalarySuccessful:false,
         attemptGenerateSalaryData:[]
     },
     getters,

@@ -2654,6 +2654,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2664,7 +2670,95 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     })),
     created: function created() {},
 
-    mounted: function mounted() {}
+    mounted: function mounted() {},
+    methods: {
+        generateSalaryReports: function generateSalaryReports(fromDate, toDate, branchOfficeId) {
+
+            var self = this;
+
+            if (fromDate && toDate && branchOfficeId) {
+
+                self.$store.dispatch({
+                    type: 'report/generateSalary',
+                    fromDate: fromDate,
+                    toDate: toDate,
+                    branchOfficeId: branchOfficeId
+                });
+
+                self.$router.push({ name: 'generateSalary' });
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'Something is missing. Unable to generate salary',
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/report/GenerateSalary.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {},
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('report', {
+        isGeneratingSalary: 'isGeneratingSalary',
+        isGenerateSalarySuccessful: 'isGenerateSalarySuccessful'
+    })),
+    created: function created() {},
+
+    mounted: function mounted() {},
+    methods: {
+        finish: function finish() {
+            this.$router.push('/');
+        }
+    }
+
 });
 
 /***/ }),
@@ -22260,6 +22354,75 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-05400554\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/report/GenerateSalary.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _vm.isGeneratingSalary
+      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(0)])
+      : _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [
+          _c("div", { staticClass: "center-margin text-center" }, [
+            _vm.isGenerateSalarySuccessful
+              ? _c("h3", { staticClass: "bold text-primary" }, [
+                  _vm._v("Generating Salary is Successful")
+                ])
+              : _c("h3", { staticClass: "bold text-danger" }, [
+                  _vm._v("Generating Salary is Unsuccessful")
+                ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "text-center" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-outline-primary",
+                on: {
+                  click: function($event) {
+                    _vm.finish()
+                  }
+                }
+              },
+              [_vm._v("Finish")]
+            )
+          ])
+        ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "center-margin" }, [
+      _c("p", { staticClass: "text-center fs-21" }, [
+        _vm._v("Generating Salary Reports.. Please Wait....")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "progress h-8" }, [
+        _c("div", {
+          staticClass: "progress-bar-indeterminate progress-bar-success"
+        })
+      ]),
+      _vm._v(" "),
+      _c("br")
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-05400554", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0635a7c0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainReport.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -22384,7 +22547,42 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     !_vm.isFetchingSalaryData
-      ? _c("div", { staticClass: "col-lg-6 m-b-10" }, [_vm._m(0)])
+      ? _c("div", { staticClass: "col-lg-6 m-b-10" }, [
+          _c("div", { staticClass: "alert alert-info bordered m-b-0" }, [
+            _c("div", { staticClass: "row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-5" }, [
+                _c("div", { staticClass: "center-margin" }, [
+                  _c("h3", [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-primary",
+                        on: {
+                          click: function($event) {
+                            _vm.generateSalaryReports(
+                              _vm.attemptGenerateSalaryData.summary.fromDate,
+                              _vm.attemptGenerateSalaryData.summary.toDate,
+                              _vm.attemptGenerateSalaryData.summary
+                                .branchOfficeId
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-check" }),
+                        _vm._v(" Yes\n                            ")
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
       : _vm._e(),
     _vm._v(" "),
     _vm.attemptGenerateSalaryData.employeesSalaryReport
@@ -22441,7 +22639,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Day Absence : "),
+                            _vm._v("Total Days of Absence : "),
                             _c("b", { staticClass: "text-primary" }, [
                               _vm._v(
                                 _vm._s(report.timesheetSummary.totalDayAbsence)
@@ -22510,7 +22708,7 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  report.generalBonusCuts
+                  report.generalBonusCut
                     ? _c("div", { staticClass: "col-lg-4" }, [
                         _c("div", { staticClass: "card-block bordered" }, [
                           _c("h5", { staticClass: "bold" }, [
@@ -22519,11 +22717,11 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "table-responsive" }, [
                             _c("table", { staticClass: "table" }, [
-                              _vm._m(1, true),
+                              _vm._m(2, true),
                               _vm._v(" "),
                               _c(
                                 "tbody",
-                                _vm._l(report.generalBonusCuts, function(gbc) {
+                                _vm._l(report.generalBonusCut, function(gbc) {
                                   return _c("tr", [
                                     _c("td", [_vm._v(_vm._s(gbc.name))]),
                                     _vm._v(" "),
@@ -22532,7 +22730,7 @@ var render = function() {
                                         ? _c(
                                             "label",
                                             {
-                                              staticClass: "label label-primary"
+                                              staticClass: "label label-success"
                                             },
                                             [_vm._v(_vm._s(gbc.addOrSub))]
                                           )
@@ -22564,7 +22762,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "table-responsive" }, [
                             _c("table", { staticClass: "table" }, [
-                              _vm._m(2, true),
+                              _vm._m(3, true),
                               _vm._v(" "),
                               _c(
                                 "tbody",
@@ -22577,7 +22775,7 @@ var render = function() {
                                         ? _c(
                                             "label",
                                             {
-                                              staticClass: "label label-primary"
+                                              staticClass: "label label-success"
                                             },
                                             [_vm._v(_vm._s(ebc.addOrSub))]
                                           )
@@ -22607,7 +22805,7 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.isFetchingSalaryData
-      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(3)])
+      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(4)])
       : _vm._e()
   ])
 }
@@ -22616,33 +22814,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "alert alert-info bordered m-b-0" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-7" }, [
-          _c("h3", [
-            _c("strong", [
-              _c("i", { staticClass: "fa fa-warning" }),
-              _vm._v(" Generate Now ?")
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-5" }, [
-          _c("div", { staticClass: "center-margin" }, [
-            _c("h3", [
-              _c("button", { staticClass: "btn btn-outline-danger" }, [
-                _c("i", { staticClass: "fa fa-times" }),
-                _vm._v(" No")
-              ]),
-              _vm._v(" "),
-              _c("button", { staticClass: "btn btn-outline-primary" }, [
-                _c("i", { staticClass: "fa fa-check" }),
-                _vm._v(" Yes")
-              ])
-            ])
-          ])
+    return _c("div", { staticClass: "col-lg-7" }, [
+      _c("h3", [
+        _c("strong", [
+          _c("i", { staticClass: "fa fa-warning" }),
+          _vm._v(" Generate Now ?")
         ])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("button", { staticClass: "btn btn-outline-danger" }, [
+      _c("i", { staticClass: "fa fa-times" }),
+      _vm._v(" No")
     ])
   },
   function() {
@@ -22916,7 +23103,8 @@ var render = function() {
                     _c("td", [
                       _vm._v(
                         _vm._s(salaryLog.generatedDate) +
-                          " by {{salaryLog.generatedBy"
+                          " by " +
+                          _vm._s(salaryLog.generatedBy)
                       )
                     ]),
                     _vm._v(" "),
@@ -22938,27 +23126,73 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-master-lighter" }, [
       _c("tr", [
-        _c("th", { staticClass: "text-black fs-9" }, [_vm._v("ID")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { padding: "5px 5px" }
+          },
+          [_vm._v("ID")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black fs-9" }, [_vm._v("Employee")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { padding: "5px 5px" }
+          },
+          [_vm._v("Employee")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black fs-9" }, [_vm._v("Date")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { padding: "5px 5px" }
+          },
+          [_vm._v("Date")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black fs-9" }, [
-          _vm._v("Confirmation Status")
-        ]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { padding: "5px 5px" }
+          },
+          [_vm._v("Status")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black fs-9" }, [
-          _vm._v("Confirmation Date")
-        ]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { padding: "5px 5px" }
+          },
+          [_vm._v("Confirm Date")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black fs-9" }, [_vm._v("Postponed")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { padding: "5px 5px" }
+          },
+          [_vm._v("Postponed")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black fs-9" }, [
-          _vm._v("Submitted For Payroll")
-        ]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { padding: "5px 5px" }
+          },
+          [_vm._v("Submitted")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black fs-9" })
+        _c("th", {
+          staticClass: "text-black fs-9",
+          staticStyle: { padding: "5px 5px" }
+        })
       ])
     ])
   },
@@ -37594,9 +37828,12 @@ $(document).ready(function () {});
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_report_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_report_Index_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_report_AttemptGenerate_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/report/AttemptGenerate.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_report_AttemptGenerate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_report_AttemptGenerate_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_report_GenerateSalary_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/report/GenerateSalary.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_report_GenerateSalary_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_report_GenerateSalary_vue__);
 /**
  * Created by kevinpurwono on 23/11/17.
  */
+
 
 
 
@@ -37607,7 +37844,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_report_Index_vue___default.a }, { path: '/attempt/generate', component: __WEBPACK_IMPORTED_MODULE_3__views_report_AttemptGenerate_vue___default.a, name: 'attemptGenerate' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_report_Index_vue___default.a }, { path: '/attempt/generate', component: __WEBPACK_IMPORTED_MODULE_3__views_report_AttemptGenerate_vue___default.a, name: 'attemptGenerate' }, { path: '/generate', component: __WEBPACK_IMPORTED_MODULE_4__views_report_GenerateSalary_vue___default.a, name: 'generateSalary' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -37652,6 +37889,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-0805a23b", Component.options)
   } else {
     hotAPI.reload("data-v-0805a23b", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/salary/views/report/GenerateSalary.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/report/GenerateSalary.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-05400554\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/report/GenerateSalary.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/salary/views/report/GenerateSalary.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-05400554", Component.options)
+  } else {
+    hotAPI.reload("data-v-05400554", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -37741,11 +38027,36 @@ module.exports = Component.exports
             state = _ref2.state;
 
 
+        state.attemptGenerateSalaryData = [];
         state.isFetchingSalaryData = true;
 
         if (payload.fromDate && payload.toDate && payload.branchOfficeId) {
             commit({
                 type: 'getAttemptGenerateSalaryData',
+                fromDate: payload.fromDate,
+                toDate: payload.toDate,
+                branchOfficeId: payload.branchOfficeId
+            });
+        } else {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'An Error Occurred. Required param missing',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        }
+    },
+    generateSalary: function generateSalary(_ref3, payload) {
+        var commit = _ref3.commit,
+            state = _ref3.state;
+
+
+        state.isGeneratingSalary = true;
+
+        if (payload.fromDate && payload.toDate && payload.branchOfficeId) {
+            commit({
+                type: 'generateSalaryNow',
                 fromDate: payload.fromDate,
                 toDate: payload.toDate,
                 branchOfficeId: payload.branchOfficeId
@@ -37807,6 +38118,8 @@ module.exports = Component.exports
         defaultFromDate: '',
         defaultToDate: '',
         isFetchingSalaryData: false,
+        isGeneratingSalary: false,
+        isGenerateSalarySuccessful: false,
         attemptGenerateSalaryData: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
@@ -37885,6 +38198,36 @@ module.exports = Component.exports
 
                 state.attemptGenerateSalaryData = res.data.salaryReport;
                 state.isFetchingSalaryData = false;
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    generateSalaryNow: function generateSalaryNow(state, payload) {
+
+        var fromDate = payload.fromDate;
+        var toDate = payload.toDate;
+        var branchOfficeId = payload.branchOfficeId;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate', { fromDate: fromDate, toDate: toDate, branchOfficeId: branchOfficeId }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                state.isGeneratingSalary = false;
+                state.isGenerateSalarySuccessful = true;
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',

@@ -59,7 +59,7 @@
             <div class="card card-transparent">
                 <div class="card-block">
                     <form id="bonus-cut-form">
-                        <h4>Bonus Cut Form</h4>
+                        <h4>Bonus/Cut Form</h4>
                         <div>
                             <div class="row clearfix">
                                 <div class="col-md-6">
@@ -248,7 +248,7 @@
 
             deleteBonusCutType(bonusCutTypeId, bonusCutTypeIndex){
                 let self = this
-                if (confirm('Are you sure to delete this? It will remove all general and employee bonus cut that use this')) {
+                if (confirm('Are you sure to delete this? It will remove all general and employee bonus/cut that use this')) {
                     post(api_path + 'salary/bonuscut/delete', {bonusCutTypeId: bonusCutTypeId})
                         .then((res) => {
                             if (!res.data.isFailed) {

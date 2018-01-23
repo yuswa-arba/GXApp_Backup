@@ -63,22 +63,56 @@ export default{
         let branchOfficeId = payload.branchOfficeId
 
         get(api_path + 'salary/generate/attempt?fromDate=' + fromDate + '&toDate=' + toDate + '&branchOfficeId=' + branchOfficeId)
-            .then((res)=>{
-                if(!res.data.isFailed){
+            .then((res) => {
+                if (!res.data.isFailed) {
 
                     state.attemptGenerateSalaryData = res.data.salaryReport
                     state.isFetchingSalaryData = false
-                } else{
-                     $('.page-container').pgNotification({
-                          style: 'flip',
-                          message: res.data.message,
-                          position: 'top-right',
-                          timeout: 3500,
-                          type: 'danger'
-                      }).show();
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
                 }
             })
-            .catch((err)=>{
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+
+    },
+    generateSalaryNow(state, payload){
+
+        let fromDate = payload.fromDate
+        let toDate = payload.toDate
+        let branchOfficeId = payload.branchOfficeId
+
+        post(api_path + 'salary/generate', {fromDate: fromDate, toDate: toDate, branchOfficeId: branchOfficeId})
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                    state.isGeneratingSalary = false
+                    state.isGenerateSalarySuccessful = true
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: err.message,

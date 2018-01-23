@@ -36,14 +36,14 @@
                         <table class="table table-hover">
                             <thead class="bg-master-lighter">
                             <tr>
-                                <th class="text-black fs-9">ID</th>
-                                <th class="text-black fs-9">Employee</th>
-                                <th class="text-black fs-9">Date</th>
-                                <th class="text-black fs-9">Confirmation Status</th>
-                                <th class="text-black fs-9">Confirmation Date</th>
-                                <th class="text-black fs-9">Postponed</th>
-                                <th class="text-black fs-9">Submitted For Payroll</th>
-                                <th class="text-black fs-9"></th>
+                                <th class="text-black fs-9" style="padding: 5px 5px">ID</th>
+                                <th class="text-black fs-9" style="padding: 5px 5px">Employee</th>
+                                <th class="text-black fs-9" style="padding: 5px 5px">Date</th>
+                                <th class="text-black fs-9" style="padding: 5px 5px">Status</th>
+                                <th class="text-black fs-9" style="padding: 5px 5px">Confirm Date</th>
+                                <th class="text-black fs-9" style="padding: 5px 5px">Postponed</th>
+                                <th class="text-black fs-9" style="padding: 5px 5px">Submitted</th>
+                                <th class="text-black fs-9" style="padding: 5px 5px"></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -79,11 +79,11 @@
                         <table class="table table-hover">
                             <thead class="bg-master-lighter">
                             <tr>
-                                <th class="text-black">ID</th>
-                                <th class="text-black">Date</th>
-                                <th class="text-black">Branch</th>
-                                <th class="text-black">At/By</th>
-                                <th class="text-black"></th>
+                                <th class="text-black" >ID</th>
+                                <th class="text-black" >Date</th>
+                                <th class="text-black" >Branch</th>
+                                <th class="text-black" >At/By</th>
+                                <th class="text-black" ></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -91,7 +91,7 @@
                                 <td>{{salaryLog.id}}</td>
                                 <td>{{salaryLog.fromDate}} - {{salaryLog.toDate}}</td>
                                 <td>{{salaryLog.branchOfficeName}}</td>
-                                <td>{{salaryLog.generatedDate}} by {{salaryLog.generatedBy</td>
+                                <td>{{salaryLog.generatedDate}} by {{salaryLog.generatedBy}}</td>
                                 <td><i class="fa fa-info text-primary fs-16 cursor"></i></td>
                             </tr>
                             </tbody>

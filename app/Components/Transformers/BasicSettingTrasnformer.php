@@ -17,6 +17,7 @@ class BasicSettingTrasnformer extends TransformerAbstract
             'id' => $setting->id,
             'name' => $setting->name,
             'value' => $setting->value,
+            'description'=>$setting->description,
             'editing'=>false
         ];
     }

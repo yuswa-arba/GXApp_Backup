@@ -17,8 +17,12 @@ use App\Components\Models\BranchOffice;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Salary\Models\GeneralBonusesCuts;
+use App\Salary\Models\GenerateSalaryReportLogs;
+use App\Salary\Models\SalaryCalculation;
+use App\Salary\Models\SalaryReport;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 
 class GenerateSalaryLogic extends GenerateUseCase
@@ -26,11 +30,150 @@ class GenerateSalaryLogic extends GenerateUseCase
 
     use GlobalUtils;
 
+    /*
+     * @description create salaryReport
+     * */
     public function handle($request)
     {
 
-    }
+        $response = array();
 
+        $reports =$this->handleAttempt($request);
+        $reports =  json_decode($reports,true);
+
+        if (!$reports['isFailed']) { //success
+
+            // All Salary Reports
+            $salaryReports = $reports['salaryReport'];
+
+            // Summary Salary Report
+            $summarySalaryReport = $salaryReports['summary'];
+
+            // Employee Salary Reports
+            $employeesSalaryReports = $salaryReports['employeesSalaryReport'];
+
+            /* inserted salary report id for logs*/
+            $insertedSalaryReportIds = array();
+
+            /* Loop through employee reports and insert it to DB */
+            if(is_array($employeesSalaryReports)||is_object($employeesSalaryReports)){
+                foreach ($employeesSalaryReports as $esr) {
+
+                    if (isset($esr['salarySummary'])) {
+
+                        $salary = $esr['salarySummary'];
+
+                        $insert = SalaryReport::updateOrCreate(
+                            [
+                                'employeeId' => $esr['employeeId'],
+                                'fromDate' => $summarySalaryReport['fromDate'],
+                                'toDate' => $summarySalaryReport['toDate']
+                            ],
+                            [
+                                'basicSalary' => $salary['basicSalary'],
+                                'totalSalaryBonus' => $salary['totalBonus'],
+                                'totalSalaryCut' => $salary['totalCut'],
+                                'salaryReceived' => $salary['salaryReceived']
+                            ]
+                        );
+
+                        /* If its inserted to DB then save the salary calculation & save logs*/
+                        if ($insert) {
+
+                            // insert id to array to save logs later
+                            array_push($insertedSalaryReportIds, $insert->id);
+
+                            // insert general bonus/cuts to salary calculation
+                            if (isset($esr['generalBonusCut'])) {
+
+                                $employeeBonusCuts = $esr['generalBonusCut'];
+
+                                foreach ($employeeBonusCuts as $generalBonusCut) {
+
+                                    SalaryCalculation::updateOrcreate(
+                                        [
+                                            'salaryReportId' => $insert->id,
+                                            'employeeId' => $esr['employeeId'],
+                                            'salaryBonusCutTypeId' => $generalBonusCut['salaryBonusCutTypeId'],
+                                            'fromDate' => $summarySalaryReport['fromDate'],
+                                            'toDate' => $summarySalaryReport['toDate'],
+                                            'isDeleted' => 0,
+                                            'isEdited' => 0,
+                                            'isProcessed' => 0
+                                        ],
+                                        [
+                                            'value' => $generalBonusCut['value'],
+                                            'insertedDate' => Carbon::now()->format('d/m/Y'),
+                                            'insertedBy' => $this->getResultWithNullChecker1Connection(Auth::user(), 'employee', 'givenName'),
+                                        ]
+                                    );
+                                }
+                            }
+
+                            //insert employee bonus/cuts to salary calculation
+                            if (isset($esr['employeeBonusCuts'])) {
+
+                                $employeeBonusCuts = $esr['employeeBonusCut'];
+
+                                foreach ($employeeBonusCuts as $employeeBonusCut) {
+
+                                    SalaryCalculation::updateOrcreate(
+                                        [
+                                            'salaryReportId' => $insert->id,
+                                            'employeeId' => $esr['employeeId'],
+                                            'salaryBonusCutTypeId' => $employeeBonusCut['salaryBonusCutTypeId'],
+                                            'fromDate' => $summarySalaryReport['fromDate'],
+                                            'toDate' => $summarySalaryReport['toDate'],
+                                            'isDeleted' => 0,
+                                            'isEdited' => 0,
+                                            'isProcessed' => 0
+                                        ],
+                                        [
+                                            'value' => $employeeBonusCut['value'],
+                                            'insertedDate' => Carbon::now()->format('d/m/Y'),
+                                            'insertedBy' => $this->getResultWithNullChecker1Connection(Auth::user(), 'employee', 'givenName'),
+                                        ]
+                                    );
+                                }
+                            }
+                        }
+                    }
+
+                    //TODO Trigger event to alert Employee in personal app using Push Notifications
+
+                }
+                /* Save Logs */
+                GenerateSalaryReportLogs::create(
+                    [
+                        'fromDate'=>$summarySalaryReport['fromDate'],
+                        'toDate'=>$summarySalaryReport['toDate'],
+                        'branchOfficeId'=>$summarySalaryReport['branchOfficeId'],
+                        'generatedDate'=>Carbon::now()->format('d/m/Y'),
+                        'generatedBy'=>$this->getResultWithNullChecker1Connection(Auth::user(), 'employee', 'givenName'),
+                        'salaryReportIds'=>implode(' ',$insertedSalaryReportIds)
+                    ]
+                );
+
+                /* Return success response */
+                $response['isFailed'] = false;
+                $response['message'] = 'Salary reports has been generated successfully';
+                return response()->json($response, 200);
+
+            } else { //failed
+                $response['isFailed'] = true;
+                $response['message'] = 'An error occured! Invalid argument';
+                return response()->json($response, 200);
+
+            }
+
+        } else { //failed
+            $response['isFailed'] = true;
+            $response['message'] = $reports['message'];
+            return response()->json($response, 200);
+        }
+
+
+    }
 
     /*
      * @desc return data before generate
@@ -64,7 +207,7 @@ class GenerateSalaryLogic extends GenerateUseCase
             $employeeSalaryReport[$i]['employeeId'] = $employeeId; // employee ID
             $employeeSalaryReport[$i]['employeeNo'] = $employee->employeeNo; // employee no
             $employeeSalaryReport[$i]['employeeName'] = $employee->givenName . ' ' . $employee->surname; // employee name
-            $employeeSalaryReport[$i]['divisionName'] = $this->getResultWithNullChecker2Connection($employee,'employment','division','name');
+            $employeeSalaryReport[$i]['divisionName'] = $this->getResultWithNullChecker2Connection($employee, 'employment', 'division', 'name');
 
             $totalDayAbsence = 0; //absence
             $totalMinLate = 0; // min late
@@ -145,10 +288,10 @@ class GenerateSalaryLogic extends GenerateUseCase
                         $calculation = $generalBonusCut->value; // not using formula so get value instead
                     }
 
-                    $employeeSalaryReport[$i]['generalBonusCuts'][$x]['id'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'id');
-                    $employeeSalaryReport[$i]['generalBonusCuts'][$x]['name'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'name');
-                    $employeeSalaryReport[$i]['generalBonusCuts'][$x]['addOrSub'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'addOrSub');
-                    $employeeSalaryReport[$i]['generalBonusCuts'][$x]['value'] = $calculation;
+                    $employeeSalaryReport[$i]['generalBonusCut'][$x]['salaryBonusCutTypeId'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'id');
+                    $employeeSalaryReport[$i]['generalBonusCut'][$x]['name'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'name');
+                    $employeeSalaryReport[$i]['generalBonusCut'][$x]['addOrSub'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'addOrSub');
+                    $employeeSalaryReport[$i]['generalBonusCut'][$x]['value'] = $calculation;
 
 
                     // total bonus & cuts
@@ -236,7 +379,9 @@ class GenerateSalaryLogic extends GenerateUseCase
         $response['message'] = 'Success';
         $response['salaryReport'] = $salaryReport;
 
-        return response()->json($response, 200);
+//        return response()->json($response, 200);
+
+        return json_encode($response);
     }
 
 

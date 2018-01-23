@@ -18,7 +18,7 @@ class SalaryReport extends Model
 
     public function generatedPayroll()
     {
-        return $this->belongsTo(GeneratePayroll::class,'generatedPayrollId');
+        return $this->belongsTo(GeneratePayroll::class,'generatePayrollId');
     }
 
     public function confirmationStatus()
