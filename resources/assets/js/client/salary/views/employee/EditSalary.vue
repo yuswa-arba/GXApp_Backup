@@ -146,7 +146,7 @@
                             <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                                 <div class="card-block no-padding">
                                     <div class="scrollable">
-                                        <div class=" h-500">
+                                        <div style="height: 400px;">
                                             <div class="table-responsive">
                                                 <table class="table table-hover employeeBonusCutDT">
                                                     <thead class="bg-master-lighter">
@@ -202,7 +202,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <label class="help pull-right m-t-10" style="opacity: 0.7">Scroll for more</label>
                                 </div>
                             </div>
 

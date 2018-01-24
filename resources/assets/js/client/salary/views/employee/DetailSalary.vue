@@ -4,10 +4,16 @@
         <div class="col-lg-12 m-b-10 m-t-10">
 
             <slot name="go-back-menu"></slot>
+
+            <button class="btn btn-info m-b-10 m-r-10 pull-left" @click="history()">
+                <i class="fa fa-file-text" ></i> History
+            </button>
+
             <button class="btn btn-danger m-b-10 pull-right"
                     @click="edit()">
                 Edit
             </button>
+
 
         </div>
         <div class="col-lg-6">
@@ -109,7 +115,7 @@
                             <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                                 <div class="card-block no-padding">
                                     <div class="scrollable">
-                                        <div class=" h-500">
+                                        <div style="height: 400px">
                                             <div class="table-responsive">
                                                 <table class="table table-hover employeeBonusCutDT">
                                                     <thead class="bg-master-lighter">
@@ -153,7 +159,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <label class="help pull-right m-t-10" style="opacity: 0.7">Scroll for more</label>
                                 </div>
                             </div>
 
@@ -188,7 +193,11 @@
         methods:{
             edit(){
                 let self =this
-                this.$router.push({name: 'editSalary', params: {id: self.$route.params.id}})
+                self.$router.push({name: 'editSalary', params: {id: self.$route.params.id}})
+            },
+            history(){
+                let self = this
+                self.$router.push({name:'historySalary',params:{id:self.$route.params.id}})
             }
         }
     }

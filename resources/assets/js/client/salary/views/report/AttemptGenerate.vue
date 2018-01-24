@@ -10,7 +10,7 @@
                         <div class="col-lg-6">
                             <p class="fs-21">Total Employees :
                                 <b>{{attemptGenerateSalaryData.summary.totalEmployees}}</b></p>
-                            <p class="fs-21">Branch OFfice :
+                            <p class="fs-21">Branch Office :
                                 <b>{{attemptGenerateSalaryData.summary.branchOfficeName}}</b></p>
                         </div>
                         <div class="col-lg-6">
@@ -31,7 +31,7 @@
                     <div class="col-lg-5">
                         <div class="center-margin">
                             <h3>
-                                <button class="btn btn-outline-danger"><i class="fa fa-times"></i> No</button>
+                                <button class="btn btn-outline-danger" @click="cancelGenerate()"><i class="fa fa-times"></i> No</button>
                                 <button class="btn btn-outline-primary"
                                         @click="generateSalaryReports(
                                         attemptGenerateSalaryData.summary.fromDate,
@@ -197,6 +197,9 @@
                     }).show();
                 }
 
+            },
+            cancelGenerate(){
+                this.$router.go(-1)
             }
         }
     }

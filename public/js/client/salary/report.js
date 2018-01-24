@@ -2695,6 +2695,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     type: 'danger'
                 }).show();
             }
+        },
+        cancelGenerate: function cancelGenerate() {
+            this.$router.go(-1);
         }
     }
 });
@@ -22539,7 +22542,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("p", { staticClass: "fs-21" }, [
-                        _vm._v("Branch OFfice :\n                            "),
+                        _vm._v("Branch Office :\n                            "),
                         _c("b", [
                           _vm._v(
                             _vm._s(
@@ -22588,7 +22591,18 @@ var render = function() {
               _c("div", { staticClass: "col-lg-5" }, [
                 _c("div", { staticClass: "center-margin" }, [
                   _c("h3", [
-                    _vm._m(1),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-danger",
+                        on: {
+                          click: function($event) {
+                            _vm.cancelGenerate()
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-times" }), _vm._v(" No")]
+                    ),
                     _vm._v(" "),
                     _c(
                       "button",
@@ -22750,7 +22764,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "table-responsive" }, [
                             _c("table", { staticClass: "table" }, [
-                              _vm._m(2, true),
+                              _vm._m(1, true),
                               _vm._v(" "),
                               _c(
                                 "tbody",
@@ -22795,7 +22809,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "table-responsive" }, [
                             _c("table", { staticClass: "table" }, [
-                              _vm._m(3, true),
+                              _vm._m(2, true),
                               _vm._v(" "),
                               _c(
                                 "tbody",
@@ -22838,7 +22852,7 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.isFetchingSalaryData
-      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(4)])
+      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(3)])
       : _vm._e()
   ])
 }
@@ -22854,15 +22868,6 @@ var staticRenderFns = [
           _vm._v(" Generate Now ?")
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-outline-danger" }, [
-      _c("i", { staticClass: "fa fa-times" }),
-      _vm._v(" No")
     ])
   },
   function() {

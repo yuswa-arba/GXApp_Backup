@@ -19,7 +19,7 @@ class GenerateController extends Controller
 
     public function __construct()
     {
-//        $this->middleware(['permission:access salary']);
+        $this->middleware(['permission:access salary']);
     }
 
 

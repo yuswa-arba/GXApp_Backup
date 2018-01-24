@@ -36,6 +36,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('employee/use/bonusCut/{employeeId}', 'EmployeeController@useBonusCut');
         Route::post('employee/save/bonusCut/{employeeId}', 'EmployeeController@saveBonusCut');
         Route::post('employee/remove/bonusCut/{employeeId}', 'EmployeeController@removeBonusCut');
+        Route::get('employee/history/{employeeId}','EmployeeController@getSalaryReportHistory');
 
         Route::get('generate/attempt', 'GenerateController@attemptGenerate');
         Route::post('generate', 'GenerateController@generate');

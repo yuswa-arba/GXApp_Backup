@@ -6,6 +6,7 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Salary;
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeBriefDetailTransfomer;
 use App\Salary\Logics\BonusCut\InsertEmployeeBonusCutLogic;
+use App\Salary\Logics\Salary\GetSalaryReportHistoryLogic;
 use App\Salary\Logics\Salary\InsertEmployeeSalaryLogic;
 use App\Salary\Logics\BonusCut\RemoveBonusCutLogic;
 use App\Salary\Logics\BonusCut\UseBonusCutLogic;
@@ -117,6 +118,12 @@ class EmployeeController extends Controller
     public function removeBonusCut(Request $request, $employeeId)
     {
         return RemoveBonusCutLogic::remove($request, $employeeId);
+    }
+
+    /* @desc Get employee salary history*/
+    public function getSalaryReportHistory($employeeId)
+    {
+        return  GetSalaryReportHistoryLogic::getData($employeeId);
     }
 
 }
