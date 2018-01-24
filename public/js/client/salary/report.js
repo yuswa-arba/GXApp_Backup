@@ -2907,12 +2907,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            selectedBranchOfficeId: ''
+            selectedBranchOfficeId: '',
+            selectedLogDetails: {}
         };
     },
 
@@ -2958,10 +2962,16 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         getGeneratedSalaryLogDetails: function getGeneratedSalaryLogDetails(id) {
-            this.$store.commit({
+
+            var self = this;
+
+            self.$store.commit({
                 type: 'report/getSalaryLogDetails',
                 generateSalaryLogId: id
             });
+
+            var generatedSalaryLogs = self.$store.state.report.generatedSalaryLogs;
+            self.selectedLogDetails = _.find(generatedSalaryLogs, { id: id });
         }
     }
 });
@@ -23061,7 +23071,7 @@ var render = function() {
         _c("div", { staticClass: "col-lg-12" }, [
           _c("div", { staticClass: "card card-bordered" }, [
             _c("div", { staticClass: "card-block" }, [
-              _c("h4", [_vm._v("Generate Logs")]),
+              _c("h4", [_vm._v("Generate History")]),
               _vm._v(" "),
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table table-hover" }, [
@@ -23122,6 +23132,19 @@ var render = function() {
               _c("div", { staticClass: "scrollable" }, [
                 _c("div", { staticStyle: { height: "700px" } }, [
                   _c("div", { staticClass: "table-responsive" }, [
+                    _vm.selectedLogDetails.id
+                      ? _c("span", { staticClass: "help" }, [
+                          _vm._v(
+                            "ID: " +
+                              _vm._s(_vm.selectedLogDetails.id) +
+                              " Date: " +
+                              _vm._s(_vm.selectedLogDetails.fromDate) +
+                              " - " +
+                              _vm._s(_vm.selectedLogDetails.toDate)
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
                     _c("table", { staticClass: "table table-hover" }, [
                       _vm._m(2),
                       _vm._v(" "),
@@ -23223,10 +23246,12 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-lg-6" }, [
-        _c("h4", { staticClass: "pull-left" }, [_vm._v("Log Details")])
+        _c("h4", { staticClass: "pull-left" }, [_vm._v("History Details")])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-6" }, [
+        _c("div", { staticClass: "clearfix" }),
+        _vm._v(" "),
         _c(
           "div",
           { staticClass: "form-group", staticStyle: { "padding-top": "5px" } },
@@ -38268,8 +38293,6 @@ module.exports = Component.exports
     getSalaryLogDetails: function getSalaryLogDetails(state, payload) {
         if (payload.generateSalaryLogId) {
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/logs/detail/' + payload.generateSalaryLogId).then(function (res) {
-
-                console.log(res.data);
 
                 if (!res.data.isFailed) {
 

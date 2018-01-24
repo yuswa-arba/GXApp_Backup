@@ -32,7 +32,7 @@
                 <div class="col-lg-12">
                     <div class="card card-bordered">
                         <div class="card-block">
-                            <h4>Generate Logs</h4>
+                            <h4>Generate History</h4> <!--generate logs/history-->
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead class="bg-master-lighter">
@@ -70,9 +70,10 @@
                         <div class="card-block">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <h4 class="pull-left">Log Details</h4>
+                                    <h4 class="pull-left">History Details</h4> <!--logs/history details-->
                                 </div>
                                <div class="col-lg-6">
+                                   <div class="clearfix"></div>
                                    <div class="form-group" style="padding-top: 5px">
                                        <input type="text" id="search-log-details" class="pull-right form-control" style="width: 250px" placeholder="Search">
                                    </div>
@@ -82,6 +83,8 @@
                             <div class="scrollable">
                                 <div style="height: 700px">
                                     <div class="table-responsive">
+                                        <span class="help" v-if="selectedLogDetails.id">ID: {{selectedLogDetails.id}} Date: {{selectedLogDetails.fromDate}} - {{selectedLogDetails.toDate}}</span>
+
                                         <table class="table table-hover">
                                             <thead class="bg-master-lighter">
                                             <tr>
@@ -137,7 +140,8 @@
     export default{
         data() {
             return{
-                selectedBranchOfficeId:''
+                selectedBranchOfficeId:'',
+                selectedLogDetails:{}
             }
         },
         computed: {
@@ -173,6 +177,7 @@
                         branchOfficeId:self.selectedBranchOfficeId
                     })
                     self.$router.push({name: 'attemptGenerate'})
+
                 } else {
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -184,10 +189,17 @@
                 }
             },
             getGeneratedSalaryLogDetails(id){
-                this.$store.commit({
+
+                let self = this
+
+                self.$store.commit({
                     type:'report/getSalaryLogDetails',
                     generateSalaryLogId:id
                 })
+
+                let generatedSalaryLogs = self.$store.state.report.generatedSalaryLogs
+                self.selectedLogDetails = _.find(generatedSalaryLogs,{id:id})
+
             }
         }
     }
