@@ -36,4 +36,9 @@ class Configs
         'DAY_ABSENCE' =>'_day_absence_'
     ];
 
+    public static $GENERATED_PAYROLL_TYPE = [
+        'CONFIRMED' =>'confirmed',
+        'STAGE_1_CONFIRMED'=>'stage-1-confirmed'
+    ];
+
 }

@@ -38284,7 +38284,7 @@ module.exports = Component.exports
         });
     },
     getGeneratedSalaryLogs: function getGeneratedSalaryLogs(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/logs').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/report/generate/logs').then(function (res) {
             state.generatedSalaryLogs = res.data.data;
         });
     },
@@ -38296,7 +38296,7 @@ module.exports = Component.exports
     },
     getSalaryLogDetails: function getSalaryLogDetails(state, payload) {
         if (payload.generateSalaryLogId) {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/logs/detail/' + payload.generateSalaryLogId).then(function (res) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/report/generate/logs/detail/' + payload.generateSalaryLogId).then(function (res) {
 
                 if (!res.data.isFailed) {
 
@@ -38327,7 +38327,7 @@ module.exports = Component.exports
         var toDate = payload.toDate;
         var branchOfficeId = payload.branchOfficeId;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/attempt?fromDate=' + fromDate + '&toDate=' + toDate + '&branchOfficeId=' + branchOfficeId).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/report/generate/attempt?fromDate=' + fromDate + '&toDate=' + toDate + '&branchOfficeId=' + branchOfficeId).then(function (res) {
             if (!res.data.isFailed) {
 
                 state.attemptGenerateSalaryData = res.data.salaryReport;
@@ -38357,7 +38357,7 @@ module.exports = Component.exports
         var toDate = payload.toDate;
         var branchOfficeId = payload.branchOfficeId;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate', { fromDate: fromDate, toDate: toDate, branchOfficeId: branchOfficeId }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/report/generate', { fromDate: fromDate, toDate: toDate, branchOfficeId: branchOfficeId }).then(function (res) {
             if (!res.data.isFailed) {
 
                 state.isGeneratingSalary = false;

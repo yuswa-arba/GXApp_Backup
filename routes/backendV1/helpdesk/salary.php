@@ -38,18 +38,19 @@ Route::prefix('v1/h')->group(function () {
         Route::post('employee/remove/bonusCut/{employeeId}', 'EmployeeController@removeBonusCut');
         Route::get('employee/history/{employeeId}','EmployeeController@getSalaryReportHistory');
 
-        Route::get('generate/attempt', 'GenerateController@attemptGenerate');
-        Route::post('generate', 'GenerateController@generate');
-        Route::get('generate/logs', 'GenerateController@getLogs');
-        Route::get('generate/logs/detail/{id}', 'GenerateController@getLogDetails');
+        Route::get('report/generate/attempt', 'SalaryReportController@attemptGenerate');
+        Route::post('report/generate', 'SalaryReportController@generate');
+        Route::get('report/generate/logs', 'SalaryReportController@getLogs');
+        Route::get('report/generate/logs/detail/{id}', 'SalaryReportController@getLogDetails');
 
         Route::get('payrollSetting/list','PayrollSettingController@list');
         Route::post('payrollSetting/edit','PayrollSettingController@edit');
         Route::get('payrollSetting/defaultGenerateDate','PayrollSettingController@getDefaultGenerateDate');
 
         Route::get('payroll/generateSalary/history','PayrollController@getGenerateSalaryHistory');
+        Route::get('payroll/report/details/{salaryReportLogID}','PayrollController@details');
         Route::get('payroll/list','PayrollController@list');
-        Route::get('payroll/files','PayrollController@files');
+        Route::get('payroll/lastGeneratedPayroll','PayrollController@getLastGeneratedPayroll');
         Route::get('payroll/generate/attempt','PayrollController@attemptGenerate');
         Route::post('payroll/generate','PayrollController@generate');
 

@@ -13,7 +13,7 @@ export default{
             })
     },
     getGeneratedSalaryLogs(state, payload){
-        get(api_path + 'salary/generate/logs')
+        get(api_path + 'salary/report/generate/logs')
             .then((res) => {
                 state.generatedSalaryLogs = res.data.data
             })
@@ -27,7 +27,7 @@ export default{
     },
     getSalaryLogDetails(state, payload){
         if (payload.generateSalaryLogId) {
-            get(api_path + 'salary/generate/logs/detail/' + payload.generateSalaryLogId)
+            get(api_path + 'salary/report/generate/logs/detail/' + payload.generateSalaryLogId)
                 .then((res) => {
 
 
@@ -63,7 +63,7 @@ export default{
         let toDate = payload.toDate
         let branchOfficeId = payload.branchOfficeId
 
-        get(api_path + 'salary/generate/attempt?fromDate=' + fromDate + '&toDate=' + toDate + '&branchOfficeId=' + branchOfficeId)
+        get(api_path + 'salary/report/generate/attempt?fromDate=' + fromDate + '&toDate=' + toDate + '&branchOfficeId=' + branchOfficeId)
             .then((res) => {
                 if (!res.data.isFailed) {
 
@@ -96,7 +96,7 @@ export default{
         let toDate = payload.toDate
         let branchOfficeId = payload.branchOfficeId
 
-        post(api_path + 'salary/generate', {fromDate: fromDate, toDate: toDate, branchOfficeId: branchOfficeId})
+        post(api_path + 'salary/report/generate', {fromDate: fromDate, toDate: toDate, branchOfficeId: branchOfficeId})
             .then((res) => {
                 if (!res.data.isFailed) {
 

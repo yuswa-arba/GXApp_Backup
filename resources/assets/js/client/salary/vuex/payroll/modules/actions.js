@@ -6,8 +6,11 @@ import series from 'async/series';
 
 export default{
 
-    getDataOnCreate({commit,state},payload){
-        commit('getSalayReportHistory')
+    getDataOnCreate({commit, state}, payload){
+        commit('getLastGeneratedPayroll')
+        commit('getPayrollList')
+    },
+    getSalaryReportList({commit, state}, payload){
+        commit('getSalaryReportHistory')
     }
-
 }

@@ -9,7 +9,9 @@ import actions from './actions'
 export default {
     namespaced: true,
     state: {
-        salaryReportsHistory:[]
+        salaryReportsHistory:[],
+        lastGeneratedPayroll:{},
+        generatedPayrollList:[]
     },
     getters,
     mutations,

@@ -12,7 +12,7 @@ use App\Traits\GlobalUtils;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class GenerateController extends Controller
+class SalaryReportController extends Controller
 {
 
     use GlobalUtils;
