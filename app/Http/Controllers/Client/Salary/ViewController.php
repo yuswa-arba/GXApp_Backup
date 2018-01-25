@@ -28,4 +28,9 @@ class ViewController extends Controller
     {
         return view('pages.salary.setting');
     }
+
+    public function payroll()
+    {
+        return view('pages.salary.payroll');
+    }
 }

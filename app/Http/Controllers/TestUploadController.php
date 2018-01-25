@@ -434,7 +434,7 @@ class TestUploadController extends Controller
 
     public function td()
     {
-        return $this->totalDays('01/01/2018','5/01/2018');
+        return $this->diffDay('01/01/2018','5/01/2018');
     }
 
 

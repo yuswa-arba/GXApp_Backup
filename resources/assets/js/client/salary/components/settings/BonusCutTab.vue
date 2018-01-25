@@ -35,13 +35,16 @@
                                             <span v-else="">-</span>
                                         </td>
                                         <td>
-                                            <i v-if="!bonuscut.editing" class="fa fa-pencil fs-16 cursor"
-                                               @click="editBonusCutType(index)"></i>
-                                            <span v-else="" class="fs-12 text-primary cursor"
-                                                  @click="doneEditing(bonuscut.id,index)">DONE</span>
-                                            &nbsp;&nbsp;
-                                            <i class="fa fa-times text-danger fs-16 cursor"
-                                               @click="deleteBonusCutType(bonuscut.id,index)"></i>
+                                            <!--only not defaults can be edited/deleted-->
+                                            <div v-if="bonuscut.id>17">
+                                                <i v-if="!bonuscut.editing" class="fa fa-pencil fs-16 cursor"
+                                                   @click="editBonusCutType(index)"></i>
+                                                <span v-else="" class="fs-12 text-primary cursor"
+                                                      @click="doneEditing(bonuscut.id,index)">DONE</span>
+                                                &nbsp;&nbsp;
+                                                <i class="fa fa-times text-danger fs-16 cursor"
+                                                   @click="deleteBonusCutType(bonuscut.id,index)"></i>
+                                            </div>
                                         </td>
 
                                     </tr>

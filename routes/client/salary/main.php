@@ -27,5 +27,6 @@ Route::prefix('salary')->namespace('Client\Salary')->group(function () {
     Route::get('report/', 'ViewController@report')->name('salary.report');
     Route::get('employee/', 'ViewController@employee')->name('salary.employee');
     Route::get('setting/', 'ViewController@setting')->name('salary.setting');
+    Route::get('payroll/','ViewController@payroll')->name('salary.payroll');
 
 });

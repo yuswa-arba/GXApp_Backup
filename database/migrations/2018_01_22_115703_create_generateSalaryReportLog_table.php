@@ -21,6 +21,9 @@ class CreateGenerateSalaryReportLogTable extends Migration
             $table->string('generatedDate');
             $table->string('generatedBy');
             $table->text('salaryReportIds');
+            $table->tinyInteger('isGeneratedForPayroll')->default(0);
+            $table->string('lastDateGeneratedForPayroll')->nullable();
+            $table->integer('lastGeneratePayrollId')->nullable();
             $table->timestamps();
         });
     }

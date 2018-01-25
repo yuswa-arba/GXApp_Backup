@@ -6,6 +6,11 @@ export default{
         return state.defaultFromDate + '/' + (moment().month()+1) + '/' + moment().year()
     },
     defaultToDate(state){
-        return state.defaultToDate + '/' + (moment().month()+1) + '/' + moment().year()
+        if(state.defaultFromDate>state.defaultToDate){
+            return state.defaultToDate + '/' + (moment().month()+2) + '/' + moment().year()
+        } else {
+            return state.defaultToDate + '/' + (moment().month()+1) + '/' + moment().year()
+        }
+
     }
 }

@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 15);
+/******/ 	return __webpack_require__(__webpack_require__.s = 18);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2458,7 +2458,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainReport.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainPayroll.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2495,7 +2495,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/report/AttemptGenerate.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2503,50 +2503,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2664,316 +2620,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {},
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('report', {
-        isFetchingSalaryData: 'isFetchingSalaryData',
-        attemptGenerateSalaryData: 'attemptGenerateSalaryData'
-    })),
-    created: function created() {},
-
     mounted: function mounted() {},
-    methods: {
-        generateSalaryReports: function generateSalaryReports(fromDate, toDate, branchOfficeId) {
-
-            var self = this;
-
-            if (fromDate && toDate && branchOfficeId) {
-
-                self.$store.dispatch({
-                    type: 'report/generateSalary',
-                    fromDate: fromDate,
-                    toDate: toDate,
-                    branchOfficeId: branchOfficeId
-                });
-
-                self.$router.push({ name: 'generateSalary' });
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: 'Something is missing. Unable to generate salary',
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        },
-        cancelGenerate: function cancelGenerate() {
-            this.$router.go(-1);
-        }
-    }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/report/GenerateSalary.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: {},
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('report', {
-        isGeneratingSalary: 'isGeneratingSalary',
-        isGenerateSalarySuccessful: 'isGenerateSalarySuccessful'
-    })),
-    created: function created() {},
-
-    mounted: function mounted() {},
-    methods: {
-        finish: function finish() {
-            this.$router.push('/');
-        }
-    }
-
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/report/Index.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            selectedBranchOfficeId: '',
-            selectedLogDetails: {}
-        };
-    },
-
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('report', {
-        branchOffices: 'branchOffices',
-        generatedSalaryLogs: 'generatedSalaryLogs',
-        salaryLogDetails: 'salaryLogDetails'
-    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('report', {
-        defaultFromDate: 'defaultFromDate',
-        defaultToDate: 'defaultToDate'
-    })),
     created: function created() {
-        this.$store.dispatch('report/getDataOnCreate');
+        this.$store.dispatch('payroll/getDataOnCreate');
     },
 
-    mounted: function mounted() {
-        $('#summary-datepicker-range').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
-    },
-    methods: {
-        attemptGenerate: function attemptGenerate() {
-            var self = this;
-
-            var fromDate = $('input[name="generateFromDate"]').val();
-            var toDate = $('input[name="generateToDate"]').val();
-
-            if (fromDate && toDate && self.selectedBranchOfficeId) {
-
-                self.$store.dispatch({
-                    type: 'report/attemptGenerateSalaryData',
-                    fromDate: fromDate,
-                    toDate: toDate,
-                    branchOfficeId: self.selectedBranchOfficeId
-                });
-                self.$router.push({ name: 'attemptGenerate' });
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: 'Something missing. Please check your generate form',
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        },
-        getGeneratedSalaryLogDetails: function getGeneratedSalaryLogDetails(id) {
-
-            var self = this;
-
-            self.$store.commit({
-                type: 'report/getSalaryLogDetails',
-                generateSalaryLogId: id
-            });
-
-            var generatedSalaryLogs = self.$store.state.report.generatedSalaryLogs;
-            self.selectedLogDetails = _.find(generatedSalaryLogs, { id: id });
-        }
-    }
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('payroll', {
+        salaryReportsHistory: 'salaryReportsHistory'
+    }))
 });
 
 /***/ }),
@@ -22400,7 +22054,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-05400554\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/report/GenerateSalary.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7b3d8ba4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22408,34 +22062,169 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _vm.isGeneratingSalary
-      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(0)])
-      : _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [
-          _c("div", { staticClass: "center-margin text-center" }, [
-            _vm.isGenerateSalarySuccessful
-              ? _c("h3", { staticClass: "bold text-primary" }, [
-                  _vm._v("Generating Salary is Successful")
-                ])
-              : _c("h3", { staticClass: "bold text-danger" }, [
-                  _vm._v("Generating Salary is Unsuccessful")
-                ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "text-center" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-primary",
-                on: {
-                  click: function($event) {
-                    _vm.finish()
-                  }
-                }
-              },
-              [_vm._v("Finish")]
-            )
-          ])
-        ])
+    _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "col-lg-12 m-b-10 m-t-10" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._l(_vm.salaryReportsHistory, function(report) {
+              return _c(
+                "div",
+                {
+                  staticClass:
+                    "card card-bordered filter-report-details no-padding"
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticClass: "card-block bg-master",
+                          staticStyle: { padding: "3px 15px!important" }
+                        },
+                        [
+                          _c("div", { staticClass: "pull-left" }, [
+                            _c(
+                              "span",
+                              { staticClass: "text-white fs-16 bold" },
+                              [_vm._v("ID: " + _vm._s(report.id))]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "pull-right" }, [
+                            _c(
+                              "span",
+                              { staticClass: "text-white fs-14 bold" },
+                              [
+                                _vm._v(
+                                  _vm._s(report.fromDate) +
+                                    " - " +
+                                    _vm._s(report.toDate)
+                                )
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-4" }, [
+                      _c("div", { staticClass: "card-block" }, [
+                        _c("p", { staticClass: "fs-16" }, [
+                          _vm._v("Branch: "),
+                          _c("b", { staticClass: "text-primary" }, [
+                            _vm._v(_vm._s(report.branchOfficeName))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "fs-16" }, [
+                          _vm._v("Generated: "),
+                          _c("b", { staticClass: "text-primary" }, [
+                            _vm._v(
+                              "@" +
+                                _vm._s(report.generatedDate) +
+                                "\n                                    by " +
+                                _vm._s(report.generatedBy)
+                            )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "fs-16" }, [
+                          _vm._v("Total Reports: "),
+                          _c("b", { staticClass: "text-primary" }, [
+                            _vm._v(_vm._s(report.totalSalaryReport))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "fs-16" }, [
+                          _vm._v("Total Submitted: "),
+                          _c("b", { staticClass: "text-primary" }, [
+                            _vm._v(_vm._s(report.totalSubmittedForPayroll))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "fs-16" }, [
+                          _vm._v("Total Postponed: "),
+                          _c("b", { staticClass: "text-primary" }, [
+                            _vm._v(_vm._s(report.totalPostponed))
+                          ])
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-4" }, [
+                      _c("div", { staticClass: "card-block" }, [
+                        _c("div", { staticClass: "table-responsive" }, [
+                          _c("table", { staticClass: "table" }, [
+                            _vm._m(1, true),
+                            _vm._v(" "),
+                            _c("tbody", [
+                              _c("tr", [
+                                _c("td", [_vm._v("Waiting for Confirmation")]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(report.totalWaitingConfimation))
+                                ]),
+                                _vm._v(" "),
+                                _c("td")
+                              ]),
+                              _vm._v(" "),
+                              _c("tr", [
+                                _c("td", [_vm._v("Confirmed")]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(report.totalConfirmed))
+                                ]),
+                                _vm._v(" "),
+                                _c("td")
+                              ]),
+                              _vm._v(" "),
+                              _c("tr", [
+                                _c("td", [_vm._v("Stage 1 Confirmed")]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(report.totalStage1Confirmed))
+                                ]),
+                                _vm._v(" "),
+                                _c("td")
+                              ]),
+                              _vm._v(" "),
+                              _c("tr", [
+                                _c("td", [_vm._v("Stage 2 Confirmed")]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(_vm._s(report.totalStage2Confirmed))
+                                ]),
+                                _vm._v(" "),
+                                _c("td")
+                              ])
+                            ])
+                          ])
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2, true)
+                  ])
+                ]
+              )
+            })
+          ],
+          2
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -22443,18 +22232,103 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "center-margin" }, [
-      _c("p", { staticClass: "text-center fs-21" }, [
-        _vm._v("Generating Salary Reports.. Please Wait....")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "progress h-8" }, [
-        _c("div", {
-          staticClass: "progress-bar-indeterminate progress-bar-success"
-        })
-      ]),
-      _vm._v(" "),
-      _c("br")
+    return _c("div", { staticClass: "card card-bordered" }, [
+      _c("div", { staticClass: "card-block" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-6" }, [
+            _c("h4", { staticClass: "pull-left" }, [
+              _vm._v("Generated Salary Report History")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-6" }, [
+            _c("div", { staticClass: "clearfix" }),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "form-group",
+                staticStyle: { "padding-top": "5px" }
+              },
+              [
+                _c("input", {
+                  staticClass: "pull-right form-control",
+                  staticStyle: { width: "250px" },
+                  attrs: {
+                    type: "text",
+                    id: "search-salary-report-details",
+                    placeholder: "Search"
+                  }
+                })
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+          },
+          [_vm._v("Status\n                                            ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "th",
+          {
+            staticClass: "text-black fs-9",
+            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
+          },
+          [_vm._v("Count\n                                            ")]
+        ),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4" }, [
+      _c("div", { staticClass: "card-block" }, [
+        _c("button", { staticClass: "btn btn-info m-b-10" }, [
+          _c("i", { staticClass: "fa fa-eye" }),
+          _vm._v(" View Details")
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-primary m-b-10" }, [
+          _c("i", { staticClass: "fa fa-print" }),
+          _vm._v(" Generate Payroll")
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-danger m-b-10" }, [
+          _c("i", { staticClass: "fa fa-eye" }),
+          _vm._v(" View Payroll")
+        ]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn btn-complete m-b-10" }, [
+          _c("i", { staticClass: "fa fa-refresh" }),
+          _vm._v(" Refresh")
+        ]),
+        _vm._v(" "),
+        _c("br")
+      ])
     ])
   }
 ]
@@ -22463,13 +22337,13 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-05400554", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7b3d8ba4", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0635a7c0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainReport.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-eae9cc6e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainPayroll.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22509,850 +22383,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0635a7c0", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0805a23b\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/report/AttemptGenerate.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("go-back-menu")],
-      2
-    ),
-    _vm._v(" "),
-    !_vm.isFetchingSalaryData
-      ? _c("div", { staticClass: "col-lg-6 m-b-10" }, [
-          _c("div", { staticClass: "card card-bordered" }, [
-            _c("div", { staticClass: "card-block" }, [
-              _vm.attemptGenerateSalaryData.summary
-                ? _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c("p", { staticClass: "fs-21" }, [
-                        _vm._v(
-                          "Total Employees :\n                            "
-                        ),
-                        _c("b", [
-                          _vm._v(
-                            _vm._s(
-                              _vm.attemptGenerateSalaryData.summary
-                                .totalEmployees
-                            )
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "fs-21" }, [
-                        _vm._v("Branch Office :\n                            "),
-                        _c("b", [
-                          _vm._v(
-                            _vm._s(
-                              _vm.attemptGenerateSalaryData.summary
-                                .branchOfficeName
-                            )
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c("p", { staticClass: "fs-21" }, [
-                        _vm._v("From Date : "),
-                        _c("b", [
-                          _vm._v(
-                            _vm._s(
-                              _vm.attemptGenerateSalaryData.summary.fromDate
-                            )
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "fs-21" }, [
-                        _vm._v("To Date : "),
-                        _c("b", [
-                          _vm._v(
-                            _vm._s(_vm.attemptGenerateSalaryData.summary.toDate)
-                          )
-                        ])
-                      ])
-                    ])
-                  ])
-                : _vm._e()
-            ])
-          ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    !_vm.isFetchingSalaryData
-      ? _c("div", { staticClass: "col-lg-6 m-b-10" }, [
-          _c("div", { staticClass: "alert alert-info bordered m-b-0" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-5" }, [
-                _c("div", { staticClass: "center-margin" }, [
-                  _c("h3", [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-danger",
-                        on: {
-                          click: function($event) {
-                            _vm.cancelGenerate()
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fa fa-times" }), _vm._v(" No")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-outline-primary",
-                        on: {
-                          click: function($event) {
-                            _vm.generateSalaryReports(
-                              _vm.attemptGenerateSalaryData.summary.fromDate,
-                              _vm.attemptGenerateSalaryData.summary.toDate,
-                              _vm.attemptGenerateSalaryData.summary
-                                .branchOfficeId
-                            )
-                          }
-                        }
-                      },
-                      [
-                        _c("i", { staticClass: "fa fa-check" }),
-                        _vm._v(" Yes\n                            ")
-                      ]
-                    )
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.attemptGenerateSalaryData.employeesSalaryReport
-      ? _c(
-          "div",
-          { staticClass: "col-lg-12 m-b-10" },
-          _vm._l(_vm.attemptGenerateSalaryData.employeesSalaryReport, function(
-            report
-          ) {
-            return _c(
-              "div",
-              { staticClass: "filter-item card card-bordered" },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "card-block bg-primary",
-                        staticStyle: { padding: "3px 15px!important" }
-                      },
-                      [
-                        _c("div", { staticClass: "pull-left" }, [
-                          _c("span", { staticClass: "text-white fs-16 bold" }, [
-                            _vm._v(_vm._s(report.employeeName))
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "text-white fs-16" }, [
-                            _vm._v("(" + _vm._s(report.employeeNo) + ")")
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "pull-right" }, [
-                          _c("span", { staticClass: "text-white fs-14 bold" }, [
-                            _vm._v(_vm._s(report.divisionName))
-                          ])
-                        ])
-                      ]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  report.timesheetSummary
-                    ? _c("div", { staticClass: "col-lg-2" }, [
-                        _c("div", { staticClass: "card-block" }, [
-                          _c("h5", { staticClass: "bold" }, [
-                            _vm._v("Timesheet Summary")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Days of Absence : "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(
-                                _vm._s(report.timesheetSummary.totalDayAbsence)
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Min. Late: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(
-                                _vm._s(report.timesheetSummary.totalMinLate)
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Min. Early Out : "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(
-                                _vm._s(report.timesheetSummary.totalMinEarlyOut)
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  report.salarySummary
-                    ? _c("div", { staticClass: "col-lg-2" }, [
-                        _c("div", { staticClass: "card-block" }, [
-                          _c("h5", { staticClass: "bold" }, [
-                            _vm._v("Salary Summary")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Basic Salary: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(_vm._s(report.salarySummary.basicSalary))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Bonus: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(_vm._s(report.salarySummary.totalBonus))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Cut: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(_vm._s(report.salarySummary.totalCut))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Salary Received: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(
-                                _vm._s(report.salarySummary.salaryReceived)
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  report.generalBonusCut
-                    ? _c("div", { staticClass: "col-lg-4" }, [
-                        _c("div", { staticClass: "card-block bordered" }, [
-                          _c("h5", { staticClass: "bold" }, [
-                            _vm._v("General Bonus/Cut")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "table-responsive" }, [
-                            _c("table", { staticClass: "table" }, [
-                              _vm._m(1, true),
-                              _vm._v(" "),
-                              _c(
-                                "tbody",
-                                _vm._l(report.generalBonusCut, function(gbc) {
-                                  return _c("tr", [
-                                    _c("td", [_vm._v(_vm._s(gbc.name))]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      gbc.addOrSub == "add"
-                                        ? _c(
-                                            "label",
-                                            {
-                                              staticClass: "label label-success"
-                                            },
-                                            [_vm._v(_vm._s(gbc.addOrSub))]
-                                          )
-                                        : _c(
-                                            "label",
-                                            {
-                                              staticClass: "label label-danger"
-                                            },
-                                            [_vm._v(_vm._s(gbc.addOrSub))]
-                                          )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(gbc.value))])
-                                  ])
-                                })
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  report.employeeBonusCut
-                    ? _c("div", { staticClass: "col-lg-4" }, [
-                        _c("div", { staticClass: "card-block bordered" }, [
-                          _c("h5", { staticClass: "bold" }, [
-                            _vm._v("Employee Bonus/Cut")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "table-responsive" }, [
-                            _c("table", { staticClass: "table" }, [
-                              _vm._m(2, true),
-                              _vm._v(" "),
-                              _c(
-                                "tbody",
-                                _vm._l(report.employeeBonusCut, function(ebc) {
-                                  return _c("tr", [
-                                    _c("td", [_vm._v(_vm._s(ebc.name))]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      ebc.addOrSub == "add"
-                                        ? _c(
-                                            "label",
-                                            {
-                                              staticClass: "label label-success"
-                                            },
-                                            [_vm._v(_vm._s(ebc.addOrSub))]
-                                          )
-                                        : _c(
-                                            "label",
-                                            {
-                                              staticClass: "label label-danger"
-                                            },
-                                            [_vm._v(_vm._s(ebc.addOrSub))]
-                                          )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(ebc.value))])
-                                  ])
-                                })
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    : _vm._e()
-                ])
-              ]
-            )
-          })
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.isFetchingSalaryData
-      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(3)])
-      : _vm._e()
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-7" }, [
-      _c("h3", [
-        _c("strong", [
-          _c("i", { staticClass: "fa fa-warning" }),
-          _vm._v(" Generate Now ?")
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Add/Sub")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Value")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Add/Sub")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Value")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "center-margin" }, [
-      _c("p", { staticClass: "text-center fs-21" }, [
-        _vm._v("Fetching Data.. Please wait..")
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "progress h-8" }, [
-        _c("div", {
-          staticClass: "progress-bar-indeterminate progress-bar-success"
-        })
-      ]),
-      _vm._v(" "),
-      _c("br")
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0805a23b", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6a6bd0eb\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/report/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-5" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
-          _c("div", { staticClass: "card card-bordered" }, [
-            _c("div", { staticClass: "card-block" }, [
-              _c(
-                "form",
-                { attrs: { action: "", id: "generate-salary-form" } },
-                [
-                  _c("h4", [_vm._v("Generate Salary")]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Date Start - Date End ")]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "input-daterange input-group",
-                        attrs: { id: "summary-datepicker-range" }
-                      },
-                      [
-                        _c("input", {
-                          staticClass: "input-sm form-control",
-                          attrs: { type: "text", name: "generateFromDate" },
-                          domProps: { value: _vm.defaultFromDate }
-                        }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "input-group-addon" }, [
-                          _vm._v("to")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "input-sm form-control",
-                          attrs: { type: "text", name: "generateToDate" },
-                          domProps: { value: _vm.defaultToDate }
-                        })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Branch Office")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.selectedBranchOfficeId,
-                            expression: "selectedBranchOfficeId"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.selectedBranchOfficeId = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      [
-                        _c(
-                          "option",
-                          {
-                            attrs: {
-                              value: "",
-                              disabled: "",
-                              hidden: "",
-                              selected: ""
-                            }
-                          },
-                          [_vm._v(" Select Branch Office")]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.branchOffices, function(branchOffice) {
-                          return _c(
-                            "option",
-                            { domProps: { value: branchOffice.id } },
-                            [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(branchOffice.name) +
-                                  "\n                                    "
-                              )
-                            ]
-                          )
-                        })
-                      ],
-                      2
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary pull-right",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.attemptGenerate()
-                        }
-                      }
-                    },
-                    [_vm._v("Generate")]
-                  )
-                ]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-12" }, [
-          _c("div", { staticClass: "card card-bordered" }, [
-            _c("div", { staticClass: "card-block" }, [
-              _c("h4", [_vm._v("Generate History")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table table-hover" }, [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c(
-                    "tbody",
-                    _vm._l(_vm.generatedSalaryLogs, function(salaryLog) {
-                      return _c("tr", [
-                        _c("td", [_vm._v(_vm._s(salaryLog.id))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            _vm._s(salaryLog.fromDate) +
-                              " - " +
-                              _vm._s(salaryLog.toDate)
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(salaryLog.branchOfficeName))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            _vm._s(salaryLog.generatedDate) +
-                              " by " +
-                              _vm._s(salaryLog.generatedBy)
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("i", {
-                            staticClass: "fa fa-info text-primary fs-16 cursor",
-                            on: {
-                              click: function($event) {
-                                _vm.getGeneratedSalaryLogDetails(salaryLog.id)
-                              }
-                            }
-                          })
-                        ])
-                      ])
-                    })
-                  )
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-7" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
-          _c("div", { staticClass: "card card-bordered" }, [
-            _c("div", { staticClass: "card-block" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", { staticClass: "scrollable" }, [
-                _c("div", { staticStyle: { height: "700px" } }, [
-                  _c("div", { staticClass: "table-responsive" }, [
-                    _vm.selectedLogDetails.id
-                      ? _c("span", { staticClass: "help" }, [
-                          _vm._v(
-                            "ID: " +
-                              _vm._s(_vm.selectedLogDetails.id) +
-                              " Date: " +
-                              _vm._s(_vm.selectedLogDetails.fromDate) +
-                              " - " +
-                              _vm._s(_vm.selectedLogDetails.toDate)
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("table", { staticClass: "table table-hover" }, [
-                      _vm._m(2),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.salaryLogDetails, function(logDetail) {
-                          return _c(
-                            "tr",
-                            { staticClass: "filter-log-details" },
-                            [
-                              _c("td", [_vm._v(_vm._s(logDetail.id))]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(_vm._s(logDetail.employeeName))
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(logDetail.fromDate) +
-                                    " - " +
-                                    _vm._s(logDetail.toDate)
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(_vm._s(logDetail.confirmationStatusName))
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _vm._v(_vm._s(logDetail.confirmationDate))
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                logDetail.isPostponed
-                                  ? _c(
-                                      "span",
-                                      { staticClass: "bold text-danger" },
-                                      [_vm._v("Yes")]
-                                    )
-                                  : _c(
-                                      "span",
-                                      { staticClass: "bold text-primary" },
-                                      [_vm._v("No")]
-                                    )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                logDetail.isSFP
-                                  ? _c(
-                                      "span",
-                                      { staticClass: "bold text-primary" },
-                                      [_vm._v("Yes")]
-                                    )
-                                  : _c(
-                                      "span",
-                                      { staticClass: "bold text-danger" },
-                                      [_vm._v("No")]
-                                    )
-                              ]),
-                              _vm._v(" "),
-                              _c("td")
-                            ]
-                          )
-                        })
-                      )
-                    ])
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c("th", { staticClass: "text-black" }, [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Branch")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("At/By")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-6" }, [
-        _c("h4", { staticClass: "pull-left" }, [_vm._v("History Details")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-6" }, [
-        _c("div", { staticClass: "clearfix" }),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group", staticStyle: { "padding-top": "5px" } },
-          [
-            _c("input", {
-              staticClass: "pull-right form-control",
-              staticStyle: { width: "250px" },
-              attrs: {
-                type: "text",
-                id: "search-log-details",
-                placeholder: "Search"
-              }
-            })
-          ]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
-          },
-          [_vm._v("ID")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
-          },
-          [_vm._v("Employee")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
-          },
-          [_vm._v("Date")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
-          },
-          [_vm._v("Status")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
-          },
-          [_vm._v("Confirm Date")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
-          },
-          [_vm._v("Postponed")]
-        ),
-        _vm._v(" "),
-        _c(
-          "th",
-          {
-            staticClass: "text-black fs-9",
-            staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
-          },
-          [_vm._v("Submitted")]
-        ),
-        _vm._v(" "),
-        _c("th", {
-          staticClass: "text-black fs-9",
-          staticStyle: { "padding-top": "5px", "padding-bottom": "5px" }
-        })
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6a6bd0eb", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-eae9cc6e", module.exports)
   }
 }
 
@@ -37859,15 +36890,15 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/MainReport.vue":
+/***/ "./resources/assets/js/client/salary/MainPayroll.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainReport.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainPayroll.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0635a7c0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainReport.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-eae9cc6e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainPayroll.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -37884,7 +36915,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/salary/MainReport.vue"
+Component.options.__file = "resources/assets/js/client/salary/MainPayroll.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -37894,9 +36925,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0635a7c0", Component.options)
+    hotAPI.createRecord("data-v-eae9cc6e", Component.options)
   } else {
-    hotAPI.reload("data-v-0635a7c0", Component.options)
+    hotAPI.reload("data-v-eae9cc6e", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -37908,17 +36939,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/report.js":
+/***/ "./resources/assets/js/client/salary/payroll.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_report__ = __webpack_require__("./resources/assets/js/client/salary/router/report.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainReport_vue__ = __webpack_require__("./resources/assets/js/client/salary/MainReport.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainReport_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainReport_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_report_store__ = __webpack_require__("./resources/assets/js/client/salary/vuex/report/store.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_payroll__ = __webpack_require__("./resources/assets/js/client/salary/router/payroll.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainPayroll_vue__ = __webpack_require__("./resources/assets/js/client/salary/MainPayroll.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainPayroll_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainPayroll_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_payroll_store__ = __webpack_require__("./resources/assets/js/client/salary/vuex/payroll/store.js");
 /**
  * Created by kevinpurwono on 6/12/17.
  */
@@ -37930,41 +36961,34 @@ __webpack_require__("./resources/assets/js/bootstrap.js");
 
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#vc-salary-report',
-    template: '<main-report></main-report>',
-    components: { MainReport: __WEBPACK_IMPORTED_MODULE_2__MainReport_vue___default.a },
-    router: __WEBPACK_IMPORTED_MODULE_1__router_report__["a" /* default */],
-    store: __WEBPACK_IMPORTED_MODULE_3__vuex_report_store__["a" /* store */]
+    el: '#vc-salary-payroll',
+    template: '<main-payroll></main-payroll>',
+    components: { MainPayroll: __WEBPACK_IMPORTED_MODULE_2__MainPayroll_vue___default.a },
+    router: __WEBPACK_IMPORTED_MODULE_1__router_payroll__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_3__vuex_payroll_store__["a" /* store */]
 });
 
 $(document).ready(function () {
-
     $('.filter-container').sieve({
-        searchInput: $('#search-log-details'),
-        itemSelector: ".filter-log-details"
+        searchInput: $('#search-salary-report-details'),
+        itemSelector: ".filter-report-details"
     });
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/router/report.js":
+/***/ "./resources/assets/js/client/salary/router/payroll.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_report_Index_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/report/Index.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_report_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_report_Index_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_report_AttemptGenerate_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/report/AttemptGenerate.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_report_AttemptGenerate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_report_AttemptGenerate_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_report_GenerateSalary_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/report/GenerateSalary.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_report_GenerateSalary_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_report_GenerateSalary_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_payroll_Index_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/payroll/Index.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_payroll_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_payroll_Index_vue__);
 /**
  * Created by kevinpurwono on 23/11/17.
  */
-
-
 
 
 
@@ -37974,22 +36998,22 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_report_Index_vue___default.a }, { path: '/attempt/generate', component: __WEBPACK_IMPORTED_MODULE_3__views_report_AttemptGenerate_vue___default.a, name: 'attemptGenerate' }, { path: '/generate', component: __WEBPACK_IMPORTED_MODULE_4__views_report_GenerateSalary_vue___default.a, name: 'generateSalary' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_payroll_Index_vue___default.a }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/views/report/AttemptGenerate.vue":
+/***/ "./resources/assets/js/client/salary/views/payroll/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/report/AttemptGenerate.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/Index.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0805a23b\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/report/AttemptGenerate.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7b3d8ba4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/Index.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -38006,7 +37030,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/salary/views/report/AttemptGenerate.vue"
+Component.options.__file = "resources/assets/js/client/salary/views/payroll/Index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -38016,9 +37040,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0805a23b", Component.options)
+    hotAPI.createRecord("data-v-7b3d8ba4", Component.options)
   } else {
-    hotAPI.reload("data-v-0805a23b", Component.options)
+    hotAPI.reload("data-v-7b3d8ba4", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -38030,105 +37054,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/views/report/GenerateSalary.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/report/GenerateSalary.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-05400554\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/report/GenerateSalary.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/views/report/GenerateSalary.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-05400554", Component.options)
-  } else {
-    hotAPI.reload("data-v-05400554", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/views/report/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/report/Index.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6a6bd0eb\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/report/Index.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/views/report/Index.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6a6bd0eb", Component.options)
-  } else {
-    hotAPI.reload("data-v-6a6bd0eb", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/vuex/report/modules/actions.js":
+/***/ "./resources/assets/js/client/salary/vuex/payroll/modules/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38143,97 +37069,34 @@ module.exports = Component.exports
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    getDataOnCreate: function getDataOnCreate(_ref) {
+    getDataOnCreate: function getDataOnCreate(_ref, payload) {
         var commit = _ref.commit,
             state = _ref.state;
 
-
-        commit({ type: 'getBranchOffices' });
-        commit({ type: 'getGeneratedSalaryLogs' });
-        commit({ type: 'getDefaultGenerateDate' });
-    },
-    attemptGenerateSalaryData: function attemptGenerateSalaryData(_ref2, payload) {
-        var commit = _ref2.commit,
-            state = _ref2.state;
-
-
-        state.attemptGenerateSalaryData = [];
-        state.isFetchingSalaryData = true;
-
-        if (payload.fromDate && payload.toDate && payload.branchOfficeId) {
-            commit({
-                type: 'getAttemptGenerateSalaryData',
-                fromDate: payload.fromDate,
-                toDate: payload.toDate,
-                branchOfficeId: payload.branchOfficeId
-            });
-        } else {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: 'An Error Occurred. Required param missing',
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        }
-    },
-    generateSalary: function generateSalary(_ref3, payload) {
-        var commit = _ref3.commit,
-            state = _ref3.state;
-
-
-        state.isGeneratingSalary = true;
-
-        if (payload.fromDate && payload.toDate && payload.branchOfficeId) {
-            commit({
-                type: 'generateSalaryNow',
-                fromDate: payload.fromDate,
-                toDate: payload.toDate,
-                branchOfficeId: payload.branchOfficeId
-            });
-        } else {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: 'An Error Occurred. Required param missing',
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        }
+        commit('getSalayReportHistory');
     }
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/report/modules/getters.js":
+/***/ "./resources/assets/js/client/salary/vuex/payroll/modules/getters.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /**
  * Created by kevinpurwono on 8/12/17.
  */
-/* harmony default export */ __webpack_exports__["a"] = ({
-    defaultFromDate: function defaultFromDate(state) {
-        return state.defaultFromDate + '/' + (moment().month() + 1) + '/' + moment().year();
-    },
-    defaultToDate: function defaultToDate(state) {
-        if (state.defaultFromDate > state.defaultToDate) {
-            return state.defaultToDate + '/' + (moment().month() + 2) + '/' + moment().year();
-        } else {
-            return state.defaultToDate + '/' + (moment().month() + 1) + '/' + moment().year();
-        }
-    }
-});
+/* harmony default export */ __webpack_exports__["a"] = ({});
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/report/modules/main.js":
+/***/ "./resources/assets/js/client/salary/vuex/payroll/modules/main.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/salary/vuex/report/modules/getters.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/salary/vuex/report/modules/mutations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/salary/vuex/report/modules/actions.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/salary/vuex/payroll/modules/getters.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/salary/vuex/payroll/modules/mutations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/salary/vuex/payroll/modules/actions.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -38245,16 +37108,7 @@ module.exports = Component.exports
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        branchOffices: [],
-        salaryReports: [],
-        generatedSalaryLogs: [],
-        salaryLogDetails: [],
-        defaultFromDate: '',
-        defaultToDate: '',
-        isFetchingSalaryData: false,
-        isGeneratingSalary: false,
-        isGenerateSalarySuccessful: false,
-        attemptGenerateSalaryData: []
+        salaryReportsHistory: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -38263,7 +37117,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/report/modules/mutations.js":
+/***/ "./resources/assets/js/client/salary/vuex/payroll/modules/mutations.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38278,98 +37132,12 @@ module.exports = Component.exports
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    getBranchOffices: function getBranchOffices(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/branchOffices').then(function (res) {
-            state.branchOffices = res.data.data;
-        });
-    },
-    getGeneratedSalaryLogs: function getGeneratedSalaryLogs(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/logs').then(function (res) {
-            state.generatedSalaryLogs = res.data.data;
-        });
-    },
-    getDefaultGenerateDate: function getDefaultGenerateDate(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payrollSetting/defaultGenerateDate').then(function (res) {
-            state.defaultFromDate = res.data.fromDate;
-            state.defaultToDate = res.data.toDate;
-        });
-    },
-    getSalaryLogDetails: function getSalaryLogDetails(state, payload) {
-        if (payload.generateSalaryLogId) {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/logs/detail/' + payload.generateSalaryLogId).then(function (res) {
+    getSalayReportHistory: function getSalayReportHistory(state, payload) {
 
-                if (!res.data.isFailed) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payroll/generateSalary/history').then(function (res) {
 
-                    state.salaryLogDetails = res.data.salaryLogDetails.data;
-                } else {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: res.data.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
-            }).catch(function (err) {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            });
-        }
-    },
-    getAttemptGenerateSalaryData: function getAttemptGenerateSalaryData(state, payload) {
-
-        var fromDate = payload.fromDate;
-        var toDate = payload.toDate;
-        var branchOfficeId = payload.branchOfficeId;
-
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate/attempt?fromDate=' + fromDate + '&toDate=' + toDate + '&branchOfficeId=' + branchOfficeId).then(function (res) {
             if (!res.data.isFailed) {
-
-                state.attemptGenerateSalaryData = res.data.salaryReport;
-                state.isFetchingSalaryData = false;
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    generateSalaryNow: function generateSalaryNow(state, payload) {
-
-        var fromDate = payload.fromDate;
-        var toDate = payload.toDate;
-        var branchOfficeId = payload.branchOfficeId;
-
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generate', { fromDate: fromDate, toDate: toDate, branchOfficeId: branchOfficeId }).then(function (res) {
-            if (!res.data.isFailed) {
-
-                state.isGeneratingSalary = false;
-                state.isGenerateSalarySuccessful = true;
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
+                state.salaryReportsHistory = res.data.reports;
             }
         }).catch(function (err) {
             $('.page-container').pgNotification({
@@ -38385,7 +37153,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/report/store.js":
+/***/ "./resources/assets/js/client/salary/vuex/payroll/store.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38393,7 +37161,7 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/salary/vuex/report/modules/main.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/salary/vuex/payroll/modules/main.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -38406,7 +37174,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
-        report: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
+        payroll: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
     }
 });
 
@@ -38439,10 +37207,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 /***/ }),
 
-/***/ 15:
+/***/ 18:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/salary/report.js");
+module.exports = __webpack_require__("./resources/assets/js/client/salary/payroll.js");
 
 
 /***/ })

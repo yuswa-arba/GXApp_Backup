@@ -47,5 +47,11 @@ Route::prefix('v1/h')->group(function () {
         Route::post('payrollSetting/edit','PayrollSettingController@edit');
         Route::get('payrollSetting/defaultGenerateDate','PayrollSettingController@getDefaultGenerateDate');
 
+        Route::get('payroll/generateSalary/history','PayrollController@getGenerateSalaryHistory');
+        Route::get('payroll/list','PayrollController@list');
+        Route::get('payroll/files','PayrollController@files');
+        Route::get('payroll/generate/attempt','PayrollController@attemptGenerate');
+        Route::post('payroll/generate','PayrollController@generate');
+
     });
 });

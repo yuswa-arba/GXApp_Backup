@@ -2616,6 +2616,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -23644,39 +23647,51 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _c("td", [
-                            !bonuscut.editing
-                              ? _c("i", {
-                                  staticClass: "fa fa-pencil fs-16 cursor",
-                                  on: {
-                                    click: function($event) {
-                                      _vm.editBonusCutType(index)
-                                    }
-                                  }
-                                })
-                              : _c(
-                                  "span",
-                                  {
-                                    staticClass: "fs-12 text-primary cursor",
+                            bonuscut.id > 17
+                              ? _c("div", [
+                                  !bonuscut.editing
+                                    ? _c("i", {
+                                        staticClass:
+                                          "fa fa-pencil fs-16 cursor",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.editBonusCutType(index)
+                                          }
+                                        }
+                                      })
+                                    : _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "fs-12 text-primary cursor",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.doneEditing(
+                                                bonuscut.id,
+                                                index
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("DONE")]
+                                      ),
+                                  _vm._v(
+                                    "\n                                              \n                                            "
+                                  ),
+                                  _c("i", {
+                                    staticClass:
+                                      "fa fa-times text-danger fs-16 cursor",
                                     on: {
                                       click: function($event) {
-                                        _vm.doneEditing(bonuscut.id, index)
+                                        _vm.deleteBonusCutType(
+                                          bonuscut.id,
+                                          index
+                                        )
                                       }
                                     }
-                                  },
-                                  [_vm._v("DONE")]
-                                ),
-                            _vm._v(
-                              "\n                                          \n                                        "
-                            ),
-                            _c("i", {
-                              staticClass:
-                                "fa fa-times text-danger fs-16 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.deleteBonusCutType(bonuscut.id, index)
-                                }
-                              }
-                            })
+                                  })
+                                ])
+                              : _vm._e()
                           ])
                         ])
                       })

@@ -44,7 +44,6 @@ class GenerateController extends Controller
 
     public function getLogDetails($id)
     {
-        
         $response = array();
         if ($id != null && $id != '') {
 
@@ -67,13 +66,12 @@ class GenerateController extends Controller
                     return response()->json($response, 200);
                 }
 
-
-
             } else {
                 $response['isFailed'] = false;
                 $response['message'] = 'Unable to find generated salary report';
                 return response()->json($response, 200);
             }
+
         } else {
             $response['isFailed'] = true;
             $response['message'] = 'Required parameter ID';
