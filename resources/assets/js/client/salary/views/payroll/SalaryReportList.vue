@@ -7,7 +7,9 @@
                         <div class="card-block">
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <button class="btn btn-outline-primary m-r-15 m-b-10 m-t-10 pull-left" @click="goBack()"><i class="fa fa-angle-left"></i> Go Back</button>
+                                    <button class="btn btn-outline-primary m-r-15 m-b-10 m-t-10 pull-left"
+                                            @click="goBack()"><i class="fa fa-angle-left"></i> Go Back
+                                    </button>
                                     <h4 class="pull-left">Salary Report History</h4>
                                     <!--logs/history details-->
                                 </div>
@@ -95,13 +97,18 @@
                             </div>
                             <div class="col-lg-4">
                                 <div class="card-block">
-                                    <button class="btn btn-info m-b-10"><i class="fa fa-eye"></i> View Details</button>
+                                    <button class="btn btn-info m-b-10" @click="showDetail(report.id)"><i
+                                            class="fa fa-eye"></i> View Details
+                                    </button>
                                     <br>
-                                    <button class="btn btn-primary m-b-10"><i class="fa fa-print"></i> Generate Payroll</button>
+                                    <button class="btn btn-primary m-b-10"><i class="fa fa-print"></i> Generate Payroll
+                                    </button>
                                     <br>
-                                    <button class="btn btn-danger m-b-10"><i class="fa fa-eye"></i> View Payroll</button>
+                                    <button class="btn btn-danger m-b-10"><i class="fa fa-eye"></i> View Payroll
+                                    </button>
                                     <br>
-                                    <button class="btn btn-complete m-b-10"><i class="fa fa-refresh"></i> Refresh</button>
+                                    <button class="btn btn-complete m-b-10"><i class="fa fa-refresh"></i> Refresh
+                                    </button>
                                     <br>
                                 </div>
                             </div>
@@ -127,9 +134,12 @@
                 salaryReportsHistory: 'salaryReportsHistory'
             })
         },
-        methods:{
+        methods: {
             goBack(){
                 this.$router.go(-1)
+            },
+            showDetail(id){
+                this.$router.push({name: 'salaryReportDetail', params: {id: id}})
             }
         }
     }

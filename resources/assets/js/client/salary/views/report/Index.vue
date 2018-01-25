@@ -24,6 +24,7 @@
                                         </option>
                                     </select>
                                 </div>
+                                <p class="help"><i class="fa fa-info-circle"></i> Make sure you have set the right date start and date end</p>
                                 <button type="button" class="btn btn-primary pull-right" @click="attemptGenerate()">Generate</button>
                             </form>
                         </div>

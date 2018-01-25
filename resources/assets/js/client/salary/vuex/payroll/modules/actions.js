@@ -12,5 +12,17 @@ export default{
     },
     getSalaryReportList({commit, state}, payload){
         commit('getSalaryReportHistory')
+    },
+    attemptGetSalaryReportDetail({commit, state}, payload){
+
+        //reset
+        state.salaryReportDetails=[]
+        state.isFetchingReportDetail = true
+
+        //get data
+        if(payload.id){
+            commit({type: 'getSalaryReportDetail', id: payload.id})
+        }
+
     }
 }

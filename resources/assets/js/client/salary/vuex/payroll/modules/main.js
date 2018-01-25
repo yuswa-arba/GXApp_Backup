@@ -11,7 +11,9 @@ export default {
     state: {
         salaryReportsHistory:[],
         lastGeneratedPayroll:{},
-        generatedPayrollList:[]
+        generatedPayrollList:[],
+        salaryReportDetails:[],
+        isFetchingReportDetail:false
     },
     getters,
     mutations,

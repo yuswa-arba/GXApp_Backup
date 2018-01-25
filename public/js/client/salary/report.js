@@ -2910,6 +2910,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -23049,6 +23050,8 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
                   _c(
                     "button",
                     {
@@ -23075,7 +23078,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table table-hover" }, [
-                  _vm._m(0),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -23127,7 +23130,7 @@ var render = function() {
         _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
           _c("div", { staticClass: "card card-bordered" }, [
             _c("div", { staticClass: "card-block" }, [
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "scrollable" }, [
                 _c("div", { staticStyle: { height: "700px" } }, [
@@ -23146,7 +23149,7 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _c("table", { staticClass: "table table-hover" }, [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c(
                         "tbody",
@@ -23222,6 +23225,15 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "help" }, [
+      _c("i", { staticClass: "fa fa-info-circle" }),
+      _vm._v(" Make sure you have set the right date start and date end")
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
