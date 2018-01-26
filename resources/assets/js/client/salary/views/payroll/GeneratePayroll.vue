@@ -14,19 +14,24 @@
         <div class="col-lg-12 m-b-10 p-t-200" v-if="!isStartGeneratingPayroll">
 
             <!--success response-->
-            <div class="center-margin" v-if="!generatePayrollResponse.isFailed">
+            <div class="center-margin text-center" v-if="!generatePayrollResponse.isFailed">
                 <div class="alert alert-info">
                     <h4>{{generatePayrollResponse.message}}</h4>
-                    <button class="btn btn-primary" @click="downloadFile(generatedPayrollId)">Download</button>
-                    <button class="btn btn-outline-primary" @click="finish()">Finish</button>
+                    <div style="padding:20px">
+                        <button class="btn btn-primary" @click="downloadFile(generatedPayrollId)">Download</button>
+                        <button class="btn btn-outline-primary" @click="finish()">Finish</button>
+                    </div>
+
                 </div>
             </div>
 
             <!--error response-->
-            <div class="center-margin" v-else="">
+            <div class="center-margin text-center" v-else="">
                 <div class="alert alert-danger">
                     <h4>{{generatePayrollResponse.message}}</h4>
-                    <button class="btn btn-outline-danger" @click="finish()">Finish</button>
+                    <div style="padding:20px">
+                        <button class="btn btn-outline-danger" @click="finish()">Finish</button>
+                    </div>
                 </div>
             </div>
 
@@ -55,7 +60,10 @@
                 this.$router.push('/')
             },
             downloadFile(id){
-
+                this.$store.commit({
+                    type:'payroll/downloadFile',
+                    id:id
+                })
             }
         }
     }

@@ -20,7 +20,7 @@ export default {
         isFetchingAttemptSalaryReportData:false,
         isStartGeneratingPayroll:false,
         attemptGenerateType:'',
-        generatePayrollResponse:{isFailed:false,message:''},
+        generatePayrollResponse:{isFailed:true,message:'Unknown Request'},
         generatedPayrollId:''
     },
     getters,

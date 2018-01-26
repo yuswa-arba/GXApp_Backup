@@ -118,13 +118,12 @@
                                     <button class="btn btn-primary m-b-10" @click="attemptGenerate(report.id)"><i class="fa fa-print" ></i> Generate Payroll
                                     </button>
                                     <br>
-                                    <button class="btn btn-danger m-b-10"><i class="fa fa-eye"></i> View Payroll
-                                    </button>
-                                    <br>
                                     <button class="btn btn-complete m-b-10" @click="refresh(report.id,index)"><i
                                             class="fa fa-refresh"></i> Refresh
                                     </button>
                                     <br>
+                                    <button class="btn btn-danger m-b-10" v-if="report.isGeneratedForPayroll"><i class="fa fa-eye"></i> View Last Payroll
+                                    </button>
                                 </div>
                             </div>
                         </div>

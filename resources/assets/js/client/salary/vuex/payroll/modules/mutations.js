@@ -241,6 +241,10 @@ export default{
                             timeout: 3500,
                             type: 'info'
                         }).show();
+
+                        //remove from array
+                        state.generatedPayrollList[payload.index].file = ''
+
                     } else {
                         $('.page-container').pgNotification({
                             style: 'flip',

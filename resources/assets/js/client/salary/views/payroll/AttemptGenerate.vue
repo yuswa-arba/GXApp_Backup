@@ -8,7 +8,7 @@
                             <button class="btn btn-outline-danger m-r-15 m-b-10 m-t-10 pull-left"
                                     @click="cancel()"><i class="fa fa-times"></i> Cancel
                             </button>
-                            <h4 class="pull-left"><b>Generate Payroll</b> (Salary Report ID: {{report.summary.id}})</h4>
+                            <h4 class="pull-left"><b>Generate Payroll</b> (Generated Salary Report ID: {{report.summary.id}})</h4>
                             <!--logs/history details-->
                         </div>
                         <div class="col-lg-6">
@@ -92,24 +92,24 @@
         </div>
         <div class="col-lg-4">
             <div v-if="report.availability">
-                <div class="card card-bordered" v-if="report.availability.normalExisted.isExisted||report.availability.stage1Existed.isExisted">
+                <div class="card card-bordered" v-if="report.availability.normalExisted.isExist||report.availability.stage1Existed.isExist">
                     <div class="card-block">
                         <div class="alert alert-warning bordered m-b-0">
 
                             <p><i class="fa fa-info-circle"></i> This report has been generated before</p>
 
                             <div class="row">
-                                <div class="col-lg-6" v-if="report.availability.normalExisted.isExisted">
+                                <div class="col-lg-6" v-if="report.availability.normalExisted.isExist">
                                     <h5 class="bold">Valid Stage</h5>
-                                    <p v-if="report.availability.normalExisted.payrollId">ID: {{report.availability.normalExisted.payrollId}}</p>
-                                    <p v-if="report.availability.normalExisted.generatedDate">Date: {{report.availability.normalExisted.generatedDate}}</p>
-                                    <p v-if="report.availability.normalExisted.generatedBy">By: {{report.availability.normalExisted.generatedBy}}</p>
+                                    <p v-if="report.availability.normalExisted.payrollId!=''">ID: {{report.availability.normalExisted.payrollId}}</p>
+                                    <p v-if="report.availability.normalExisted.generatedDate!=''">Date: {{report.availability.normalExisted.generatedDate}}</p>
+                                    <p v-if="report.availability.normalExisted.generatedBy!=''">By: {{report.availability.normalExisted.generatedBy}}</p>
                                 </div>
-                                <div class="col-lg-6" v-if="report.availability.stage1Existed.isExisted">
+                                <div class="col-lg-6" v-if="report.availability.stage1Existed.isExist">
                                     <h5 class="bold">Stage-1</h5>
-                                    <p v-if="report.availability.stage1Existed.payrollId">ID: {{report.availability.stage1Existed.payrollId}}</p>
-                                    <p v-if="report.availability.stage1Existed.generatedDate">Date: {{report.availability.stage1Existed.generatedDate}}</p>
-                                    <p v-if="report.availability.stage1Existed.generatedBy">By: {{report.availability.stage1Existed.generatedBy}}</p>
+                                    <p v-if="report.availability.stage1Existed.payrollId!=''">ID: {{report.availability.stage1Existed.payrollId}}</p>
+                                    <p v-if="report.availability.stage1Existed.generatedDate!=''">Date: {{report.availability.stage1Existed.generatedDate}}</p>
+                                    <p v-if="report.availability.stage1Existed.generatedBy!=''">By: {{report.availability.stage1Existed.generatedBy}}</p>
                                 </div>
                             </div>
 

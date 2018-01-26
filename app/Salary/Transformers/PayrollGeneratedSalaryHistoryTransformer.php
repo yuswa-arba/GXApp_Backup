@@ -32,7 +32,10 @@ class PayrollGeneratedSalaryHistoryTransformer extends TransformerAbstract
             'totalStage2Confirmed' => $this->getTotalStage2Confirmed($reportLogs->salaryReportIds),
             'totalPostponed' => $this->getTotalPostponed($reportLogs->salaryReportIds),
             'totalSubmittedForPayroll' => $this->getTotalSubmittedForPayroll($reportLogs->salaryReportIds),
-            'totalSalaryReport' => $this->getTotalSalaryReport($reportLogs->salaryReportIds)
+            'totalSalaryReport' => $this->getTotalSalaryReport($reportLogs->salaryReportIds),
+            'isGeneratedForPayroll'=>$reportLogs->isGeneratedForPayroll,
+            'lastGeneratePayrollId'=>$reportLogs->lastGeneratePayrollId
+
         ];
     }
 

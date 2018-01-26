@@ -2987,6 +2987,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3003,7 +3008,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         finish: function finish() {
             this.$router.push('/');
         },
-        downloadFile: function downloadFile(id) {}
+        downloadFile: function downloadFile(id) {
+            this.$store.commit({
+                type: 'payroll/downloadFile',
+                id: id
+            });
+        }
     }
 });
 
@@ -3017,6 +3027,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
 //
 //
 //
@@ -3101,10 +3115,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 id: id
             });
         },
-        deleteFile: function deleteFile(id) {
+        deleteFile: function deleteFile(id, index) {
             this.$store.commit({
-                type: 'payroll/downloadFile',
-                id: id
+                type: 'payroll/deleteFile',
+                id: id,
+                index: index
             });
         }
     }
@@ -3285,7 +3300,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
 //
 //
 //
@@ -23437,7 +23451,7 @@ var render = function() {
                     _c("h4", { staticClass: "pull-left" }, [
                       _c("b", [_vm._v("Generate Payroll")]),
                       _vm._v(
-                        " (Salary Report ID: " +
+                        " (Generated Salary Report ID: " +
                           _vm._s(_vm.report.summary.id) +
                           ")"
                       )
@@ -23647,8 +23661,8 @@ var render = function() {
       _c("div", { staticClass: "col-lg-4" }, [
         _vm.report.availability
           ? _c("div", [
-              _vm.report.availability.normalExisted.isExisted ||
-              _vm.report.availability.stage1Existed.isExisted
+              _vm.report.availability.normalExisted.isExist ||
+              _vm.report.availability.stage1Existed.isExist
                 ? _c("div", { staticClass: "card card-bordered" }, [
                     _c("div", { staticClass: "card-block" }, [
                       _c(
@@ -23658,14 +23672,14 @@ var render = function() {
                           _vm._m(1),
                           _vm._v(" "),
                           _c("div", { staticClass: "row" }, [
-                            _vm.report.availability.normalExisted.isExisted
+                            _vm.report.availability.normalExisted.isExist
                               ? _c("div", { staticClass: "col-lg-6" }, [
                                   _c("h5", { staticClass: "bold" }, [
                                     _vm._v("Valid Stage")
                                   ]),
                                   _vm._v(" "),
                                   _vm.report.availability.normalExisted
-                                    .payrollId
+                                    .payrollId != ""
                                     ? _c("p", [
                                         _vm._v(
                                           "ID: " +
@@ -23678,7 +23692,7 @@ var render = function() {
                                     : _vm._e(),
                                   _vm._v(" "),
                                   _vm.report.availability.normalExisted
-                                    .generatedDate
+                                    .generatedDate != ""
                                     ? _c("p", [
                                         _vm._v(
                                           "Date: " +
@@ -23691,7 +23705,7 @@ var render = function() {
                                     : _vm._e(),
                                   _vm._v(" "),
                                   _vm.report.availability.normalExisted
-                                    .generatedBy
+                                    .generatedBy != ""
                                     ? _c("p", [
                                         _vm._v(
                                           "By: " +
@@ -23705,14 +23719,14 @@ var render = function() {
                                 ])
                               : _vm._e(),
                             _vm._v(" "),
-                            _vm.report.availability.stage1Existed.isExisted
+                            _vm.report.availability.stage1Existed.isExist
                               ? _c("div", { staticClass: "col-lg-6" }, [
                                   _c("h5", { staticClass: "bold" }, [
                                     _vm._v("Stage-1")
                                   ]),
                                   _vm._v(" "),
                                   _vm.report.availability.stage1Existed
-                                    .payrollId
+                                    .payrollId != ""
                                     ? _c("p", [
                                         _vm._v(
                                           "ID: " +
@@ -23725,7 +23739,7 @@ var render = function() {
                                     : _vm._e(),
                                   _vm._v(" "),
                                   _vm.report.availability.stage1Existed
-                                    .generatedDate
+                                    .generatedDate != ""
                                     ? _c("p", [
                                         _vm._v(
                                           "Date: " +
@@ -23738,7 +23752,7 @@ var render = function() {
                                     : _vm._e(),
                                   _vm._v(" "),
                                   _vm.report.availability.stage1Existed
-                                    .generatedBy
+                                    .generatedBy != ""
                                     ? _c("p", [
                                         _vm._v(
                                           "By: " +
@@ -24193,57 +24207,61 @@ var render = function() {
     !_vm.isStartGeneratingPayroll
       ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [
           !_vm.generatePayrollResponse.isFailed
-            ? _c("div", { staticClass: "center-margin" }, [
+            ? _c("div", { staticClass: "center-margin text-center" }, [
                 _c("div", { staticClass: "alert alert-info" }, [
                   _c("h4", [
                     _vm._v(_vm._s(_vm.generatePayrollResponse.message))
                   ]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      on: {
-                        click: function($event) {
-                          _vm.downloadFile(_vm.generatedPayrollId)
+                  _c("div", { staticStyle: { padding: "20px" } }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        on: {
+                          click: function($event) {
+                            _vm.downloadFile(_vm.generatedPayrollId)
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Download")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-primary",
-                      on: {
-                        click: function($event) {
-                          _vm.finish()
+                      },
+                      [_vm._v("Download")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-primary",
+                        on: {
+                          click: function($event) {
+                            _vm.finish()
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Finish")]
-                  )
+                      },
+                      [_vm._v("Finish")]
+                    )
+                  ])
                 ])
               ])
-            : _c("div", { staticClass: "center-margin" }, [
+            : _c("div", { staticClass: "center-margin text-center" }, [
                 _c("div", { staticClass: "alert alert-danger" }, [
                   _c("h4", [
                     _vm._v(_vm._s(_vm.generatePayrollResponse.message))
                   ]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-outline-danger",
-                      on: {
-                        click: function($event) {
-                          _vm.finish()
+                  _c("div", { staticStyle: { padding: "20px" } }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-danger",
+                        on: {
+                          click: function($event) {
+                            _vm.finish()
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Finish")]
-                  )
+                      },
+                      [_vm._v("Finish")]
+                    )
+                  ])
                 ])
               ])
         ])
@@ -24549,10 +24567,6 @@ var render = function() {
                         _vm._v(" "),
                         _c("br"),
                         _vm._v(" "),
-                        _vm._m(1, true),
-                        _vm._v(" "),
-                        _c("br"),
-                        _vm._v(" "),
                         _c(
                           "button",
                           {
@@ -24569,7 +24583,20 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("br")
+                        _c("br"),
+                        _vm._v(" "),
+                        report.isGeneratedForPayroll
+                          ? _c(
+                              "button",
+                              { staticClass: "btn btn-danger m-b-10" },
+                              [
+                                _c("i", { staticClass: "fa fa-eye" }),
+                                _vm._v(
+                                  " View Last Payroll\n                                "
+                                )
+                              ]
+                            )
+                          : _vm._e()
                       ])
                     ])
                   ])
@@ -24610,15 +24637,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th")
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-danger m-b-10" }, [
-      _c("i", { staticClass: "fa fa-eye" }),
-      _vm._v(" View Payroll\n                                ")
     ])
   }
 ]
@@ -24695,7 +24713,7 @@ var render = function() {
     _c("div", { staticClass: "col-lg-12" }, [
       _c("div", { staticClass: "card card-bordered" }, [
         _c("div", { staticClass: "card-block" }, [
-          _c("h4", [_vm._v("Generated Payrol List")]),
+          _c("h4", [_vm._v("Generated Payroll List")]),
           _vm._v(" "),
           _c("div", { staticClass: "scrollable" }, [
             _c("div", { staticStyle: { height: "500px" } }, [
@@ -24705,7 +24723,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "tbody",
-                    _vm._l(_vm.generatedPayrollList, function(payroll) {
+                    _vm._l(_vm.generatedPayrollList, function(payroll, index) {
                       return _c("tr", [
                         _c("td", [_vm._v(_vm._s(payroll.id))]),
                         _vm._v(" "),
@@ -24736,39 +24754,45 @@ var render = function() {
                         _c("td", [_vm._v(_vm._s(payroll.notes))]),
                         _vm._v(" "),
                         _c("td", [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-outline-primary",
-                              on: {
-                                click: function($event) {
-                                  _vm.downloadFile(payroll.id)
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fa fa-arrow-down" }),
-                              _vm._v(" Download File")
-                            ]
-                          ),
-                          _vm._v(
-                            "\n                                         \n                                        "
-                          ),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-outline-danger",
-                              on: {
-                                click: function($event) {
-                                  _vm.deleteFile(payroll.id)
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fa fa-trash" }),
-                              _vm._v(" Delete File")
-                            ]
-                          )
+                          payroll.file
+                            ? _c("div", [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-outline-primary",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.downloadFile(payroll.id)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fa fa-arrow-down"
+                                    }),
+                                    _vm._v(" Download File")
+                                  ]
+                                ),
+                                _vm._v(
+                                  "\n                                             \n                                            "
+                                ),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-outline-danger",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.deleteFile(payroll.id, index)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "fa fa-trash" }),
+                                    _vm._v(" Delete")
+                                  ]
+                                )
+                              ])
+                            : _c("p", [_vm._v("No File")])
                         ])
                       ])
                     })
@@ -24805,9 +24829,19 @@ var staticRenderFns = [
           _vm._v("Employee")
         ]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [_vm._v("Notes")]),
+        _c(
+          "th",
+          {
+            staticClass: "text-black p-t-5 p-b-5",
+            staticStyle: { width: "250px" }
+          },
+          [_vm._v("Notes")]
+        ),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black p-t-5 p-b-5" })
+        _c("th", {
+          staticClass: "text-black p-t-5 p-b-5",
+          staticStyle: { width: "300px" }
+        })
       ])
     ])
   }
@@ -39937,7 +39971,7 @@ module.exports = Component.exports
         isFetchingAttemptSalaryReportData: false,
         isStartGeneratingPayroll: false,
         attemptGenerateType: '',
-        generatePayrollResponse: { isFailed: false, message: '' },
+        generatePayrollResponse: { isFailed: true, message: 'Unknown Request' },
         generatedPayrollId: ''
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
@@ -40170,6 +40204,9 @@ module.exports = Component.exports
                         timeout: 3500,
                         type: 'info'
                     }).show();
+
+                    //remove from array
+                    state.generatedPayrollList[payload.index].file = '';
                 } else {
                     $('.page-container').pgNotification({
                         style: 'flip',

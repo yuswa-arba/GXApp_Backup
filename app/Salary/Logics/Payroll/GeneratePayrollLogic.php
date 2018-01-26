@@ -93,7 +93,7 @@ class GeneratePayrollLogic extends GenerateUseCase
                 if ($payrollReports) {
 
 
-                    $csvFileName = 'PR' . Carbon::now()->format('dmY') . 'ID' . $request->generateSalaryReportLogId . '.csv';
+                    $csvFileName = 'PR' . Carbon::now()->format('dmy') . '_ID' . $request->generateSalaryReportLogId . '_'.Carbon::now()->format('His').'.csv';
                     $csvFilePath = Configs::$DOWNLOAD_PATH['PAYROLL_REPORT'] . $csvFileName;
 
 
@@ -252,12 +252,12 @@ class GeneratePayrollLogic extends GenerateUseCase
                 $availability['normal'] = true;
 
                 /* Check if already exist */
-                $payroll = GeneratePayroll::where('generatedType', Configs::$GENERATED_PAYROLL_TYPE['CONFIRMED'])->where('generateSalaryReportLogId', $request->generateSalaryReportLogId)->first();
-                if ($payroll > 0) {
+                $payroll = GeneratePayroll::where('generatedType', Configs::$GENERATED_PAYROLL_TYPE['CONFIRMED'])->where('generateSalaryReportLogId', $request->generateSalaryReportLogId)->orderBy('id','desc')->first();
+                if ($payroll ) {
                     $availability['normalExisted']['isExist'] = true;
                     $availability['normalExisted']['payrollId'] = $payroll->id;
                     $availability['normalExisted']['generatedDate'] = $payroll->generatedDate;
-                    $availability['normalExisted']['generatedby'] = $payroll->generatedBy;
+                    $availability['normalExisted']['generatedBy'] = $payroll->generatedBy;
                 }
             }
 
@@ -267,12 +267,12 @@ class GeneratePayrollLogic extends GenerateUseCase
                 $availability['stage1'] = true;
 
                 /* Check if already exist */
-                $payroll = GeneratePayroll::where('generatedType', Configs::$GENERATED_PAYROLL_TYPE['STAGE_1_CONFIRMED'])->where('generateSalaryReportLogId', $request->generateSalaryReportLogId)->first();
-                if ($payroll > 0) {
+                $payroll = GeneratePayroll::where('generatedType', Configs::$GENERATED_PAYROLL_TYPE['STAGE_1_CONFIRMED'])->where('generateSalaryReportLogId', $request->generateSalaryReportLogId)->orderBy('id','desc')->first();
+                if ($payroll) {
                     $availability['stage1Existed']['isExist'] = true;
                     $availability['stage1Existed']['payrollId'] = $payroll->id;
                     $availability['stage1Existed']['generatedDate'] = $payroll->generatedDate;
-                    $availability['stage1Existed']['generatedby'] = $payroll->generatedBy;
+                    $availability['stage1Existed']['generatedBy'] = $payroll->generatedBy;
                 }
             }
 

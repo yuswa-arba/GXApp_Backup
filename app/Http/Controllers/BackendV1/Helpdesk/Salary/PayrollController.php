@@ -184,6 +184,11 @@ class PayrollController extends Controller
             if (file_exists($filePath)) {
 
                 if (unlink($filePath)) {
+
+                    //remove file path from DB
+                    $generatePayroll->file='';
+                    $generatePayroll->save();
+
                     /* return response */
                     $response['isFailed'] = false;
                     $response['message'] = 'File has been deleted successfully';
