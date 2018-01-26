@@ -2878,11 +2878,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {},
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        $('#sortReportListYear').datepicker({
+            autoclose: true,
+            format: " yyyy", // Notice the Extra space at the beginning
+            viewMode: "years",
+            minViewMode: "years"
+        });
+
+        var currentYear = moment().format('YYYY');
+        if (this.$store.state.payroll.selectedYear) {
+            currentYear = this.$store.state.payroll.selectedYear;
+        }
+        $('#sortReportListYear').val(currentYear);
+    },
     created: function created() {
         this.$store.dispatch('payroll/getSalaryReportList');
     },
@@ -2903,6 +2928,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 type: 'payroll/refreshSalaryReport',
                 id: id,
                 index: index
+            });
+        },
+        sortReportList: function sortReportList() {
+
+            var selectedYear = $('input[name="sortReportListYear"]').val();
+
+            this.$store.dispatch({
+                type: 'payroll/sortReportList',
+                selectedYear: selectedYear
             });
         }
     }
@@ -22728,7 +22762,43 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(0)
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "clearfix" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "pull-right m-r-15" }, [
+                      _c("div", { staticClass: "form-group required" }, [
+                        _c(
+                          "div",
+                          { staticClass: "input-group bootstrap-timepicker" },
+                          [
+                            _c("input", {
+                              staticClass: "form-control",
+                              attrs: {
+                                id: "sortReportListYear",
+                                name: "sortReportListYear",
+                                type: "text",
+                                required: ""
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "input-group-addon bg-primary text-white",
+                                on: {
+                                  click: function($event) {
+                                    _vm.sortReportList()
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fa fa-check" })]
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
                 ])
               ])
             ]),
@@ -22830,7 +22900,7 @@ var render = function() {
                       _c("div", { staticClass: "card-block" }, [
                         _c("div", { staticClass: "table-responsive" }, [
                           _c("table", { staticClass: "table" }, [
-                            _vm._m(1, true),
+                            _vm._m(0, true),
                             _vm._v(" "),
                             _c("tbody", [
                               _c("tr", [
@@ -22900,11 +22970,11 @@ var render = function() {
                         _vm._v(" "),
                         _c("br"),
                         _vm._v(" "),
-                        _vm._m(2, true),
+                        _vm._m(1, true),
                         _vm._v(" "),
                         _c("br"),
                         _vm._v(" "),
-                        _vm._m(3, true),
+                        _vm._m(2, true),
                         _vm._v(" "),
                         _c("br"),
                         _vm._v(" "),
@@ -22939,30 +23009,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6" }, [
-      _c("div", { staticClass: "clearfix" }),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group", staticStyle: { "padding-top": "5px" } },
-        [
-          _c("input", {
-            staticClass: "pull-right form-control",
-            staticStyle: { width: "250px" },
-            attrs: {
-              type: "text",
-              id: "search-salary-report-details",
-              placeholder: "Search"
-            }
-          })
-        ]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -38029,7 +38075,7 @@ module.exports = Component.exports
         var commit = _ref2.commit,
             state = _ref2.state;
 
-        commit('getSalaryReportHistory');
+        commit({ type: 'getSalaryReportHistory', selectedYear: '', branchOfficeId: '' });
     },
     attemptGetSalaryReportDetail: function attemptGetSalaryReportDetail(_ref3, payload) {
         var commit = _ref3.commit,
@@ -38044,6 +38090,21 @@ module.exports = Component.exports
         if (payload.id) {
             commit({ type: 'getSalaryReportDetail', id: payload.id });
         }
+    },
+    sortReportList: function sortReportList(_ref4, payload) {
+        var commit = _ref4.commit,
+            state = _ref4.state;
+
+
+        if (payload.selectedYear) state.selectedYear = payload.selectedYear;
+
+        if (payload.selectedBranchOfficeId) state.selectedBranchOfficeId = payload.selectedBranchOfficeId;
+
+        commit({
+            type: 'getSalaryReportHistory',
+            selectedYear: state.selectedYear,
+            branchOfficeId: state.selectedBranchOfficeId
+        });
     }
 });
 
@@ -38082,7 +38143,9 @@ module.exports = Component.exports
         lastGeneratedPayroll: {},
         generatedPayrollList: [],
         salaryReportDetails: [],
-        isFetchingReportDetail: false
+        isFetchingReportDetail: false,
+        selectedYear: '',
+        selectedBranchOfficeId: ''
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -38108,19 +38171,20 @@ module.exports = Component.exports
 /* harmony default export */ __webpack_exports__["a"] = ({
     getSalaryReportHistory: function getSalaryReportHistory(state, payload) {
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payroll/generateSalary/history').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payroll/generateSalary/history?year=' + payload.selectedYear + '&branchOfficeId=' + payload.branchOfficeId).then(function (res) {
 
             if (!res.data.isFailed) {
                 state.salaryReportsHistory = res.data.reports;
             }
         }).catch(function (err) {
+
             $('.page-container').pgNotification({
                 style: 'flip',
                 message: err.message,
                 position: 'top-right',
                 timeout: 3500,
                 type: 'danger'
-            }).show();
+            });
         });
     },
     getLastGeneratedPayroll: function getLastGeneratedPayroll(state, payload) {

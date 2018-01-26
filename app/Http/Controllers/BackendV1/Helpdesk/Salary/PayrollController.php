@@ -41,10 +41,7 @@ class PayrollController extends Controller
 
     public function getGenerateSalaryHistory(Request $request)
     {
-
         return GetSalaryReportListLogic::getData($request);
-
-
     }
 
     public function details($salaryReportLogId)

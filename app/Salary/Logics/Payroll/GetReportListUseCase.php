@@ -21,11 +21,11 @@ abstract class GetReportListUseCase
         $byBranchOffice = false;
         $bySpecificYear = false;
 
-        if($request->byBranchOffice){
+        if($request->branchOfficeId){
             $byBranchOffice = true;
         }
 
-        if($request->bySpecificYear){
+        if($request->year){
             $bySpecificYear = true;
         }
 

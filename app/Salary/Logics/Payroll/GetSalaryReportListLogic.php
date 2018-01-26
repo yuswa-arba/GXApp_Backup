@@ -34,11 +34,8 @@ class GetSalaryReportListLogic extends GetReportListUseCase
 
     public function handleDefault($request)
     {
-        // get only current year and last year
-        $generateSalaryReports = GenerateSalaryReportLogs::orderBy('id', 'desc')
-            ->whereYear('created_at', Carbon::now()->year)->orWhere(function ($query) {
-                $query->whereYear('created_at', Carbon::now()->subYear()->year);
-            })->get();
+        // get only current year
+        $generateSalaryReports = GenerateSalaryReportLogs::orderBy('id', 'desc')->whereYear('created_at', Carbon::now()->year)->get();
 
         foreach ($generateSalaryReports as $generateSalaryReport) {
             /* Salary Reports Data */
@@ -58,16 +55,67 @@ class GetSalaryReportListLogic extends GetReportListUseCase
 
     public function handleBySpecificBranchOffice($request)
     {
-        // TODO: Implement handleBySpecificBranchOffice() method.
+        $generateSalaryReports = GenerateSalaryReportLogs::orderBy('id', 'desc')
+                ->whereYear('created_at', Carbon::now()->year)
+                ->where('branchOfficeId',$request->branchOfficeId)->get();
+
+        foreach ($generateSalaryReports as $generateSalaryReport) {
+            /* Salary Reports Data */
+            $salaryReports = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->get();
+
+            /* Check */
+            $this->checkStage2Confirm($generateSalaryReport, $salaryReports);
+        }
+
+        $response = array();
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['reports'] = fractal($generateSalaryReports, new PayrollGeneratedSalaryHistoryTransformer())->toArray()['data'];
+
+        return response()->json($response, 200);
     }
 
     public function handleBySpecificYear($request)
     {
-        // TODO: Implement handleBySpecificYear() method.
+        // get only current year and last year
+        $generateSalaryReports = GenerateSalaryReportLogs::orderBy('id', 'desc')
+            ->whereYear('created_at', $request->year)->get();
+
+        foreach ($generateSalaryReports as $generateSalaryReport) {
+            /* Salary Reports Data */
+            $salaryReports = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->get();
+
+            /* Check */
+            $this->checkStage2Confirm($generateSalaryReport, $salaryReports);
+        }
+
+        $response = array();
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['reports'] = fractal($generateSalaryReports, new PayrollGeneratedSalaryHistoryTransformer())->toArray()['data'];
+
+        return response()->json($response, 200);
     }
 
     public function handleBySpecificYearAndBranchOffice($request)
     {
-        // TODO: Implement handleBySpecificYearAndBranchOffice() method.
+        $generateSalaryReports = GenerateSalaryReportLogs::orderBy('id', 'desc')
+            ->whereYear('created_at', $request->year)
+            ->where('branchOfficeId',$request->branchOfficeId)->get();
+
+        foreach ($generateSalaryReports as $generateSalaryReport) {
+            /* Salary Reports Data */
+            $salaryReports = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->get();
+
+            /* Check */
+            $this->checkStage2Confirm($generateSalaryReport, $salaryReports);
+        }
+
+        $response = array();
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['reports'] = fractal($generateSalaryReports, new PayrollGeneratedSalaryHistoryTransformer())->toArray()['data'];
+
+        return response()->json($response, 200);
     }
 }

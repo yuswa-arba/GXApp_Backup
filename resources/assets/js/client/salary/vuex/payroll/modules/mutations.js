@@ -7,7 +7,7 @@ import series from 'async/series';
 export default{
     getSalaryReportHistory(state, payload){
 
-        get(api_path + 'salary/payroll/generateSalary/history')
+        get(api_path + 'salary/payroll/generateSalary/history?year=' + payload.selectedYear + '&branchOfficeId=' + payload.branchOfficeId)
             .then((res) => {
 
                 if (!res.data.isFailed) {
@@ -16,14 +16,17 @@ export default{
 
             })
             .catch((err) => {
+
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: err.message,
                     position: 'top-right',
                     timeout: 3500,
                     type: 'danger'
-                }).show();
+                })
+
             })
+
     },
     getLastGeneratedPayroll(state, payload){
         get(api_path + 'salary/payroll/lastGeneratedPayroll')
@@ -89,35 +92,34 @@ export default{
     refreshSalaryReport(state, payload){
 
 
-            post(api_path + 'salary/payroll/report/refresh/' + payload.id)
-                .then((res) => {
-                    if (!res.data.isFailed) {
+        post(api_path + 'salary/payroll/report/refresh/' + payload.id)
+            .then((res) => {
+                if (!res.data.isFailed) {
 
 
-                        /// success notification
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        //refresh data
-                        state.salaryReportsHistory.splice(payload.index, 1, res.data.reports)
-
-                    }
-                })
-                .catch((err) => {
+                    /// success notification
                     $('.page-container').pgNotification({
                         style: 'flip',
-                        message: err.message,
+                        message: res.data.message,
                         position: 'top-right',
                         timeout: 3500,
-                        type: 'danger'
+                        type: 'info'
                     }).show();
-                })
 
+                    //refresh data
+                    state.salaryReportsHistory.splice(payload.index, 1, res.data.reports)
+
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
 
 
     }

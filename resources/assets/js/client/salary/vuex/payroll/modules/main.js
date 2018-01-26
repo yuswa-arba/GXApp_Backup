@@ -13,7 +13,9 @@ export default {
         lastGeneratedPayroll:{},
         generatedPayrollList:[],
         salaryReportDetails:[],
-        isFetchingReportDetail:false
+        isFetchingReportDetail:false,
+        selectedYear:'',
+        selectedBranchOfficeId:''
     },
     getters,
     mutations,

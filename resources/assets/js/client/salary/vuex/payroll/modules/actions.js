@@ -11,7 +11,7 @@ export default{
         commit('getPayrollList')
     },
     getSalaryReportList({commit, state}, payload){
-        commit('getSalaryReportHistory')
+        commit({type:'getSalaryReportHistory',selectedYear:'',branchOfficeId:''})
     },
     attemptGetSalaryReportDetail({commit, state}, payload){
 
@@ -24,5 +24,19 @@ export default{
             commit({type: 'getSalaryReportDetail', id: payload.id})
         }
 
+    },
+    sortReportList({commit,state},payload){
+
+        if(payload.selectedYear)
+        state.selectedYear = payload.selectedYear
+
+        if(payload.selectedBranchOfficeId)
+        state.selectedBranchOfficeId = payload.selectedBranchOfficeId
+
+        commit({
+            type:'getSalaryReportHistory',
+            selectedYear:state.selectedYear,
+            branchOfficeId:state.selectedBranchOfficeId
+        })
     }
 }

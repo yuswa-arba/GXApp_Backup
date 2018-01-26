@@ -6,7 +6,7 @@
 <script src="{{asset('plugins/jquery-datatable/media/js/jquery.dataTables.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('plugins/datatables-responsive/js/datatables.responsive.js')}}"></script>
 
-<script src="{{asset('plugins/fullcalendar/js/moment.min.js')}}"></script>
+{{--<script src="{{asset('plugins/fullcalendar/js/moment.min.js')}}"></script>--}}
 @endpush
 
 @push('child-page-controller')

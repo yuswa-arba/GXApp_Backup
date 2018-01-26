@@ -15,10 +15,21 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="clearfix"></div>
-                                    <div class="form-group" style="padding-top: 5px">
-                                        <input type="text" id="search-salary-report-details"
-                                               class="pull-right form-control"
-                                               style="width: 250px" placeholder="Search">
+                                    <!--<div class="form-group" style="padding-top: 5px">-->
+                                    <!--<input type="text" id="search-salary-report-details"-->
+                                    <!--class="pull-right form-control"-->
+                                    <!--style="width: 250px" placeholder="Search">-->
+                                    <!--</div>-->
+                                    <div class="pull-right m-r-15">
+                                        <div class="form-group required">
+                                            <div class="input-group bootstrap-timepicker">
+                                                <input id="sortReportListYear" name="sortReportListYear" type="text"
+                                                       class="form-control" required>
+                                                <span class="input-group-addon bg-primary text-white"
+                                                      @click="sortReportList()"><i
+                                                        class="fa fa-check"></i></span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +118,8 @@
                                     <button class="btn btn-danger m-b-10"><i class="fa fa-eye"></i> View Payroll
                                     </button>
                                     <br>
-                                    <button class="btn btn-complete m-b-10" @click="refresh(report.id,index)"><i class="fa fa-refresh"></i> Refresh
+                                    <button class="btn btn-complete m-b-10" @click="refresh(report.id,index)"><i
+                                            class="fa fa-refresh"></i> Refresh
                                     </button>
                                     <br>
                                 </div>
@@ -124,7 +136,18 @@
     export default{
         components: {},
         mounted(){
+            $('#sortReportListYear').datepicker({
+                autoclose: true,
+                format: " yyyy", // Notice the Extra space at the beginning
+                viewMode: "years",
+                minViewMode: "years"
+            });
 
+            let currentYear = moment().format('YYYY')
+            if (this.$store.state.payroll.selectedYear) {
+                currentYear = this.$store.state.payroll.selectedYear
+            }
+            $('#sortReportListYear').val(currentYear)
         },
         created(){
             this.$store.dispatch('payroll/getSalaryReportList')
@@ -141,13 +164,23 @@
             showDetail(id){
                 this.$router.push({name: 'salaryReportDetail', params: {id: id}})
             },
-            refresh(id,index){
+            refresh(id, index){
 
                 this.$store.commit({
-                    type:'payroll/refreshSalaryReport',
-                    id:id,
-                    index:index
+                    type: 'payroll/refreshSalaryReport',
+                    id: id,
+                    index: index
                 })
+            },
+            sortReportList(){
+
+                let selectedYear = $('input[name="sortReportListYear"]').val()
+
+                this.$store.dispatch({
+                    type:'payroll/sortReportList',
+                    selectedYear: selectedYear
+                })
+
             }
         }
     }
