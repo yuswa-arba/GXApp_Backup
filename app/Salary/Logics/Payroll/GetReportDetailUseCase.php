@@ -12,7 +12,7 @@ namespace App\Salary\Logics\Payroll;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-abstract class GetReportUseCase
+abstract class GetReportDetailUseCase
 {
 
     public static function getData($salaryReportLogId)

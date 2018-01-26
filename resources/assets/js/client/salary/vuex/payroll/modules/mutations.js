@@ -43,8 +43,6 @@ export default{
     },
     getSalaryReportDetail(state, payload){
 
-
-
         get(api_path + 'salary/payroll/report/details/' + payload.id)
             .then((res) => {
                 if (!res.data.isFailed) {
@@ -86,6 +84,41 @@ export default{
                 state.isFetchingReportDetail = false
 
             })
+
+    },
+    refreshSalaryReport(state, payload){
+
+
+            post(api_path + 'salary/payroll/report/refresh/' + payload.id)
+                .then((res) => {
+                    if (!res.data.isFailed) {
+
+
+                        /// success notification
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        //refresh data
+                        state.salaryReportsHistory.splice(payload.index, 1, res.data.reports)
+
+                    }
+                })
+                .catch((err) => {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                })
+
+
 
     }
 

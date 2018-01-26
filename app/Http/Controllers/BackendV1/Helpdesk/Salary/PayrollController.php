@@ -7,6 +7,7 @@ use App\Components\Transformers\BasicSettingTrasnformer;
 use App\Salary\Logics\Payroll\GeneratePayrollLogic;
 use App\Salary\Logics\Payroll\GetPayrollListLogic;
 use App\Salary\Logics\Payroll\GetSalaryReportDetailsLogic;
+use App\Salary\Logics\Payroll\GetSalaryReportListLogic;
 use App\Salary\Logics\Salary\GenerateSalaryLogic;
 use App\Salary\Models\GeneratePayroll;
 use App\Salary\Models\GenerateSalaryReportLogs;
@@ -38,28 +39,12 @@ class PayrollController extends Controller
         return GetPayrollListLogic::getData($request);
     }
 
-    public function getGenerateSalaryHistory()
+    public function getGenerateSalaryHistory(Request $request)
     {
-        // get only current year and last year
-        $generateSalaryReports = GenerateSalaryReportLogs::orderBy('id', 'desc')
-            ->whereYear('created_at', Carbon::now()->year)->orWhere(function ($query) {
-                $query->whereYear('created_at', Carbon::now()->subYear()->year);
-            })->get();
 
-        foreach ($generateSalaryReports as $generateSalaryReport) {
-            /* Salary Reports Data */
-            $salaryReports = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->get();
+        return GetSalaryReportListLogic::getData($request);
 
-            /* Check */
-            $this->checkStage2Confirm($generateSalaryReport, $salaryReports);
-        }
 
-        $response = array();
-        $response['isFailed'] = false;
-        $response['message'] = 'Success';
-        $response['reports'] = fractal($generateSalaryReports, new PayrollGeneratedSalaryHistoryTransformer())->toArray()['data'];
-
-        return response()->json($response, 200);
     }
 
     public function details($salaryReportLogId)
@@ -74,7 +59,43 @@ class PayrollController extends Controller
 
 
         return GetSalaryReportDetailsLogic::getData($salaryReportLogId);
+    }
 
+    public function refresh($salaryReportLogId)
+    {
+        $response = array();
+
+        if ($salaryReportLogId == null || $salaryReportLogId == '') {
+            $response['isFailed'] = true;
+            $response['message'] = 'Salary report log ID is missing';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $generatedSalaryReport = GenerateSalaryReportLogs::find($salaryReportLogId);
+
+        if($generatedSalaryReport){
+
+            /* Salary Reports Data */
+            $salaryReports = SalaryReport::whereIn('id', explode(' ', $generatedSalaryReport->salaryReportIds))->get();
+
+            /* Check */
+            $this->checkStage2Confirm($generatedSalaryReport, $salaryReports);
+
+            /* Return response */
+            $response['isFailed'] = false;
+            $response['message'] = 'Refresh successful!';
+            $response['reports'] = fractal($generatedSalaryReport, new PayrollGeneratedSalaryHistoryTransformer())->toArray()['data'];
+
+            return response()->json($response, 200);
+
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Salary report log is empty';
+            return response()->json($response,200);
+        }
     }
 
     public function getLastGeneratedPayroll()
@@ -110,8 +131,6 @@ class PayrollController extends Controller
 
             return response()->json($response,200);
         }
-
-
     }
 
 

@@ -29,7 +29,7 @@ class AttendanceRepeatSlotMaker extends Command
 
     public function handle()
     {
-        //php artisan queue:work --queue=checker
+        //php artisan queue:work --queue=repeater
         RepeatGeneralSlot::dispatch()->onConnection('database')->onQueue('repeater');
         RepeatSlotMaker::dispatch()->onConnection('database')->onQueue('repeater');
     }

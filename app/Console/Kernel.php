@@ -5,7 +5,7 @@ namespace App\Console;
 use App\Attendance\Console\Commands\AttendanceRepeatSlotMaker;
 use App\Attendance\Console\Commands\AttendanceScheduleChecker;
 use App\Attendance\Console\Commands\AttendanceTimesheetChecker;
-use App\Attendance\Jobs\RepeatSlotMaker;
+use App\Salary\Console\Commands\SalaryConfirmationChecker;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\App;
@@ -20,7 +20,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         \App\Attendance\Console\Commands\AttendanceScheduleChecker::class,
         \App\Attendance\Console\Commands\AttendanceTimesheetChecker::class,
-        \App\Attendance\Console\Commands\AttendanceRepeatSlotMaker::class
+        \App\Attendance\Console\Commands\AttendanceRepeatSlotMaker::class,
+        \App\Salary\Console\Commands\SalaryConfirmationChecker::class
     ];
 
     /**
@@ -32,7 +33,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $this->scheduleInDayCommands($schedule);
-//        $this->scheduleDailyCommands($schedule);
+        $this->scheduleDailyCommands($schedule);
 //        $this->scheduleOnDayCommands($schedule);
         $this->scheduleYearlyCommands($schedule);
     }
@@ -47,7 +48,7 @@ class Kernel extends ConsoleKernel
 
     protected function scheduleDailyCommands(Schedule $schedule)
     {
-//        $schedule->command('products:set-rating')->dailyAt('02:30');
+        $schedule->command(SalaryConfirmationChecker::class)->twiceDaily(9,15);
 //        $schedule->command('service:generators:sitemap')->dailyAt('00:35');
 //        $schedule->command('send:daily-emails')->dailyAt('00:00');
     }

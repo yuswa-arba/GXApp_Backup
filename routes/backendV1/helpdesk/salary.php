@@ -49,6 +49,7 @@ Route::prefix('v1/h')->group(function () {
 
         Route::get('payroll/generateSalary/history','PayrollController@getGenerateSalaryHistory');
         Route::get('payroll/report/details/{salaryReportLogID}','PayrollController@details');
+        Route::post('payroll/report/refresh/{salaryReportLogID}','PayrollController@refresh');
         Route::get('payroll/list','PayrollController@list');
         Route::get('payroll/lastGeneratedPayroll','PayrollController@getLastGeneratedPayroll');
         Route::get('payroll/generate/attempt','PayrollController@attemptGenerate');

@@ -2896,6 +2896,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         showDetail: function showDetail(id) {
             this.$router.push({ name: 'salaryReportDetail', params: { id: id } });
+        },
+        refresh: function refresh(id, index) {
+
+            this.$store.commit({
+                type: 'payroll/refreshSalaryReport',
+                id: id,
+                index: index
+            });
         }
     }
 });
@@ -22725,7 +22733,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._l(_vm.salaryReportsHistory, function(report) {
+            _vm._l(_vm.salaryReportsHistory, function(report, index) {
               return _c(
                 "div",
                 {
@@ -22900,7 +22908,21 @@ var render = function() {
                         _vm._v(" "),
                         _c("br"),
                         _vm._v(" "),
-                        _vm._m(4, true),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-complete m-b-10",
+                            on: {
+                              click: function($event) {
+                                _vm.refresh(report.id, index)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-refresh" }),
+                            _vm._v(" Refresh\n                                ")
+                          ]
+                        ),
                         _vm._v(" "),
                         _c("br")
                       ])
@@ -22985,15 +23007,6 @@ var staticRenderFns = [
     return _c("button", { staticClass: "btn btn-danger m-b-10" }, [
       _c("i", { staticClass: "fa fa-eye" }),
       _vm._v(" View Payroll\n                                ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "btn btn-complete m-b-10" }, [
-      _c("i", { staticClass: "fa fa-refresh" }),
-      _vm._v(" Refresh\n                                ")
     ])
   }
 ]
@@ -38161,6 +38174,33 @@ module.exports = Component.exports
             }).show();
 
             state.isFetchingReportDetail = false;
+        });
+    },
+    refreshSalaryReport: function refreshSalaryReport(state, payload) {
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payroll/report/refresh/' + payload.id).then(function (res) {
+            if (!res.data.isFailed) {
+
+                /// success notification
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                //refresh data
+                state.salaryReportsHistory.splice(payload.index, 1, res.data.reports);
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
         });
     }
 });

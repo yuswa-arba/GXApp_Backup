@@ -25,7 +25,7 @@
                         </div>
                     </div>
                     <div class="card card-bordered filter-report-details no-padding"
-                         v-for="report in salaryReportsHistory">
+                         v-for="(report,index) in salaryReportsHistory">
                         <div class="widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                             <div class="card-block bg-master" style="padding:3px 15px!important;">
                                 <div class="pull-left">
@@ -107,7 +107,7 @@
                                     <button class="btn btn-danger m-b-10"><i class="fa fa-eye"></i> View Payroll
                                     </button>
                                     <br>
-                                    <button class="btn btn-complete m-b-10"><i class="fa fa-refresh"></i> Refresh
+                                    <button class="btn btn-complete m-b-10" @click="refresh(report.id,index)"><i class="fa fa-refresh"></i> Refresh
                                     </button>
                                     <br>
                                 </div>
@@ -140,6 +140,14 @@
             },
             showDetail(id){
                 this.$router.push({name: 'salaryReportDetail', params: {id: id}})
+            },
+            refresh(id,index){
+
+                this.$store.commit({
+                    type:'payroll/refreshSalaryReport',
+                    id:id,
+                    index:index
+                })
             }
         }
     }

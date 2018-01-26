@@ -28,7 +28,7 @@ trait SalaryCheckerUtil
         $reachedStage2 = false;//default
 
         /* Check if today has reached stage2 confirmation*/
-        if ($this->totalDays_($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) >= $maxConfirmationStage1) {
+        if ($this->totalDays_($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationStage1) {
             $reachedStage2 = true;
         }
 

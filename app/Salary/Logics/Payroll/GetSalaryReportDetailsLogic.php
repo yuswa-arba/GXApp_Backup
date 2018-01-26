@@ -22,7 +22,7 @@ use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 
 
-class GetSalaryReportDetailsLogic extends GetReportUseCase
+class GetSalaryReportDetailsLogic extends GetReportDetailUseCase
 {
 
     use GlobalUtils;
