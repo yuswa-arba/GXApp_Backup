@@ -93,7 +93,8 @@ class GeneratePayrollLogic extends GenerateUseCase
                 if ($payrollReports) {
 
 
-                    $csvFilePath = Configs::$DOWNLOAD_PATH['PAYROLL_REPORT'] . 'PR' . Carbon::now()->format('dmY') . 'ID' . $request->generateSalaryReportLogId . '.csv';
+                    $csvFileName = 'PR' . Carbon::now()->format('dmY') . 'ID' . $request->generateSalaryReportLogId . '.csv';
+                    $csvFilePath = Configs::$DOWNLOAD_PATH['PAYROLL_REPORT'] . $csvFileName;
 
 
                     /* Create CSV File*/
@@ -108,7 +109,7 @@ class GeneratePayrollLogic extends GenerateUseCase
                         'fromDate'=>$generateSalaryReport->fromDate,
                         'toDate'=>$generateSalaryReport->toDate,
                         'branchOfficeId'=>$generateSalaryReport->toDate,
-                        'file'=>$csvFilePath,
+                        'file'=>$csvFileName, //save file name
                         'generatedDate'=>Carbon::now()->format('d/m/Y'),
                         'generatedBy'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','name'),
                         'generatedType'=>$request->generateType,
@@ -119,7 +120,6 @@ class GeneratePayrollLogic extends GenerateUseCase
 
 
                     if($create){
-
 
                         //Update Generate Salary Report Log
                         $generateSalaryReport->isGeneratedForPayroll = 1;
@@ -139,7 +139,6 @@ class GeneratePayrollLogic extends GenerateUseCase
                             SalaryCalculation::where('salaryReportId',$salaryReport->id)->update(['isProcessed'=>1,'processedDate'=>Carbon::now()->format('d/m/Y')]);
 
                         }
-
 
                         // Success Response
                         $response['isFailed'] = false;
@@ -190,8 +189,7 @@ class GeneratePayrollLogic extends GenerateUseCase
     // - valid stage salary report lists (all salary report logs model that confirmation status ID == 1)
     // - stage 1 salary report list (all salary report logs model that confirmation status ID == 4)
     // - stage 2 salary report list (all salary report logs model that confirmation status ID == 5)
-    public
-    function handleAttempt($request)
+    public function handleAttempt($request)
     {
         /* Response array */
         $response = array();

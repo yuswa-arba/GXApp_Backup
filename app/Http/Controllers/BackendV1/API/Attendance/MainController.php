@@ -4,6 +4,8 @@ namespace App\Http\Controllers\BackendV1\API\Attendance;
 
 use App\Account\Traits\TokenUtils;
 use App\Attendance\Logics\Attendance\AttendanceLogic;
+use App\Attendance\Models\AttendanceSchedule;
+use App\Attendance\Models\Shifts;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
@@ -184,4 +186,5 @@ class MainController extends Controller
         }
 
     }
+
 }

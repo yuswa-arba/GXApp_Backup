@@ -204,6 +204,9 @@ class AttendanceLogic extends AttendanceUseCase
             }
 
 
+            /* Check Attendance schedule first */
+            $this->checkAttendanceSchedule($shiftId);
+
             $attdSchedule = AttendanceSchedule::where('shiftId', $shiftId)->first(); // get default shift attendance schedule (8 to 17)
 
             /* return result based on punch type */
@@ -272,4 +275,55 @@ class AttendanceLogic extends AttendanceUseCase
         }
 
     }
+
+
+    private function checkAttendanceSchedule($shiftId)
+    {
+
+        $nowTime = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y H:i'));
+        $shift = Shifts::find($shiftId);
+
+        if ($shift) {
+
+            $workStartAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y') . ' ' . $shift->workStartAt);
+            $workEndAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y') . ' ' . $shift->workEndAt);
+
+//            if($shift->isOvernight==1){
+//                $workEndAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->addDay()->format('d/m/Y'). ' '. $shift->workEndAt);
+//            }
+
+            $breakStartAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y') . ' ' . $shift->breakStartAt);
+            $breakEndAt = Carbon::createFromFormat('d/m/Y H:i', Carbon::now()->format('d/m/Y') . ' ' . $shift->breakEndAt);
+
+
+            // allow check in before 1 hour
+            if ($nowTime->gte($workStartAt->subHour(1))) {
+                AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToCheckIn' => 1, 'allowedToCheckOut' => 0]);
+            } else {
+                AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToCheckIn' => 0]);
+            }
+
+            // allow check out after specified time
+            if ($nowTime->gte($workEndAt)) {
+                AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToCheckIn' => 0, 'allowedToCheckOut' => 1]);
+            } else {
+                AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToCheckOut' => 0]);
+            }
+
+            // allow break in after specified time or 2 hours after
+            if ($nowTime->gte($breakStartAt) && $nowTime->lte($breakStartAt->addHours(2))) {
+                AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToBreakIn' => 1]);
+            } else {
+                AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToBreakIn' => 0]);
+            }
+
+            // allow break out before specified time
+            if ($nowTime->lte($breakEndAt)) {
+                AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToBreakOut' => 1]);
+            } else {
+                AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToBreakOut' => 0]);
+            }
+        }
+    }
+
 }

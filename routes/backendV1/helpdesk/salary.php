@@ -53,7 +53,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('payroll/list','PayrollController@list');
         Route::get('payroll/lastGeneratedPayroll','PayrollController@getLastGeneratedPayroll');
         Route::get('payroll/generate/attempt','PayrollController@attemptGenerate');
-        Route::get('payroll/generate','PayrollController@generate');
+        Route::post('payroll/generate','PayrollController@generate');
 
     });
 });
