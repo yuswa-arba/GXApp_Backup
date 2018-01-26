@@ -113,7 +113,7 @@ class PayrollController extends Controller
             $lastGeneratedPayrollData['generatedType']= $lastGeneratedPayroll->generatedType;
             $lastGeneratedPayrollData['totalEmployee']= $lastGeneratedPayroll->totalEmployee;
             $lastGeneratedPayrollData['notes']= $lastGeneratedPayroll->notes;
-            $lastGeneratedPayrollData['salaryReportLogId']= $lastGeneratedPayroll->salaryReportLogId;
+            $lastGeneratedPayrollData['generateSalaryReportLogId']= $lastGeneratedPayroll->generateSalaryReportLogId;
 
             /* return response */
             $response['isFailed'] = false;
@@ -130,11 +130,14 @@ class PayrollController extends Controller
         }
     }
 
-
-
     public function attemptGenerate(Request $request)
     {
         return GeneratePayrollLogic::attemptGenerate($request);
+    }
+
+    public function generate(Request $request)
+    {
+        return GeneratePayrollLogic::generate($request);
     }
 
 }

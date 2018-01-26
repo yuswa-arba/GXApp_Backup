@@ -17,7 +17,7 @@ const router = new VueRouter({
         {path:'/',component:Index},
         {path:'/report/list',component:SalaryReportList,name:'salaryReportList'},
         {path:'/report/:id/detail',component:SalaryReportDetail,name:'salaryReportDetail'},
-        {path:'/attempt/generate',component:AttemptGenerate,name:'attemptGenerate'}
+        {path:'/attempt/generate/:id',component:AttemptGenerate,name:'attemptGenerate'}
     ]
 })
 

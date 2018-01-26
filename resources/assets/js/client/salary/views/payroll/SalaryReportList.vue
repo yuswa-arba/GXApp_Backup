@@ -177,13 +177,7 @@
             },
             attemptGenerate(id){
 
-
-                this.$store.dispatch({
-                    type:'payroll/attemptGeneratePayroll',
-                    generateSalaryReportLogId:id
-                })
-
-                this.$router.push({name: 'attemptGenerate'})
+                this.$router.push({name: 'attemptGenerate',params:{id:id}})
 
             },
             sortReportList(){

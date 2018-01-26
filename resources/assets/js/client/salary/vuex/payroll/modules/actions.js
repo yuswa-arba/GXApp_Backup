@@ -41,7 +41,8 @@ export default{
     },
     attemptGeneratePayroll({commit,state},payload){
 
-        state.isFetchingAttemptSalaryReportDate = true
+        state.attemptGenerateSalaryReport=[] //reset
+        state.isFetchingAttemptSalaryReportData = true
 
         if(payload.generateSalaryReportLogId){
 

@@ -18,12 +18,13 @@ class CreateGeneratePayrollTable extends Migration
             $table->string('fromDate');
             $table->string('toDate');
             $table->integer('branchOfficeId');
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->string('generatedDate');
             $table->string('generatedBy');
             $table->string('generatedType'); // pdf , json (send to personal type)
             $table->integer('totalEmployee');
-            $table->string('notes');
+            $table->string('notes')->nullable();
+            $table->integer('generateSalaryReportLogId');
             $table->timestamps();
         });
     }

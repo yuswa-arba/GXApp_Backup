@@ -40,6 +40,8 @@ abstract class GenerateUseCase
 
          $validator = Validator::make($request->all(),[
              'generateSalaryReportLogId'=>'required',
+             'generateType'=>'required',
+             'transferDate'=>'required'
          ]);
 
          if($validator->fails()){

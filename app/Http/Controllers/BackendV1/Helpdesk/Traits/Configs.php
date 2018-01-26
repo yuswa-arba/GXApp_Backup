@@ -16,6 +16,10 @@ class Configs
         'EMPLOYEE_PHOTO' => 'public/images/employee/',
         'RESIGNATION_PHOTO' => 'public/images/resignation/',
     ];
+    
+    public static $DOWNLOAD_PATH = [
+      'PAYROLL_REPORT'=>'public/downloads/payroll/'  
+    ];
 
     public static $PUNCH_TYPE = [
         'IN' => 'in',

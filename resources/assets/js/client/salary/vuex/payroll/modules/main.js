@@ -17,7 +17,7 @@ export default {
         selectedYear:'',
         selectedBranchOfficeId:'',
         attemptGenerateSalaryReport:[],
-        isFetchingAttemptSalaryReportDate:false
+        isFetchingAttemptSalaryReportData:false
     },
     getters,
     mutations,

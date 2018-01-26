@@ -3,44 +3,47 @@
         <div class="col-lg-12 m-b-10 m-t-10">
             <div class="card card-bordered">
                 <div class="card-block">
-                    <div class="row" v-if="!isFetchingAttemptSalaryReportDate&&report.summary">
+                    <div class="row" v-if="!isFetchingAttemptSalaryReportData&&report.summary">
                         <div class="col-lg-6">
                             <button class="btn btn-outline-danger m-r-15 m-b-10 m-t-10 pull-left"
                                     @click="cancel()"><i class="fa fa-times"></i> Cancel
                             </button>
-                            <h4 class="pull-left">Generate Payroll ID: {{report.summary.id}}</h4>
+                            <h4 class="pull-left"><b>Generate Payroll</b> (Salary Report ID: {{report.summary.id}})</h4>
                             <!--logs/history details-->
                         </div>
                         <div class="col-lg-6">
                             <div class="clearfix"></div>
-                            <!--<div class="form-group" style="padding-top: 5px">-->
-                            <!--<input type="text" id="search-salary-report-details"-->
-                            <!--class="pull-right form-control"-->
-                            <!--style="width: 250px" placeholder="Search">-->
-                            <!--</div>-->
                             <div class="pull-right">
-                                <button class="btn btn-primary m-r-15">Generate Valid Stage</button>
-                                <button class="btn btn-info m-r-15">Generate Stage-1</button>
-                            </div>
+                                <button class="btn btn-primary m-r-15" v-if="report.availability.normal">Generate Valid
+                                    Stage
+                                </button>
+                                <button class="btn btn-primary m-r-15" disabled v-else="">Generate Valid Stage</button>
 
-                            <!--TODO: ADD SORT BY BRANCH OFFICE-->
+                                <button class="btn btn-info m-r-15" v-if="report.availability.stage1">Generate Stage-1
+                                </button>
+                                <button class="btn btn-info m-r-15" disabled v-else=""> Generate Stage-1</button>
+                            </div>
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-8" v-if="!isFetchingAttemptSalaryReportDate && report.summary">
+        <div class="col-lg-8" v-if="!isFetchingAttemptSalaryReportData && report.summary">
             <div class="card card-bordered filter-report-details no-padding">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="card-block">
                             <h5 class="bold">{{report.summary.fromDate}} - {{report.summary.toDate}}</h5>
                             <p class="fs-16">Branch: <b class="text-primary">{{report.summary.branchOfficeName}}</b></p>
-                            <p class="fs-16">Generated: <b class="text-primary">@{{report.summary.generatedDate}}by {{report.summary.generatedBy}}</b></p>
-                            <p class="fs-16">Total Reports: <b class="text-primary">{{report.summary.totalSalaryReport}}</b></p>
-                            <p class="fs-16">Total Submitted: <b class="text-primary">{{report.summary.totalSubmittedForPayroll}}</b></p>
-                            <p class="fs-16">Total Postponed: <b class="text-primary">{{report.summary.totalPostponed}}</b></p>
+                            <p class="fs-16">Generated: <b class="text-primary">@{{report.summary.generatedDate}}by
+                                {{report.summary.generatedBy}}</b></p>
+                            <p class="fs-16">Total Reports: <b
+                                    class="text-primary">{{report.summary.totalSalaryReport}}</b></p>
+                            <p class="fs-16">Total Submitted: <b class="text-primary">{{report.summary.totalSubmittedForPayroll}}</b>
+                            </p>
+                            <p class="fs-16">Total Postponed: <b
+                                    class="text-primary">{{report.summary.totalPostponed}}</b></p>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -87,7 +90,35 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4"></div> <!--empty-->
+        <div class="col-lg-4">
+            <div class="card card-bordered" v-if="report.availability.normalExisted.isExisted||report.availability.stage1Existed.isExisted">
+                <div class="card-block">
+                    <div class="alert alert-warning bordered m-b-0">
+
+                        <p><i class="fa fa-info-circle"></i> This report has been generated before</p>
+
+                        <div class="row">
+                            <div class="col-lg-6" v-if="report.availability.normalExisted.isExisted">
+                                <h5 class="bold">Valid Stage</h5>
+                                <p v-if="report.availability.normalExisted.payrollId">ID: {{report.availability.normalExisted.payrollId}}</p>
+                                <p v-if="report.availability.normalExisted.generatedDate">Date: {{report.availability.normalExisted.generatedDate}}</p>
+                                <p v-if="report.availability.normalExisted.generatedBy">By: {{report.availability.normalExisted.generatedBy}}</p>
+                            </div>
+                            <div class="col-lg-6" v-if="report.availability.stage1Existed.isExisted">
+                                <h5 class="bold">Stage-1</h5>
+                                <p v-if="report.availability.stage1Existed.payrollId">ID: {{report.availability.stage1Existed.payrollId}}</p>
+                                <p v-if="report.availability.stage1Existed.generatedDate">Date: {{report.availability.stage1Existed.generatedDate}}</p>
+                                <p v-if="report.availability.stage1Existed.generatedBy">By: {{report.availability.stage1Existed.generatedBy}}</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
 
         <div class="col-lg-4">
             <div class="card card-bordered">
@@ -246,9 +277,7 @@
             </div>
         </div>
 
-
-
-        <div class="col-lg-12 m-b-10 p-t-200" v-if="isFetchingAttemptSalaryReportDate">
+        <div class="col-lg-12 m-b-10 p-t-200" v-if="isFetchingAttemptSalaryReportData">
             <!--Fetching data progress-->
             <div class="center-margin">
                 <p class="text-center fs-21">Fetching Data.. Please wait..</p>
@@ -269,11 +298,14 @@
 
         },
         created(){
-
+            this.$store.dispatch({
+                type: 'payroll/attemptGeneratePayroll',
+                generateSalaryReportLogId: this.$route.params.id
+            })
         },
         computed: {
             ...mapState('payroll', {
-                isFetchingAttemptSalaryReportDate :'isFetchingAttemptSalaryReportDate',
+                isFetchingAttemptSalaryReportData: 'isFetchingAttemptSalaryReportData',
                 report: 'attemptGenerateSalaryReport'
             })
         },

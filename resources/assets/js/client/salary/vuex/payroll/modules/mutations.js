@@ -139,7 +139,7 @@ export default{
                     }
 
 
-                    state.isFetchingAttemptSalaryReportDate = false
+                    state.isFetchingAttemptSalaryReportData = false
                 })
                 .catch((err)=>{
                     $('.page-container').pgNotification({
@@ -150,7 +150,7 @@ export default{
                         type: 'danger'
                     }).show();
 
-                    state.isFetchingAttemptSalaryReportDate = false
+                    state.isFetchingAttemptSalaryReportData = false
                 })
         } else {
              $('.page-container').pgNotification({
