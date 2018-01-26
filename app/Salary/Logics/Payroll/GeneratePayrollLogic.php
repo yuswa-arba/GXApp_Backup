@@ -9,18 +9,24 @@
 
 namespace App\Salary\Logics\Payroll;
 
+use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
+use App\Salary\Models\GeneratePayroll;
 use App\Salary\Models\GenerateSalaryReportLogs;
+use App\Salary\Models\PayrollSetting;
 use App\Salary\Models\SalaryReport;
 use App\Salary\Traits\SalaryCheckerUtil;
+use App\Salary\Transformers\BriefEmployeeDetailSalaryReportTransformer;
 use App\Salary\Transformers\PayrollGeneratedSalaryHistoryTransformer;
 use App\Salary\Transformers\SalaryReportTransformer;
 use App\Traits\GlobalUtils;
+use Carbon\Carbon;
 
 
 class GeneratePayrollLogic extends GenerateUseCase
 {
 
     use SalaryCheckerUtil;
+    use GlobalUtils;
 
     public function handle($request)
     {
@@ -63,29 +69,73 @@ class GeneratePayrollLogic extends GenerateUseCase
             foreach ($salaryReports as $salaryReport){
                 switch ($salaryReport->confirmationStatusId){
                     case 1 :
-                        array_push($details['confirmed'],fractal($salaryReport,new SalaryReportTransformer())->toArray()['data']);
+                        array_push($details['confirmed'],fractal($salaryReport,new BriefEmployeeDetailSalaryReportTransformer())->toArray()['data']);
                         break;
                     case 2 :
-                        array_push($details['unconfirmed'],fractal($salaryReport,new SalaryReportTransformer())->toArray()['data']);
+                        array_push($details['unconfirmed'],fractal($salaryReport,new BriefEmployeeDetailSalaryReportTransformer())->toArray()['data']);
                         break;
                     case 3 :
-                        array_push($details['waiting'],fractal($salaryReport,new SalaryReportTransformer())->toArray()['data']);
+                        array_push($details['waiting'],fractal($salaryReport,new BriefEmployeeDetailSalaryReportTransformer())->toArray()['data']);
                         break;
                     case 4 :
-                        array_push($details['stage1Confirmed'],fractal($salaryReport,new SalaryReportTransformer())->toArray()['data']);
+                        array_push($details['stage1Confirmed'],fractal($salaryReport,new BriefEmployeeDetailSalaryReportTransformer())->toArray()['data']);
                         break;
                     case 5 :
-                        array_push($details['stage2Confirmed'],fractal($salaryReport,new SalaryReportTransformer())->toArray()['data']);
+                        array_push($details['stage2Confirmed'],fractal($salaryReport,new BriefEmployeeDetailSalaryReportTransformer())->toArray()['data']);
                         break;
                     default:break;
                 }
             }
 
+            /* Check availability*/
+            $availability = array();
+            $availability['normal'] = false;
+            $availability['normal-existed']['isExist'] = false;
+            $availability['stage1'] = false;
+            $availability['stage1-existed']['isExist'] = false;
+
+            /* Payroll setting Max Day to Confirm Stage 1 */
+            $maxConfirmationStage1 = PayrollSetting::where('name', 'max-days-confirmation-salary-stage-1')->first()['value'];
+            $maxConfirmationValidStage = PayrollSetting::where('name', 'max-days-confirmation-salary-valid-stage')->first()['value'];
+
+            /* Check if today is in stage 1 confirmation*/
+            if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationValidStage) {
+
+                $availability['normal'] = true;
+
+                /* Check if already exist */
+                $payroll = GeneratePayroll::where('generatedType',Configs::$GENERATED_PAYROLL_TYPE['CONFIRMED'])->where('salaryReportLogId',$request->generateSalaryReportLogId)->first();
+                if($payroll>0){
+                    $availability['normal-existed']['isExist'] = true;
+                    $availability['normal-existed']['payrollId'] = $payroll->id;
+                    $availability['normal-existed']['generatedDate'] = $payroll->generatedDate;
+                    $availability['normal-existed']['generatedby'] = $payroll->generatedBy;
+                }
+            }
+
+            /* Check if today is in stage 1 confirmation*/
+            if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationStage1) {
+
+                $availability['stage1'] = true;
+
+                /* Check if already exist */
+                $payroll = GeneratePayroll::where('generatedType',Configs::$GENERATED_PAYROLL_TYPE['STAGE_1_CONFIRMED'])->where('salaryReportLogId',$request->generateSalaryReportLogId)->first();
+                if($payroll>0){
+                    $availability['stage1-existed']['isExist'] = true;
+                    $availability['stage1-existed']['payrollId'] = $payroll->id;
+                    $availability['stage1-existed']['generatedDate'] = $payroll->generatedDate;
+                    $availability['stage1-existed']['generatedby'] = $payroll->generatedBy;
+                }
+            }
+
+
+
             /* Insert to response array */
             $response['isFailed'] = false;
             $response['message'] = 'Success';
-            $response['summary'] = fractal($generateSalaryReport,new PayrollGeneratedSalaryHistoryTransformer())->toArray()['data'];
-            $response['details'] = $details;
+            $response['reports']['summary'] = fractal($generateSalaryReport,new PayrollGeneratedSalaryHistoryTransformer())->toArray()['data'];
+            $response['reports']['details'] = $details;
+            $response['reports']['availability'] = $availability;
 
             return response()->json($response,200);
 

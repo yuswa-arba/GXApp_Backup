@@ -38,5 +38,20 @@ export default{
             selectedYear:state.selectedYear,
             branchOfficeId:state.selectedBranchOfficeId
         })
+    },
+    attemptGeneratePayroll({commit,state},payload){
+
+        state.isFetchingAttemptSalaryReportDate = true
+
+        if(payload.generateSalaryReportLogId){
+
+            commit({
+                type:'getAttemptGenerateSalaryReport',
+                generateSalaryReportLogId:payload.generateSalaryReportLogId
+            })
+
+        }
+
+
     }
 }

@@ -91,7 +91,6 @@ export default{
     },
     refreshSalaryReport(state, payload){
 
-
         post(api_path + 'salary/payroll/report/refresh/' + payload.id)
             .then((res) => {
                 if (!res.data.isFailed) {
@@ -120,7 +119,48 @@ export default{
                     type: 'danger'
                 }).show();
             })
+    },
+    getAttemptGenerateSalaryReport(state, payload){
+        if(payload.generateSalaryReportLogId){
+            get(api_path + 'salary/payroll/generate/attempt?generateSalaryReportLogId=' + payload.generateSalaryReportLogId)
+                .then((res) => {
+                    if (!res.data.isFailed) {
 
+                        state.attemptGenerateSalaryReport = res.data.reports
+
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+
+
+                    state.isFetchingAttemptSalaryReportDate = false
+                })
+                .catch((err)=>{
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+
+                    state.isFetchingAttemptSalaryReportDate = false
+                })
+        } else {
+             $('.page-container').pgNotification({
+                  style: 'flip',
+                  message: 'Error! Salary Report Log ID is empty',
+                  position: 'top-right',
+                  timeout: 3500,
+                  type: 'danger'
+              }).show();
+        }
 
     }
 

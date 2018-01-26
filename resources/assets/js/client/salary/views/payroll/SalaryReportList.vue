@@ -31,6 +31,9 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!--TODO: ADD SORT BY BRANCH OFFICE-->
+
                                 </div>
                             </div>
                         </div>
@@ -112,7 +115,7 @@
                                             class="fa fa-eye"></i> View Details
                                     </button>
                                     <br>
-                                    <button class="btn btn-primary m-b-10"><i class="fa fa-print"></i> Generate Payroll
+                                    <button class="btn btn-primary m-b-10" @click="attemptGenerate(report.id)"><i class="fa fa-print" ></i> Generate Payroll
                                     </button>
                                     <br>
                                     <button class="btn btn-danger m-b-10"><i class="fa fa-eye"></i> View Payroll
@@ -171,6 +174,17 @@
                     id: id,
                     index: index
                 })
+            },
+            attemptGenerate(id){
+
+
+                this.$store.dispatch({
+                    type:'payroll/attemptGeneratePayroll',
+                    generateSalaryReportLogId:id
+                })
+
+                this.$router.push({name: 'attemptGenerate'})
+
             },
             sortReportList(){
 
