@@ -121,7 +121,7 @@ export default{
             })
     },
     getAttemptGenerateSalaryReport(state, payload){
-        if(payload.generateSalaryReportLogId){
+        if (payload.generateSalaryReportLogId) {
             get(api_path + 'salary/payroll/generate/attempt?generateSalaryReportLogId=' + payload.generateSalaryReportLogId)
                 .then((res) => {
                     if (!res.data.isFailed) {
@@ -141,7 +141,7 @@ export default{
 
                     state.isFetchingAttemptSalaryReportData = false
                 })
-                .catch((err)=>{
+                .catch((err) => {
                     $('.page-container').pgNotification({
                         style: 'flip',
                         message: err.message,
@@ -153,15 +153,123 @@ export default{
                     state.isFetchingAttemptSalaryReportData = false
                 })
         } else {
-             $('.page-container').pgNotification({
-                  style: 'flip',
-                  message: 'Error! Salary Report Log ID is empty',
-                  position: 'top-right',
-                  timeout: 3500,
-                  type: 'danger'
-              }).show();
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'Error! Salary Report Log ID is empty',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
         }
+    },
+    generatePayroll(state, payload){
 
+        post(api_path + 'salary/payroll/generate', {
+            generateSalaryReportLogId: payload.generateSalaryReportLogId,
+            generateType: payload.generateType,
+            transferDate: payload.transferDate,
+            notes: payload.notes
+        })
+            .then((res) => {
+
+                state.isStartGeneratingPayroll = false
+                state.attemptGenerateType = '' //reset
+
+                if (!res.data.isFailed) {
+
+                    state.generatePayrollResponse.isFailed = false
+                    state.generatePayrollResponse.message = res.data.message
+                    state.generatedPayrollId = res.data.payrollId
+
+                } else {
+
+                    state.generatePayrollResponse.isFailed = true
+                    state.generatePayrollResponse.message = res.data.message
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+
+            })
+            .catch((err) => {
+
+                state.isStartGeneratingPayroll = false
+
+                state.generatePayrollResponse.isFailed = true
+                state.generatePayrollResponse.message = 'An Error Occurred'
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+
+            })
+    },
+    downloadFile(state, payload){
+        if (payload.id) {
+
+            window.open(api_path + 'salary/payroll/download/file/' + payload.id)
+
+        } else {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'ID is not defined',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        }
+    },
+    deleteFile(state, payload){
+        if (payload.id) {
+
+            post(api_path + 'salary/payroll/delete/file/' + payload.id)
+                .then((res) => {
+                    if (!res.data.isFailed) {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                })
+                .catch((err) => {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                })
+
+        } else {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'ID is not defined',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        }
     }
 
 }

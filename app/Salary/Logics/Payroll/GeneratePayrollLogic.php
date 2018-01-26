@@ -108,10 +108,10 @@ class GeneratePayrollLogic extends GenerateUseCase
                     $create = GeneratePayroll::create([
                         'fromDate'=>$generateSalaryReport->fromDate,
                         'toDate'=>$generateSalaryReport->toDate,
-                        'branchOfficeId'=>$generateSalaryReport->toDate,
+                        'branchOfficeId'=>$generateSalaryReport->branchOfficeId,
                         'file'=>$csvFileName, //save file name
                         'generatedDate'=>Carbon::now()->format('d/m/Y'),
-                        'generatedBy'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','name'),
+                        'generatedBy'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
                         'generatedType'=>$request->generateType,
                         'totalEmployee'=>count($payrollReports)-1, //minus first row
                         'notes'=>$request->notes,
@@ -143,7 +143,7 @@ class GeneratePayrollLogic extends GenerateUseCase
                         // Success Response
                         $response['isFailed'] = false;
                         $response['message'] = 'Generate payroll is successful';
-                        $response['payrollReportFile'] = $create->file;
+                        $response['payrollId'] = $create->id;
 
                         return response()->json($response, 200);
 

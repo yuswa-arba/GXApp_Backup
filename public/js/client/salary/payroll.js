@@ -2495,12 +2495,125 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/payroll/StartGeneratePayrollModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            notes: ''
+        };
+    },
+
+    mounted: function mounted() {
+        $('#transferDate').datepicker({
+            autoclose: true,
+            format: 'dd/mm/yyyy',
+            todayHighlight: true
+        });
+
+        var transferDate = moment().format('DD/MM/YYYY');
+        $('#transferDate').val(transferDate);
+    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('payroll', {
+        attemptGenerateType: 'attemptGenerateType'
+    })),
+    methods: {
+        generatePayrollNow: function generatePayrollNow() {
+            var self = this;
+            var transferDate = $('#transferDate').val();
+
+            if (transferDate && self.notes) {
+
+                this.$store.dispatch({
+                    type: 'payroll/startGeneratePayroll',
+                    generateSalaryReportLogId: this.$route.params.id,
+                    transferDate: transferDate,
+                    notes: self.notes
+                });
+
+                this.$router.push({ name: 'generate', params: { id: this.$route.params.id } });
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'Error! Form is invalid',
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }
+    }
+
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/AttemptGenerate.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_payroll_StartGeneratePayrollModal_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/payroll/StartGeneratePayrollModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_payroll_StartGeneratePayrollModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_payroll_StartGeneratePayrollModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2760,6 +2873,85 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        'start-generate-payroll-modal': __WEBPACK_IMPORTED_MODULE_1__components_payroll_StartGeneratePayrollModal_vue___default.a
+    },
+    mounted: function mounted() {},
+    created: function created() {
+        this.$store.dispatch({
+            type: 'payroll/attemptGeneratePayroll',
+            generateSalaryReportLogId: this.$route.params.id
+        });
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('payroll', {
+        isFetchingAttemptSalaryReportData: 'isFetchingAttemptSalaryReportData',
+        report: 'attemptGenerateSalaryReport'
+    })),
+    methods: {
+        cancel: function cancel() {
+            this.$router.go(-1);
+        },
+        startGeneratePayrollModal: function startGeneratePayrollModal(type) {
+            this.$store.state.payroll.attemptGenerateType = type;
+
+            $('#modal-start-generate-payroll').modal('show'); //show modal
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/GeneratePayroll.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -2800,21 +2992,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {},
     mounted: function mounted() {},
-    created: function created() {
-        this.$store.dispatch({
-            type: 'payroll/attemptGeneratePayroll',
-            generateSalaryReportLogId: this.$route.params.id
-        });
-    },
+    created: function created() {},
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('payroll', {
-        isFetchingAttemptSalaryReportData: 'isFetchingAttemptSalaryReportData',
-        report: 'attemptGenerateSalaryReport'
+        isStartGeneratingPayroll: 'isStartGeneratingPayroll',
+        generatedPayrollId: 'generatedPayrollId',
+        generatePayrollResponse: 'generatePayrollResponse'
     })),
     methods: {
-        cancel: function cancel() {
-            this.$router.go(-1);
-        }
+        finish: function finish() {
+            this.$router.push('/');
+        },
+        downloadFile: function downloadFile(id) {}
     }
 });
 
@@ -2828,6 +3017,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
 //
 //
 //
@@ -2903,6 +3094,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     methods: {
         startGeneratePayroll: function startGeneratePayroll() {
             this.$router.push({ name: 'salaryReportList' });
+        },
+        downloadFile: function downloadFile(id) {
+            this.$store.commit({
+                type: 'payroll/downloadFile',
+                id: id
+            });
+        },
+        deleteFile: function deleteFile(id) {
+            this.$store.commit({
+                type: 'payroll/downloadFile',
+                id: id
+            });
         }
     }
 });
@@ -22698,6 +22901,149 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-062671ef\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/payroll/StartGeneratePayrollModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade stick-up",
+      attrs: {
+        id: "modal-start-generate-payroll",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("form", { attrs: { role: "form" } }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("p", [_vm._v("Type: " + _vm._s(_vm.attemptGenerateType))]),
+                  _vm._v(" "),
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Notes")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.notes,
+                          expression: "notes"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", required: "" },
+                      domProps: { value: _vm.notes },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.notes = $event.target.value
+                        }
+                      }
+                    })
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-8" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-block m-t-5",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.generatePayrollNow()
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            Generate\n                        "
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close" })]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+        _vm._v("Start Generate Payroll")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Transfer Date ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          id: "transferDate",
+          type: "text",
+          name: "transferDate",
+          required: ""
+        }
+      })
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-062671ef", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1f7a99ad\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/SalaryReportDetail.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23061,497 +23407,583 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          !_vm.isFetchingAttemptSalaryReportData && _vm.report.summary
-            ? _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-lg-6" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass:
-                        "btn btn-outline-danger m-r-15 m-b-10 m-t-10 pull-left",
-                      on: {
-                        click: function($event) {
-                          _vm.cancel()
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+        _c("div", { staticClass: "card card-bordered" }, [
+          _c("div", { staticClass: "card-block" }, [
+            !_vm.isFetchingAttemptSalaryReportData && _vm.report.summary
+              ? _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-outline-danger m-r-15 m-b-10 m-t-10 pull-left",
+                        on: {
+                          click: function($event) {
+                            _vm.cancel()
+                          }
                         }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-times" }),
-                      _vm._v(" Cancel\n                        ")
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("h4", { staticClass: "pull-left" }, [
-                    _c("b", [_vm._v("Generate Payroll")]),
-                    _vm._v(
-                      " (Salary Report ID: " +
-                        _vm._s(_vm.report.summary.id) +
-                        ")"
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-6" }, [
-                  _c("div", { staticClass: "clearfix" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "pull-right" }, [
-                    _vm.report.availability.normal
-                      ? _c(
-                          "button",
-                          { staticClass: "btn btn-primary m-r-15" },
-                          [
-                            _vm._v(
-                              "Generate Valid\n                                Stage\n                            "
-                            )
-                          ]
-                        )
-                      : _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary m-r-15",
-                            attrs: { disabled: "" }
-                          },
-                          [_vm._v("Generate Valid Stage")]
-                        ),
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-times" }),
+                        _vm._v(" Cancel\n                        ")
+                      ]
+                    ),
                     _vm._v(" "),
-                    _vm.report.availability.stage1
-                      ? _c("button", { staticClass: "btn btn-info m-r-15" }, [
+                    _c("h4", { staticClass: "pull-left" }, [
+                      _c("b", [_vm._v("Generate Payroll")]),
+                      _vm._v(
+                        " (Salary Report ID: " +
+                          _vm._s(_vm.report.summary.id) +
+                          ")"
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "clearfix" }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "pull-right" }, [
+                      _vm.report.availability.normal
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary m-r-15",
+                              on: {
+                                click: function($event) {
+                                  _vm.startGeneratePayrollModal("confirmed")
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "Generate Valid\n                                Stage\n                            "
+                              )
+                            ]
+                          )
+                        : _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary m-r-15",
+                              attrs: { disabled: "" }
+                            },
+                            [_vm._v("Generate Valid Stage")]
+                          ),
+                      _vm._v(" "),
+                      _vm.report.availability.stage1
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-info m-r-15",
+                              on: {
+                                click: function($event) {
+                                  _vm.startGeneratePayrollModal(
+                                    "stage-1-confirmed"
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "Generate Stage-1\n                            "
+                              )
+                            ]
+                          )
+                        : _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-info m-r-15",
+                              attrs: { disabled: "" }
+                            },
+                            [_vm._v(" Generate Stage-1")]
+                          )
+                    ])
+                  ])
+                ])
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      !_vm.isFetchingAttemptSalaryReportData && _vm.report.summary
+        ? _c("div", { staticClass: "col-lg-8" }, [
+            _c(
+              "div",
+              {
+                staticClass:
+                  "card card-bordered filter-report-details no-padding"
+              },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "card-block" }, [
+                      _c("h5", { staticClass: "bold" }, [
+                        _vm._v(
+                          _vm._s(_vm.report.summary.fromDate) +
+                            " - " +
+                            _vm._s(_vm.report.summary.toDate)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "fs-16" }, [
+                        _vm._v("Branch: "),
+                        _c("b", { staticClass: "text-primary" }, [
+                          _vm._v(_vm._s(_vm.report.summary.branchOfficeName))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "fs-16" }, [
+                        _vm._v("Generated: "),
+                        _c("b", { staticClass: "text-primary" }, [
                           _vm._v(
-                            "Generate Stage-1\n                            "
+                            "@" +
+                              _vm._s(_vm.report.summary.generatedDate) +
+                              "by\n                            " +
+                              _vm._s(_vm.report.summary.generatedBy)
                           )
                         ])
-                      : _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-info m-r-15",
-                            attrs: { disabled: "" }
-                          },
-                          [_vm._v(" Generate Stage-1")]
-                        )
-                  ])
-                ])
-              ])
-            : _vm._e()
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    !_vm.isFetchingAttemptSalaryReportData && _vm.report.summary
-      ? _c("div", { staticClass: "col-lg-8" }, [
-          _c(
-            "div",
-            {
-              staticClass: "card card-bordered filter-report-details no-padding"
-            },
-            [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-lg-6" }, [
-                  _c("div", { staticClass: "card-block" }, [
-                    _c("h5", { staticClass: "bold" }, [
-                      _vm._v(
-                        _vm._s(_vm.report.summary.fromDate) +
-                          " - " +
-                          _vm._s(_vm.report.summary.toDate)
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "fs-16" }, [
-                      _vm._v("Branch: "),
-                      _c("b", { staticClass: "text-primary" }, [
-                        _vm._v(_vm._s(_vm.report.summary.branchOfficeName))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "fs-16" }, [
-                      _vm._v("Generated: "),
-                      _c("b", { staticClass: "text-primary" }, [
-                        _vm._v(
-                          "@" +
-                            _vm._s(_vm.report.summary.generatedDate) +
-                            "by\n                            " +
-                            _vm._s(_vm.report.summary.generatedBy)
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "fs-16" }, [
-                      _vm._v("Total Reports: "),
-                      _c("b", { staticClass: "text-primary" }, [
-                        _vm._v(_vm._s(_vm.report.summary.totalSalaryReport))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "fs-16" }, [
-                      _vm._v("Total Submitted: "),
-                      _c("b", { staticClass: "text-primary" }, [
-                        _vm._v(
-                          _vm._s(_vm.report.summary.totalSubmittedForPayroll)
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "fs-16" }, [
-                      _vm._v("Total Postponed: "),
-                      _c("b", { staticClass: "text-primary" }, [
-                        _vm._v(_vm._s(_vm.report.summary.totalPostponed))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "fs-16" }, [
+                        _vm._v("Total Reports: "),
+                        _c("b", { staticClass: "text-primary" }, [
+                          _vm._v(_vm._s(_vm.report.summary.totalSalaryReport))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "fs-16" }, [
+                        _vm._v("Total Submitted: "),
+                        _c("b", { staticClass: "text-primary" }, [
+                          _vm._v(
+                            _vm._s(_vm.report.summary.totalSubmittedForPayroll)
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "fs-16" }, [
+                        _vm._v("Total Postponed: "),
+                        _c("b", { staticClass: "text-primary" }, [
+                          _vm._v(_vm._s(_vm.report.summary.totalPostponed))
+                        ])
                       ])
                     ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-6" }, [
-                  _c("div", { staticClass: "card-block" }, [
-                    _c("div", { staticClass: "table-responsive" }, [
-                      _c("table", { staticClass: "table" }, [
-                        _vm._m(0),
-                        _vm._v(" "),
-                        _c("tbody", [
-                          _c("tr", [
-                            _c("td", [_vm._v("Waiting for Confirmation")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(
-                                  _vm.report.summary.totalWaitingConfimation
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-6" }, [
+                    _c("div", { staticClass: "card-block" }, [
+                      _c("div", { staticClass: "table-responsive" }, [
+                        _c("table", { staticClass: "table" }, [
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _c("tbody", [
+                            _c("tr", [
+                              _c("td", [_vm._v("Waiting for Confirmation")]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.report.summary.totalWaitingConfimation
+                                  )
                                 )
-                              )
+                              ]),
+                              _vm._v(" "),
+                              _c("td")
                             ]),
                             _vm._v(" "),
-                            _c("td")
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("td", [_vm._v("Confirmed")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(_vm.report.summary.totalConfirmed))
+                            _c("tr", [
+                              _c("td", [_vm._v("Confirmed")]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(_vm.report.summary.totalConfirmed)
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td")
                             ]),
                             _vm._v(" "),
-                            _c("td")
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("td", [_vm._v("Stage 1 Confirmed")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(_vm.report.summary.totalStage1Confirmed)
-                              )
+                            _c("tr", [
+                              _c("td", [_vm._v("Stage 1 Confirmed")]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.report.summary.totalStage1Confirmed
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td")
                             ]),
                             _vm._v(" "),
-                            _c("td")
-                          ]),
-                          _vm._v(" "),
-                          _c("tr", [
-                            _c("td", [_vm._v("Stage 2 Confirmed")]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(_vm.report.summary.totalStage2Confirmed)
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td")
+                            _c("tr", [
+                              _c("td", [_vm._v("Stage 2 Confirmed")]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.report.summary.totalStage2Confirmed
+                                  )
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td")
+                            ])
                           ])
                         ])
                       ])
                     ])
                   ])
                 ])
-              ])
-            ]
-          )
-        ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4" }, [
-      _vm.report.availability.normalExisted.isExisted ||
-      _vm.report.availability.stage1Existed.isExisted
-        ? _c("div", { staticClass: "card card-bordered" }, [
-            _c("div", { staticClass: "card-block" }, [
-              _c("div", { staticClass: "alert alert-warning bordered m-b-0" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _vm.report.availability.normalExisted.isExisted
-                    ? _c("div", { staticClass: "col-lg-6" }, [
-                        _c("h5", { staticClass: "bold" }, [
-                          _vm._v("Valid Stage")
-                        ]),
+              ]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4" }, [
+        _vm.report.availability
+          ? _c("div", [
+              _vm.report.availability.normalExisted.isExisted ||
+              _vm.report.availability.stage1Existed.isExisted
+                ? _c("div", { staticClass: "card card-bordered" }, [
+                    _c("div", { staticClass: "card-block" }, [
+                      _c(
+                        "div",
+                        { staticClass: "alert alert-warning bordered m-b-0" },
+                        [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _vm.report.availability.normalExisted.isExisted
+                              ? _c("div", { staticClass: "col-lg-6" }, [
+                                  _c("h5", { staticClass: "bold" }, [
+                                    _vm._v("Valid Stage")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm.report.availability.normalExisted
+                                    .payrollId
+                                    ? _c("p", [
+                                        _vm._v(
+                                          "ID: " +
+                                            _vm._s(
+                                              _vm.report.availability
+                                                .normalExisted.payrollId
+                                            )
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.report.availability.normalExisted
+                                    .generatedDate
+                                    ? _c("p", [
+                                        _vm._v(
+                                          "Date: " +
+                                            _vm._s(
+                                              _vm.report.availability
+                                                .normalExisted.generatedDate
+                                            )
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.report.availability.normalExisted
+                                    .generatedBy
+                                    ? _c("p", [
+                                        _vm._v(
+                                          "By: " +
+                                            _vm._s(
+                                              _vm.report.availability
+                                                .normalExisted.generatedBy
+                                            )
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.report.availability.stage1Existed.isExisted
+                              ? _c("div", { staticClass: "col-lg-6" }, [
+                                  _c("h5", { staticClass: "bold" }, [
+                                    _vm._v("Stage-1")
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm.report.availability.stage1Existed
+                                    .payrollId
+                                    ? _c("p", [
+                                        _vm._v(
+                                          "ID: " +
+                                            _vm._s(
+                                              _vm.report.availability
+                                                .stage1Existed.payrollId
+                                            )
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.report.availability.stage1Existed
+                                    .generatedDate
+                                    ? _c("p", [
+                                        _vm._v(
+                                          "Date: " +
+                                            _vm._s(
+                                              _vm.report.availability
+                                                .stage1Existed.generatedDate
+                                            )
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.report.availability.stage1Existed
+                                    .generatedBy
+                                    ? _c("p", [
+                                        _vm._v(
+                                          "By: " +
+                                            _vm._s(
+                                              _vm.report.availability
+                                                .stage1Existed.generatedBy
+                                            )
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
+                              : _vm._e()
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                : _vm._e()
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4" }, [
+        _c("div", { staticClass: "card card-bordered" }, [
+          _c("div", { staticClass: "card-block" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticStyle: { height: "400px" } }, [
+                _vm.report.details
+                  ? _c("div", { staticClass: "table-responsive" }, [
+                      _c("table", { staticClass: "table" }, [
+                        _vm._m(3),
                         _vm._v(" "),
-                        _vm.report.availability.normalExisted.payrollId
-                          ? _c("p", [
-                              _vm._v(
-                                "ID: " +
-                                  _vm._s(
-                                    _vm.report.availability.normalExisted
-                                      .payrollId
-                                  )
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.report.availability.normalExisted.generatedDate
-                          ? _c("p", [
-                              _vm._v(
-                                "Date: " +
-                                  _vm._s(
-                                    _vm.report.availability.normalExisted
-                                      .generatedDate
-                                  )
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.report.availability.normalExisted.generatedBy
-                          ? _c("p", [
-                              _vm._v(
-                                "By: " +
-                                  _vm._s(
-                                    _vm.report.availability.normalExisted
-                                      .generatedBy
-                                  )
-                              )
-                            ])
+                        _vm.report.details.waiting
+                          ? _c(
+                              "tbody",
+                              _vm._l(_vm.report.details.waiting, function(
+                                data
+                              ) {
+                                return _c("tr", [
+                                  _c("td", [_vm._v(_vm._s(data.id))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(data.employeeName))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(data.divisionName))]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(_vm._s(data.branchOfficeName))
+                                  ])
+                                ])
+                              })
+                            )
                           : _vm._e()
                       ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.report.availability.stage1Existed.isExisted
-                    ? _c("div", { staticClass: "col-lg-6" }, [
-                        _c("h5", { staticClass: "bold" }, [_vm._v("Stage-1")]),
+                    ])
+                  : _vm._e()
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4" }, [
+        _c("div", { staticClass: "card card-bordered" }, [
+          _c("div", { staticClass: "card-block" }, [
+            _vm._m(4),
+            _vm._v(" "),
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticStyle: { height: "400px" } }, [
+                _vm.report.details
+                  ? _c("div", { staticClass: "table-responsive" }, [
+                      _c("table", { staticClass: "table" }, [
+                        _vm._m(5),
                         _vm._v(" "),
-                        _vm.report.availability.stage1Existed.payrollId
-                          ? _c("p", [
-                              _vm._v(
-                                "ID: " +
-                                  _vm._s(
-                                    _vm.report.availability.stage1Existed
-                                      .payrollId
-                                  )
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.report.availability.stage1Existed.generatedDate
-                          ? _c("p", [
-                              _vm._v(
-                                "Date: " +
-                                  _vm._s(
-                                    _vm.report.availability.stage1Existed
-                                      .generatedDate
-                                  )
-                              )
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _vm.report.availability.stage1Existed.generatedBy
-                          ? _c("p", [
-                              _vm._v(
-                                "By: " +
-                                  _vm._s(
-                                    _vm.report.availability.stage1Existed
-                                      .generatedBy
-                                  )
-                              )
-                            ])
+                        _vm.report.details.confirmed
+                          ? _c(
+                              "tbody",
+                              _vm._l(_vm.report.details.confirmed, function(
+                                data
+                              ) {
+                                return _c("tr", [
+                                  _c("td", [_vm._v(_vm._s(data.id))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(data.employeeName))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(data.divisionName))]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(_vm._s(data.branchOfficeName))
+                                  ])
+                                ])
+                              })
+                            )
                           : _vm._e()
                       ])
-                    : _vm._e()
-                ])
-              ])
-            ])
-          ])
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _vm._m(2),
-          _vm._v(" "),
-          _c("div", { staticClass: "scrollable" }, [
-            _c("div", { staticStyle: { height: "400px" } }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _vm.report.details.waiting
-                    ? _c(
-                        "tbody",
-                        _vm._l(_vm.report.details.waiting, function(data) {
-                          return _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
-                          ])
-                        })
-                      )
-                    : _vm._e()
-                ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _vm._m(4),
-          _vm._v(" "),
-          _c("div", { staticClass: "scrollable" }, [
-            _c("div", { staticStyle: { height: "400px" } }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _vm.report.details.confirmed
-                    ? _c(
-                        "tbody",
-                        _vm._l(_vm.report.details.confirmed, function(data) {
-                          return _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
-                          ])
-                        })
-                      )
-                    : _vm._e()
-                ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4" }, [
+        _c("div", { staticClass: "card card-bordered" }, [
+          _c("div", { staticClass: "card-block" }, [
+            _vm._m(6),
+            _vm._v(" "),
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticStyle: { height: "400px" } }, [
+                _vm.report.details
+                  ? _c("div", { staticClass: "table-responsive" }, [
+                      _c("table", { staticClass: "table" }, [
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _vm.report.details.stage1Confirmed
+                          ? _c(
+                              "tbody",
+                              _vm._l(
+                                _vm.report.details.stage1Confirmed,
+                                function(data) {
+                                  return _c("tr", [
+                                    _c("td", [_vm._v(_vm._s(data.id))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(data.employeeName))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(data.divisionName))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(data.branchOfficeName))
+                                    ])
+                                  ])
+                                }
+                              )
+                            )
+                          : _vm._e()
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _vm._m(6),
-          _vm._v(" "),
-          _c("div", { staticClass: "scrollable" }, [
-            _c("div", { staticStyle: { height: "400px" } }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(7),
-                  _vm._v(" "),
-                  _vm.report.details.stage1Confirmed
-                    ? _c(
-                        "tbody",
-                        _vm._l(_vm.report.details.stage1Confirmed, function(
-                          data
-                        ) {
-                          return _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
-                          ])
-                        })
-                      )
-                    : _vm._e()
-                ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4" }, [
+        _c("div", { staticClass: "card card-bordered" }, [
+          _c("div", { staticClass: "card-block" }, [
+            _vm._m(8),
+            _vm._v(" "),
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticStyle: { height: "400px" } }, [
+                _vm.report.details
+                  ? _c("div", { staticClass: "table-responsive" }, [
+                      _c("table", { staticClass: "table" }, [
+                        _vm._m(9),
+                        _vm._v(" "),
+                        _vm.report.details.stage2Confirmed
+                          ? _c(
+                              "tbody",
+                              _vm._l(
+                                _vm.report.details.stage2Confirmed,
+                                function(data) {
+                                  return _c("tr", [
+                                    _c("td", [_vm._v(_vm._s(data.id))]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(data.employeeName))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(data.divisionName))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(_vm._s(data.branchOfficeName))
+                                    ])
+                                  ])
+                                }
+                              )
+                            )
+                          : _vm._e()
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _vm._m(8),
-          _vm._v(" "),
-          _c("div", { staticClass: "scrollable" }, [
-            _c("div", { staticStyle: { height: "400px" } }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(9),
-                  _vm._v(" "),
-                  _vm.report.details.stage2Confirmed
-                    ? _c(
-                        "tbody",
-                        _vm._l(_vm.report.details.stage2Confirmed, function(
-                          data
-                        ) {
-                          return _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
-                          ])
-                        })
-                      )
-                    : _vm._e()
-                ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4" }, [
+        _c("div", { staticClass: "card card-bordered" }, [
+          _c("div", { staticClass: "card-block" }, [
+            _vm._m(10),
+            _vm._v(" "),
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticStyle: { height: "400px" } }, [
+                _vm.report.details
+                  ? _c("div", { staticClass: "table-responsive" }, [
+                      _c("table", { staticClass: "table" }, [
+                        _vm._m(11),
+                        _vm._v(" "),
+                        _vm.report.details.unconfirmed
+                          ? _c(
+                              "tbody",
+                              _vm._l(_vm.report.details.unconfirmed, function(
+                                data
+                              ) {
+                                return _c("tr", [
+                                  _c("td", [_vm._v(_vm._s(data.id))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(data.employeeName))]),
+                                  _vm._v(" "),
+                                  _c("td", [_vm._v(_vm._s(data.divisionName))]),
+                                  _vm._v(" "),
+                                  _c("td", [
+                                    _vm._v(_vm._s(data.branchOfficeName))
+                                  ])
+                                ])
+                              })
+                            )
+                          : _vm._e()
+                      ])
+                    ])
+                  : _vm._e()
               ])
             ])
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _vm._m(10),
-          _vm._v(" "),
-          _c("div", { staticClass: "scrollable" }, [
-            _c("div", { staticStyle: { height: "400px" } }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(11),
-                  _vm._v(" "),
-                  _vm.report.details.unconfirmed
-                    ? _c(
-                        "tbody",
-                        _vm._l(_vm.report.details.unconfirmed, function(data) {
-                          return _c("tr", [
-                            _c("td", [_vm._v(_vm._s(data.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
-                          ])
-                        })
-                      )
-                    : _vm._e()
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _vm.isFetchingAttemptSalaryReportData
-      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(12)])
-      : _vm._e()
-  ])
+      ]),
+      _vm._v(" "),
+      _vm.isFetchingAttemptSalaryReportData
+        ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(12)])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("start-generate-payroll-modal")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -23741,6 +24173,109 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-6a87ec98", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6e7ce542\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/GeneratePayroll.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _vm.isStartGeneratingPayroll
+      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(0)])
+      : _vm._e(),
+    _vm._v(" "),
+    !_vm.isStartGeneratingPayroll
+      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [
+          !_vm.generatePayrollResponse.isFailed
+            ? _c("div", { staticClass: "center-margin" }, [
+                _c("div", { staticClass: "alert alert-info" }, [
+                  _c("h4", [
+                    _vm._v(_vm._s(_vm.generatePayrollResponse.message))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      on: {
+                        click: function($event) {
+                          _vm.downloadFile(_vm.generatedPayrollId)
+                        }
+                      }
+                    },
+                    [_vm._v("Download")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-primary",
+                      on: {
+                        click: function($event) {
+                          _vm.finish()
+                        }
+                      }
+                    },
+                    [_vm._v("Finish")]
+                  )
+                ])
+              ])
+            : _c("div", { staticClass: "center-margin" }, [
+                _c("div", { staticClass: "alert alert-danger" }, [
+                  _c("h4", [
+                    _vm._v(_vm._s(_vm.generatePayrollResponse.message))
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-danger",
+                      on: {
+                        click: function($event) {
+                          _vm.finish()
+                        }
+                      }
+                    },
+                    [_vm._v("Finish")]
+                  )
+                ])
+              ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "center-margin" }, [
+      _c("p", { staticClass: "text-center fs-21" }, [
+        _vm._v("Generating Payroll.. Please wait..")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "progress h-8" }, [
+        _c("div", {
+          staticClass: "progress-bar-indeterminate progress-bar-success"
+        })
+      ]),
+      _vm._v(" "),
+      _c("br")
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6e7ce542", module.exports)
   }
 }
 
@@ -24157,7 +24692,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-7" }, [
+    _c("div", { staticClass: "col-lg-12" }, [
       _c("div", { staticClass: "card card-bordered" }, [
         _c("div", { staticClass: "card-block" }, [
           _c("h4", [_vm._v("Generated Payrol List")]),
@@ -24200,7 +24735,41 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(payroll.notes))]),
                         _vm._v(" "),
-                        _vm._m(1, true)
+                        _c("td", [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-primary",
+                              on: {
+                                click: function($event) {
+                                  _vm.downloadFile(payroll.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-arrow-down" }),
+                              _vm._v(" Download File")
+                            ]
+                          ),
+                          _vm._v(
+                            "\n                                         \n                                        "
+                          ),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-outline-danger",
+                              on: {
+                                click: function($event) {
+                                  _vm.deleteFile(payroll.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-trash" }),
+                              _vm._v(" Delete File")
+                            ]
+                          )
+                        ])
                       ])
                     })
                   )
@@ -24239,17 +24808,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [_vm._v("Notes")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black p-t-5 p-b-5" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("button", { staticClass: "btn btn-outline-primary" }, [
-        _c("i", { staticClass: "fa fa-arrow-down" }),
-        _vm._v(" Download File")
       ])
     ])
   }
@@ -38861,6 +39419,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/salary/components/payroll/StartGeneratePayrollModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/payroll/StartGeneratePayrollModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-062671ef\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/payroll/StartGeneratePayrollModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/salary/components/payroll/StartGeneratePayrollModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-062671ef", Component.options)
+  } else {
+    hotAPI.reload("data-v-062671ef", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/salary/payroll.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -38914,9 +39521,12 @@ $(document).ready(function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_payroll_SalaryReportDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_payroll_SalaryReportDetail_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_payroll_AttemptGenerate_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/payroll/AttemptGenerate.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_payroll_AttemptGenerate_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__views_payroll_AttemptGenerate_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_payroll_GeneratePayroll_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/payroll/GeneratePayroll.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_payroll_GeneratePayroll_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__views_payroll_GeneratePayroll_vue__);
 /**
  * Created by kevinpurwono on 23/11/17.
  */
+
 
 
 
@@ -38929,7 +39539,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_payroll_Index_vue___default.a }, { path: '/report/list', component: __WEBPACK_IMPORTED_MODULE_3__views_payroll_SalaryReportList_vue___default.a, name: 'salaryReportList' }, { path: '/report/:id/detail', component: __WEBPACK_IMPORTED_MODULE_4__views_payroll_SalaryReportDetail_vue___default.a, name: 'salaryReportDetail' }, { path: '/attempt/generate/:id', component: __WEBPACK_IMPORTED_MODULE_5__views_payroll_AttemptGenerate_vue___default.a, name: 'attemptGenerate' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_payroll_Index_vue___default.a }, { path: '/report/list', component: __WEBPACK_IMPORTED_MODULE_3__views_payroll_SalaryReportList_vue___default.a, name: 'salaryReportList' }, { path: '/report/:id/detail', component: __WEBPACK_IMPORTED_MODULE_4__views_payroll_SalaryReportDetail_vue___default.a, name: 'salaryReportDetail' }, { path: '/attempt/generate/:id', component: __WEBPACK_IMPORTED_MODULE_5__views_payroll_AttemptGenerate_vue___default.a, name: 'attemptGenerate' }, { path: '/generate/:id', component: __WEBPACK_IMPORTED_MODULE_6__views_payroll_GeneratePayroll_vue___default.a, name: 'generate' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -38974,6 +39584,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-6a87ec98", Component.options)
   } else {
     hotAPI.reload("data-v-6a87ec98", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/salary/views/payroll/GeneratePayroll.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/GeneratePayroll.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6e7ce542\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/payroll/GeneratePayroll.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/salary/views/payroll/GeneratePayroll.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6e7ce542", Component.options)
+  } else {
+    hotAPI.reload("data-v-6e7ce542", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -39204,6 +39863,35 @@ module.exports = Component.exports
                 generateSalaryReportLogId: payload.generateSalaryReportLogId
             });
         }
+    },
+    startGeneratePayroll: function startGeneratePayroll(_ref6, payload) {
+        var commit = _ref6.commit,
+            state = _ref6.state;
+
+
+        // hide modal
+        $('#modal-start-generate-payroll').modal('toggle');
+
+        state.isStartGeneratingPayroll = true;
+
+        if (payload.generateSalaryReportLogId && payload.transferDate && payload.notes && state.attemptGenerateType) {
+
+            commit({
+                type: 'generatePayroll',
+                transferDate: payload.transferDate,
+                generateSalaryReportLogId: payload.generateSalaryReportLogId,
+                generateType: state.attemptGenerateType,
+                notes: payload.notes
+            });
+        } else {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'An Error Occurred. Something is missing',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        }
     }
 });
 
@@ -39246,7 +39934,11 @@ module.exports = Component.exports
         selectedYear: '',
         selectedBranchOfficeId: '',
         attemptGenerateSalaryReport: [],
-        isFetchingAttemptSalaryReportData: false
+        isFetchingAttemptSalaryReportData: false,
+        isStartGeneratingPayroll: false,
+        attemptGenerateType: '',
+        generatePayrollResponse: { isFailed: false, message: '' },
+        generatedPayrollId: ''
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -39400,6 +40092,106 @@ module.exports = Component.exports
             $('.page-container').pgNotification({
                 style: 'flip',
                 message: 'Error! Salary Report Log ID is empty',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        }
+    },
+    generatePayroll: function generatePayroll(state, payload) {
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payroll/generate', {
+            generateSalaryReportLogId: payload.generateSalaryReportLogId,
+            generateType: payload.generateType,
+            transferDate: payload.transferDate,
+            notes: payload.notes
+        }).then(function (res) {
+
+            state.isStartGeneratingPayroll = false;
+            state.attemptGenerateType = ''; //reset
+
+            if (!res.data.isFailed) {
+
+                state.generatePayrollResponse.isFailed = false;
+                state.generatePayrollResponse.message = res.data.message;
+                state.generatedPayrollId = res.data.payrollId;
+            } else {
+
+                state.generatePayrollResponse.isFailed = true;
+                state.generatePayrollResponse.message = res.data.message;
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+
+            state.isStartGeneratingPayroll = false;
+
+            state.generatePayrollResponse.isFailed = true;
+            state.generatePayrollResponse.message = 'An Error Occurred';
+
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    downloadFile: function downloadFile(state, payload) {
+        if (payload.id) {
+
+            window.open(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payroll/download/file/' + payload.id);
+        } else {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'ID is not defined',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        }
+    },
+    deleteFile: function deleteFile(state, payload) {
+        if (payload.id) {
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payroll/delete/file/' + payload.id).then(function (res) {
+                if (!res.data.isFailed) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        } else {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'ID is not defined',
                 position: 'top-right',
                 timeout: 3500,
                 type: 'danger'

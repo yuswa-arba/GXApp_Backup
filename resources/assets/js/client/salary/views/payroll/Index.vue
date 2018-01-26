@@ -14,7 +14,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-7">
+        <div class="col-lg-12">
             <div class="card card-bordered">
                 <div class="card-block">
                     <h4>Generated Payrol List</h4>
@@ -44,7 +44,9 @@
                                         <td>{{payroll.totalEmployee}}</td>
                                         <td>{{payroll.notes}}</td>
                                         <td>
-                                            <button class="btn btn-outline-primary"><i class="fa fa-arrow-down"></i> Download File</button>
+                                            <button class="btn btn-outline-primary" @click="downloadFile(payroll.id)"><i class="fa fa-arrow-down"></i> Download File</button>
+                                            &nbsp;
+                                            <button class="btn btn-outline-danger" @click="deleteFile(payroll.id)"><i class="fa fa-trash"></i> Delete File</button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -76,6 +78,18 @@
         methods: {
             startGeneratePayroll(){
                 this.$router.push({name: 'salaryReportList'})
+            },
+            downloadFile(id){
+                this.$store.commit({
+                    type:'payroll/downloadFile',
+                    id:id
+                })
+            },
+            deleteFile(id){
+                this.$store.commit({
+                    type:'payroll/downloadFile',
+                    id:id
+                })
             }
         }
     }

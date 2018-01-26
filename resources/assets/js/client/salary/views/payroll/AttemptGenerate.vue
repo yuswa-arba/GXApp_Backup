@@ -14,12 +14,12 @@
                         <div class="col-lg-6">
                             <div class="clearfix"></div>
                             <div class="pull-right">
-                                <button class="btn btn-primary m-r-15" v-if="report.availability.normal">Generate Valid
+                                <button class="btn btn-primary m-r-15" v-if="report.availability.normal" @click="startGeneratePayrollModal('confirmed')">Generate Valid
                                     Stage
                                 </button>
                                 <button class="btn btn-primary m-r-15" disabled v-else="">Generate Valid Stage</button>
 
-                                <button class="btn btn-info m-r-15" v-if="report.availability.stage1">Generate Stage-1
+                                <button class="btn btn-info m-r-15" v-if="report.availability.stage1" @click="startGeneratePayrollModal('stage-1-confirmed')">Generate Stage-1
                                 </button>
                                 <button class="btn btn-info m-r-15" disabled v-else=""> Generate Stage-1</button>
                             </div>
@@ -91,31 +91,34 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="card card-bordered" v-if="report.availability.normalExisted.isExisted||report.availability.stage1Existed.isExisted">
-                <div class="card-block">
-                    <div class="alert alert-warning bordered m-b-0">
+            <div v-if="report.availability">
+                <div class="card card-bordered" v-if="report.availability.normalExisted.isExisted||report.availability.stage1Existed.isExisted">
+                    <div class="card-block">
+                        <div class="alert alert-warning bordered m-b-0">
 
-                        <p><i class="fa fa-info-circle"></i> This report has been generated before</p>
+                            <p><i class="fa fa-info-circle"></i> This report has been generated before</p>
 
-                        <div class="row">
-                            <div class="col-lg-6" v-if="report.availability.normalExisted.isExisted">
-                                <h5 class="bold">Valid Stage</h5>
-                                <p v-if="report.availability.normalExisted.payrollId">ID: {{report.availability.normalExisted.payrollId}}</p>
-                                <p v-if="report.availability.normalExisted.generatedDate">Date: {{report.availability.normalExisted.generatedDate}}</p>
-                                <p v-if="report.availability.normalExisted.generatedBy">By: {{report.availability.normalExisted.generatedBy}}</p>
+                            <div class="row">
+                                <div class="col-lg-6" v-if="report.availability.normalExisted.isExisted">
+                                    <h5 class="bold">Valid Stage</h5>
+                                    <p v-if="report.availability.normalExisted.payrollId">ID: {{report.availability.normalExisted.payrollId}}</p>
+                                    <p v-if="report.availability.normalExisted.generatedDate">Date: {{report.availability.normalExisted.generatedDate}}</p>
+                                    <p v-if="report.availability.normalExisted.generatedBy">By: {{report.availability.normalExisted.generatedBy}}</p>
+                                </div>
+                                <div class="col-lg-6" v-if="report.availability.stage1Existed.isExisted">
+                                    <h5 class="bold">Stage-1</h5>
+                                    <p v-if="report.availability.stage1Existed.payrollId">ID: {{report.availability.stage1Existed.payrollId}}</p>
+                                    <p v-if="report.availability.stage1Existed.generatedDate">Date: {{report.availability.stage1Existed.generatedDate}}</p>
+                                    <p v-if="report.availability.stage1Existed.generatedBy">By: {{report.availability.stage1Existed.generatedBy}}</p>
+                                </div>
                             </div>
-                            <div class="col-lg-6" v-if="report.availability.stage1Existed.isExisted">
-                                <h5 class="bold">Stage-1</h5>
-                                <p v-if="report.availability.stage1Existed.payrollId">ID: {{report.availability.stage1Existed.payrollId}}</p>
-                                <p v-if="report.availability.stage1Existed.generatedDate">Date: {{report.availability.stage1Existed.generatedDate}}</p>
-                                <p v-if="report.availability.stage1Existed.generatedBy">By: {{report.availability.stage1Existed.generatedBy}}</p>
-                            </div>
+
+
                         </div>
 
-
                     </div>
-
                 </div>
+
             </div>
 
         </div>
@@ -126,7 +129,7 @@
                     <h5><i class="fa fa-circle text-info"></i> Waiting For Confirmation</h5>
                     <div class="scrollable">
                         <div style="height: 400px">
-                            <div class="table-responsive">
+                            <div class="table-responsive" v-if="report.details">
                                 <table class="table">
                                     <thead class="bg-master-lighter">
                                     <tr>
@@ -157,7 +160,7 @@
                     <h5><i class="fa fa-circle text-success"></i> Confirmed</h5>
                     <div class="scrollable">
                         <div style="height: 400px">
-                            <div class="table-responsive">
+                            <div class="table-responsive" v-if="report.details">
                                 <table class="table">
                                     <thead class="bg-master-lighter">
                                     <tr>
@@ -188,7 +191,7 @@
                     <h5><i class="fa fa-circle text-warning"></i> Stage 1 Confirmed</h5>
                     <div class="scrollable">
                         <div style="height: 400px">
-                            <div class="table-responsive">
+                            <div class="table-responsive" v-if="report.details">
                                 <table class="table">
                                     <thead class="bg-master-lighter">
                                     <tr>
@@ -220,7 +223,7 @@
                     <h5><i class="fa fa-circle text-danger"></i> Stage 2 Confirmed</h5>
                     <div class="scrollable">
                         <div style="height: 400px">
-                            <div class="table-responsive">
+                            <div class="table-responsive" v-if="report.details">
                                 <table class="table">
                                     <thead class="bg-master-lighter">
                                     <tr>
@@ -251,7 +254,7 @@
                     <h5><i class="fa fa-circle text-true-black"></i> Unconfirmed</h5>
                     <div class="scrollable">
                         <div style="height: 400px">
-                            <div class="table-responsive">
+                            <div class="table-responsive" v-if="report.details">
                                 <table class="table">
                                     <thead class="bg-master-lighter">
                                     <tr>
@@ -287,13 +290,16 @@
                 <br>
             </div>
         </div>
-
+        <start-generate-payroll-modal></start-generate-payroll-modal>
     </div>
 </template>
 <script type="text/javascript">
     import {mapGetters, mapState} from 'vuex'
+    import StartGeneratePayrollModal from '../../components/payroll/StartGeneratePayrollModal.vue'
     export default{
-        components: {},
+        components: {
+            'start-generate-payroll-modal':StartGeneratePayrollModal
+        },
         mounted(){
 
         },
@@ -313,7 +319,11 @@
             cancel(){
                 this.$router.go(-1)
             },
+            startGeneratePayrollModal(type){
+                this.$store.state.payroll.attemptGenerateType = type
 
+                $('#modal-start-generate-payroll').modal('show') //show modal
+            }
         }
     }
 </script>

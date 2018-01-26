@@ -73,6 +73,7 @@ class RecruitmentLogic extends RecruitmentUseCase
             $filename = $this->getImageName($request->employeePhoto, $request->nickName);
             $request->employeePhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
             $requestData['employeePhoto'] = $filename; // rename
+
         }
 
         $employee = MasterEmployee::create($requestData);

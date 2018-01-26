@@ -13,6 +13,7 @@
                     <form role="form">
                         <div class="row">
                             <div class="col-md-12">
+                                <p>Type: {{attemptGenerateType}}</p>
                                 <div class="form-group">
                                     <label>Transfer Date </label>
                                     <input id="transferDate" type="text" class="form-control" name="transferDate" required>
@@ -65,6 +66,11 @@
             let transferDate = moment().format('DD/MM/YYYY')
             $('#transferDate').val(transferDate)
         },
+        computed:{
+            ...mapState('payroll',{
+                attemptGenerateType:'attemptGenerateType'
+            })
+        },
         methods: {
             generatePayrollNow(){
                 let self = this
@@ -72,7 +78,14 @@
 
                 if(transferDate&&self.notes){
 
-                    this.$router.push({name:'startGeneratePayroll'})
+                    this.$store.dispatch({
+                        type:'payroll/startGeneratePayroll',
+                        generateSalaryReportLogId:this.$route.params.id,
+                        transferDate:transferDate,
+                        notes:self.notes
+                    })
+
+                    this.$router.push({name:'generate',params:{id:this.$route.params.id}})
 
                 } else {
                      $('.page-container').pgNotification({
