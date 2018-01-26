@@ -6,7 +6,7 @@
                     <div class="row" v-if="!isFetchingAttemptSalaryReportDate&&report.summary">
                         <div class="col-lg-6">
                             <button class="btn btn-outline-danger m-r-15 m-b-10 m-t-10 pull-left"
-                                    @click="cancel()"><i class="fa fa-angle-left"></i> Go Back
+                                    @click="cancel()"><i class="fa fa-times"></i> Cancel
                             </button>
                             <h4 class="pull-left">Generate Payroll ID: {{report.summary.id}}</h4>
                             <!--logs/history details-->
@@ -86,8 +86,167 @@
                     </div>
                 </div>
             </div>
-
         </div>
+        <div class="col-lg-4"></div> <!--empty-->
+
+        <div class="col-lg-4">
+            <div class="card card-bordered">
+                <div class="card-block">
+                    <h5><i class="fa fa-circle text-info"></i> Waiting For Confirmation</h5>
+                    <div class="scrollable">
+                        <div style="height: 400px">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="bg-master-lighter">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Employee</th>
+                                        <th>Division</th>
+                                        <th>Branch</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody v-if="report.details.waiting">
+                                    <tr v-for="data in report.details.waiting">
+                                        <td>{{data.id}}</td>
+                                        <td>{{data.employeeName}}</td>
+                                        <td>{{data.divisionName}}</td>
+                                        <td>{{data.branchOfficeName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-bordered">
+                <div class="card-block">
+                    <h5><i class="fa fa-circle text-success"></i> Confirmed</h5>
+                    <div class="scrollable">
+                        <div style="height: 400px">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="bg-master-lighter">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Employee</th>
+                                        <th>Division</th>
+                                        <th>Branch</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody v-if="report.details.confirmed">
+                                    <tr v-for="data in report.details.confirmed">
+                                        <td>{{data.id}}</td>
+                                        <td>{{data.employeeName}}</td>
+                                        <td>{{data.divisionName}}</td>
+                                        <td>{{data.branchOfficeName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-bordered">
+                <div class="card-block">
+                    <h5><i class="fa fa-circle text-warning"></i> Stage 1 Confirmed</h5>
+                    <div class="scrollable">
+                        <div style="height: 400px">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="bg-master-lighter">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Employee</th>
+                                        <th>Division</th>
+                                        <th>Branch</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody v-if="report.details.stage1Confirmed">
+                                    <tr v-for="data in report.details.stage1Confirmed">
+                                        <td>{{data.id}}</td>
+                                        <td>{{data.employeeName}}</td>
+                                        <td>{{data.divisionName}}</td>
+                                        <td>{{data.branchOfficeName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card card-bordered">
+                <div class="card-block">
+                    <h5><i class="fa fa-circle text-danger"></i> Stage 2 Confirmed</h5>
+                    <div class="scrollable">
+                        <div style="height: 400px">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="bg-master-lighter">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Employee</th>
+                                        <th>Division</th>
+                                        <th>Branch</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody v-if="report.details.stage2Confirmed">
+                                    <tr v-for="data in report.details.stage2Confirmed">
+                                        <td>{{data.id}}</td>
+                                        <td>{{data.employeeName}}</td>
+                                        <td>{{data.divisionName}}</td>
+                                        <td>{{data.branchOfficeName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card card-bordered">
+                <div class="card-block">
+                    <h5><i class="fa fa-circle text-true-black"></i> Unconfirmed</h5>
+                    <div class="scrollable">
+                        <div style="height: 400px">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="bg-master-lighter">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Employee</th>
+                                        <th>Division</th>
+                                        <th>Branch</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody v-if="report.details.unconfirmed">
+                                    <tr v-for="data in report.details.unconfirmed">
+                                        <td>{{data.id}}</td>
+                                        <td>{{data.employeeName}}</td>
+                                        <td>{{data.divisionName}}</td>
+                                        <td>{{data.branchOfficeName}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
         <div class="col-lg-12 m-b-10 p-t-200" v-if="isFetchingAttemptSalaryReportDate">
             <!--Fetching data progress-->

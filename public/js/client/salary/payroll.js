@@ -2607,6 +2607,165 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -22892,8 +23051,8 @@ var render = function() {
                       }
                     },
                     [
-                      _c("i", { staticClass: "fa fa-angle-left" }),
-                      _vm._v(" Go Back\n                        ")
+                      _c("i", { staticClass: "fa fa-times" }),
+                      _vm._v(" Cancel\n                        ")
                     ]
                   ),
                   _vm._v(" "),
@@ -23039,8 +23198,189 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("div", { staticClass: "scrollable" }, [
+            _c("div", { staticStyle: { height: "400px" } }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _vm.report.details.waiting
+                    ? _c(
+                        "tbody",
+                        _vm._l(_vm.report.details.waiting, function(data) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(data.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
+                          ])
+                        })
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _vm._m(4),
+          _vm._v(" "),
+          _c("div", { staticClass: "scrollable" }, [
+            _c("div", { staticStyle: { height: "400px" } }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table" }, [
+                  _vm._m(5),
+                  _vm._v(" "),
+                  _vm.report.details.confirmed
+                    ? _c(
+                        "tbody",
+                        _vm._l(_vm.report.details.confirmed, function(data) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(data.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
+                          ])
+                        })
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _vm._m(6),
+          _vm._v(" "),
+          _c("div", { staticClass: "scrollable" }, [
+            _c("div", { staticStyle: { height: "400px" } }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table" }, [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _vm.report.details.stage1Confirmed
+                    ? _c(
+                        "tbody",
+                        _vm._l(_vm.report.details.stage1Confirmed, function(
+                          data
+                        ) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(data.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
+                          ])
+                        })
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _vm._m(8),
+          _vm._v(" "),
+          _c("div", { staticClass: "scrollable" }, [
+            _c("div", { staticStyle: { height: "400px" } }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table" }, [
+                  _vm._m(9),
+                  _vm._v(" "),
+                  _vm.report.details.stage2Confirmed
+                    ? _c(
+                        "tbody",
+                        _vm._l(_vm.report.details.stage2Confirmed, function(
+                          data
+                        ) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(data.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
+                          ])
+                        })
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _vm._m(10),
+          _vm._v(" "),
+          _c("div", { staticClass: "scrollable" }, [
+            _c("div", { staticStyle: { height: "400px" } }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table" }, [
+                  _vm._m(11),
+                  _vm._v(" "),
+                  _vm.report.details.unconfirmed
+                    ? _c(
+                        "tbody",
+                        _vm._l(_vm.report.details.unconfirmed, function(data) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(data.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.employeeName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.divisionName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(data.branchOfficeName))])
+                          ])
+                        })
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
     _vm.isFetchingAttemptSalaryReportDate
-      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(2)])
+      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(12)])
       : _vm._e()
   ])
 }
@@ -23088,6 +23428,131 @@ var staticRenderFns = [
         ),
         _vm._v(" "),
         _c("th")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [
+      _c("i", { staticClass: "fa fa-circle text-info" }),
+      _vm._v(" Waiting For Confirmation")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Employee")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Division")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Branch")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [
+      _c("i", { staticClass: "fa fa-circle text-success" }),
+      _vm._v(" Confirmed")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Employee")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Division")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Branch")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [
+      _c("i", { staticClass: "fa fa-circle text-warning" }),
+      _vm._v(" Stage 1 Confirmed")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Employee")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Division")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Branch")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [
+      _c("i", { staticClass: "fa fa-circle text-danger" }),
+      _vm._v(" Stage 2 Confirmed")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Employee")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Division")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Branch")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", [
+      _c("i", { staticClass: "fa fa-circle text-true-black" }),
+      _vm._v(" Unconfirmed")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Employee")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Division")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Branch")])
       ])
     ])
   },
