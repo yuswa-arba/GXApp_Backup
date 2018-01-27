@@ -415,13 +415,13 @@ class TestUploadController extends Controller
 
     public function dayoff()
     {
-        $dayOffs = DayOffSchedule::select('date','description')->where('slotId', 1)->get();
+        $dayOffs = DayOffSchedule::select('date', 'description')->where('slotId', 1)->get();
 
         $copyOfDaysOffs = array();
 
         foreach ($dayOffs as $dayOff) {
-            $dayOffDate = Carbon::createFromFormat('d/m/Y',$dayOff->date)->addDay()->format('d/m/Y');
-            array_push($copyOfDaysOffs,array('slotId'=>2,'date'=>$dayOffDate,'description'=>$dayOff->description));
+            $dayOffDate = Carbon::createFromFormat('d/m/Y', $dayOff->date)->addDay()->format('d/m/Y');
+            array_push($copyOfDaysOffs, array('slotId' => 2, 'date' => $dayOffDate, 'description' => $dayOff->description));
         }
 
         echo json_encode($copyOfDaysOffs);
@@ -434,11 +434,25 @@ class TestUploadController extends Controller
 
     public function td()
     {
-        return $this->diffDay('01/01/2018','5/01/2018');
+
+//        $nowTime = Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
+//        $twelveAM = Carbon::createFromFormat('H:i', '14:00');
+//
+//        if ($nowTime->lt($twelveAM)) {
+//            return 'lower';
+//        } else {
+//            return 'greater';
+//        }
+
+        if( $this->totalDays('26/01/2018','28/01/2018') > 2){
+            return "greater";
+
+        } else {
+            return "lower";
+        }
+
+
     }
-
-
-
 
 
 }

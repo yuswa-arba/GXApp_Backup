@@ -18,8 +18,6 @@ class CreateSalaryQueueTable extends Migration
             $table->uuid('employeeId');
             $table->integer('salaryBonusCutTypeId');
             $table->string('value');
-            $table->string('fromDate');
-            $table->string('toDate');
             $table->string('notes');
             $table->string('insertedDate');
             $table->string('insertedBy');

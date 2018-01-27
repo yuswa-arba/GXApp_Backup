@@ -48,7 +48,7 @@ class Kernel extends ConsoleKernel
 
     protected function scheduleDailyCommands(Schedule $schedule)
     {
-        $schedule->command(SalaryConfirmationChecker::class)->twiceDaily(9,15);
+        $schedule->command(SalaryConfirmationChecker::class)->twiceDaily(8,12);
 //        $schedule->command('service:generators:sitemap')->dailyAt('00:35');
 //        $schedule->command('send:daily-emails')->dailyAt('00:00');
     }

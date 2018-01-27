@@ -46,15 +46,22 @@ class CheckUnconfirmedAtValidStage implements ShouldQueue
         /* Payroll setting Max Day to Confirm Valid Stage */
         $maxConfirmationValidStage = PayrollSetting::where('name', 'max-days-confirmation-salary-valid-stage')->first()['value'];
 
+
+        $nowTime = Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
+        $twelveAM = Carbon::createFromFormat('H:i', '12:00');
+
         $isValidStage = false;//default
 
         // get only current year and last year
         $generateSalaryReports = GenerateSalaryReportLogs::orderBy('id', 'desc')->whereYear('created_at', Carbon::now()->year)->get();
 
+
         foreach ($generateSalaryReports as $generateSalaryReport) {
 
             /* Salary Reports Data */
-            $salaryReports = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->get();
+            $salaryReports = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->where(function ($query) {
+                $query->where('confirmationStatusId', 2)->where('confirmationStatusId', 3);
+            })->get();
 
 
             /* Check if today has reached stage2 confirmation*/
@@ -64,17 +71,17 @@ class CheckUnconfirmedAtValidStage implements ShouldQueue
 
             if ($isValidStage) { // if today is in valid stage
 
-                /* Run logic to check validation */
-                foreach ($salaryReports as $salaryReport) {
+                $stage1Schedule = Carbon::createFromFormat('d/m/Y',$generateSalaryReport->generateDate)->addDays($maxConfirmationValidStage)->format('d/m/Y');
 
-                    /* If status is still unconfirmed or waiting for confirmation */
-                    if ($salaryReport->confirmationStatusId == 2 || $salaryReport->confirmationStatusId == 3) {
+                if($salaryReports){
+                    /* Run logic to check validation */
+                    foreach ($salaryReports as $salaryReport) {
 
-                        //TODO: broadcast event to notify users that they need to confirm to receive salary in time
+                        //TODO: broadcast event to notify users that they need to confirm to receive salary in time before $stage1Schedule at 12 AM
 
                     }
-
                 }
+
             }
         }
     }

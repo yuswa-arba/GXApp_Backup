@@ -44,11 +44,14 @@ class CheckUnconfirmedAtStage1 implements ShouldQueue
     public function handle()
     {
         /* Delays */
-        $delayUnconfirmedStage1 = PayrollSetting::where('name','delay-unconfirmed-salary-stage-1')->first()['value'];
+        $delayUnconfirmedStage1 = PayrollSetting::where('name', 'delay-unconfirmed-salary-stage-1')->first()['value'];
 
         /* Payroll setting Max Day to Confirm Stage 1 */
         $maxConfirmationStage1 = PayrollSetting::where('name', 'max-days-confirmation-salary-stage-1')->first()['value'];
         $maxConfirmationValidStage = PayrollSetting::where('name', 'max-days-confirmation-salary-valid-stage')->first()['value'];
+
+        $nowTime = Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
+        $twelveAM = Carbon::createFromFormat('H:i', '12:00');
 
         $isInStage1 = false;//default
 
@@ -58,28 +61,32 @@ class CheckUnconfirmedAtStage1 implements ShouldQueue
         foreach ($generateSalaryReports as $generateSalaryReport) {
 
             /* Salary Reports Data */
-            $salaryReports = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->get();
+            $salaryReports = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->where(function ($query) {
+                $query->where('confirmationStatusId', 2)->where('confirmationStatusId', 3);
+            })->get();
 
 
             /* Check if today is still in stage 1 confirmation*/
-            if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationValidStage&&
-                $this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) <= $maxConfirmationStage1) {
+            if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationValidStage &&
+                $this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) <= $maxConfirmationStage1
+            ) {
+
                 $isInStage1 = true;
             }
 
             if ($isInStage1) { // if today is in stage 1
 
-                /* Run logic to check validation */
-                foreach ($salaryReports as $salaryReport) {
+                if ($salaryReports) {
 
-                    /* If status is still unconfirmed or waiting for confirmation */
-                    if ($salaryReport->confirmationStatusId == 2 || $salaryReport->confirmationStatusId == 3) {
+                    /* Run logic to check validation */
+                    foreach ($salaryReports as $salaryReport) {
+                        if ($nowTime->lt($twelveAM)) {
 
-                        //TODO: broadcast event to notify Users that they need to confirm salary to receive salary in stage 1
-
+                            //TODO: broadcast event to notify Users that they need to confirm salary TODAY before 12 AM to receive salary in stage 1
+                        }
                     }
-
                 }
+
             }
 
         }
