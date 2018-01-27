@@ -23074,7 +23074,7 @@ var render = function() {
         _c("div", { staticClass: "col-lg-12" }, [
           _c("div", { staticClass: "card card-bordered" }, [
             _c("div", { staticClass: "card-block" }, [
-              _c("h4", [_vm._v("Generate History")]),
+              _c("h4", [_vm._v("Generate Salary Report History")]),
               _vm._v(" "),
               _c("div", { staticClass: "table-responsive" }, [
                 _c("table", { staticClass: "table table-hover" }, [

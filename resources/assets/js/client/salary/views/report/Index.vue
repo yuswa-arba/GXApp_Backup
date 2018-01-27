@@ -33,7 +33,7 @@
                 <div class="col-lg-12">
                     <div class="card card-bordered">
                         <div class="card-block">
-                            <h4>Generate History</h4> <!--generate logs/history-->
+                            <h4>Generate Salary Report History</h4> <!--generate logs/history-->
                             <div class="table-responsive">
                                 <table class="table table-hover">
                                     <thead class="bg-master-lighter">

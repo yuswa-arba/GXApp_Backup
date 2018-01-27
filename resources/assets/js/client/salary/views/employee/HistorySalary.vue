@@ -50,6 +50,7 @@
                             <p class="fs-16">Basic Salary: <b class="text-primary">{{report.basicSalary}}</b></p>
                             <p class="fs-16">Total Bonus: <b class="text-primary">{{report.totalSalaryBonus}}</b></p>
                             <p class="fs-16">Total Cut: <b class="text-primary">{{report.totalSalaryCut}}</b></p>
+                            <p class="fs-16">Salary Received: <b class="text-primary">{{report.salaryReceived}}</b></p>
                             <p class="fs-16">Status: <label
                                     class="label fs-16">{{report.confirmationStatusName}}</label></p>
                             <p class="fs-16">Postponed: <span v-if="report.isPostponed">Yes</span> <span

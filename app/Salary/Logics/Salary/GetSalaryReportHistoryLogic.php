@@ -68,6 +68,7 @@ class GetSalaryReportHistoryLogic extends GetSalaryReportUseCase
                     $reportResult[$i]['basicSalary'] = $salaryReport->basicSalary;
                     $reportResult[$i]['totalSalaryBonus'] = $salaryReport->totalSalaryBonus;
                     $reportResult[$i]['totalSalaryCut'] = $salaryReport->totalSalaryCut;
+                    $reportResult[$i]['salaryReceived'] = $salaryReport->salaryReceived;
                     $reportResult[$i]['confirmationStatusId'] = $salaryReport->confirmationStatusId;
                     $reportResult[$i]['confirmationStatusName'] = $this->getResultWithNullChecker1Connection($salaryReport, 'confirmationStatus', 'name');
                     $reportResult[$i]['confirmationDate'] = $salaryReport->confirmationDate;

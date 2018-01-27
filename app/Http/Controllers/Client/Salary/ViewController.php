@@ -33,4 +33,9 @@ class ViewController extends Controller
     {
         return view('pages.salary.payroll');
     }
+
+    public function help()
+    {
+        return view('pages.salary.help');
+    }
 }

@@ -32,6 +32,10 @@
                 <a href="{{route('attendance.setting')}}">Settings</a>
                 <span class="icon-thumbnail">st</span>
             </li>
+            <li class="">
+                <a href="{{route('attendance.help')}}">Help </a>
+                <span class="icon-thumbnail"><i class="fa fa-info-circle"></i></span>
+            </li>
             @endrole
         </ul>
     </li>

@@ -39,9 +39,9 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
         if ($request->attdApprovalId != '') {
             $timesheet = AttendanceTimesheet::where('attendanceApproveId', $request->attdApprovalId)->where(function ($query) use ($sortDate) {
                 $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->get();
+            })->orderBy('id','desc')->get();
         } else {
-            $timesheet = AttendanceTimesheet::where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate)->get();
+            $timesheet = AttendanceTimesheet::where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate)->orderBy('id','desc')->get();
 
         }
 
@@ -64,11 +64,11 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
         if ($request->attdApprovalId != '') {
             $timesheet = AttendanceTimesheet::whereIn('employeeId', $employeeIds)->where('shiftId', $request->shiftId)->where('attendanceApproveId', $request->attdApprovalId)->where(function ($query) use ($sortDate) {
                 $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->get();
+            })->orderBy('id','desc')->get();
         } else {
             $timesheet = AttendanceTimesheet::whereIn('employeeId', $employeeIds)->where('shiftId', $request->shiftId)->where(function ($query) use ($sortDate) {
                 $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->get();
+            })->orderBy('id','desc')->get();
         }
 
         return fractal($timesheet, new TimesheetListTransformer())->respond(200);
@@ -94,11 +94,11 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
                 ->where('attendanceApproveId', $request->attdApprovalId)
                 ->where(function ($query) use ($sortDate) {
                 $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->get();
+            })->orderBy('id','desc')->get();
         } else {
             $timesheet = AttendanceTimesheet::whereIn('employeeId', $employeeIds)->where(function ($query) use ($sortDate) {
                 $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->get();
+            })->orderBy('id','desc')->get();
         }
 
 
@@ -118,7 +118,7 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
 
         $timesheet = AttendanceTimesheet::where('shiftId', $request->shiftId)->where(function ($query) use ($sortDate) {
             $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-        })->get();
+        })->orderBy('id','desc')->get();
         return fractal($timesheet, new TimesheetListTransformer())->respond(200);
     }
 }

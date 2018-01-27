@@ -45,4 +45,9 @@ class ViewController extends Controller
         return view('pages.attendance.leave');
     }
 
+    public function help()
+    {
+        return view('pages.attendance.help');
+    }
+
 }

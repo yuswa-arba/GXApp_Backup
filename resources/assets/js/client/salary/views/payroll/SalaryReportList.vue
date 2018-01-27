@@ -122,7 +122,7 @@
                                             class="fa fa-refresh"></i> Refresh
                                     </button>
                                     <br>
-                                    <button class="btn btn-danger m-b-10" v-if="report.isGeneratedForPayroll"><i class="fa fa-eye"></i> View Last Payroll
+                                    <button class="btn btn-danger m-b-10" v-if="report.isGeneratedForPayroll" @click="viewLastPayroll(report.id)"><i class="fa fa-eye"></i> View Last Payroll
                                     </button>
                                 </div>
                             </div>
@@ -178,6 +178,9 @@
 
                 this.$router.push({name: 'attemptGenerate',params:{id:id}})
 
+            },
+            viewLastPayroll(id){
+              this.$router.push({name:'lastPayrollDetail',params:{id:id}})
             },
             sortReportList(){
 

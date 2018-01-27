@@ -3518,6 +3518,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -24538,6 +24539,13 @@ var render = function() {
                           _vm._v("Total Cut: "),
                           _c("b", { staticClass: "text-primary" }, [
                             _vm._v(_vm._s(report.totalSalaryCut))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "fs-16" }, [
+                          _vm._v("Salary Received: "),
+                          _c("b", { staticClass: "text-primary" }, [
+                            _vm._v(_vm._s(report.salaryReceived))
                           ])
                         ]),
                         _vm._v(" "),

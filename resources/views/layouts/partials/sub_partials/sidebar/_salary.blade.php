@@ -22,6 +22,10 @@
                 <a href="{{route('salary.setting')}}">Settings</a>
                 <span class="icon-thumbnail">st</span>
             </li>
+            <li class="">
+                <a href="{{route('salary.help')}}">Help</a>
+                <span class="icon-thumbnail"><i class="fa fa-info-circle"></i></span>
+            </li>
         </ul>
     </li>
 @endcan

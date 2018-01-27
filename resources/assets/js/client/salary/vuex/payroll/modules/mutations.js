@@ -213,6 +213,35 @@ export default{
 
             })
     },
+    getLastPayrollDetail(state, payload){
+        get(api_path + 'salary/payroll/lastPayroll/' + payload.id)
+            .then((res) => {
+
+                if (!res.data.isFailed) {
+
+                    state.lastPayrollDetail = res.data.lastPayroll
+
+                } else {
+                     $('.page-container').pgNotification({
+                          style: 'flip',
+                          message: res.data.message,
+                          position: 'top-right',
+                          timeout: 3500,
+                          type: 'danger'
+                      }).show();
+                }
+
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+    },
     downloadFile(state, payload){
         if (payload.id) {
 

@@ -21,7 +21,8 @@ export default {
         isStartGeneratingPayroll:false,
         attemptGenerateType:'',
         generatePayrollResponse:{isFailed:true,message:'Unknown Request'},
-        generatedPayrollId:''
+        generatedPayrollId:'',
+        lastPayrollDetail:{}
     },
     getters,
     mutations,

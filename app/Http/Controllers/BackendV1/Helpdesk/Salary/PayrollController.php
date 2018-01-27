@@ -150,10 +150,10 @@ class PayrollController extends Controller
             $filePath = base_path(Configs::$DOWNLOAD_PATH['PAYROLL_REPORT'] . $generatePayroll->file);
             if (file_exists($filePath)) {
 
-                return response()->file($filePath,[
+                return response()->file($filePath, [
                     'Content-Type' => 'text/csv; charset=utf-8',
-                    'Content-Disposition' => 'attachment; filename="'.$generatePayroll->file.'"',
-                    'Content-Transfer-Encoding'=>'binary'
+                    'Content-Disposition' => 'attachment; filename="' . $generatePayroll->file . '"',
+                    'Content-Transfer-Encoding' => 'binary'
                 ]);
 
             } else {
@@ -186,7 +186,7 @@ class PayrollController extends Controller
                 if (unlink($filePath)) {
 
                     //remove file path from DB
-                    $generatePayroll->file='';
+                    $generatePayroll->file = '';
                     $generatePayroll->save();
 
                     /* return response */
@@ -215,6 +215,54 @@ class PayrollController extends Controller
 
             return response()->json($response, 200);
         }
+    }
+
+    public function getLastPayrollDetail($salaryReportLogId)
+    {
+
+        $response = array();
+
+        if ($salaryReportLogId == '' || $salaryReportLogId == null) {
+            /* return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Salary report log ID is empty';
+
+            return response()->json($response, 200);
+        }
+
+        $lastPayrollData = array();
+
+        $generatePayroll = GeneratePayroll::where('generateSalaryReportLogId', $salaryReportLogId)->first();
+
+        if ($generatePayroll) {
+            $lastPayrollData['id'] = $generatePayroll->id;
+            $lastPayrollData['fromDate'] = $generatePayroll->fromDate;
+            $lastPayrollData['toDate'] = $generatePayroll->toDate;
+            $lastPayrollData['branchOfficeId'] = $generatePayroll->branchOfficeId;
+            $lastPayrollData['branchOfficeName'] = $this->getResultWithNullChecker1Connection($generatePayroll, 'branchOffice', 'name');
+            $lastPayrollData['file'] = $generatePayroll->file;
+            $lastPayrollData['generatedDate'] = $generatePayroll->generatedDate;
+            $lastPayrollData['generatedBy'] = $generatePayroll->generatedBy;
+            $lastPayrollData['generatedType'] = $generatePayroll->generatedType;
+            $lastPayrollData['totalEmployee'] = $generatePayroll->totalEmployee;
+            $lastPayrollData['notes'] = $generatePayroll->notes;
+            $lastPayrollData['generateSalaryReportLogId'] = $generatePayroll->generateSalaryReportLogId;
+
+            /* return response */
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            $response['lastPayroll'] = $lastPayrollData;
+
+            return response()->json($response, 200);
+        } else {
+            /* return response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Data empty';
+
+            return response()->json($response, 200);
+        }
+
+
     }
 
 }

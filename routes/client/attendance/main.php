@@ -29,4 +29,5 @@ Route::prefix('attendance')->namespace('Client\Attendance')->middleware('auth.ad
     Route::get('schedule/', 'ViewController@schedule')->name('attendance.schedule');
     Route::get('timesheet', 'ViewController@timesheet')->name('attendance.timesheet');
     Route::get('leave','ViewController@leave')->name('attendance.leave');
+    Route::get('help','ViewController@help')->name('attendance.help');
 });
