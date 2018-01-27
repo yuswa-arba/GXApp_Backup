@@ -24,6 +24,11 @@ class ViewController extends Controller
         return view('pages.salary.employee');
     }
 
+    public function queue()
+    {
+        return view('pages.salary.queue');
+    }
+
     public function setting()
     {
         return view('pages.salary.setting');

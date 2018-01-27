@@ -15,6 +15,10 @@
                 <span class="icon-thumbnail">pl</span>
             </li>
             <li class="">
+                <a href="{{route('salary.queue')}}">Queue</a>
+                <span class="icon-thumbnail">q</span>
+            </li>
+            <li class="">
                 <a href="{{route('salary.employee')}}">Employee</a>
                 <span class="icon-thumbnail">e</span>
             </li>

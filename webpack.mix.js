@@ -169,6 +169,8 @@ mix.js('resources/assets/js/client/salary/report','public/js/client/salary');
 mix.js('resources/assets/js/client/salary/employee','public/js/client/salary');
 mix.js('resources/assets/js/client/salary/setting','public/js/client/salary');
 mix.js('resources/assets/js/client/salary/payroll','public/js/client/salary');
+mix.js('resources/assets/js/client/salary/queue','public/js/client/salary');
+
 /*
  |--------------------------------------------------------------------------
  | Application JS

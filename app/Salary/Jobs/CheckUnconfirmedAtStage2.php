@@ -86,7 +86,7 @@ class CheckUnconfirmedAtStage2 implements ShouldQueue
                     /* Run logic to check validation */
                     foreach ($salaryReports as $salaryReport) {
 
-                        if ($nowTime->gte($twelveAM)) {
+                        if ($nowTime->gte($twelveAM)) { // if now time is 12:00 or greater
 
                             $salaryReport->confirmationStatusId = 5; // update confirmation status => stage 2 confirmed
                             $salaryReport->isPostponed = 1; // update isPostponed => true
@@ -104,7 +104,7 @@ class CheckUnconfirmedAtStage2 implements ShouldQueue
                                 'insertedBy' => 'SYSTEM_CHECK'
                             ]);
 
-                        } else {
+                        } else { // if now time is still note 12AM
 
                             //TODO: notify USERS that the last time to confirm stage 2 is TODAY before 12 AM
                         }

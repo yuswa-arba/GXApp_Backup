@@ -21,7 +21,7 @@
                     <div class="scrollable">
                         <div style="height: 500px">
                             <div class="table-responsive">
-                                <table class="table tabel-hover">
+                                <table class="table">
                                     <thead class="bg-master-lighter">
                                     <tr>
                                         <th class="text-black p-t-5 p-b-5">ID</th>
