@@ -23141,7 +23141,7 @@ var render = function() {
                     [_vm._v(_vm._s(employee.employeeNo))]
                   ),
                   _vm._v(" "),
-                  _c("h5", { staticClass: "fs-18" }, [
+                  _c("h5", { staticClass: "fs-16 overflow-ellipsis" }, [
                     _vm._v(_vm._s(employee.givenName))
                   ]),
                   _vm._v(" "),
