@@ -2867,14 +2867,34 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     methods: {
-        calculateQueue: function calculateQueue(id) {
-            console.log(id);
+        deleteQueue: function deleteQueue(salaryQueueId, index) {
+
+            if (confirm('Are you sure to delete this salary queue?')) {
+
+                if (salaryQueueId != null && index != null) {
+                    this.$store.commit({
+                        type: 'queue/deleteSalaryQueue',
+                        salaryQueueId: salaryQueueId,
+                        index: index
+                    });
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'An Error Occurred!',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }
         },
-        deleteQueue: function deleteQueue(id) {
-            console.log(id);
+        deleteAllQueue: function deleteAllQueue() {
+            if (confirm('[WARNING] Are you sure to delete ALL salary queues?')) {
+                this.$store.commit({
+                    type: 'queue/deleteAllSalaryQueue'
+                });
+            }
         },
-        calculateAllQueue: function calculateAllQueue() {},
-        deleteAllQueue: function deleteAllQueue() {},
         createQueue: function createQueue() {
             this.$router.push({ name: 'createQueue' });
         },
@@ -22852,7 +22872,7 @@ var render = function() {
                     _vm._v(" "),
                     _c(
                       "tbody",
-                      _vm._l(_vm.salaryQueues, function(queue) {
+                      _vm._l(_vm.salaryQueues, function(queue, index) {
                         return _c("tr", [
                           _c("td", [_vm._v(_vm._s(queue.id))]),
                           _vm._v(" "),
@@ -22904,7 +22924,7 @@ var render = function() {
                                   staticClass: "btn btn-outline-danger",
                                   on: {
                                     click: function($event) {
-                                      _vm.deleteQueue(queue.id)
+                                      _vm.deleteQueue(queue.id, index)
                                     }
                                   }
                                 },
@@ -37971,6 +37991,71 @@ module.exports = Component.exports
                 }).show();
 
                 state.salaryQueues.push(res.data.salaryQueues.data); // push to array
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    deleteSalaryQueue: function deleteSalaryQueue(state, payload) {
+        var self = this;
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/delete', { salaryQueueId: payload.salaryQueueId }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                state.salaryQueues.splice(payload.index, 1); //remove from array
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    deleteAllSalaryQueue: function deleteAllSalaryQueue(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/deleteAll').then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                state.salaryQueues = []; // empty array
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',

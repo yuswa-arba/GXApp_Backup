@@ -36,7 +36,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="queue in salaryQueues">
+                                    <tr v-for="(queue,index) in salaryQueues">
                                         <td>{{queue.id}}</td>
                                         <td>{{queue.employeeName}}({{queue.divisionName}})</td>
                                         <td>{{queue.salaryBonusCutTypeName}}
@@ -51,7 +51,7 @@
                                         <td>@<b>{{queue.insertedDate}}</b> by <b>{{queue.insertedBy}}</b></td>
                                         <td>
                                             <div>
-                                                <button class="btn btn-outline-danger" @click="deleteQueue(queue.id)"><i
+                                                <button class="btn btn-outline-danger" @click="deleteQueue(queue.id,index)"><i
                                                         class="fa fa-trash"></i>
                                                     Delete
                                                 </button>
@@ -88,17 +88,35 @@
             this.$store.commit('queue/getSalaryQueueList')
         },
         methods: {
-            calculateQueue(id){
-                console.log(id)
-            },
-            deleteQueue(id){
-                console.log(id)
-            },
-            calculateAllQueue(){
+            deleteQueue(salaryQueueId,index){
+
+                if(confirm('Are you sure to delete this salary queue?')){
+
+                    if(salaryQueueId!=null&&index!=null){
+                        this.$store.commit({
+                            type:'queue/deleteSalaryQueue',
+                            salaryQueueId:salaryQueueId,
+                            index:index
+                        })
+                    } else {
+                         $('.page-container').pgNotification({
+                              style: 'flip',
+                              message: 'An Error Occurred!',
+                              position: 'top-right',
+                              timeout: 3500,
+                              type: 'danger'
+                          }).show();
+                    }
+                }
+
 
             },
             deleteAllQueue(){
-
+                if(confirm('[WARNING] Are you sure to delete ALL salary queues?')){
+                    this.$store.commit({
+                        type:'queue/deleteAllSalaryQueue'
+                    })
+                }
             },
             createQueue(){
                 this.$router.push({name:'createQueue'})

@@ -60,6 +60,8 @@ Route::prefix('v1/h')->group(function () {
 
         Route::get('queue/list','SalaryQueueController@list');
         Route::post('queue/create','SalaryQueueController@create');
+        Route::post('queue/delete','SalaryQueueController@delete');
+        Route::post('queue/deleteAll','SalaryQueueController@deleteAll');
 
     });
 });

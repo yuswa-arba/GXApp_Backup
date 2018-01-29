@@ -82,5 +82,50 @@ class SalaryQueueController extends Controller
 
     }
 
+    public function delete( Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(),[
+            'salaryQueueId'=>'required'
+        ]);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Required parameter is missing';
+            return response()->json($response, 200);
+        }
+
+
+        //is valid
+
+        $salaryQueue = SalaryQueue::find($request->salaryQueueId);
+
+        if($salaryQueue){
+
+            $salaryQueue->delete();
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Salary queue has been deleted successfully';
+            return response()->json($response,200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find salary queue data';
+            return response()->json($response,200);
+        }
+
+    }
+
+    public function deleteAll()
+    {
+
+        SalaryQueue::truncate();
+
+        $response['isFailed'] = false;
+        $response['message'] = 'Salary queues has been truncated successfully';
+        return response()->json($response,200);
+    }
+
 
 }
