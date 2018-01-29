@@ -50,8 +50,8 @@ export default{
             .then((res) => {
                 if (!res.data.isFailed) {
 
-                    if (res.data.salaryReport) {
-                        state.salaryReportDetails = res.data.salaryReport
+                    if (res.data.salaryReportDetails) {
+                        state.salaryReportDetails = res.data.salaryReportDetails
                     } else {
                         $('.page-container').pgNotification({
                             style: 'flip',

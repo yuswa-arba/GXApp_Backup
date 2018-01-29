@@ -136,6 +136,33 @@ class GenerateSalaryLogic extends GenerateUseCase
                                     );
                                 }
                             }
+
+                            //insert employee salary queue to salary calculation
+                            if (isset($esr['employeeSalaryQueue'])) {
+
+                                $employeeSalaryQueues = $esr['employeeSalaryQueue'];
+
+                                foreach ($employeeSalaryQueues as $employeeSalaryQueue) {
+
+                                    SalaryCalculation::updateOrcreate(
+                                        [
+                                            'salaryReportId' => $insert->id,
+                                            'employeeId' => $esr['employeeId'],
+                                            'salaryBonusCutTypeId' => $employeeSalaryQueue['salaryBonusCutTypeId'],
+                                            'fromDate' => $summarySalaryReport['fromDate'],
+                                            'toDate' => $summarySalaryReport['toDate'],
+                                            'isDeleted' => 0,
+                                            'isEdited' => 0,
+                                            'isProcessed' => 0
+                                        ],
+                                        [
+                                            'value' => $employeeSalaryQueue['value'],
+                                            'insertedDate' => Carbon::now()->format('d/m/Y'),
+                                            'insertedBy' => $this->getResultWithNullChecker1Connection(Auth::user(), 'employee', 'givenName'),
+                                        ]
+                                    );
+                                }
+                            }
                         }
                     }
 
@@ -265,6 +292,7 @@ class GenerateSalaryLogic extends GenerateUseCase
 
                 $x = 0; // general bonus cut array
                 $y = 0; // employee bonus cut array
+                $z = 0; // employee salary queue array
 
                 /* Calculate GENERAL bonus cuts*/
                 foreach ($generalBonusCuts as $generalBonusCut) {
@@ -306,18 +334,18 @@ class GenerateSalaryLogic extends GenerateUseCase
                 }
 
                 /* Calculate EMPLOYEE bonus cuts*/
-                foreach ($employee->bonusCut as $bonusCut) {
+                foreach ($employee->bonusCut as $queue) {
 
                     $calculation = 0; //default calculation
 
                     /* check if bonus cut is active*/
-                    if ($bonusCut->isActive) {
+                    if ($queue->isActive) {
 
-                        if ($bonusCut->isUsingFormula) {
+                        if ($queue->isUsingFormula) {
 
                             /* FORMULA calculation */
 
-                            $formula = $bonusCut->formula; // default
+                            $formula = $queue->formula; // default
 
                             $formula = str_replace(Configs::$SALARY_FORMULA_OPEARTOR['SALARY'], $employeeSalary, $formula); // salary
                             $formula = str_replace(Configs::$SALARY_FORMULA_OPEARTOR['MIN_LATE_IN'], $totalMinLate, $formula); // min late in
@@ -328,26 +356,50 @@ class GenerateSalaryLogic extends GenerateUseCase
                             $calculation = eval('return ' . $formula . ';');
 
                         } else {
-                            $calculation = $bonusCut->value;
+                            $calculation = $queue->value;
                         }
 
                     }
 
-                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['id'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'id');
-                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['name'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'name');
-                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['addOrSub'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'addOrSub');
+                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['id'] = $this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'id');
+                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['name'] = $this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'name');
+                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['addOrSub'] = $this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'addOrSub');
                     $employeeSalaryReport[$i]['employeeBonusCut'][$y]['value'] = $calculation;
 
 
                     // total bonus & cuts
-                    if ($this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'addOrSub') == 'add') {
+                    if ($this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'addOrSub') == 'add') {
                         $totalBonus = $totalBonus + $calculation;
-                    } elseif ($this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'addOrSub') == 'sub') {
+                    } elseif ($this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'addOrSub') == 'sub') {
                         $totalCut = $totalCut + $calculation;
                     }
 
 
                     $y++; // increment array
+
+                }
+
+                /* Calculate EMPLOYEE salary queue*/
+                foreach ($employee->salaryQueue as $queue) {
+
+                    $calculation = 0; //default calculation
+
+                    $calculation = $queue->value; // queue value
+
+                    $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['id'] = $this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'id');
+                    $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['name'] = $this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'name');
+                    $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['addOrSub'] = $this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'addOrSub');
+                    $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['value'] = $calculation;
+                    $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['notes'] = $queue->notes;
+
+                    // total bonus & cuts
+                    if ($this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'addOrSub') == 'add') {
+                        $totalBonus = $totalBonus + $calculation;
+                    } elseif ($this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'addOrSub') == 'sub') {
+                        $totalCut = $totalCut + $calculation;
+                    }
+
+                    $z++; // increment array
 
                 }
 

@@ -3355,9 +3355,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -23221,13 +23218,11 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-6 m-b-10" }),
     _vm._v(" "),
-    _vm.salaryReportDetails.employeesSalaryReport
+    _vm.salaryReportDetails.details
       ? _c(
           "div",
           { staticClass: "col-lg-12 m-b-10" },
-          _vm._l(_vm.salaryReportDetails.employeesSalaryReport, function(
-            report
-          ) {
+          _vm._l(_vm.salaryReportDetails.details, function(detail) {
             return _c(
               "div",
               { staticClass: "filter-item card card-bordered" },
@@ -23239,201 +23234,395 @@ var render = function() {
                       "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
                   },
                   [
-                    _c(
-                      "div",
-                      {
-                        staticClass: "card-block bg-primary",
-                        staticStyle: { padding: "3px 15px!important" }
-                      },
-                      [
-                        _c("div", { staticClass: "pull-left" }, [
-                          _c("span", { staticClass: "text-white fs-16 bold" }, [
-                            _vm._v(_vm._s(report.employeeName))
-                          ]),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "text-white fs-16" }, [
-                            _vm._v("(" + _vm._s(report.employeeNo) + ")")
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "pull-right" }, [
-                          _c("span", { staticClass: "text-white fs-14 bold" }, [
-                            _vm._v(_vm._s(report.divisionName))
-                          ])
-                        ])
-                      ]
-                    )
+                    detail.employeeData
+                      ? _c(
+                          "div",
+                          {
+                            staticClass: "card-block bg-primary",
+                            staticStyle: { padding: "3px 15px!important" }
+                          },
+                          [
+                            _c("div", { staticClass: "pull-left" }, [
+                              _c(
+                                "span",
+                                { staticClass: "text-white fs-16 bold" },
+                                [
+                                  _vm._v(
+                                    _vm._s(detail.employeeData.employeeName)
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("span", { staticClass: "text-white fs-16" }, [
+                                _vm._v(
+                                  "(" +
+                                    _vm._s(detail.employeeData.employeeNo) +
+                                    ")"
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "pull-right" }, [
+                              _c(
+                                "span",
+                                { staticClass: "text-white fs-14 bold" },
+                                [
+                                  _vm._v(
+                                    _vm._s(detail.employeeData.divisionName)
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        )
+                      : _vm._e()
                   ]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  report.timesheetSummary
-                    ? _c("div", { staticClass: "col-lg-2" }, [
-                        _c("div", { staticClass: "card-block" }, [
-                          _c("h5", { staticClass: "bold" }, [
-                            _vm._v("Timesheet Summary")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Days of Absence : "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(
-                                _vm._s(report.timesheetSummary.totalDayAbsence)
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Min. Late: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(
-                                _vm._s(report.timesheetSummary.totalMinLate)
-                              )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Min. Early Out : "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(
-                                _vm._s(report.timesheetSummary.totalMinEarlyOut)
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  report.salarySummary
-                    ? _c("div", { staticClass: "col-lg-2" }, [
-                        _c("div", { staticClass: "card-block" }, [
-                          _c("h5", { staticClass: "bold" }, [
-                            _vm._v("Salary Summary")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Basic Salary: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(_vm._s(report.salarySummary.basicSalary))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Bonus: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(_vm._s(report.salarySummary.totalBonus))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Total Cut: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(_vm._s(report.salarySummary.totalCut))
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "fs-16" }, [
-                            _vm._v("Salary Received: "),
-                            _c("b", { staticClass: "text-primary" }, [
-                              _vm._v(
-                                _vm._s(report.salarySummary.salaryReceived)
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  report.generalBonusCut
-                    ? _c("div", { staticClass: "col-lg-4" }, [
-                        _c("div", { staticClass: "card-block bordered" }, [
-                          _c("h5", { staticClass: "bold" }, [
-                            _vm._v("General Bonus/Cut")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "table-responsive" }, [
-                            _c("table", { staticClass: "table" }, [
-                              _vm._m(0, true),
+                detail.reportResult
+                  ? _c(
+                      "div",
+                      { staticClass: "col-lg-12 m-b-10" },
+                      _vm._l(detail.reportResult, function(report) {
+                        return _c(
+                          "div",
+                          { staticClass: "card card-borderless filter-item" },
+                          [
+                            _c("div", { staticClass: "row" }, [
+                              report.salaryReport
+                                ? _c(
+                                    "div",
+                                    { staticClass: "col-lg-3 m-t-10" },
+                                    [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "card-block p-t-0",
+                                          staticStyle: { "margin-left": "25px" }
+                                        },
+                                        [
+                                          _c("h5", { staticClass: "bold" }, [
+                                            _vm._v("Summary")
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", { staticClass: "fs-16" }, [
+                                            _vm._v("Basic Salary: "),
+                                            _c(
+                                              "b",
+                                              { staticClass: "text-primary" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    report.salaryReport
+                                                      .basicSalary
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", { staticClass: "fs-16" }, [
+                                            _vm._v("Total Bonus: "),
+                                            _c(
+                                              "b",
+                                              { staticClass: "text-primary" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    report.salaryReport
+                                                      .totalSalaryBonus
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", { staticClass: "fs-16" }, [
+                                            _vm._v("Total Cut: "),
+                                            _c(
+                                              "b",
+                                              { staticClass: "text-primary" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    report.salaryReport
+                                                      .totalSalaryCut
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", { staticClass: "fs-16" }, [
+                                            _vm._v("Salary Received: "),
+                                            _c(
+                                              "b",
+                                              { staticClass: "text-primary" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    report.salaryReport
+                                                      .salaryReceived
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", { staticClass: "fs-16" }, [
+                                            _vm._v("Status: "),
+                                            _c(
+                                              "label",
+                                              { staticClass: "label fs-16" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    report.salaryReport
+                                                      .confirmationStatusName
+                                                  )
+                                                )
+                                              ]
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", { staticClass: "fs-16" }, [
+                                            _vm._v("Postponed: "),
+                                            report.salaryReport.isPostponed
+                                              ? _c("span", [_vm._v("Yes")])
+                                              : _c("span", [_vm._v("No")])
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("p", { staticClass: "fs-16" }, [
+                                            _vm._v("Submitted: "),
+                                            report.salaryReport
+                                              .isSubmittedForPayroll
+                                              ? _c("span", [_vm._v("Yes")])
+                                              : _c("span", [_vm._v("No")])
+                                          ])
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                : _vm._e(),
                               _vm._v(" "),
-                              _c(
-                                "tbody",
-                                _vm._l(report.generalBonusCut, function(gbc) {
-                                  return _c("tr", [
-                                    _c("td", [_vm._v(_vm._s(gbc.name))]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      gbc.addOrSub == "add"
-                                        ? _c(
-                                            "label",
-                                            {
-                                              staticClass: "label label-success"
-                                            },
-                                            [_vm._v(_vm._s(gbc.addOrSub))]
-                                          )
-                                        : _c(
-                                            "label",
-                                            {
-                                              staticClass: "label label-danger"
-                                            },
-                                            [_vm._v(_vm._s(gbc.addOrSub))]
-                                          )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(gbc.value))])
+                              _c("div", { staticClass: "col-lg-9 m-t-10" }, [
+                                _c("div", { staticClass: "card-block p-t-0" }, [
+                                  _c("h5", { staticClass: "bold" }, [
+                                    _vm._v("Bonus/Cuts")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "scrollable" }, [
+                                    _c(
+                                      "div",
+                                      { staticStyle: { height: "280px" } },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "table-responsive" },
+                                          [
+                                            report.salaryCalculations
+                                              ? _c(
+                                                  "table",
+                                                  { staticClass: "table" },
+                                                  [
+                                                    _vm._m(0, true),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "tbody",
+                                                      _vm._l(
+                                                        report.salaryCalculations,
+                                                        function(calculation) {
+                                                          return _c("tr", [
+                                                            _c("td", [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  calculation.SBCTypeName
+                                                                )
+                                                              )
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("td", [
+                                                              calculation.SBCTypeAddOrSub ==
+                                                              "add"
+                                                                ? _c(
+                                                                    "label",
+                                                                    {
+                                                                      staticClass:
+                                                                        "label label-success fs-16"
+                                                                    },
+                                                                    [
+                                                                      _vm._v(
+                                                                        "Add"
+                                                                      )
+                                                                    ]
+                                                                  )
+                                                                : _c("label", [
+                                                                    _vm._v(
+                                                                      "Sub"
+                                                                    )
+                                                                  ])
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("td", [
+                                                              _vm._v(
+                                                                "\n                                                        At "
+                                                              ),
+                                                              _c("b", [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    calculation.insertedDate
+                                                                  )
+                                                                )
+                                                              ]),
+                                                              _vm._v(" by "),
+                                                              _c("b", [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    calculation.insertedBy
+                                                                  )
+                                                                )
+                                                              ])
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("td", [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  calculation.value
+                                                                )
+                                                              )
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("td", [
+                                                              _c(
+                                                                "p",
+                                                                {
+                                                                  staticClass:
+                                                                    "fs-14"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Edited: "
+                                                                  ),
+                                                                  calculation.isEdited
+                                                                    ? _c(
+                                                                        "span",
+                                                                        {
+                                                                          staticClass:
+                                                                            "bold"
+                                                                        },
+                                                                        [
+                                                                          _vm._v(
+                                                                            "Yes (by " +
+                                                                              _vm._s(
+                                                                                calculation.editedB
+                                                                              ) +
+                                                                              " at " +
+                                                                              _vm._s(
+                                                                                calculation.editedDate
+                                                                              ) +
+                                                                              ")"
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    : _c(
+                                                                        "span",
+                                                                        {
+                                                                          staticClass:
+                                                                            "bold"
+                                                                        },
+                                                                        [
+                                                                          _vm._v(
+                                                                            "No"
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                ]
+                                                              )
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("td", [
+                                                              _c(
+                                                                "p",
+                                                                {
+                                                                  staticClass:
+                                                                    "fs 14"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "Processed: "
+                                                                  ),
+                                                                  calculation.isProcessed
+                                                                    ? _c(
+                                                                        "span",
+                                                                        {
+                                                                          staticClass:
+                                                                            "bold"
+                                                                        },
+                                                                        [
+                                                                          _vm._v(
+                                                                            "Yes (at " +
+                                                                              _vm._s(
+                                                                                calculation.processedDate
+                                                                              ) +
+                                                                              ")"
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    : _c(
+                                                                        "span",
+                                                                        {
+                                                                          staticClass:
+                                                                            "bold"
+                                                                        },
+                                                                        [
+                                                                          _vm._v(
+                                                                            "No"
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                ]
+                                                              )
+                                                            ]),
+                                                            _vm._v(" "),
+                                                            _c("td", [
+                                                              calculation.notes
+                                                                ? _c(
+                                                                    "p",
+                                                                    {
+                                                                      staticClass:
+                                                                        "fs-14"
+                                                                    },
+                                                                    [
+                                                                      _vm._v(
+                                                                        "Notes: " +
+                                                                          _vm._s(
+                                                                            calculation.notes
+                                                                          )
+                                                                      )
+                                                                    ]
+                                                                  )
+                                                                : _vm._e()
+                                                            ])
+                                                          ])
+                                                        }
+                                                      )
+                                                    )
+                                                  ]
+                                                )
+                                              : _vm._e()
+                                          ]
+                                        )
+                                      ]
+                                    )
                                   ])
-                                })
-                              )
+                                ])
+                              ])
                             ])
-                          ])
-                        ])
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  report.employeeBonusCut
-                    ? _c("div", { staticClass: "col-lg-4" }, [
-                        _c("div", { staticClass: "card-block bordered" }, [
-                          _c("h5", { staticClass: "bold" }, [
-                            _vm._v("Employee Bonus/Cut")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "table-responsive" }, [
-                            _c("table", { staticClass: "table" }, [
-                              _vm._m(1, true),
-                              _vm._v(" "),
-                              _c(
-                                "tbody",
-                                _vm._l(report.employeeBonusCut, function(ebc) {
-                                  return _c("tr", [
-                                    _c("td", [_vm._v(_vm._s(ebc.name))]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      ebc.addOrSub == "add"
-                                        ? _c(
-                                            "label",
-                                            {
-                                              staticClass: "label label-success"
-                                            },
-                                            [_vm._v(_vm._s(ebc.addOrSub))]
-                                          )
-                                        : _c(
-                                            "label",
-                                            {
-                                              staticClass: "label label-danger"
-                                            },
-                                            [_vm._v(_vm._s(ebc.addOrSub))]
-                                          )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [_vm._v(_vm._s(ebc.value))])
-                                  ])
-                                })
-                              )
-                            ])
-                          ])
-                        ])
-                      ])
-                    : _vm._e()
-                ])
+                          ]
+                        )
+                      })
+                    )
+                  : _vm._e()
               ]
             )
           })
@@ -23441,7 +23630,7 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.isFetchingReportDetail
-      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(2)])
+      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(1)])
       : _vm._e()
   ])
 }
@@ -23456,21 +23645,15 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Add/Sub")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Value")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c("th", [_vm._v("Name")]),
+        _c("th", [_vm._v("Insert")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Add/Sub")]),
+        _c("th", [_vm._v("Value")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Value")])
+        _c("th", [_vm._v("Details")]),
+        _vm._v(" "),
+        _c("th"),
+        _vm._v(" "),
+        _c("th")
       ])
     ])
   },
@@ -40316,8 +40499,8 @@ module.exports = Component.exports
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payroll/report/details/' + payload.id).then(function (res) {
             if (!res.data.isFailed) {
 
-                if (res.data.salaryReport) {
-                    state.salaryReportDetails = res.data.salaryReport;
+                if (res.data.salaryReportDetails) {
+                    state.salaryReportDetails = res.data.salaryReportDetails;
                 } else {
                     $('.page-container').pgNotification({
                         style: 'flip',

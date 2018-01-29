@@ -27,95 +27,92 @@
         </div>
 
 
-        <div class="col-lg-12 m-b-10" v-if="salaryReportDetails.employeesSalaryReport">
-            <div class="filter-item card card-bordered" v-for="report in salaryReportDetails.employeesSalaryReport">
+        <div class="col-lg-12 m-b-10" v-if="salaryReportDetails.details">
+            <div class="filter-item card card-bordered" v-for="detail in salaryReportDetails.details">
                 <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
-                    <div class="card-block bg-primary" style="padding:3px 15px!important;">
+                    <div class="card-block bg-primary" style="padding:3px 15px!important;" v-if="detail.employeeData">
                         <div class="pull-left">
-                            <span class="text-white fs-16 bold">{{report.employeeName}}</span>
-                            <span class="text-white fs-16">({{report.employeeNo}})</span>
+                            <span class="text-white fs-16 bold">{{detail.employeeData.employeeName}}</span>
+                            <span class="text-white fs-16">({{detail.employeeData.employeeNo}})</span>
                         </div>
                         <div class="pull-right">
-                            <span class="text-white fs-14 bold">{{report.divisionName}}</span>
+                            <span class="text-white fs-14 bold">{{detail.employeeData.divisionName}}</span>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-2" v-if="report.timesheetSummary">
-                        <div class="card-block">
-                            <h5 class="bold">Timesheet Summary</h5>
-                            <p class="fs-16">Total Days of Absence : <b class="text-primary">{{report.timesheetSummary.totalDayAbsence}}</b></p>
-                            <p class="fs-16">Total Min. Late: <b class="text-primary">{{report.timesheetSummary.totalMinLate}}</b></p>
-                            <p class="fs-16">Total Min. Early Out : <b class="text-primary">{{report.timesheetSummary.totalMinEarlyOut}}</b></p>
-                        </div>
-                    </div>
+                <div class="col-lg-12 m-b-10" v-if="detail.reportResult">
+                    <div class="card card-borderless filter-item" v-for="report in detail.reportResult">
 
-                    <div class="col-lg-2" v-if="report.salarySummary">
-                        <div class="card-block">
-                            <h5 class="bold">Salary Summary</h5>
-                            <p class="fs-16">Basic Salary: <b class="text-primary">{{report.salarySummary.basicSalary}}</b></p>
-                            <p class="fs-16">Total Bonus: <b class="text-primary">{{report.salarySummary.totalBonus}}</b></p>
-                            <p class="fs-16">Total Cut: <b class="text-primary">{{report.salarySummary.totalCut}}</b></p>
-                            <p class="fs-16">Salary Received: <b class="text-primary">{{report.salarySummary.salaryReceived}}</b></p>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4" v-if="report.generalBonusCut">
-                        <div class="card-block bordered">
-                            <h5 class="bold">General Bonus/Cut</h5>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead class="bg-master-lighter">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Add/Sub</th>
-                                        <th>Value</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr v-for="gbc in report.generalBonusCut">
-                                        <td>{{gbc.name}}</td>
-                                        <td>
-                                            <label v-if="gbc.addOrSub=='add'" class="label label-success">{{gbc.addOrSub}}</label>
-                                            <label v-else="" class="label label-danger">{{gbc.addOrSub}}</label>
-                                        </td>
-                                        <td>{{gbc.value}}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                        <div class="row">
+                            <div class="col-lg-3 m-t-10" v-if="report.salaryReport">
+                                <div class="card-block p-t-0" style="margin-left: 25px">
+                                    <h5 class="bold">Summary</h5>
+                                    <p class="fs-16">Basic Salary: <b class="text-primary">{{report.salaryReport.basicSalary}}</b></p>
+                                    <p class="fs-16">Total Bonus: <b class="text-primary">{{report.salaryReport.totalSalaryBonus}}</b></p>
+                                    <p class="fs-16">Total Cut: <b class="text-primary">{{report.salaryReport.totalSalaryCut}}</b></p>
+                                    <p class="fs-16">Salary Received: <b class="text-primary">{{report.salaryReport.salaryReceived}}</b></p>
+                                    <p class="fs-16">Status: <label
+                                            class="label fs-16">{{report.salaryReport.confirmationStatusName}}</label></p>
+                                    <p class="fs-16">Postponed: <span v-if="report.salaryReport.isPostponed">Yes</span> <span
+                                            v-else="">No</span></p>
+                                    <p class="fs-16">Submitted: <span v-if="report.salaryReport.isSubmittedForPayroll">Yes</span> <span
+                                            v-else="">No</span></p>
+                                </div>
                             </div>
-
-                        </div>
-                    </div>
-                    <div class="col-lg-4" v-if="report.employeeBonusCut">
-                        <div class="card-block bordered">
-                            <h5 class="bold">Employee Bonus/Cut</h5>
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead class="bg-master-lighter">
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Add/Sub</th>
-                                        <th>Value</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr v-for="ebc in report.employeeBonusCut">
-                                        <td>{{ebc.name}}</td>
-                                        <td>
-                                            <label v-if="ebc.addOrSub=='add'" class="label label-success">{{ebc.addOrSub}}</label>
-                                            <label v-else="" class="label label-danger">{{ebc.addOrSub}}</label>
-                                        </td>
-                                        <td>{{ebc.value}}</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
+                            <div class="col-lg-9 m-t-10">
+                                <div class="card-block p-t-0">
+                                    <h5 class="bold">Bonus/Cuts</h5>
+                                    <div class="scrollable">
+                                        <div style="height: 280px">
+                                            <div class="table-responsive">
+                                                <table class="table" v-if="report.salaryCalculations">
+                                                    <thead class="bg-master-lighter">
+                                                    <tr>
+                                                        <th>Name</th>
+                                                        <th>Add/Sub</th>
+                                                        <th>Insert</th>
+                                                        <th>Value</th>
+                                                        <th>Details</th>
+                                                        <th></th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr v-for="calculation in report.salaryCalculations">
+                                                        <td>{{calculation.SBCTypeName}}</td>
+                                                        <td>
+                                                            <label v-if="calculation.SBCTypeAddOrSub=='add'"
+                                                                   class="label label-success fs-16">Add</label>
+                                                            <label v-else="label label-danger fs-16">Sub</label>
+                                                        </td>
+                                                        <td>
+                                                            At <b>{{calculation.insertedDate}}</b> by <b>{{calculation.insertedBy}}</b>
+                                                        </td>
+                                                        <td>{{calculation.value}}</td>
+                                                        <td>
+                                                            <p class="fs-14">Edited: <span class="bold"
+                                                                                           v-if="calculation.isEdited">Yes (by {{calculation.editedB}} at {{calculation.editedDate}})</span>
+                                                                <span class="bold" v-else="">No</span></p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="fs 14">Processed: <span class="bold"
+                                                                                              v-if="calculation.isProcessed">Yes (at {{calculation.processedDate}})</span>
+                                                                <span class="bold" v-else="">No</span></p>
+                                                        </td>
+                                                        <td>
+                                                            <p class="fs-14" v-if="calculation.notes">Notes: {{calculation.notes}}</p>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-
                         </div>
+
                     </div>
-
-
                 </div>
             </div>
         </div>
