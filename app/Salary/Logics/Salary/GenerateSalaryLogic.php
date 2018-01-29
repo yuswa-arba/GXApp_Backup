@@ -73,7 +73,7 @@ class GenerateSalaryLogic extends GenerateUseCase
                                 'toDate' => $summarySalaryReport['toDate']
                             ],
                             [
-                                'basicSalary' => $salary['basicSalary'],
+                                'basicSalary' => $salary['basicSalary'] , //TODO : consider encrypt this using  $this->encryptSalary($salary['basicSalary'])
                                 'totalSalaryBonus' => $salary['totalBonus'],
                                 'totalSalaryCut' => $salary['totalCut'],
                                 'salaryReceived' => $salary['salaryReceived']
