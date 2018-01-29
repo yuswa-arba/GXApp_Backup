@@ -9,27 +9,19 @@
 
 namespace App\Salary\Logics\Salary;
 
-use App\Attendance\Models\AttendanceTimesheet;
-use App\Attendance\Models\DayOffSchedule;
-use App\Attendance\Models\EmployeeSlotSchedule;
-use App\Attendance\Models\Shifts;
-use App\Components\Models\BranchOffice;
+
 use App\Employee\Models\MasterEmployee;
-use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
-use App\Salary\Models\GeneralBonusesCuts;
-use App\Salary\Models\GenerateSalaryReportLogs;
 use App\Salary\Models\SalaryCalculation;
 use App\Salary\Models\SalaryReport;
+use App\Salary\Traits\SalaryUtils;
 use App\Traits\GlobalUtils;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
 
 
 class GetSalaryReportHistoryLogic extends GetSalaryReportUseCase
 {
 
     use GlobalUtils;
-
+    use SalaryUtils;
     /*
      * @description create salaryReport
      * */
@@ -65,7 +57,7 @@ class GetSalaryReportHistoryLogic extends GetSalaryReportUseCase
                     $reportResult[$i]['id'] = $salaryReport->id;
                     $reportResult[$i]['fromDate'] = $salaryReport->fromDate;
                     $reportResult[$i]['toDate'] = $salaryReport->toDate;
-                    $reportResult[$i]['basicSalary'] = $salaryReport->basicSalary;
+                    $reportResult[$i]['basicSalary'] = $this->getEmployeeBasicSalary($salaryReport->basicSalary);
                     $reportResult[$i]['totalSalaryBonus'] = $salaryReport->totalSalaryBonus;
                     $reportResult[$i]['totalSalaryCut'] = $salaryReport->totalSalaryCut;
                     $reportResult[$i]['salaryReceived'] = $salaryReport->salaryReceived;

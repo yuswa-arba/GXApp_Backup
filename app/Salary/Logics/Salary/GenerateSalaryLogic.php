@@ -20,15 +20,18 @@ use App\Salary\Models\GeneralBonusesCuts;
 use App\Salary\Models\GenerateSalaryReportLogs;
 use App\Salary\Models\SalaryCalculation;
 use App\Salary\Models\SalaryReport;
+use App\Salary\Traits\SalaryUtils;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
 
 
 class GenerateSalaryLogic extends GenerateUseCase
 {
 
     use GlobalUtils;
+    use SalaryUtils;
 
     /*
      * @description create salaryReport
@@ -286,7 +289,7 @@ class GenerateSalaryLogic extends GenerateUseCase
 
             /* get employee salary*/
             $employeeSalary = $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary');
-
+            $employeeSalary = $this->getEmployeeBasicSalary($employeeSalary);
 
             /* start calculation */
             if ($employeeSalary) {

@@ -14,6 +14,7 @@ use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -444,12 +445,19 @@ class TestUploadController extends Controller
 //            return 'greater';
 //        }
 
-        if( $this->totalDays('26/01/2018','28/01/2018') > 2){
-            return "greater";
+//        if( $this->totalDays('26/01/2018','28/01/2018') > 2){
+//            return "greater";
+//
+//        } else {
+//            return "lower";
+//        }
 
-        } else {
-            return "lower";
-        }
+        $encrypted = Crypt::encryptString('350000');
+        $decrypted = Crypt::decryptString($encrypted);
+
+        echo $encrypted;
+        echo '<br>';
+        echo $decrypted;
 
 
     }

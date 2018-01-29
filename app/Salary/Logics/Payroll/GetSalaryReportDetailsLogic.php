@@ -20,14 +20,17 @@ use App\Salary\Models\GeneralBonusesCuts;
 use App\Salary\Models\GenerateSalaryReportLogs;
 use App\Salary\Models\SalaryCalculation;
 use App\Salary\Models\SalaryReport;
+use App\Salary\Traits\SalaryUtils;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 
 
 class GetSalaryReportDetailsLogic extends GetReportDetailUseCase
 {
 
     use GlobalUtils;
+    use SalaryUtils;
 
     public function handle($salaryReportLogId)
     {
@@ -68,7 +71,7 @@ class GetSalaryReportDetailsLogic extends GetReportDetailUseCase
                         $reportResult[$i]['salaryReport']['id'] = $salaryReport->id;
                         $reportResult[$i]['salaryReport']['fromDate'] = $salaryReport->fromDate;
                         $reportResult[$i]['salaryReport']['toDate'] = $salaryReport->toDate;
-                        $reportResult[$i]['salaryReport']['basicSalary'] = $salaryReport->basicSalary;
+                        $reportResult[$i]['salaryReport']['basicSalary'] = $this->getEmployeeBasicSalary($salaryReport->basicSalary);
                         $reportResult[$i]['salaryReport']['totalSalaryBonus'] = $salaryReport->totalSalaryBonus;
                         $reportResult[$i]['salaryReport']['totalSalaryCut'] = $salaryReport->totalSalaryCut;
                         $reportResult[$i]['salaryReport']['salaryReceived'] = $salaryReport->salaryReceived;
