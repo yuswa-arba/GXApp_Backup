@@ -11,7 +11,7 @@
 
             <div class="card card-default">
                 <div class="card-header ">
-                    <div class="card-title">Search Employee</div>
+                    <div class="card-title">1. Search Employee</div>
 
                 </div>
                 <div class="card-block">
@@ -69,7 +69,7 @@
         <div class="col-lg-6">
             <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title"> Resignation Form</div>
+                    <div class="card-title">2. Resignation Form</div>
                 </div>
                 <div class="card-block">
                     <div class="row">

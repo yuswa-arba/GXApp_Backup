@@ -7,15 +7,12 @@
                 <div class="card-block">
                     <div class="row">
                         <div class="col-lg-6">
-                            <h4 class="pull-left">Salary Queue</h4>
+                            <h4 class="pull-left">Salary Queue <i class="fa fa-question-circle fs-16 cursor" style="opacity: 0.7" @click="salaryQueueHelp()"></i></h4>
                         </div>
                         <div class="col-lg-6">
                             <div class="pull-right">
-                                <button class="btn btn-complete" @click="createQueue()"><i class="fa fa-plus"></i>
+                                <button class="btn btn-primary" @click="createQueue()"><i class="fa fa-plus"></i>
                                     Create Queue
-                                </button>
-                                <button class="btn btn-primary" @click="calculateAllQueue()"><i
-                                        class="fa fa-calculator"></i> Calculate All
                                 </button>
                                 <button class="btn btn-danger" @click="deleteAllQueue()"><i class="fa fa-trash"> Delete
                                     All</i></button>
@@ -54,10 +51,6 @@
                                         <td>@<b>{{queue.insertedDate}}</b> by <b>{{queue.insertedBy}}</b></td>
                                         <td>
                                             <div>
-                                                <button class="btn btn-outline-primary"
-                                                        @click="calculateQueue(queue.id)"><i class="fa fa-plus"></i>
-                                                    Calculate
-                                                </button>
                                                 <button class="btn btn-outline-danger" @click="deleteQueue(queue.id)"><i
                                                         class="fa fa-trash"></i>
                                                     Delete
@@ -73,12 +66,15 @@
                 </div>
             </div>
         </div>
+        <salary-queue-help-modal></salary-queue-help-modal>
     </div>
 </template>
 <script type="text/javascript">
     import{mapState, mapGetters} from 'vuex'
+    import SalaryQueueHelpModal from '../../components/queue/SalaryQueueHelpModal.vue'
     export default{
         components: {
+           'salary-queue-help-modal':SalaryQueueHelpModal
         },
         mounted(){
 
@@ -106,6 +102,9 @@
             },
             createQueue(){
                 this.$router.push({name:'createQueue'})
+            },
+            salaryQueueHelp(){
+                $('#modal-salary-queue-help').modal('show')
             }
         }
     }

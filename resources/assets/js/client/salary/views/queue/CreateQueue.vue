@@ -74,10 +74,10 @@
                         <div class="col-lg-12">
                             <div class="form-group form-group-default required">
                                 <label> Salary Bonus/Cut Type </label>
-                                <select class="form-control">
-                                    <option value="16">Manual Add <label class="label label-primary">Add</label>
-                                    </option>
-                                    <option value="17">Manual Sub <label class="label label-danger">Sub</label></option>
+                                <select class="form-control" v-model="formObject.salaryBonusCutTypeId">
+                                    <option value="" disabled hidden selected>Select Bonus/Cut type</option>
+                                    <option value="16">Manual Add</option>
+                                    <option value="17">Manual Sub</option>
                                 </select>
                             </div>
                         </div>
@@ -86,6 +86,7 @@
                                 <label> Notes </label>
                                 <input type="text"
                                        class="form-control"
+                                       v-model="formObject.notes"
                                        required>
                             </div>
                         </div>
@@ -94,6 +95,7 @@
                                 <label> Value </label>
                                 <input type="number"
                                        class="form-control"
+                                       v-model="formObject.value"
                                        required>
                             </div>
                         </div>
@@ -123,6 +125,12 @@
                 disableSubmitBtn: true,
                 selectedEmployee: {
                     employeeId: '', employeeNo: '', givenName: '', surname: ''
+                },
+                formObject: {
+                    employeeId: '',
+                    salaryBonusCutTypeId: '',
+                    value: '',
+                    notes: ''
                 }
             }
         },
@@ -156,6 +164,10 @@
                 self.selectedEmployee.givenName = candidateGivenName
                 self.selectedEmployee.surname = candidateSurname
 
+                self.formObject.employeeId = candidateId //insert to form object
+
+                self.disableSubmitBtn = false
+
             },
             removeSelectedEmployee(){
                 let self = this
@@ -164,11 +176,43 @@
                 self.searchText = ''
 
                 self.selectedEmployee.employeeId = ''
+                s
                 self.selectedEmployee.employeeNo = ''
                 self.selectedEmployee.givenName = ''
                 self.selectedEmployee.surname = ''
+
+                self.formObject.employeeId = '' //remove from form object
+
+                self.disableSubmitBtn = true
             },
             submitSalaryQueueForm(){
+
+                let self = this
+
+                if (self.formObject.employeeId
+                    && self.formObject.salaryBonusCutTypeId
+                    && self.formObject.value
+                    && self.formObject.notes ) {
+
+                    //submit to server
+                    this.$store.commit({
+                        type: 'queue/createSalaryQueue',
+                        formObject: self.formObject
+                    })
+
+                    //back to home
+                    this.$router.push('/')
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Form is not valid',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+
 
             }
         }

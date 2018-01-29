@@ -19,7 +19,7 @@ class SalaryQueueTransformer extends TransformerAbstract
         return [
             'id' => $salaryQueue->id,
             'employeeId' => $salaryQueue->employeeId,
-            'employeeName'=>$this->getResultWithNullChecker1Connection($salaryQueue,'employee','givenName'),
+            'employeeName'=>$this->getResultWithNullChecker1Connection($salaryQueue,'employee','givenName').' '. $this->getResultWithNullChecker1Connection($salaryQueue,'employee','surname'),
             'divisionId'=>$this->getResultWithNullChecker2Connection($salaryQueue,'employee','employment','divisionId'),
             'divisionName'=>$this->getResultWithNullChecker3Connection($salaryQueue,'employee','employment','division','name'),
             'branchOfficeId'=>$this->getResultWithNullChecker2Connection($salaryQueue,'employee','employment','branchOfficeId'),

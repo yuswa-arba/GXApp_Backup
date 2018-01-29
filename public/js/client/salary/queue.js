@@ -2495,6 +2495,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        closeModal: function closeModal() {
+            $('#modal-salary-queue-help').modal('toggle');
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/queue/CreateQueue.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2503,6 +2557,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
 //
 //
 //
@@ -2628,6 +2684,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             disableSubmitBtn: true,
             selectedEmployee: {
                 employeeId: '', employeeNo: '', givenName: '', surname: ''
+            },
+            formObject: {
+                employeeId: '',
+                salaryBonusCutTypeId: '',
+                value: '',
+                notes: ''
             }
         };
     },
@@ -2657,6 +2719,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             self.selectedEmployee.employeeNo = candidateNo;
             self.selectedEmployee.givenName = candidateGivenName;
             self.selectedEmployee.surname = candidateSurname;
+
+            self.formObject.employeeId = candidateId; //insert to form object
+
+            self.disableSubmitBtn = false;
         },
         removeSelectedEmployee: function removeSelectedEmployee() {
             var self = this;
@@ -2665,11 +2731,39 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             self.searchText = '';
 
             self.selectedEmployee.employeeId = '';
+            s;
             self.selectedEmployee.employeeNo = '';
             self.selectedEmployee.givenName = '';
             self.selectedEmployee.surname = '';
+
+            self.formObject.employeeId = ''; //remove from form object
+
+            self.disableSubmitBtn = true;
         },
-        submitSalaryQueueForm: function submitSalaryQueueForm() {}
+        submitSalaryQueueForm: function submitSalaryQueueForm() {
+
+            var self = this;
+
+            if (self.formObject.employeeId && self.formObject.salaryBonusCutTypeId && self.formObject.value && self.formObject.notes) {
+
+                //submit to server
+                this.$store.commit({
+                    type: 'queue/createSalaryQueue',
+                    formObject: self.formObject
+                });
+
+                //back to home
+                this.$router.push('/');
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'Form is not valid',
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }
     }
 });
 
@@ -2681,6 +2775,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_queue_SalaryQueueHelpModal_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_queue_SalaryQueueHelpModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_queue_SalaryQueueHelpModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2754,16 +2850,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {},
+    components: {
+        'salary-queue-help-modal': __WEBPACK_IMPORTED_MODULE_1__components_queue_SalaryQueueHelpModal_vue___default.a
+    },
     mounted: function mounted() {},
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('queue', {
@@ -2784,6 +2877,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         deleteAllQueue: function deleteAllQueue() {},
         createQueue: function createQueue() {
             this.$router.push({ name: 'createQueue' });
+        },
+        salaryQueueHelp: function salaryQueueHelp() {
+            $('#modal-salary-queue-help').modal('show');
         }
     }
 });
@@ -22458,11 +22554,135 @@ var render = function() {
                   )
                 ]),
             _vm._v(" "),
-            _vm._m(1),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c(
+                "div",
+                { staticClass: "form-group form-group-default required" },
+                [
+                  _c("label", [_vm._v(" Salary Bonus/Cut Type ")]),
+                  _vm._v(" "),
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.formObject.salaryBonusCutTypeId,
+                          expression: "formObject.salaryBonusCutTypeId"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.$set(
+                            _vm.formObject,
+                            "salaryBonusCutTypeId",
+                            $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          )
+                        }
+                      }
+                    },
+                    [
+                      _c(
+                        "option",
+                        {
+                          attrs: {
+                            value: "",
+                            disabled: "",
+                            hidden: "",
+                            selected: ""
+                          }
+                        },
+                        [_vm._v("Select Bonus/Cut type")]
+                      ),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "16" } }, [
+                        _vm._v("Manual Add")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "17" } }, [
+                        _vm._v("Manual Sub")
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(2),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c(
+                "div",
+                { staticClass: "form-group form-group-default required" },
+                [
+                  _c("label", [_vm._v(" Notes ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formObject.notes,
+                        expression: "formObject.notes"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", required: "" },
+                    domProps: { value: _vm.formObject.notes },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formObject, "notes", $event.target.value)
+                      }
+                    }
+                  })
+                ]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(3),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c(
+                "div",
+                { staticClass: "form-group form-group-default required" },
+                [
+                  _c("label", [_vm._v(" Value ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formObject.value,
+                        expression: "formObject.value"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", required: "" },
+                    domProps: { value: _vm.formObject.value },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formObject, "value", $event.target.value)
+                      }
+                    }
+                  })
+                ]
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-12" }, [
               _c(
@@ -22492,58 +22712,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("div", { staticClass: "card-title" }, [_vm._v(" Salary Queue Form")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "form-group form-group-default required" }, [
-        _c("label", [_vm._v(" Salary Bonus/Cut Type ")]),
-        _vm._v(" "),
-        _c("select", { staticClass: "form-control" }, [
-          _c("option", { attrs: { value: "16" } }, [
-            _vm._v("Manual Add "),
-            _c("label", { staticClass: "label label-primary" }, [_vm._v("Add")])
-          ]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "17" } }, [
-            _vm._v("Manual Sub "),
-            _c("label", { staticClass: "label label-danger" }, [_vm._v("Sub")])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "form-group form-group-default required" }, [
-        _c("label", [_vm._v(" Notes ")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "text", required: "" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "form-group form-group-default required" }, [
-        _c("label", [_vm._v(" Value ")]),
-        _vm._v(" "),
-        _c("input", {
-          staticClass: "form-control",
-          attrs: { type: "number", required: "" }
-        })
-      ])
     ])
   }
 ]
@@ -22611,183 +22779,161 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("div", { staticClass: "row" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-6" }, [
-              _c("div", { staticClass: "pull-right" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-complete",
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("div", { staticClass: "col-lg-12" }, [
+        _c("div", { staticClass: "card card-bordered" }, [
+          _c("div", { staticClass: "card-block" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c("h4", { staticClass: "pull-left" }, [
+                  _vm._v("Salary Queue "),
+                  _c("i", {
+                    staticClass: "fa fa-question-circle fs-16 cursor",
+                    staticStyle: { opacity: "0.7" },
                     on: {
                       click: function($event) {
-                        _vm.createQueue()
+                        _vm.salaryQueueHelp()
                       }
                     }
-                  },
-                  [
-                    _c("i", { staticClass: "fa fa-plus" }),
-                    _vm._v(
-                      "\n                                Create Queue\n                            "
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary",
-                    on: {
-                      click: function($event) {
-                        _vm.calculateAllQueue()
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-6" }, [
+                _c("div", { staticClass: "pull-right" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      on: {
+                        click: function($event) {
+                          _vm.createQueue()
+                        }
                       }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "fa fa-calculator" }),
-                    _vm._v(" Calculate All\n                            ")
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    on: {
-                      click: function($event) {
-                        _vm.deleteAllQueue()
-                      }
-                    }
-                  },
-                  [
-                    _c("i", { staticClass: "fa fa-trash" }, [
-                      _vm._v(" Delete\n                                All")
-                    ])
-                  ]
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "scrollable" }, [
-            _c("div", { staticStyle: { height: "600px" } }, [
-              _c("div", { staticClass: "table-responsive" }, [
-                _c("table", { staticClass: "table" }, [
-                  _vm._m(1),
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-plus" }),
+                      _vm._v(
+                        "\n                                Create Queue\n                            "
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
                   _c(
-                    "tbody",
-                    _vm._l(_vm.salaryQueues, function(queue) {
-                      return _c("tr", [
-                        _c("td", [_vm._v(_vm._s(queue.id))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            _vm._s(queue.employeeName) +
-                              "(" +
-                              _vm._s(queue.divisionName) +
-                              ")"
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v(
-                            _vm._s(queue.salaryBonusCutTypeName) +
-                              "\n                                        "
-                          ),
-                          queue.salaryBonusCutTypeAddOrSub == "add"
-                            ? _c(
-                                "label",
-                                { staticClass: "label label-success" },
-                                [_vm._v("Add")]
-                              )
-                            : queue.salaryBonusCutTypeAddOrSub == "sub"
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          _vm.deleteAllQueue()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-trash" }, [
+                        _vm._v(" Delete\n                                All")
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "clearfix" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticStyle: { height: "600px" } }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.salaryQueues, function(queue) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(queue.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(queue.employeeName) +
+                                "(" +
+                                _vm._s(queue.divisionName) +
+                                ")"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(queue.salaryBonusCutTypeName) +
+                                "\n                                        "
+                            ),
+                            queue.salaryBonusCutTypeAddOrSub == "add"
                               ? _c(
                                   "label",
-                                  { staticClass: "label label-danger" },
-                                  [_vm._v("Sub")]
+                                  { staticClass: "label label-success" },
+                                  [_vm._v("Add")]
                                 )
-                              : _c("label")
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(queue.value))]),
-                        _vm._v(" "),
-                        _c("td", [_vm._v(_vm._s(queue.notes))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _vm._v("@"),
-                          _c("b", [_vm._v(_vm._s(queue.insertedDate))]),
-                          _vm._v(" by "),
-                          _c("b", [_vm._v(_vm._s(queue.insertedBy))])
-                        ]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c("div", [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-outline-primary",
-                                on: {
-                                  click: function($event) {
-                                    _vm.calculateQueue(queue.id)
+                              : queue.salaryBonusCutTypeAddOrSub == "sub"
+                                ? _c(
+                                    "label",
+                                    { staticClass: "label label-danger" },
+                                    [_vm._v("Sub")]
+                                  )
+                                : _c("label")
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(queue.value))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(queue.notes))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v("@"),
+                            _c("b", [_vm._v(_vm._s(queue.insertedDate))]),
+                            _vm._v(" by "),
+                            _c("b", [_vm._v(_vm._s(queue.insertedBy))])
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("div", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-outline-danger",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.deleteQueue(queue.id)
+                                    }
                                   }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fa fa-plus" }),
-                                _vm._v(
-                                  "\n                                                Calculate\n                                            "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-outline-danger",
-                                on: {
-                                  click: function($event) {
-                                    _vm.deleteQueue(queue.id)
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fa fa-trash" }),
-                                _vm._v(
-                                  "\n                                                Delete\n                                            "
-                                )
-                              ]
-                            )
+                                },
+                                [
+                                  _c("i", { staticClass: "fa fa-trash" }),
+                                  _vm._v(
+                                    "\n                                                Delete\n                                            "
+                                  )
+                                ]
+                              )
+                            ])
                           ])
                         ])
-                      ])
-                    })
-                  )
+                      })
+                    )
+                  ])
                 ])
               ])
             ])
           ])
         ])
-      ])
-    ])
-  ])
+      ]),
+      _vm._v(" "),
+      _c("salary-queue-help-modal")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6" }, [
-      _c("h4", { staticClass: "pull-left" }, [_vm._v("Salary Queue")])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -22823,6 +22969,111 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-6b76b190", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-e316808e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade stick-up",
+      attrs: {
+        id: "modal-salary-queue-help",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "p-t-5 p-b-5 btn text-primary bold all-caps btn-block",
+                on: {
+                  click: function($event) {
+                    _vm.closeModal()
+                  }
+                }
+              },
+              [_vm._v("\n                    Close\n                ")]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close" })]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+        _vm._v("Salary Queue Help")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c("p", [
+        _vm._v(
+          "Salary queue is simply a value that you want to add or subtract to/form someone's salary"
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "\n                    It is best use for one-time cases, such as postponed, special bonus, or anything that is not\n                    routine\n                "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "\n                    After you create salary queue, it will appear on the table below, but you can only delete it. To\n                    actually use it, you will have to generate salary report in Report & Generate menu, the salary\n                    queues will be previewed\n                    before you generate the salary report, and you can select which one you want to use. (It will be removed from queue after you use it)\n                "
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-e316808e", module.exports)
   }
 }
 
@@ -37378,6 +37629,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-e316808e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e316808e", Component.options)
+  } else {
+    hotAPI.reload("data-v-e316808e", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/salary/queue.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -37655,6 +37955,40 @@ module.exports = Component.exports
                 type: 'danger'
             }).show();
         }
+    },
+    createSalaryQueue: function createSalaryQueue(state, payload) {
+        var self = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/create', payload.formObject).then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                state.salaryQueues.push(res.data.salaryQueues.data); // push to array
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
     }
 });
 

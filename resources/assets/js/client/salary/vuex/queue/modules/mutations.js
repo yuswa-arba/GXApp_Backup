@@ -10,14 +10,14 @@ export default{
         get(api_path + 'salary/queue/list')
             .then((res) => {
                 if (!res.data.isFailed) {
-                    state.salaryQueues  = res.data.salaryQueues.data
+                    state.salaryQueues = res.data.salaryQueues.data
                 }
             })
             .catch((err) => {
 
             })
     },
-    searchEmployee(state,payload){
+    searchEmployee(state, payload){
 
         let self = this
         if (payload.searchText) {
@@ -56,7 +56,45 @@ export default{
             }).show();
         }
 
-
     },
+    createSalaryQueue(state, payload){
+        let self = this
+
+        post(api_path + 'salary/queue/create', payload.formObject)
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                     $('.page-container').pgNotification({
+                          style: 'flip',
+                          message: res.data.message,
+                          position: 'top-right',
+                          timeout: 3500,
+                          type: 'info'
+                      }).show();
+
+                     state.salaryQueues.push(res.data.salaryQueues.data) // push to array
+
+                } else {
+                     $('.page-container').pgNotification({
+                          style: 'flip',
+                          message: res.data.message,
+                          position: 'top-right',
+                          timeout: 3500,
+                          type: 'danger'
+                      }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+
+
+    }
 
 }
