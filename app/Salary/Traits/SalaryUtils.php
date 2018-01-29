@@ -28,7 +28,7 @@ trait SalaryUtils
      * want to use encryption make sure all the data in the employeeSalary table is ENCRYPTED, if you dont want to
      * use encryption, make sure all the data in employeeSalary table is UNENCRYPTED
      */
-    public static $useEncryption = true;
+    public static $useEncryption = false;
 
 
     public function getEmployeeBasicSalary($basicSalary)

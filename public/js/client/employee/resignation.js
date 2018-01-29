@@ -21737,8 +21737,10 @@ var render = function() {
                       })
                 ]),
                 _vm._v(" "),
-                _c("h5", { staticClass: "fs-18" }, [
-                  _vm._v(_vm._s(employee.givenName))
+                _c("h5", { staticClass: "fs-16" }, [
+                  _vm._v(
+                    _vm._s(employee.givenName) + " " + _vm._s(employee.surname)
+                  )
                 ]),
                 _vm._v(" "),
                 _c(
