@@ -59,6 +59,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('payroll/delete/file/{generatedPayrollId}','PayrollController@deleteFile');
 
         Route::get('queue/list','SalaryQueueController@list');
+        Route::get('queue/list/branch/{branchOfficeId}','SalaryQueueController@listByBranchOffice');
         Route::post('queue/create','SalaryQueueController@create');
         Route::post('queue/delete','SalaryQueueController@delete');
         Route::post('queue/deleteAll','SalaryQueueController@deleteAll');

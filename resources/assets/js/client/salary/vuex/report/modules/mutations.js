@@ -91,7 +91,7 @@ export default{
 
     },
     getSalaryQueues(state,payload){
-        get(api_path + 'salary/queue/list')
+        get(api_path + 'salary/queue/list/branch/'+payload.branchOfficeId)
             .then((res) => {
                 if (!res.data.isFailed) {
                     state.salaryQueues = res.data.salaryQueues.data

@@ -30,7 +30,8 @@ export default{
             })
 
             commit({
-                type:'getSalaryQueues'
+                type:'getSalaryQueues',
+                branchOfficeId:payload.branchOfficeId
             })
 
 

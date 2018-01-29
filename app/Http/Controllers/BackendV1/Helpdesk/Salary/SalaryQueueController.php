@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackendV1\Helpdesk\Salary;
 
 
+use App\Employee\Models\Employment;
 use App\Salary\Logics\Salary\GenerateSalaryLogic;
 use App\Salary\Models\GenerateSalaryReportLogs;
 use App\Salary\Models\SalaryQueue;
@@ -32,6 +33,20 @@ class SalaryQueueController extends Controller
     {
 
         $salaryQueueus = SalaryQueue::all();
+
+        $response = array();
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['salaryQueues'] = fractal($salaryQueueus, new SalaryQueueTransformer());
+
+        return response()->json($response, 200);
+    }
+
+    public function listByBranchOffice($branchOfficeId)
+    {
+        $employeeIds =Employment::where('branchOfficeId',$branchOfficeId)->get()->pluck('employeeId');
+
+        $salaryQueueus = SalaryQueue::whereIn('employeeId',$employeeIds)->get();
 
         $response = array();
         $response['isFailed'] = false;

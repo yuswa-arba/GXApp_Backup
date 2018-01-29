@@ -38507,7 +38507,8 @@ module.exports = Component.exports
             });
 
             commit({
-                type: 'getSalaryQueues'
+                type: 'getSalaryQueues',
+                branchOfficeId: payload.branchOfficeId
             });
         } else {
             $('.page-container').pgNotification({
@@ -38695,7 +38696,7 @@ module.exports = Component.exports
         });
     },
     getSalaryQueues: function getSalaryQueues(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/list').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/list/branch/' + payload.branchOfficeId).then(function (res) {
             if (!res.data.isFailed) {
                 state.salaryQueues = res.data.salaryQueues.data;
             }
