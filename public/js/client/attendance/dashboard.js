@@ -37156,7 +37156,10 @@ module.exports = Component.exports
             state = _ref2.state;
 
         if (payload.feedData) {
-            state.liveClockInFeeds.unshift(payload.feedData);
+            if (!_.find(state.liveClockInFeeds, payload.feedData)) {
+                //make sure it does not exist already
+                state.liveClockInFeeds.unshift(payload.feedData);
+            }
         }
     },
     newClockOutFeed: function newClockOutFeed(_ref3, payload) {
@@ -37164,7 +37167,10 @@ module.exports = Component.exports
             state = _ref3.state;
 
         if (payload.feedData) {
-            state.liveClockOutFeeds.unshift(payload.feedData);
+            if (!_.find(state.liveClockOutFeeds, payload.feedData)) {
+                //make sure it does not exist already
+                state.liveClockOutFeeds.unshift(payload.feedData);
+            }
         }
     }
 });

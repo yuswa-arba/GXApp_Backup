@@ -265,16 +265,21 @@ class GenerateSalaryLogic extends GenerateUseCase
                 // if its not day off and not employee leave schedule then insert date to array
                 if (!$this->isDayOffForThisSlot($slotId, $date) && !$this->employeeLeaveSchedule($employeeId, $date)) {
 
-                    $timesheetId = AttendanceTimesheet::where('employeeId', $employeeId)
+                    $timesheet = AttendanceTimesheet::where('employeeId', $employeeId)
                         ->where('clockInDate', $date)
                         ->whereNotNull('clockOutDate')
-                        ->first()['id'];
+                        ->first();
 
-                    if (!$timesheetId) {
-                        $totalDayAbsence++; // add absence
+                    if (!$timesheet) {
+                        $totalDayAbsence++; // add ABSENCE
                     } else {
-                        $totalMinLate = $totalMinLate + $this->countMinutesCheckInLate($timesheetId);
-                        $totalMinEarlyOut = $totalMinEarlyOut + $this->countMinutesCheckOutEarly($timesheetId);
+                        if($timesheet->attendanceApproveId==98){ // DISAPPROVED
+                            $totalDayAbsence++; // add DISAPPROVED timesheet to absence
+                        } else {
+                            $totalMinLate = $totalMinLate + $this->countMinutesCheckInLate($timesheet->id);
+                            $totalMinEarlyOut = $totalMinEarlyOut + $this->countMinutesCheckOutEarly($timesheet->id);
+                        }
+
                     }
 
                 }

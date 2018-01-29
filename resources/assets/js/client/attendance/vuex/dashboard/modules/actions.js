@@ -9,13 +9,17 @@ export default{
         commit('getLiveFeedData')
     },
     newClockInFeed({commit, state}, payload){
-        if(payload.feedData){
-            state.liveClockInFeeds.unshift(payload.feedData)
+        if (payload.feedData) {
+            if (!_.find(state.liveClockInFeeds, payload.feedData)) { //make sure it does not exist already
+                state.liveClockInFeeds.unshift(payload.feedData)
+            }
         }
     },
     newClockOutFeed({commit, state}, payload){
-        if(payload.feedData){
-            state.liveClockOutFeeds.unshift(payload.feedData)
+        if (payload.feedData) {
+            if (!_.find(state.liveClockOutFeeds, payload.feedData)) { //make sure it does not exist already
+                state.liveClockOutFeeds.unshift(payload.feedData)
+            }
         }
     }
 }
