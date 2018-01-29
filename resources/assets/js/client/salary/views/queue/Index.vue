@@ -11,8 +11,14 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="pull-right">
-                                <button class="btn btn-primary"><i class="fa fa-plus"></i> Calculate All</button>
-                                <button class="btn btn-danger"><i class="fa fa-trash"> Delete All</i></button>
+                                <button class="btn btn-complete" @click="createQueue()"><i class="fa fa-plus"></i>
+                                    Create Queue
+                                </button>
+                                <button class="btn btn-primary" @click="calculateAllQueue()"><i
+                                        class="fa fa-calculator"></i> Calculate All
+                                </button>
+                                <button class="btn btn-danger" @click="deleteAllQueue()"><i class="fa fa-trash"> Delete
+                                    All</i></button>
                             </div>
                         </div>
                     </div>
@@ -33,19 +39,27 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Kevin Purwono (CSO)</td>
-                                        <td>Postponed Salary Add <label class="label label-success">Add</label></td>
-                                        <td>3000000</td>
-                                        <td>Postponed salry from last month</td>
-                                        <td>@<b>20/02/2018</b> by <b>Kevin</b></td>
+                                    <tr v-for="queue in salaryQueues">
+                                        <td>{{queue.id}}</td>
+                                        <td>{{queue.employeeName}}({{queue.divisionName}})</td>
+                                        <td>{{queue.salaryBonusCutTypeName}}
+                                            <label class="label label-success"
+                                                   v-if="queue.salaryBonusCutTypeAddOrSub=='add'">Add</label>
+                                            <label class="label label-danger"
+                                                   v-else-if="queue.salaryBonusCutTypeAddOrSub=='sub'">Sub</label>
+                                            <label v-else=""></label>
+                                        </td>
+                                        <td>{{queue.value}}</td>
+                                        <td>{{queue.notes}}</td>
+                                        <td>@<b>{{queue.insertedDate}}</b> by <b>{{queue.insertedBy}}</b></td>
                                         <td>
                                             <div>
-                                                <button class="btn btn-outline-primary"><i class="fa fa-plus"></i>
+                                                <button class="btn btn-outline-primary"
+                                                        @click="calculateQueue(queue.id)"><i class="fa fa-plus"></i>
                                                     Calculate
                                                 </button>
-                                                <button class="btn btn-outline-danger"><i class="fa fa-trash"></i>
+                                                <button class="btn btn-outline-danger" @click="deleteQueue(queue.id)"><i
+                                                        class="fa fa-trash"></i>
                                                     Delete
                                                 </button>
                                             </div>
@@ -56,19 +70,43 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
         </div>
     </div>
 </template>
 <script type="text/javascript">
-
+    import{mapState, mapGetters} from 'vuex'
     export default{
-        components: {},
+        components: {
+        },
         mounted(){
 
+        },
+        computed: {
+            ...mapState('queue', {
+                salaryQueues: 'salaryQueues'
+            })
+        },
+        created(){
+            this.$store.commit('queue/getSalaryQueueList')
+        },
+        methods: {
+            calculateQueue(id){
+                console.log(id)
+            },
+            deleteQueue(id){
+                console.log(id)
+            },
+            calculateAllQueue(){
+
+            },
+            deleteAllQueue(){
+
+            },
+            createQueue(){
+                this.$router.push({name:'createQueue'})
+            }
         }
     }
 </script>

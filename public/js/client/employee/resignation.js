@@ -2358,6 +2358,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -21921,103 +21925,104 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-lg-12" },
-              [
-                _vm.candidates.length > 0
-                  ? _c("label", { staticClass: "p-t-10" }, [
-                      _vm._v(" Choose employee")
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm._l(_vm.candidates, function(candidate) {
-                  return _c(
-                    "div",
-                    {
-                      staticClass:
-                        "d-flex-not-important flex-column p-t-0 filter-employee"
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "card social-card share  full-width m-b-0 d-flex flex-1 full-height no-border sm-vh-75",
-                          attrs: { "data-social": "item" },
-                          on: {
-                            click: function($event) {
-                              _vm.pickEmployee(
-                                candidate.id,
-                                candidate.employeeNo,
-                                candidate.givenName,
-                                candidate.surname
-                              )
+            _c("div", { staticClass: "col-lg-12" }, [
+              _vm.candidates.length > 0
+                ? _c("label", { staticClass: "p-t-10" }, [
+                    _vm._v(" Choose employee")
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _c("div", { staticClass: "scrollable" }, [
+                _c(
+                  "div",
+                  { staticStyle: { height: "300px" } },
+                  _vm._l(_vm.candidates, function(candidate) {
+                    return _c(
+                      "div",
+                      {
+                        staticClass:
+                          "d-flex-not-important flex-column p-t-0 filter-employee"
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "card social-card share  full-width m-b-0 d-flex flex-1 full-height no-border sm-vh-75",
+                            attrs: { "data-social": "item" },
+                            on: {
+                              click: function($event) {
+                                _vm.pickEmployee(
+                                  candidate.id,
+                                  candidate.employeeNo,
+                                  candidate.givenName,
+                                  candidate.surname
+                                )
+                              }
                             }
-                          }
-                        },
-                        [
-                          _c("div", { staticClass: "card-header clearfix" }, [
-                            _c("h5", { staticStyle: { float: "right" } }, [
+                          },
+                          [
+                            _c("div", { staticClass: "card-header clearfix" }, [
+                              _c("h5", { staticStyle: { float: "right" } }, [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "fs-14",
+                                    staticStyle: {
+                                      "font-weight": "normal!important"
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "(" + _vm._s(candidate.employeeNo) + ")"
+                                    )
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "user-pic" }, [
+                                _c("img", {
+                                  attrs: {
+                                    alt: "None",
+                                    src:
+                                      "/images/employee/" +
+                                      candidate.employeePhoto,
+                                    width: "38",
+                                    height: "38"
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("h5", { staticClass: "fs-18" }, [
+                                _vm._v(_vm._s(candidate.givenName) + " ")
+                              ]),
+                              _vm._v(" "),
                               _c(
-                                "span",
+                                "h6",
                                 {
                                   staticClass: "fs-14",
-                                  staticStyle: {
-                                    "font-weight": "normal!important"
-                                  }
+                                  staticStyle: { opacity: ".7" }
                                 },
-                                [
-                                  _vm._v(
-                                    "(" + _vm._s(candidate.employeeNo) + ")"
-                                  )
-                                ]
+                                [_vm._v(_vm._s(candidate.surname))]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "h6",
+                                {
+                                  staticClass: "text-primary",
+                                  staticStyle: { "margin-top": "3px" }
+                                },
+                                [_vm._v(_vm._s(candidate.jobPosition))]
                               )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "user-pic" }, [
-                              _c("img", {
-                                attrs: {
-                                  alt: "None",
-                                  src:
-                                    "/images/employee/" +
-                                    candidate.employeePhoto,
-                                  width: "38",
-                                  height: "38"
-                                }
-                              })
-                            ]),
-                            _vm._v(" "),
-                            _c("h5", { staticClass: "fs-18" }, [
-                              _vm._v(_vm._s(candidate.givenName) + " ")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "h6",
-                              {
-                                staticClass: "fs-14",
-                                staticStyle: { opacity: ".7" }
-                              },
-                              [_vm._v(_vm._s(candidate.surname))]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "h6",
-                              {
-                                staticClass: "text-primary",
-                                staticStyle: { "margin-top": "3px" }
-                              },
-                              [_vm._v(_vm._s(candidate.jobPosition))]
-                            )
-                          ])
-                        ]
-                      )
-                    ]
-                  )
-                })
-              ],
-              2
-            )
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  })
+                )
+              ])
+            ])
           ])
         ])
       ])

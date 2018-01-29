@@ -58,5 +58,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('payroll/download/file/{generatedPayrollId}','PayrollController@downloadFile');
         Route::post('payroll/delete/file/{generatedPayrollId}','PayrollController@deleteFile');
 
+        Route::get('queue/list','SalaryQueueController@list');
+
     });
 });

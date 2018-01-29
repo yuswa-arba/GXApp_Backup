@@ -29,28 +29,32 @@
 
                         <div class="col-lg-12">
                             <label class="p-t-10" v-if="candidates.length>0"> Choose employee</label>
+                            <div class="scrollable">
+                                <div style="height: 300px">
+                                    <div class="d-flex-not-important flex-column p-t-0 filter-employee"
+                                         v-for="candidate in candidates">
+                                        <div class="card social-card share  full-width m-b-0 d-flex flex-1 full-height no-border sm-vh-75"
+                                             data-social="item"
+                                             @click="pickEmployee(candidate.id,candidate.employeeNo,candidate.givenName,candidate.surname)">
 
-                            <div class="d-flex-not-important flex-column p-t-0 filter-employee"
-                                 v-for="candidate in candidates">
-                                <div class="card social-card share  full-width m-b-0 d-flex flex-1 full-height no-border sm-vh-75"
-                                     data-social="item"
-                                     @click="pickEmployee(candidate.id,candidate.employeeNo,candidate.givenName,candidate.surname)">
+                                            <div class="card-header clearfix">
+                                                <h5 style="float: right"><span style="font-weight: normal!important"
+                                                                               class="fs-14">({{candidate.employeeNo}})</span>
+                                                </h5>
 
-                                    <div class="card-header clearfix">
-                                        <h5 style="float: right"><span style="font-weight: normal!important"
-                                                                       class="fs-14">({{candidate.employeeNo}})</span>
-                                        </h5>
-
-                                        <div class="user-pic">
-                                            <img alt="None"
-                                                 :src="`/images/employee/${candidate.employeePhoto}`"
-                                                 width="38" height="38"
-                                            />
+                                                <div class="user-pic">
+                                                    <img alt="None"
+                                                         :src="`/images/employee/${candidate.employeePhoto}`"
+                                                         width="38" height="38"
+                                                    />
+                                                </div>
+                                                <h5 class="fs-18">{{candidate.givenName}} </h5>
+                                                <h6 class="fs-14" style="opacity: .7">{{candidate.surname}}</h6>
+                                                <h6 class="text-primary" style="margin-top: 3px">{{candidate.jobPosition}}</h6>
+                                            </div>
                                         </div>
-                                        <h5 class="fs-18">{{candidate.givenName}} </h5>
-                                        <h6 class="fs-14" style="opacity: .7">{{candidate.surname}}</h6>
-                                        <h6 class="text-primary" style="margin-top: 3px">{{candidate.jobPosition}}</h6>
                                     </div>
+
                                 </div>
                             </div>
 
