@@ -57,7 +57,7 @@ class GetSalaryReportDetailsLogic extends GetReportDetailUseCase
                 $employeeData['divisionName'] = $this->getResultWithNullChecker2Connection($employee, 'employment', 'division', 'name');
 
                 /* Salary Reports */
-                $salaryReports = SalaryReport::where('employeeId', $employee->id)->get()->sortByDesc('created_at');
+                $salaryReports = SalaryReport::where('employeeId', $employee->id)->whereIn('id',explode(' ', $generateSalaryReport->salaryReportIds))->get()->sortByDesc('created_at');
 
                 if (count($salaryReports) > 0) {
 

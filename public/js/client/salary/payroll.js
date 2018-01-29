@@ -3355,6 +3355,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -23448,7 +23453,7 @@ var render = function() {
                                                                     "label",
                                                                     {
                                                                       staticClass:
-                                                                        "label label-success fs-16"
+                                                                        "label label-success fs-12"
                                                                     },
                                                                     [
                                                                       _vm._v(
@@ -23456,11 +23461,28 @@ var render = function() {
                                                                       )
                                                                     ]
                                                                   )
-                                                                : _c("label", [
-                                                                    _vm._v(
-                                                                      "Sub"
+                                                                : calculation.SBCTypeAddOrSub ==
+                                                                  "sub"
+                                                                  ? _c(
+                                                                      "label",
+                                                                      {
+                                                                        staticClass:
+                                                                          "label label-danger fs-12"
+                                                                      },
+                                                                      [
+                                                                        _vm._v(
+                                                                          "Sub"
+                                                                        )
+                                                                      ]
                                                                     )
-                                                                  ])
+                                                                  : _c(
+                                                                      "label",
+                                                                      [
+                                                                        _vm._v(
+                                                                          "undefined"
+                                                                        )
+                                                                      ]
+                                                                    )
                                                             ]),
                                                             _vm._v(" "),
                                                             _c("td", [
@@ -23614,7 +23636,22 @@ var render = function() {
                                         )
                                       ]
                                     )
-                                  ])
+                                  ]),
+                                  _vm._v(" "),
+                                  report.salaryCalculations
+                                    ? _c("div", { staticClass: "m-t-10" }, [
+                                        report.salaryCalculations.length > 3
+                                          ? _c(
+                                              "p",
+                                              {
+                                                staticClass: "pull-right",
+                                                staticStyle: { opacity: "0.7" }
+                                              },
+                                              [_vm._v("Scroll for more")]
+                                            )
+                                          : _vm._e()
+                                      ])
+                                    : _vm._e()
                                 ])
                               ])
                             ])

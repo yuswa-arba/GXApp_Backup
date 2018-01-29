@@ -82,8 +82,9 @@
                                                         <td>{{calculation.SBCTypeName}}</td>
                                                         <td>
                                                             <label v-if="calculation.SBCTypeAddOrSub=='add'"
-                                                                   class="label label-success fs-16">Add</label>
-                                                            <label v-else="label label-danger fs-16">Sub</label>
+                                                                   class="label label-success fs-12">Add</label>
+                                                            <label v-else-if="calculation.SBCTypeAddOrSub=='sub'" class="label label-danger fs-12">Sub</label>
+                                                            <label v-else="">undefined</label>
                                                         </td>
                                                         <td>
                                                             At <b>{{calculation.insertedDate}}</b> by <b>{{calculation.insertedBy}}</b>
@@ -105,8 +106,12 @@
                                                     </tr>
                                                     </tbody>
                                                 </table>
+
                                             </div>
                                         </div>
+                                    </div>
+                                    <div v-if="report.salaryCalculations" class="m-t-10">
+                                        <p v-if="report.salaryCalculations.length>3" class="pull-right" style="opacity: 0.7">Scroll for more</p>
                                     </div>
                                 </div>
                             </div>
