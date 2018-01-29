@@ -20,7 +20,7 @@
                              width="38" height="38"
                         />
                     </div>
-                    <h5 class="fs-18">{{employee.givenName}}</h5>
+                    <h5 class="fs-16">{{employee.givenName}} {{employee.surname}}</h5>
                     <h6 class="fs-14" style="opacity: .7">{{employee.surname}}</h6>
                     <h6 class="text-primary" style="margin-top: 3px">{{employee.jobPosition}}</h6>
                 </div>
