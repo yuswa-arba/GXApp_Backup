@@ -18,8 +18,10 @@
                     <p>
                         After you create salary queue, it will appear on the table below, but you can only delete it. To
                         actually use it, you will have to generate salary report in Report & Generate menu, the salary
-                        queues will be previewed
-                        before you generate the salary report, and you can select which one you want to use. (It will be removed from queue after you use it)
+                        queues can be previewed again before you generate the salary report.
+                    </p>
+                    <p class="bold">
+                        All salary queues that exist will be automatically added/subtracted when you generate the salary report.
                     </p>
                 </div>
                 <div class="modal-footer">

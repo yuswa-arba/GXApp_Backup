@@ -15,16 +15,25 @@ export default{
 
     attemptGenerateSalaryData({commit, state}, payload){
 
+        //reset the first time
         state.attemptGenerateSalaryData = []
+        state.salaryQueues = []
         state.isFetchingSalaryData = true
 
         if(payload.fromDate && payload.toDate && payload.branchOfficeId){
+
             commit({
                 type: 'getAttemptGenerateSalaryData',
                 fromDate:payload.fromDate,
                 toDate:payload.toDate,
                 branchOfficeId:payload.branchOfficeId
             })
+
+            commit({
+                type:'getSalaryQueues'
+            })
+
+
         } else {
             $('.page-container').pgNotification({
                 style: 'flip',

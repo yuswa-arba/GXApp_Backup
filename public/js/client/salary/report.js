@@ -2660,17 +2660,100 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {},
+    data: function data() {
+        return {
+            editingSalaryQueue: false
+        };
+    },
+
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('report', {
         isFetchingSalaryData: 'isFetchingSalaryData',
-        attemptGenerateSalaryData: 'attemptGenerateSalaryData'
+        attemptGenerateSalaryData: 'attemptGenerateSalaryData',
+        salaryQueues: 'salaryQueues'
     })),
     created: function created() {},
-
     mounted: function mounted() {},
+
     methods: {
         generateSalaryReports: function generateSalaryReports(fromDate, toDate, branchOfficeId) {
 
@@ -2698,6 +2781,41 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         cancelGenerate: function cancelGenerate() {
             this.$router.go(-1);
+        },
+        editQueue: function editQueue() {
+            var self = this;
+            self.editingSalaryQueue = true;
+        },
+        finishEditSalaryQueue: function finishEditSalaryQueue() {
+            var self = this;
+            self.editingSalaryQueue = false;
+        },
+        deleteQueue: function deleteQueue(salaryQueueId, index) {
+            if (confirm('Are you sure to delete this salary queue?')) {
+
+                if (salaryQueueId != null && index != null) {
+                    this.$store.commit({
+                        type: 'report/deleteSalaryQueue',
+                        salaryQueueId: salaryQueueId,
+                        index: index
+                    });
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'An Error Occurred!',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }
+        },
+        deleteAllQueue: function deleteAllQueue() {
+            if (confirm('[WARNING] Are you sure to delete ALL salary queues?')) {
+                this.$store.commit({
+                    type: 'report/deleteAllSalaryQueue'
+                });
+            }
         }
     }
 });
@@ -22527,9 +22645,178 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("go-back-menu")],
+      [
+        _vm._t("go-back-menu"),
+        _vm._v(" "),
+        _c("div", { staticClass: "pull-right m-r-15 m-b-10" }, [
+          _vm.salaryQueues
+            ? _c("div", { staticClass: "dropdown dropdown-default" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "btn btn-danger all-caps dropdown-toggle text-center",
+                    attrs: {
+                      type: "button",
+                      "data-toggle": "dropdown",
+                      "aria-haspopup": "true",
+                      "aria-expanded": "false"
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    Queues : " +
+                        _vm._s(_vm.salaryQueues.length) +
+                        "\n                "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "dropdown-menu w-100" }, [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.editQueue()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                        View & Edit")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.deleteAllQueue()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                        Delete All")]
+                  )
+                ])
+              ])
+            : _vm._e()
+        ])
+      ],
       2
     ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-4 m-b-10" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
+      _vm.editingSalaryQueue && _vm.salaryQueues.length > 0
+        ? _c("div", { staticClass: "card card-bordered" }, [
+            _c("div", { staticClass: "card-block" }, [
+              _c("div", { staticClass: "row" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-6" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-outline-primary pull-right",
+                      on: {
+                        click: function($event) {
+                          _vm.finishEditSalaryQueue()
+                        }
+                      }
+                    },
+                    [_vm._v("Finish")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "clearfix" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "scrollable" }, [
+                _c("div", { staticStyle: { height: "300px" } }, [
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c("table", { staticClass: "table" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.salaryQueues, function(queue, index) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(queue.id))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(queue.employeeName) +
+                                  "(" +
+                                  _vm._s(queue.divisionName) +
+                                  ")"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(queue.salaryBonusCutTypeName) +
+                                  "\n                                        "
+                              ),
+                              queue.salaryBonusCutTypeAddOrSub == "add"
+                                ? _c(
+                                    "label",
+                                    { staticClass: "label label-success" },
+                                    [_vm._v("Add")]
+                                  )
+                                : queue.salaryBonusCutTypeAddOrSub == "sub"
+                                  ? _c(
+                                      "label",
+                                      { staticClass: "label label-danger" },
+                                      [_vm._v("Sub")]
+                                    )
+                                  : _c("label")
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(queue.value))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(queue.notes))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v("@"),
+                              _c("b", [_vm._v(_vm._s(queue.insertedDate))]),
+                              _vm._v(" by "),
+                              _c("b", [_vm._v(_vm._s(queue.insertedBy))])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c("div", [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-outline-danger",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.deleteQueue(queue.id, index)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "fa fa-trash" }),
+                                    _vm._v(
+                                      "\n                                                Delete\n                                            "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ])
+                        })
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        : _vm._e()
+    ]),
     _vm._v(" "),
     !_vm.isFetchingSalaryData
       ? _c("div", { staticClass: "col-lg-6 m-b-10" }, [
@@ -22597,7 +22884,7 @@ var render = function() {
       ? _c("div", { staticClass: "col-lg-6 m-b-10" }, [
           _c("div", { staticClass: "alert alert-info bordered m-b-0" }, [
             _c("div", { staticClass: "row" }, [
-              _vm._m(0),
+              _vm._m(2),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-5" }, [
                 _c("div", { staticClass: "center-margin" }, [
@@ -22775,7 +23062,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "table-responsive" }, [
                             _c("table", { staticClass: "table" }, [
-                              _vm._m(1, true),
+                              _vm._m(3, true),
                               _vm._v(" "),
                               _c(
                                 "tbody",
@@ -22820,7 +23107,7 @@ var render = function() {
                           _vm._v(" "),
                           _c("div", { staticClass: "table-responsive" }, [
                             _c("table", { staticClass: "table" }, [
-                              _vm._m(2, true),
+                              _vm._m(4, true),
                               _vm._v(" "),
                               _c(
                                 "tbody",
@@ -22863,11 +23150,47 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     _vm.isFetchingSalaryData
-      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(3)])
+      ? _c("div", { staticClass: "col-lg-12 m-b-10 p-t-200" }, [_vm._m(5)])
       : _vm._e()
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("h4", { staticClass: "pull-left" }, [_vm._v("Salary Queue ")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [
+          _vm._v("Employee")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [
+          _vm._v("Bonus/Cut")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [_vm._v("Value")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [_vm._v("Notes")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [
+          _vm._v("Inserted")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black p-t-5 p-b-5" })
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -38169,15 +38492,22 @@ module.exports = Component.exports
             state = _ref2.state;
 
 
+        //reset the first time
         state.attemptGenerateSalaryData = [];
+        state.salaryQueues = [];
         state.isFetchingSalaryData = true;
 
         if (payload.fromDate && payload.toDate && payload.branchOfficeId) {
+
             commit({
                 type: 'getAttemptGenerateSalaryData',
                 fromDate: payload.fromDate,
                 toDate: payload.toDate,
                 branchOfficeId: payload.branchOfficeId
+            });
+
+            commit({
+                type: 'getSalaryQueues'
             });
         } else {
             $('.page-container').pgNotification({
@@ -38266,7 +38596,8 @@ module.exports = Component.exports
         isFetchingSalaryData: false,
         isGeneratingSalary: false,
         isGenerateSalarySuccessful: false,
-        attemptGenerateSalaryData: []
+        attemptGenerateSalaryData: [],
+        salaryQueues: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -38344,6 +38675,78 @@ module.exports = Component.exports
 
                 state.attemptGenerateSalaryData = res.data.salaryReport;
                 state.isFetchingSalaryData = false;
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    getSalaryQueues: function getSalaryQueues(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/list').then(function (res) {
+            if (!res.data.isFailed) {
+                state.salaryQueues = res.data.salaryQueues.data;
+            }
+        }).catch(function (err) {});
+    },
+    deleteSalaryQueue: function deleteSalaryQueue(state, payload) {
+        var self = this;
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/delete', { salaryQueueId: payload.salaryQueueId }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                state.salaryQueues.splice(payload.index, 1); //remove from array
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    deleteAllSalaryQueue: function deleteAllSalaryQueue(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/deleteAll').then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                state.salaryQueues = []; // empty array
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',

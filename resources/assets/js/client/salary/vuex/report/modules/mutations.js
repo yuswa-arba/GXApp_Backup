@@ -90,6 +90,88 @@ export default{
             })
 
     },
+    getSalaryQueues(state,payload){
+        get(api_path + 'salary/queue/list')
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    state.salaryQueues = res.data.salaryQueues.data
+                }
+            })
+            .catch((err) => {
+
+            })
+    },
+    deleteSalaryQueue(state, payload){
+        let self = this
+        post(api_path + 'salary/queue/delete', {salaryQueueId:payload.salaryQueueId})
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    state.salaryQueues.splice(payload.index,1) //remove from array
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    deleteAllSalaryQueue(state,payload){
+        post(api_path+'salary/queue/deleteAll')
+            .then((res)=>{
+                if (!res.data.isFailed) {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    state.salaryQueues = [] // empty array
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+    },
     generateSalaryNow(state, payload){
 
         let fromDate = payload.fromDate
@@ -122,7 +204,6 @@ export default{
                     type: 'danger'
                 }).show();
             })
-
     }
 
 }

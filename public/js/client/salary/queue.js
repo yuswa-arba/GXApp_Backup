@@ -2538,6 +2538,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     methods: {
@@ -23082,7 +23084,13 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("p", [
         _vm._v(
-          "\n                    After you create salary queue, it will appear on the table below, but you can only delete it. To\n                    actually use it, you will have to generate salary report in Report & Generate menu, the salary\n                    queues will be previewed\n                    before you generate the salary report, and you can select which one you want to use. (It will be removed from queue after you use it)\n                "
+          "\n                    After you create salary queue, it will appear on the table below, but you can only delete it. To\n                    actually use it, you will have to generate salary report in Report & Generate menu, the salary\n                    queues can be previewed again before you generate the salary report.\n                "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "bold" }, [
+        _vm._v(
+          "\n                    All salary queues that exist will be automatically added/subtracted when you generate the salary report.\n                "
         )
       ])
     ])

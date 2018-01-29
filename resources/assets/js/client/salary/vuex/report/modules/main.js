@@ -18,7 +18,8 @@ export default {
         isFetchingSalaryData:false,
         isGeneratingSalary:false,
         isGenerateSalarySuccessful:false,
-        attemptGenerateSalaryData:[]
+        attemptGenerateSalaryData:[],
+        salaryQueues:[]
     },
     getters,
     mutations,
