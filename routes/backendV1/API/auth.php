@@ -13,13 +13,14 @@ Route::prefix('v1/a')->group(function () {
 
     Route::namespace('BackendV1\API\Auth')->prefix('auth')->group(function (){
 
-        Route::post('register', 'LoginController@register');
+//        Route::post('register', 'LoginController@register');
         Route::post('login', 'LoginController@login');
         Route::post('refresh', 'LoginController@refresh');
 
 
         Route::middleware('auth:api')->group(function () {
 
+            Route::post('login/success', 'LoginController@loginSuccessful');
             Route::get('test', 'LoginController@test');
             Route::post('logout', 'LoginController@logout');
 

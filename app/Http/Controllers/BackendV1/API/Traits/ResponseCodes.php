@@ -29,6 +29,12 @@ class ResponseCodes
         'UNAUTHORIZED_ACCESS'=>300010
     ];
 
+    public static $USER_ERR_CODE = [
+        'USER_NOT_FOUND'=>400001,
+        'USER_ACCESS_NOT_GRANTED'=>400002,
+        'USER_EMPLOYEE_DATA_NOT_FOUND'=>400003
+    ];
+
     public static $ATTD_ERR_CODES = [
         'ALREADY_CLOCKED_IN' => 500001,
         'ALREADY_CLOCKED_OUT' => 500002,

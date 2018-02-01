@@ -20,6 +20,7 @@ class EmployeeBriefDetailTransfomer extends TransformerAbstract
             'bankId'=>$employee->bankId,
             'bankName'=>!is_null($employee->bank)?$employee->bank->name:'',
             'bankAccNo'=>$employee->bankAccNo,
+            'phoneNo'=>$employee->phoneNo,
             'employeePhoto'=>$employee->employeePhoto,
             'divisionId'=>!is_null($employee->employment)?$employee->employment->divisionId:'',
             'divisionName'=>!is_null($employee->employment)?!is_null($employee->employment->division)?$employee->employment->division->name:'':'',

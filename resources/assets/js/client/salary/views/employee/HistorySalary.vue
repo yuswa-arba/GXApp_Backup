@@ -83,7 +83,8 @@
                                                 <td>
                                                     <label v-if="calculation.SBCTypeAddOrSub=='add'"
                                                            class="label label-success fs-16">Add</label>
-                                                    <label v-else="label label-danger fs-16">Sub</label>
+                                                    <label v-else-if="calculation.SBCTypeAddOrSub=='sub'" class="label label-danger fs-16">Sub</label>
+                                                    <label v-else=""></label>
                                                 </td>
                                                 <td>
                                                     At <b>{{calculation.insertedDate}}</b> by <b>{{calculation.insertedBy}}</b>
