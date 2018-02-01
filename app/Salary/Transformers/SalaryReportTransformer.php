@@ -30,6 +30,7 @@ class SalaryReportTransformer extends TransformerAbstract
             'basicSalary'=>$this->getEmployeeBasicSalary($salaryReport->basicSalary),
             'totalSalaryBonus'=>$this->formatRupiahCurrency($salaryReport->totalSalaryBonus),
             'totalSalaryCut'=>$this->formatRupiahCurrency($salaryReport->totalSalaryCut),
+            'salaryReceived'=>$this->formatRupiahCurrency($salaryReport->salaryReceived),
             'confirmationStatusId'=>$salaryReport->confirmationStatusId,
             'confirmationStatusName'=>$this->getResultWithNullChecker1Connection($salaryReport,'confirmationStatus','name'),
             'confirmationDate'=>$salaryReport->confirmationDate,

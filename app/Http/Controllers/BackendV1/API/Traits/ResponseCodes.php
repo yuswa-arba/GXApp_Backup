@@ -45,6 +45,10 @@ class ResponseCodes
         'IS_DAY_OFF'=>500007
     ];
 
+    public static $SALARY_ERR_CODES = [
+        'SALARY_REPORT_NOT_FOUND' =>600001,
+    ];
+
 
     public static $HTTP_CODES = [
         'SUCCESS' => 200,

@@ -34,7 +34,7 @@ abstract class GenerateUseCase
 
         //is valid
 
-        return (new static)->handleAttempt($request);
+        return (new static)->handleAttemptView($request);
     }
 
     public static function generate(Request $request)
@@ -59,6 +59,6 @@ abstract class GenerateUseCase
     }
 
 
-    abstract public function handleAttempt($request);
+    abstract public function handleAttemptView($request);
     abstract public function handle($request);
 }

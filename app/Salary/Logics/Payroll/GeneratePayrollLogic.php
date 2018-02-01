@@ -249,7 +249,13 @@ class GeneratePayrollLogic extends GenerateUseCase
             /* Check if today is in stage 1 confirmation*/
             if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationValidStage) {
 
-                $availability['normal'] = true;
+                $countConfirmedUsers = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->where('confirmationStatusId',1)->count();
+
+                /* Check if there is at least 1 user that has confirmed*/
+                if($countConfirmedUsers>0){
+                    $availability['normal'] = true;
+                }
+
 
                 /* Check if already exist */
                 $payroll = GeneratePayroll::where('generatedType', Configs::$GENERATED_PAYROLL_TYPE['CONFIRMED'])->where('generateSalaryReportLogId', $request->generateSalaryReportLogId)->orderBy('id','desc')->first();
@@ -264,7 +270,12 @@ class GeneratePayrollLogic extends GenerateUseCase
             /* Check if today is in stage 1 confirmation*/
             if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationStage1) {
 
-                $availability['stage1'] = true;
+                $countConfirmedUsers = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->where('confirmationStatusId',4)->count();
+
+                /* Check if there is at least 1 user that has stage 1 confirmed*/
+                if($countConfirmedUsers>0){
+                    $availability['stage1'] = true;
+                }
 
                 /* Check if already exist */
                 $payroll = GeneratePayroll::where('generatedType', Configs::$GENERATED_PAYROLL_TYPE['STAGE_1_CONFIRMED'])->where('generateSalaryReportLogId', $request->generateSalaryReportLogId)->orderBy('id','desc')->first();

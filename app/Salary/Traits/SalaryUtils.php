@@ -99,7 +99,12 @@ trait SalaryUtils
     }
 
     public function formatRupiahCurrency($value){
-        return number_format($value, 2, ',', '.');
+        if($value>0 && is_float($value) && $value!=null && $value!=""){
+            return number_format($value, 2, ',', '.');
+        } else {
+            return $value;
+        }
+
 
     }
 
