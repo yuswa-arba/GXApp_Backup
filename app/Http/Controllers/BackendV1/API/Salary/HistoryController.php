@@ -37,7 +37,11 @@ class HistoryController extends Controller
             $user = Auth::guard('api')->user(); //user
             $employee = $user->employee; // employee
 
-            $salaryReportHistory = SalaryReport::where('employeeId', $employee->id)->whereNotNull('generatePayrollId')->orderBy('id', 'desc')->paginate(30);
+            $salaryReportHistory = SalaryReport::where('employeeId', $employee->id)
+                ->whereNotNull('generatePayrollId')
+                ->where('confirmationStatusId','!=',3) //where is not Waiting for confirmation
+                ->orderBy('id', 'desc')
+                ->paginate(30);
 
             if($salaryReportHistory){
                 $response['isFailed'] = false;
