@@ -3119,7 +3119,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             self.salaryDetail = res.data.salary.data;
             self.bonusCutDetails = res.data.bonusCut.data;
 
-            self.editSalaryForm.basicSalary = self.salaryDetail.basicSalary;
+            self.editSalaryForm.basicSalary = self.salaryDetail.basicSalaryNoFormat;
         });
 
         // get bonus cut data
@@ -3400,6 +3400,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
 //
 //
 //
@@ -24606,7 +24607,17 @@ var render = function() {
                                                 },
                                                 [_vm._v("Add")]
                                               )
-                                            : _c("label", [_vm._v("Sub")])
+                                            : calculation.SBCTypeAddOrSub ==
+                                              "sub"
+                                              ? _c(
+                                                  "label",
+                                                  {
+                                                    staticClass:
+                                                      "label label-danger fs-16"
+                                                  },
+                                                  [_vm._v("Sub")]
+                                                )
+                                              : _c("label")
                                         ]),
                                         _vm._v(" "),
                                         _c("td", [

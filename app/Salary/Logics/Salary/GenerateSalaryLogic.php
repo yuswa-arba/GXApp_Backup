@@ -294,7 +294,7 @@ class GenerateSalaryLogic extends GenerateUseCase
 
             /* get employee salary*/
             $employeeSalary = $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary');
-            $employeeSalary = $this->getEmployeeBasicSalary($employeeSalary);
+            $employeeSalary = $this->getEmployeeBasicSalaryNoFormat($employeeSalary);
 
             /* start calculation */
             if ($employeeSalary) {
@@ -328,7 +328,7 @@ class GenerateSalaryLogic extends GenerateUseCase
                     $employeeSalaryReport[$i]['generalBonusCut'][$x]['salaryBonusCutTypeId'] = $generalBonusCut->salaryBonusCutTypeId;
                     $employeeSalaryReport[$i]['generalBonusCut'][$x]['name'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'name');
                     $employeeSalaryReport[$i]['generalBonusCut'][$x]['addOrSub'] = $this->getResultWithNullChecker1Connection($generalBonusCut, 'salaryBonusCutType', 'addOrSub');
-                    $employeeSalaryReport[$i]['generalBonusCut'][$x]['value'] = $calculation;
+                    $employeeSalaryReport[$i]['generalBonusCut'][$x]['value'] = $this->formatRupiahCurrency($calculation);
 
 
                     // total bonus & cuts
@@ -373,7 +373,7 @@ class GenerateSalaryLogic extends GenerateUseCase
                     $employeeSalaryReport[$i]['employeeBonusCut'][$y]['salaryBonusCutTypeId'] = $bonusCut->salaryBonusCutTypeId;
                     $employeeSalaryReport[$i]['employeeBonusCut'][$y]['name'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'name');
                     $employeeSalaryReport[$i]['employeeBonusCut'][$y]['addOrSub'] = $this->getResultWithNullChecker1Connection($bonusCut, 'salaryBonusCutType', 'addOrSub');
-                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['value'] = $calculation;
+                    $employeeSalaryReport[$i]['employeeBonusCut'][$y]['value'] = $this->formatRupiahCurrency($calculation);
 
 
                     // total bonus & cuts
@@ -398,7 +398,7 @@ class GenerateSalaryLogic extends GenerateUseCase
                     $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['salaryBonusCutTypeId'] = $queue->salaryBonusCutTypeId;
                     $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['name'] = $this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'name');
                     $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['addOrSub'] = $this->getResultWithNullChecker1Connection($queue, 'salaryBonusCutType', 'addOrSub');
-                    $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['value'] = $calculation;
+                    $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['value'] = $this->formatRupiahCurrency($calculation);
                     $employeeSalaryReport[$i]['employeeSalaryQueue'][$z]['notes'] = $queue->notes;
 
                     // total bonus & cuts
@@ -414,10 +414,10 @@ class GenerateSalaryLogic extends GenerateUseCase
 
             }
 
-            $employeeSalaryReport[$i]['salarySummary']['basicSalary'] = (float)$employeeSalary;
-            $employeeSalaryReport[$i]['salarySummary']['totalBonus'] = $totalBonus;
-            $employeeSalaryReport[$i]['salarySummary']['totalCut'] = $totalCut;
-            $employeeSalaryReport[$i]['salarySummary']['salaryReceived'] = (float)$employeeSalary + (float)$totalBonus - (float)$totalCut;
+            $employeeSalaryReport[$i]['salarySummary']['basicSalary'] = $this->formatRupiahCurrency((float)$employeeSalary);
+            $employeeSalaryReport[$i]['salarySummary']['totalBonus'] = $this->formatRupiahCurrency((float)$totalBonus);
+            $employeeSalaryReport[$i]['salarySummary']['totalCut'] = $this->formatRupiahCurrency((float)$totalCut);
+            $employeeSalaryReport[$i]['salarySummary']['salaryReceived'] = $this->formatRupiahCurrency((float)$employeeSalary + (float)$totalBonus - (float)$totalCut);
 
             /* Incrementing array */
             $i++;
