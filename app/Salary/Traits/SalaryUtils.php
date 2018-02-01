@@ -37,6 +37,31 @@ trait SalaryUtils
             if ($basicSalary) {
                 try {
                     $decryptedSalary = Crypt::decryptString($basicSalary);
+                    return $this->formatRupiahCurrency($decryptedSalary);
+                } catch (DecryptException $e) {
+                    //
+                }
+
+
+            } else {
+                return '';
+            }
+        } else {
+            if ($basicSalary) {
+                return $this->formatRupiahCurrency($basicSalary);
+//                return $basicSalary;
+            } else {
+                return '';
+            }
+        }
+    }
+
+    public function getEmployeeBasicSalaryNoFormat($basicSalary)
+    {
+        if (SalaryUtils::$useEncryption) {
+            if ($basicSalary) {
+                try {
+                    $decryptedSalary = Crypt::decryptString($basicSalary);
                     return $decryptedSalary;
                 } catch (DecryptException $e) {
                     //
@@ -70,6 +95,11 @@ trait SalaryUtils
                 return '';
             }
         }
+
+    }
+
+    public function formatRupiahCurrency($value){
+        return number_format($value, 2, ',', '.');
 
     }
 

@@ -58,9 +58,9 @@ class GetSalaryReportHistoryLogic extends GetSalaryReportUseCase
                     $reportResult[$i]['fromDate'] = $salaryReport->fromDate;
                     $reportResult[$i]['toDate'] = $salaryReport->toDate;
                     $reportResult[$i]['basicSalary'] = $this->getEmployeeBasicSalary($salaryReport->basicSalary);
-                    $reportResult[$i]['totalSalaryBonus'] = $salaryReport->totalSalaryBonus;
-                    $reportResult[$i]['totalSalaryCut'] = $salaryReport->totalSalaryCut;
-                    $reportResult[$i]['salaryReceived'] = $salaryReport->salaryReceived;
+                    $reportResult[$i]['totalSalaryBonus'] = $this->formatRupiahCurrency($salaryReport->totalSalaryBonus);
+                    $reportResult[$i]['totalSalaryCut'] = $this->formatRupiahCurrency($salaryReport->totalSalaryCut);
+                    $reportResult[$i]['salaryReceived'] = $this->formatRupiahCurrency($salaryReport->salaryReceived);
                     $reportResult[$i]['confirmationStatusId'] = $salaryReport->confirmationStatusId;
                     $reportResult[$i]['confirmationStatusName'] = $this->getResultWithNullChecker1Connection($salaryReport, 'confirmationStatus', 'name');
                     $reportResult[$i]['confirmationDate'] = $salaryReport->confirmationDate;
@@ -84,7 +84,7 @@ class GetSalaryReportHistoryLogic extends GetSalaryReportUseCase
                         $reportResult[$i]['salaryCalculations'][$x]['SBCTypeId'] = $salaryCalculation->salaryBonusCutTypeId;
                         $reportResult[$i]['salaryCalculations'][$x]['SBCTypeName'] = $this->getResultWithNullChecker1Connection($salaryCalculation, 'salaryBonusCutType', 'name');
                         $reportResult[$i]['salaryCalculations'][$x]['SBCTypeAddOrSub'] = $this->getResultWithNullChecker1Connection($salaryCalculation, 'salaryBonusCutType', 'addOrSub');
-                        $reportResult[$i]['salaryCalculations'][$x]['value'] = $salaryCalculation->value;
+                        $reportResult[$i]['salaryCalculations'][$x]['value'] = $this->formatRupiahCurrency($salaryCalculation->value);
                         $reportResult[$i]['salaryCalculations'][$x]['notes'] = $salaryCalculation->notes;
                         $reportResult[$i]['salaryCalculations'][$x]['insertedDate'] = $salaryCalculation->insertedDate;
                         $reportResult[$i]['salaryCalculations'][$x]['insertedBy'] = $salaryCalculation->insertedBy;

@@ -23,6 +23,7 @@ class EmployeeSalaryTransformer extends TransformerAbstract
             'id' => $employeeSalary->id,
             'employeeId'=>$employeeSalary->employeeId,
             'basicSalary'=>$this->getEmployeeBasicSalary($employeeSalary->basicSalary),
+            'basicSalaryNoFormat'=>$this->getEmployeeBasicSalaryNoFormat($employeeSalary->basicSalary),
             'insertedDate'=>$employeeSalary->insertedDate,
             'insertedBy'=>$employeeSalary->insertedBy,
         ];

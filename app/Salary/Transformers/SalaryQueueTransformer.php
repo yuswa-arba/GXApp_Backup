@@ -7,6 +7,7 @@ use App\Employee\Models\MasterEmployee;
 use App\Salary\Models\SalaryBonusCutType;
 use App\Salary\Models\SalaryQueue;
 use App\Salary\Models\SalaryReport;
+use App\Salary\Traits\SalaryUtils;
 use App\Traits\GlobalUtils;
 use League\Fractal\TransformerAbstract;
 
@@ -14,6 +15,7 @@ class SalaryQueueTransformer extends TransformerAbstract
 {
 
     use GlobalUtils;
+    use SalaryUtils;
     public function transform(SalaryQueue $salaryQueue)
     {
         return [
@@ -27,7 +29,7 @@ class SalaryQueueTransformer extends TransformerAbstract
             'salaryBonusCutTypeId'=>$salaryQueue->salaryBonusCutTypeId,
             'salaryBonusCutTypeName'=>$this->getResultWithNullChecker1Connection($salaryQueue,'salaryBonusCutType','name'),
             'salaryBonusCutTypeAddOrSub'=>$this->getResultWithNullChecker1Connection($salaryQueue,'salaryBonusCutType','addOrSub'),
-            'value'=>$salaryQueue->value,
+            'value'=>$this->formatRupiahCurrency($salaryQueue->value),
             'notes'=>$salaryQueue->notes,
             'insertedDate'=>$salaryQueue->insertedDate,
             'insertedBy'=>$salaryQueue->insertedBy

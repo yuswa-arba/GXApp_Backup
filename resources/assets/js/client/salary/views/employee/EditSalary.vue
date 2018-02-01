@@ -81,7 +81,7 @@
                     <div class="row">
                         <div class="col-lg-6 employee-details m-b-10">
                             <label>Basic Salary</label>
-                            <input min="0" type="number" class="form-control" v-model="editSalaryForm.basicSalary">
+                            <input min="0" type="number" class="form-control" v-model="editSalaryForm.basicSalaryNoFormat">
                         </div>
 
                         <div class="col-lg-6">
