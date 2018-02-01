@@ -19,6 +19,9 @@ Route::prefix('v1/a')->group(function () {
             Route::get('history', 'HistoryController@getList');
             Route::get('history/detail/{salaryReportId}','HistoryController@getDetail');
 
+            Route::get('confirmation/waiting','ConfirmationController@getNeedConfirmation');
+            Route::post('confirmation/confirm/{salaryReportId}','ConfirmationController@confirmSalary');
+
         });
 
     });

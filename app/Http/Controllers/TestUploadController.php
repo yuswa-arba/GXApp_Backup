@@ -436,28 +436,13 @@ class TestUploadController extends Controller
     public function td()
     {
 
-//        $nowTime = Carbon::createFromFormat('H:i', Carbon::now()->format('H:i'));
-//        $twelveAM = Carbon::createFromFormat('H:i', '14:00');
-//
-//        if ($nowTime->lt($twelveAM)) {
-//            return 'lower';
-//        } else {
-//            return 'greater';
-//        }
+        $numarray  = [2,50,29,1,3,6,7,8,9,23];
 
-//        if( $this->totalDays('26/01/2018','28/01/2018') > 2){
-//            return "greater";
-//
-//        } else {
-//            return "lower";
-//        }
-
-        $encrypted = Crypt::encryptString('350000');
-        $decrypted = Crypt::decryptString($encrypted);
-
-        echo $encrypted;
-        echo '<br>';
-        echo $decrypted;
+        if(in_array(22,$numarray)){
+            return "yes";
+        } else {
+            return "no";
+        }
 
 
     }

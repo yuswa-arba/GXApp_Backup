@@ -95,7 +95,6 @@ trait SalaryUtils
                 return '';
             }
         }
-
     }
 
     public function formatRupiahCurrency($value){

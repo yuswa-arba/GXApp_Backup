@@ -47,4 +47,10 @@ class User extends Authenticatable
     {
         return $this->belongsTo(AccessStatus::class,'accessStatusId');
     }
+
+    public function pushToken()
+    {
+        return $this->hasMany(UserPushToken::class,'userId');
+    }
+
 }

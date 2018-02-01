@@ -47,6 +47,7 @@ class ResponseCodes
 
     public static $SALARY_ERR_CODES = [
         'SALARY_REPORT_NOT_FOUND' =>600001,
+        'CONFIRM_TYPE_UNDEFINED'=>600002,
     ];
 
 
