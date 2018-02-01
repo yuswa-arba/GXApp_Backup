@@ -287,7 +287,6 @@ class GeneratePayrollLogic extends GenerateUseCase
                 }
             }
 
-
             /* Insert to response array */
             $response['isFailed'] = false;
             $response['message'] = 'Success';
