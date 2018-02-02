@@ -50,6 +50,11 @@ class ResponseCodes
         'CONFIRM_TYPE_UNDEFINED'=>600002,
     ];
 
+    public static $PROFILE_ERR_CODE =[
+        'CONFIRMATION_DOESNT_MATCH'=>700001,
+        'OLD_PASSWORD_INCORRECT'=>700002
+    ];
+
 
     public static $HTTP_CODES = [
         'SUCCESS' => 200,
