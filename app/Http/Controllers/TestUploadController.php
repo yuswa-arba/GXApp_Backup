@@ -8,6 +8,8 @@ use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
 use App\Employee\Models\MasterEmployee;
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
+use App\Http\Controllers\BackendV1\API\Traits\FirebaseUtils;
 use App\Salary\Models\GeneralBonusesCuts;
 use App\Salary\Models\SalaryBonusCutType;
 use App\Traits\GlobalUtils;
@@ -21,6 +23,7 @@ use Illuminate\Support\Facades\Log;
 class TestUploadController extends Controller
 {
     use GlobalUtils;
+    use FirebaseUtils;
 
     public function upload(Request $request)
     {
@@ -436,13 +439,7 @@ class TestUploadController extends Controller
     public function td()
     {
 
-        $numarray  = [2,50,29,1,3,6,7,8,9,23];
-
-        if(in_array(22,$numarray)){
-            return "yes";
-        } else {
-            return "no";
-        }
+        $this->sendSinglePush("9143ca32-d63f-376f-8173-9c8d1d7f92db","Welcome to GXAE","Your token has been successfully saved!",null,ConfigCodes::$TOKEN_TYPE['ANDROID']);
 
 
     }

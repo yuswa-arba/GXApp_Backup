@@ -16,7 +16,7 @@ class CreateUsersPushTokenTable extends Migration
         Schema::create('usersPushToken', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('userId');
-            $table->string('pushToken');
+            $table->string('token');
             $table->timestamps();
         });
     }

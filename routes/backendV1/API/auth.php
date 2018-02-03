@@ -24,6 +24,8 @@ Route::prefix('v1/a')->group(function () {
             Route::get('test', 'LoginController@test');
             Route::post('logout', 'LoginController@logout');
 
+            Route::post('pushToken/save','PushTokenController@savePushToken');
+
         });
 
     });

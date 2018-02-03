@@ -22,6 +22,11 @@ class ConfigCodes{
         'DIVISION'=>'division'
     ];
 
+    public static $TOKEN_TYPE = [
+        'ANDROID'=>'android',
+        'WEB'=>'web'
+    ];
+
 
 
 
