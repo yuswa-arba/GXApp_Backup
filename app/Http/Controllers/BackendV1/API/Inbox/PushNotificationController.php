@@ -1,67 +1,41 @@
 <?php
 
-namespace App\Http\Controllers\BackendV1\API\Auth;
+namespace App\Http\Controllers\BackendV1\API\Inbox;
 
-use App\Account\Logics\Users\UserAuthLogic;
 use App\Account\Models\PushNotifications;
-use App\Account\Models\User;
-use App\Account\Models\UserPushToken;
 use App\Http\Controllers\BackendV1\API\Traits\ApiUtils;
-use App\Http\Controllers\BackendV1\API\Traits\FirebaseUtils;
-use App\Http\Controllers\BackendV1\API\Traits\IssueTokenTrait;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
+use App\Http\Controllers\Controller;
 use App\Notification\Transformers\BriefPushNotificationTransformer;
 use App\Traits\GlobalUtils;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Laravel\Passport\Client;
 
-class PushTokenController extends Controller
+
+class PushNotificationController extends Controller
 {
-
-    use GlobalUtils;
     use ApiUtils;
-    use FirebaseUtils;
 
-
-    public function savePushToken(Request $request)
+    public function getPushNotificationList()
     {
         $response = array();
-
 
         if ($this->checkUserEmployee()) {
 
             $user = Auth::guard('api')->user(); //user
             $employee = $user->employee; // employee
 
-            $validator = Validator::make($request->all(), [
-                'token' => 'required',
-                'type'=>'required'
-            ]);
-
-            if ($validator->fails()) {
-                $response['isFailed'] = true;
-                $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
-                $response['message'] = 'Required paramater is missing';
-                return response()->json($response, 200);
-            }
-
             //is valid
-            $insert = UserPushToken::updateOrCreate(
-                ['userId'=>$user->id,'type'=>$request->type],
-                ['token'=>$request->token]
-            );
+            $pushNotifications = PushNotifications::where('userId',$user->id)->orderBy('hasSeen','asc')->paginate(30);
 
-            if($insert){
+            if($pushNotifications){
 
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                 $response['message'] = 'Success';
-
+                $response['pushNotificationResponse'] = fractal($pushNotifications,new BriefPushNotificationTransformer());
 
                 return response()->json($response,200);
             } else{
@@ -82,5 +56,9 @@ class PushTokenController extends Controller
         }
     }
 
+    public function seenPushNotification(Request $request)
+    {
+
+    }
 
 }

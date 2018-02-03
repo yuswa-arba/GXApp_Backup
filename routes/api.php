@@ -20,6 +20,7 @@ require(base_path($backend_path . $api_path . 'auth.php'));
 require(base_path($backend_path . $api_path . 'attendance.php'));
 require(base_path($backend_path . $api_path . 'salary.php'));
 require(base_path($backend_path . $api_path . 'employee.php'));
+require(base_path($backend_path . $api_path . 'inbox.php'));
 
 
 
