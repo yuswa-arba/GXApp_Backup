@@ -122,8 +122,7 @@ trait GlobalUtils
 
 
 
-     function clockingVia($id)
-    {
+    function clockingVia($id){
         $via = '';
         switch ($id) {
             case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK'] :

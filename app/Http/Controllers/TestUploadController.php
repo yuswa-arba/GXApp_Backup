@@ -439,7 +439,11 @@ class TestUploadController extends Controller
     public function td()
     {
 
-        $this->sendSinglePush("9143ca32-d63f-376f-8173-9c8d1d7f92db","Welcome to GXAE","Your token has been successfully saved!",null,ConfigCodes::$TOKEN_TYPE['ANDROID']);
+        $this->sendSinglePush("9143ca32-d63f-376f-8173-9c8d1d7f92db",
+            "Welcome to GXAE", "Your token has been successfully saved!",
+            null,
+            ConfigCodes::$FCM_INTENT_TYPE['SALARY'],
+            ConfigCodes::$TOKEN_TYPE['ANDROID']);
 
 
     }

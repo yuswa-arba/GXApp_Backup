@@ -5,11 +5,11 @@
         <li class="" data-target="#quickview-notes" data-toggle="tab">
             <a href="#">Notes</a>
         </li>
-        <li data-target="#quickview-alerts" data-toggle="tab">
+        <li class="active" data-target="#quickview-alerts" data-toggle="tab">
             <a href="#">Alerts</a>
         </li>
-        <li class="active" data-target="#quickview-chat" data-toggle="tab">
-            <a href="#">Chat</a>
+        <li class="">
+            <a href="http://gxmessenger.globalxtreme.net/" target="_blank">Chat</a>
         </li>
     </ul>
     <a class="btn-link quickview-toggle" data-toggle-element="#quickview" data-toggle="quickview"><i
@@ -93,7 +93,7 @@
         </div>
         <!-- END Notes !-->
         <!-- BEGIN Alerts !-->
-        <div class="tab-pane no-padding" id="quickview-alerts">
+        <div class="tab-pane active no-padding" id="quickview-alerts">
             <div class="view-port clearfix" id="alerts">
                 <!-- BEGIN Alerts View !-->
                 <div class="view bg-white">
@@ -207,7 +207,7 @@
             </div>
         </div>
         <!-- END Alerts !-->
-        <div class="tab-pane active no-padding" id="quickview-chat">
+        <div class="tab-pane no-padding" id="quickview-chat">
             <div class="view-port clearfix" id="chat">
                 <div class="view bg-white">
                     <!-- BEGIN View Header !-->

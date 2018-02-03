@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2458,73 +2458,11 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainQueue.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/misc/MainNotification.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {},
-
-    methods: {
-        goBack: function goBack() {
-            $('#errors-container').addClass('hide');
-            this.$router.go(-1);
-        }
-    }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2542,16 +2480,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    created: function created() {},
+
     methods: {
-        closeModal: function closeModal() {
-            $('#modal-salary-queue-help').modal('toggle');
-        }
+        goBack: function goBack() {
+            $('#errors-container').addClass('hide');
+            this.$router.push('/');
+        },
+        edit: function edit() {},
+        save: function save() {}
     }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/queue/CreateQueue.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/misc/views/notification/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2676,10 +2619,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {},
     data: function data() {
         return {
             searchText: '',
@@ -2689,19 +2651,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             formObject: {
                 employeeId: '',
-                salaryBonusCutTypeId: '',
-                value: '',
-                notes: ''
+                title: 'GXApp Employee',
+                message: '',
+                sendToType: '',
+                intentType: '',
+                viaType: ''
             }
         };
     },
-    mounted: function mounted() {},
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('queue', {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('notification', {
         employeeCandidates: 'employeeCandidates'
     })),
+    mounted: function mounted() {},
     created: function created() {
-        this.$store.state.queue.employeeCandidates = []; //reset the first time
+        this.$store.state.notification.employeeCandidates = []; //reset the first time
     },
 
     methods: {
@@ -2710,7 +2674,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var self = this;
 
             this.$store.commit({
-                type: 'queue/searchEmployee',
+                type: 'notification/searchEmployee',
                 searchText: self.searchText
             });
         },
@@ -2729,7 +2693,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         removeSelectedEmployee: function removeSelectedEmployee() {
             var self = this;
 
-            this.$store.state.queue.employeeCandidates = []; //reset the first time
+            this.$store.state.notification.employeeCandidates = []; //reset the first time
             self.searchText = '';
 
             self.selectedEmployee.employeeId = '';
@@ -2742,20 +2706,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             self.disableSubmitBtn = true;
         },
-        submitSalaryQueueForm: function submitSalaryQueueForm() {
-
+        sendPushNotification: function sendPushNotification() {
             var self = this;
 
-            if (self.formObject.employeeId && self.formObject.salaryBonusCutTypeId && self.formObject.value && self.formObject.notes) {
+            console.log(JSON.stringify(self.formObject));
+
+            if (self.formObject.employeeId && self.formObject.message && self.formObject.viaType) {
 
                 //submit to server
                 this.$store.commit({
-                    type: 'queue/createSalaryQueue',
+                    type: 'notification/sendSingleNotification',
                     formObject: self.formObject
                 });
 
-                //back to home
-                this.$router.push('/');
+                this.$router.go(); //refresh
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -2765,143 +2729,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     type: 'danger'
                 }).show();
             }
-        }
-    }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/queue/Index.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_queue_SalaryQueueHelpModal_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_queue_SalaryQueueHelpModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_queue_SalaryQueueHelpModal_vue__);
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        'salary-queue-help-modal': __WEBPACK_IMPORTED_MODULE_1__components_queue_SalaryQueueHelpModal_vue___default.a
-    },
-    mounted: function mounted() {},
-
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('queue', {
-        salaryQueues: 'salaryQueues'
-    })),
-    created: function created() {
-        this.$store.commit('queue/getSalaryQueueList');
-    },
-
-    methods: {
-        deleteQueue: function deleteQueue(salaryQueueId, index) {
-
-            if (confirm('Are you sure to delete this salary queue?')) {
-
-                if (salaryQueueId != null && index != null) {
-                    this.$store.commit({
-                        type: 'queue/deleteSalaryQueue',
-                        salaryQueueId: salaryQueueId,
-                        index: index
-                    });
-                } else {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: 'An Error Occurred!',
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
-            }
-        },
-        deleteAllQueue: function deleteAllQueue() {
-            if (confirm('[WARNING] Are you sure to delete ALL salary queues?')) {
-                this.$store.commit({
-                    type: 'queue/deleteAllSalaryQueue'
-                });
-            }
-        },
-        createQueue: function createQueue() {
-            this.$router.push({ name: 'createQueue' });
-        },
-        salaryQueueHelp: function salaryQueueHelp() {
-            $('#modal-salary-queue-help').modal('show');
         }
     }
 });
@@ -22330,7 +22157,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2f1bd033\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/queue/CreateQueue.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-052d9c80\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/misc/views/notification/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22338,13 +22165,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("go-back-menu")],
-      2
-    ),
-    _vm._v(" "),
     _c("div", { staticClass: "col-lg-6" }, [
       _c("div", { staticClass: "card card-default" }, [
         _vm._m(0),
@@ -22581,7 +22401,71 @@ var render = function() {
                 "div",
                 { staticClass: "form-group form-group-default required" },
                 [
-                  _c("label", [_vm._v(" Salary Bonus/Cut Type ")]),
+                  _c("label", [_vm._v(" Title ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formObject.title,
+                        expression: "formObject.title"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", c: "", required: "" },
+                    domProps: { value: _vm.formObject.title },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formObject, "title", $event.target.value)
+                      }
+                    }
+                  })
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c(
+                "div",
+                { staticClass: "form-group form-group-default required" },
+                [
+                  _c("label", [_vm._v(" Message ")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formObject.message,
+                        expression: "formObject.message"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", required: "" },
+                    domProps: { value: _vm.formObject.message },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formObject, "message", $event.target.value)
+                      }
+                    }
+                  })
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c(
+                "div",
+                { staticClass: "form-group form-group-default required" },
+                [
+                  _c("label", [_vm._v(" Send Via ")]),
                   _vm._v(" "),
                   _c(
                     "select",
@@ -22590,8 +22474,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.formObject.salaryBonusCutTypeId,
-                          expression: "formObject.salaryBonusCutTypeId"
+                          value: _vm.formObject.viaType,
+                          expression: "formObject.viaType"
                         }
                       ],
                       staticClass: "form-control",
@@ -22607,7 +22491,7 @@ var render = function() {
                             })
                           _vm.$set(
                             _vm.formObject,
-                            "salaryBonusCutTypeId",
+                            "viaType",
                             $event.target.multiple
                               ? $$selectedVal
                               : $$selectedVal[0]
@@ -22626,15 +22510,15 @@ var render = function() {
                             selected: ""
                           }
                         },
-                        [_vm._v("Select Bonus/Cut type")]
+                        [_vm._v("Select Via")]
                       ),
                       _vm._v(" "),
-                      _c("option", { attrs: { value: "16" } }, [
-                        _vm._v("Manual Add")
+                      _c("option", { attrs: { value: "notification" } }, [
+                        _vm._v("Push Notification")
                       ]),
                       _vm._v(" "),
-                      _c("option", { attrs: { value: "17" } }, [
-                        _vm._v("Manual Sub")
+                      _c("option", { attrs: { value: "sms", disabled: "" } }, [
+                        _vm._v("SMS")
                       ])
                     ]
                   )
@@ -22642,69 +22526,145 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12" }, [
-              _c(
-                "div",
-                { staticClass: "form-group form-group-default required" },
-                [
-                  _c("label", [_vm._v(" Notes ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formObject.notes,
-                        expression: "formObject.notes"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", required: "" },
-                    domProps: { value: _vm.formObject.notes },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formObject, "notes", $event.target.value)
-                      }
-                    }
-                  })
-                ]
-              )
-            ]),
+            _vm.formObject.viaType == "notification"
+              ? _c("div", { staticClass: "col-lg-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group form-group-default required" },
+                    [
+                      _c("label", [_vm._v(" Send to Type ")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formObject.sendToType,
+                              expression: "formObject.sendToType"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.formObject,
+                                "sendToType",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: {
+                                value: "",
+                                disabled: "",
+                                hidden: "",
+                                selected: ""
+                              }
+                            },
+                            [_vm._v("Select Type")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "android" } }, [
+                            _vm._v("Android")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "web" } }, [
+                            _vm._v("Web")
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12" }, [
-              _c(
-                "div",
-                { staticClass: "form-group form-group-default required" },
-                [
-                  _c("label", [_vm._v(" Value ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formObject.value,
-                        expression: "formObject.value"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "number", required: "" },
-                    domProps: { value: _vm.formObject.value },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formObject, "value", $event.target.value)
-                      }
-                    }
-                  })
-                ]
-              )
-            ]),
+            _vm.formObject.sendToType == "android"
+              ? _c("div", { staticClass: "col-lg-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "form-group form-group-default required" },
+                    [
+                      _c("label", [_vm._v(" Intent Type ")]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formObject.intentType,
+                              expression: "formObject.intentType"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.formObject,
+                                "intentType",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: {
+                                value: "",
+                                disabled: "",
+                                hidden: "",
+                                selected: ""
+                              }
+                            },
+                            [_vm._v("Select Intent Type")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "home" } }, [
+                            _vm._v("Home Page")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "salary" } }, [
+                            _vm._v("Salary Page")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "profile" } }, [
+                            _vm._v("Profile Page")
+                          ])
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-12" }, [
               _c(
@@ -22714,7 +22674,7 @@ var render = function() {
                   attrs: { disabled: _vm.disableSubmitBtn },
                   on: {
                     click: function($event) {
-                      _vm.submitSalaryQueueForm()
+                      _vm.sendPushNotification()
                     }
                   }
                 },
@@ -22733,7 +22693,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "card-title" }, [_vm._v(" Salary Queue Form")])
+      _c("div", { staticClass: "card-title" }, [
+        _vm._v("Send Push Notification / SMS")
+      ])
     ])
   }
 ]
@@ -22742,13 +22704,13 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2f1bd033", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-052d9c80", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4a6b72b5\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainQueue.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7e752c95\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/misc/MainNotification.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -22788,320 +22750,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4a6b72b5", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6b76b190\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/queue/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row" },
-    [
-      _c("div", { staticClass: "col-lg-12" }, [
-        _c("div", { staticClass: "card card-bordered" }, [
-          _c("div", { staticClass: "card-block" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-6" }, [
-                _c("h4", { staticClass: "pull-left" }, [
-                  _vm._v("Salary Queue "),
-                  _c("i", {
-                    staticClass: "fa fa-question-circle fs-16 cursor",
-                    staticStyle: { opacity: "0.7" },
-                    on: {
-                      click: function($event) {
-                        _vm.salaryQueueHelp()
-                      }
-                    }
-                  })
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-6" }, [
-                _c("div", { staticClass: "pull-right" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      on: {
-                        click: function($event) {
-                          _vm.createQueue()
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-plus" }),
-                      _vm._v(
-                        "\n                                Create Queue\n                            "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-danger",
-                      on: {
-                        click: function($event) {
-                          _vm.deleteAllQueue()
-                        }
-                      }
-                    },
-                    [
-                      _c("i", { staticClass: "fa fa-trash" }, [
-                        _vm._v(" Delete\n                                All")
-                      ])
-                    ]
-                  )
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "scrollable" }, [
-              _c("div", { staticStyle: { height: "600px" } }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.salaryQueues, function(queue, index) {
-                        return _c("tr", [
-                          _c("td", [_vm._v(_vm._s(queue.id))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              _vm._s(queue.employeeName) +
-                                "(" +
-                                _vm._s(queue.divisionName) +
-                                ")"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              _vm._s(queue.salaryBonusCutTypeName) +
-                                "\n                                        "
-                            ),
-                            queue.salaryBonusCutTypeAddOrSub == "add"
-                              ? _c(
-                                  "label",
-                                  { staticClass: "label label-success" },
-                                  [_vm._v("Add")]
-                                )
-                              : queue.salaryBonusCutTypeAddOrSub == "sub"
-                                ? _c(
-                                    "label",
-                                    { staticClass: "label label-danger" },
-                                    [_vm._v("Sub")]
-                                  )
-                                : _c("label")
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(queue.value))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(queue.notes))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v("@"),
-                            _c("b", [_vm._v(_vm._s(queue.insertedDate))]),
-                            _vm._v(" by "),
-                            _c("b", [_vm._v(_vm._s(queue.insertedBy))])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("div", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-outline-danger",
-                                  on: {
-                                    click: function($event) {
-                                      _vm.deleteQueue(queue.id, index)
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("i", { staticClass: "fa fa-trash" }),
-                                  _vm._v(
-                                    "\n                                                Delete\n                                            "
-                                  )
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      })
-                    )
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("salary-queue-help-modal")
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [_vm._v("ID")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [
-          _vm._v("Employee")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [
-          _vm._v("Bonus/Cut")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [_vm._v("Value")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [_vm._v("Notes")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black p-t-5 p-b-5" }, [
-          _vm._v("Inserted")
-        ]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black p-t-5 p-b-5" })
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6b76b190", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-e316808e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "modal fade stick-up",
-      attrs: {
-        id: "modal-salary-queue-help",
-        tabindex: "-1",
-        role: "dialog",
-        "aria-hidden": "true"
-      }
-    },
-    [
-      _c("div", { staticClass: "modal-dialog" }, [
-        _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-footer" }, [
-            _c(
-              "button",
-              {
-                staticClass:
-                  "p-t-5 p-b-5 btn text-primary bold all-caps btn-block",
-                on: {
-                  click: function($event) {
-                    _vm.closeModal()
-                  }
-                }
-              },
-              [_vm._v("\n                    Close\n                ")]
-            )
-          ])
-        ])
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
-        },
-        [_c("i", { staticClass: "pg-close" })]
-      ),
-      _vm._v(" "),
-      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-        _vm._v("Salary Queue Help")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-body" }, [
-      _c("p", [
-        _vm._v(
-          "Salary queue is simply a value that you want to add or subtract to/form someone's salary"
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "\n                    It is best use for one-time cases, such as postponed, special bonus, or anything that is not\n                    routine\n                "
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", [
-        _vm._v(
-          "\n                    After you create salary queue, it will appear on the table below, but you can only delete it. To\n                    actually use it, you will have to generate salary report in Report & Generate menu, the salary\n                    queues can be previewed again before you generate the salary report.\n                "
-        )
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "bold" }, [
-        _vm._v(
-          "\n                    All salary queues that exist will be automatically added/subtracted when you generate the salary report.\n                "
-        )
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-e316808e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7e752c95", module.exports)
   }
 }
 
@@ -37608,15 +37257,15 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/MainQueue.vue":
+/***/ "./resources/assets/js/client/misc/MainNotification.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainQueue.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/misc/MainNotification.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4a6b72b5\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainQueue.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7e752c95\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/misc/MainNotification.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -37633,7 +37282,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/salary/MainQueue.vue"
+Component.options.__file = "resources/assets/js/client/misc/MainNotification.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -37643,9 +37292,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4a6b72b5", Component.options)
+    hotAPI.createRecord("data-v-7e752c95", Component.options)
   } else {
-    hotAPI.reload("data-v-4a6b72b5", Component.options)
+    hotAPI.reload("data-v-7e752c95", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -37657,66 +37306,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-e316808e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/components/queue/SalaryQueueHelpModal.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-e316808e", Component.options)
-  } else {
-    hotAPI.reload("data-v-e316808e", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/queue.js":
+/***/ "./resources/assets/js/client/misc/notification.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_queue__ = __webpack_require__("./resources/assets/js/client/salary/router/queue.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainQueue_vue__ = __webpack_require__("./resources/assets/js/client/salary/MainQueue.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainQueue_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainQueue_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_queue_store__ = __webpack_require__("./resources/assets/js/client/salary/vuex/queue/store.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_notification__ = __webpack_require__("./resources/assets/js/client/misc/router/notification.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainNotification_vue__ = __webpack_require__("./resources/assets/js/client/misc/MainNotification.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainNotification_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainNotification_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_notification_store__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/store.js");
 /**
  * Created by kevinpurwono on 6/12/17.
  */
@@ -37728,32 +37328,29 @@ __webpack_require__("./resources/assets/js/bootstrap.js");
 
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#vc-salary-queue',
-    template: '<main-queue></main-queue>',
-    components: { MainQueue: __WEBPACK_IMPORTED_MODULE_2__MainQueue_vue___default.a },
-    router: __WEBPACK_IMPORTED_MODULE_1__router_queue__["a" /* default */],
-    store: __WEBPACK_IMPORTED_MODULE_3__vuex_queue_store__["a" /* store */]
+    el: '#vc-misc-notification',
+    template: '<main-notification></main-notification>',
+    components: { MainNotification: __WEBPACK_IMPORTED_MODULE_2__MainNotification_vue___default.a },
+    router: __WEBPACK_IMPORTED_MODULE_1__router_notification__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_3__vuex_notification_store__["a" /* store */]
 });
 
 $(document).ready(function () {});
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/router/queue.js":
+/***/ "./resources/assets/js/client/misc/router/notification.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_queue_Index_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/queue/Index.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_queue_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_queue_Index_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_queue_CreateQueue_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/queue/CreateQueue.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_queue_CreateQueue_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_queue_CreateQueue_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_notification_Index_vue__ = __webpack_require__("./resources/assets/js/client/misc/views/notification/Index.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_notification_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_notification_Index_vue__);
 /**
- * Created by kevinpurwono on 23/11/17.
+ * Created by kevinpurwono on 9/11/17.
  */
-
 
 
 
@@ -37763,22 +37360,22 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_queue_Index_vue___default.a }, { path: '/create', component: __WEBPACK_IMPORTED_MODULE_3__views_queue_CreateQueue_vue___default.a, name: 'createQueue' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_notification_Index_vue___default.a }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/views/queue/CreateQueue.vue":
+/***/ "./resources/assets/js/client/misc/views/notification/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/queue/CreateQueue.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/misc/views/notification/Index.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2f1bd033\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/queue/CreateQueue.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-052d9c80\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/misc/views/notification/Index.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -37795,7 +37392,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/salary/views/queue/CreateQueue.vue"
+Component.options.__file = "resources/assets/js/client/misc/views/notification/Index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -37805,9 +37402,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2f1bd033", Component.options)
+    hotAPI.createRecord("data-v-052d9c80", Component.options)
   } else {
-    hotAPI.reload("data-v-2f1bd033", Component.options)
+    hotAPI.reload("data-v-052d9c80", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -37819,56 +37416,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/views/queue/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/queue/Index.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6b76b190\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/queue/Index.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/views/queue/Index.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6b76b190", Component.options)
-  } else {
-    hotAPI.reload("data-v-6b76b190", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/vuex/queue/modules/actions.js":
+/***/ "./resources/assets/js/client/misc/vuex/notification/modules/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37886,7 +37434,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/queue/modules/getters.js":
+/***/ "./resources/assets/js/client/misc/vuex/notification/modules/getters.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37897,13 +37445,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/queue/modules/main.js":
+/***/ "./resources/assets/js/client/misc/vuex/notification/modules/main.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/salary/vuex/queue/modules/getters.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/salary/vuex/queue/modules/mutations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/salary/vuex/queue/modules/actions.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/modules/getters.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/modules/mutations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/modules/actions.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -37915,7 +37463,6 @@ module.exports = Component.exports
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        salaryQueues: [],
         employeeCandidates: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
@@ -37925,7 +37472,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/queue/modules/mutations.js":
+/***/ "./resources/assets/js/client/misc/vuex/notification/modules/mutations.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -37933,20 +37480,15 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series__ = __webpack_require__("./node_modules/async/series.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_async_series__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
 
 
 
+
 /* harmony default export */ __webpack_exports__["a"] = ({
-    getSalaryQueueList: function getSalaryQueueList(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/list').then(function (res) {
-            if (!res.data.isFailed) {
-                state.salaryQueues = res.data.salaryQueues.data;
-            }
-        }).catch(function (err) {});
-    },
     searchEmployee: function searchEmployee(state, payload) {
 
         var self = this;
@@ -37984,86 +37526,16 @@ module.exports = Component.exports
             }).show();
         }
     },
-    createSalaryQueue: function createSalaryQueue(state, payload) {
-        var self = this;
-
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/create', payload.formObject).then(function (res) {
+    sendSingleNotification: function sendSingleNotification(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'misc/notification/send/single', payload.formObject).then(function (res) {
             if (!res.data.isFailed) {
-
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: res.data.message,
                     position: 'top-right',
                     timeout: 3500,
-                    type: 'info'
+                    type: 'success'
                 }).show();
-
-                state.salaryQueues.push(res.data.salaryQueues.data); // push to array
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    deleteSalaryQueue: function deleteSalaryQueue(state, payload) {
-        var self = this;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/delete', { salaryQueueId: payload.salaryQueueId }).then(function (res) {
-            if (!res.data.isFailed) {
-
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-
-                state.salaryQueues.splice(payload.index, 1); //remove from array
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    deleteAllSalaryQueue: function deleteAllSalaryQueue(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/queue/deleteAll').then(function (res) {
-            if (!res.data.isFailed) {
-
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-
-                state.salaryQueues = []; // empty array
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -38087,7 +37559,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/vuex/queue/store.js":
+/***/ "./resources/assets/js/client/misc/vuex/notification/store.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -38095,7 +37567,7 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/salary/vuex/queue/modules/main.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/modules/main.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -38108,7 +37580,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
-        queue: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
+        notification: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
     }
 });
 
@@ -38141,10 +37613,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 /***/ }),
 
-/***/ 19:
+/***/ 20:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/salary/queue.js");
+module.exports = __webpack_require__("./resources/assets/js/client/misc/notification.js");
 
 
 /***/ })

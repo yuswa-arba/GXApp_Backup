@@ -28,6 +28,8 @@ require(base_path($client_path . 'attendance/main.php'));
 require(base_path($client_path . 'doorAccess/main.php'));
 require(base_path($client_path . 'developer/main.php'));
 require(base_path($client_path . 'salary/main.php'));
+require(base_path($client_path . 'misc/main.php'));
+/*
 /*
 |--------------------------------------------------------------------------
 | Init Backend routes
@@ -39,7 +41,7 @@ require(base_path($backend_path . $type_helpdesk . 'attendance.php'));
 require(base_path($backend_path . $type_helpdesk . 'salary.php'));
 require(base_path($backend_path . $type_helpdesk . 'developer.php'));
 require(base_path($backend_path . $type_helpdesk . 'component.php'));
-
+require(base_path($backend_path . $type_helpdesk . 'misc.php'));
 /*
 |--------------------------------------------------------------------------
 | Init general routes

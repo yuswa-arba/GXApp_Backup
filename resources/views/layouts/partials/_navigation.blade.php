@@ -149,7 +149,7 @@
                 </div>
             </li>
             <li class="p-r-10 inline">
-                <a href="#" class="header-icon pg pg-link"></a>
+                <i class="header-icon fa fa-comment cursor m-b-5" style="font-size: 18px"></i>
             </li>
             <li class="p-r-10 inline">
                 <a href="#" class="header-icon pg pg-thumbs"></a>

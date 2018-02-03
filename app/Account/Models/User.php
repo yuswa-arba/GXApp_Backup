@@ -53,4 +53,9 @@ class User extends Authenticatable
         return $this->hasMany(UserPushToken::class,'userId');
     }
 
+    public function pushNotifications()
+    {
+        return $this->hasMany(PushNotifications::class,'userId');
+    }
+
 }

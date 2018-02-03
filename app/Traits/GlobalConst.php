@@ -25,4 +25,9 @@ trait GlobalConst
     public static $CONFIG = [
         'RUN_ON_PORT_80' => true /* Check if web server run on port 80 */
     ];
+
+    public static $FIREBASE = [
+        'URL'=>'https://fcm.googleapis.com/fcm/send', //firebase server url to send the curl request
+        'SERVER_KEY'=>'AAAAuhtmDPE:APA91bEDYdsQP8RgsAS39Ixqty59a2Sz2YuL5yVTSguoVZ6dSa_QW7kl9tx6EGGtafnBPryzBTo9bjLzBd3c1vlWuL-fQoCXy0fqgJW6-BUdVaIKAKV1QPP771bwvfzyuJoK1Ne8UlbV'
+    ];
 }

@@ -17,6 +17,7 @@
     <div class="sidebar-menu">
         <!-- BEGIN SIDEBAR MENU ITEMS-->
         <ul class="menu-items">
+
             @include('layouts.partials.sub_partials.sidebar._dashboard')
             @include('layouts.partials.sub_partials.sidebar._divisions')
             @include('layouts.partials.sub_partials.sidebar._general')
@@ -30,6 +31,7 @@
             @include('layouts.partials.sub_partials.sidebar._door-access')
             @include('layouts.partials.sub_partials.sidebar._settings')
             @include('layouts.partials.sub_partials.sidebar._developer')
+            @include('layouts.partials.sub_partials.sidebar._misc')
 
         </ul>
         <div class="clearfix"></div>

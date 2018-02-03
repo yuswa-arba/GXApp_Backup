@@ -1,14 +1,9 @@
 <template>
     <div class="row">
-
-        <div class="col-lg-12 m-b-10 m-t-10">
-            <slot name="go-back-menu"></slot>
-        </div>
-
         <div class="col-lg-6">
             <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title"> Salary Queue Form</div>
+                    <div class="card-title">Send Push Notification / SMS</div>
                 </div>
                 <div class="card-block">
                     <div class="row">
@@ -73,36 +68,60 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group form-group-default required">
-                                <label> Salary Bonus/Cut Type </label>
-                                <select class="form-control" v-model="formObject.salaryBonusCutTypeId">
-                                    <option value="" disabled hidden selected>Select Bonus/Cut type</option>
-                                    <option value="16">Manual Add</option>
-                                    <option value="17">Manual Sub</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group form-group-default required">
-                                <label> Notes </label>
+                                <label> Title </label>
                                 <input type="text"
-                                       class="form-control"
-                                       v-model="formObject.notes"
+                                       class="form-control" c
+                                       v-model="formObject.title"
                                        required>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group form-group-default required">
-                                <label> Value </label>
-                                <input type="number"
+                                <label> Message </label>
+                                <input type="text"
                                        class="form-control"
-                                       v-model="formObject.value"
+                                       v-model="formObject.message"
                                        required>
                             </div>
                         </div>
 
                         <div class="col-lg-12">
+                            <div class="form-group form-group-default required">
+                                <label> Send Via </label>
+                                <select class="form-control" v-model="formObject.viaType">
+                                    <option value="" disabled hidden selected>Select Via</option>
+                                    <option value="notification">Push Notification</option>
+                                    <option value="sms" disabled>SMS</option> <!--currently not supported yet-->
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12" v-if="formObject.viaType=='notification'">
+                            <div class="form-group form-group-default required">
+                                <label> Send to Type </label>
+                                <select class="form-control" v-model="formObject.sendToType">
+                                    <option value="" disabled hidden selected>Select Type</option>
+                                    <option value="android">Android</option>
+                                    <option value="web">Web</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-lg-12" v-if="formObject.sendToType=='android'">
+                            <div class="form-group form-group-default required">
+                                <label> Intent Type </label>
+                                <select class="form-control" v-model="formObject.intentType">
+                                    <option value="" disabled hidden selected>Select Intent Type</option>
+                                    <option value="home">Home Page</option>
+                                    <option value="salary">Salary Page</option>
+                                    <option value="profile">Profile Page</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
                             <button class="pull-right btn btn-primary"
-                                    @click="submitSalaryQueueForm()"
+                                    @click="sendPushNotification()"
                                     :disabled="disableSubmitBtn"
                             >Save
                             </button>
@@ -117,8 +136,8 @@
 </template>
 <script type="text/javascript">
     import{mapState, mapGetters} from 'vuex'
+
     export default{
-        components: {},
         data(){
             return {
                 searchText: '',
@@ -128,22 +147,24 @@
                 },
                 formObject: {
                     employeeId: '',
-                    salaryBonusCutTypeId: '',
-                    value: '',
-                    notes: ''
+                    title: 'GXApp Employee',
+                    message: '',
+                    sendToType: '',
+                    intentType: '',
+                    viaType: ''
                 }
             }
+        },
+        computed: {
+            ...mapState('notification', {
+                employeeCandidates: 'employeeCandidates'
+            })
         },
         mounted(){
 
         },
-        computed: {
-            ...mapState('queue', {
-                employeeCandidates: 'employeeCandidates'
-            })
-        },
         created(){
-            this.$store.state.queue.employeeCandidates = [] //reset the first time
+            this.$store.state.notification.employeeCandidates = [] //reset the first time
         },
         methods: {
             searchEmployee(){
@@ -151,7 +172,7 @@
                 let self = this
 
                 this.$store.commit({
-                    type: 'queue/searchEmployee',
+                    type: 'notification/searchEmployee',
                     searchText: self.searchText
                 })
 
@@ -172,7 +193,7 @@
             removeSelectedEmployee(){
                 let self = this
 
-                this.$store.state.queue.employeeCandidates = [] //reset the first time
+                this.$store.state.notification.employeeCandidates = [] //reset the first time
                 self.searchText = ''
 
                 self.selectedEmployee.employeeId = ''
@@ -185,23 +206,23 @@
 
                 self.disableSubmitBtn = true
             },
-            submitSalaryQueueForm(){
-
+            sendPushNotification(){
                 let self = this
 
+                console.log(JSON.stringify(self.formObject))
+
                 if (self.formObject.employeeId
-                    && self.formObject.salaryBonusCutTypeId
-                    && self.formObject.value
-                    && self.formObject.notes ) {
+                    && self.formObject.message
+                    && self.formObject.viaType
+                ) {
 
                     //submit to server
                     this.$store.commit({
-                        type: 'queue/createSalaryQueue',
+                        type: 'notification/sendSingleNotification',
                         formObject: self.formObject
                     })
 
-                    //back to home
-                    this.$router.push('/')
+                    this.$router.go()//refresh
 
                 } else {
                     $('.page-container').pgNotification({
@@ -212,8 +233,6 @@
                         type: 'danger'
                     }).show();
                 }
-
-
             }
         }
     }
