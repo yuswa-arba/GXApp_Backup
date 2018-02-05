@@ -52,6 +52,7 @@ trait FirebaseUtils
     public function send($registration_ids, $message)
     {
         $fields = array(
+            'priority'=>'high',
             'registration_ids' => $registration_ids,
             'data' => $message,
         );

@@ -8,6 +8,7 @@ use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\Controller;
 use App\Notification\Transformers\BriefPushNotificationTransformer;
 use App\Traits\GlobalUtils;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -28,7 +29,7 @@ class PushNotificationController extends Controller
             $employee = $user->employee; // employee
 
             //is valid
-            $pushNotifications = PushNotifications::where('userId',$user->id)->orderBy('hasSeen','asc')->paginate(30);
+            $pushNotifications = PushNotifications::where('userId',$user->id)->orderBy('hasSeen','asc')->orderBy('created_at','desc')->paginate(30);
 
             if($pushNotifications){
 
@@ -56,9 +57,43 @@ class PushNotificationController extends Controller
         }
     }
 
-    public function seenPushNotification(Request $request)
+    public function seenPushNotification()
     {
+        if ($this->checkUserEmployee()) {
 
+            $user = Auth::guard('api')->user(); //user
+            $employee = $user->employee; // employee
+
+            //is valid
+            $updateHasSeen = PushNotifications::where('userId',$user->id)->where('hasSeen','0')->update([
+                'hasSeen'=>1,
+                'seenDate'=>Carbon::now()->format('d/m/Y'),
+                'seenTime'=>Carbon::now()->format('H:i')
+            ]);
+
+            if($updateHasSeen){
+
+                $response['isFailed'] = false;
+                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                $response['message'] = 'Success';
+
+                return response()->json($response,200);
+            } else{
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                $response['message'] = 'Unable to save data';
+
+                return response()->json($response,200);
+            }
+
+
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$USER_ERR_CODE['USER_ACCESS_NOT_GRANTED'];
+            $response['message'] = 'User\'s access not granted';
+
+            return response()->json($response, 200);
+        }
     }
 
 }

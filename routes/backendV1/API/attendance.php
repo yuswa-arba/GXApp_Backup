@@ -16,7 +16,9 @@ Route::prefix('v1/a')->group(function () {
 
         Route::middleware('client')->group(function () {
 
-            Route::post('clock/{punchType}', 'MainController@clock');
+            Route::post('clock/{punchType}', 'MainController@clock'); // clock in / clock out
+
+            Route::get('calendar/detail','CalendarController@detail');
 
         });
     });

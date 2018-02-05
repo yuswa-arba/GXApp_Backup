@@ -16,7 +16,7 @@ Route::prefix('v1/a')->group(function () {
         Route::middleware('auth:api')->group(function () {
 
             Route::get('pushNotification/list', 'PushNotificationController@getPushNotificationList');
-            Route::post('pushNotification/seen', 'PushNotificationController@seenPushNotification');
+            Route::get('pushNotification/seen', 'PushNotificationController@seenPushNotification');
 
         });
 
