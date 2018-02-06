@@ -33,7 +33,7 @@ class ShiftController extends Controller
     use GlobalUtils;
     use ApiUtils;
 
-    public function attempt(Request $request)
+    public function attemptExchange(Request $request)
     {
 
         $response = array();
@@ -65,7 +65,7 @@ class ShiftController extends Controller
         }
     }
 
-    public function request(Request $request)
+    public function requestExchange(Request $request)
     {
 
         $response = array();
@@ -103,7 +103,7 @@ class ShiftController extends Controller
         }
     }
 
-    public function answer(Request $request)
+    public function answerExchange(Request $request)
     {
         $response = array();
 

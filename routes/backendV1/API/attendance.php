@@ -25,7 +25,10 @@ Route::prefix('v1/a')->group(function () {
         Route::middleware('auth:api')->group(function () {
 
             Route::get('calendar/detail', 'CalendarController@detail');
-            Route::get('shift/exchange/attempt', 'ShiftController@attempt');
+
+            Route::get('shift/exchange/attempt', 'ShiftController@attemptExchange');
+            Route::post('shift/exchange/request','ShiftController@requestExchange');
+            Route::post('shift/exchange/answer','ShiftController@answerExchange');
 
         });
     });
