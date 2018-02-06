@@ -21,8 +21,8 @@ class CreateExchangeShiftEmployeeTable extends Migration
             $table->integer('toShiftId');
             $table->string('date');
             $table->tinyInteger('isConfirmed')->default(0);
-            $table->string('confirmedDate');
-            $table->string('confirmedTime');
+            $table->string('confirmedDate')->nullable();
+            $table->string('confirmedTime')->nullable();
             $table->timestamps();
         });
     }

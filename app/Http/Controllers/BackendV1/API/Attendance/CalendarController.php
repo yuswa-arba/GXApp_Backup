@@ -104,10 +104,7 @@ class CalendarController extends Controller
             }
 
         }
-
         return $uniqueShiftId;
-
-
     }
 
 }

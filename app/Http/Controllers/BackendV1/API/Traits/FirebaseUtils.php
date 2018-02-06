@@ -26,7 +26,7 @@ trait FirebaseUtils
         //getting the token from database object
         if ($userID != null && $type != null) {
 
-            if($title==null||$title==''){
+            if ($title == null || $title == '') {
                 $title = 'GXApp Employee'; //default
             }
 
@@ -43,16 +43,23 @@ trait FirebaseUtils
             //getting the push from push object
             $mPushNotification = $push;
 
-            $devicetoken = UserPushToken::where('userId', $userID)->where('type', $type)->orderBy('id', 'desc')->first()['token'];
+            try { // wrap with try and catch to prevent error crash
 
-            $this->send(array($devicetoken), $mPushNotification); //required as an array
+                $devicetoken = UserPushToken::where('userId', $userID)->where('type', $type)->orderBy('id', 'desc')->first()['token'];
+
+                $this->send(array($devicetoken), $mPushNotification); //required as an array
+
+            } catch (\Exception $exception) {
+                Log::error($exception->getMessage());
+            }
+
         }
     }
 
     public function send($registration_ids, $message)
     {
         $fields = array(
-            'priority'=>'high',
+            'priority' => 'high',
             'registration_ids' => $registration_ids,
             'data' => $message,
         );
@@ -64,7 +71,7 @@ trait FirebaseUtils
     * This function will make the actuall curl request to firebase server
     * and then the message is sent
     */
-    private function sendPushNotification($fields)
+    protected function sendPushNotification($fields)
     {
 
         $FIREBASE_API_KEY = GlobalConst::$FIREBASE['SERVER_KEY'];

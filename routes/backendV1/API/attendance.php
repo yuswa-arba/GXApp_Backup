@@ -14,11 +14,18 @@ Route::prefix('v1/a')->group(function () {
     /*Attendance*/
     Route::namespace('BackendV1\API\Attendance')->prefix('attd')->group(function () {
 
+        // kiosk
         Route::middleware('client')->group(function () {
 
             Route::post('clock/{punchType}', 'MainController@clock'); // clock in / clock out
 
-            Route::get('calendar/detail','CalendarController@detail');
+        });
+
+
+        Route::middleware('auth:api')->group(function () {
+
+            Route::get('calendar/detail', 'CalendarController@detail');
+            Route::get('shift/exchange/attempt', 'ShiftController@attempt');
 
         });
     });
@@ -41,25 +48,25 @@ Route::prefix('v1/a')->group(function () {
     /*Kiosk*/
     Route::namespace('BackendV1\API\Attendance')->prefix('kiosk')->group(function () {
         Route::middleware('client')->group(function () {
-        /* @header Authorization Bearer <kiosk_api_token> * */
+            /* @header Authorization Bearer <kiosk_api_token> * */
 
-        /*
-         * @param punchType in/out
-         * @body cViaTypeId int
-         * @body employeeId uuid
-         * */
-        Route::post('clock/{punchType}', 'MainController@clock');
+            /*
+             * @param punchType in/out
+             * @body cViaTypeId int
+             * @body employeeId uuid
+             * */
+            Route::post('clock/{punchType}', 'MainController@clock');
 
-        /*
-         * @param id
-         * */
-        Route::get('detail/{id}', 'KioskController@detail');
+            /*
+             * @param id
+             * */
+            Route::get('detail/{id}', 'KioskController@detail');
 
-        Route::get('employee/pg/{personGroupId}/person/{personId}/activity','KioskController@getEmployeeActivity');
+            Route::get('employee/pg/{personGroupId}/person/{personId}/activity', 'KioskController@getEmployeeActivity');
 
-        Route::get('employee/setting/access/{employeeId}','KioskController@getEmployeeAccess');
+            Route::get('employee/setting/access/{employeeId}', 'KioskController@getEmployeeAccess');
 
-        Route::post('setting/access','KioskController@checkKioskPasscode');
+            Route::post('setting/access', 'KioskController@checkKioskPasscode');
 
         });
     });
