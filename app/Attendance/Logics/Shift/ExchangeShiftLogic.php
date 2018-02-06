@@ -24,6 +24,7 @@ use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\API\Traits\FirebaseUtils;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Traits\GlobalUtils;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -206,12 +207,91 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
         if ($employee) {
             $exchangeShift = ExchangeShiftEmployee::find($request->exchangeShiftId);
 
-            if ($exchangeShift->employeeId2 == $employee->id) {
+            if ($exchangeShift->employeeId2 == $employee->id) { //Check if this user is authorized to answer request
 
 
                 if ($request->confirmType == 'accept') {
 
-                    //TODO: accept exchange request
+                    $requesterSlotId = $this->getResultWithNullChecker1Connection($exchangeShift->requesterEmployee, 'slotSchedule', 'slotId');
+                    $ownerSlotId = $this->getResultWithNullChecker1Connection($exchangeShift->ownerEmployee, 'slotSchedule', 'slotId');
+
+
+                    $exchangeFrom = SlotShiftSchedule::where('slotId', $requesterSlotId)
+                        ->where('shiftId', $exchangeShift->fromShiftId)
+                        ->where('date', $exchangeShift->date)
+                        ->where('isConfirmed', 0)
+                        ->first();
+
+                    $exchangeTo = SlotShiftSchedule::where('slotId', $ownerSlotId)
+                        ->where('shiftId', $exchangeShift->toShiftId)
+                        ->where('date', $exchangeShift->date)
+                        ->where('isConfirmed', 0)
+                        ->first();
+
+                    if ($exchangeFrom && $exchangeTo) {
+
+                        // Save requester
+                        $exchangeFrom->slotId = $ownerSlotId;
+                        $exchangeFrom->shiftId = $exchangeShift->toShiftId;
+
+                        //Save owner
+                        $exchangeTo->slotId = $requesterSlotId;
+                        $exchangeTo->shiftId = $exchangeShift->fromShiftId;
+
+                        if ($exchangeFrom->save() && $exchangeTo->save()) {
+
+                            //Update exchange shift employee data
+                            $exchangeShift->isConfirmed = 1;//confirmed
+                            $exchangeShift->confirmedDate = Carbon::now()->format('d/m/Y');
+                            $exchangeShift->confirmedTime = Carbon::now()->format('H:i');
+
+                            if ($exchangeShift->save()) {
+
+                                // Notify requester
+                                $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeShift->requesterEmployee, 'user', 'id');
+                                $this->sendSinglePush(
+                                    $requesterUserId,
+                                    'Exchange Shift Accepted',
+                                    'Your exchange shift request has been accepted!',
+                                    null,
+                                    ConfigCodes::$TOKEN_TYPE['ANDROID'],
+                                    ConfigCodes::$FCM_INTENT_TYPE['HOME']
+                                );
+
+                                /*Success response*/
+                                $response['isFailed'] = false;
+                                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                                $response['message'] = 'Success';
+
+                                return response()->json($response, 200);
+                            } else {
+                                /*Error repsonse*/
+                                $response['isFailed'] = true;
+                                $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                                $response['message'] = 'Unable to save exchange shift table';
+
+                                return response()->json($response, 200);
+                            }
+
+
+                        } else {
+                            /*Error repsonse*/
+                            $response['isFailed'] = true;
+                            $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                            $response['message'] = 'Unable to save exchange data';
+
+                            return response()->json($response, 200);
+
+                        }
+
+                    } else {
+                        /*Error repsonse*/
+                        $response['isFailed'] = true;
+                        $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_GET_EXCHANGE_SHIFTS_DATA'];
+                        $response['message'] = 'Unable to get exchange shifts data';
+
+                        return response()->json($response, 200);
+                    }
 
                 } elseif ($request->confirmType == 'decline') { // DECLINE REQUEST
 
@@ -269,7 +349,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
             $response['message'] = 'Employee data not found';
             return response()->json($response, 200);
         }
-
 
     }
 }
