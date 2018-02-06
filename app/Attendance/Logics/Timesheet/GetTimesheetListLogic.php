@@ -10,14 +10,11 @@
 namespace App\Attendance\Logics\Timesheet;
 
 use App\Attendance\Models\AttendanceTimesheet;
-use App\Attendance\Models\DayOffSchedule;
-use App\Attendance\Models\SlotShiftSchedule;
-use App\Attendance\Transformers\ShiftScheduleSingleCalendarTransformer;
-use App\Attendance\Transformers\DayOffSingleCalendarTransformer;
 use App\Attendance\Transformers\TimesheetListTransformer;
 use App\Employee\Models\Employment;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 
 class GetTimesheetListLogic extends GetTimesheetDataUseCase
@@ -42,8 +39,18 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
             })->orderBy('id','desc')->get();
         } else {
             $timesheet = AttendanceTimesheet::where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate)->orderBy('id','desc')->get();
-
         }
+
+        //Logging
+        app()->make('LogService')->logging([
+            'causer'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
+            'via'=>'web client',
+            'subject'=>'Read Timesheet',
+            'action'=>'read',
+            'level'=>3,
+            'description'=>'Get all timesheet data, sort date: ' . $sortDate,
+            'causerIPAddress'=> \Request::ip()
+        ]);
 
         return fractal($timesheet, new TimesheetListTransformer())->respond(200);
     }
@@ -59,7 +66,6 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
 
         $employeeIds =Employment::where('divisionId', $request->divisionId)->get()->pluck('employeeId');
 
-
         /* Get timesheet */
         if ($request->attdApprovalId != '') {
             $timesheet = AttendanceTimesheet::whereIn('employeeId', $employeeIds)->where('shiftId', $request->shiftId)->where('attendanceApproveId', $request->attdApprovalId)->where(function ($query) use ($sortDate) {
@@ -70,6 +76,17 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
                 $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
             })->orderBy('id','desc')->get();
         }
+
+        //Logging
+        app()->make('LogService')->logging([
+            'causer'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
+            'via'=>'web client',
+            'subject'=>'Read Timesheet',
+            'action'=>'read',
+            'level'=>3,
+            'description'=>'Get timesheet data by division: '. $request->divisionId .' & shift: '.$request->shiftId.', sort date: ' . $sortDate,
+            'causerIPAddress'=> \Request::ip()
+        ]);
 
         return fractal($timesheet, new TimesheetListTransformer())->respond(200);
 
@@ -101,6 +118,16 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
             })->orderBy('id','desc')->get();
         }
 
+        //Logging
+        app()->make('LogService')->logging([
+            'causer'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
+            'via'=>'web client',
+            'subject'=>'Read Timesheet',
+            'action'=>'read',
+            'level'=>3,
+            'description'=>'Get timesheet data by division: '. $request->divisionId .', sort date: ' . $sortDate,
+            'causerIPAddress'=> \Request::ip()
+        ]);
 
         return fractal($timesheet, new TimesheetListTransformer())->respond(200);
     }
@@ -119,6 +146,19 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
         $timesheet = AttendanceTimesheet::where('shiftId', $request->shiftId)->where(function ($query) use ($sortDate) {
             $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
         })->orderBy('id','desc')->get();
+
+
+        //Logging
+        app()->make('LogService')->logging([
+            'causer'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
+            'via'=>'web client',
+            'subject'=>'Read Timesheet',
+            'action'=>'read',
+            'level'=>3,
+            'description'=>'Get timesheet data by shift: '. $request->shiftId .', sort date: ' . $sortDate,
+            'causerIPAddress'=> \Request::ip()
+        ]);
+
         return fractal($timesheet, new TimesheetListTransformer())->respond(200);
     }
 }

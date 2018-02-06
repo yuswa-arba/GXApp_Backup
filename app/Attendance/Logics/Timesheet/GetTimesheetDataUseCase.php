@@ -10,7 +10,9 @@
 namespace App\Attendance\Logics\Timesheet;
 
 
+use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 abstract class GetTimesheetDataUseCase
 {
@@ -27,6 +29,7 @@ abstract class GetTimesheetDataUseCase
         if ($request->get('shiftId') != '') {
             $byAllShiftId = false;
         }
+
 
         // by specific division, by specific shift
         if (!$byAllDivision && !$byAllShiftId) {

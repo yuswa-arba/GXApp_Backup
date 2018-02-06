@@ -14,6 +14,20 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
 
+        /* Auth Listeners*/
+        'Illuminate\Auth\Events\Login' => [
+            'App\Account\Listeners\LogSuccessfulLogin',
+        ],
+        'Illuminate\Auth\Events\Failed' => [
+            'App\Account\Listeners\LogFailedLogin',
+        ],
+        'Illuminate\Auth\Events\Attempting' => [
+            'App\Account\Listeners\LogAuthenticationAttempt',
+        ],
+        'Illuminate\Auth\Events\Logout' => [
+            'App\Account\Listeners\LogSuccessfulLogout',
+        ],
+
         /* Employment Event Listeners*/
         'App\Employee\Events\EmployeeCreated' => [
             'App\Employee\Listeners\SendEmployeeDataVerification'
@@ -31,6 +45,8 @@ class EventServiceProvider extends ServiceProvider
         ]
 
 
+
+
     ];
 
     /**
@@ -42,6 +58,5 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
     }
 }
