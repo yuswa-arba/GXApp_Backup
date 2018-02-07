@@ -715,7 +715,6 @@ class GenerateSalaryLogic extends GenerateUseCase
 
         // else return FALSE
         return false;
-
     }
 
     private function employeeLeaveSchedule($employeeId, $date)

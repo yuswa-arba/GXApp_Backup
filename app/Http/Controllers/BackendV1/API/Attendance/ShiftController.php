@@ -61,11 +61,20 @@ class ShiftController extends Controller
                     return response()->json($response, 200);
                 }
 
+                $parseFromDate = Carbon::createFromFormat('d/m/Y',$request->fromDate);
+
+                if($parseFromDate->lt(Carbon::now())){ // validate request must be greater than today's date
+
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_CHANGE_PAST_DATES'];
+                    $response['message'] = 'Unable to change past dates';
+                    return response()->json($response,200);
+
+                }
+
                 //is valid
 
                 if ($this->checkIfFromDateIsDayOff($requesterSlotId, $request->fromDate)) { // check if date click is day off or not
-
-                    $parseFromDate = Carbon::createFromFormat('d/m/Y',$request->fromDate);
 
                     if(Carbon::now()->addDays(2)->gt($parseFromDate)){ //check if today is valid to exchange day offs
 

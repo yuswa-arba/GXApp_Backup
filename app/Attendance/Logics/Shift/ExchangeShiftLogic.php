@@ -62,44 +62,73 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                 $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId') ?: 1; //default use general
 
-                // Get Slot Shift Schedule
-                $slotShiftSchedules = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->fromDate)->get();
+                Log::info('slot ID: ' . $slotId);
 
-                if ($slotId != 1) { // if employee is assigned to specific slot
-                    foreach ($slotShiftSchedules as $slotShiftSchedule) {
+                // Get Slot Shift Schedule if exist
+                $slotShiftSchedule = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->fromDate)->first();
 
-                        $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
-                        $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                        $possibleExchanges[$i]['shiftId'] = $slotShiftSchedule->shiftId;
-                        $possibleExchanges[$i]['shiftDetails'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'name') . ' (' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workStartAt') . ' - ' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workEndAt') . ')';
-                        $possibleExchanges[$i]['slotId'] = $slotShiftSchedule->slotId;
-                        $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
-                        $possibleExchanges[$i]['date'] = $slotShiftSchedule->date;
-                        $possibleExchanges[$i]['isDayOff'] = 0;
+                if(!$this->isDayOffForThisSlot($slotId,$request->fromDate)){ // Make sure not to exchange if this date is day off for the owner
 
-                        $i++; //increment
+                    if ($slotId != 1) { // if employee is assigned to specific slot
 
+                        if ($slotShiftSchedule) { // Check if this employee assigned to specific shift this date
+
+                            Log::info('slot shift ID&Date: ' . $slotShiftSchedule->shiftId . ' ' . $slotShiftSchedule->date);
+
+                            $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
+                            $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
+                            $possibleExchanges[$i]['shiftId'] = $slotShiftSchedule->shiftId;
+                            $possibleExchanges[$i]['shiftDetails'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'name') . ' (' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workStartAt') . ' - ' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workEndAt') . ')';
+                            $possibleExchanges[$i]['slotId'] = $slotShiftSchedule->slotId;
+                            $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
+                            $possibleExchanges[$i]['date'] = $slotShiftSchedule->date;
+                            $possibleExchanges[$i]['isDayOff'] = 0;
+
+                            $i++; //increment
+
+                        } else { // else use General
+
+                            if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
+
+                                $generalSlot = Slots::find(1);
+                                $generalShift = Shifts::find(1);
+
+                                $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
+                                $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
+                                $possibleExchanges[$i]['shiftId'] = 1;
+                                $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
+                                $possibleExchanges[$i]['slotId'] = 1;
+                                $possibleExchanges[$i]['slotName'] = $generalSlot->name;
+                                $possibleExchanges[$i]['date'] = $request->toDate;
+                                $possibleExchanges[$i]['isDayOff'] = 0;
+
+                                $i++; //increment
+                            }
+
+                        }
+
+                    } else { // else use  General
+
+                        if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
+
+                            $generalSlot = Slots::find(1);
+                            $generalShift = Shifts::find(1);
+
+                            $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
+                            $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
+                            $possibleExchanges[$i]['shiftId'] = 1;
+                            $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
+                            $possibleExchanges[$i]['slotId'] = 1;
+                            $possibleExchanges[$i]['slotName'] = $generalSlot->name;
+                            $possibleExchanges[$i]['date'] = $request->toDate;
+                            $possibleExchanges[$i]['isDayOff'] = 0;
+
+                            $i++; //increment
+                        }
                     }
 
-                } else { // else use  General
-
-                    if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
-
-                        $generalSlot = Slots::find(1);
-                        $generalShift = Shifts::find(1);
-
-                        $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
-                        $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                        $possibleExchanges[$i]['shiftId'] = 1;
-                        $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
-                        $possibleExchanges[$i]['slotId'] = 1;
-                        $possibleExchanges[$i]['slotName'] = $generalSlot->name;
-                        $possibleExchanges[$i]['date'] = $request->toDate;
-                        $possibleExchanges[$i]['isDayOff'] = 0;
-
-                        $i++; //increment
-                    }
                 }
+
 
 
             }
@@ -149,7 +178,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                 $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId') ?: 1; //default general slot
 
-                $dayOffSchedules = DayOffSchedule::where('slotId', $slotId)->where('date','!=', $request->fromDate)->get();
+                $dayOffSchedules = DayOffSchedule::where('slotId', $slotId)->where('date', '!=', $request->fromDate)->get();
 
                 foreach ($dayOffSchedules as $dayOffSchedule) {
 
@@ -413,5 +442,20 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
         }
 
     }
+
+    private function isDayOffForThisSlot($slotId, $date)
+    {
+
+        $checkDayOffSchedule = DayOffSchedule::where('slotId', $slotId)->where('date', $date)->count();
+
+        // if day off schedule found return TRUE
+        if ($checkDayOffSchedule > 0) {
+            return true;
+        }
+
+        // else return FALSE
+        return false;
+    }
+
 
 }
