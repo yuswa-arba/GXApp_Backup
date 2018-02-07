@@ -14,10 +14,6 @@ use App\Attendance\Models\ExchangeShiftEmployee;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
 use App\Attendance\Models\SlotShiftSchedule;
-use App\Attendance\Transformers\DayOffMappingCalendarTransformer;
-use App\Attendance\Transformers\ShiftScheduleMappingCalendarTransformer;
-use App\Attendance\Transformers\ShiftScheduleSingleCalendarTransformer;
-use App\Attendance\Transformers\DayOffSingleCalendarTransformer;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
@@ -162,7 +158,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                         $parseFromDate = Carbon::createFromFormat('d/m/Y', $request->fromDate);
                         $parseDayOffDate = Carbon::createFromFormat('d/m/Y', $dayOffSchedule->date);
 
-                        // Make sure day off dates is greater than today and it's in year
+                        // Make sure day off dates is greater than today and it's in current year
                         if ($parseDayOffDate->gt(Carbon::now()) && $parseDayOffDate->year == $parseFromDate->year) {
 
                             $possibleExchanges[$j]['employeeId'] = $possibleEmployee->id;

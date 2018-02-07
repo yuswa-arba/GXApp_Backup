@@ -420,7 +420,7 @@ class GenerateSalaryLogic extends GenerateUseCase
 
             $employeeSalaryReport[$i]['salarySummary']['basicSalary'] = (float)$employeeSalary;
             $employeeSalaryReport[$i]['salarySummary']['totalBonus'] = (float)$totalBonus;
-            $employeeSalaryReport[$i]['salarySummary']['totalCut'] =(float)$totalCut;
+            $employeeSalaryReport[$i]['salarySummary']['totalCut'] = (float)$totalCut;
             $employeeSalaryReport[$i]['salarySummary']['salaryReceived'] = (float)$employeeSalary + (float)$totalBonus - (float)$totalCut;
 
             /* Incrementing array */
@@ -731,12 +731,18 @@ class GenerateSalaryLogic extends GenerateUseCase
         if ($timesheet->clockInDate != '' && $timesheet->clockInTime != '') {
             $clockInTime = Carbon::createFromFormat('d/m/Y H:i', $timesheet->clockInDate . ' ' . $timesheet->clockInTime);
             $shift = Shifts::find($timesheet->shiftId);
-            $shiftWorkStartAt = Carbon::createFromFormat('d/m/Y H:i', $timesheet->clockInDate . ' ' . $shift->workStartAt);
 
-            // if its late then return minutes late
-            if ($clockInTime->gt($shiftWorkStartAt)) {
-                return $clockInTime->diffInMinutes($shiftWorkStartAt);
+            if ($shift) {
+
+                $shiftWorkStartAt = Carbon::createFromFormat('d/m/Y H:i', $timesheet->clockInDate . ' ' . $shift->workStartAt);
+
+                // if its late then return minutes late
+                if ($clockInTime->gt($shiftWorkStartAt)) {
+                    return $clockInTime->diffInMinutes($shiftWorkStartAt);
+                }
+
             }
+
         }
 
 
@@ -751,12 +757,17 @@ class GenerateSalaryLogic extends GenerateUseCase
         if ($timesheet->clockOutDate != '' && $timesheet->clockOutTime != '') {
             $clockOutTime = Carbon::createFromFormat('d/m/Y H:i', $timesheet->clockOutDate . ' ' . $timesheet->clockOutTime);
             $shift = Shifts::find($timesheet->shiftId);
-            $shiftWorkEndAt = Carbon::createFromFormat('d/m/Y H:i', $timesheet->clockOutDate . ' ' . $shift->workEndAt);
 
-            // if its early then return minutes early
-            if ($clockOutTime->lt($shiftWorkEndAt)) {
-                return $clockOutTime->diffInMinutes($shiftWorkEndAt);
+            if($shift){
+                $shiftWorkEndAt = Carbon::createFromFormat('d/m/Y H:i', $timesheet->clockOutDate . ' ' . $shift->workEndAt);
+
+                // if its early then return minutes early
+                if ($clockOutTime->lt($shiftWorkEndAt)) {
+                    return $clockOutTime->diffInMinutes($shiftWorkEndAt);
+                }
             }
+
+
         }
 
         return 0;

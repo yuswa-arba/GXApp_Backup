@@ -67,14 +67,14 @@ class ShiftController extends Controller
 
                     $parseFromDate = Carbon::createFromFormat('d/m/Y',$request->fromDate);
 
-//                    if(Carbon::now()->addDays(2)->gt($parseFromDate)){ //check if today is valid to exchange day offs
-//
-//                        $response['isFailed'] = true;
-//                        $response['code'] = ResponseCodes::$ATTD_ERR_CODES['3_DAYS_BEFORE_EXCHANGE_DAY_OFF'];
-//                        $response['message'] = 'Unable to exchange this day off. Required 3 days before day off\'s date';
-//
-//                        return response()->json($response, 200);
-//                    }
+                    if(Carbon::now()->addDays(2)->gt($parseFromDate)){ //check if today is valid to exchange day offs
+
+                        $response['isFailed'] = true;
+                        $response['code'] = ResponseCodes::$ATTD_ERR_CODES['3_DAYS_BEFORE_EXCHANGE_DAY_OFF'];
+                        $response['message'] = 'Unable to exchange this day off. (min. 3 days before requested date)';
+
+                        return response()->json($response, 200);
+                    }
 
                     //is valid
 
