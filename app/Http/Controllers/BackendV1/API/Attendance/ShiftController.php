@@ -65,24 +65,22 @@ class ShiftController extends Controller
 
                 if ($this->checkIfFromDateIsDayOff($requesterSlotId, $request->fromDate)) { // check if date click is day off or not
 
+                    $parseFromDate = Carbon::createFromFormat('d/m/Y',$request->fromDate);
+
+//                    if(Carbon::now()->addDays(2)->gt($parseFromDate)){ //check if today is valid to exchange day offs
+//
+//                        $response['isFailed'] = true;
+//                        $response['code'] = ResponseCodes::$ATTD_ERR_CODES['3_DAYS_BEFORE_EXCHANGE_DAY_OFF'];
+//                        $response['message'] = 'Unable to exchange this day off. Required 3 days before day off\'s date';
+//
+//                        return response()->json($response, 200);
+//                    }
+
                     //is valid
 
                     return ExchangeShiftLogic::attemptExchangeDayOff($request);
 
                 } else {
-
-                    $validator = Validator::make($request->all(), ['fromDate' => 'required', 'toDate' => 'required']);
-
-                    if ($validator->fails()) {
-
-                        $response['isFailed'] = true;
-                        $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
-                        $response['message'] = 'Required parameter is missing';
-
-                        return response()->json($response, 200);
-                    }
-
-                    //is valid
 
                     return ExchangeShiftLogic::attemptExchangeWorkingDay($request);
 

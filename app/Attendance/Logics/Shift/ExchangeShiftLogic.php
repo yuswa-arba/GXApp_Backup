@@ -64,53 +64,13 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
             foreach ($possibleEmployees as $possibleEmployee) {
 
-                $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId');
-                $shiftId = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->toDate)->first()['shiftId'] ?: 1;
+                $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId') ?: 1; //default use general
 
                 // Get Slot Shift Schedule
-                $slotShiftSchedule = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->toDate)->first();
+                $slotShiftSchedules = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->fromDate)->get();
 
-                if ($request->fromDate == $request->toDate) {
-
-                    if ($requesterShiftId != $shiftId) { // Make sure requester shift ID and possible exchange shift ID is not the same if on the same day
-
-                        if ($slotShiftSchedule) { // Insert to possible exchanges array
-
-                            $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
-                            $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                            $possibleExchanges[$i]['shiftId'] = $slotShiftSchedule->shiftId;
-                            $possibleExchanges[$i]['shiftDetails'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'name') . ' (' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workStartAt') . ' - ' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workEndAt') . ')';
-                            $possibleExchanges[$i]['slotId'] = $slotShiftSchedule->slotId;
-                            $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
-                            $possibleExchanges[$i]['date'] = $slotShiftSchedule->date;
-                            $possibleExchanges[$i]['isDayOff'] = 0;
-
-                            $i++; //increment
-
-                        } else { // General
-
-                            if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
-
-                                $generalSlot = Slots::find(1);
-                                $generalShift = Shifts::find(1);
-
-                                $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
-                                $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                                $possibleExchanges[$i]['shiftId'] = 1;
-                                $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
-                                $possibleExchanges[$i]['slotId'] = 1;
-                                $possibleExchanges[$i]['slotName'] = $generalSlot->name;
-                                $possibleExchanges[$i]['date'] = $request->toDate;
-                                $possibleExchanges[$i]['isDayOff'] = 0;
-
-                                $i++; //increment
-                            }
-                        }
-                    }
-
-                } else {
-
-                    if ($slotShiftSchedule) { // Insert to possible exchanges array
+                if ($slotId != 1) { // if employee is assigned to specific slot
+                    foreach ($slotShiftSchedules as $slotShiftSchedule) {
 
                         $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
                         $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
@@ -123,26 +83,28 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                         $i++; //increment
 
-                    } else { // General
+                    }
 
-                        if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
+                } else { // else use  General
 
-                            $generalSlot = Slots::find(1);
-                            $generalShift = Shifts::find(1);
+                    if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
 
-                            $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
-                            $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                            $possibleExchanges[$i]['shiftId'] = 1;
-                            $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
-                            $possibleExchanges[$i]['slotId'] = 1;
-                            $possibleExchanges[$i]['slotName'] = $generalSlot->name;
-                            $possibleExchanges[$i]['date'] = $request->toDate;
-                            $possibleExchanges[$i]['isDayOff'] = 0;
+                        $generalSlot = Slots::find(1);
+                        $generalShift = Shifts::find(1);
 
-                            $i++; //increment
-                        }
+                        $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
+                        $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
+                        $possibleExchanges[$i]['shiftId'] = 1;
+                        $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
+                        $possibleExchanges[$i]['slotId'] = 1;
+                        $possibleExchanges[$i]['slotName'] = $generalSlot->name;
+                        $possibleExchanges[$i]['date'] = $request->toDate;
+                        $possibleExchanges[$i]['isDayOff'] = 0;
+
+                        $i++; //increment
                     }
                 }
+
 
             }
 
@@ -174,12 +136,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
         //get Job Position ID, ony take shift from employee with the same job position
         $jobPositionId = $this->getResultWithNullChecker1Connection($employee, 'employment', 'jobPositionId');
 
-        // Requester slotID
-        $requesterSlotId = $employee->slotSchedule->slotId ?: 1; //else use default slot
-
-        // Requester shift ID
-        $requesterShiftId = $employee->slotSchedule->slot->shiftSchedule->where('date', $request->fromDate)->first()['shiftId'] ?: 1; //else use default shift
-
         // Possible Exchange
         $possibleExchanges = array();
 
@@ -197,7 +153,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                 $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId') ?: 1; //default general slot
 
-                $dayOffSchedules = DayOffSchedule::where('slotId', $slotId)->where('date', '!=', $request->fromDate)->get();
+                $dayOffSchedules = DayOffSchedule::where('slotId', $slotId)->where('date','!=', $request->fromDate)->get();
 
                 foreach ($dayOffSchedules as $dayOffSchedule) {
 
@@ -206,8 +162,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                         $parseFromDate = Carbon::createFromFormat('d/m/Y', $request->fromDate);
                         $parseDayOffDate = Carbon::createFromFormat('d/m/Y', $dayOffSchedule->date);
 
-                        // Make sure day off dates is greater than the one being change and it's in current year
-                        if ($parseDayOffDate->gt($parseFromDate->addDays(2)) && $parseDayOffDate->year == $parseFromDate->year) {
+                        // Make sure day off dates is greater than today and it's in year
+                        if ($parseDayOffDate->gt(Carbon::now()) && $parseDayOffDate->year == $parseFromDate->year) {
 
                             $possibleExchanges[$j]['employeeId'] = $possibleEmployee->id;
                             $possibleExchanges[$j]['employeeName'] = $possibleEmployee->givenName;
@@ -244,7 +200,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
             return response()->json($response, 200);
         }
     }
-
 
 
     public function handleRequestExchange($request)
