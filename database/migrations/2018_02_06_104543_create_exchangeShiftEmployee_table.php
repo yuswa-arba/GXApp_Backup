@@ -17,9 +17,10 @@ class CreateExchangeShiftEmployeeTable extends Migration
             $table->increments('id');
             $table->uuid('employeeId1'); // requester
             $table->integer('fromShiftId');
+            $table->string('fromDate');
             $table->uuid('employeeId2'); // owner
             $table->integer('toShiftId');
-            $table->string('date');
+            $table->string('toDate');
             $table->tinyInteger('isConfirmed')->default(0);
             $table->string('confirmedDate')->nullable();
             $table->string('confirmedTime')->nullable();

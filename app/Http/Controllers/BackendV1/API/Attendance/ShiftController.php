@@ -40,7 +40,7 @@ class ShiftController extends Controller
 
         if ($this->checkUserEmployee()) {
 
-            $validator = Validator::make($request->all(),['date'=>'required']);
+            $validator = Validator::make($request->all(),['fromDate'=>'required','toDate'=>'required']);
 
             if($validator->fails()){
 
@@ -73,7 +73,8 @@ class ShiftController extends Controller
         if ($this->checkUserEmployee()) {
 
             $validator = Validator::make($request->all(),[
-                'date'=>'required',
+                'fromDate'=>'required',
+                'toDate'=>'required',
                 'fromShiftId'=>'required',
                 'requesterSlotId'=>'required',
                 'ownerEmployeeId'=>'required',
