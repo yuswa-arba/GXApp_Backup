@@ -34,150 +34,221 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
     use GlobalUtils;
     use FirebaseUtils;
 
-    /*
-     * @desc : get data that wants to be replaced
-     *
-     * */
-    public function handleAttemptExchange($request)
+    public function handleAttemptExchangeWorkingDay($request)
     {
         $user = Auth::guard('api')->user(); //user
         $employee = $user->employee; // employee
         $response = array();
 
-        if ($employee) {
+        //get Job Position ID, ony take shift from employee with the same job position
+        $jobPositionId = $this->getResultWithNullChecker1Connection($employee, 'employment', 'jobPositionId');
 
-            //get Job Position ID, ony take shift from employee with the same job position
-            $jobPositionId = $this->getResultWithNullChecker1Connection($employee, 'employment', 'jobPositionId');
+        // Requester slotID
+        $requesterSlotId = $employee->slotSchedule->slotId ?: 1; //else use default slot
 
-            // Requester slotID
-            $requesterSlotId = $employee->slotSchedule->slotId ?: 1; //else use default slot
+        // Requester shift ID
+        $requesterShiftId = $employee->slotSchedule->slot->shiftSchedule->where('date', $request->fromDate)->first()['shiftId'] ?: 1; //else use default shift
 
-            // Requester shift ID
-            $requesterShiftId = $employee->slotSchedule->slot->shiftSchedule->where('date', $request->fromDate)->first()['shiftId'] ?: 1; //else use default shift
+        // Possible Exchange
+        $possibleExchanges = array();
 
-            // Possible Exchange
-            $possibleExchanges = array();
+        // Check if fromDate is day off
+        if ($jobPositionId) {
 
-            // Check if fromDate is day off
-            if ($jobPositionId) {
+            $possibleEmployeeIds = Employment::where('jobPositionId', $jobPositionId)->get()->pluck('employeeId');
 
-                $possibleEmployeeIds = Employment::where('jobPositionId', $jobPositionId)->get()->pluck('employeeId');
+            // Get Slot Ids
+            $possibleEmployees = MasterEmployee::whereIn('id', $possibleEmployeeIds)->where('id', '!=', $employee->id)->get(); //do not include self
 
-                // Get Slot Ids
-                $possibleEmployees = MasterEmployee::whereIn('id', $possibleEmployeeIds)->where('id', '!=', $employee->id)->get(); //do not include self
+            $i = 0;
 
-                if ($this->checkIfFromDateIsDayOff($requesterSlotId, $request->fromDate)) {
+            foreach ($possibleEmployees as $possibleEmployee) {
 
-                    //TODO: FIND POSSIBLE EMPLOYEE THAT HAVE THE SAME DAY OFFS
+                $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId');
+                $shiftId = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->toDate)->first()['shiftId'] ?: 1;
 
-                } else {
+                // Get Slot Shift Schedule
+                $slotShiftSchedule = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->toDate)->first();
 
-                    $i = 0;
+                if ($request->fromDate == $request->toDate) {
 
-                    foreach ($possibleEmployees as $possibleEmployee) {
+                    if ($requesterShiftId != $shiftId) { // Make sure requester shift ID and possible exchange shift ID is not the same if on the same day
 
-                        $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId');
-                        $shiftId = $possibleEmployee->slotSchedule->slot->shiftSchedule->where('date', $request->toDate)->first()['shiftId'] ?: 1; //else use default shift
+                        if ($slotShiftSchedule) { // Insert to possible exchanges array
 
-                        // Get Slot Shift Schedule
-                        $slotShiftSchedule = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->toDate)->first();
+                            $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
+                            $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
+                            $possibleExchanges[$i]['shiftId'] = $slotShiftSchedule->shiftId;
+                            $possibleExchanges[$i]['shiftDetails'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'name') . ' (' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workStartAt') . ' - ' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workEndAt') . ')';
+                            $possibleExchanges[$i]['slotId'] = $slotShiftSchedule->slotId;
+                            $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
+                            $possibleExchanges[$i]['date'] = $slotShiftSchedule->date;
+                            $possibleExchanges[$i]['isDayOff'] = 0;
 
-                        if ($request->fromDate == $request->toDate) {
+                            $i++; //increment
 
-                            if ($requesterShiftId != $shiftId) { // Make sure requester shift ID and possible exchange shift ID is not the same if on the same day
+                        } else { // General
 
-                                if ($slotShiftSchedule) { // Insert to possible exchanges array
+                            if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
 
-                                    $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
-                                    $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                                    $possibleExchanges[$i]['shiftId'] = $slotShiftSchedule->shiftId;
-                                    $possibleExchanges[$i]['shiftDetails'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'name') . ' (' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workStartAt') . ' - ' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workEndAt') . ')';
-                                    $possibleExchanges[$i]['slotId'] = $slotShiftSchedule->slotId;
-                                    $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
-                                    $possibleExchanges[$i]['date'] = $request->toDate;
-
-                                } else { // General
-
-                                    if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
-
-                                        $generalSlot = Slots::find(1);
-                                        $generalShift = Shifts::find(1);
-
-                                        $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
-                                        $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                                        $possibleExchanges[$i]['shiftId'] = 1;
-                                        $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
-                                        $possibleExchanges[$i]['slotId'] = 1;
-                                        $possibleExchanges[$i]['slotName'] = $generalSlot->name;
-                                        $possibleExchanges[$i]['date'] = $request->toDate;
-
-                                    }
-                                }
-                            }
-
-                        } else {
-
-                            if ($slotShiftSchedule) { // Insert to possible exchanges array
+                                $generalSlot = Slots::find(1);
+                                $generalShift = Shifts::find(1);
 
                                 $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
                                 $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                                $possibleExchanges[$i]['shiftId'] = $slotShiftSchedule->shiftId;
-                                $possibleExchanges[$i]['shiftDetails'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'name') . ' (' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workStartAt') . ' - ' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workEndAt') . ')';
-                                $possibleExchanges[$i]['slotId'] = $slotShiftSchedule->slotId;
-                                $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
+                                $possibleExchanges[$i]['shiftId'] = 1;
+                                $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
+                                $possibleExchanges[$i]['slotId'] = 1;
+                                $possibleExchanges[$i]['slotName'] = $generalSlot->name;
                                 $possibleExchanges[$i]['date'] = $request->toDate;
+                                $possibleExchanges[$i]['isDayOff'] = 0;
 
-                            } else { // General
-
-                                if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
-
-                                    $generalSlot = Slots::find(1);
-                                    $generalShift = Shifts::find(1);
-
-                                    $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
-                                    $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                                    $possibleExchanges[$i]['shiftId'] = 1;
-                                    $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
-                                    $possibleExchanges[$i]['slotId'] = 1;
-                                    $possibleExchanges[$i]['slotName'] = $generalSlot->name;
-                                    $possibleExchanges[$i]['date'] = $request->toDate;
-
-                                }
+                                $i++; //increment
                             }
-                            $i++;
+                        }
+                    }
+
+                } else {
+
+                    if ($slotShiftSchedule) { // Insert to possible exchanges array
+
+                        $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
+                        $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
+                        $possibleExchanges[$i]['shiftId'] = $slotShiftSchedule->shiftId;
+                        $possibleExchanges[$i]['shiftDetails'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'name') . ' (' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workStartAt') . ' - ' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workEndAt') . ')';
+                        $possibleExchanges[$i]['slotId'] = $slotShiftSchedule->slotId;
+                        $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
+                        $possibleExchanges[$i]['date'] = $slotShiftSchedule->date;
+                        $possibleExchanges[$i]['isDayOff'] = 0;
+
+                        $i++; //increment
+
+                    } else { // General
+
+                        if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
+
+                            $generalSlot = Slots::find(1);
+                            $generalShift = Shifts::find(1);
+
+                            $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
+                            $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
+                            $possibleExchanges[$i]['shiftId'] = 1;
+                            $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
+                            $possibleExchanges[$i]['slotId'] = 1;
+                            $possibleExchanges[$i]['slotName'] = $generalSlot->name;
+                            $possibleExchanges[$i]['date'] = $request->toDate;
+                            $possibleExchanges[$i]['isDayOff'] = 0;
+
+                            $i++; //increment
                         }
                     }
                 }
 
-                /* Success Response */
-                $response['isFailed'] = false;
-                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
-                $response['message'] = 'Success';
-                $response['possibleExchangeResponse']['data'] = $possibleExchanges;
-
-                return response()->json($response, 200);
-
-            } else {
-
-                /* Error Response */
-                $response['isFailed'] = true;
-                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['JOB_POSITION_ID_NOT_DEFINED'];
-                $response['message'] = 'Job Position ID is not defined';
-
-                return response()->json($response, 200);
             }
 
+            /* Success Response */
+            $response['isFailed'] = false;
+            $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+            $response['message'] = 'Success';
+            $response['possibleExchangeResponse']['data'] = $possibleExchanges;
+
+            return response()->json($response, 200);
+
         } else {
+
             /* Error Response */
             $response['isFailed'] = true;
-            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
-            $response['message'] = 'Employee data not found';
+            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['JOB_POSITION_ID_NOT_DEFINED'];
+            $response['message'] = 'Job Position ID is not defined';
+
             return response()->json($response, 200);
         }
-
     }
 
-    public function handleRequestExchange($request){
+    public function handleAttemptExchangeDayOff($request)
+    {
+        $user = Auth::guard('api')->user(); //user
+        $employee = $user->employee; // employee
+        $response = array();
+
+        //get Job Position ID, ony take shift from employee with the same job position
+        $jobPositionId = $this->getResultWithNullChecker1Connection($employee, 'employment', 'jobPositionId');
+
+        // Requester slotID
+        $requesterSlotId = $employee->slotSchedule->slotId ?: 1; //else use default slot
+
+        // Requester shift ID
+        $requesterShiftId = $employee->slotSchedule->slot->shiftSchedule->where('date', $request->fromDate)->first()['shiftId'] ?: 1; //else use default shift
+
+        // Possible Exchange
+        $possibleExchanges = array();
+
+        // Check if fromDate is day off
+        if ($jobPositionId) {
+
+            $possibleEmployeeIds = Employment::where('jobPositionId', $jobPositionId)->get()->pluck('employeeId');
+
+            // Get Slot Ids
+            $possibleEmployees = MasterEmployee::whereIn('id', $possibleEmployeeIds)->where('id', '!=', $employee->id)->get(); //do not include self
+
+            $j = 0;
+
+            foreach ($possibleEmployees as $possibleEmployee) {
+
+                $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId') ?: 1; //default general slot
+
+                $dayOffSchedules = DayOffSchedule::where('slotId', $slotId)->where('date', '!=', $request->fromDate)->get();
+
+                foreach ($dayOffSchedules as $dayOffSchedule) {
+
+                    if ($dayOffSchedule->date && $request->fromDate) { // Make sure dates are not empty
+
+                        $parseFromDate = Carbon::createFromFormat('d/m/Y', $request->fromDate);
+                        $parseDayOffDate = Carbon::createFromFormat('d/m/Y', $dayOffSchedule->date);
+
+                        // Make sure day off dates is greater than the one being change and it's in current year
+                        if ($parseDayOffDate->gt($parseFromDate->addDays(2)) && $parseDayOffDate->year == $parseFromDate->year) {
+
+                            $possibleExchanges[$j]['employeeId'] = $possibleEmployee->id;
+                            $possibleExchanges[$j]['employeeName'] = $possibleEmployee->givenName;
+                            $possibleExchanges[$j]['slotId'] = $slotId;
+                            $possibleExchanges[$j]['slotName'] = Slots::where('id', $slotId)->first()['name'];
+                            $possibleExchanges[$j]['date'] = $dayOffSchedule->date;
+                            $possibleExchanges[$j]['isDayOff'] = 1;
+                            $possibleExchanges[$j]['dayOffName'] = $dayOffSchedule->description;
+
+                            $j++;//increment
+
+                        }
+
+                    }
+                }
+
+            }
+
+            /* Success Response */
+            $response['isFailed'] = false;
+            $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+            $response['message'] = 'Success';
+            $response['possibleExchangeResponse']['data'] = $possibleExchanges;
+
+            return response()->json($response, 200);
+
+        } else {
+
+            /* Error Response */
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['JOB_POSITION_ID_NOT_DEFINED'];
+            $response['message'] = 'Job Position ID is not defined';
+
+            return response()->json($response, 200);
+        }
+    }
+
+
+
+    public function handleRequestExchange($request)
+    {
 
         $user = Auth::guard('api')->user(); //user
         $employee = $user->employee; // employee
@@ -239,7 +310,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
         }
     }
 
-    public function handleAnswerRequest($request){
+    public function handleAnswerRequest($request)
+    {
 
         $user = Auth::guard('api')->user(); //user
         $employee = $user->employee; // employee
@@ -391,14 +463,4 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
     }
 
-    private function checkIfFromDateIsDayOff($requesterSlotId, $fromDate)
-    {
-        $checkDayOff = DayOffSchedule::where('slotId', $requesterSlotId)->where('date', $fromDate)->count();
-        if ($checkDayOff > 0) {
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 }

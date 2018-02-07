@@ -14,8 +14,12 @@ use Illuminate\Http\Request;
 
 abstract class ExchangeShiftUseCase
 {
-    public static function attemptExchange(Request $request){
-        return (new static)->handleAttemptExchange($request);
+    public static function attemptExchangeDayOff(Request $request){
+        return (new static)->handleAttemptExchangeDayOff($request);
+    }
+
+    public static function attemptExchangeWorkingDay(Request $request){
+        return (new static)->handleAttemptExchangeWorkingDay($request);
     }
 
     public static function requestExchange(Request $request){
@@ -27,7 +31,8 @@ abstract class ExchangeShiftUseCase
         return (new static)->handleAnswerRequest($request);
     }
 
-    abstract public function handleAttemptExchange($request);
+    abstract public function handleAttemptExchangeDayOff($request);
+    abstract public function handleAttemptExchangeWorkingDay($request);
     abstract public function handleRequestExchange($request);
     abstract public function handleAnswerRequest($request);
 

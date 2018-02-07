@@ -33,6 +33,7 @@ class ShiftController extends Controller
     use GlobalUtils;
     use ApiUtils;
 
+
     public function attemptExchange(Request $request)
     {
 
@@ -40,20 +41,60 @@ class ShiftController extends Controller
 
         if ($this->checkUserEmployee()) {
 
-            $validator = Validator::make($request->all(),['fromDate'=>'required','toDate'=>'required']);
+            $user = Auth::guard('api')->user(); //user
+            $employee = $user->employee; // employee
+            $response = array();
 
-            if($validator->fails()){
+            if ($employee) {
 
+                // Requester slotID
+                $requesterSlotId = $employee->slotSchedule->slotId ?: 1; //else use default slot
+
+                $validator = Validator::make($request->all(), ['fromDate' => 'required']);
+
+                if ($validator->fails()) {
+
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                    $response['message'] = 'Required parameter is missing';
+
+                    return response()->json($response, 200);
+                }
+
+                //is valid
+
+                if ($this->checkIfFromDateIsDayOff($requesterSlotId, $request->fromDate)) { // check if date click is day off or not
+
+                    //is valid
+
+                    return ExchangeShiftLogic::attemptExchangeDayOff($request);
+
+                } else {
+
+                    $validator = Validator::make($request->all(), ['fromDate' => 'required', 'toDate' => 'required']);
+
+                    if ($validator->fails()) {
+
+                        $response['isFailed'] = true;
+                        $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                        $response['message'] = 'Required parameter is missing';
+
+                        return response()->json($response, 200);
+                    }
+
+                    //is valid
+
+                    return ExchangeShiftLogic::attemptExchangeWorkingDay($request);
+
+                }
+
+            } else {
+                /* Error Response */
                 $response['isFailed'] = true;
-                $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
-                $response['message'] = 'Required parameter is missing';
-
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+                $response['message'] = 'Employee data not found';
                 return response()->json($response, 200);
             }
-
-            //is valid
-
-            return ExchangeShiftLogic::attemptExchange($request);
 
 
         } else {
@@ -72,16 +113,16 @@ class ShiftController extends Controller
 
         if ($this->checkUserEmployee()) {
 
-            $validator = Validator::make($request->all(),[
-                'fromDate'=>'required',
-                'toDate'=>'required',
-                'fromShiftId'=>'required',
-                'requesterSlotId'=>'required',
-                'ownerEmployeeId'=>'required',
-                'toShiftId'=>'required'
+            $validator = Validator::make($request->all(), [
+                'fromDate' => 'required',
+                'toDate' => 'required',
+                'fromShiftId' => 'required',
+                'requesterSlotId' => 'required',
+                'ownerEmployeeId' => 'required',
+                'toShiftId' => 'required'
             ]);
 
-            if($validator->fails()){
+            if ($validator->fails()) {
 
                 $response['isFailed'] = true;
                 $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
@@ -110,12 +151,12 @@ class ShiftController extends Controller
 
         if ($this->checkUserEmployee()) {
 
-            $validator = Validator::make($request->all(),[
-                'confirmType'=>'required',
-                'exchangeShiftId'=>'required'
+            $validator = Validator::make($request->all(), [
+                'confirmType' => 'required',
+                'exchangeShiftId' => 'required'
             ]);
 
-            if($validator->fails()){
+            if ($validator->fails()) {
 
                 $response['isFailed'] = true;
                 $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
@@ -136,6 +177,18 @@ class ShiftController extends Controller
 
             return response()->json($response, 200);
         }
+    }
+
+
+    private function checkIfFromDateIsDayOff($requesterSlotId, $fromDate)
+    {
+        $checkDayOff = DayOffSchedule::where('slotId', $requesterSlotId)->where('date', $fromDate)->count();
+        if ($checkDayOff > 0) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
 
