@@ -83,6 +83,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                             $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
                             $possibleExchanges[$i]['date'] = $slotShiftSchedule->date;
                             $possibleExchanges[$i]['isDayOff'] = 0;
+                            $possibleExchanges[$i]['dayOffName'] = null;
 
                             $i++; //increment
 
@@ -99,8 +100,9 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                 $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
                                 $possibleExchanges[$i]['slotId'] = 1;
                                 $possibleExchanges[$i]['slotName'] = $generalSlot->name;
-                                $possibleExchanges[$i]['date'] = $request->toDate;
+                                $possibleExchanges[$i]['date'] = $request->fromDate;
                                 $possibleExchanges[$i]['isDayOff'] = 0;
+                                $possibleExchanges[$i]['dayOffName'] = null;
 
                                 $i++; //increment
                             }
@@ -120,8 +122,9 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                             $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
                             $possibleExchanges[$i]['slotId'] = 1;
                             $possibleExchanges[$i]['slotName'] = $generalSlot->name;
-                            $possibleExchanges[$i]['date'] = $request->toDate;
+                            $possibleExchanges[$i]['date'] = $request->fromDate;
                             $possibleExchanges[$i]['isDayOff'] = 0;
+                            $possibleExchanges[$i]['dayOffName'] = null;
 
                             $i++; //increment
                         }
@@ -178,7 +181,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                 $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId') ?: 1; //default general slot
 
-                $dayOffSchedules = DayOffSchedule::where('slotId', $slotId)->where('date', '!=', $request->fromDate)->get();
+                $dayOffSchedules = DayOffSchedule::where('slotId', $slotId)->where('date', '!=', $request->fromDate)->where('date',$request->toDate)->get();
 
                 foreach ($dayOffSchedules as $dayOffSchedule) {
 
@@ -192,6 +195,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                             $possibleExchanges[$j]['employeeId'] = $possibleEmployee->id;
                             $possibleExchanges[$j]['employeeName'] = $possibleEmployee->givenName;
+                            $possibleExchanges[$j]['shiftId'] = ""; //require empty value
+                            $possibleExchanges[$j]['shiftDetails'] =""; //require empty value
                             $possibleExchanges[$j]['slotId'] = $slotId;
                             $possibleExchanges[$j]['slotName'] = Slots::where('id', $slotId)->first()['name'];
                             $possibleExchanges[$j]['date'] = $dayOffSchedule->date;

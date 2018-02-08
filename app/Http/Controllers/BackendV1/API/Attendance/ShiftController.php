@@ -34,16 +34,50 @@ class ShiftController extends Controller
     use ApiUtils;
 
 
-    public function attemptExchange(Request $request)
-    {
+    /*
+       |--------------------------------------
+       | Logic to Exchange Shift v 0.1.0
+       |--------------------------------------
+       | * Check day off call
+       |--------------------------------------
+       | 1. Check requester type request, is it day off or not
+       |--------------------------------------
+       | * Attempt Exchange call
+       |--------------------------------------
+       | 1. Requester can only exchange shift on the same date
+       | 2. If the date being exchange is a "day-off" date, it can only be exchange
+       |    with another "day-off" of other employees and does not have to be on the same date
+       | 3. @return it will give list of possible exchange , and user will then pick which
+       |    possible exchange they want to trade -> call Request Exchange
+       |--------------------------------------
+       | * Request Exchange call
+       |--------------------------------------
+       | 1. Request Exchange will only save the requester exchange into exchangeShiftEmployee table and
+       | 2. Notify the shift's owner that someone has requested to exchange with their shift
+       | 3. Shift's owner answers -> Accept/Decline -> call Answer Exchange
+       |--------------------------------------
+       | * Answer Exchange call
+       |--------------------------------------
+       | 1. Define confirmation type (accept/decline)
+       | 2. If it's decline , remove data from exchangeShiftEmployee table and notify requester -> finish()
+       | 3. If it's accept , run the logic :
+       |    - define if fromDate is day-off or working day
+       |    - if day off , trade the data between requester and owner in dayOffSchedule table
+       |    - if working day, trade the data between requester and owner in slotShiftSchedule table,
+       |      if exchange is from/to general shift, remove the data from slotShiftSchedule table,
+       |      this is because anything that is not in slotShiftSchedule or dayOffSchedule table is
+       |      considered as general shift (8-17)
+       |
+    */
 
+    public function attemptCheckDate(Request $request)
+    {
         $response = array();
 
         if ($this->checkUserEmployee()) {
 
             $user = Auth::guard('api')->user(); //user
             $employee = $user->employee; // employee
-            $response = array();
 
             if ($employee) {
 
@@ -61,22 +95,21 @@ class ShiftController extends Controller
                     return response()->json($response, 200);
                 }
 
-                $parseFromDate = Carbon::createFromFormat('d/m/Y',$request->fromDate);
+                $parseFromDate = Carbon::createFromFormat('d/m/Y', $request->fromDate);
 
-                if($parseFromDate->lt(Carbon::now())){ // validate request must be greater than today's date
+                if ($parseFromDate->lt(Carbon::now())) { // validate request must be greater than today's date
 
                     $response['isFailed'] = true;
                     $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_CHANGE_PAST_DATES'];
                     $response['message'] = 'Unable to change past dates';
-                    return response()->json($response,200);
+                    return response()->json($response, 200);
 
                 }
 
-                //is valid
 
                 if ($this->checkIfFromDateIsDayOff($requesterSlotId, $request->fromDate)) { // check if date click is day off or not
 
-                    if(Carbon::now()->addDays(2)->gt($parseFromDate)){ //check if today is valid to exchange day offs
+                    if (Carbon::now()->addDays(2)->gt($parseFromDate)) { //check if today is valid to exchange day offs
 
                         $response['isFailed'] = true;
                         $response['code'] = ResponseCodes::$ATTD_ERR_CODES['3_DAYS_BEFORE_EXCHANGE_DAY_OFF'];
@@ -87,13 +120,129 @@ class ShiftController extends Controller
 
                     //is valid
 
-                    return ExchangeShiftLogic::attemptExchangeDayOff($request);
+                    //is day off
+                    $response['isFailed'] = false;
+                    $response['message'] = 'Success';
+                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                    $response['isDayOff'] = 1;
+
+                    return response()->json($response,200);
 
                 } else {
 
-                    return ExchangeShiftLogic::attemptExchangeWorkingDay($request);
+                    //is not day off
+                    $response['isFailed'] = false;
+                    $response['message'] = 'Success';
+                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                    $response['isDayOff'] = 0;
+
+                    return response()->json($response,200);
 
                 }
+
+            } else {
+                /* Error Response */
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+                $response['message'] = 'Employee data not found';
+                return response()->json($response, 200);
+            }
+
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$USER_ERR_CODE['USER_ACCESS_NOT_GRANTED'];
+            $response['message'] = 'User\'s access not granted';
+
+            return response()->json($response, 200);
+        }
+    }
+
+    public function attemptExchangeWorkingDay(Request $request)
+    {
+        $response = array();
+
+        if ($this->checkUserEmployee()) {
+
+            $user = Auth::guard('api')->user(); //user
+            $employee = $user->employee; // employee
+
+            if ($employee) {
+
+                // Requester slotID
+                $requesterSlotId = $employee->slotSchedule->slotId ?: 1; //else use default slot
+
+                $validator = Validator::make($request->all(), ['fromDate' => 'required']);
+
+                if ($validator->fails()) {
+
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                    $response['message'] = 'Required parameter is missing';
+
+                    return response()->json($response, 200);
+                }
+
+                //is valid
+
+                return ExchangeShiftLogic::attemptExchangeWorkingDay($request);
+
+            } else {
+                /* Error Response */
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+                $response['message'] = 'Employee data not found';
+                return response()->json($response, 200);
+            }
+
+
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$USER_ERR_CODE['USER_ACCESS_NOT_GRANTED'];
+            $response['message'] = 'User\'s access not granted';
+
+            return response()->json($response, 200);
+        }
+    }
+
+    public function attemptExchangeDayOff(Request $request)
+    {
+        $response = array();
+
+        if ($this->checkUserEmployee()) {
+
+            $user = Auth::guard('api')->user(); //user
+            $employee = $user->employee; // employee
+
+            if ($employee) {
+
+                // Requester slotID
+                $requesterSlotId = $employee->slotSchedule->slotId ?: 1; //else use default slot
+
+                $validator = Validator::make($request->all(), ['fromDate' => 'required','toDate'=>'required']);
+
+                if ($validator->fails()) {
+
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                    $response['message'] = 'Required parameter is missing';
+
+                    return response()->json($response, 200);
+                }
+
+                $parseFromDate = Carbon::createFromFormat('d/m/Y', $request->fromDate);
+
+                if ($parseFromDate->lt(Carbon::now())) { // validate request must be greater than today's date
+
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_CHANGE_PAST_DATES'];
+                    $response['message'] = 'Unable to change past dates';
+                    return response()->json($response, 200);
+
+                }
+
+                //is valid
+
+                return ExchangeShiftLogic::attemptExchangeDayOff($request);
 
             } else {
                 /* Error Response */
