@@ -10,7 +10,7 @@ use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
-use App\Http\Controllers\BackendV1\API\Traits\FirebaseUtils;
+use App\Traits\FirebaseUtils;
 use App\Mail\LoginAccountDetails;
 use App\Salary\Models\GeneralBonusesCuts;
 use App\Salary\Models\SalaryBonusCutType;

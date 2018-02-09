@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\BackendV1\API\Traits;
+namespace App\Traits;
 
-class ConfigCodes
+class GlobalConfig
 {
 
     public static $LAST_ACTIVITY_TYPE = [

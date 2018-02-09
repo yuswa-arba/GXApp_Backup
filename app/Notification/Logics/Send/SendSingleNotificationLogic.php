@@ -12,7 +12,7 @@ namespace App\Notification\Logics\Send;
 
 use App\Account\Models\PushNotifications;
 use App\Employee\Models\MasterEmployee;
-use App\Http\Controllers\BackendV1\API\Traits\FirebaseUtils;
+use App\Traits\FirebaseUtils;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +48,14 @@ class SendSingleNotificationLogic extends SendSingleNotificationUseCase
                 'sendTime'=>Carbon::now()->format('H:i')
             ]);
 
-            $this->sendSinglePush($employee->user->id,$request->title, $request->message, null, $request->intentType, $request->sendToType); //send notification
+            $this->sendSinglePush(
+                $employee->user->id,
+                $request->title,
+                $request->message,
+                null,
+                $request->intentType,
+                $request->sendToType
+            ); //send notification
 
             $response['isFailed'] = false;
             $response['message'] = 'Success';

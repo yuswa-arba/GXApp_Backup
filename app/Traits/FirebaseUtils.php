@@ -6,23 +6,19 @@
  * Date: 5/12/17
  * Time: 11:12 AM
  */
-namespace App\Http\Controllers\BackendV1\API\Traits;
+namespace App\Traits;
 
 
 use App\Account\Models\UserPushToken;
-use App\Traits\GlobalConst;
-use Illuminate\Contracts\Encryption\DecryptException;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Log;
 
 
 trait FirebaseUtils
 {
 
-
     public function sendSinglePush($userID, $title, $message, $image, $intentType, $type)
     {
+
         //getting the token from database object
         if ($userID != null && $type != null) {
 
@@ -44,9 +40,7 @@ trait FirebaseUtils
             $mPushNotification = $push;
 
             try { // wrap with try and catch to prevent error crash
-
                 $devicetoken = UserPushToken::where('userId', $userID)->where('type', $type)->orderBy('id', 'desc')->first()['token'];
-
                 $this->send(array($devicetoken), $mPushNotification); //required as an array
 
             } catch (\Exception $exception) {
@@ -73,6 +67,7 @@ trait FirebaseUtils
     */
     protected function sendPushNotification($fields)
     {
+
 
         $FIREBASE_API_KEY = GlobalConst::$FIREBASE['SERVER_KEY'];
 
@@ -111,6 +106,15 @@ trait FirebaseUtils
         }
         //Now close the connection
         curl_close($ch);
+
+        // Log if error
+        try {
+            if (json_decode($result, true)['failure'] == 1) {
+                Log::error($result);
+            }
+        } catch (\Exception $exception) {
+
+        }
 
         //and return the result
         return $result;

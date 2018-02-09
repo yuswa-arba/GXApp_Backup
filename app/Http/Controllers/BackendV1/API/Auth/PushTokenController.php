@@ -7,7 +7,7 @@ use App\Account\Models\PushNotifications;
 use App\Account\Models\User;
 use App\Account\Models\UserPushToken;
 use App\Http\Controllers\BackendV1\API\Traits\ApiUtils;
-use App\Http\Controllers\BackendV1\API\Traits\FirebaseUtils;
+use App\Traits\FirebaseUtils;
 use App\Http\Controllers\BackendV1\API\Traits\IssueTokenTrait;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Notification\Transformers\BriefPushNotificationTransformer;

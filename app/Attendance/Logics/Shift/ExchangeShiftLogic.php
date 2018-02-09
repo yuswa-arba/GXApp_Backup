@@ -18,8 +18,9 @@ use App\Attendance\Models\SlotShiftSchedule;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
-use App\Http\Controllers\BackendV1\API\Traits\FirebaseUtils;
+use App\Traits\FirebaseUtils;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
+use App\Traits\GlobalConfig;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -244,13 +245,16 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                     $ownerShiftUserId = $this->getResultWithNullChecker1Connection($ownerShift, 'user', 'id');
 
-                    $this->sendSinglePush($ownerShiftUserId,
-                        'Exchange Shift',
-                        'Someone has requested to change shift with you!',
-                        null, //image url
-                        ConfigCodes::$TOKEN_TYPE['ANDROID'],
-                        ConfigCodes::$FCM_INTENT_TYPE['HOME']
-                    );
+
+                    app()->make('PushNotificationService')->singleNotify([
+                        'userID'=>$ownerShiftUserId,
+                        'title'=>'Exchange Shift',
+                        'message'=>'Someone has requested to change shift with you!',
+                        'sendToType'=>GlobalConfig::$TOKEN_TYPE['ANDROID'],
+                        'intentType'=>GlobalConfig::$FCM_INTENT_TYPE['HOME'],
+                        'viaType'=>GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                        'sender'=>$user
+                    ]);
 
                     /* Success Response */
                     $response['isFailed'] = false;

@@ -40,35 +40,7 @@ class ShiftController extends Controller
        |--------------------------------------
        | Logic to Exchange Shift v 0.1.0
        |--------------------------------------
-       | * Check day off call
-       |--------------------------------------
-       | 1. Check requester type request, is it day off or not
-       |--------------------------------------
-       | * Attempt Exchange call
-       |--------------------------------------
-       | 1. Requester can only exchange shift on the same date
-       | 2. If the date being exchange is a "day-off" date, it can only be exchange
-       |    with another "day-off" of other employees and does not have to be on the same date
-       | 3. @return it will give list of possible exchange , and user will then pick which
-       |    possible exchange they want to trade -> call Request Exchange
-       |--------------------------------------
-       | * Request Exchange call
-       |--------------------------------------
-       | 1. Request Exchange will only save the requester exchange into exchangeShiftEmployee table and
-       | 2. Notify the shift's owner that someone has requested to exchange with their shift
-       | 3. Shift's owner answers -> Accept/Decline -> call Answer Exchange
-       |--------------------------------------
-       | * Answer Exchange call
-       |--------------------------------------
-       | 1. Define confirmation type (accept/decline)
-       | 2. If it's decline , remove data from exchangeShiftEmployee table and notify requester -> finish()
-       | 3. If it's accept , run the logic :
-       |    - define if fromDate is day-off or working day
-       |    - if day off , trade the data between requester and owner in dayOffSchedule table
-       |    - if working day, trade the data between requester and owner in slotShiftSchedule table,
-       |      if exchange is from/to general shift, remove the data from slotShiftSchedule table,
-       |      this is because anything that is not in slotShiftSchedule or dayOffSchedule table is
-       |      considered as general shift (8-17)
+       | see : https://github.com/globalxtreme/GXApp_Employee_Server/wiki/Exchange-Shift-Day-off-Logic
        |
     */
 
