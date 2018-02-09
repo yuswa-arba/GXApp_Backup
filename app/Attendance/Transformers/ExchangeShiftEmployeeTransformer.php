@@ -41,6 +41,7 @@ class ExchangeShiftEmployeeTransformer extends TransformerAbstract
             'confirmType' => $exchangeShiftEmployee->confirmType,
             'confirmTypeName' => $this->getConfirmTypeName($exchangeShiftEmployee->confirmType),
             'confirmedAt' => $exchangeShiftEmployee->confirmedDate . " " . $exchangeShiftEmployee->confirmedTime,
+            'isDayOff' =>$exchangeShiftEmployee->isDayOff
         ];
     }
 

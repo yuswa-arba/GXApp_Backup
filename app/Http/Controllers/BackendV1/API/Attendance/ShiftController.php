@@ -245,9 +245,7 @@ class ShiftController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'fromDate' => 'required',
-                'fromShiftId' => 'required',
                 'toDate' => 'required',
-                'toShiftId' => 'required',
                 'ownerEmployeeId' => 'required',
             ]);
 
@@ -330,7 +328,7 @@ class ShiftController extends Controller
                     $response['isFailed'] = false;
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Success';
-                    $response['exchangeShiftsResponse'] = fractal($exchangeShifts,new ExchangeShiftEmployeeTransformer());
+                    $response['exchangeShiftRequestResponse'] = fractal($exchangeShifts,new ExchangeShiftEmployeeTransformer());
 
                     return response()->json($response,200);
 
@@ -363,7 +361,7 @@ class ShiftController extends Controller
     /*
      * @desc : get exchange shift data that is REQUESTED BY YOU
      * */
-    public function requestExchangeList()
+    public function outgoingExchangeList()
     {
         $response = array();
 
@@ -381,7 +379,7 @@ class ShiftController extends Controller
                     $response['isFailed'] = false;
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Success';
-                    $response['exchangeShiftsResponse'] = fractal($exchangeShifts,new ExchangeShiftEmployeeTransformer());
+                    $response['exchangeShiftRequestResponse'] = fractal($exchangeShifts,new ExchangeShiftEmployeeTransformer());
 
                     return response()->json($response,200);
 

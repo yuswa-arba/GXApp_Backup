@@ -16,10 +16,11 @@ class CreateExchangeSlotEmployeeTable extends Migration
         Schema::create('exchangeSlotEmployee', function (Blueprint $table) {
             $table->increments('id');
             $table->string('employeeId1');
-            $table->tinyInteger('fromSlotId');
+            $table->tinyInteger('fromSlotId')->nullable();
             $table->string('employeeId2');
-            $table->tinyInteger('toSlotId');
+            $table->tinyInteger('toSlotId')->nullable();
             $table->string('fromDates');
+            $table->tinyInteger('isDayOff')->default(0);
             $table->string('toDates');
             $table->tinyInteger('slotApproveId');
             $table->string('approvedBy');

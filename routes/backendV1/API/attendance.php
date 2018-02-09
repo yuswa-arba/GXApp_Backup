@@ -31,7 +31,7 @@ Route::prefix('v1/a')->group(function () {
             Route::get('shift/exchange/attempt/dayoff', 'ShiftController@attemptExchangeDayOff');
             Route::post('shift/exchange/request','ShiftController@requestExchange');
             Route::post('shift/exchange/answer','ShiftController@answerExchange');
-            Route::get('shift/exchange/list/request','ShiftController@requestExchangeList');
+            Route::get('shift/exchange/list/outgoing','ShiftController@outgoingExchangeList');
             Route::get('shift/exchange/list/incoming','ShiftController@incomingExchangeList');
 
         });
