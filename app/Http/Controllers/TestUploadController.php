@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Account\Models\User;
 use App\Attendance\Events\AndroidTest;
 use App\Attendance\Events\EmployeeClocked;
 use App\Attendance\Models\DayOffSchedule;
@@ -10,6 +11,7 @@ use App\Attendance\Models\Slots;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\API\Traits\FirebaseUtils;
+use App\Mail\LoginAccountDetails;
 use App\Salary\Models\GeneralBonusesCuts;
 use App\Salary\Models\SalaryBonusCutType;
 use App\Traits\GlobalUtils;
@@ -19,6 +21,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class TestUploadController extends Controller
 {
@@ -438,13 +441,9 @@ class TestUploadController extends Controller
 
     public function td()
     {
-
-        $this->sendSinglePush("9143ca32-d63f-376f-8173-9c8d1d7f92db",
-            "Welcome to GXAE", "Your token has been successfully saved!",
-            null,
-            ConfigCodes::$FCM_INTENT_TYPE['SALARY'],
-            ConfigCodes::$TOKEN_TYPE['ANDROID']);
-
+        $user = User::find("9143ca32-d63f-376f-8173-9c8d1d7f92db");
+        $message = (new LoginAccountDetails($user, "888456"))->onConnection('database')->onQueue('emails');
+        Mail::to($user->email)->queue($message);
 
     }
 

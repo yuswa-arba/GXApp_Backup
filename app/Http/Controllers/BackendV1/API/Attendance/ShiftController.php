@@ -5,11 +5,13 @@ namespace App\Http\Controllers\BackendV1\API\Attendance;
 use App\Account\Models\User;
 use App\Attendance\Logics\Shift\ExchangeShiftLogic;
 use App\Attendance\Models\DayOffSchedule;
+use App\Attendance\Models\ExchangeShiftEmployee;
 use App\Attendance\Models\Kiosks;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Attendance\Transformers\DayOffSingleCalendarAPITransformer;
 use App\Attendance\Transformers\DayOffSingleCalendarTransformer;
+use App\Attendance\Transformers\ExchangeShiftEmployeeTransformer;
 use App\Attendance\Transformers\KioskTransformer;
 use App\Attendance\Transformers\ShiftListTransformer;
 use App\Attendance\Transformers\ShiftScheduleSingleCalendarAPITransformer;
@@ -126,7 +128,7 @@ class ShiftController extends Controller
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['isDayOff'] = 1;
 
-                    return response()->json($response,200);
+                    return response()->json($response, 200);
 
                 } else {
 
@@ -136,7 +138,7 @@ class ShiftController extends Controller
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['isDayOff'] = 0;
 
-                    return response()->json($response,200);
+                    return response()->json($response, 200);
 
                 }
 
@@ -218,7 +220,7 @@ class ShiftController extends Controller
                 // Requester slotID
                 $requesterSlotId = $employee->slotSchedule->slotId ?: 1; //else use default slot
 
-                $validator = Validator::make($request->all(), ['fromDate' => 'required','toDate'=>'required']);
+                $validator = Validator::make($request->all(), ['fromDate' => 'required', 'toDate' => 'required']);
 
                 if ($validator->fails()) {
 
@@ -271,11 +273,10 @@ class ShiftController extends Controller
 
             $validator = Validator::make($request->all(), [
                 'fromDate' => 'required',
-                'toDate' => 'required',
                 'fromShiftId' => 'required',
-                'requesterSlotId' => 'required',
+                'toDate' => 'required',
+                'toShiftId' => 'required',
                 'ownerEmployeeId' => 'required',
-                'toShiftId' => 'required'
             ]);
 
             if ($validator->fails()) {
@@ -325,6 +326,108 @@ class ShiftController extends Controller
 
             return ExchangeShiftLogic::answerRequestExchange($request);
 
+
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$USER_ERR_CODE['USER_ACCESS_NOT_GRANTED'];
+            $response['message'] = 'User\'s access not granted';
+
+            return response()->json($response, 200);
+        }
+    }
+
+
+    /*
+     * @desc : get exchange shift data that is REQUESTED TO YOU
+     * */
+    public function incomingExchangeList()
+    {
+        $response = array();
+
+        if ($this->checkUserEmployee()) {
+
+            $user = Auth::guard('api')->user(); //user
+            $employee = $user->employee; // employee
+
+            if ($employee) {
+
+                $exchangeShifts = ExchangeShiftEmployee::where('employeeId2',$employee->id)->get();
+
+                if($exchangeShifts){
+
+                    $response['isFailed'] = false;
+                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                    $response['message'] = 'Success';
+                    $response['exchangeShiftsResponse'] = fractal($exchangeShifts,new ExchangeShiftEmployeeTransformer());
+
+                    return response()->json($response,200);
+
+                } else {
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EXCHANGE_SHIFT_DATA_NOT_FOUND'];
+                    $response['message'] = 'Data not found';
+
+                    return response()->json($response,200);
+                }
+
+            } else {
+                /* Error Response */
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+                $response['message'] = 'Employee data not found';
+                return response()->json($response, 200);
+            }
+
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$USER_ERR_CODE['USER_ACCESS_NOT_GRANTED'];
+            $response['message'] = 'User\'s access not granted';
+
+            return response()->json($response, 200);
+        }
+    }
+
+
+    /*
+     * @desc : get exchange shift data that is REQUESTED BY YOU
+     * */
+    public function requestExchangeList()
+    {
+        $response = array();
+
+        if ($this->checkUserEmployee()) {
+
+            $user = Auth::guard('api')->user(); //user
+            $employee = $user->employee; // employee
+
+            if ($employee) {
+
+                $exchangeShifts = ExchangeShiftEmployee::where('employeeId1',$employee->id)->get();
+
+                if($exchangeShifts){
+
+                    $response['isFailed'] = false;
+                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                    $response['message'] = 'Success';
+                    $response['exchangeShiftsResponse'] = fractal($exchangeShifts,new ExchangeShiftEmployeeTransformer());
+
+                    return response()->json($response,200);
+
+                } else {
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EXCHANGE_SHIFT_DATA_NOT_FOUND'];
+                    $response['message'] = 'Data not found';
+
+                    return response()->json($response,200);
+                }
+
+            } else {
+                /* Error Response */
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+                $response['message'] = 'Employee data not found';
+                return response()->json($response, 200);
+            }
 
         } else {
             $response['isFailed'] = true;

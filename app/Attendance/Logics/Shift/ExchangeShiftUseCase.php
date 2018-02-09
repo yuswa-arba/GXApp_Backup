@@ -22,7 +22,7 @@ abstract class ExchangeShiftUseCase
         return (new static)->handleAttemptExchangeWorkingDay($request);
     }
 
-    public static function requestExchangeDayOff(Request $request){
+    public static function requestExchange(Request $request){
         return (new static)->handleRequestExchange($request);
     }
 

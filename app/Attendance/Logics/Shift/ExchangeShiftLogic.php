@@ -62,8 +62,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                 $slotId = $this->getResultWithNullChecker1Connection($possibleEmployee, 'slotSchedule', 'slotId') ?: 1; //default use general
 
-                Log::info('slot ID: ' . $slotId);
-
                 // Get Slot Shift Schedule if exist
                 $slotShiftSchedule = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->fromDate)->first();
 
@@ -72,8 +70,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                     if ($slotId != 1) { // if employee is assigned to specific slot
 
                         if ($slotShiftSchedule) { // Check if this employee assigned to specific shift this date
-
-                            Log::info('slot shift ID&Date: ' . $slotShiftSchedule->shiftId . ' ' . $slotShiftSchedule->date);
 
                             $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
                             $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
@@ -259,22 +255,36 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                 //TODO send notification to manager
 
                 // Send Notification to shift's owner
-                $ownerShiftUserId = $this->getResultWithNullChecker1Connection(MasterEmployee::find($request->ownerEmployeeId), 'user', 'id');
+                $ownerShift = MasterEmployee::find($request->ownerEmployeeId);
 
-                $this->sendSinglePush($ownerShiftUserId,
-                    'Exchange Shift',
-                    'Someone has requested to change shift with you!',
-                    null, //image url
-                    ConfigCodes::$TOKEN_TYPE['ANDROID'],
-                    ConfigCodes::$FCM_INTENT_TYPE['HOME']
-                );
+                if($ownerShift){
 
-                /* Success Response */
-                $response['isFailed'] = false;
-                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
-                $response['message'] = 'Success';
+                    $ownerShiftUserId = $this->getResultWithNullChecker1Connection($ownerShift, 'user', 'id');
 
-                return response()->json($response, 200);
+                    $this->sendSinglePush($ownerShiftUserId,
+                        'Exchange Shift',
+                        'Someone has requested to change shift with you!',
+                        null, //image url
+                        ConfigCodes::$TOKEN_TYPE['ANDROID'],
+                        ConfigCodes::$FCM_INTENT_TYPE['HOME']
+                    );
+
+                    /* Success Response */
+                    $response['isFailed'] = false;
+                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                    $response['message'] = 'Success';
+
+                    return response()->json($response, 200);
+
+                } else {
+
+                    /* Error Response */
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+                    $response['message'] = 'Owner shift employee data not found';
+
+                    return response()->json($response, 200);
+                }
 
             } else {
 
@@ -315,13 +325,13 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                     $exchangeFrom = SlotShiftSchedule::where('slotId', $requesterSlotId)
                         ->where('shiftId', $exchangeShift->fromShiftId)
                         ->where('date', $exchangeShift->fromDate)
-                        ->where('isConfirmed', 0)
+                        ->where('confirmType', 0)
                         ->first();
 
                     $exchangeTo = SlotShiftSchedule::where('slotId', $ownerSlotId)
                         ->where('shiftId', $exchangeShift->toShiftId)
                         ->where('date', $exchangeShift->toDate)
-                        ->where('isConfirmed', 0)
+                        ->where('confirmType', 0)
                         ->first();
 
                     if ($exchangeFrom && $exchangeTo) {
@@ -337,7 +347,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                         if ($exchangeFrom->save() && $exchangeTo->save()) {
 
                             //Update exchange shift employee data
-                            $exchangeShift->isConfirmed = 1;//confirmed
+                            $exchangeShift->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['CONFIRM'];//confirmed
                             $exchangeShift->confirmedDate = Carbon::now()->format('d/m/Y');
                             $exchangeShift->confirmedTime = Carbon::now()->format('H:i');
 
@@ -402,8 +412,14 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                         ConfigCodes::$FCM_INTENT_TYPE['HOME']
                     );
 
-                    // Decline request = delete
-                    if ($exchangeShift->delete()) {
+
+                    //Update exchange shift employee data
+                    $exchangeShift->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['DECLINE'];//declined
+                    $exchangeShift->confirmedDate = Carbon::now()->format('d/m/Y');
+                    $exchangeShift->confirmedTime = Carbon::now()->format('H:i');
+
+                    // Decline request
+                    if ($exchangeShift->save()) {
 
                         /* Success response */
                         $response['isFailed'] = false;

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExchangeShiftEmployee extends Model
 {
-    protected $table='exchangeSlotEmployee';
+    protected $table='exchangeShiftEmployee';
     protected $guarded=['id'];
 
     public function requesterEmployee()

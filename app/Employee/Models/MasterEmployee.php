@@ -118,4 +118,10 @@ class MasterEmployee extends Model
     {
         return $this->hasMany(SalaryCalculation::class,'employeeId');
     }
+
+
+    public function fingerspotUser()
+    {
+        return $this->hasOne(FingerspotUser::class,'employeeId');
+    }
 }

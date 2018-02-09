@@ -42,5 +42,11 @@ class ConfigCodes
         'SMS'=>'sms'
     ];
 
+    public static $EXCHANGE_SHIFT_CONFIRM_TYPE = [
+        'WAITING'=>0,
+        'CONFIRM'=>1,
+        'DECLINE'=>2
+    ];
+
 
 }
