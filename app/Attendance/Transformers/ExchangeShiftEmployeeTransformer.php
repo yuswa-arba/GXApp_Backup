@@ -56,6 +56,9 @@ class ExchangeShiftEmployeeTransformer extends TransformerAbstract
             case ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['DECLINE']:
                 return "Declined";
                 break;
+            case ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['INVALID']:
+                return "Invalid";
+                break;
             default:
                 return "Undefined";
                 break;

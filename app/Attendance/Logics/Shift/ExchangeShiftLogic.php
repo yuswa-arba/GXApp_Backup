@@ -245,15 +245,15 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                     $ownerShiftUserId = $this->getResultWithNullChecker1Connection($ownerShift, 'user', 'id');
 
-
+                    /* Send push notification */
                     app()->make('PushNotificationService')->singleNotify([
-                        'userID'=>$ownerShiftUserId,
-                        'title'=>'Exchange Shift',
-                        'message'=>'Someone has requested to change shift with you!',
-                        'sendToType'=>GlobalConfig::$TOKEN_TYPE['ANDROID'],
-                        'intentType'=>GlobalConfig::$FCM_INTENT_TYPE['HOME'],
-                        'viaType'=>GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
-                        'sender'=>$user
+                        'userID' => $ownerShiftUserId,
+                        'title' => 'Exchange Shift',
+                        'message' => 'Someone has requested to change shift with you!',
+                        'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
+                        'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
+                        'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                        'sender' => $user
                     ]);
 
                     /* Success Response */
@@ -300,113 +300,240 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
         $response = array();
 
         if ($employee) {
-            $exchangeShift = ExchangeShiftEmployee::find($request->exchangeShiftId);
+            $exchangeReq = ExchangeShiftEmployee::find($request->exchangeShiftId);
 
-            if ($exchangeShift->employeeId2 == $employee->id) { //Check if this user is authorized to answer request
+            if ($exchangeReq->employeeId2 == $employee->id) { //Check if this user is authorized to answer request
 
                 if ($request->confirmType == 'accept') {
 
-                    $requesterSlotId = $this->getResultWithNullChecker1Connection($exchangeShift->requesterEmployee, 'slotSchedule', 'slotId') ?: 1;
-                    $ownerSlotId = $this->getResultWithNullChecker1Connection($exchangeShift->ownerEmployee, 'slotSchedule', 'slotId') ?: 1;
+                    $requesterSlotId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'slotSchedule', 'slotId') ?: 1;
+                    $ownerSlotId = $this->getResultWithNullChecker1Connection($exchangeReq->ownerEmployee, 'slotSchedule', 'slotId') ?: 1;
 
-                    $exchangeFrom = SlotShiftSchedule::where('slotId', $requesterSlotId)
-                        ->where('shiftId', $exchangeShift->fromShiftId)
-                        ->where('date', $exchangeShift->fromDate)
-                        ->where('confirmType', 0)
-                        ->first();
+                    if ($requesterSlotId != 1 && $ownerSlotId != 1) { //Make sure its not General Slot that is being traded
 
-                    $exchangeTo = SlotShiftSchedule::where('slotId', $ownerSlotId)
-                        ->where('shiftId', $exchangeShift->toShiftId)
-                        ->where('date', $exchangeShift->toDate)
-                        ->where('confirmType', 0)
-                        ->first();
+                        if ($this->isDayOffForThisSlot($requesterSlotId, $exchangeReq->fromDate) && $this->isDayOffForThisSlot($ownerSlotId, $exchangeReq->toDate)) {
 
-                    if ($exchangeFrom && $exchangeTo) {
+                            $exchangeDayOffFrom = DayOffSchedule::where('slotId',$requesterSlotId)
+                                                 ->where('date',$exchangeReq->fromDate)
+                                                 ->first();
+                            $exchangeDayOffTo = DayOffSchedule::where('slotId',$ownerSlotId)
+                                                ->where('date',$exchangeReq->toDate)
+                                                ->first();
 
-                        // Save requester
-                        $exchangeFrom->slotId = $ownerSlotId;
-                        $exchangeFrom->shiftId = $exchangeShift->toShiftId;
+                            if($exchangeDayOffFrom&&$exchangeDayOffTo){
 
-                        //Save owner
-                        $exchangeTo->slotId = $requesterSlotId;
-                        $exchangeTo->shiftId = $exchangeShift->fromShiftId;
+                                // Save requester
+                                $exchangeDayOffFrom->slotId = $ownerSlotId;
+                                $exchangeDayOffFrom->date = $exchangeReq->toDate;
 
-                        if ($exchangeFrom->save() && $exchangeTo->save()) {
+                                // Save owner
+                                $exchangeDayOffTo->slotId=$requesterSlotId;
+                                $exchangeDayOffTo->date = $exchangeReq->fromDate;
 
-                            //Update exchange shift employee data
-                            $exchangeShift->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['CONFIRM'];//confirmed
-                            $exchangeShift->confirmedDate = Carbon::now()->format('d/m/Y');
-                            $exchangeShift->confirmedTime = Carbon::now()->format('H:i');
 
-                            if ($exchangeShift->save()) {
+                                if($exchangeDayOffFrom->save() && $exchangeDayOffTo->save()){
 
-                                // Notify requester
-                                $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeShift->requesterEmployee, 'user', 'id');
-                                $this->sendSinglePush(
-                                    $requesterUserId,
-                                    'Exchange Shift Accepted',
-                                    'Your exchange shift request has been accepted!',
-                                    null,
-                                    ConfigCodes::$TOKEN_TYPE['ANDROID'],
-                                    ConfigCodes::$FCM_INTENT_TYPE['HOME']
-                                );
+                                    //Update exchange shift employee data
+                                    $exchangeReq->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['CONFIRM'];//confirmed
+                                    $exchangeReq->confirmedDate = Carbon::now()->format('d/m/Y');
+                                    $exchangeReq->confirmedTime = Carbon::now()->format('H:i');
 
-                                /*Success response*/
-                                $response['isFailed'] = false;
-                                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
-                                $response['message'] = 'Success';
+                                    if ($exchangeReq->save()) {
 
-                                return response()->json($response, 200);
+                                        // Notify requester
+                                        $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'user', 'id');
+
+                                        /* Send push notification */
+                                        app()->make('PushNotificationService')->singleNotify([
+                                            'userID' => $requesterUserId,
+                                            'title' => 'Exchange Shift Accepted',
+                                            'message' => 'Your exchange shift request has been accepted!',
+                                            'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
+                                            'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
+                                            'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                                            'sender' => $user
+                                        ]);
+
+                                        /*Success response*/
+                                        $response['isFailed'] = false;
+                                        $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                                        $response['message'] = 'Success';
+
+                                        return response()->json($response, 200);
+                                    } else {
+                                        /*Error repsonse*/
+                                        $response['isFailed'] = true;
+                                        $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                                        $response['message'] = 'Unable to save exchange shift table';
+
+                                        return response()->json($response, 200);
+                                    }
+
+
+                                } else {
+                                    /*Error repsonse*/
+                                    $response['isFailed'] = true;
+                                    $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                                    $response['message'] = 'Unable to save exchange data';
+
+                                    return response()->json($response, 200);
+                                }
+
+
+
                             } else {
                                 /*Error repsonse*/
                                 $response['isFailed'] = true;
-                                $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
-                                $response['message'] = 'Unable to save exchange shift table';
+                                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_GET_EXCHANGE_SHIFTS_DATA'];
+                                $response['message'] = 'Unable to get exchange shifts data';
 
                                 return response()->json($response, 200);
                             }
 
 
+
+                        } elseif (!$this->isDayOffForThisSlot($requesterSlotId, $exchangeReq->fromDate) && !$this->isDayOffForThisSlot($ownerSlotId, $exchangeReq->toDate)) {
+
+                            //HANDLE WORK DAY EXCHANGE
+
+                            $exchangeShiftFrom = SlotShiftSchedule::where('slotId', $requesterSlotId)
+                                ->where('shiftId', $exchangeReq->fromShiftId)
+                                ->where('date', $exchangeReq->fromDate)
+                                ->where('confirmType', 0)
+                                ->first();
+
+                            $exchangeShiftTo = SlotShiftSchedule::where('slotId', $ownerSlotId)
+                                ->where('shiftId', $exchangeReq->toShiftId)
+                                ->where('date', $exchangeReq->toDate)
+                                ->where('confirmType', 0)
+                                ->first();
+
+                            if ($exchangeShiftFrom && $exchangeShiftTo) {
+
+                                // Save requester
+                                $exchangeShiftFrom->slotId = $ownerSlotId;
+                                $exchangeShiftFrom->shiftId = $exchangeReq->toShiftId;
+
+                                //Save owner
+                                $exchangeShiftTo->slotId = $requesterSlotId;
+                                $exchangeShiftTo->shiftId = $exchangeReq->fromShiftId;
+
+                                if ($exchangeShiftFrom->save() && $exchangeShiftTo->save()) {
+
+                                    //Update exchange shift employee data
+                                    $exchangeReq->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['CONFIRM'];//confirmed
+                                    $exchangeReq->confirmedDate = Carbon::now()->format('d/m/Y');
+                                    $exchangeReq->confirmedTime = Carbon::now()->format('H:i');
+
+                                    if ($exchangeReq->save()) {
+
+                                        // Notify requester
+                                        $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'user', 'id');
+
+                                        /* Send push notification */
+                                        app()->make('PushNotificationService')->singleNotify([
+                                            'userID' => $requesterUserId,
+                                            'title' => 'Exchange Shift Accepted',
+                                            'message' => 'Your exchange shift request has been accepted!',
+                                            'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
+                                            'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
+                                            'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                                            'sender' => $user
+                                        ]);
+
+                                        /*Success response*/
+                                        $response['isFailed'] = false;
+                                        $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                                        $response['message'] = 'Success';
+
+                                        return response()->json($response, 200);
+                                    } else {
+                                        /*Error repsonse*/
+                                        $response['isFailed'] = true;
+                                        $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                                        $response['message'] = 'Unable to save exchange shift table';
+
+                                        return response()->json($response, 200);
+                                    }
+
+
+                                } else {
+                                    /*Error repsonse*/
+                                    $response['isFailed'] = true;
+                                    $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                                    $response['message'] = 'Unable to save exchange data';
+
+                                    return response()->json($response, 200);
+
+                                }
+
+                            } else {
+                                /*Error repsonse*/
+                                $response['isFailed'] = true;
+                                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_GET_EXCHANGE_SHIFTS_DATA'];
+                                $response['message'] = 'Unable to get exchange shifts data';
+
+                                return response()->json($response, 200);
+                            }
+
                         } else {
+
+                            /* Save invalid request */
+                            $exchangeReq->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['INVALID'];
+                            $exchangeReq->confirmedDate = Carbon::now()->format('d/m/Y');
+                            $exchangeReq->confirmedTime = Carbon::now()->format('H:i');
+                            $exchangeReq->save();
+
                             /*Error repsonse*/
                             $response['isFailed'] = true;
-                            $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
-                            $response['message'] = 'Unable to save exchange data';
+                            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['INVALID_EXCHANGE_REQUEST'];
+                            $response['message'] = 'Invalid exchange request';
 
                             return response()->json($response, 200);
-
                         }
 
-                    } else {
+                    }  else { // ERROR RESPONSE , GENERAL SLOT IS BEING TRADED
+
+                        /* Save invalid request */
+                        $exchangeReq->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['INVALID'];
+                        $exchangeReq->confirmedDate = Carbon::now()->format('d/m/Y');
+                        $exchangeReq->confirmedTime = Carbon::now()->format('H:i');
+                        $exchangeReq->save();
+
                         /*Error repsonse*/
                         $response['isFailed'] = true;
-                        $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_GET_EXCHANGE_SHIFTS_DATA'];
-                        $response['message'] = 'Unable to get exchange shifts data';
+                        $response['code'] = ResponseCodes::$ATTD_ERR_CODES['INVALID_EXCHANGE_REQUEST'];
+                        $response['message'] = 'Invalid exchange request. General Slot cannot be traded';
 
                         return response()->json($response, 200);
                     }
 
+
+
                 } elseif ($request->confirmType == 'decline') { // DECLINE REQUEST
 
                     // Notify requester that owner is declining the request
-                    $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeShift->requesterEmployee, 'user', 'id');
-                    $this->sendSinglePush(
-                        $requesterUserId,
-                        'Exchange Shift Declined',
-                        null, //image url
-                        $this->getResultWithNullChecker1Connection($exchangeShift, 'requesterEmployee', 'givenName') . ' has declined your exchange shift request.',
-                        ConfigCodes::$TOKEN_TYPE['ANDROID'],
-                        ConfigCodes::$FCM_INTENT_TYPE['HOME']
-                    );
+                    $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'user', 'id');
+
+                    /* Send push notification */
+                    app()->make('PushNotificationService')->singleNotify([
+                        'userID' => $requesterUserId,
+                        'title' => 'Exchange Shift Declined',
+                        'message' => $this->getResultWithNullChecker1Connection($exchangeReq, 'requesterEmployee', 'givenName') . ' has declined your exchange shift request.',
+                        'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
+                        'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
+                        'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                        'sender' => $user
+                    ]);
 
 
                     //Update exchange shift employee data
-                    $exchangeShift->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['DECLINE'];//declined
-                    $exchangeShift->confirmedDate = Carbon::now()->format('d/m/Y');
-                    $exchangeShift->confirmedTime = Carbon::now()->format('H:i');
+                    $exchangeReq->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['DECLINE'];//declined
+                    $exchangeReq->confirmedDate = Carbon::now()->format('d/m/Y');
+                    $exchangeReq->confirmedTime = Carbon::now()->format('H:i');
 
                     // Decline request
-                    if ($exchangeShift->save()) {
+                    if ($exchangeReq->save()) {
 
                         /* Success response */
                         $response['isFailed'] = false;
