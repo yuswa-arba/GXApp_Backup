@@ -68,43 +68,49 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                     // Make sure this slot is not multiple assigned to other users
                     if (EmployeeSlotSchedule::where('employeeId', '!=', $possibleEmployee->id)->where('slotId', $slotId)->count() == 0) {
 
-                        // Get Slot Shift Schedule if exist
-                        $slotShiftSchedule = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->fromDate)->first();
+                        //Make sure its not this employee day off
+                        if (!$this->isDayOffForThisSlot($slotId, $request->fromDate)) {
 
-                        if ($slotShiftSchedule) { // Check if this employee assigned to specific shift this date
+                            // Get Slot Shift Schedule if exist
+                            $slotShiftSchedule = SlotShiftSchedule::where('slotId', $slotId)->where('date', $request->fromDate)->first();
 
-                            $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
-                            $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                            $possibleExchanges[$i]['shiftId'] = $slotShiftSchedule->shiftId;
-                            $possibleExchanges[$i]['shiftDetails'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'name') . ' (' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workStartAt') . ' - ' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workEndAt') . ')';
-                            $possibleExchanges[$i]['slotId'] = $slotShiftSchedule->slotId;
-                            $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
-                            $possibleExchanges[$i]['date'] = $slotShiftSchedule->date;
-                            $possibleExchanges[$i]['isDayOff'] = 0;
-                            $possibleExchanges[$i]['dayOffName'] = null;
-
-                            $i++; //increment
-
-                        } else { // else use General shift
-
-                            if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
-
-                                $generalShift = Shifts::find(1);
+                            if ($slotShiftSchedule) { // Check if this employee assigned to specific shift this date
 
                                 $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
                                 $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
-                                $possibleExchanges[$i]['shiftId'] = 1;
-                                $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
-                                $possibleExchanges[$i]['slotId'] = $slotId;
-                                $possibleExchanges[$i]['slotName'] = Slots::find($slotId)->name;
-                                $possibleExchanges[$i]['date'] = $request->fromDate;
+                                $possibleExchanges[$i]['shiftId'] = $slotShiftSchedule->shiftId;
+                                $possibleExchanges[$i]['shiftDetails'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'name') . ' (' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workStartAt') . ' - ' . $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'shift', 'workEndAt') . ')';
+                                $possibleExchanges[$i]['slotId'] = $slotShiftSchedule->slotId;
+                                $possibleExchanges[$i]['slotName'] = $this->getResultWithNullChecker1Connection($slotShiftSchedule, 'slot', 'name');
+                                $possibleExchanges[$i]['date'] = $slotShiftSchedule->date;
                                 $possibleExchanges[$i]['isDayOff'] = 0;
                                 $possibleExchanges[$i]['dayOffName'] = null;
 
                                 $i++; //increment
-                            }
 
+                            } else { // else use General shift
+
+                                if ($requesterShiftId != 1) { // Make sure only get this if only requester shift id is not the same (general)
+
+                                    $generalShift = Shifts::find(1);
+
+                                    $possibleExchanges[$i]['employeeId'] = $possibleEmployee->id;
+                                    $possibleExchanges[$i]['employeeName'] = $possibleEmployee->givenName;
+                                    $possibleExchanges[$i]['shiftId'] = 1;
+                                    $possibleExchanges[$i]['shiftDetails'] = $generalShift->name . ' (' . $generalShift->workStartAt . '-' . $generalShift->workEndAt . ')';
+                                    $possibleExchanges[$i]['slotId'] = $slotId;
+                                    $possibleExchanges[$i]['slotName'] = Slots::find($slotId)->name;
+                                    $possibleExchanges[$i]['date'] = $request->fromDate;
+                                    $possibleExchanges[$i]['isDayOff'] = 0;
+                                    $possibleExchanges[$i]['dayOffName'] = null;
+
+                                    $i++; //increment
+                                }
+
+                            }
                         }
+
+
                     }
                 }
 
@@ -333,7 +339,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
             if ($exchangeReq->employeeId2 == $employee->id) { //Check if this user is authorized to answer request
 
-                if ($request->confirmType == 'accept') {
+                if ($request->answerType == GlobalConfig::$EXCHANGE_ANSWER_TYPE['ACCEPT']) {
 
                     $requesterSlotId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'slotSchedule', 'slotId') ?: 1;
                     $ownerSlotId = $this->getResultWithNullChecker1Connection($exchangeReq->ownerEmployee, 'slotSchedule', 'slotId') ?: 1;
@@ -341,6 +347,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                     if ($requesterSlotId != 1 && $ownerSlotId != 1) { //Make sure its not General Slot that is being traded
 
                         if ($this->isDayOffForThisSlot($requesterSlotId, $exchangeReq->fromDate) && $this->isDayOffForThisSlot($ownerSlotId, $exchangeReq->toDate)) {
+
+                            //HANDLE DAY OFF EXCHANGE
 
                             $exchangeDayOffFrom = DayOffSchedule::where('slotId', $requesterSlotId)
                                 ->where('date', $exchangeReq->fromDate)
@@ -423,82 +431,88 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
                             //HANDLE WORK DAY EXCHANGE
 
-                            $exchangeShiftFrom = SlotShiftSchedule::where('slotId', $requesterSlotId)
-                                ->where('shiftId', $exchangeReq->fromShiftId)
-                                ->where('date', $exchangeReq->fromDate)
-                                ->where('confirmType', 0)
-                                ->first();
+                            // If requester is changing to general shift ID just delete their
+                            // data in slot shift schedule table, because general shift ID does not need
+                            // to be inserted in the slot shift schedule table
+                            if($exchangeReq->toShiftId==1){
+                                SlotShiftSchedule::where('slotId',$requesterSlotId)->where('date',$exchangeReq->fromDate)->delete();
+                            }
 
-                            $exchangeShiftTo = SlotShiftSchedule::where('slotId', $ownerSlotId)
-                                ->where('shiftId', $exchangeReq->toShiftId)
-                                ->where('date', $exchangeReq->toDate)
-                                ->where('confirmType', 0)
-                                ->first();
+                            // If owner is changing to general shift ID just delete their
+                            // data in slot shift schedule table, because general shift ID does not need
+                            // to be inserted in the slot shift schedule table
+                            if($exchangeReq->fromShiftId==1){
+                                SlotShiftSchedule::where('slotId',$ownerSlotId)->where('date',$exchangeReq->toDate)->delete();
+                            }
 
-                            if ($exchangeShiftFrom && $exchangeShiftTo) {
+                            // If requester shift ID was general shift ID, do nothing
+                            // else update or create the slot shift schedule
+                            if($exchangeReq->fromShiftId!=1){
+                                $updateOwnerSchedule = SlotShiftSchedule::updateOrCreate(
+                                    ['date'=>$exchangeReq->toDate,'slotId'=>$ownerSlotId],
+                                    ['shiftId' => $exchangeReq->fromShiftId]
+                                );
+                            } else {
+                                $updateOwnerSchedule = true;//do nothing
+                            }
 
-                                // Save requester
-                                $exchangeShiftFrom->slotId = $ownerSlotId;
-                                $exchangeShiftFrom->shiftId = $exchangeReq->toShiftId;
-
-                                //Save owner
-                                $exchangeShiftTo->slotId = $requesterSlotId;
-                                $exchangeShiftTo->shiftId = $exchangeReq->fromShiftId;
-
-                                if ($exchangeShiftFrom->save() && $exchangeShiftTo->save()) {
-
-                                    //Update exchange shift employee data
-                                    $exchangeReq->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['CONFIRM'];//confirmed
-                                    $exchangeReq->confirmedDate = Carbon::now()->format('d/m/Y');
-                                    $exchangeReq->confirmedTime = Carbon::now()->format('H:i');
-
-                                    if ($exchangeReq->save()) {
-
-                                        // Notify requester
-                                        $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'user', 'id');
-
-                                        /* Send push notification */
-                                        app()->make('PushNotificationService')->singleNotify([
-                                            'userID' => $requesterUserId,
-                                            'title' => 'Exchange Shift Accepted',
-                                            'message' => 'Your exchange shift request has been accepted!',
-                                            'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
-                                            'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
-                                            'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
-                                            'sender' => $user
-                                        ]);
-
-                                        /*Success response*/
-                                        $response['isFailed'] = false;
-                                        $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
-                                        $response['message'] = 'Success';
-
-                                        return response()->json($response, 200);
-                                    } else {
-                                        /*Error repsonse*/
-                                        $response['isFailed'] = true;
-                                        $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
-                                        $response['message'] = 'Unable to save exchange shift table';
-
-                                        return response()->json($response, 200);
-                                    }
+                            // If owner shift ID was general shift ID, do nothing
+                            // else update or create the slot shift schedule
+                            if($exchangeReq->toShiftId!=1){
+                                $updateRequesterSchedule = SlotShiftSchedule::updateOrCreate(
+                                    ['date'=>$exchangeReq->fromDate,'slotId'=>$requesterSlotId],
+                                    ['shiftId' => $exchangeReq->toShiftId]
+                                );
+                            } else {
+                                $updateRequesterSchedule = true; //do nothing
+                            }
 
 
+                            if ($updateOwnerSchedule && $updateRequesterSchedule) {
+
+
+                                //Update exchange shift employee data
+                                $exchangeReq->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['CONFIRM'];//confirmed
+                                $exchangeReq->confirmedDate = Carbon::now()->format('d/m/Y');
+                                $exchangeReq->confirmedTime = Carbon::now()->format('H:i');
+
+                                if ($exchangeReq->save()) {
+
+                                    // Notify requester
+                                    $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'user', 'id');
+
+                                    /* Send push notification */
+                                    app()->make('PushNotificationService')->singleNotify([
+                                        'userID' => $requesterUserId,
+                                        'title' => 'Exchange Shift Accepted',
+                                        'message' => 'Your exchange shift request has been accepted!',
+                                        'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
+                                        'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
+                                        'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                                        'sender' => $user
+                                    ]);
+
+                                    /*Success response*/
+                                    $response['isFailed'] = false;
+                                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                                    $response['message'] = 'Success';
+
+                                    return response()->json($response, 200);
                                 } else {
                                     /*Error repsonse*/
                                     $response['isFailed'] = true;
                                     $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
-                                    $response['message'] = 'Unable to save exchange data';
+                                    $response['message'] = 'Unable to save exchange shift table';
 
                                     return response()->json($response, 200);
-
                                 }
+
 
                             } else {
                                 /*Error repsonse*/
                                 $response['isFailed'] = true;
-                                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_GET_EXCHANGE_SHIFTS_DATA'];
-                                $response['message'] = 'Unable to get exchange shifts data';
+                                $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                                $response['message'] = 'Unable to update data';
 
                                 return response()->json($response, 200);
                             }
@@ -536,7 +550,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                     }
 
 
-                } elseif ($request->confirmType == 'decline') { // DECLINE REQUEST
+                } elseif ($request->answerType == GlobalConfig::$EXCHANGE_ANSWER_TYPE['DECLINE']) { // DECLINE REQUEST
 
                     // Notify requester that owner is declining the request
                     $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'user', 'id');
@@ -612,10 +626,10 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
         // if day off schedule found return TRUE
         if ($checkDayOffSchedule > 0) {
             return true;
+        } else {
+            return false;
         }
 
-        // else return FALSE
-        return false;
     }
 
 

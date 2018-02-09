@@ -441,10 +441,10 @@ class TestUploadController extends Controller
 
     public function td()
     {
-        $user = User::find("9143ca32-d63f-376f-8173-9c8d1d7f92db");
-        $message = (new LoginAccountDetails($user, "888456"))->onConnection('database')->onQueue('emails');
-        Mail::to($user->email)->queue($message);
-
+//        $user = User::find("9143ca32-d63f-376f-8173-9c8d1d7f92db");
+//        $message = (new LoginAccountDetails($user, "888456"))->onConnection('database')->onQueue('emails');
+//        Mail::to($user->email)->queue($message);
+Log::info('asdfasdfasf');
     }
 
 

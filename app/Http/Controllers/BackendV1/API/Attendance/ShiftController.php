@@ -22,6 +22,7 @@ use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\Controller;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
+use Illuminate\Contracts\Logging\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -274,12 +275,14 @@ class ShiftController extends Controller
 
     public function answerExchange(Request $request)
     {
+        \Illuminate\Support\Facades\Log::info('answer exchange controller');
+
         $response = array();
 
         if ($this->checkUserEmployee()) {
 
             $validator = Validator::make($request->all(), [
-                'confirmType' => 'required',
+                'answerType' => 'required',
                 'exchangeShiftId' => 'required'
             ]);
 
@@ -321,7 +324,7 @@ class ShiftController extends Controller
 
             if ($employee) {
 
-                $exchangeShifts = ExchangeShiftEmployee::where('employeeId2',$employee->id)->get();
+                $exchangeShifts = ExchangeShiftEmployee::where('employeeId2',$employee->id)->orderBy('id','desc')->get();
 
                 if($exchangeShifts){
 
@@ -372,7 +375,7 @@ class ShiftController extends Controller
 
             if ($employee) {
 
-                $exchangeShifts = ExchangeShiftEmployee::where('employeeId1',$employee->id)->get();
+                $exchangeShifts = ExchangeShiftEmployee::where('employeeId1',$employee->id)->orderBy('id','desc')->get();
 
                 if($exchangeShifts){
 

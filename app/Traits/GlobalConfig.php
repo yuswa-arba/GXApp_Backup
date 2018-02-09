@@ -48,4 +48,9 @@ class GlobalConfig
         'DECLINE'=>2
     ];
 
+    public static $EXCHANGE_ANSWER_TYPE = [
+        'DECLINE'=>'decline',
+        'ACCEPT'=>'accept'
+    ];
+
 }
