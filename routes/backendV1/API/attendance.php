@@ -34,6 +34,8 @@ Route::prefix('v1/a')->group(function () {
             Route::get('shift/exchange/list/outgoing','ShiftController@outgoingExchangeList');
             Route::get('shift/exchange/list/incoming','ShiftController@incomingExchangeList');
 
+            Route::get('history/record','HistoryController@getRecord');
+
         });
     });
 

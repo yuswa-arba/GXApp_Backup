@@ -275,8 +275,6 @@ class ShiftController extends Controller
 
     public function answerExchange(Request $request)
     {
-        \Illuminate\Support\Facades\Log::info('answer exchange controller');
-
         $response = array();
 
         if ($this->checkUserEmployee()) {
