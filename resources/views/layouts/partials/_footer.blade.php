@@ -26,6 +26,7 @@
 
 <script src="{{mix('core/js/core-theme.js')}}" type="text/javascript"></script> <!-- core theme -->
 <script src="{{asset('plugins/socketioclient/dist/socket.io.js')}}"></script>
+<script src="{{mix('js/client/components/InternetConnection.js')}}"></script>
 
 
 {{--<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script> <!-- socket io client -->--}}

@@ -21,21 +21,27 @@
 </head>
 <body class="fixed-header menu-pin menu-behind">
 
+<div class="content" >
+    <div id="vc-internet-connection"></div>
+</div>
+
 @include('layouts.partials._sidebar')
 
 <!-- START PAGE-CONTAINER -->
 <div class="page-container">
 @include('layouts.partials._navigation')
 <!-- START PAGE CONTENT WRAPPER -->
+
     <div class="page-content-wrapper">
         <!-- START PAGE CONTENT -->
-
         @yield('content')
+        <!-- END PAGE CONTENT -->
 
         {{--@include('layouts.partials._footer_in_page')--}}
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
 </div>
+
 <!-- END PAGE CONTAINER -->
 @include('layouts.partials._quickview')
 @include('layouts.partials._overlay')

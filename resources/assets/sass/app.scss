@@ -394,3 +394,23 @@ body{
   padding: 3px 10px !important;
 }
 
+
+.bottom-float-full {
+  position: absolute!important;
+  bottom: 0!important;
+  right: 0!important;
+  z-index: 999!important;
+  width: 100%!important;
+  text-align: center!important;
+  margin-bottom: 0!important;
+}
+
+.top-float-full{
+  position: absolute!important;
+  top: 0!important;
+  right: 0!important;
+  z-index: 999!important;
+  width: 100%!important;
+  text-align: center!important;
+  margin-bottom: 0!important;
+}

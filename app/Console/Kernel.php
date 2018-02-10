@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Attendance\Console\Commands\AttendanceRepeatSlotMaker;
 use App\Attendance\Console\Commands\AttendanceScheduleChecker;
 use App\Attendance\Console\Commands\AttendanceTimesheetChecker;
+use App\Components\Console\Commands\SendHeartbeat;
 use App\Salary\Console\Commands\SalaryConfirmationChecker;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -21,7 +22,8 @@ class Kernel extends ConsoleKernel
         \App\Attendance\Console\Commands\AttendanceScheduleChecker::class,
         \App\Attendance\Console\Commands\AttendanceTimesheetChecker::class,
         \App\Attendance\Console\Commands\AttendanceRepeatSlotMaker::class,
-        \App\Salary\Console\Commands\SalaryConfirmationChecker::class
+        \App\Salary\Console\Commands\SalaryConfirmationChecker::class,
+        \App\Components\Console\Commands\SendHeartbeat::class
     ];
 
     /**
@@ -42,6 +44,7 @@ class Kernel extends ConsoleKernel
     protected function scheduleInDayCommands(Schedule $schedule)
     {
         $schedule->command(AttendanceScheduleChecker::class)->everyMinute();
+        $schedule->command(SendHeartbeat::class)->everyMinute();
         $schedule->command(AttendanceTimesheetChecker::class)->everyFiveMinutes();
 
     }
