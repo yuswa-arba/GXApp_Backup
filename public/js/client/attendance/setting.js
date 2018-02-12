@@ -1667,6 +1667,136 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/GeneralTab.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            attendanceSettings: []
+        };
+    },
+    created: function created() {
+        var self = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/setting/list').then(function (res) {
+            self.attendanceSettings = res.data.attendanceSettings.data;
+        });
+    },
+
+    methods: {
+        startEditing: function startEditing(id, index) {
+
+            var self = this;
+            self.attendanceSettings[index].editing = true;
+        },
+        doneEditing: function doneEditing(id, index) {
+            var self = this;
+
+            var value = $('input[name="' + 'editValue' + id + '"]').val();
+            var description = $('input[name="' + 'editDescription' + id + '"]').val();
+
+            if (value) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/setting/edit', { id: id, value: value, description: description }).then(function (res) {
+
+                    if (!res.data.isFailed) {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        //update array
+                        self.attendanceSettings.splice(index, 1, res.data.attendanceSetting.data);
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'Update canceled. Value cannot be empty',
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+
+            self.attendanceSettings[index].editing = false;
+        }
+    },
+    computed: {}
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/GeofenceTab.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2090,34 +2220,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         }
     }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/ManagerTab.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {}
 });
 
 /***/ }),
@@ -2949,23 +3051,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_ShiftTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/ShiftTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_ShiftTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_ShiftTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_SlotTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/SlotTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_SlotTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_settings_SlotTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_DayOffTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/DayOffTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_DayOffTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_settings_DayOffTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_settings_PublicHolidayTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/PublicHolidayTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_settings_PublicHolidayTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_settings_PublicHolidayTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_settings_ManagerTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/ManagerTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_settings_ManagerTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_settings_ManagerTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_GeneralTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/GeneralTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_GeneralTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_GeneralTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_ShiftTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/ShiftTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_ShiftTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_settings_ShiftTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_SlotTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/SlotTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_SlotTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_settings_SlotTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_settings_DayOffTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/DayOffTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_settings_DayOffTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_settings_DayOffTab_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_settings_PublicHolidayTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/PublicHolidayTab.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_settings_PublicHolidayTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_settings_PublicHolidayTab_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_settings_GeofenceTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/GeofenceTab.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_settings_GeofenceTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_settings_GeofenceTab_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/KIoskTab.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/settings/MiscTab.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue__);
-//
 //
 //
 //
@@ -3042,11 +3143,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        'shift-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_ShiftTab_vue___default.a,
-        'slot-tab': __WEBPACK_IMPORTED_MODULE_1__components_settings_SlotTab_vue___default.a,
-        'day-off-tab': __WEBPACK_IMPORTED_MODULE_2__components_settings_DayOffTab_vue___default.a,
-        'public-holiday-tab': __WEBPACK_IMPORTED_MODULE_3__components_settings_PublicHolidayTab_vue___default.a,
-        'manager-tab': __WEBPACK_IMPORTED_MODULE_4__components_settings_ManagerTab_vue___default.a,
+        'general-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_GeneralTab_vue___default.a,
+        'shift-tab': __WEBPACK_IMPORTED_MODULE_1__components_settings_ShiftTab_vue___default.a,
+        'slot-tab': __WEBPACK_IMPORTED_MODULE_2__components_settings_SlotTab_vue___default.a,
+        'day-off-tab': __WEBPACK_IMPORTED_MODULE_3__components_settings_DayOffTab_vue___default.a,
+        'public-holiday-tab': __WEBPACK_IMPORTED_MODULE_4__components_settings_PublicHolidayTab_vue___default.a,
         'geofence-tab': __WEBPACK_IMPORTED_MODULE_5__components_settings_GeofenceTab_vue___default.a,
         'kiosk-tab': __WEBPACK_IMPORTED_MODULE_6__components_settings_KIoskTab_vue___default.a,
         'misc-tab': __WEBPACK_IMPORTED_MODULE_7__components_settings_MiscTab_vue___default.a
@@ -30519,7 +30620,14 @@ var render = function() {
         _c("div", { staticClass: "tab-content" }, [
           _c(
             "div",
-            { staticClass: "tab-pane active", attrs: { id: "tabShifts" } },
+            { staticClass: "tab-pane active", attrs: { id: "tabGeneral" } },
+            [_c("general-tab")],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "tab-pane ", attrs: { id: "tabShifts" } },
             [_c("shift-tab")],
             1
           ),
@@ -30549,13 +30657,6 @@ var render = function() {
             "div",
             { staticClass: "tab-pane", attrs: { id: "tabDayOff" } },
             [_c("day-off-tab")],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "tab-pane", attrs: { id: "tabManagers" } },
-            [_c("manager-tab")],
             1
           ),
           _vm._v(" "),
@@ -30594,6 +30695,21 @@ var staticRenderFns = [
             "a",
             {
               staticClass: "active",
+              attrs: {
+                href: "#",
+                "data-toggle": "tab",
+                role: "tab",
+                "data-target": "#tabGeneral"
+              }
+            },
+            [_vm._v("General")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
               attrs: {
                 href: "#",
                 "data-toggle": "tab",
@@ -30673,21 +30789,6 @@ var staticRenderFns = [
                 href: "#",
                 "data-toggle": "tab",
                 role: "tab",
-                "data-target": "#tabManagers"
-              }
-            },
-            [_vm._v("Managers")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tab",
-                role: "tab",
                 "data-target": "#tabGeofence"
               }
             },
@@ -30725,51 +30826,6 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-17fc7ddc", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2af4b20f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/ManagerTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row column-seperation" }, [
-      _c("div", { staticClass: "col-lg-6" }, [
-        _c("h3", [
-          _c("span", { staticClass: "semi-bold" }, [_vm._v("Sometimes")]),
-          _vm._v(" Small things in life means the most\n        ")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-6" }, [
-        _c("h3", { staticClass: "semi-bold" }, [_vm._v("great tabs")]),
-        _vm._v(" "),
-        _c("p", [
-          _vm._v(
-            "Native boostrap tabs customized to Pages look and feel, simply changing class name\n            you can change color as well as its animations"
-          )
-        ])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2af4b20f", module.exports)
   }
 }
 
@@ -31871,6 +31927,117 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-85ca06a4", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a7a01f18\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/GeneralTab.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row column-seperation" }, [
+    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
+      _c("div", { staticClass: "card card-bordered" }, [
+        _c("div", { staticClass: "card-block" }, [
+          _c("h4", [_vm._v(" Attendance Setting")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "tbody",
+                _vm._l(_vm.attendanceSettings, function(setting, index) {
+                  return _c("tr", [
+                    _c("td", [_vm._v(_vm._s(setting.name))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      !setting.editing
+                        ? _c("span", [_vm._v(_vm._s(setting.value))])
+                        : _c("input", {
+                            attrs: {
+                              type: "text",
+                              name: "editValue" + setting.id
+                            },
+                            domProps: { value: setting.value }
+                          })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      !setting.editing
+                        ? _c("span", [_vm._v(_vm._s(setting.description))])
+                        : _c("input", {
+                            staticStyle: { width: "380px" },
+                            attrs: {
+                              type: "text",
+                              name: "editDescription" + setting.id
+                            },
+                            domProps: { value: setting.description }
+                          })
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      !setting.editing
+                        ? _c("i", {
+                            staticClass:
+                              "fa fa-pencil text-primary fs-16 cursor",
+                            on: {
+                              click: function($event) {
+                                _vm.startEditing(setting.id, index)
+                              }
+                            }
+                          })
+                        : _c(
+                            "i",
+                            {
+                              staticClass: "text-danger cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.doneEditing(setting.id, index)
+                                }
+                              }
+                            },
+                            [_vm._v("DONE")]
+                          )
+                    ])
+                  ])
+                })
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Value")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a7a01f18", module.exports)
   }
 }
 
@@ -47691,6 +47858,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/attendance/components/settings/GeneralTab.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/GeneralTab.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a7a01f18\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/GeneralTab.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/attendance/components/settings/GeneralTab.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a7a01f18", Component.options)
+  } else {
+    hotAPI.reload("data-v-a7a01f18", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/attendance/components/settings/GeofenceTab.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -47778,55 +47994,6 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-4ea178f3", Component.options)
   } else {
     hotAPI.reload("data-v-4ea178f3", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/attendance/components/settings/ManagerTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/ManagerTab.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2af4b20f\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/settings/ManagerTab.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/attendance/components/settings/ManagerTab.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2af4b20f", Component.options)
-  } else {
-    hotAPI.reload("data-v-2af4b20f", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true

@@ -383,7 +383,7 @@
 }
 
 .bottom-float-full {
-  position: absolute !important;
+  position: fixed !important;
   bottom: 0 !important;
   right: 0 !important;
   z-index: 999 !important;
@@ -393,7 +393,7 @@
 }
 
 .top-float-full {
-  position: absolute !important;
+  position: fixed !important;
   top: 0 !important;
   right: 0 !important;
   z-index: 999 !important;

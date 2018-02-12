@@ -57,6 +57,9 @@ Route::prefix('v1/h')->group(function () {
 
         Route::get('dashboard/livefeed','DashboardController@livefeed')->name('v1.timesheet.livefeed');
 
+        Route::get('setting/list','SettingController@list')->name('v1.attendance.setting.list');
+        Route::post('setting/edit','SettingController@edit')->name('v1.attendance.setting.edit');
+
     });
 
 

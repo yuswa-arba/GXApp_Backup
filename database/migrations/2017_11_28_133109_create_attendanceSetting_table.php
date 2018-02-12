@@ -15,7 +15,7 @@ class CreateAttendanceSettingTable extends Migration
     {
         Schema::create('attendanceSetting', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('param');
+            $table->string('name');
             $table->string('value');
             $table->string('description');
             $table->timestamps();

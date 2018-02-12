@@ -11,6 +11,7 @@ namespace App\Attendance\Logics\Attendance;
 
 use App\Attendance\Events\EmployeeClocked;
 use App\Attendance\Models\AttendanceSchedule;
+use App\Attendance\Models\AttendanceSetting;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
@@ -236,24 +237,40 @@ class AttendanceLogic extends AttendanceUseCase
 
             } elseif ($punchType == 'out') {
 
-                if ($attdSchedule->allowedToCheckOut == 1) {
+                // Check if attendance setting allow clock out early
+
+                $allowEarlyClockOut = AttendanceSetting::where('name','allow-early-clock-out')->first()->value;
+
+                if($allowEarlyClockOut==1){ //yes its allowed
 
                     $response['isFailed'] = false;
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Allowed to Clock-Out';
-                    $response['isAllowed'] = $attdSchedule->allowedToCheckOut;
+                    $response['isAllowed'] = 1;
                     $response['shiftId'] = $shiftId;
                     return $response;
 
-                } else {
-                    $timeAvailable = Carbon::createFromFormat('H:i', Shifts::find($shiftId)->workEndAt)->format('H:i');
-                    $response['isFailed'] = true;
-                    $response['code'] = ResponseCodes::$ATTD_ERR_CODES['NOT_ALLOWED_TO_CLOCK_OUT'];
-                    $response['message'] = 'Not allowed to Clock-Out yet until ' . $timeAvailable;
-                    $response['isAllowed'] = $attdSchedule->allowedToCheckOut;
-                    $response['shiftId'] = $shiftId;
-                    return $response;
+                } else{ // not allowed, check attendance schedule
 
+                    if ($attdSchedule->allowedToCheckOut == 1) {
+
+                        $response['isFailed'] = false;
+                        $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                        $response['message'] = 'Allowed to Clock-Out';
+                        $response['isAllowed'] = $attdSchedule->allowedToCheckOut;
+                        $response['shiftId'] = $shiftId;
+                        return $response;
+
+                    } else {
+                        $timeAvailable = Carbon::createFromFormat('H:i', Shifts::find($shiftId)->workEndAt)->format('H:i');
+                        $response['isFailed'] = true;
+                        $response['code'] = ResponseCodes::$ATTD_ERR_CODES['NOT_ALLOWED_TO_CLOCK_OUT'];
+                        $response['message'] = 'Not allowed to Clock-Out yet until ' . $timeAvailable;
+                        $response['isAllowed'] = $attdSchedule->allowedToCheckOut;
+                        $response['shiftId'] = $shiftId;
+                        return $response;
+
+                    }
                 }
 
             } else {
