@@ -2,6 +2,7 @@
 
 namespace App\Attendance\Models;
 
+use App\Components\Models\Religion;
 use Illuminate\Database\Eloquent\Model;
 
 class PublicHolidaySchedule extends Model
@@ -13,4 +14,10 @@ class PublicHolidaySchedule extends Model
         'isGeneral',
         'religionId',
     ];
+
+    public function religion()
+    {
+        return $this->belongsTo(Religion::class,'religionId');
+    }
+
 }

@@ -43,7 +43,6 @@
             <div id="vc-salary-report"></div>
         </div>
 
-
     </div>
     <!-- END PAGE CONTENT -->
 

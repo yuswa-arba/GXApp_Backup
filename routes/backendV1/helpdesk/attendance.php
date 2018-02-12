@@ -61,6 +61,10 @@ Route::prefix('v1/h')->group(function () {
         Route::get('setting/list','SettingController@list')->name('v1.attendance.setting.list');
         Route::post('setting/edit','SettingController@edit')->name('v1.attendance.setting.edit');
 
+        Route::get('pubHoliday/list','PublicHolidayController@getList')->name('v1.attendance.pubHoliday.list');
+        Route::post('pubHoliday/create','PublicHolidayController@create')->name('v1.attendance.pubHoliday.create');
+        Route::post('pubHoliday/delete','PublicHolidayController@delete')->name('v1.attendance.pubHoliday.delete');
+
     });
 
 

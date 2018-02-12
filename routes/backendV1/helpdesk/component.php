@@ -14,6 +14,9 @@ Route::prefix('v1/h')->group(function () {
 //    Route::prefix('attendance')->namespace('BackendV1\Helpdesk\Attendance')->middleware('auth.admin')->group(function (){
     Route::prefix('component')->namespace('BackendV1\Helpdesk\Component')->group(function () {
 
+        Route::get('religion/{id}','GetListController@religion')->name('v1.component.religion');
+        Route::get('list/religion', 'GetListController@religions')->name('v1.component.list.religions');
+
         Route::get('jobPosition/{id}','GetListController@jobPosition')->name('v1.component.jobPosition');
         Route::get('list/jobPosition', 'GetListController@jobPositions')->name('v1.component.list.jobPositions');
 

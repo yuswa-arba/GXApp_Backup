@@ -2258,6 +2258,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 //
 //
 //
@@ -2346,10 +2347,131 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    created: function created() {}
+    data: function data() {
+        return {
+            religions: [],
+            formObject: {
+                dateStart: '',
+                dateEnd: '',
+                holidayName: '',
+                onYear: moment().year(),
+                religionId: ''
+            },
+            publicHolidays: []
+        };
+    },
+    created: function created() {
+        var self = this;
+
+        //get religions list
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/religion').then(function (res) {
+            self.religions = res.data.data;
+        });
+
+        //get public holidays
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/pubHoliday/list').then(function (res) {
+            if (!res.data.isFailed) {
+                self.publicHolidays = res.data.publicHolidays.data;
+            }
+        });
+    },
+
+    methods: {
+        createPublicHoliday: function createPublicHoliday() {
+            var self = this;
+
+            self.formObject.dateStart = $('input[name="dateStart"]').val();
+            self.formObject.dateEnd = $('input[name="dateEnd"]').val();
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/pubHoliday/create', self.formObject).then(function (res) {
+                if (!res.data.isFailed) {
+
+                    self.publicHolidays = res.data.publicHolidays.data;
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        },
+        deletePublicHoliday: function deletePublicHoliday(id, index) {
+            var self = this;
+
+            if (confirm('Are you sure you want to delete this public holiday?')) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/pubHoliday/delete', { id: id }).then(function (res) {
+                    if (!res.data.isFailed) {
+
+                        self.publicHolidays.splice(index, 1);
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -30441,19 +30563,63 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "tbody",
-                        _vm._l(10, function(index) {
+                        _vm._l(_vm.publicHolidays, function(pubHoliday, index) {
                           return _c("tr", [
-                            _c("td", [_vm._v("23/12/2017")]),
+                            _c("td", [_vm._v(_vm._s(pubHoliday.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(pubHoliday.date))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(pubHoliday.name))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(pubHoliday.religionName))]),
                             _vm._v(" "),
                             _c("td", [
-                              _vm._v("Lorem ipsum lorem ipsum lorem ipsum")
+                              pubHoliday.isGeneral
+                                ? _c("i", {
+                                    staticClass:
+                                      "fs-16 text-complete fa fa-check"
+                                  })
+                                : _c("i", {
+                                    staticClass: "fs-16 text-danger fa fa-times"
+                                  })
                             ]),
                             _vm._v(" "),
-                            _vm._m(1, true),
+                            _c("td", [
+                              pubHoliday.isApplied
+                                ? _c("i", {
+                                    staticClass:
+                                      "fs-16 text-complete fa fa-check"
+                                  })
+                                : _c("i", {
+                                    staticClass: "fs-16 text-danger fa fa-times"
+                                  })
+                            ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(" Kristen")]),
-                            _vm._v(" "),
-                            _vm._m(2, true)
+                            _c("td", [
+                              !pubHoliday.isApplied
+                                ? _c("i", {
+                                    staticClass:
+                                      "fs-14 text-success fa fa-play pointer"
+                                  })
+                                : _c("i", { staticClass: "fs-14 fa fa-play" }),
+                              _vm._v(
+                                "\n                                           \n                                        "
+                              ),
+                              !pubHoliday.isApplied
+                                ? _c("i", {
+                                    staticClass:
+                                      "fs-14 text-danger fa fa-trash pointer",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.deletePublicHoliday(
+                                          pubHoliday.id,
+                                          index
+                                        )
+                                      }
+                                    }
+                                  })
+                                : _c("i", { staticClass: "fs-14 fa fa-trash" })
+                            ])
                           ])
                         })
                       )
@@ -30467,91 +30633,61 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm._m(3)
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c("th", { staticClass: "text-black" }, [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("General")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Religion")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("i", { staticClass: "fs-16 text-complete fa fa-check" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("i", { staticClass: "fs-14 fa fa-pencil pointer" }),
-      _vm._v(
-        "\n                                           \n                                        "
-      ),
-      _c("i", { staticClass: "fs-14 text-danger fa fa-trash pointer" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-4 m-b-10" }, [
+    _c("div", { staticClass: "col-lg-4 m-b-10" }, [
       _c("div", { staticClass: "card card-transparent" }, [
         _c("div", { staticClass: "card-block" }, [
           _c("form", { attrs: { id: "pub-holiday-form" } }, [
             _c("h4", [_vm._v("Public Holiday Form")]),
             _vm._v(" "),
-            _c("div", { staticClass: "form-group" }, [
-              _c("label", [_vm._v("Date Start - Date End ")]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "input-daterange input-group",
-                  attrs: { id: "holiday-datepicker-range" }
-                },
-                [
-                  _c("input", {
-                    staticClass: "input-sm form-control",
-                    attrs: { type: "text", name: "start" }
-                  }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "input-group-addon" }, [
-                    _vm._v("to")
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    staticClass: "input-sm form-control",
-                    attrs: { type: "text", name: "end" }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
             _c("div", { staticClass: "form-group " }, [
               _c("label", [_vm._v("Holiday name")]),
               _vm._v(" "),
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formObject.holidayName,
+                    expression: "formObject.holidayName"
+                  }
+                ],
                 staticClass: "form-control",
-                attrs: { type: "text" }
+                attrs: { type: "text" },
+                domProps: { value: _vm.formObject.holidayName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.formObject, "holidayName", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group " }, [
+              _c("label", [_vm._v("On Year")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.formObject.onYear,
+                    expression: "formObject.onYear"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "number", max: "9998" },
+                domProps: { value: _vm.formObject.onYear },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.formObject, "onYear", $event.target.value)
+                  }
+                }
               })
             ]),
             _vm._v(" "),
@@ -30564,37 +30700,112 @@ var staticRenderFns = [
                 _c(
                   "select",
                   {
-                    staticClass: "full-width select2",
-                    attrs: { "data-placeholder": "Select Religion" }
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formObject.religionId,
+                        expression: "formObject.religionId"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.formObject,
+                          "religionId",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
                   },
-                  [
-                    _c("option", { attrs: { value: "All" } }, [_vm._v("All")]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "test" } }, [
-                      _vm._v("Test")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "test" } }, [
-                      _vm._v("Test")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "test" } }, [
-                      _vm._v("Test")
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "test" } }, [
-                      _vm._v("Test")
-                    ]),
-                    _vm._v("v\n                            "),
-                    _c("option", { attrs: { value: "test" } }, [_vm._v("Test")])
-                  ]
+                  _vm._l(_vm.religions, function(religion) {
+                    return _c("option", { domProps: { value: religion.id } }, [
+                      _vm._v(_vm._s(religion.name))
+                    ])
+                  })
                 )
               ]
             ),
             _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Date Start - Date End ")]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "input-daterange input-group",
+                  attrs: { id: "holiday-datepicker-range" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formObject.dateStart,
+                        expression: "formObject.dateStart"
+                      }
+                    ],
+                    staticClass: "input-sm form-control",
+                    attrs: { type: "text", name: "dateStart" },
+                    domProps: { value: _vm.formObject.dateStart },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.formObject,
+                          "dateStart",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group-addon" }, [
+                    _vm._v("to")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formObject.dateEnd,
+                        expression: "formObject.dateEnd"
+                      }
+                    ],
+                    staticClass: "input-sm form-control",
+                    attrs: { type: "text", name: "dateEnd" },
+                    domProps: { value: _vm.formObject.dateEnd },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formObject, "dateEnd", $event.target.value)
+                      }
+                    }
+                  })
+                ]
+              )
+            ]),
+            _vm._v(" "),
             _c("p", [
               _vm._v(
-                " If ALL religion is selected, then this holiday will be applied to all employees, otherwise it will be applied\n                        to employees with selected religion.\n                    "
+                "\n                        If ALL religion is selected, then this holiday will be applied to all employees, otherwise\n                        it will be applied\n                        to employees with selected religion.\n                    "
               )
             ]),
             _vm._v(" "),
@@ -30602,9 +30813,14 @@ var staticRenderFns = [
               "button",
               {
                 staticClass: "btn btn-complete pull-right",
-                attrs: { type: "button" }
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.createPublicHoliday()
+                  }
+                }
               },
-              [_vm._v("Save")]
+              [_vm._v("Save\n                    ")]
             )
           ]),
           _vm._v(" "),
@@ -30612,6 +30828,30 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("br")
         ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Religion")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("General")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Applied")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
       ])
     ])
   }
@@ -48304,7 +48544,7 @@ $(document).ready(function () {
         widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
     });
 
-    $('#holiday-datepicker-range').datepicker({ format: 'dd/mm/yyyy' });
+    $('#holiday-datepicker-range').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
 
     $('.select2').select2();
 
@@ -48321,6 +48561,18 @@ $(document).ready(function () {
     $('#firstdate').datepicker({
         format: 'dd/mm/yyyy',
         startDate: new Date(d.getFullYear(), 0, 1)
+    });
+
+    // disable mousewheel on a input number field when in focus
+    // (to prevent Cromium browsers change the value when scrolling)
+    $('form').on('focus', 'input[type=number]', function (e) {
+        $(this).on('mousewheel.disableScroll', function (e) {
+            e.preventDefault();
+        });
+    });
+
+    $('form').on('blur', 'input[type=number]', function (e) {
+        $(this).off('mousewheel.disableScroll');
     });
 });
 

@@ -17,7 +17,7 @@ class LeaveScheduleController extends Controller
 
     public function __construct()
     {
-
+        $this->middleware(['permission:view attendance']);
     }
 
     public function list(Request $request)

@@ -279,6 +279,7 @@ class GeneratePayrollLogic extends GenerateUseCase
 
                 /* Check if already exist */
                 $payroll = GeneratePayroll::where('generatedType', Configs::$GENERATED_PAYROLL_TYPE['STAGE_1_CONFIRMED'])->where('generateSalaryReportLogId', $request->generateSalaryReportLogId)->orderBy('id','desc')->first();
+
                 if ($payroll) {
                     $availability['stage1Existed']['isExist'] = true;
                     $availability['stage1Existed']['payrollId'] = $payroll->id;

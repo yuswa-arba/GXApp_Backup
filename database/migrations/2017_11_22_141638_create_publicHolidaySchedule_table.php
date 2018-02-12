@@ -19,6 +19,8 @@ class CreatePublicHolidayScheduleTable extends Migration
             $table->string('name');
             $table->tinyInteger('isGeneral')->default(1);
             $table->tinyInteger('religionId')->nullable();
+            $table->tinyInteger('isApplied')->default(0);
+            $table->tinyInteger('onYear')->nullable();
             $table->timestamps();
         });
     }

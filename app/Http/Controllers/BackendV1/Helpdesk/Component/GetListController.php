@@ -16,6 +16,7 @@ use App\Attendance\Transformers\SlotMakerListTransformer;
 use App\Components\Models\BranchOffice;
 use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
+use App\Components\Models\Religion;
 use App\Components\Transformers\BasicComponentTrasnformer;
 use App\Components\Transformers\BasicSettingTrasnformer;
 use App\Components\Transformers\DivisionListTransfomer;
@@ -29,6 +30,14 @@ class GetListController extends Controller
 {
     use GlobalUtils;
 
+    public function religion($id)
+    {
+        return fractal(Religion::find($id), new BasicComponentTrasnformer())->respond(200);
+    }
+    public function religions()
+    {
+        return fractal(Religion::all(), new BasicComponentTrasnformer())->respond(200);
+    }
     public function jobPosition($id)
     {
         return fractal(JobPosition::find($id), new BasicComponentTrasnformer())->respond(200);
