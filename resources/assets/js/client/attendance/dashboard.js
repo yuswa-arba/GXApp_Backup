@@ -19,19 +19,5 @@ const app =  new Vue({
 
 $(document).ready(function(){
 
-    let liveClockFeedDT = $('#liveClockFeedDT');
-
-    liveClockFeedDT.dataTable({
-        "sDom": "t",
-        "destroy": true,
-        "paging": true,
-        "scrollCollapse": false,
-        "ordering": false
-    })
-
-
-
-    $('.dataTables_empty').hide()
-
 });
 

@@ -257,7 +257,7 @@
                             <input type="text" class="form-control" v-model="form.fatherPhoneNo">
                         </div>
 
-                        <div class="col-lg-12 employee-details">
+                        <div class="col-lg-4 employee-details">
                             <label>Father's Marital Status</label>
                             <select class="form-control" v-model="form.fatherMaritalStatusId">
                                 <option v-for="maritalStatus in maritalStatuses"
@@ -266,7 +266,13 @@
                                 </option>
                             </select>
                         </div>
-
+                        <div class="col-lg-4 employee-details">
+                            <label>Father is deceased?</label>
+                            <select class="form-control" v-model="form.fatherIsDeceased">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
+                            </select>
+                        </div>
                         <div class="col-lg-4 employee-details">
                             <label>Mother's Name</label>
                             <input type="text" class="form-control" v-model="form.motherName">
@@ -287,13 +293,20 @@
                             <input type="text" class="form-control" v-model="form.motherPhoneNo">
                         </div>
 
-                        <div class="col-lg-12 employee-details">
+                        <div class="col-lg-4 employee-details">
                             <label>Mother's Marital Status</label>
                             <select class="form-control" v-model="form.motherMaritalStatusId">
                                 <option v-for="maritalStatus in maritalStatuses"
                                         :value="maritalStatus.id">
                                     {{maritalStatus.name}}
                                 </option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 employee-details">
+                            <label>Mother is deceased?</label>
+                            <select class="form-control" v-model="form.motherIsDeceased">
+                                <option value="1">Yes</option>
+                                <option value="0">No</option>
                             </select>
                         </div>
 

@@ -560,12 +560,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     */
     Pages.prototype.initSelect2Plugin = function (context) {
         $.fn.select2 && $('[data-init-plugin="select2"]', context).each(function () {
+            var self = this;
             $(this).select2({
+                // closeOnSelect: false,
                 minimumResultsForSearch: $(this).attr('data-disable-search') == 'true' ? -1 : 1
             }).on('select2:open', function () {
                 $.fn.scrollbar && $('.select2-results__options').scrollbar({
                     ignoreMobile: false
                 });
+            }).on('select2:select', function () {
+                // $(this).select2('close')
             });
         });
     };

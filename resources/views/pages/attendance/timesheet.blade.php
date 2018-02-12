@@ -1,14 +1,17 @@
 @extends('layouts.main')
 
 @push('child-styles')
-<!-- push needed plugins for this page-->
-<link href="{{asset('plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css')}}" rel="stylesheet"
-      type="text/css"/>
+<!-- push needed for this plugins -->
+
+
 <link href="{{asset('plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css')}}"
       rel="stylesheet" type="text/css"/>
 <link href="{{asset('plugins/datatables-responsive/css/datatables.responsive.css')}}" rel="stylesheet" type="text/css"
       media="screen"/>
 <link href="{{asset('plugins/fullcalendar/css/fullcalendar.css')}}" rel="stylesheet" type="text/css" media="screen"/>
+<link href="{{asset('plugins/jquery-datatable/media/css/dataTables.bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
+
+@endpush
 
 @push('child-scripts-plugins')
 <!-- push needed plugins for this page -->
@@ -20,7 +23,7 @@
         type="text/javascript"></script>
 <script src="{{asset('plugins/datatables-responsive/js/datatables.responsive.js')}}"></script>
 <script src="{{asset('plugins/datatables-responsive/js/lodash.min.js')}}"></script>
-{{--<script src="{{asset('plugins/fullcalendar/js/moment.min.js')}}"></script>--}}
+<script src="{{asset('plugins/fullcalendar/js/moment.min.js')}}"></script>
 <script src="{{asset('plugins/fullcalendar/js/fullcalendar.min.js')}}"></script>
 <script src="{{asset('plugins/js/palette.js')}}"></script>
 @endpush

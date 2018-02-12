@@ -37037,20 +37037,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     store: __WEBPACK_IMPORTED_MODULE_3__vuex_dashboard_store__["a" /* store */]
 });
 
-$(document).ready(function () {
-
-    var liveClockFeedDT = $('#liveClockFeedDT');
-
-    liveClockFeedDT.dataTable({
-        "sDom": "t",
-        "destroy": true,
-        "paging": true,
-        "scrollCollapse": false,
-        "ordering": false
-    });
-
-    $('.dataTables_empty').hide();
-});
+$(document).ready(function () {});
 
 /***/ }),
 

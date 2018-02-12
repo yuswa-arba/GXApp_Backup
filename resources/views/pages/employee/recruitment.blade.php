@@ -191,6 +191,7 @@
                                                 <label class="">Marital Status</label>
                                                 <select class="full-width" data-placeholder="Select Marital Status"
                                                         data-init-plugin="select2"
+                                                        {{----}}
                                                         name="maritalStatusId"
                                                         required>
                                                     <option value="" disabled selected></option>
@@ -236,14 +237,28 @@
                                             </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Father's Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Marital Status"
+                                                <select class="full-width"
+                                                        data-placeholder="Select Marital Status"
                                                         data-init-plugin="select2"
+
                                                         name="fatherMaritalStatusId"
                                                         required>
                                                     <option value="" disabled selected></option>
                                                     @foreach($maritalStatuses as $maritalStatus)
                                                         <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                                <label class="">Father is deceased?</label>
+                                                <select class="full-width" data-placeholder="Select"
+
+                                                        data-init-plugin="select2"
+                                                        name="fatherIsDeceased"
+                                                        required>
+                                                    <option value="" disabled selected></option>
+                                                    <option value="0">No</option>
+                                                    <option value="1">Yes</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -273,12 +288,25 @@
                                                 <label class="">Mother's Marital Status</label>
                                                 <select class="full-width" data-placeholder="Select Marital Status"
                                                         data-init-plugin="select2"
+
                                                         name="motherMaritalStatusId"
                                                         required>
                                                     <option disabled selected></option>
                                                     @foreach($maritalStatuses as $maritalStatus)
                                                         <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                     @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                                <label class="">Mother is deceased?</label>
+                                                <select class="full-width" data-placeholder="Select"
+                                                        data-init-plugin="select2"
+
+                                                        name="motherIsDeceased"
+                                                        required>
+                                                    <option value="" disabled selected></option>
+                                                    <option value="0">No</option>
+                                                    <option value="1">Yes</option>
                                                 </select>
                                             </div>
                                         </div>

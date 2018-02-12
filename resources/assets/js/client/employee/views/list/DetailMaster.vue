@@ -230,9 +230,14 @@
                             <h5>{{detail.fatherPhoneNo}}</h5>
                         </div>
 
-                        <div class="col-lg-12 employee-details">
+                        <div class="col-lg-4 employee-details">
                             <label>Father's Marital Status</label>
                             <h5>{{detail.fatherMaritalStatus}}</h5>
+                        </div>
+
+                        <div class="col-lg-4 employee-details">
+                            <label></label>
+                            <h5 v-if="detail.fatherIsDeceased" class="text-danger bold">(Father is Deceased)</h5>
                         </div>
 
                         <div class="col-lg-4 employee-details">
@@ -255,9 +260,13 @@
                             <h5>{{detail.motherPhoneNo}}</h5>
                         </div>
 
-                        <div class="col-lg-12 employee-details">
+                        <div class="col-lg-4 employee-details">
                             <label>Mother's Marital Status</label>
                             <h5>{{detail.motherMaritalStatus}}</h5>
+                        </div>
+                        <div class="col-lg-4 employee-details">
+                            <label></label>
+                            <h5 v-if="detail.motherIsDeceased" class="text-danger bold">(Mother is Deceased)</h5>
                         </div>
 
                         <div class="col-lg-4 employee-details">

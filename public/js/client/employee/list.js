@@ -3054,6 +3054,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3387,6 +3396,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -22634,10 +22656,20 @@ var render = function() {
               _c("h5", [_vm._v(_vm._s(_vm.detail.fatherPhoneNo))])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Father's Marital Status")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.fatherMaritalStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label"),
+              _vm._v(" "),
+              _vm.detail.fatherIsDeceased
+                ? _c("h5", { staticClass: "text-danger bold" }, [
+                    _vm._v("(Father is Deceased)")
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
@@ -22664,10 +22696,20 @@ var render = function() {
               _c("h5", [_vm._v(_vm._s(_vm.detail.motherPhoneNo))])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Mother's Marital Status")]),
               _vm._v(" "),
               _c("h5", [_vm._v(_vm._s(_vm.detail.motherMaritalStatus))])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label"),
+              _vm._v(" "),
+              _vm.detail.motherIsDeceased
+                ? _c("h5", { staticClass: "text-danger bold" }, [
+                    _vm._v("(Mother is Deceased)")
+                  ])
+                : _vm._e()
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
@@ -24882,7 +24924,7 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Father's Marital Status")]),
               _vm._v(" "),
               _c(
@@ -24930,6 +24972,49 @@ var render = function() {
                     ]
                   )
                 })
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Father is deceased?")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.fatherIsDeceased,
+                      expression: "form.fatherIsDeceased"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "fatherIsDeceased",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "1" } }, [_vm._v("Yes")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "0" } }, [_vm._v("No")])
+                ]
               )
             ]),
             _vm._v(" "),
@@ -25037,7 +25122,7 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Mother's Marital Status")]),
               _vm._v(" "),
               _c(
@@ -25085,6 +25170,49 @@ var render = function() {
                     ]
                   )
                 })
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("label", [_vm._v("Mother is deceased?")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.motherIsDeceased,
+                      expression: "form.motherIsDeceased"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.$set(
+                        _vm.form,
+                        "motherIsDeceased",
+                        $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      )
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "1" } }, [_vm._v("Yes")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "0" } }, [_vm._v("No")])
+                ]
               )
             ]),
             _vm._v(" "),

@@ -262,6 +262,7 @@ class AttendanceLogic extends AttendanceUseCase
                         return $response;
 
                     } else {
+
                         $timeAvailable = Carbon::createFromFormat('H:i', Shifts::find($shiftId)->workEndAt)->format('H:i');
                         $response['isFailed'] = true;
                         $response['code'] = ResponseCodes::$ATTD_ERR_CODES['NOT_ALLOWED_TO_CLOCK_OUT'];
