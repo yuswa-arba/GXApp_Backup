@@ -3,25 +3,25 @@
         <div class="col-lg-5 m-b-10 m-t-10">
             <div class="card no-border">
                 <div class="card-block">
-                    <div class="parent-center">
-                        <p class="pull-left child-center fs-14">Allow employees to exchange slot</p>
-                        <input class="pull-right child-center" type="checkbox">
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="parent-center">
-                        <p class="pull-left child-center fs-14">Allow exchange without confirmation</p>
-                        <input class="pull-right child-center" type="checkbox">
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="parent-center">
-                        <p class="pull-left child-center fs-14">Allow managers to edit timesheets</p>
-                        <input class="pull-right child-center" type="checkbox">
-                    </div>
-                    <div class="clearfix"></div>
-                    <div class="parent-center">
-                        <p class="pull-left child-center fs-14">Auto-sync slots</p>
-                        <input class="pull-right child-center" type="checkbox">
-                    </div>
+                    <!--<div class="parent-center">-->
+                    <!--<p class="pull-left child-center fs-14">Allow employees to exchange slot</p>-->
+                    <!--<input class="pull-right child-center" type="checkbox">-->
+                    <!--</div>-->
+                    <!--<div class="clearfix"></div>-->
+                    <!--<div class="parent-center">-->
+                    <!--<p class="pull-left child-center fs-14">Allow exchange without confirmation</p>-->
+                    <!--<input class="pull-right child-center" type="checkbox">-->
+                    <!--</div>-->
+                    <!--<div class="clearfix"></div>-->
+                    <!--<div class="parent-center">-->
+                    <!--<p class="pull-left child-center fs-14">Allow managers to edit timesheets</p>-->
+                    <!--<input class="pull-right child-center" type="checkbox">-->
+                    <!--</div>-->
+                    <!--<div class="clearfix"></div>-->
+                    <!--<div class="parent-center">-->
+                    <!--<p class="pull-left child-center fs-14">Auto-sync slots</p>-->
+                    <!--<input class="pull-right child-center" type="checkbox">-->
+                    <!--</div>-->
 
                     <div class="clearfix"></div>
                     <p class="fs-12">If someone is not assigned to specific slot, he/she will be automatically assigned
@@ -35,8 +35,10 @@
                     <p class="fs-12">
                         Repeating slot maker SHOULD NOT be in the same year. <br>
                         Repeated slot maker will follow the source slot maker
-                        first date and add by 1 year (ex. B is a copy of A. A first date is 01/02/2017, B first date will be 01/02/2018),
-                        therefore it will follow the same date pattern but not the day. If the day is important for this slot, it is
+                        first date and add by 1 year (ex. B is a copy of A. A first date is 01/02/2017, B first date
+                        will be 01/02/2018),
+                        therefore it will follow the same date pattern but not the day. If the day is important for this
+                        slot, it is
                         recommended to generate a new slot maker instead of repeating the previous one.
                     </p>
                 </div>
@@ -55,7 +57,8 @@
             <div class="card card-bordered">
                 <div class="card-block">
                     <form id="slot-maker-form">
-                        <h4>Slot Maker Form</h4>
+                        <h4>Slot Maker Form <i class="fa fa-question-circle pointer"
+                                               @click="seeHow()"></i></h4>
                         <div>
 
 
@@ -78,8 +81,7 @@
                             <div class="row clearfix">
                                 <div class="col-md-6">
                                     <div class="form-group  required">
-                                        <label>Name <i class="fa fa-question-circle pointer"
-                                                       @click="seeHow()"></i></label>
+                                        <label>Name </label>
                                         <input type="text" class="form-control" name="name" required>
                                     </div>
                                 </div>
@@ -185,6 +187,13 @@
                                                v-if="slotMaker.isExecuted==1" @click="repeat(slotMaker.id)"></i>
                                             <i class="fs-14 fa fa-refresh pointer" v-else></i>
 
+
+                                            &nbsp;
+
+                                            <i class="fs-14 text-success fa fa-arrow-right pointer"
+                                               v-if="slotMaker.isExecuted==1" @click="autoAssign(slotMaker.id)"></i>
+                                            <i class="fs-14 fa fa-arrow-right pointer" v-else=""></i>
+
                                         </td>
                                     </tr>
                                     </tbody>
@@ -220,9 +229,9 @@
                         <div class="p-l-10">
                             <span style="font-style: italic">JobPositionName_6D_17</span>
                             <br>
-                            So you can use it like : <b>HouseHoldTrainee_5D_17</b>
+                            So, <b>HouseHoldTrainee_5D_17</b>
                             <br>
-                            It means this slot was made for <b>Household Trainee</b> on 20<b>17</b> and has <b>5</b>
+                            means this slot was made for <b>Household Trainee</b> on 20<b>17</b> and has <b>5</b>
                             working days
                         </div>
 
@@ -243,6 +252,11 @@
                             Slot 1 : 12/01/2017,18/01/2017,25/01/2017... <br>
                             Slot 2 : 13/01/2017,19/01/2017,26/01/2017... <br>
                             Slot 3 : 14/01/2017,20/01/2017,27/01/2017... <br>
+
+                            If it is related to job position, loop day value will automatically increase during
+                            execution according to
+                            how many employees has the job position, this is to prevent employee does not get the right
+                            slot(duplicated).
                         </div>
                         </p>
                         <p><span class="bold">4. Working Days: </span> Total working days before 1 day off</p>
@@ -413,7 +427,7 @@
                 if (confirm('Are you sure to repeat this slot maker? (Make sure it\'s not in the same year)')) {
                     post(api_path + 'attendance/slotMaker/repeat', {id: slotMakerId})
                         .then((res) => {
-                            if(!res.data.isFailed){
+                            if (!res.data.isFailed) {
                                 $('.page-container').pgNotification({
                                     style: 'flip',
                                     message: res.data.message,
@@ -433,6 +447,43 @@
                                 }).show();
                             }
 
+                        })
+                        .catch((err) => {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        })
+                }
+
+            },
+            autoAssign(slotMakerId){
+
+                if (confirm("Are you sure to auto assign this slot maker? Note that any existing slot schedule will be overwrite.")) {
+                    post(api_path + 'attendance/slotMaker/autoAssign', {id: slotMakerId})
+                        .then((res) => {
+                            if (!res.data.isFailed) {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+                                self.slotMakers = res.data.slotMakers
+                            } else {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            }
                         })
                         .catch((err) => {
                             $('.page-container').pgNotification({

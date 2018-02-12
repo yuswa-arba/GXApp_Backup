@@ -66,11 +66,16 @@ class SlotMakerController extends Controller
         return SlotMakerLogic::execute($request);
     }
 
-
     public function repeat(Request $request)
     {
         $request->validate(['id' => 'required']);
         return SlotMakerLogic::repeat($request);
+    }
+
+    public function autoAssign(Request $request)
+    {
+        $request->validate(['id'=>'required']);
+        return SlotMakerLogic::autoAssign($request);
     }
 
 

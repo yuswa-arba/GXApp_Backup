@@ -46,7 +46,6 @@ class AssignSlotLogic extends AssignUseCase
         }
 
         return response()->json($response, 200);
-
     }
 
     public function handleRemove($request)

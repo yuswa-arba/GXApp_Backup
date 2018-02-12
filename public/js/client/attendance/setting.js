@@ -2875,6 +2875,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3005,6 +3019,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             if (confirm('Are you sure to repeat this slot maker? (Make sure it\'s not in the same year)')) {
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/repeat', { id: slotMakerId }).then(function (res) {
+                    if (!res.data.isFailed) {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        self.slotMakers = res.data.slotMakers;
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            }
+        },
+        autoAssign: function autoAssign(slotMakerId) {
+
+            if (confirm("Are you sure to auto assign this slot maker? Note that any existing slot schedule will be overwrite.")) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/slotMaker/autoAssign', { id: slotMakerId }).then(function (res) {
                     if (!res.data.isFailed) {
                         $('.page-container').pgNotification({
                             style: 'flip',
@@ -30917,7 +30965,17 @@ var render = function() {
       _c("div", { staticClass: "card card-bordered" }, [
         _c("div", { staticClass: "card-block" }, [
           _c("form", { attrs: { id: "slot-maker-form" } }, [
-            _c("h4", [_vm._v("Slot Maker Form")]),
+            _c("h4", [
+              _vm._v("Slot Maker Form "),
+              _c("i", {
+                staticClass: "fa fa-question-circle pointer",
+                on: {
+                  click: function($event) {
+                    _vm.seeHow()
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", [
               _c("div", { staticClass: "form-group" }, [
@@ -30995,30 +31053,7 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              _c("div", { staticClass: "row clearfix" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group  required" }, [
-                    _c("label", [
-                      _vm._v("Name "),
-                      _c("i", {
-                        staticClass: "fa fa-question-circle pointer",
-                        on: {
-                          click: function($event) {
-                            _vm.seeHow()
-                          }
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: { type: "text", name: "name", required: "" }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._m(2)
-              ]),
+              _vm._m(2),
               _vm._v(" "),
               _vm._m(3),
               _vm._v(" "),
@@ -31151,6 +31186,22 @@ var render = function() {
                                 })
                               : _c("i", {
                                   staticClass: "fs-14 fa fa-refresh pointer"
+                                }),
+                            _vm._v(
+                              "\n\n\n                                         \n\n                                        "
+                            ),
+                            slotMaker.isExecuted == 1
+                              ? _c("i", {
+                                  staticClass:
+                                    "fs-14 text-success fa fa-arrow-right pointer",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.autoAssign(slotMaker.id)
+                                    }
+                                  }
+                                })
+                              : _c("i", {
+                                  staticClass: "fs-14 fa fa-arrow-right pointer"
                                 })
                           ])
                         ])
@@ -31223,56 +31274,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-lg-5 m-b-10 m-t-10" }, [
       _c("div", { staticClass: "card no-border" }, [
         _c("div", { staticClass: "card-block" }, [
-          _c("div", { staticClass: "parent-center" }, [
-            _c("p", { staticClass: "pull-left child-center fs-14" }, [
-              _vm._v("Allow employees to exchange slot")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "pull-right child-center",
-              attrs: { type: "checkbox" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "parent-center" }, [
-            _c("p", { staticClass: "pull-left child-center fs-14" }, [
-              _vm._v("Allow exchange without confirmation")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "pull-right child-center",
-              attrs: { type: "checkbox" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "parent-center" }, [
-            _c("p", { staticClass: "pull-left child-center fs-14" }, [
-              _vm._v("Allow managers to edit timesheets")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "pull-right child-center",
-              attrs: { type: "checkbox" }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "clearfix" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "parent-center" }, [
-            _c("p", { staticClass: "pull-left child-center fs-14" }, [
-              _vm._v("Auto-sync slots")
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              staticClass: "pull-right child-center",
-              attrs: { type: "checkbox" }
-            })
-          ]),
-          _vm._v(" "),
           _c("div", { staticClass: "clearfix" }),
           _vm._v(" "),
           _c("p", { staticClass: "fs-12" }, [
@@ -31299,7 +31300,7 @@ var staticRenderFns = [
             ),
             _c("br"),
             _vm._v(
-              "\n                    Repeated slot maker will follow the source slot maker\n                    first date and add by 1 year (ex. B is a copy of A. A first date is 01/02/2017, B first date will be 01/02/2018),\n                    therefore it will follow the same date pattern but not the day. If the day is important for this slot, it is\n                    recommended to generate a new slot maker instead of repeating the previous one.\n                "
+              "\n                    Repeated slot maker will follow the source slot maker\n                    first date and add by 1 year (ex. B is a copy of A. A first date is 01/02/2017, B first date\n                    will be 01/02/2018),\n                    therefore it will follow the same date pattern but not the day. If the day is important for this\n                    slot, it is\n                    recommended to generate a new slot maker instead of repeating the previous one.\n                "
             )
           ])
         ])
@@ -31320,23 +31321,36 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("div", { staticClass: "form-group required" }, [
-        _c("label", [_vm._v("First Date")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
+    return _c("div", { staticClass: "row clearfix" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group  required" }, [
+          _c("label", [_vm._v("Name ")]),
+          _vm._v(" "),
           _c("input", {
             staticClass: "form-control",
-            attrs: {
-              id: "firstdate",
-              type: "text",
-              name: "firstDate",
-              required: ""
-            }
-          }),
+            attrs: { type: "text", name: "name", required: "" }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "form-group required" }, [
+          _c("label", [_vm._v("First Date")]),
           _vm._v(" "),
-          _c("span", { staticClass: "input-group-addon" }, [
-            _c("i", { staticClass: "fa fa-calendar" })
+          _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
+            _c("input", {
+              staticClass: "form-control",
+              attrs: {
+                id: "firstdate",
+                type: "text",
+                name: "firstDate",
+                required: ""
+              }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "input-group-addon" }, [
+              _c("i", { staticClass: "fa fa-calendar" })
+            ])
           ])
         ])
       ])
@@ -31461,11 +31475,11 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("br"),
-        _vm._v("\n                        So you can use it like : "),
+        _vm._v("\n                        So, "),
         _c("b", [_vm._v("HouseHoldTrainee_5D_17")]),
         _vm._v(" "),
         _c("br"),
-        _vm._v("\n                        It means this slot was made for "),
+        _vm._v("\n                        means this slot was made for "),
         _c("b", [_vm._v("Household Trainee")]),
         _vm._v(" on 20"),
         _c("b", [_vm._v("17")]),
@@ -31516,7 +31530,10 @@ var staticRenderFns = [
         _vm._v(
           "\n                        Slot 3 : 14/01/2017,20/01/2017,27/01/2017... "
         ),
-        _c("br")
+        _c("br"),
+        _vm._v(
+          "\n\n                        If it is related to job position, loop day value will automatically increase during\n                        execution according to\n                        how many employees has the job position, this is to prevent employee does not get the right\n                        slot(duplicated).\n                    "
+        )
       ]),
       _vm._v(" "),
       _c("p"),

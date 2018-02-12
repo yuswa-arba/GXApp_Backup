@@ -23,7 +23,13 @@ abstract class ExecuteUseCase
         return (new static)->handleRepeat($request);
     }
 
+    public static function autoAssign(Request $request)
+    {
+        return(new static)->handleAutoAssign($request);
+    }
+
     abstract public function handleExecution($request);
+    abstract public function handleAutoAssign($request);
     abstract public function handleRepeat($request);
 
 }

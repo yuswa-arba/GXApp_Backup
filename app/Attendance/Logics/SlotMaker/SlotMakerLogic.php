@@ -10,8 +10,12 @@
 namespace App\Attendance\Logics\SlotMaker;
 
 use App\Attendance\Models\DayOffSchedule;
+use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\SlotMaker;
 use App\Attendance\Models\Slots;
+use App\Components\Models\JobPosition;
+use App\Employee\Models\Employment;
+use App\Employee\Models\MasterEmployee;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -28,6 +32,36 @@ class SlotMakerLogic extends ExecuteUseCase
         $slotMaker = SlotMaker::where('id', $request->get('id'))->where('isExecuted', '!=', 1)->first();
 
         if ($slotMaker) {
+
+            // Check if its related to job position and count loop day
+            if ($slotMaker->relatedToJobPosition) {
+
+                $jobPosition = JobPosition::find($slotMaker->jobPositionId);
+
+                if ($jobPosition) {
+
+                    $employeeIds = Employment::where('jobPositionId', $jobPosition->id)->get()->pluck('employeeId');
+
+                    foreach ($employeeIds as $key => $employeeId) { // check if employee has resigned
+
+                        $employee = MasterEmployee::find($employeeId);
+                        if ($employee) {
+                            if ($employee->hasResigned == 1) {
+                                array_splice($employeeIds, $key, 1); // remove from array employeeIds
+                            }
+                        }
+
+                    }
+
+                    // filtered
+
+                    $countEmployeeIds = count($employeeIds);
+
+                    // update slot maker loop day
+                    $slotMaker->totalDayLoop = $countEmployeeIds;
+                    $slotMaker->save();
+                }
+            }
 
             $execute = $this->createDayOffSlots($slotMaker)->updateSlotMaker($slotMaker);
 
@@ -70,7 +104,7 @@ class SlotMakerLogic extends ExecuteUseCase
         $slotMaker = SlotMaker::find($request->get('id'));
 
         // Check year compatible
-        if(Carbon::createFromFormat('d/m/Y',$slotMaker->firstDate)->format('Y')==$this->currentYear()){
+        if (Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->format('Y') == $this->currentYear()) {
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Failed! Repeating must not be in the same year';
@@ -78,7 +112,7 @@ class SlotMakerLogic extends ExecuteUseCase
         }
 
         //Check if exist
-        if(SlotMaker::where('name',$slotMaker->name . '_' . $this->currentYear())->count()>0){
+        if (SlotMaker::where('name', $slotMaker->name . '_' . $this->currentYear())->count() > 0) {
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Failed! This slot maker has been repeated once this year';
@@ -87,15 +121,46 @@ class SlotMakerLogic extends ExecuteUseCase
 
         $repeatSlotMaker = SlotMaker::create([
             'name' => $slotMaker->name . '_' . $this->currentYear(),
-            'firstDate' =>Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addYear()->format('d/m/Y'),
-            'relatedToJobPosition' =>$slotMaker->relatedToJobPosition,
-            'jobPositionId'=>$slotMaker->jobPositionId,
-            'totalDayLoop'=>$slotMaker->totalDayLoop,
-            'workingDays'=>$slotMaker->workingDays,
-            'allowMultipleAssign'=>$slotMaker->allowMultipleAssign
+            'firstDate' => Carbon::createFromFormat('d/m/Y', $slotMaker->firstDate)->addYear()->format('d/m/Y'),
+            'relatedToJobPosition' => $slotMaker->relatedToJobPosition,
+            'jobPositionId' => $slotMaker->jobPositionId,
+            'totalDayLoop' => $slotMaker->totalDayLoop,
+            'workingDays' => $slotMaker->workingDays,
+            'allowMultipleAssign' => $slotMaker->allowMultipleAssign
         ]);
 
         if ($repeatSlotMaker) {
+
+            // Check if its related to job position and count loop day
+            if ($repeatSlotMaker->relatedToJobPosition) {
+
+                $jobPosition = JobPosition::find($repeatSlotMaker->jobPositionId);
+
+                if ($jobPosition) {
+
+                    $employeeIds = Employment::where('jobPositionId', $jobPosition->id)->get()->pluck('employeeId');
+
+                    foreach ($employeeIds as $key => $employeeId) { // check if employee has resigned
+
+                        $employee = MasterEmployee::find($employeeId);
+                        if ($employee) {
+                            if ($employee->hasResigned == 1) {
+                                array_splice($employeeIds, $key, 1); // remove from array employeeIds
+                            }
+                        }
+
+                    }
+
+                    // filtered
+
+                    $countEmployeeIds = count($employeeIds);
+
+                    // update slot maker loop day
+                    $slotMaker->totalDayLoop = $countEmployeeIds;
+                    $repeatSlotMaker->save();
+                }
+            }
+
 
             $execute = $this->createDayOffSlots($repeatSlotMaker)->updateSlotMaker($repeatSlotMaker);
 
@@ -205,4 +270,77 @@ class SlotMakerLogic extends ExecuteUseCase
             ->update(['isExecuted' => 1, 'executedAt' => Carbon::now(), 'executedBy' => !is_null(Auth::user()->employee) ? Auth::user()->employee->givenName : '']);
     }
 
+    public function handleAutoAssign($request)
+    {
+        $response = array();
+        $slotMaker = SlotMaker::find($request->id);
+
+        if ($slotMaker) {
+
+            if ($slotMaker->isExecuted == 1 && $slotMaker->relatedToJobPosition) {
+
+                $jobPosition = JobPosition::find($slotMaker->jobPositionId);
+
+                if ($jobPosition) {
+
+                    $employeeIds = Employment::where('jobPositionId', $jobPosition->id)->get()->pluck('employeeId');
+
+                    foreach ($employeeIds as $key => $employeeId) { // check if employee has resigned
+
+                        $employee = MasterEmployee::find($employeeId);
+                        if ($employee) {
+                            if ($employee->hasResigned == 1) {
+                                array_splice($employeeIds, $key, 1); // remove from array employeeIds
+                            }
+                        }
+
+                    }
+
+                    //filtered employee Ids
+                    $i = 0;
+                    foreach ($employeeIds as $employeeId) {
+
+                        $slot = Slots::where('slotMakerId',$slotMaker->id)->where('positionOrder',$i+1)->first();
+
+                        if($slot){
+
+                            //assign slots to employee
+                            EmployeeSlotSchedule::updateOrCreate(
+                                [
+                                    'employeeId'=>$employeeId
+                                ],
+                                [
+                                    'slotId'=>$slot->id,
+                                    'setBy'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
+                                    'setAt'=>Carbon::now()
+                                ]
+                            );
+
+                        }
+                        $i++;
+                    }
+
+                    $response['isFailed'] = false;
+                    $response['message'] = 'Auto assign has been executed successfully';
+                    return response()->json($response,200);
+
+                } else {
+                    $response['isFailed'] = true;
+                    $response['message'] = 'Unable to find job position';
+                    return response()->json($response, 200);
+                }
+            } else {
+                $response['isFailed'] = true;
+                $response['message'] = 'Slot maker has not been executed yet or is not related to any job position';
+                return response()->json($response, 200);
+            }
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find slot maker data';
+            return response()->json($response, 200);
+        }
+
+
+    }
 }

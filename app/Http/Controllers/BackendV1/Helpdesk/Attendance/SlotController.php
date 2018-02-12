@@ -59,6 +59,7 @@ class SlotController extends Controller
     public function employeeList(Request $request)
     {
         $validator = Validator::make($request->all(), ['slotId' => 'required']);
+
         if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Slot ID required';
