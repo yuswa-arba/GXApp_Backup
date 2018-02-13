@@ -34,12 +34,9 @@
                                             <i class="fs-16 text-danger fa fa-times" v-else=""></i>
                                         </td>
                                         <td>
-                                            <i class="fs-14 text-success fa fa-play pointer" v-if="!pubHoliday.isApplied"></i>
-                                            <i class="fs-14 fa fa-play" v-else=""></i>
+                                            <i class="fs-14 text-success fa fa-play pointer" @click="applyPublicHoliday(pubHoliday.id,index)"></i>
                                             &nbsp; &nbsp;
-                                            <i class="fs-14 text-danger fa fa-trash pointer"
-                                               v-if="!pubHoliday.isApplied" @click="deletePublicHoliday(pubHoliday.id,index)"></i>
-                                            <i class="fs-14 fa fa-trash" v-else=""></i>
+                                            <i class="fs-14 text-danger fa fa-trash pointer" @click="deletePublicHoliday(pubHoliday.id,index)"></i>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -71,8 +68,8 @@
                         <div class="form-group form-group-default-select2">
                             <label class="">Religion</label>
                             <select class="form-control" v-model="formObject.religionId">
-                                <!--<option value="" disabled selected hidden>Select Religion</option>-->
-                                <!--<option value="all">All</option>-->
+                                <option value="" disabled selected hidden>Select Religion</option>
+                                <option value="all">All(General</option>
                                 <option :value="religion.id" v-for="religion in religions">{{religion.name}}</option>
                             </select>
                         </div>
@@ -150,7 +147,9 @@
                     .then((res) => {
                         if (!res.data.isFailed) {
 
-                            self.publicHolidays = res.data.publicHolidays.data;
+                            _.forEach(res.data.publicHolidays.data,function(value,key){
+                                self.publicHolidays.unshift(value)
+                            })
 
                             $('.page-container').pgNotification({
                                 style: 'flip',
@@ -208,6 +207,47 @@
                                 }).show();
                             }
                         }).catch((err) => {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    })
+                }
+            },
+            applyPublicHoliday(id,index){
+                let self = this
+                if(confirm("Apply this public holiday now ?")){
+                    post(api_path + 'attendance/pubHoliday/apply', {id:id})
+                        .then((res) => {
+                            if (!res.data.isFailed) {
+
+                                let updatePubHoliday = self.publicHolidays[index]
+                                updatePubHoliday.isApplied = 1
+
+                                self.publicHolidays.splice(index,1,updatePubHoliday)
+
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+                            } else {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            }
+                        }).catch((err) => {
+
                         $('.page-container').pgNotification({
                             style: 'flip',
                             message: err.message,

@@ -2361,9 +2361,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -2407,7 +2404,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/pubHoliday/create', self.formObject).then(function (res) {
                 if (!res.data.isFailed) {
 
-                    self.publicHolidays = res.data.publicHolidays.data;
+                    _.forEach(res.data.publicHolidays.data, function (value, key) {
+                        self.publicHolidays.unshift(value);
+                    });
 
                     $('.page-container').pgNotification({
                         style: 'flip',
@@ -2461,6 +2460,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         }).show();
                     }
                 }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            }
+        },
+        applyPublicHoliday: function applyPublicHoliday(id, index) {
+            var self = this;
+            if (confirm("Apply this public holiday now ?")) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/pubHoliday/apply', { id: id }).then(function (res) {
+                    if (!res.data.isFailed) {
+
+                        var updatePubHoliday = self.publicHolidays[index];
+                        updatePubHoliday.isApplied = 1;
+
+                        self.publicHolidays.splice(index, 1, updatePubHoliday);
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+
                     $('.page-container').pgNotification({
                         style: 'flip',
                         message: err.message,
@@ -30596,29 +30634,30 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("td", [
-                              !pubHoliday.isApplied
-                                ? _c("i", {
-                                    staticClass:
-                                      "fs-14 text-success fa fa-play pointer"
-                                  })
-                                : _c("i", { staticClass: "fs-14 fa fa-play" }),
+                              _c("i", {
+                                staticClass:
+                                  "fs-14 text-success fa fa-play pointer",
+                                on: {
+                                  click: function($event) {
+                                    _vm.applyPublicHoliday(pubHoliday.id, index)
+                                  }
+                                }
+                              }),
                               _vm._v(
                                 "\n                                           \n                                        "
                               ),
-                              !pubHoliday.isApplied
-                                ? _c("i", {
-                                    staticClass:
-                                      "fs-14 text-danger fa fa-trash pointer",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.deletePublicHoliday(
-                                          pubHoliday.id,
-                                          index
-                                        )
-                                      }
-                                    }
-                                  })
-                                : _c("i", { staticClass: "fs-14 fa fa-trash" })
+                              _c("i", {
+                                staticClass:
+                                  "fs-14 text-danger fa fa-trash pointer",
+                                on: {
+                                  click: function($event) {
+                                    _vm.deletePublicHoliday(
+                                      pubHoliday.id,
+                                      index
+                                    )
+                                  }
+                                }
+                              })
                             ])
                           ])
                         })
@@ -30729,11 +30768,33 @@ var render = function() {
                       }
                     }
                   },
-                  _vm._l(_vm.religions, function(religion) {
-                    return _c("option", { domProps: { value: religion.id } }, [
-                      _vm._v(_vm._s(religion.name))
-                    ])
-                  })
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: {
+                          value: "",
+                          disabled: "",
+                          selected: "",
+                          hidden: ""
+                        }
+                      },
+                      [_vm._v("Select Religion")]
+                    ),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "all" } }, [
+                      _vm._v("All(General")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.religions, function(religion) {
+                      return _c(
+                        "option",
+                        { domProps: { value: religion.id } },
+                        [_vm._v(_vm._s(religion.name))]
+                      )
+                    })
+                  ],
+                  2
                 )
               ]
             ),

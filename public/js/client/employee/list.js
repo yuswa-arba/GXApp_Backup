@@ -22457,7 +22457,7 @@ var render = function() {
             _c("div", { staticClass: "col-lg-4 employee-details" }, [
               _c("label", [_vm._v("Religion")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.gender))]),
+              _c("h5", [_vm._v(_vm._s(_vm.detail.religion))]),
               _vm._v(" "),
               _c("label", [_vm._v("Hometown")]),
               _vm._v(" "),

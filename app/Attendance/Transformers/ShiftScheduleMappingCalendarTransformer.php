@@ -12,11 +12,7 @@ use League\Fractal\TransformerAbstract;
 
 class ShiftScheduleMappingCalendarTransformer extends TransformerAbstract
 {
-    /**
-     * A Fractal transformer.
-     *
-     * @return array
-     */
+
     public function transform(SlotShiftSchedule $slotShiftSchedule)
     {
         return [

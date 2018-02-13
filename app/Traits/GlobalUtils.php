@@ -156,6 +156,22 @@ trait GlobalUtils
         return !is_null($collection->$a)?!is_null($collection->$a->$b)?!is_null($collection->$a->$b->$c)?$collection->$a->$b->$c->$result:'':'':'';
     }
 
+    function sortBy($field, &$array, $direction = 'asc')
+    {
+        usort($array, create_function('$a, $b', '
+        $a = $a["' . $field . '"];
+        $b = $b["' . $field . '"];
+
+        if ($a == $b) return 0;
+
+        $direction = strtolower(trim($direction));
+
+        return ($a ' . ($direction == 'desc' ? '>' : '<') .' $b) ? -1 : 1;
+    '));
+
+        return true;
+    }
+
 
 
 }

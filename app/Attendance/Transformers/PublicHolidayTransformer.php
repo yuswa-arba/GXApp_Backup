@@ -5,7 +5,7 @@ namespace App\Attendance\Transformers;
 use App\Attendance\Models\AttendanceSchedule;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\Kiosks;
-use App\Attendance\Models\PublicHolidaySchedule;
+use App\Attendance\Models\PublicHoliday;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotMaker;
 use App\Attendance\Models\Slots;
@@ -20,7 +20,7 @@ class PublicHolidayTransformer extends TransformerAbstract
     use GlobalUtils;
 
 
-    public function transform(PublicHolidaySchedule $holidaySchedule)
+    public function transform(PublicHoliday $holidaySchedule)
     {
         return [
             'id' => $holidaySchedule->id,

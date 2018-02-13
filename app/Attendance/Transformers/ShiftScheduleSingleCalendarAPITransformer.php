@@ -2,15 +2,12 @@
 
 namespace App\Attendance\Transformers;
 
-use App\Attendance\Models\DayOffSchedule;
-use App\Attendance\Models\SlotMaker;
-use App\Attendance\Models\Slots;
 use App\Attendance\Models\SlotShiftSchedule;
-use App\Employee\Models\MasterEmployee;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use League\Fractal\TransformerAbstract;
 
+/* @desc called from API call to show calendar data of specific slot */
 class ShiftScheduleSingleCalendarAPITransformer extends TransformerAbstract
 {
     use GlobalUtils;

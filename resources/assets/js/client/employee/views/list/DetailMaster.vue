@@ -56,7 +56,7 @@
                         </div>
                         <div class="col-lg-4 employee-details">
                             <label>Religion</label>
-                            <h5>{{detail.gender}}</h5>
+                            <h5>{{detail.religion}}</h5>
 
                             <label>Hometown</label>
                             <h5>{{detail.hometown}}</h5>

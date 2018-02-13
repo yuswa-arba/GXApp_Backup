@@ -10,6 +10,7 @@
 namespace App\Attendance\Logics\Misc;
 
 use App\Attendance\Models\DayOffSchedule;
+use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Attendance\Transformers\ShiftScheduleSingleCalendarTransformer;
 use App\Attendance\Transformers\DayOffSingleCalendarTransformer;
@@ -19,11 +20,10 @@ use App\Traits\GlobalUtils;
 class GetCalendarLogic extends GetDataUseCase
 {
     use GlobalUtils;
+
     public function handle($request)
     {
-
         $response = array();
-
 
 //        $dayOffSchedule = DayOffSchedule::where('slotId', $request->slotId)->get();
 //        $shiftSchedule = SlotShiftSchedule::where('slotId', $request->slotId)->get();
@@ -37,6 +37,7 @@ class GetCalendarLogic extends GetDataUseCase
 
         $response['dayOffs'] = fractal($dayOffSchedule, new DayOffSingleCalendarTransformer());
         $response['shiftSchedules'] = fractal($shiftSchedule, new ShiftScheduleSingleCalendarTransformer());
+        $response['pubHolidaySchedules'] = fractal();
 
         return response()->json($response,200);
     }

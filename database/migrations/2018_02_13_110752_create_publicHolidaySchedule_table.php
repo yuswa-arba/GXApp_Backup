@@ -15,12 +15,12 @@ class CreatePublicHolidayScheduleTable extends Migration
     {
         Schema::create('publicHolidaySchedule', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('date');
-            $table->string('name');
-            $table->tinyInteger('isGeneral')->default(1);
-            $table->tinyInteger('religionId')->nullable();
-            $table->tinyInteger('isApplied')->default(0);
-            $table->tinyInteger('onYear')->nullable();
+            $table->string('employeeId');
+            $table->integer('pubHolidayId');
+            $table->string('originalDate');
+            $table->string('applyDate');
+            $table->integer('positionOrder');
+            $table->integer('fromSlotId');
             $table->timestamps();
         });
     }

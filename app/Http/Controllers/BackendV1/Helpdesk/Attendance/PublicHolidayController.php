@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Attendance;
 
+use App\Attendance\Logics\PublicHoliday\ApplyPubHolidayUseCase;
+use App\Attendance\Logics\PublicHoliday\ApplyPublicHolidayLogic;
+use App\Attendance\Models\PublicHoliday;
 use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Transformers\PublicHolidayTransformer;
 use App\Http\Controllers\Controller;
@@ -16,7 +19,7 @@ class PublicHolidayController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['permission:view attendance']);
+//        $this->middleware(['permission:view attendance']);
     }
 
     public function create(Request $request)
@@ -59,7 +62,7 @@ class PublicHolidayController extends Controller
             if (count($dateRange) > 0) {
                 foreach ($dateRange as $date) {
 
-                    $insert = PublicHolidaySchedule::updateOrCreate(
+                    $insert = PublicHoliday::updateOrCreate(
                         [
                             'date' => $date,
                             'name' => $request->holidayName,
@@ -86,7 +89,7 @@ class PublicHolidayController extends Controller
 
         } else { // else if the same
 
-            $insert = PublicHolidaySchedule::updateOrCreate(
+            $insert = PublicHoliday::updateOrCreate(
                 [
                     'date' => $request->dateStart,
                     'name' => $request->holidayName,
@@ -107,7 +110,7 @@ class PublicHolidayController extends Controller
         //return success response
         $response['isFailed'] = false;
         $response['message'] = 'Public holiday has been inserted successfully';
-        $response['publicHolidays'] = fractal(PublicHolidaySchedule::whereIn('id', $insertedIds)->get(), new PublicHolidayTransformer());
+        $response['publicHolidays'] = fractal(PublicHoliday::whereIn('id', $insertedIds)->get(), new PublicHolidayTransformer());
 
         return response()->json($response, 200);
     }
@@ -115,7 +118,7 @@ class PublicHolidayController extends Controller
     public function getList()
     {
         $response = array();
-        $publicHolidaySchedules = PublicHolidaySchedule::orderBy('created_at', 'desc')->get();
+        $publicHolidaySchedules = PublicHoliday::orderBy('created_at', 'desc')->get();
 
         if ($publicHolidaySchedules) {
 
@@ -148,25 +151,24 @@ class PublicHolidayController extends Controller
 
         //is valid
 
-        $pubHolidaySchedule = PublicHolidaySchedule::find($request->id);
+        $pubHoliday = PublicHoliday::find($request->id);
 
-        if ($pubHolidaySchedule) {
-            if (!$pubHolidaySchedule->isApplied) {
+        if ($pubHoliday) {
 
-                if ($pubHolidaySchedule->delete()) {
+            if ($pubHoliday->isApplied) {
+                # delete all public holiday in schedule
+                PublicHolidaySchedule::where('pubHolidayId',$pubHoliday->id)->delete();
+            }
 
-                    $response['isFailed'] = false;
-                    $response['message'] = 'Has been deleted successfully';
-                    return response()->json($response, 200);
+            if ($pubHoliday->delete()) {
 
-                } else {
-                    $response['isFailed'] = true;
-                    $response['message'] = 'Unable to delete';
-                    return response()->json($response, 200);
-                }
+                $response['isFailed'] = false;
+                $response['message'] = 'Has been deleted successfully';
+                return response()->json($response, 200);
+
             } else {
                 $response['isFailed'] = true;
-                $response['message'] = 'Unable to delete this public holiday because it has been applied';
+                $response['message'] = 'Unable to delete';
                 return response()->json($response, 200);
             }
 
@@ -182,7 +184,7 @@ class PublicHolidayController extends Controller
     public function apply(Request $request)
     {
         $response = array();
-        $validator = Validator::make($request->all(), ['id' => $request->id]);
+        $validator = Validator::make($request->all(), ['id' => 'required']);
 
 
         if ($validator->fails()) {
@@ -193,11 +195,11 @@ class PublicHolidayController extends Controller
 
         //is valid
 
-        $pubHolidaySchedule = PublicHolidaySchedule::find($request->id);
+        $pubHolidaySchedule = PublicHoliday::find($request->id);
 
         if ($pubHolidaySchedule) {
 
-            //TODO : logic to apply public holiday
+            return ApplyPublicHolidayLogic::apply($request);
 
         } else {
             $response['isFailed'] = true;
