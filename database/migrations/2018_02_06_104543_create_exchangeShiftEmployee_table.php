@@ -24,6 +24,8 @@ class CreateExchangeShiftEmployeeTable extends Migration
             $table->tinyInteger('confirmType')->default(0);
             $table->string('confirmedDate')->nullable();
             $table->string('confirmedTime')->nullable();
+            $table->tinyInteger('isDayOff')->default(0);
+            $table->tinyInteger('isPublicHoliday')->default(0);
             $table->timestamps();
         });
     }

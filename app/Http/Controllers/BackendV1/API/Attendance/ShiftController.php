@@ -7,6 +7,7 @@ use App\Attendance\Logics\Shift\ExchangeShiftLogic;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\ExchangeShiftEmployee;
 use App\Attendance\Models\Kiosks;
+use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Attendance\Transformers\DayOffSingleCalendarAPITransformer;
@@ -95,11 +96,42 @@ class ShiftController extends Controller
 
                     //is valid
 
+                    $dayOffSchedule = DayOffSchedule::where('slotId', $requesterSlotId)->where('date', $request->fromDate)->first();
+
                     //is day off
                     $response['isFailed'] = false;
                     $response['message'] = 'Success';
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['isDayOff'] = 1;
+                    $response['dayOffName'] = $dayOffSchedule->description?:null;
+                    $response['isPublicHoliday'] = 0;
+                    $response['publicHolidayName']=null;
+
+                    return response()->json($response, 200);
+
+                } else if ($this->checkIfFromDateIsPublicHoliday($requesterSlotId, $request->fromDate)) {
+
+                    if (Carbon::now()->addDays(2)->gt($parseFromDate)) { //check if today is valid to exchange day offs
+
+                        $response['isFailed'] = true;
+                        $response['code'] = ResponseCodes::$ATTD_ERR_CODES['3_DAYS_BEFORE_EXCHANGE_DAY_OFF'];
+                        $response['message'] = 'Unable to exchange this day off. (min. 3 days before requested date)';
+
+                        return response()->json($response, 200);
+                    }
+
+                    //is valid
+
+                    $publicHolidaySchedule = PublicHolidaySchedule::where('fromSlotId', $requesterSlotId)->where('applyDate', $request->fromDate)->first();
+
+                    //is day off
+                    $response['isFailed'] = false;
+                    $response['message'] = 'Success';
+                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                    $response['isDayOff'] = 0;
+                    $response['dayOffName'] = null;
+                    $response['isPublicHoliday'] = 1;
+                    $response['publicHolidayName']=$this->getResultWithNullChecker1Connection($publicHolidaySchedule,'publicHoliday','name');
 
                     return response()->json($response, 200);
 
@@ -110,6 +142,7 @@ class ShiftController extends Controller
                     $response['message'] = 'Success';
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['isDayOff'] = 0;
+                    $response['isPublicHoliday'] = 0;
 
                     return response()->json($response, 200);
 
@@ -237,6 +270,64 @@ class ShiftController extends Controller
         }
     }
 
+    public function attemptExchangePublicHoliday(Request $request)
+    {
+        $response = array();
+
+        if ($this->checkUserEmployee()) {
+
+            $user = Auth::guard('api')->user(); //user
+            $employee = $user->employee; // employee
+
+            if ($employee) {
+
+                // Requester slotID
+                $requesterSlotId = $employee->slotSchedule->slotId ?: 1; //else use default slot
+
+                $validator = Validator::make($request->all(), ['fromDate' => 'required']);
+
+                if ($validator->fails()) {
+
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+                    $response['message'] = 'Required parameter is missing';
+
+                    return response()->json($response, 200);
+                }
+
+                $parseFromDate = Carbon::createFromFormat('d/m/Y', $request->fromDate);
+
+                if ($parseFromDate->lt(Carbon::now())) { // validate request must be greater than today's date
+
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_CHANGE_PAST_DATES'];
+                    $response['message'] = 'Unable to change past dates';
+                    return response()->json($response, 200);
+
+                }
+
+                //is valid
+
+                return ExchangeShiftLogic::attemptExchangePublicHoliday($request);
+
+            } else {
+                /* Error Response */
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+                $response['message'] = 'Employee data not found';
+                return response()->json($response, 200);
+            }
+
+
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$USER_ERR_CODE['USER_ACCESS_NOT_GRANTED'];
+            $response['message'] = 'User\'s access not granted';
+
+            return response()->json($response, 200);
+        }
+    }
+
     public function requestExchange(Request $request)
     {
 
@@ -322,23 +413,23 @@ class ShiftController extends Controller
 
             if ($employee) {
 
-                $exchangeShifts = ExchangeShiftEmployee::where('employeeId2',$employee->id)->orderBy('id','desc')->get();
+                $exchangeShifts = ExchangeShiftEmployee::where('employeeId2', $employee->id)->orderBy('id', 'desc')->get();
 
-                if($exchangeShifts){
+                if ($exchangeShifts) {
 
                     $response['isFailed'] = false;
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Success';
-                    $response['exchangeShiftRequestResponse'] = fractal($exchangeShifts,new ExchangeShiftEmployeeTransformer());
+                    $response['exchangeShiftRequestResponse'] = fractal($exchangeShifts, new ExchangeShiftEmployeeTransformer());
 
-                    return response()->json($response,200);
+                    return response()->json($response, 200);
 
                 } else {
                     $response['isFailed'] = true;
                     $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EXCHANGE_SHIFT_DATA_NOT_FOUND'];
                     $response['message'] = 'Data not found';
 
-                    return response()->json($response,200);
+                    return response()->json($response, 200);
                 }
 
             } else {
@@ -373,23 +464,23 @@ class ShiftController extends Controller
 
             if ($employee) {
 
-                $exchangeShifts = ExchangeShiftEmployee::where('employeeId1',$employee->id)->orderBy('id','desc')->get();
+                $exchangeShifts = ExchangeShiftEmployee::where('employeeId1', $employee->id)->orderBy('id', 'desc')->get();
 
-                if($exchangeShifts){
+                if ($exchangeShifts) {
 
                     $response['isFailed'] = false;
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Success';
-                    $response['exchangeShiftRequestResponse'] = fractal($exchangeShifts,new ExchangeShiftEmployeeTransformer());
+                    $response['exchangeShiftRequestResponse'] = fractal($exchangeShifts, new ExchangeShiftEmployeeTransformer());
 
-                    return response()->json($response,200);
+                    return response()->json($response, 200);
 
                 } else {
                     $response['isFailed'] = true;
                     $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EXCHANGE_SHIFT_DATA_NOT_FOUND'];
                     $response['message'] = 'Data not found';
 
-                    return response()->json($response,200);
+                    return response()->json($response, 200);
                 }
 
             } else {
@@ -419,6 +510,16 @@ class ShiftController extends Controller
             return false;
         }
 
+    }
+
+    private function checkIfFromDateIsPublicHoliday($requesterSlotId, $fromDate)
+    {
+        $checkPublicHoliday = PublicHolidaySchedule::where('fromSlotId', $requesterSlotId)->where('applyDate', $fromDate)->count();
+        if ($checkPublicHoliday > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

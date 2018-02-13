@@ -22,6 +22,11 @@ abstract class ExchangeShiftUseCase
         return (new static)->handleAttemptExchangeWorkingDay($request);
     }
 
+    public static function attemptExchangePublicHoliday(Request $request){
+        return (new static)->handleAttemptExchangePublicHoliday($request);
+    }
+
+
     public static function requestExchange(Request $request){
         return (new static)->handleRequestExchange($request);
     }
@@ -32,6 +37,7 @@ abstract class ExchangeShiftUseCase
     }
 
     abstract public function handleAttemptExchangeDayOff($request);
+    abstract public function handleAttemptExchangePublicHoliday($request);
     abstract public function handleAttemptExchangeWorkingDay($request);
     abstract public function handleRequestExchange($request);
     abstract public function handleAnswerRequest($request);

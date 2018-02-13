@@ -28,6 +28,7 @@ Route::prefix('v1/a')->group(function () {
 
             Route::get('shift/exchange/checkDate', 'ShiftController@attemptCheckDate');
             Route::get('shift/exchange/attempt/workday', 'ShiftController@attemptExchangeWorkingDay');
+            Route::get('shift/exchange/attempt/pubHoliday','ShiftController@attemptExchangePublicHoliday');
             Route::get('shift/exchange/attempt/dayoff', 'ShiftController@attemptExchangeDayOff');
             Route::post('shift/exchange/request','ShiftController@requestExchange');
             Route::post('shift/exchange/answer','ShiftController@answerExchange');

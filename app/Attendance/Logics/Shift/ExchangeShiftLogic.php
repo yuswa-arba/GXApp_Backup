@@ -12,6 +12,8 @@ namespace App\Attendance\Logics\Shift;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\ExchangeShiftEmployee;
+use App\Attendance\Models\PublicHoliday;
+use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
 use App\Attendance\Models\SlotShiftSchedule;
@@ -85,6 +87,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                 $possibleExchanges[$i]['date'] = $slotShiftSchedule->date;
                                 $possibleExchanges[$i]['isDayOff'] = 0;
                                 $possibleExchanges[$i]['dayOffName'] = null;
+                                $possibleExchanges[$i]['isPublicHoliday'] = 0;
+                                $possibleExchanges[$i]['publicHolidayName'] = null;
 
                                 $i++; //increment
 
@@ -103,6 +107,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                     $possibleExchanges[$i]['date'] = $request->fromDate;
                                     $possibleExchanges[$i]['isDayOff'] = 0;
                                     $possibleExchanges[$i]['dayOffName'] = null;
+                                    $possibleExchanges[$i]['isPublicHoliday'] = 0;
+                                    $possibleExchanges[$i]['publicHolidayName'] = null;
 
                                     $i++; //increment
                                 }
@@ -187,11 +193,12 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                     $possibleExchanges[$j]['date'] = $dayOffSchedule->date;
                                     $possibleExchanges[$j]['isDayOff'] = 1;
                                     $possibleExchanges[$j]['dayOffName'] = $dayOffSchedule->description;
+                                    $possibleExchanges[$j]['isPublicHoliday'] = 0;
+                                    $possibleExchanges[$j]['publicHolidayName'] = null;
 
                                     $j++;//increment
 
                                 }
-
                             }
                         }
                     }
@@ -217,6 +224,72 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
         }
     }
 
+    public function handleAttemptExchangePublicHoliday($request)
+    {
+        $user = Auth::guard('api')->user(); //user
+        $employee = $user->employee; // employee
+        $response = array();
+
+        $employeePublicHolidayId = PublicHolidaySchedule::where('applyDate', $request->fromDate)
+            ->where('employeeId', $employee->id)
+            ->orderBy('id', 'desc')->first()->pubHolidayId;
+
+        // Possible Exchange
+        $possibleExchanges = array();
+
+        if ($employeePublicHolidayId) {
+
+            $publicHolidaySchedules = PublicHolidaySchedule::where('pubHolidayId', $employeePublicHolidayId)
+                ->where('employeeId', '!=', $employee->id)->get();  //dont include self
+
+            $j = 0;
+
+            foreach ($publicHolidaySchedules as $publicHolidaySchedule) {
+
+                if ($publicHolidaySchedule->applyDate && $request->fromDate) { // Make sure dates are not empty
+
+                    $parseFromDate = Carbon::createFromFormat('d/m/Y', $request->fromDate);
+                    $parsePublicHolidayDate = Carbon::createFromFormat('d/m/Y', $publicHolidaySchedule->applyDate);
+
+                    // Make sure day off dates is greater than today and it's in current year
+                    if ($parsePublicHolidayDate->gt(Carbon::now()) && $parsePublicHolidayDate->year == $parseFromDate->year) {
+
+                        $possibleExchanges[$j]['employeeId'] = $publicHolidaySchedule->employeeId;
+                        $possibleExchanges[$j]['employeeName'] = $this->getResultWithNullChecker1Connection($publicHolidaySchedule, 'employee', 'givenName');
+                        $possibleExchanges[$j]['shiftId'] = ""; //require empty value
+                        $possibleExchanges[$j]['shiftDetails'] = ""; //require empty value
+                        $possibleExchanges[$j]['slotId'] = $publicHolidaySchedule->fromSlotId;
+                        $possibleExchanges[$j]['slotName'] = $this->getResultWithNullChecker1Connection($publicHolidaySchedule, 'slot', 'name');
+                        $possibleExchanges[$j]['date'] = $publicHolidaySchedule->applyDate;
+                        $possibleExchanges[$j]['isDayOff'] = 0;
+                        $possibleExchanges[$j]['dayOffName'] = '';
+                        $possibleExchanges[$j]['isPublicHoliday'] = 1;
+                        $possibleExchanges[$j]['publicHolidayName'] = $this->getResultWithNullChecker1Connection($publicHolidaySchedule, 'publicHoliday', 'name');
+
+                        $j++;//increment
+                    }
+                }
+            }
+
+            /* Success Response */
+            $response['isFailed'] = false;
+            $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+            $response['message'] = 'Success';
+            $response['possibleExchangeResponse']['data'] = $possibleExchanges;
+
+            return response()->json($response, 200);
+
+        } else {
+            /* Errror response */
+            $response['isFailed'] = false;
+            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['PUBLIC_HOLIDAY_SCHEDULE_UNDEFINED'];
+            $response['message'] = 'Unable to find public employee schedule ID';
+
+            return response()->json($response, 200);
+        }
+
+
+    }
 
     public function handleRequestExchange($request)
     {
@@ -239,14 +312,30 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
             $ownerSlotId = $this->getResultWithNullChecker1Connection($ownerEmployee, 'slotSchedule', 'slotId') ?: 1;
 
             $isDayOff = 0; //default
+            $isPublicHoliday = 0; //default
             $invalidRequest = 0; //default
 
             /* Validate dates */
+
+            # check if its day off
             if ($this->isDayOffForThisSlot($requesterSlotId, $request->fromDate) && $this->isDayOffForThisSlot($ownerSlotId, $request->toDate)) {
                 $isDayOff = 1;
                 $requesterShiftId = '';//empty
-            } elseif (!$this->isDayOffForThisSlot($requesterSlotId, $request->fromDate) && !$this->isDayOffForThisSlot($request->ownerEmployeeId, $request->toDate)) {
+
+            # check if its public holiady
+            } elseif ($this->isPublicHolidayForThisSlot($requesterSlotId, $request->fromDate)&& $this->isPublicHolidayForThisSlot($ownerSlotId, $request->toDate)) {
+                $isPublicHoliday = 1;
+                $requesterShiftId = '';//empty
+
+            # make sure its not day off
+            }elseif (!$this->isDayOffForThisSlot($requesterSlotId, $request->fromDate) && !$this->isDayOffForThisSlot($ownerSlotId, $request->toDate)) {
                 $isDayOff = 0;
+
+            # make sure its not public holiday
+            } elseif (!$this->isPublicHolidayForThisSlot($requesterSlotId, $request->fromDate) && !$this->isPublicHolidayForThisSlot($ownerSlotId, $request->toDate)) {
+                $isPublicHoliday = 0;
+
+            # invalid request
             } else {
                 $invalidRequest = 1; // invalid
             }
@@ -264,7 +353,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                         'fromShiftId' => $requesterShiftId,
                         'toShiftId' => $request->toShiftId,
                         'toDate' => $request->toDate,
-                        'isDayOff' => $isDayOff
+                        'isDayOff' => $isDayOff,
+                        'isPublicHoliday'=>$isPublicHoliday
                     ]
                 );
 
@@ -381,6 +471,70 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                     app()->make('PushNotificationService')->singleNotify([
                                         'userID' => $requesterUserId,
                                         'title' => 'Exchange Day Off Accepted',
+                                        'message' => 'Your exchange day off request has been accepted!',
+                                        'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
+                                        'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
+                                        'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                                        'sender' => $user
+                                    ]);
+
+                                    /*Success response*/
+                                    $response['isFailed'] = false;
+                                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                                    $response['message'] = 'Success';
+
+                                    return response()->json($response, 200);
+                                } else {
+
+                                    /*Error repsonse*/
+                                    $response['isFailed'] = true;
+                                    $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                                    $response['message'] = 'Unable to save exchange shift table';
+
+                                    return response()->json($response, 200);
+                                }
+
+                            } else {
+
+                                /*Error repsonse*/
+                                $response['isFailed'] = true;
+                                $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                                $response['message'] = 'Unable to save exchange data';
+
+                                return response()->json($response, 200);
+                            }
+
+                        }elseif ($this->isPublicHolidayForThisSlot($requesterSlotId, $exchangeReq->fromDate) && $this->isPublicHolidayForThisSlot($ownerSlotId, $exchangeReq->toDate)) {
+
+                            //HANDLE PUBLIC HOLIDAY EXCHANGE
+
+                            $updateRequesterDayOff = PublicHolidaySchedule::where('fromSlotId', $requesterSlotId)
+                                ->where('applyDate', $exchangeReq->fromDate)
+                                ->where('employeeId',$exchangeReq->employeeId1)
+                                ->update(['applyDate' => $exchangeReq->toDate]);
+
+                            $updateOwnerDayOff = PublicHolidaySchedule::where('fromSlotId', $ownerSlotId)
+                                ->where('applyDate', $exchangeReq->toDate)
+                                ->where('employeeId',$exchangeReq->employeeId2)
+                                ->update(['applyDate' => $exchangeReq->fromDate]);
+
+
+                            if ($updateRequesterDayOff && $updateOwnerDayOff) {
+
+                                //Update exchange shift employee data
+                                $exchangeReq->confirmType = ConfigCodes::$EXCHANGE_SHIFT_CONFIRM_TYPE['CONFIRM'];//confirmed
+                                $exchangeReq->confirmedDate = Carbon::now()->format('d/m/Y');
+                                $exchangeReq->confirmedTime = Carbon::now()->format('H:i');
+
+                                if ($exchangeReq->save()) {
+
+                                    // Notify requester
+                                    $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'user', 'id');
+
+                                    /* Send push notification */
+                                    app()->make('PushNotificationService')->singleNotify([
+                                        'userID' => $requesterUserId,
+                                        'title' => 'Exchange Public Holiday Accepted',
                                         'message' => 'Your exchange day off request has been accepted!',
                                         'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
                                         'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
@@ -617,6 +771,21 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
             return false;
         }
 
+    }
+
+    private function isPublicHolidayForThisSlot($requesterSlotId, $fromDate)
+    {
+        $checkPublicHoliday = PublicHolidaySchedule::where('fromSlotId', $requesterSlotId)->where('applyDate', $fromDate)->count();
+
+        Log::info('rsID: '.$requesterSlotId);
+        Log::info('fromDate: '.$fromDate);
+        Log::info('cbh: '.$checkPublicHoliday);
+
+        if ($checkPublicHoliday > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 

@@ -29,8 +29,6 @@ class SendHeartbeat extends Command
 
     public function handle()
     {
-        Log::info('send heartbeat');
-
         event(new HeartBeat());
     }
 }
