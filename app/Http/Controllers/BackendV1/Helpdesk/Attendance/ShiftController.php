@@ -116,6 +116,13 @@ class ShiftController extends Controller
         return GetShiftMappingCalendarLogic::getShiftSchedules($request);
     }
 
+    public function getPubHolidayScheduleOnCalendar(Request $request)
+    {
+        $request->validate(['slotIds' => 'required']);
+        return GetShiftMappingCalendarLogic::getPubHolidaySchedules($request);
+    }
+
+
     public function removeSchedule(Request $request)
     {
         $request->validate(['id' => 'required']);

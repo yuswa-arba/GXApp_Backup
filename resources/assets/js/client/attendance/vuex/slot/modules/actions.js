@@ -93,6 +93,13 @@ export default{
                         slotIds: payload.slotIds,
                     })
                     cb(null)
+                },
+                function (cb) {
+                    commit({
+                        type: 'getPubHolidaySchedule',
+                        slotIds: payload.slotIds,
+                    })
+                    cb(null)
                 }
             ])
 

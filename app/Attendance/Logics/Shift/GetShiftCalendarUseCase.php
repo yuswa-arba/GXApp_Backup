@@ -22,7 +22,12 @@ abstract class GetShiftCalendarUseCase
         return (new static)->handleShiftSchedules($request);
     }
 
+    public static function getPubHolidaySchedules(Request $request){
+        return (new static)->handlePublicHolidaySchedules($request);
+    }
+
     abstract public function handleDayOffs($request);
     abstract public function handleShiftSchedules($request);
+    abstract public function handlePublicHolidaySchedules($request);
 
 }

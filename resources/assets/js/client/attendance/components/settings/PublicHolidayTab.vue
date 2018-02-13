@@ -34,9 +34,11 @@
                                             <i class="fs-16 text-danger fa fa-times" v-else=""></i>
                                         </td>
                                         <td>
-                                            <i class="fs-14 text-success fa fa-play pointer" @click="applyPublicHoliday(pubHoliday.id,index)"></i>
+                                            <i class="fs-14 text-success fa fa-play pointer"
+                                               @click="applyPublicHoliday(pubHoliday.id,index)"></i>
                                             &nbsp; &nbsp;
-                                            <i class="fs-14 text-danger fa fa-trash pointer" @click="deletePublicHoliday(pubHoliday.id,index)"></i>
+                                            <i class="fs-14 text-danger fa fa-trash pointer"
+                                               @click="deletePublicHoliday(pubHoliday.id,index)"></i>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -147,7 +149,7 @@
                     .then((res) => {
                         if (!res.data.isFailed) {
 
-                            _.forEach(res.data.publicHolidays.data,function(value,key){
+                            _.forEach(res.data.publicHolidays.data, function (value, key) {
                                 self.publicHolidays.unshift(value)
                             })
 
@@ -158,6 +160,15 @@
                                 timeout: 3500,
                                 type: 'info'
                             }).show();
+
+                            //reset form
+                            self.formObject = {
+                                dateStart: '',
+                                dateEnd: '',
+                                holidayName: '',
+                                onYear: moment().year(),
+                                religionId: ''
+                            }
 
                         } else {
                             $('.page-container').pgNotification({
@@ -179,15 +190,15 @@
                 })
 
             },
-            deletePublicHoliday(id,index){
+            deletePublicHoliday(id, index){
                 let self = this
 
-                if(confirm('Are you sure you want to delete this public holiday?')){
-                    post(api_path + 'attendance/pubHoliday/delete', {id:id})
+                if (confirm('Are you sure you want to delete this public holiday?')) {
+                    post(api_path + 'attendance/pubHoliday/delete', {id: id})
                         .then((res) => {
                             if (!res.data.isFailed) {
 
-                                self.publicHolidays.splice(index,1)
+                                self.publicHolidays.splice(index, 1)
 
                                 $('.page-container').pgNotification({
                                     style: 'flip',
@@ -217,17 +228,17 @@
                     })
                 }
             },
-            applyPublicHoliday(id,index){
+            applyPublicHoliday(id, index){
                 let self = this
-                if(confirm("Apply this public holiday now ?")){
-                    post(api_path + 'attendance/pubHoliday/apply', {id:id})
+                if (confirm("Apply this public holiday now ?")) {
+                    post(api_path + 'attendance/pubHoliday/apply', {id: id})
                         .then((res) => {
                             if (!res.data.isFailed) {
 
                                 let updatePubHoliday = self.publicHolidays[index]
                                 updatePubHoliday.isApplied = 1
 
-                                self.publicHolidays.splice(index,1,updatePubHoliday)
+                                self.publicHolidays.splice(index, 1, updatePubHoliday)
 
                                 $('.page-container').pgNotification({
                                     style: 'flip',

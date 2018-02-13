@@ -22,6 +22,7 @@ export default {
         cbSlotsBeingMap: [],
         calendarShiftMappingEventSource: [],
         calendarShiftScheduleEventSource:[],
+        calendarPubHolidayEventSource:[],
         shiftMapPalette: [
             '336699',
             '00aaff',

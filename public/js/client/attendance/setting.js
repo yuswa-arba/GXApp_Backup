@@ -2361,6 +2361,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -2415,6 +2417,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         timeout: 3500,
                         type: 'info'
                     }).show();
+
+                    //reset form
+                    self.formObject = {
+                        dateStart: '',
+                        dateEnd: '',
+                        holidayName: '',
+                        onYear: moment().year(),
+                        religionId: ''
+                    };
                 } else {
                     $('.page-container').pgNotification({
                         style: 'flip',

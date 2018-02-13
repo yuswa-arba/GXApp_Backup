@@ -113,6 +113,7 @@ export default{
             .then((res) => {
                 $('#calendar').fullCalendar('addEventSource', res.data.dayOffs.data);
                 $('#calendar').fullCalendar('addEventSource', res.data.shiftSchedules.data);
+                $('#calendar').fullCalendar('addEventSource', res.data.pubHolidaySchedules.data);
             })
             .catch((err) => {
                 $('.page-container').pgNotification({
@@ -374,6 +375,45 @@ export default{
         }
 
 
+    },
+    getPubHolidaySchedule(state,payload){
+        let slotIdsToGet = []
+
+        _.forEach(payload.slotIds, function (value, key) {
+            // insert slots except the plucked ones
+            if (!value.toString().startsWith('plucked_')) {
+                slotIdsToGet.push(value) // remove plucked ids to use in server request
+            }
+        })
+
+        if (!_.isEmpty(slotIdsToGet)) {
+            post(api_path + 'attendance/shift/mapping/pubHolidays', {slotIds: payload.slotIds})
+                .then((res) => {
+                    state.calendarPubHolidayEventSource = res.data.data
+                    //add color
+                    let c = 0
+                    _.forEach(payload.slotIds, function (value, key) {
+
+                        let filteredToAddColor = _.filter(state.calendarPubHolidayEventSource, {slotId: value})
+                        for (let i = 0; i < filteredToAddColor.length; i++) {
+                            _.assign(filteredToAddColor[i], {backgroundColor: '#' + state.shiftMapPalette[c]})
+                        }
+
+                        c++ //increment
+                    })
+                    $('#calendar-shift-mapping').fullCalendar('addEventSource', state.calendarPubHolidayEventSource)
+
+                })
+                .catch((err) => {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                })
+        }
     },
     mapShift(state, payload){
 
