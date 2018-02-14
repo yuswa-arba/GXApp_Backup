@@ -15,16 +15,16 @@
             <span class="icon-thumbnail">fa</span>
         </li>
         <li class="">
+            <a href="{{route('developer.logs')}}">Logs</a>
+            <span class="icon-thumbnail">l</span>
+        </li>
+        <li class="">
             <a href="">Queue Jobs</a>
             <span class="icon-thumbnail">qj</span>
         </li>
         <li class="">
             <a href="">Actions</a>
             <span class="icon-thumbnail">a</span>
-        </li>
-        <li class="">
-            <a href="">Logs</a>
-            <span class="icon-thumbnail">l</span>
         </li>
         <li class="">
             <a href="">Reports</a>

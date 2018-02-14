@@ -29,6 +29,7 @@ class Configs
     public static $TIMESHEET_NOTES_INITIAL = [
         'DAY-OFF' => 'D',
         'PAID-LEAVE' => 'PL',
+        'PUBLIC-HOLIDAY'=>'PH',
         'ABSENCE'=>'A'
     ];
 

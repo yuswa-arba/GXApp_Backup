@@ -23,6 +23,11 @@ class ViewController extends Controller
         return view('pages.developer.face');
     }
 
+    public function logs()
+    {
+        return view('pages.developer.logs');
+    }
+
     public function test()
     {
         return view('pages.developer.test');

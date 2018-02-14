@@ -12,6 +12,7 @@ namespace App\Attendance\Logics\Timesheet;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
+use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Transformers\EmployeeSummaryTransformer;
 use App\Attendance\Transformers\TimesheetSummaryTransformer;
 use App\Employee\Models\MasterEmployee;
@@ -95,6 +96,11 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
             return ['isHoliday'=>true,'notes'=>Configs::$TIMESHEET_NOTES_INITIAL['DAY-OFF']];
         }
 
+        // if its users day off
+        if($this->isPublicHolidayForThisEmployee($employeeId,$slotId,$datedmy)){
+            return ['isHoliday'=>true,'notes'=>Configs::$TIMESHEET_NOTES_INITIAL['PUBLIC-HOLIDAY']];
+        }
+
         return ['isHoliday'=>false,'notes'=>''];
 
     }
@@ -128,6 +134,20 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
         return false;
 
     }
+
+    private function isPublicHolidayForThisEmployee($employeeId, $slotId, $date)
+    {
+        $checkPublicHoliday = PublicHolidaySchedule::where('fromSlotId', $slotId)
+            ->where('applyDate', $date)
+            ->where('employeeId', $employeeId)
+            ->count();
+        if ($checkPublicHoliday > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 
     private function employeeLeaveSchedule($employeeIds, $date)
     {
