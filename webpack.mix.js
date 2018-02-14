@@ -164,6 +164,7 @@ mix.js('resources/assets/js/client/attendance/leave','public/js/client/attendanc
 mix.js('resources/assets/js/client/attendance/dashboard','public/js/client/attendance');
 mix.js('resources/assets/js/client/doorAccess/main','public/js/client/doorAccess');
 mix.js('resources/assets/js/client/developer/face','public/js/client/developer');
+mix.js('resources/assets/js/client/developer/queueJob','public/js/client/developer');
 mix.js('resources/assets/js/client/developer/test','public/js/client/developer');
 mix.js('resources/assets/js/client/salary/report','public/js/client/salary');
 mix.js('resources/assets/js/client/salary/employee','public/js/client/salary');

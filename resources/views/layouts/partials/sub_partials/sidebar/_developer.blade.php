@@ -19,7 +19,7 @@
             <span class="icon-thumbnail">l</span>
         </li>
         <li class="">
-            <a href="">Queue Jobs</a>
+            <a href="{{route('developer.queueJob')}}">Queue Jobs</a>
             <span class="icon-thumbnail">qj</span>
         </li>
         <li class="">

@@ -37,7 +37,7 @@ class LogController extends Controller
                     <td>'.$uv->id.'</td>
                     <td>'.$uv->causer.'</td>
                     <td>'.$uv->via.'</td>
-                    <td>'.$uv->causerIPAdress.'</td>
+                    <td>'.$uv->causerIPAddress.'</td>
                     <td>'.$uv->subject.'</td>
                     <td>'.$uv->action.'</td>
                     <td>'.$uv->level.'</td>

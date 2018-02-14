@@ -28,6 +28,11 @@ class ViewController extends Controller
         return view('pages.developer.logs');
     }
 
+    public function queueJob()
+    {
+        return view('pages.developer.queueJobs');
+    }
+    
     public function test()
     {
         return view('pages.developer.test');

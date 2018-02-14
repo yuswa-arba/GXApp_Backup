@@ -38,6 +38,7 @@ class CheckAttendanceTimesheet implements ShouldQueue
      */
     public function handle()
     {
+
         $curDate = Carbon::now()->format('d/m/Y');
         $timesheets = AttendanceTimesheet::where('clockInDate', $curDate)->orWhere('clockOutDate', $curDate)->get();
 
@@ -45,6 +46,8 @@ class CheckAttendanceTimesheet implements ShouldQueue
             $this->checkValidation($timesheet);
             $this->checkApproval($timesheet);
         }
+
+
     }
 
 }

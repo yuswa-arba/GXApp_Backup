@@ -403,7 +403,7 @@ class TestUploadController extends Controller
     {
 //        event(new EmployeeClocked(['name' => 'Kevin', 'age' => 21]));
 //        broadcast(new EmployeeClocked(['name' => 'Kevin', 'age' => 21]))->toOthers();
-        broadcast(new AndroidTest());
+//        broadcast(new AndroidTest());
     }
 
     public function cbdiff()
