@@ -12,6 +12,7 @@ namespace App\Salary\Logics\Salary;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
+use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Models\Shifts;
 use App\Components\Models\BranchOffice;
 use App\Employee\Models\MasterEmployee;
@@ -255,7 +256,7 @@ class GenerateSalaryLogic extends GenerateUseCase
                  * 1. Get slot ID if assigned, else use 1 (general)
                  * 2. Check if date exist in day off schedule table based on slotId, if it does, don't include it in array
                  * 3. Check date in employee leave schedule, if exist, don't include it in array //TODO : employee leave schedule still not working
-                 *
+                 * 4. Check if date exist in public holiday schedule table, if it does . don't include it in array
                 */
 
                 $slotId = 1; // default
@@ -265,8 +266,11 @@ class GenerateSalaryLogic extends GenerateUseCase
                     $slotId = $this->getEmployeeSlotId($employeeId);
                 }
 
-                // if its not day off and not employee leave schedule then insert date to array
-                if (!$this->isDayOffForThisSlot($slotId, $date) && !$this->employeeLeaveSchedule($employeeId, $date)) {
+                // if its not day off and not employee leave schedule and not public holiday scheudle then insert date to array
+                if (!$this->isDayOffForThisSlot($slotId, $date)
+                    && !$this->employeeLeaveSchedule($employeeId, $date)
+                    && !$this->isPublicHolidayForThisEmployee($employeeId,$slotId,$date)
+                ) {
 
                     $timesheet = AttendanceTimesheet::where('employeeId', $employeeId)
                         ->where('clockInDate', $date)
@@ -717,6 +721,19 @@ class GenerateSalaryLogic extends GenerateUseCase
         return false;
     }
 
+    private function isPublicHolidayForThisEmployee($employeeId, $slotId, $date)
+    {
+        $checkPublicHoliday = PublicHolidaySchedule::where('fromSlotId', $slotId)
+                                                    ->where('applyDate', $date)
+                                                    ->where('employeeId', $employeeId)
+                                                    ->count();
+        if ($checkPublicHoliday > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private function employeeLeaveSchedule($employeeId, $date)
     {
         //TODO: CHECK IF THIS SPECIFIC DATE IS EMPLOYEE LEAVE SCHEDULE
@@ -771,6 +788,8 @@ class GenerateSalaryLogic extends GenerateUseCase
 
         return 0;
     }
+
+
 
 
 }
