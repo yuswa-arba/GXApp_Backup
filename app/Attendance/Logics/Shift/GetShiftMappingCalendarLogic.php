@@ -31,7 +31,7 @@ class GetShiftMappingCalendarLogic extends GetShiftCalendarUseCase
 //        $dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->get();
         $dayOffSchedule = DayOffSchedule::whereIn('slotId', $request->slotIds)->where(function ($query) {
             $query->where('date', 'like', '%' . $this->currentYear())->orWhere('date', 'like', '%' . $this->lastYear());
-        })->get();
+        })->get()->unique();
 
         return fractal($dayOffSchedule, new DayOffMappingCalendarTransformer())->respond(200);
     }
@@ -43,7 +43,7 @@ class GetShiftMappingCalendarLogic extends GetShiftCalendarUseCase
 
         $shiftSchedule = SlotShiftSchedule::whereIn('slotId', $request->slotIds)->where(function ($query) {
             $query->where('date', 'like', '%' . $this->currentYear())->orWhere('date', 'like', '%' . $this->lastYear());
-        })->get();
+        })->get()->unique();
         return fractal($shiftSchedule, new ShiftScheduleMappingCalendarTransformer())->respond(200);
     }
 
@@ -51,7 +51,7 @@ class GetShiftMappingCalendarLogic extends GetShiftCalendarUseCase
     {
         $pubHolidaySchedule = PublicHolidaySchedule::whereIn('fromSlotId',$request->slotIds)->where(function($query){
             $query->where('applyDate','like','%'.$this->currentYear())->orWhere('applyDate','like','%'.$this->lastYear());
-        })->get();
+        })->get()->unique();
 
         return  fractal($pubHolidaySchedule, new PublicHolidayScheduleMappingCalendarTransformer())->respond(200);
 
