@@ -19,6 +19,8 @@
                                 Master</a>
                             <a class="dropdown-item pointer" @click="viewEmploymentDetail()">
                                 Employment</a>
+                            <a class="dropdown-item pointer" @click="viewMedicalRecordsDetail()">
+                                Medical Records</a>
                             <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">
                                 Face API</a>
                             <a class="dropdown-item pointer" @click="viewLoginDetail()">
@@ -89,6 +91,10 @@
                 self.save(form,'master')
             })
 
+            this.$bus.$on('save:medical_records_detail', function (form) {
+                self.save(form, "medicalRecords")
+            })
+
             this.$bus.$on('save:employment_detail', function (form) {
                 self.save(form, "employment")
             })
@@ -103,6 +109,10 @@
             viewMasterDetail(){
                 $('#errors-container').addClass('hide');
                 this.$router.push({name: 'detailMaster', params: {id: this.$route.params.id}})
+            },
+            viewMedicalRecordsDetail(){
+                $('#errors-container').addClass('hide');
+                this.$router.push({name: 'detailMedicalRecords', params: {id: this.$route.params.id}})
             },
             viewEmploymentDetail(){
                 $('#errors-container').addClass('hide');
@@ -125,6 +135,9 @@
                     case 'detailMaster':
                         this.$router.push({name: 'editMaster', params: {id: this.$route.params.id}})
                         break;
+                    case 'detailMedicalRecords':
+                        this.$router.push({name: 'editMedicalRecords', params: {id: this.$route.params.id}})
+                        break;
                     case 'detailEmployment':
                         this.$router.push({name: 'editEmployment', params: {id: this.$route.params.id}})
                         break;
@@ -140,6 +153,9 @@
                     case 'master':
                         this.saveMaster(form)
                         break;
+                    case 'medicalRecords':
+                        this.saveMedicalRecords(form)
+                        break;
                     case 'employment':
                         this.saveEmployment(form)
                         break;
@@ -154,6 +170,9 @@
                 switch (this.$route.name) {
                     case 'editMaster':
                         this.viewMasterDetail()
+                        break;
+                    case 'editMedicalRecords':
+                        this.viewMedicalRecordsDetail()
                         break;
                     case 'editEmployment':
                         this.viewEmploymentDetail()
@@ -185,6 +204,57 @@
 
                             //redirect
                             self.$router.push({name: 'detailMaster', params: {id: self.$route.params.id}})
+
+                        }
+                        else {
+                            /* Show error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 0,
+                                type: 'danger'
+                            }).show();
+
+                        }
+                    })
+                    .catch((err) => {
+                        let errorsResponse = err.message + '</br>';
+
+                        _.forEach(err.response.data.errors, function (value, key) {
+                            errorsResponse += value[0] + ' ';
+                        })
+
+                        $('#errors-container').removeClass('hide').addClass('show')
+                        $('#errors-value').html(errorsResponse)
+                        errorsResponse = '' // reset value
+                        /* Scroll to top*/
+                        $('html, body').animate({
+                            scrollTop: $(".jumbotron").offset().top
+                        }, 500);
+
+                    })
+            },
+            saveMedicalRecords(form){
+                let self = this;
+                post(api_path + 'employee/edit/medicalRecords', form)
+                    .then((res) => {
+                        if (!res.data.isFailed) {
+
+                            // remove errors alert
+                            $('#errors-container').addClass('hide');
+
+                            /* Show success notification*/
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            //redirect
+                            self.$router.push({name: 'detailMedicalRecords', params: {id: self.$route.params.id}})
 
                         }
                         else {

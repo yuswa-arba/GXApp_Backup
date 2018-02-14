@@ -5,12 +5,15 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Employee;
 use App\Account\Models\User;
 use App\Account\Transformers\LoginDetailTransfomer;
 use App\Account\Transformers\LoginEditTransfomer;
+use App\Employee\Models\EmployeeMedicalRecords;
 use App\Employee\Models\Employment;
 use App\Employee\Models\FacePerson;
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Models\Resignation;
 use App\Employee\Transformers\EmployeeDetailTransfomer;
 use App\Employee\Transformers\EmployeeEditTransfomer;
+use App\Employee\Transformers\EmployeeMedicalRecordDetailTransfomer;
+use App\Employee\Transformers\EmployeeMedicalRecordEditTransfomer;
 use App\Employee\Transformers\EmploymentEditTransfomer;
 use App\Employee\Transformers\EmploymentTransfomer;
 use App\Employee\Transformers\FaceAPIDetailTransfomer;
@@ -19,6 +22,7 @@ use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Requests\Employee\EditMasterEmployeeRequest;
 use App\Http\Requests\Employee\EmploymentRequest;
 use App\Http\Requests\Employee\MasterEmployeeRequest;
+use App\Http\Requests\Employee\MedicalRecordsRequest;
 use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -132,6 +136,99 @@ class AjaxController extends Controller
             return response()->json($response, 200);
         }
     }
+
+
+    public function medicalRecordDetail($employeeId)
+    {
+        if ($employeeId != null && $employeeId != '') {
+
+            $medicalRecord = EmployeeMedicalRecords::where('employeeId', $employeeId)->first();
+
+            if ($medicalRecord) {
+                return response()->json([
+                    'message' => 'Successful',
+                    'detail' => fractal($medicalRecord, new EmployeeMedicalRecordDetailTransfomer())
+                ], 200);
+
+            } else {
+                return response()->json(['message' => 'Error occured! Unable to find employee medical record data'], 200);
+            }
+        } else {
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
+        }
+    }
+
+    public function medicalRecordEdit($employeeId)
+    {
+        if ($employeeId != null && $employeeId != '') {
+
+            $medicalRecord = EmployeeMedicalRecords::where('employeeId', $employeeId)->first();
+
+            if ($medicalRecord) {
+                return response()->json([
+                    'message' => 'Successful',
+                    'detail' => fractal($medicalRecord, new EmployeeMedicalRecordEditTransfomer())
+                ], 200);
+
+            } else {
+                return response()->json(['message' => 'Error occured! Unable to find employee medical record data'], 200);
+            }
+        } else {
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
+        }
+    }
+
+    public function saveMedicalRecordEdit(MedicalRecordsRequest $request)
+    {
+        $response = array();
+        $medicalRecord = EmployeeMedicalRecords::where('employeeId',$request->employeeId)->first();
+
+        if($medicalRecord){ //if existed
+
+            $update = $medicalRecord->update($request->all());
+
+            if($update){
+
+                /* Return success response */
+                $response['isFailed'] = false;
+                $response['message'] = 'Medical record has been saved successfully';
+
+                return response()->json($response, 200);
+
+            } else {
+
+                /* Return error response */
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to update medical records data';
+
+                return response()->json($response,200);
+            }
+
+        } else { // non existed create a new one
+
+            $create = $medicalRecord->create($request->all());
+
+            if($create){
+
+                /* Return success response */
+                $response['isFailed'] = false;
+                $response['message'] = 'Medical record has been saved successfully';
+
+                return response()->json($response, 200);
+
+            } else {
+
+                /* Return error response */
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to create medical records data';
+
+                return response()->json($response,200);
+            }
+        }
+
+    }
+
+
 
     public function employmentDetail($employeeId)
     {

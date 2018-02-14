@@ -1701,6 +1701,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -1712,6 +1714,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         this.$bus.$on('save:master_detail', function (form) {
             self.save(form, 'master');
+        });
+
+        this.$bus.$on('save:medical_records_detail', function (form) {
+            self.save(form, "medicalRecords");
         });
 
         this.$bus.$on('save:employment_detail', function (form) {
@@ -1727,6 +1733,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         viewMasterDetail: function viewMasterDetail() {
             $('#errors-container').addClass('hide');
             this.$router.push({ name: 'detailMaster', params: { id: this.$route.params.id } });
+        },
+        viewMedicalRecordsDetail: function viewMedicalRecordsDetail() {
+            $('#errors-container').addClass('hide');
+            this.$router.push({ name: 'detailMedicalRecords', params: { id: this.$route.params.id } });
         },
         viewEmploymentDetail: function viewEmploymentDetail() {
             $('#errors-container').addClass('hide');
@@ -1749,6 +1759,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 case 'detailMaster':
                     this.$router.push({ name: 'editMaster', params: { id: this.$route.params.id } });
                     break;
+                case 'detailMedicalRecords':
+                    this.$router.push({ name: 'editMedicalRecords', params: { id: this.$route.params.id } });
+                    break;
                 case 'detailEmployment':
                     this.$router.push({ name: 'editEmployment', params: { id: this.$route.params.id } });
                     break;
@@ -1764,6 +1777,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 case 'master':
                     this.saveMaster(form);
                     break;
+                case 'medicalRecords':
+                    this.saveMedicalRecords(form);
+                    break;
                 case 'employment':
                     this.saveEmployment(form);
                     break;
@@ -1778,6 +1794,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             switch (this.$route.name) {
                 case 'editMaster':
                     this.viewMasterDetail();
+                    break;
+                case 'editMedicalRecords':
+                    this.viewMedicalRecordsDetail();
                     break;
                 case 'editEmployment':
                     this.viewEmploymentDetail();
@@ -1808,6 +1827,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                     //redirect
                     self.$router.push({ name: 'detailMaster', params: { id: self.$route.params.id } });
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                var errorsResponse = err.message + '</br>';
+
+                _.forEach(err.response.data.errors, function (value, key) {
+                    errorsResponse += value[0] + ' ';
+                });
+
+                $('#errors-container').removeClass('hide').addClass('show');
+                $('#errors-value').html(errorsResponse);
+                errorsResponse = ''; // reset value
+                /* Scroll to top*/
+                $('html, body').animate({
+                    scrollTop: $(".jumbotron").offset().top
+                }, 500);
+            });
+        },
+        saveMedicalRecords: function saveMedicalRecords(form) {
+            var self = this;
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/medicalRecords', form).then(function (res) {
+                if (!res.data.isFailed) {
+
+                    // remove errors alert
+                    $('#errors-container').addClass('hide');
+
+                    /* Show success notification*/
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    //redirect
+                    self.$router.push({ name: 'detailMedicalRecords', params: { id: self.$route.params.id } });
                 } else {
                     /* Show error notification */
                     $('.page-container').pgNotification({
@@ -3089,6 +3153,248 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/list/DetailMedicalRecords.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            detail: []
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/medicalRecords/' + this.$route.params.id).then(function (res) {
+            _this.detail = res.data.detail.data;
+        });
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/list/EditEmployment.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3873,6 +4179,287 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         insertIDCardPhotoToForm: function insertIDCardPhotoToForm(e) {
             this.form.idCardPhoto = e.target.files[0];
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/list/EditMedicalRecords.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: {}
+        };
+    },
+    created: function created() {
+        var _this = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/edit/medicalRecords/' + this.$route.params.id).then(function (res) {
+
+            //set current value
+            _this.form = res.data.detail.data;
+            _this.form.employeeId = _this.$route.params.id;
+        });
+    },
+
+    methods: {
+        save: function save() {
+            delete this.form.formComponents; // remove form components during submit
+            this.$bus.$emit('save:medical_records_detail', this.form);
         }
     }
 });
@@ -23075,6 +23662,1014 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-35001f0c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/list/EditMedicalRecords.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row row-same-height" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 m-t-10" },
+      [
+        _vm._t("cancel-menu"),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary m-r-15 m-b-10 pull-left",
+            on: {
+              click: function($event) {
+                _vm.save()
+              }
+            }
+          },
+          [_vm._v("\n            Save\n        ")]
+        )
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Long term medication")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.hasLongTermMedication,
+                    expression: "form.hasLongTermMedication"
+                  }
+                ],
+                attrs: {
+                  type: "radio",
+                  id: "long-term-medication-yes",
+                  value: "1"
+                },
+                domProps: {
+                  checked: _vm._q(_vm.form.hasLongTermMedication, "1")
+                },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "hasLongTermMedication", "1")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "long-term-medication-yes" } }, [
+                _vm._v("Yes")
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.hasLongTermMedication,
+                    expression: "form.hasLongTermMedication"
+                  }
+                ],
+                attrs: {
+                  type: "radio",
+                  id: "long-term-medication-no",
+                  value: "0"
+                },
+                domProps: {
+                  checked: _vm._q(_vm.form.hasLongTermMedication, "0")
+                },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "hasLongTermMedication", "0")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "long-term-medication-no" } }, [
+                _vm._v("No")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Type of Disease")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.typeOfDisease,
+                    expression: "form.typeOfDisease"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.typeOfDisease },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "typeOfDisease", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Since When")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.medicationSinceWhen,
+                    expression: "form.medicationSinceWhen"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "dd/mm/yyyy" },
+                domProps: { value: _vm.form.medicationSinceWhen },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "medicationSinceWhen",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Type of drug")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.typeOfDrug,
+                    expression: "form.typeOfDrug"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.typeOfDrug },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "typeOfDrug", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Is A Smoker?")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.isASmoker,
+                    expression: "form.isASmoker"
+                  }
+                ],
+                attrs: { type: "radio", id: "is-a-smoker-yes", value: "1" },
+                domProps: { checked: _vm._q(_vm.form.isASmoker, "1") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "isASmoker", "1")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "is-a-smoker-yes" } }, [
+                _vm._v("Yes")
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.isASmoker,
+                    expression: "form.isASmoker"
+                  }
+                ],
+                attrs: { type: "radio", id: "is-a-smoker-no", value: "0" },
+                domProps: { checked: _vm._q(_vm.form.isASmoker, "0") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "isASmoker", "0")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "is-a-smoker-no" } }, [_vm._v("No")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Amount per day")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.smokeAmountPerDay,
+                    expression: "form.smokeAmountPerDay"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.smokeAmountPerDay },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "smokeAmountPerDay", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Since When")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.smokingSinceWhen,
+                    expression: "form.smokingSinceWhen"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "dd/mm/yyyy" },
+                domProps: { value: _vm.form.smokingSinceWhen },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "smokingSinceWhen", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Is A Drinker?")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.isADrinker,
+                    expression: "form.isADrinker"
+                  }
+                ],
+                attrs: { type: "radio", id: "is-a-drinker-yes", value: "1" },
+                domProps: { checked: _vm._q(_vm.form.isADrinker, "1") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "isADrinker", "1")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "is-a-drinker-yes" } }, [
+                _vm._v("Yes")
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.isADrinker,
+                    expression: "form.isADrinker"
+                  }
+                ],
+                attrs: { type: "radio", id: "is-a-drinker-no", value: "0" },
+                domProps: { checked: _vm._q(_vm.form.isADrinker, "0") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "isADrinker", "0")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "is-a-drinker-no" } }, [_vm._v("No")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Amount per day")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.drinkAmountPerDay,
+                    expression: "form.drinkAmountPerDay"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.drinkAmountPerDay },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "drinkAmountPerDay", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Since When")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.drinkingSinceWhen,
+                    expression: "form.drinkingSinceWhen"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "dd/mm/yyyy" },
+                domProps: { value: _vm.form.drinkingSinceWhen },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "drinkingSinceWhen", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(3),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Had An Accident?")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.hadAnAccident,
+                    expression: "form.hadAnAccident"
+                  }
+                ],
+                attrs: { type: "radio", id: "had-an-accident-yes", value: "1" },
+                domProps: { checked: _vm._q(_vm.form.hadAnAccident, "1") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "hadAnAccident", "1")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "had-an-accident-yes" } }, [
+                _vm._v("Yes")
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.hadAnAccident,
+                    expression: "form.hadAnAccident"
+                  }
+                ],
+                attrs: { type: "radio", id: "had-an-accident-no", value: "0" },
+                domProps: { checked: _vm._q(_vm.form.hadAnAccident, "0") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "hadAnAccident", "0")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "had-an-accident-no" } }, [
+                _vm._v("No")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Date")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.accidentDate,
+                    expression: "form.accidentDate"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "dd/mm/yyyy" },
+                domProps: { value: _vm.form.accidentDate },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "accidentDate", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Type of Accident")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.typeOfAccident,
+                    expression: "form.typeOfAccident"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.typeOfAccident },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "typeOfAccident", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Had A Surgery?")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.hadASurgery,
+                    expression: "form.hadASurgery"
+                  }
+                ],
+                attrs: { type: "radio", id: "had-an-surgery-yes", value: "1" },
+                domProps: { checked: _vm._q(_vm.form.hadASurgery, "1") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "hadASurgery", "1")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "had-an-surgery-yes" } }, [
+                _vm._v("Yes")
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.hadASurgery,
+                    expression: "form.hadASurgery"
+                  }
+                ],
+                attrs: { type: "radio", id: "had-an-surgery-no", value: "0" },
+                domProps: { checked: _vm._q(_vm.form.hadASurgery, "0") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "hadASurgery", "0")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "had-an-surgery-no" } }, [
+                _vm._v("No")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Date")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.surgeryDate,
+                    expression: "form.surgeryDate"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "dd/mm/yyyy" },
+                domProps: { value: _vm.form.surgeryDate },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "surgeryDate", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Type of Surgery")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.typeOfSurgery,
+                    expression: "form.typeOfSurgery"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.typeOfSurgery },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "typeOfSurgery", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(5),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Has Hospitalized?")]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.hasHospitalized,
+                    expression: "form.hasHospitalized"
+                  }
+                ],
+                attrs: { type: "radio", id: "has-hopitalized-yes", value: "1" },
+                domProps: { checked: _vm._q(_vm.form.hasHospitalized, "1") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "hasHospitalized", "1")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "had-an-surgery-yes" } }, [
+                _vm._v("Yes")
+              ]),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.hasHospitalized,
+                    expression: "form.hasHospitalized"
+                  }
+                ],
+                attrs: { type: "radio", id: "has-hopitalized-no", value: "0" },
+                domProps: { checked: _vm._q(_vm.form.hasHospitalized, "0") },
+                on: {
+                  change: function($event) {
+                    _vm.$set(_vm.form, "hasHospitalized", "0")
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("label", { attrs: { for: "had-an-surgery-no" } }, [
+                _vm._v("No")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Date")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.dateHospitalized,
+                    expression: "form.dateHospitalized"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "dd/mm/yyyy" },
+                domProps: { value: _vm.form.dateHospitalized },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "dateHospitalized", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Type of Medication")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.typeOfMedication,
+                    expression: "form.typeOfMedication"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.typeOfMedication },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "typeOfMedication", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(6),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Dietary Habits")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.dietaryHabit,
+                    expression: "form.dietaryHabit"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.dietaryHabit },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "dietaryHabit", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Type of Sport")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.typeOfSport,
+                    expression: "form.typeOfSport"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.typeOfSport },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "typeOfSport", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Sport activity per week")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.sportAmountPerWeek,
+                    expression: "form.sportAmountPerWeek"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.sportAmountPerWeek },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      _vm.form,
+                      "sportAmountPerWeek",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Body Height")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.bodyHeight,
+                    expression: "form.bodyHeight"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.bodyHeight },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "bodyHeight", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Wear Glasses")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.wearGlasses,
+                    expression: "form.wearGlasses"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.wearGlasses },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "wearGlasses", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Glasses Size")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.glassesSize,
+                    expression: "form.glassesSize"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.glassesSize },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "glassesSize", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Notes")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.form.extraNotes,
+                    expression: "form.extraNotes"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", placeholder: "" },
+                domProps: { value: _vm.form.extraNotes },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.form, "extraNotes", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Long term medication")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Smoker Status")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Drinker Status")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Accident Record")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Surgery Record")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Hospitalized Record")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Others")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-35001f0c", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3b72b978\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/components/EmployeeCard.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23682,6 +25277,19 @@ var render = function() {
                       }
                     },
                     [_vm._v("\n                            Employment")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.viewMedicalRecordsDetail()
+                        }
+                      }
+                    },
+                    [_vm._v("\n                            Medical Records")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -26208,6 +27816,387 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-c7f2fef2", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d743d95a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/list/DetailMedicalRecords.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row row-same-height" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 m-t-10" },
+      [_vm._t("go-back-and-view-menu")],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Long term medication")]),
+              _vm._v(" "),
+              _vm.detail.hasLongTermMedication
+                ? _c("p", { staticClass: "text-primary" }, [_vm._v("Yes")])
+                : _c("p", { staticClass: "text-danger" }, [_vm._v("No")])
+            ]),
+            _vm._v(" "),
+            _vm.detail.hasLongTermMedication
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Type of Disease")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.typeOfDisease))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.detail.hasLongTermMedication
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Since When")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.medicationSinceWhen))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.detail.hasLongTermMedication
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Type of drug")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.typeOfDrug))
+                  ])
+                ])
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Is A Smoker?")]),
+              _vm._v(" "),
+              _vm.detail.isASmoker
+                ? _c("p", { staticClass: "text-primary" }, [_vm._v("Yes")])
+                : _c("p", { staticClass: "text-danger" }, [_vm._v("No")])
+            ]),
+            _vm._v(" "),
+            _vm.detail.isASmoker
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Amount per day")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.smokeAmountPerDay))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.detail.isASmoker
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Since When")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.smokingSinceWhen))
+                  ])
+                ])
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Is A Drinker?")]),
+              _vm._v(" "),
+              _vm.detail.isADrinker
+                ? _c("p", { staticClass: "text-primary" }, [_vm._v("Yes")])
+                : _c("p", { staticClass: "text-danger" }, [_vm._v("No")])
+            ]),
+            _vm._v(" "),
+            _vm.detail.isADrinker
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Amount per day")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.drinkAmountPerDay))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.detail.isADrinker
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Since When")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.drinkingSinceWhen))
+                  ])
+                ])
+              : _vm._e()
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(3),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Had An Accident?")]),
+              _vm._v(" "),
+              _vm.detail.hadAnAccident
+                ? _c("p", { staticClass: "text-primary" }, [_vm._v("Yes")])
+                : _c("p", { staticClass: "text-danger" }, [_vm._v("No")])
+            ]),
+            _vm._v(" "),
+            _vm.detail.hadAnAccident
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Date")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.accidentDate))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.detail.hadAnAccident
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Type of Accident")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.typeOfAccident))
+                  ])
+                ])
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Had A Surgery?")]),
+              _vm._v(" "),
+              _vm.detail.hadASurgery
+                ? _c("p", { staticClass: "text-primary" }, [_vm._v("Yes")])
+                : _c("p", { staticClass: "text-danger" }, [_vm._v("No")])
+            ]),
+            _vm._v(" "),
+            _vm.detail.hadASurgery
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Date")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.surgeryDate))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.detail.hadASurgery
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Type of Surgery")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.typeOfSurgery))
+                  ])
+                ])
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(5),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Has Hospitalized?")]),
+              _vm._v(" "),
+              _vm.detail.hasHospitalized
+                ? _c("p", { staticClass: "text-primary" }, [_vm._v("Yes")])
+                : _c("p", { staticClass: "text-danger" }, [_vm._v("No")])
+            ]),
+            _vm._v(" "),
+            _vm.detail.hasHospitalized
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Date")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.dateHospitalized))
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.detail.hasHospitalized
+              ? _c("div", { staticClass: "col-lg-6 employee-details" }, [
+                  _c("label", [_vm._v("Type of Medication")]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.typeOfMedication))
+                  ])
+                ])
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(6),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Dietary Habits")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-black" }, [
+                _vm._v(_vm._s(_vm.detail.dietaryHabit))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Type of Sport")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.typeOfSport))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Sport activity per week")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-primary" }, [
+                _vm._v(_vm._s(_vm.detail.sportAmountPerWeek))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Body Height")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-black" }, [
+                _vm._v(_vm._s(_vm.detail.bodyHeight))
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Wear Glasses")]),
+              _vm._v(" "),
+              _vm.detail.wearGlasses
+                ? _c("p", { staticClass: "text-primary" }, [_vm._v("Yes")])
+                : _c("p", { staticClass: "text-danger" }, [_vm._v("No")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Glasses Size")]),
+              _vm._v(" "),
+              _vm.detail.wearGlasses
+                ? _c("p", { staticClass: "text-primary" }, [
+                    _vm._v(_vm._s(_vm.detail.glassesSize))
+                  ])
+                : _vm._e()
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 employee-details" }, [
+              _c("label", [_vm._v("Notes")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-black" }, [
+                _vm._v(_vm._s(_vm.detail.extraNotes))
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Long term medication")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Smoker Status")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Drinker Status")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Accident Record")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Surgery Record")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Hospitalized Record")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Others")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-d743d95a", module.exports)
   }
 }
 
@@ -39770,23 +41759,29 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_list_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_list_Index_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_list_DetailMaster_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/DetailMaster.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_list_DetailMaster_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_list_DetailMaster_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_list_DetailEmployment_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/DetailEmployment.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_list_DetailEmployment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_list_DetailEmployment_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_list_DetailFaceAPI_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/DetailFaceAPI.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_list_DetailFaceAPI_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__views_list_DetailFaceAPI_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_list_DetailLogin_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/DetailLogin.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_list_DetailLogin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__views_list_DetailLogin_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__views_list_EditMaster_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/EditMaster.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__views_list_EditMaster_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__views_list_EditMaster_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__views_list_EditEmployment_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/EditEmployment.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__views_list_EditEmployment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__views_list_EditEmployment_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__views_list_EditLogin_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/EditLogin.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__views_list_EditLogin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__views_list_EditLogin_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__helpers_NotFound_vue__ = __webpack_require__("./resources/assets/js/client/helpers/NotFound.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__helpers_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__helpers_NotFound_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_list_DetailMedicalRecords_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/DetailMedicalRecords.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_list_DetailMedicalRecords_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_list_DetailMedicalRecords_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_list_DetailEmployment_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/DetailEmployment.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_list_DetailEmployment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__views_list_DetailEmployment_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_list_DetailFaceAPI_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/DetailFaceAPI.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__views_list_DetailFaceAPI_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__views_list_DetailFaceAPI_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__views_list_DetailLogin_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/DetailLogin.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__views_list_DetailLogin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__views_list_DetailLogin_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__views_list_EditMaster_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/EditMaster.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__views_list_EditMaster_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__views_list_EditMaster_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__views_list_EditMedicalRecords_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/EditMedicalRecords.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__views_list_EditMedicalRecords_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__views_list_EditMedicalRecords_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__views_list_EditEmployment_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/EditEmployment.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__views_list_EditEmployment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__views_list_EditEmployment_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__views_list_EditLogin_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/list/EditLogin.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__views_list_EditLogin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__views_list_EditLogin_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__helpers_NotFound_vue__ = __webpack_require__("./resources/assets/js/client/helpers/NotFound.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__helpers_NotFound_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__helpers_NotFound_vue__);
 /**
  * Created by kevinpurwono on 9/11/17.
  */
+
+
 
 
 
@@ -39805,7 +41800,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_list_Index_vue___default.a }, { path: '/detail/:id/master', component: __WEBPACK_IMPORTED_MODULE_3__views_list_DetailMaster_vue___default.a, name: 'detailMaster' }, { path: '/detail/:id/employment', component: __WEBPACK_IMPORTED_MODULE_4__views_list_DetailEmployment_vue___default.a, name: 'detailEmployment' }, { path: '/detail/:id/faceAPI', component: __WEBPACK_IMPORTED_MODULE_5__views_list_DetailFaceAPI_vue___default.a, name: 'detailFaceAPI' }, { path: '/detail/:id/login', component: __WEBPACK_IMPORTED_MODULE_6__views_list_DetailLogin_vue___default.a, name: 'detailLogin' }, { path: '/detail/:id/master/edit', component: __WEBPACK_IMPORTED_MODULE_7__views_list_EditMaster_vue___default.a, name: 'editMaster' }, { path: '/detail/:id/employment/edit', component: __WEBPACK_IMPORTED_MODULE_8__views_list_EditEmployment_vue___default.a, name: 'editEmployment' }, { path: '/detail/:id/login/edit', component: __WEBPACK_IMPORTED_MODULE_9__views_list_EditLogin_vue___default.a, name: 'editLogin' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_list_Index_vue___default.a }, { path: '/detail/:id/master', component: __WEBPACK_IMPORTED_MODULE_3__views_list_DetailMaster_vue___default.a, name: 'detailMaster' }, { path: '/detail/:id/medicalRecords', component: __WEBPACK_IMPORTED_MODULE_4__views_list_DetailMedicalRecords_vue___default.a, name: 'detailMedicalRecords' }, { path: '/detail/:id/employment', component: __WEBPACK_IMPORTED_MODULE_5__views_list_DetailEmployment_vue___default.a, name: 'detailEmployment' }, { path: '/detail/:id/faceAPI', component: __WEBPACK_IMPORTED_MODULE_6__views_list_DetailFaceAPI_vue___default.a, name: 'detailFaceAPI' }, { path: '/detail/:id/login', component: __WEBPACK_IMPORTED_MODULE_7__views_list_DetailLogin_vue___default.a, name: 'detailLogin' }, { path: '/detail/:id/master/edit', component: __WEBPACK_IMPORTED_MODULE_8__views_list_EditMaster_vue___default.a, name: 'editMaster' }, { path: '/detail/:id/medicalRecords/edit', component: __WEBPACK_IMPORTED_MODULE_9__views_list_EditMedicalRecords_vue___default.a, name: 'editMedicalRecords' }, { path: '/detail/:id/employment/edit', component: __WEBPACK_IMPORTED_MODULE_10__views_list_EditEmployment_vue___default.a, name: 'editEmployment' }, { path: '/detail/:id/login/edit', component: __WEBPACK_IMPORTED_MODULE_11__views_list_EditLogin_vue___default.a, name: 'editLogin' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -40008,6 +42003,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/employee/views/list/DetailMedicalRecords.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/list/DetailMedicalRecords.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d743d95a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/list/DetailMedicalRecords.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/employee/views/list/DetailMedicalRecords.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d743d95a", Component.options)
+  } else {
+    hotAPI.reload("data-v-d743d95a", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/employee/views/list/EditEmployment.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -40144,6 +42188,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-c2f35506", Component.options)
   } else {
     hotAPI.reload("data-v-c2f35506", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/views/list/EditMedicalRecords.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/list/EditMedicalRecords.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-35001f0c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/list/EditMedicalRecords.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/employee/views/list/EditMedicalRecords.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-35001f0c", Component.options)
+  } else {
+    hotAPI.reload("data-v-35001f0c", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true

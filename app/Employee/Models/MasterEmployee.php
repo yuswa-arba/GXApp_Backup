@@ -38,6 +38,11 @@ class MasterEmployee extends Model
         return $this->hasOne(User::class, 'employeeId');
     }
 
+    public function medicalRecord()
+    {
+        return $this->hasOne(EmployeeMedicalRecords::class,'employeeId');
+    }
+
     public function employment()
     {
         return $this->hasOne(Employment::class, 'employeeId');

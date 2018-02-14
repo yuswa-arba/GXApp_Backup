@@ -28,6 +28,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('list', 'ListController@mainList');
         Route::get('list/resigned', 'ListController@resignedList');
         Route::get('detail/master/{id}', 'AjaxController@masterEmployeeDetail');
+        Route::get('detail/medicalRecords/{employeeId}', 'AjaxController@medicalRecordDetail');
         Route::get('detail/faceapi/{employeeId}', 'AjaxController@faceAPIDetail');
         Route::get('detail/employment/{employeeId}', 'AjaxController@employmentDetail');
         Route::get('detail/login/{employeeId}', 'AjaxController@loginDetail');
@@ -35,6 +36,9 @@ Route::prefix('v1/h')->group(function () {
 
         Route::get('edit/master/{id}', 'AjaxController@masterEmployeeEdit');
         Route::post('edit/master', 'AjaxController@saveMasterEmployeeEdit');
+
+        Route::get('edit/medicalRecords/{id}', 'AjaxController@medicalRecordEdit');
+        Route::post('edit/medicalRecords', 'AjaxController@saveMedicalRecordEdit');
 
         Route::get('edit/employment/{employeeId}', 'AjaxController@employmentEdit');
         Route::post('edit/employment', 'AjaxController@saveEmploymentEdit');

@@ -72,7 +72,6 @@
             <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">Contact Information</div>
-
                 </div>
                 <div class="card-block">
                     <div class="row">
@@ -102,6 +101,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="card card-default filter-item">
                 <div class="card-header ">
                     <div class="card-title">ID Card Information</div>
