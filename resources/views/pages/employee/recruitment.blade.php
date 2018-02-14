@@ -51,6 +51,11 @@
                     </li>
                     <li class="nav-item">
                         <a class=""
+                           id="item-medical-records"
+                           data-toggle="tab" href="#" role="tab"><i class="fa fa-user-md tab-icon"></i> <span>Medical Records</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class=""
                            id="item-employment"
                            data-toggle="tab" href="#" role="tab"><i
                                     class="fa fa-file-text tab-icon"></i> <span>Employment</span></a>
@@ -66,6 +71,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane slide-left padding-20 sm-no-padding active" id="tab-personal-info">
+                        <!-- Start of Personal Tab -->
                         <form class="" role="form" id="personalInformationForm" enctype="multipart/form-data"
                               autocomplete="off">
                             <div class="row ">
@@ -359,7 +365,8 @@
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default required">
                                                 <label>ID Card Number</label>
-                                                <input type="number" min="0" maxlength="16" class="form-control" name="idCardNumber"
+                                                <input type="number" min="0" maxlength="16" class="form-control"
+                                                       name="idCardNumber"
                                                        value="{{old('idCardNumber')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
@@ -430,7 +437,7 @@
                                             <div class="form-group form-group-default  ">
                                                 <label>E-mail Address</label>
                                                 <input type="email" class="form-control" name="emergencyEmailAddress"
-                                                       value="{{old('emergencyEmailAddress')}}" >
+                                                       value="{{old('emergencyEmailAddress')}}">
                                             </div>
                                         </div>
                                         <br>
@@ -484,7 +491,8 @@
                                             </div>
                                             <div class="form-group form-group-default ">
                                                 <label>Company Phone Number</label>
-                                                <input type="number" min="0" class="form-control" name="prevCompanyPhoneNo"
+                                                <input type="number" min="0" class="form-control"
+                                                       name="prevCompanyPhoneNo"
                                                        value="{{old('prevCompanyPhoneNo')}}">
                                             </div>
                                             <div class="row">
@@ -498,8 +506,10 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-default ">
                                                         <label>Length of Employment</label>
-                                                        <input type="radio" name="lengthEmploymentTimeFormat" value="years" checked> Year(s)
-                                                        <input type="radio" name="lengthEmploymentTimeFormat" value="months"> Month(s)
+                                                        <input type="radio" name="lengthEmploymentTimeFormat"
+                                                               value="years" checked> Year(s)
+                                                        <input type="radio" name="lengthEmploymentTimeFormat"
+                                                               value="months"> Month(s)
                                                         <br>
                                                         <input type="number" class="form-control"
                                                                placeholder="1"
@@ -517,16 +527,382 @@
 
                                     </div>
                                     <button class="btn btn-outline-primary btn-block" id="createEmployeeBtn"
-                                            type="button">Create
-                                        Employee &
-                                        Go to Employment
+                                            type="button">Create Employee
                                     </button>
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div> <!-- End of Personal Tab -->
 
-                    <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab-employment">
+                    <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab-medical-records">
+                        <!-- Start of Medical Records Tab -->
+                        <form class="" role="form" id="medicalRecordsForm" autocomplete="off">
+                            <div class="row">
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Long term medication</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="hasLongTermMedication"
+                                                           id="treatment-on">
+                                                    <label for="treatment-on">Yes</label>
+                                                    <input type="radio" value="0" name="hasLongTermMedication"
+                                                           checked="checked" id="treatment-off">
+                                                    <label for="treatment-off">No</label>
+                                                </div>
+                                            </div>
+                                            <div class="row  padding-5 form-group form-group-attached disabled"
+                                                 id="treatmentQuestion" style="display: none;">
+                                                <div class="form-group form-group-default required">
+                                                    <label class="label-sm">Type of disease</label>
+                                                    <input type="text" class="form-control"
+                                                           name="typeOfDisease"
+                                                           placeholder="Type of disease" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label class="label-sm">Since When</label>
+                                                    <input type="text"
+                                                           name="medicationSinceWhen"
+                                                           class="form-control datepickerGet"
+                                                           placeholder="dd/mm/yyyy" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label class="col-form-label-sm">Type of Drug</label>
+                                                    <input type="text"
+                                                           name="typeOfDrug"
+                                                           class="form-control" placeholder="Type of drug"
+                                                           required>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Are you a smoker?</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="isASmoker" id="smoker-on">
+                                                    <label for="smoker-on">Yes</label>
+                                                    <input type="radio" value="0" name="isASmoker" checked="checked"
+                                                           id="smoker-off">
+                                                    <label for="smoker-off">No</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-attached padding-5" id="smokerQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Amount per day</label>
+                                                            <input type="number"
+                                                                   name="smokeAmountPerDay"
+                                                                   value="1"
+                                                                   class="form-control"
+                                                                   placeholder="Amount" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Since When</label>
+                                                            <input type="text"
+                                                                   class="form-control datepickerGet"
+                                                                   name="smokingSinceWhen"
+                                                                   placeholder="dd/mm/yyyy" required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Are you a drinker?</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="isADrinker" id="drinker-on">
+                                                    <label for="drinker-on">Yes</label>
+                                                    <input type="radio" value="0" name="isADrinker" checked="checked"
+                                                           id="drinker-off">
+                                                    <label for="drinker-off">No</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-attached padding-5" id="drinkerQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Amount per day</label>
+                                                            <input type="number"
+                                                                   value="1"
+                                                                   class="form-control"
+                                                                   name="drinkAmountPerDay"
+                                                                   placeholder="Amount" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Since When</label>
+                                                            <input type="text"
+                                                                   class="form-control datepickerGet"
+                                                                   name="drinkingSinceWhen"
+                                                                   placeholder="dd/mm/yyyy" required>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr/>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Had an Accident</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="hadAnAccident" id="accident-on">
+                                                    <label for="accident-on">Yes</label>
+                                                    <input type="radio" value="0" name="hadAnAccident" checked="checked"
+                                                           id="accident-off">
+                                                    <label for="accident-off">No</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-attached padding-5" id="accidentQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">When</label>
+                                                            <input type="text"
+                                                                   name="accidentDate"
+                                                                   class="form-control datepickerGet"
+                                                                   placeholder="dd/mm/yyyy" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Type of Accident</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="typeOfAccident"
+                                                                   placeholder="Type of Accident" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Surgery</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="hadASurgery" id="operation-on">
+                                                    <label for="operation-on">Yes</label>
+                                                    <input type="radio" value="0" name="hadASurgery" checked="checked"
+                                                           id="operation-off">
+                                                    <label for="operation-off">No</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-attached padding-5" id="operationQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">When</label>
+                                                            <input type="text"
+                                                                   name="surgeryDate"
+                                                                   class="form-control datepickerGet"
+                                                                   placeholder="dd/mm/yyyy" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Type of Surgery</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="typeOfSurgery"
+                                                                   placeholder="Type of Surgery" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Hospitalized</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="hasHospitalized"
+                                                           id="hospitalized-on">
+                                                    <label for="hospitalized-on">Yes</label>
+                                                    <input type="radio" value="0" name="hasHospitalized"
+                                                           checked="checked" id="hospitalized-off">
+                                                    <label for="hospitalized-off">No</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-attached padding-5" id="hospitalizedQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">When</label>
+                                                            <input type="text"
+                                                                   class="form-control datepickerGet"
+                                                                   name="dateHospitalized"
+                                                                   placeholder="dd/mm/yyyy" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Type of Medication</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="typeOfMedication"
+                                                                   placeholder="Type of Medication" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Special Habits</p>
+
+                                            <div class="form-group-attached padding-5" id="accidentQuestion">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Dietary habit</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="dietaryHabit"
+                                                                   placeholder="Dietary habit" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Type of sport</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="typeOfSport"
+                                                                   placeholder="Type of sport" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Amount per week</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="sportAmountPerWeek"
+                                                                   placeholder="Sports routine per week" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Notes etc</label>
+                                                            <input placeholder="Notes etc"
+                                                                   class="form-control"
+                                                                   name="extraNotes">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <p>Physical Information</p>
+
+                                            <div class="form-group padding-5">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">Body height</label>
+                                                            <input type="text" class="form-control"
+                                                                   name="bodyHeight"
+                                                                   placeholder="Height body" required>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-mg-12">
+                                                        <p>Do you wear glasses</p>
+                                                        <div class="radio radio-success">
+                                                            <input type="radio" value="1" name="wearGlasses"
+                                                                   id="glasses-on">
+                                                            <label for="glasses-on">Yes</label>
+                                                            <input type="radio" value="0" name="wearGlasses"
+                                                                   checked="checked"
+                                                                   id="glasses-off">
+                                                            <label for="glasses-off">No</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group padding-5" id="glassesQuestion"
+                                                             style="display: none;">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group form-group-default required">
+                                                                        <label class="label-sm">Glasses size</label>
+                                                                        <input type="text"
+                                                                               name="glassesSize"
+                                                                               class="form-control" required>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <button style="margin-top: 55px;"
+                                                                class="btn btn-outline-primary btn-block"
+                                                                id="saveMedicalRecordsBtn"
+                                                                type="button">Save Employee Medical Records
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>  <!-- End of Medical Records Tab -->
+
+                    <div class="tab-pane slide-left padding-20 sm-no-padding " id="tab-employment">
+                        <!-- Start of Employment Tab -->
                         <div class="row row-same-height">
                             <div class="col-md-7 b-r b-dashed b-grey ">
                                 <div class="padding-30 sm-padding-5">
@@ -628,7 +1004,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> <!-- End of Employment Tab -->
                 </div>
             </div>
             <!-- END PLACE PAGE CONTENT HERE -->

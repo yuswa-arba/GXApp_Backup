@@ -6,6 +6,7 @@ use App\Account\Models\User;
 use App\Employee\Events\EmployeeCreated;
 use App\Employee\Events\UserGenerated;
 use App\Employee\Models\EmployeeDataVerification;
+use App\Employee\Models\EmployeeMedicalRecords;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
@@ -89,6 +90,36 @@ class RecruitmentLogic extends RecruitmentUseCase
         return $this;
     }
 
+
+
+    /*
+     |--------------------------------------------------------------------------
+     | Create Medical Records
+     |--------------------------------------------------------------------------
+     */
+    public function handleMedicalRecords($request)
+    {
+        $response = array();
+
+        $medicalRecords = EmployeeMedicalRecords::create($request->all());
+
+        if($medicalRecords){
+
+            /* Return success response */
+            $response['isFailed'] =false;
+            $response['message'] = 'Medical Records has been saved successfully';
+            return response()->json($response,200);
+        } else {
+
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to create medical records';
+            return response()->json($response,200);
+        }
+    }
+
+
+
     /*
      |--------------------------------------------------------------------------
      | Create Employment
@@ -157,6 +188,8 @@ class RecruitmentLogic extends RecruitmentUseCase
 
         return $this;
     }
+
+
 
 
 }

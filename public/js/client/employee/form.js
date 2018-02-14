@@ -1855,6 +1855,7 @@ $(document).ready(function () {
     // constants
     var employeeId = '';
     var personalInfoForm = $('#personalInformationForm');
+    var medicalRecordsForm = $('#medicalRecordsForm');
     var employmentForm = $('#employmentForm');
     var formObject = {};
 
@@ -1892,12 +1893,63 @@ $(document).ready(function () {
 
                 if (employeeId) {
                     // make sure employee ID is not empty
-                    goToEmploymentTab();
+                    goToMedicalRecordsTab();
                 } else {
                     alert('Something went wrong! Employee ID is not defined');
                 }
             } else {
 
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            var errorsResponse = err.message + '</br>';
+
+            _.forEach(err.response.data.errors, function (value, key) {
+                errorsResponse += value[0] + ' ';
+            });
+
+            $('#errors-container').removeClass('hide').addClass('show');
+            $('#errors-value').html(errorsResponse);
+            errorsResponse = ''; // reset value
+            /* Scroll to top*/
+            $('html, body').animate({
+                scrollTop: $(".jumbotron").offset().top
+            }, 500);
+        });
+    });
+
+    $('#saveMedicalRecordsBtn').on('click', function () {
+
+        var formData = medicalRecordsForm.serialize();
+        formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
+
+        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/medicalRecords', formData).then(function (res) {
+            if (!res.data.isFailed) {
+                $('#errors-container').removeClass('show').addClass('hide');
+
+                /* Show success notification*/
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                if (employeeId) {
+                    // make sure employee ID is not empty
+                    goToEmploymentTab();
+                } else {
+                    alert('Something went wrong! Employee ID is not defined');
+                }
+            } else {
                 /* Show error notification */
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -1943,7 +1995,7 @@ $(document).ready(function () {
                     type: 'info'
                 }).show();
 
-                window.location.href = '/employee/list';
+                window.location.href = '/employee/list'; // go to list page when FINISH
             } else {
                 /* Show error notification */
                 $('.page-container').pgNotification({
@@ -1987,7 +2039,107 @@ $(document).ready(function () {
         formObject.employeePhoto = e.target.files[0];
     });
 
+    /* Medical Record Tab */
+
+    $('.datepickerGet').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true
+    });
+
+    $('[name="hasLongTermMedication"]').click(function () {
+        var treatmentLong = $(this).val();
+
+        var outDis = '';
+
+        if (treatmentLong == false) {
+            outDis = 'none';
+        }
+
+        $('#treatmentQuestion').css({ 'display': outDis });
+    });
+
+    $('[name="isASmoker"]').click(function () {
+        var smokerVal = $(this).val();
+        var outDisSmoker = '';
+
+        if (smokerVal == false) {
+            outDisSmoker = 'none';
+        }
+
+        $('#smokerQuestion').css({ 'display': outDisSmoker });
+    });
+
+    $('[name="isADrinker"]').click(function () {
+        var drinkerVal = $(this).val();
+
+        var outDisDrinker = '';
+
+        if (drinkerVal == false) {
+            outDisDrinker = 'none';
+        }
+
+        $('#drinkerQuestion').css({ 'display': outDisDrinker });
+    });
+
+    $('[name="hadAnAccident"]').click(function () {
+        var accidentVal = $(this).val();
+
+        var outDisAccident = '';
+
+        if (accidentVal == false) {
+            outDisAccident = 'none';
+        }
+
+        $('#accidentQuestion').css({ 'display': outDisAccident });
+    });
+
+    $('[name="hadASurgery"]').click(function () {
+
+        var operationVal = $(this).val();
+
+        var outDisOperation = '';
+
+        if (operationVal == false) {
+            outDisOperation = 'none';
+        }
+
+        $('#operationQuestion').css({ 'display': outDisOperation });
+    });
+
+    $('[name="hasHospitalized"]').click(function () {
+        var hospitalizedVal = $(this).val();
+
+        var outDisHospitaled = '';
+
+        if (hospitalizedVal == false) {
+            outDisHospitaled = 'none';
+        }
+
+        $('#hospitalizedQuestion').css({ 'display': outDisHospitaled });
+    });
+
+    $('[name="wearGlasses"]').click(function () {
+
+        var glassesVal = $(this).val();
+
+        var outDisGlasses = '';
+
+        if (glassesVal == false) {
+            outDisGlasses = 'none';
+        }
+
+        $('#glassesQuestion').css({ 'display': outDisGlasses });
+    });
+
+    /* End of Mesical Record Tab */
+
     // functions
+
+    function goToMedicalRecordsTab() {
+        clearActiveTab();
+        $('#item-medical-records').addClass('active');
+        $('#tab-medical-records').addClass('active');
+    }
 
     function goToEmploymentTab() {
 
