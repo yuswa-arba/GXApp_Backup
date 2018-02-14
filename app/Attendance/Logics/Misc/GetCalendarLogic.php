@@ -32,13 +32,13 @@ class GetCalendarLogic extends GetDataUseCase
 
         $dayOffSchedule = DayOffSchedule::where('slotId', $request->slotId)->where(function($query){
             $query->where('date','like','%'.$this->currentYear())->orWhere('date','like','%'.$this->lastYear());
-        })->get();
+        })->get()->unique(); //prevent duplicated results
         $shiftSchedule = SlotShiftSchedule::where('slotId', $request->slotId)->where(function($query){
             $query->where('date','like','%'.$this->currentYear())->orWhere('date','like','%'.$this->lastYear());
-        })->get();
+        })->get()->unique(); //prevent duplicated results
         $pubHolidaySchedule = PublicHolidaySchedule::where('fromSlotId',$request->slotId)->where(function($query){
            $query->where('applyDate','like','%'.$this->currentYear())->orWhere('applyDate','like','%'.$this->lastYear());
-        })->get();
+        })->get()->unique(); //prevent duplicated results
 
         $response['dayOffs'] = fractal($dayOffSchedule, new DayOffSingleCalendarTransformer());
         $response['shiftSchedules'] = fractal($shiftSchedule, new ShiftScheduleSingleCalendarTransformer());
