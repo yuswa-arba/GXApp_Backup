@@ -21,6 +21,9 @@ Route::prefix('v1/h')->group(function () {
         Route::get('queue/retry/failedJob','QueueJobController@retryFailedJob');
         Route::get('queue/delete/failedJob','QueueJobController@deleteFailedJobs');
 
+        Route::get('report/problem/list','ReportProblemController@getList');
+        Route::post('report/problem/submit','ReportProblemController@submit');
+        Route::post('report/problem/update','ReportProblemController@update');
 
     });
 });
