@@ -30,6 +30,7 @@ class KioskListTransformer extends TransformerAbstract
             'isCharging' => $kiosks->isCharging,
             'isActivated' => $kiosks->isActivated,
             'isInMaintenanceMode' => $kiosks->isInMaintenanceMode,
+            'lastHeartBeat'=>$kiosks->lastHeartBeat,
             'editing' => false
         ];
     }

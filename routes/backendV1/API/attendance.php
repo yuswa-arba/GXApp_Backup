@@ -14,10 +14,26 @@ Route::prefix('v1/a')->group(function () {
     /*Attendance*/
     Route::namespace('BackendV1\API\Attendance')->prefix('attd')->group(function () {
 
-        // kiosk
+        // Kisosk
         Route::middleware('client')->group(function () {
 
-            Route::post('clock/{punchType}', 'MainController@clock'); // clock in / clock out
+            /* @header Authorization Bearer <kiosk_api_token> * */
+
+            /*
+             * @param punchType in/out
+             * @body cViaTypeId int
+             * @body employeeId uuid
+             * */
+            Route::post('clock/{punchType}', 'MainController@clock');
+
+            /*
+             * @param punchType in/out
+             * @body cViaTypeId int
+             * @body employeeId uuid
+             * @body dDate string dd/mm/yyy
+             * @body cTime string H:i
+             * */
+            Route::post('clock/backup/{punchType}','MainController@clockBackUp'); //clock in / clock out for backup sync
 
         });
 
@@ -58,24 +74,42 @@ Route::prefix('v1/a')->group(function () {
     /*Kiosk*/
     Route::namespace('BackendV1\API\Attendance')->prefix('kiosk')->group(function () {
         Route::middleware('client')->group(function () {
-            /* @header Authorization Bearer <kiosk_api_token> * */
-
-            /*
-             * @param punchType in/out
-             * @body cViaTypeId int
-             * @body employeeId uuid
-             * */
-            Route::post('clock/{punchType}', 'MainController@clock');
 
             /*
              * @param id
-             * */
+             */
             Route::get('detail/{id}', 'KioskController@detail');
 
+            /*
+             * @param id
+             */
+            Route::get('save/heartbeat/{kioskId}','KioskController@saveLastHeartBeat');
+
+            /*
+            * @param id
+            */
+            Route::post('save/battery/{kioskId}','KioskController@saveBatteryStatus');
+
+            /*
+             * @param personGroupId
+             * @param personId
+             */
             Route::get('employee/pg/{personGroupId}/person/{personId}/activity', 'KioskController@getEmployeeActivity');
 
+            /*
+             * @param employeeNo string
+             */
+            Route::get('employee/no/{employeeNo}/activity','KioskController@getEmployeeActivityByEmployeeNo');
+
+            /*
+             * @param employeeId uuid
+             */
             Route::get('employee/setting/access/{employeeId}', 'KioskController@getEmployeeAccess');
 
+            /*
+             * @body kioskId int
+             * @body passcode string
+             */
             Route::post('setting/access', 'KioskController@checkKioskPasscode');
 
         });

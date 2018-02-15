@@ -30,7 +30,8 @@ class KioskTransformer extends TransformerAbstract
             'batteryPower' => $kiosk->batteryPower,
             'isCharging' => $kiosk->isCharging,
             'isActivated' => $kiosk->isActivated,
-            'isInMaintenanceMode' => $kiosk->isInMaintenanceMode
+            'isInMaintenanceMode' => $kiosk->isInMaintenanceMode,
+            'lastHeartBeat'=>$kiosk->lastHeartBeat
         ];
     }
 

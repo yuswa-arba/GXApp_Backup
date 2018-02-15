@@ -2039,6 +2039,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -32040,6 +32046,14 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("td", [
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(kiosk.lastHeartBeat) +
+                                  "\n                                    "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
                               !kiosk.editing
                                 ? _c("i", {
                                     staticClass: "fs-14 fa fa-pencil pointer",
@@ -32167,6 +32181,8 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-black" }, [_vm._v("MNT Mode")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Activated")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Last Heartbeat")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
       ])

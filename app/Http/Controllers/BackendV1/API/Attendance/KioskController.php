@@ -6,13 +6,16 @@ use App\Account\Models\User;
 use App\Attendance\Models\Kiosks;
 use App\Attendance\Transformers\KioskTransformer;
 use App\Employee\Models\FacePerson;
+use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeLastActivityTransfomer;
+use App\Employee\Transformers\EmployeeNameAndIdTransfomer;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Passport\Client;
 
@@ -76,6 +79,26 @@ class KioskController extends Controller
         return response()->json($response,200);
     }
 
+    public function getEmployeeActivityByEmployeeNo($employeeNo)
+    {
+        $response = array();
+        $employee = MasterEmployee::where('employeeNo',$employeeNo)->first();
+        if ($employee) {
+
+            $response['isFailed'] = false;
+            $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+            $response['message'] = 'Success';
+            $response['employeeActivityData'] = fractal($employee, new EmployeeLastActivityTransfomer());
+            return response()->json($response,200);
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$KIOSK_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+            $response['message'] = 'Unable to find employee';
+            return response()->json($response,200);
+        }
+
+    }
+
     public function checkKioskPasscode(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -117,7 +140,30 @@ class KioskController extends Controller
         }
 
         return response()->json($response, 200);
+    }
 
+    public function saveLastHeartBeat($kioskId)
+    {
+        $kiosk = Kiosks::find($kioskId);
+
+        if($kiosk){
+
+            $kiosk->lastHeartBeat = Carbon::now()->format('d/m/Y H:i:s');
+            $kiosk->save();
+
+        }
+    }
+
+    public function saveBatteryStatus(Request $request, $kioskId)
+    {
+        $kiosk = Kiosks::find($kioskId);
+
+        if($kiosk){
+            $kiosk->batteryPower = ($request->batteryPower*100).'%';
+            $kiosk->isCharging = $request->isCharging;
+            $kiosk->save();;
+
+        }
     }
 
 }
