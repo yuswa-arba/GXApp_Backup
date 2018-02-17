@@ -162,8 +162,12 @@ class KioskController extends Controller
             $kiosk->batteryPower = ($request->batteryPower*100).'%';
             $kiosk->isCharging = $request->isCharging;
             $kiosk->save();;
-
         }
+
+        if($request->batteryPower*100 < 20){
+            //TODO: check if battery power low (lower than 20%) and send notification to Developer/Admin
+        }
+
     }
 
 }

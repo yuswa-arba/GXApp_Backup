@@ -23,6 +23,7 @@ Route::prefix('v1/a')->group(function () {
              * @param punchType in/out
              * @body cViaTypeId int
              * @body employeeId uuid
+             * @body isMicrosoftFaceAPIApproved string yes/no
              * */
             Route::post('clock/{punchType}', 'MainController@clock');
 
@@ -32,6 +33,7 @@ Route::prefix('v1/a')->group(function () {
              * @body employeeId uuid
              * @body dDate string dd/mm/yyy
              * @body cTime string H:i
+             * @body isMicrosoftFaceAPIApproved string yes/no
              * */
             Route::post('clock/backup/{punchType}','MainController@clockBackUp'); //clock in / clock out for backup sync
 

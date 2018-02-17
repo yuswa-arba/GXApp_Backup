@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -107,7 +108,7 @@ class MainController extends Controller
 
             }
 
-            if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_PERSONAL_DEVICE']) {//by personal device
+            if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_PERSONAL_DEVICE']) { //by personal device
                 $validator = Validator::make($request->all(), [
                     'cValidGeofence' => 'required',
                     'cLatitude' => 'required',
@@ -126,7 +127,7 @@ class MainController extends Controller
                 $formRequest['cLongitude'] = $request->cLongitude;
             }
 
-            if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL']) {//by web portal
+            if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL']) { //by web portal
 
                 $validator = Validator::make($request->all(), [
                     'cIpAddress' => 'required',
@@ -157,6 +158,9 @@ class MainController extends Controller
     # clock employees from backup of client's local storage
     public function clockBackUp(Request $request, $punchType)
     {
+
+       Log::info($request->cDate." ".$request->cTime." by: " .$request->employeeId);
+
         /* Validation Request*/
         $validator = Validator::make($request->all(), [
             'employeeId' => 'required',
@@ -168,7 +172,7 @@ class MainController extends Controller
         if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
-            $response['message'] = 'Employee ID and Via type required';
+            $response['message'] = 'Missing required params';
             return response()->json($response, 200);
         }
 
