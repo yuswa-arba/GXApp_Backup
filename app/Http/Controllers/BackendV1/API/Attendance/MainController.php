@@ -158,9 +158,6 @@ class MainController extends Controller
     # clock employees from backup of client's local storage
     public function clockBackUp(Request $request, $punchType)
     {
-
-       Log::info($request->cDate." ".$request->cTime." by: " .$request->employeeId);
-
         /* Validation Request*/
         $validator = Validator::make($request->all(), [
             'employeeId' => 'required',
