@@ -47,8 +47,8 @@
                                         <th class="text-black">Passcode</th>
                                         <th class="text-black">Battery Power</th>
                                         <th class="text-black">Charging</th>
-                                        <th class="text-black">MNT Mode</th>
                                         <th class="text-black">Activated</th>
+                                        <th class="text-black">Synced,Unsycned</th>
                                         <th class="text-black">Last Heartbeat</th>
                                         <th class="text-black">Action</th>
                                     </tr>
@@ -79,13 +79,11 @@
                                             <i class="fs-16 text-danger fa fa-times" v-else=""></i>
                                         </td>
                                         <td>
-                                            <i class="fs-16 text-complete fa fa-check"
-                                               v-if="kiosk.isInMaintenanceMode==1"></i>
+                                            <i class="fs-16 text-complete fa fa-check" v-if="kiosk.isActivated==1"></i>
                                             <i class="fs-16 text-danger fa fa-times" v-else=""></i>
                                         </td>
                                         <td>
-                                            <i class="fs-16 text-complete fa fa-check" v-if="kiosk.isActivated==1"></i>
-                                            <i class="fs-16 text-danger fa fa-times" v-else=""></i>
+                                            {{kiosk.totalSynced}},{{kiosk.totalUnsynced}}
                                         </td>
                                         <td>
                                             {{kiosk.lastHeartBeat}}

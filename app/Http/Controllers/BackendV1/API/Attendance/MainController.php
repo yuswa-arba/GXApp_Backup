@@ -314,7 +314,6 @@ class MainController extends Controller
 
     private function saveClockOutPhoto(Request $request)
     {
-
         /* Save Clock Out Photo if exist */
         if ($request->hasFile('employeePhotoClockOut') && $request->file('employeePhotoClockOut')->isValid()) {
 

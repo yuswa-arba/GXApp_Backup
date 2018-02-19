@@ -88,9 +88,24 @@ Route::prefix('v1/a')->group(function () {
             Route::get('save/heartbeat/{kioskId}','KioskController@saveLastHeartBeat');
 
             /*
-            * @param id
-            */
+             * @param kioskId
+             * @body batteryPower
+             * @body isCharging
+             */
             Route::post('save/battery/{kioskId}','KioskController@saveBatteryStatus');
+
+            /*
+             * @param kioskId
+             * @body totalSynced
+             * @body totalUnsynced
+             */
+            Route::post('save/localStorage/{kioskId}','KioskController@saveLocalStorageData');
+
+            /*
+            * @param kioskId
+            * @body logs
+            */
+            Route::post('log/unsynced/{kioskId}','KioskController@logUnsyncedData');
 
             /*
              * @param personGroupId

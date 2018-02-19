@@ -2043,8 +2043,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 
@@ -32024,7 +32022,7 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("td", [
-                              kiosk.isInMaintenanceMode == 1
+                              kiosk.isActivated == 1
                                 ? _c("i", {
                                     staticClass:
                                       "fs-16 text-complete fa fa-check"
@@ -32035,14 +32033,13 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c("td", [
-                              kiosk.isActivated == 1
-                                ? _c("i", {
-                                    staticClass:
-                                      "fs-16 text-complete fa fa-check"
-                                  })
-                                : _c("i", {
-                                    staticClass: "fs-16 text-danger fa fa-times"
-                                  })
+                              _vm._v(
+                                "\n                                        " +
+                                  _vm._s(kiosk.totalSynced) +
+                                  "," +
+                                  _vm._s(kiosk.totalUnsynced) +
+                                  "\n                                    "
+                              )
                             ]),
                             _vm._v(" "),
                             _c("td", [
@@ -32178,9 +32175,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Charging")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("MNT Mode")]),
-        _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Activated")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Synced,Unsycned")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Last Heartbeat")]),
         _vm._v(" "),

@@ -31,6 +31,8 @@ class KioskListTransformer extends TransformerAbstract
             'isActivated' => $kiosks->isActivated,
             'isInMaintenanceMode' => $kiosks->isInMaintenanceMode,
             'lastHeartBeat'=>$kiosks->lastHeartBeat,
+            'totalSynced'=>$kiosks->totalSynced,
+            'totalUnsynced'=>$kiosks->totalUnsynced,
             'editing' => false
         ];
     }

@@ -167,6 +167,27 @@ class KioskController extends Controller
         if($request->batteryPower*100 < 20){
             //TODO: check if battery power low (lower than 20%) and send notification to Developer/Admin
         }
+    }
+
+    public function saveLocalStorageData(Request $request,$kioskId)
+    {
+        $kiosk = Kiosks::find($kioskId);
+
+        if($kiosk){
+            $kiosk->totalSynced = $request->totalSynced;
+            $kiosk->totalUnsynced = $request->totalUnsynced;
+            $kiosk->save();;
+        }
+
+    }
+
+    public function logUnsyncedData(Request $request,$kioskId)
+    {
+        $kiosk = Kiosks::find($kioskId);
+
+        if($kiosk){
+            Log::useDailyFiles(storage_path() . '/logs/kiosk/unsynced.log');
+        }
 
     }
 

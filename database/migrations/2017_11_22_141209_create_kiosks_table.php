@@ -26,6 +26,8 @@ class CreateKiosksTable extends Migration
             $table->tinyInteger('isActivated')->default(0);
             $table->tinyInteger('isDeleted')->default(0);
             $table->string('lastHeartBeat')->nullable();
+            $table->string('totalSynced')->nullable();
+            $table->string('totalUnsynced')->nullable();
             $table->timestamps();
         });
     }
