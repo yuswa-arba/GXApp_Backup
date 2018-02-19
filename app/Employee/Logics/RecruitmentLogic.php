@@ -7,11 +7,13 @@ use App\Employee\Events\EmployeeCreated;
 use App\Employee\Events\UserGenerated;
 use App\Employee\Models\EmployeeDataVerification;
 use App\Employee\Models\EmployeeMedicalRecords;
+use App\Employee\Models\EmployeeSiblings;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Traits\GlobalUtils;
 use GuzzleHttp\Psr7\Request;
+use Illuminate\Support\Facades\Log;
 
 class RecruitmentLogic extends RecruitmentUseCase
 {
@@ -54,9 +56,16 @@ class RecruitmentLogic extends RecruitmentUseCase
     {
         /*Add unique ID param*/
         $request->request->add(['id' => $this->generateUUID()]);
-        $request->request->add(['employeeNo' => str_random(6)]);
+//        $request->request->add(['employeeNo' => str_random(6)]);
 
-        $requestData = $request->except('lengthEmploymentTimeFormat'); // remove from request
+        $requestData = $request->except([
+            'lengthEmploymentTimeFormat',
+            'siblingName',
+            'siblingAddress',
+            'siblingCity',
+            'siblingPhoneNo',
+            'siblingMaritalStatusId',
+        ]); // remove from request
 
         /*Handle image uploads*/
         if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
@@ -77,7 +86,26 @@ class RecruitmentLogic extends RecruitmentUseCase
 
         }
 
+
+        //create employee
         $employee = MasterEmployee::create($requestData);
+
+        Log::info(count($request->siblingName));
+
+        //save siblings
+        if($employee->numberOfSiblings>0){
+            for($i =0;$i<$employee->numberOfSiblings;$i++){
+
+                EmployeeSiblings::create([
+                    'employeeId'=>$employee->id,
+                    'name'=>$request->siblingName[$i],
+                    'address'=>$request->siblingAddress[$i],
+                    'city'=>$request->siblingCity[$i]
+                ]);
+            }
+        }
+
+        //return employee
         return $employee;
     }
 
@@ -91,7 +119,6 @@ class RecruitmentLogic extends RecruitmentUseCase
     }
 
 
-
     /*
      |--------------------------------------------------------------------------
      | Create Medical Records
@@ -103,21 +130,20 @@ class RecruitmentLogic extends RecruitmentUseCase
 
         $medicalRecords = EmployeeMedicalRecords::create($request->all());
 
-        if($medicalRecords){
+        if ($medicalRecords) {
 
             /* Return success response */
-            $response['isFailed'] =false;
+            $response['isFailed'] = false;
             $response['message'] = 'Medical Records has been saved successfully';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         } else {
 
             /* Return error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to create medical records';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
     }
-
 
 
     /*
@@ -161,16 +187,16 @@ class RecruitmentLogic extends RecruitmentUseCase
 
     private function updateEmployeeNoBasedOnBranch($employment)
     {
-       $employee = MasterEmployee::find($employment->employee->id);
+        $employee = MasterEmployee::find($employment->employee->id);
 
-       //format : 17021201001 = ({date of entry : yymmdd}{branch code no}{order no})
-       $employee->employeeNo = $this->convertDateDDMMYYYYtoYMD($employment->dateOfEntry)
-           . $employment->branchOffice->codeNo
-           . $this->zeroPrefix(count(MasterEmployee::all()),3);
+        //format : 17021201001 = ({date of entry : yymmdd}{branch code no}{order no})
+        $employee->employeeNo = $this->convertDateDDMMYYYYtoYMD($employment->dateOfEntry)
+            . $employment->branchOffice->codeNo
+            . $this->zeroPrefix(count(MasterEmployee::all()), 3);
 
-       $employee->save();
+        $employee->save();
 
-       return $this;
+        return $this;
 
     }
 
@@ -188,8 +214,6 @@ class RecruitmentLogic extends RecruitmentUseCase
 
         return $this;
     }
-
-
 
 
 }

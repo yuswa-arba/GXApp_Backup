@@ -129,4 +129,9 @@ class MasterEmployee extends Model
     {
         return $this->hasOne(FingerspotUser::class,'employeeId');
     }
+
+    public function siblings()
+    {
+        return $this->hasMany(EmployeeSiblings::class,'employeeId');
+    }
 }

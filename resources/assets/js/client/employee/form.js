@@ -311,6 +311,23 @@ $(document).ready(function () {
     /* End of Mesical Record Tab */
 
 
+    /* Siblings form */
+
+    $('[name="numberOfSiblings"]').keyup(function () {
+
+
+        if ($(this).val() > 0) {
+            if ($(this).val() <= 10){
+                addSiblingsForm($(this).val())
+            }
+        } else {
+            removeSiblingsForm()
+        }
+    })
+
+    /* End of siblings form */
+
+
     // functions
 
     function goToMedicalRecordsTab() {
@@ -338,4 +355,46 @@ $(document).ready(function () {
         $('.nav-item a').removeClass('active')
     }
 
+
+    function addSiblingsForm(total) {
+
+        removeSiblingsForm();//reset
+
+        let i = 0
+        for (i; i < total; i++) {
+
+            let originalForm = `<div class="hide" id="siblingsForm`+i+`">
+                                                <br>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's Name</label>
+                                                    <input type="text" class="form-control" name="siblingName[`+i+`]" value="">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's Address</label>
+                                                    <input type="text" class="form-control" name="siblingAddress[`+i+`]"
+                                                           value="">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's City</label>
+                                                    <input type="text" class="form-control" name="siblingCity[`+i+`]"
+                                                           value="">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's Phone Number</label>
+                                                    <input type="number" min="0" class="form-control" name="siblingPhoneNo[`+i+`]"
+                                                           value="">
+                                                </div>
+                                                <br>
+                                            </div>`
+
+            $('#siblingsFormContainer').prepend(originalForm)
+
+            $('#siblingsForm' + i).removeClass('hide')
+        }
+    }
+
+    function removeSiblingsForm() {
+        $('#siblingsFormContainer').empty()
+
+    }
 });

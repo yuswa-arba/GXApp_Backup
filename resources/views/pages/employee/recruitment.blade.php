@@ -307,7 +307,6 @@
                                                 <label class="">Mother is deceased?</label>
                                                 <select class="full-width" data-placeholder="Select"
                                                         data-init-plugin="select2"
-
                                                         name="motherIsDeceased"
                                                         required>
                                                     <option value="" disabled selected></option>
@@ -317,43 +316,42 @@
                                             </div>
                                         </div>
                                         <br>
+                                        <div class="form-group form-group-default">
+                                            <label>Number of Siblings</label>
+                                            <input type="number" min="0" maxlength="1" max="10"
+                                                   placeholder="(max: 10)"
+                                                   class="form-control" name="numberOfSiblings"
+                                                   value="{{old('numberOfSiblings')}}">
+                                        </div>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default">
-                                                <label>Number of Siblings</label>
-                                                <input type="number" min="0" class="form-control" name="siblingPhoneNo"
-                                                       value="{{old('siblingPhoneNo')}}">
+                                            <div class="hide" id="siblingsForm">
+                                                <br>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's Name</label>
+                                                    <input type="text" class="form-control" name="siblingName[]" value="{{old('siblingName')}}">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's Address</label>
+                                                    <input type="text" class="form-control" name="siblingAddress[]"
+                                                           value="{{old('siblingAddress')}}">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's City</label>
+                                                    <input type="text" class="form-control" name="siblingCity[]"
+                                                           value="{{old('siblingCity')}}">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's Phone Number</label>
+                                                    <input type="number" min="0" class="form-control" name="siblingPhoneNo[]"
+                                                           value="{{old('siblingPhoneNo')}}">
+                                                </div>
+                                                <br>
                                             </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Sibling's Name</label>
-                                                <input type="text" class="form-control" name="siblingName"
-                                                       value="{{old('siblingName')}}">
+
+                                            <div id="siblingsFormContainer">
+
                                             </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Sibling's Address</label>
-                                                <input type="text" class="form-control" name="siblingAddress"
-                                                       value="{{old('siblingAddress')}}">
-                                            </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Sibling's City</label>
-                                                <input type="text" class="form-control" name="siblingCity"
-                                                       value="{{old('siblingCity')}}">
-                                            </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Sibling's Phone Number</label>
-                                                <input type="number" min="0" class="form-control" name="siblingPhoneNo"
-                                                       value="{{old('siblingPhoneNo')}}">
-                                            </div>
-                                            <div class="form-group form-group-default form-group-default-select2">
-                                                <label class="">Sibling's Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Marital Status"
-                                                        data-init-plugin="select2"
-                                                        name="siblingMaritalStatusId">
-                                                    <option value="" disabled selected></option>
-                                                    @foreach($maritalStatuses as $maritalStatus)
-                                                        <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+
                                         </div>
                                         <br>
                                     </div>
@@ -814,7 +812,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group form-group-default required">
                                                             <label class="label-sm">Amount per week</label>
-                                                            <input type="text"
+                                                            <input type="number"
                                                                    class="form-control"
                                                                    name="sportAmountPerWeek"
                                                                    placeholder="Sports routine per week" required>
@@ -844,7 +842,7 @@
                                                     <div class="col-md-12">
                                                         <div class="form-group form-group-default required">
                                                             <label class="label-sm">Body height</label>
-                                                            <input type="text" class="form-control"
+                                                            <input type="number" class="form-control"
                                                                    name="bodyHeight"
                                                                    placeholder="Height body" required>
                                                         </div>
@@ -872,6 +870,7 @@
                                                                     <div class="form-group form-group-default required">
                                                                         <label class="label-sm">Glasses size</label>
                                                                         <input type="text"
+                                                                               placeholder="e.g. L:-2.0 , R: -1.5"
                                                                                name="glassesSize"
                                                                                class="form-control" required>
                                                                     </div>

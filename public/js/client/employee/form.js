@@ -2133,6 +2133,21 @@ $(document).ready(function () {
 
     /* End of Mesical Record Tab */
 
+    /* Siblings form */
+
+    $('[name="numberOfSiblings"]').keyup(function () {
+
+        if ($(this).val() > 0) {
+            if ($(this).val() <= 10) {
+                addSiblingsForm($(this).val());
+            }
+        } else {
+            removeSiblingsForm();
+        }
+    });
+
+    /* End of siblings form */
+
     // functions
 
     function goToMedicalRecordsTab() {
@@ -2157,6 +2172,25 @@ $(document).ready(function () {
     function clearActiveTab() {
         $('.tab-pane').removeClass('active');
         $('.nav-item a').removeClass('active');
+    }
+
+    function addSiblingsForm(total) {
+
+        removeSiblingsForm(); //reset
+
+        var i = 0;
+        for (i; i < total; i++) {
+
+            var originalForm = '<div class="hide" id="siblingsForm' + i + '">\n                                                <br>\n                                                <div class="form-group form-group-default">\n                                                    <label>Sibling\'s Name</label>\n                                                    <input type="text" class="form-control" name="siblingName[' + i + ']" value="">\n                                                </div>\n                                                <div class="form-group form-group-default">\n                                                    <label>Sibling\'s Address</label>\n                                                    <input type="text" class="form-control" name="siblingAddress[' + i + ']"\n                                                           value="">\n                                                </div>\n                                                <div class="form-group form-group-default">\n                                                    <label>Sibling\'s City</label>\n                                                    <input type="text" class="form-control" name="siblingCity[' + i + ']"\n                                                           value="">\n                                                </div>\n                                                <div class="form-group form-group-default">\n                                                    <label>Sibling\'s Phone Number</label>\n                                                    <input type="number" min="0" class="form-control" name="siblingPhoneNo[' + i + ']"\n                                                           value="">\n                                                </div>\n                                                <br>\n                                            </div>';
+
+            $('#siblingsFormContainer').prepend(originalForm);
+
+            $('#siblingsForm' + i).removeClass('hide');
+        }
+    }
+
+    function removeSiblingsForm() {
+        $('#siblingsFormContainer').empty();
     }
 });
 
