@@ -315,36 +315,6 @@
                             <input type="text" class="form-control" v-model="form.numberOfSiblings">
                         </div>
 
-                        <div class="col-lg-4 employee-details">
-                            <label>Sibling's Name</label>
-                            <input type="text" class="form-control" v-model="form.siblingName">
-                        </div>
-
-                        <div class="col-lg-4 employee-details">
-                            <label>Sibling's Address</label>
-                            <input type="text" class="form-control" v-model="form.siblingAddress">
-                        </div>
-
-                        <div class="col-lg-4 employee-details">
-                            <label>Sibling's City</label>
-                            <input type="text" class="form-control" v-model="form.siblingCity">
-                        </div>
-
-                        <div class="col-lg-4 employee-details">
-                            <label>Sibling's Phone Number</label>
-                            <input type="text" class="form-control" v-model="form.siblingPhoneNo">
-                        </div>
-
-                        <div class="col-lg-12 employee-details">
-                            <label>Sibling's Marital Status</label>
-                            <select class="form-control" v-model="form.siblingMaritalStatusId">
-                                <option v-for="maritalStatus in maritalStatuses"
-                                        :value="maritalStatus.id">
-                                    {{maritalStatus.name}}
-                                </option>
-                            </select>
-                        </div>
-
                     </div>
                 </div>
             </div>

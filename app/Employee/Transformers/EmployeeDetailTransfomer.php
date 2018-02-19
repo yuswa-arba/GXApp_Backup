@@ -50,11 +50,6 @@ class EmployeeDetailTransfomer extends TransformerAbstract
             'motherMaritalStatus' => !is_null($employee->motherMaritalStatus) ? $employee->motherMaritalStatus->name : '',
             'motherIsDeceased'=>$employee->motherIsDeceased,
             'numberOfSiblings' => $employee->numberOfSiblings,
-            'siblingName' => $employee->siblingName,
-            'siblingAddress' => $employee->siblingAddress,
-            'siblingCity' => $employee->siblingCity,
-            'siblingPhoneNo' => $employee->siblingPhoneNo,
-            'siblingMaritalStatus' => !is_null($employee->siblingMaritalStatus) ? $employee->siblingMaritalStatus->name : '',
             'emergencyContact' => $employee->emergencyContact,
             'emergencyRelationship' => $employee->emergencyRelationship,
             'emergencyAddress' => $employee->emergencyAddress,
@@ -71,7 +66,8 @@ class EmployeeDetailTransfomer extends TransformerAbstract
             'bankAccNo' => $employee->bankAccNo,
             'bankHolderName' => $employee->bankHolderName,
             'bankBranch' => $employee->bankBranch,
-            'bankCity' => $employee->bankCity
+            'bankCity' => $employee->bankCity,
+            'siblings'=>fractal($employee->siblings,new EmployeeSiblingsTransfomer())
         ];
     }
 

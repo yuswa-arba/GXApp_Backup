@@ -309,35 +309,43 @@
                             <label>Number of Siblings</label>
                             <h5>{{detail.numberOfSiblings}}</h5>
                         </div>
+                        <div class="clearfix"></div>
+                        <div v-if="detail.siblings.data" class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-12 employee-details" v-for="(sibling,index) in detail.siblings.data">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            No. {{index+1}}
+                                        </div>
+                                        <div class="col-lg-4 employee-details">
+                                            <label>Sibling's Name</label>
+                                            <h5>{{sibling.name}}</h5>
+                                            <h5 v-if="!sibling.name">-</h5>
+                                        </div>
 
-                        <div class="col-lg-4 employee-details">
-                            <label>Sibling's Name</label>
-                            <h5>{{detail.siblingName}}</h5>
-                            <h5 v-if="!detail.siblingName">-</h5>
-                        </div>
+                                        <div class="col-lg-4 employee-details">
+                                            <label>Sibling's Address</label>
+                                            <h5>{{sibling.address}}</h5>
+                                            <h5 v-if="!sibling.address">-</h5>
+                                        </div>
 
-                        <div class="col-lg-4 employee-details">
-                            <label>Sibling's Address</label>
-                            <h5>{{detail.siblingAddress}}</h5>
-                            <h5 v-if="!detail.siblingAddress">-</h5>
-                        </div>
+                                        <div class="col-lg-4 employee-details">
+                                            <label>Sibling's City</label>
+                                            <h5>{{sibling.city}}</h5>
+                                            <h5 v-if="!sibling.city">-</h5>
+                                        </div>
 
-                        <div class="col-lg-4 employee-details">
-                            <label>Sibling's City</label>
-                            <h5>{{detail.siblingCity}}</h5>
-                            <h5 v-if="!detail.siblingCity">-</h5>
-                        </div>
+                                        <div class="col-lg-4 employee-details">
+                                            <label>Sibling's Phone Number</label>
+                                            <h5>{{sibling.phoneNumber}}</h5>
+                                            <h5 v-if="!sibling.phoneNumber">-</h5>
+                                        </div>
+                                    </div>
 
-                        <div class="col-lg-4 employee-details">
-                            <label>Sibling's Phone Number</label>
-                            <h5>{{detail.siblingPhoneNo}}</h5>
-                            <h5 v-if="!detail.siblingPhoneNo">-</h5>
-                        </div>
+                                </div>
 
-                        <div class="col-lg-8 employee-details">
-                            <label>Sibling's Marital Status</label>
-                            <h5>{{detail.siblingMaritalStatus}}</h5>
-                            <h5 v-if="!detail.siblingMaritalStatus">-</h5>
+                            </div>
+
                         </div>
 
                     </div>
@@ -456,6 +464,8 @@
                 .then((res) => {
                     this.resignationDetail = res.data.detail.data
                 })
+
+
         },
         methods: {
             goBackToResignedList(){

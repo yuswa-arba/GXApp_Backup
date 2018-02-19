@@ -2161,6 +2161,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -21435,47 +21443,89 @@ var render = function() {
               _c("h5", [_vm._v(_vm._s(_vm.detail.numberOfSiblings))])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4 employee-details" }, [
-              _c("label", [_vm._v("Sibling's Name")]),
-              _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingName))]),
-              _vm._v(" "),
-              !_vm.detail.siblingName ? _c("h5", [_vm._v("-")]) : _vm._e()
-            ]),
+            _c("div", { staticClass: "clearfix" }),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4 employee-details" }, [
-              _c("label", [_vm._v("Sibling's Address")]),
-              _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingAddress))]),
-              _vm._v(" "),
-              !_vm.detail.siblingAddress ? _c("h5", [_vm._v("-")]) : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4 employee-details" }, [
-              _c("label", [_vm._v("Sibling's City")]),
-              _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingCity))]),
-              _vm._v(" "),
-              !_vm.detail.siblingCity ? _c("h5", [_vm._v("-")]) : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4 employee-details" }, [
-              _c("label", [_vm._v("Sibling's Phone Number")]),
-              _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingPhoneNo))]),
-              _vm._v(" "),
-              !_vm.detail.siblingPhoneNo ? _c("h5", [_vm._v("-")]) : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-8 employee-details" }, [
-              _c("label", [_vm._v("Sibling's Marital Status")]),
-              _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.detail.siblingMaritalStatus))]),
-              _vm._v(" "),
-              !_vm.detail.siblingMaritalStatus
-                ? _c("h5", [_vm._v("-")])
-                : _vm._e()
-            ])
+            _vm.detail.siblings.data
+              ? _c("div", { staticClass: "col-lg-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.detail.siblings.data, function(sibling, index) {
+                      return _c(
+                        "div",
+                        { staticClass: "col-lg-12 employee-details" },
+                        [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-lg-12" }, [
+                              _vm._v(
+                                "\n                                        No. " +
+                                  _vm._s(index + 1) +
+                                  "\n                                    "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-lg-4 employee-details" },
+                              [
+                                _c("label", [_vm._v("Sibling's Name")]),
+                                _vm._v(" "),
+                                _c("h5", [_vm._v(_vm._s(sibling.name))]),
+                                _vm._v(" "),
+                                !sibling.name
+                                  ? _c("h5", [_vm._v("-")])
+                                  : _vm._e()
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-lg-4 employee-details" },
+                              [
+                                _c("label", [_vm._v("Sibling's Address")]),
+                                _vm._v(" "),
+                                _c("h5", [_vm._v(_vm._s(sibling.address))]),
+                                _vm._v(" "),
+                                !sibling.address
+                                  ? _c("h5", [_vm._v("-")])
+                                  : _vm._e()
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-lg-4 employee-details" },
+                              [
+                                _c("label", [_vm._v("Sibling's City")]),
+                                _vm._v(" "),
+                                _c("h5", [_vm._v(_vm._s(sibling.city))]),
+                                _vm._v(" "),
+                                !sibling.city
+                                  ? _c("h5", [_vm._v("-")])
+                                  : _vm._e()
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-lg-4 employee-details" },
+                              [
+                                _c("label", [_vm._v("Sibling's Phone Number")]),
+                                _vm._v(" "),
+                                _c("h5", [_vm._v(_vm._s(sibling.phoneNumber))]),
+                                _vm._v(" "),
+                                !sibling.phoneNumber
+                                  ? _c("h5", [_vm._v("-")])
+                                  : _vm._e()
+                              ]
+                            )
+                          ])
+                        ]
+                      )
+                    })
+                  )
+                ])
+              : _vm._e()
           ])
         ])
       ]),
