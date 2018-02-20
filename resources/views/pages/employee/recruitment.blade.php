@@ -583,7 +583,7 @@
                                                     <input type="text"
                                                            name="typeOfDrug"
                                                            class="form-control" placeholder="Type of drug"
-                                                           required>
+                                                           >
                                                 </div>
                                             </div>
                                         </div>
@@ -609,7 +609,7 @@
                                                                    name="smokeAmountPerDay"
                                                                    value="1"
                                                                    class="form-control"
-                                                                   placeholder="Amount" required>
+                                                                   placeholder="Amount">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
@@ -618,7 +618,7 @@
                                                             <input type="text"
                                                                    class="form-control datepickerGet"
                                                                    name="smokingSinceWhen"
-                                                                   placeholder="dd/mm/yyyy" required>
+                                                                   placeholder="dd/mm/yyyy">
                                                         </div>
                                                     </div>
 
@@ -647,7 +647,7 @@
                                                                    value="1"
                                                                    class="form-control"
                                                                    name="drinkAmountPerDay"
-                                                                   placeholder="Amount" required>
+                                                                   placeholder="Amount" >
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
@@ -656,7 +656,7 @@
                                                             <input type="text"
                                                                    class="form-control datepickerGet"
                                                                    name="drinkingSinceWhen"
-                                                                   placeholder="dd/mm/yyyy" required>
+                                                                   placeholder="dd/mm/yyyy" >
                                                         </div>
                                                     </div>
 
@@ -691,7 +691,7 @@
                                                             <input type="text"
                                                                    name="accidentDate"
                                                                    class="form-control datepickerGet"
-                                                                   placeholder="dd/mm/yyyy" required>
+                                                                   placeholder="dd/mm/yyyy" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -702,7 +702,7 @@
                                                             <input type="text"
                                                                    class="form-control"
                                                                    name="typeOfAccident"
-                                                                   placeholder="Type of Accident" required>
+                                                                   placeholder="Type of Accident" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -730,7 +730,7 @@
                                                             <input type="text"
                                                                    name="surgeryDate"
                                                                    class="form-control datepickerGet"
-                                                                   placeholder="dd/mm/yyyy" required>
+                                                                   placeholder="dd/mm/yyyy" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -741,7 +741,7 @@
                                                             <input type="text"
                                                                    class="form-control"
                                                                    name="typeOfSurgery"
-                                                                   placeholder="Type of Surgery" required>
+                                                                   placeholder="Type of Surgery" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -770,7 +770,7 @@
                                                             <input type="text"
                                                                    class="form-control datepickerGet"
                                                                    name="dateHospitalized"
-                                                                   placeholder="dd/mm/yyyy" required>
+                                                                   placeholder="dd/mm/yyyy" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -781,7 +781,7 @@
                                                             <input type="text"
                                                                    class="form-control"
                                                                    name="typeOfMedication"
-                                                                   placeholder="Type of Medication" required>
+                                                                   placeholder="Type of Medication" >
                                                         </div>
                                                     </div>
                                                 </div>
@@ -804,7 +804,7 @@
                                                             <input type="text"
                                                                    class="form-control"
                                                                    name="dietaryHabit"
-                                                                   placeholder="Dietary habit" required>
+                                                                   placeholder="Dietary habit">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -815,7 +815,7 @@
                                                             <input type="text"
                                                                    class="form-control"
                                                                    name="typeOfSport"
-                                                                   placeholder="Type of sport" required>
+                                                                   placeholder="Type of sport">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -826,7 +826,7 @@
                                                             <input type="number"
                                                                    class="form-control"
                                                                    name="sportAmountPerWeek"
-                                                                   placeholder="Sports routine per week" required>
+                                                                   placeholder="Sports routine per week">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -855,7 +855,7 @@
                                                             <label class="label-sm">Body height</label>
                                                             <input type="number" class="form-control"
                                                                    name="bodyHeight"
-                                                                   placeholder="Height body" required>
+                                                                   placeholder="Height body">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -883,7 +883,7 @@
                                                                         <input type="text"
                                                                                placeholder="e.g. L:-2.0 , R: -1.5"
                                                                                name="glassesSize"
-                                                                               class="form-control" required>
+                                                                               class="form-control">
                                                                     </div>
                                                                 </div>
                                                             </div>

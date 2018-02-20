@@ -56,14 +56,27 @@ $(document).ready(function () {
 
                 } else {
 
-                    /* Show error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: res.data.message,
-                        position: 'top-right',
-                        timeout: 0,
-                        type: 'danger'
-                    }).show();
+                    if(res.data.message){
+                        /* Show error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 0,
+                            type: 'danger'
+                        }).show();
+                    } else {
+                        /* Show error notification */
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: 'Invalid repsonse from server',
+                            position: 'top-right',
+                            timeout: 0,
+                            type: 'danger'
+                        }).show();
+                    }
+
+
 
                 }
 
