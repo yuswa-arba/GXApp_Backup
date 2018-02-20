@@ -90,6 +90,12 @@ class AjaxController extends Controller
         if ($assignUserIdArr != null && $assignUserIdArr != '') {
 
 
+            /* Revoke all*/
+            $users = User::all();
+            foreach ($users as $user) {
+                $user->revokePermissionTo($permissionName);
+            }
+
             /* Assign permission to User */
             $assignUsers = User::whereIn('employeeId', $assignUserIdArr)->get();
 
@@ -100,6 +106,7 @@ class AjaxController extends Controller
 //                }
 
                 $assignUser->givePermissionTo($permissionName);
+
 
             }
 
