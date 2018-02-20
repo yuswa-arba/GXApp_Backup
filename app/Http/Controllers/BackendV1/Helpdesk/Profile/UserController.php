@@ -81,6 +81,17 @@ class UserController extends Controller
 
             if ($user->save()) { /* Success response */
 
+                //Logging
+                app()->make('LogService')->logging([
+                    'causer'=>$this->getResultWithNullChecker1Connection($user,'employee','givenName'),
+                    'via'=>'web client',
+                    'subject'=>'Change Password',
+                    'action'=>'write',
+                    'level'=>3,
+                    'description'=>$this->getResultWithNullChecker1Connection($user,'employee','givenName').' has changed their password',
+                    'causerIPAddress'=> \Request::ip()
+                ]);
+
                 $response['isFailed'] = false;
                 $response['message'] = 'Success';
                 return response()->json($response, 200);

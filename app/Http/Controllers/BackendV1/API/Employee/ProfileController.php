@@ -58,7 +58,17 @@ class ProfileController extends Controller
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                     $response['message'] = 'Success';
 
-                    //TODO : LOG THIS, users has changed hisher password
+                    //Logging
+                    app()->make('LogService')->logging([
+                        'causer'=>$this->getResultWithNullChecker1Connection($user,'employee','givenName'),
+                        'via'=>'api call',
+                        'subject'=>'Change Password',
+                        'action'=>'write',
+                        'level'=>3,
+                        'description'=>$this->getResultWithNullChecker1Connection($user,'employee','givenName').' has changed their password',
+                        'causerIPAddress'=> \Request::ip()
+                    ]);
+
 
                     return response()->json($response,200);
 
