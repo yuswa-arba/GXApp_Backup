@@ -29,8 +29,8 @@ class MasterEmployeeRequest extends FormRequest
         return [
             'phoneNo' => 'required|unique:MasterEmployee',
             'email' => 'required|unique:MasterEmployee',
-            'employeePhoto' => 'max:2048',
-            'idCardPhoto' => 'max:2048',
+//            'employeePhoto' => 'max:2048',
+//            'idCardPhoto' => 'max:2048',
             'surname' => 'required',
             'givenName' => 'required',
             'nickName' => 'required',

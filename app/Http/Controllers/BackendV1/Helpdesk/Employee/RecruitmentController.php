@@ -15,7 +15,7 @@ class RecruitmentController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['role:admin','permission:create employee']);
+        $this->middleware(['role:admin','permission:create employee','role:superadmin']);
     }
 
     public function createEmployee(MasterEmployeeRequest $request)

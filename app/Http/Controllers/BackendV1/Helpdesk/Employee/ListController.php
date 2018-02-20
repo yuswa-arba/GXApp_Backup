@@ -19,13 +19,13 @@ class ListController extends Controller
 
     public function mainList()
     {
-        $employees = MasterEmployee::where('hasResigned','!=',1)->get()->sortBy('employeeNo');
+        $employees = MasterEmployee::where('hasResigned','!=',1)->get()->sortBy('givenName');
         return fractal($employees,new EmployeeListTransfomer())->respond(200);
     }
 
     public function resignedList()
     {
-        $employees = MasterEmployee::where('hasResigned','=',1)->get()->sortBy('employeeNo');
+        $employees = MasterEmployee::where('hasResigned','=',1)->get()->sortBy('givenName');
         return fractal($employees,new EmployeeListTransfomer())->respond(200);
     }
 
