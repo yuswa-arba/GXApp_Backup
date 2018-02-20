@@ -90,8 +90,6 @@ class RecruitmentLogic extends RecruitmentUseCase
         //create employee
         $employee = MasterEmployee::create($requestData);
 
-        Log::info(count($request->siblingName));
-
         //save siblings
         if($employee->numberOfSiblings>0){
             for($i =0;$i<$employee->numberOfSiblings;$i++){
