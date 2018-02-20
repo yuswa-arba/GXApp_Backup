@@ -81,14 +81,14 @@ class ProfileController extends Controller
             }
 
 
-
-
         } else {
+
             $response['isFailed'] = true;
             $response['code'] = ResponseCodes::$USER_ERR_CODE['USER_ACCESS_NOT_GRANTED'];
             $response['message'] = 'User\'s access not granted';
 
             return response()->json($response, 200);
+
         }
     }
 

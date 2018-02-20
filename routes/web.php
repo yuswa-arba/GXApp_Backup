@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
 $client_path = 'routes/client/';
 $backend_path = 'routes/backendV1/';
 $type_helpdesk = 'helpdesk/';
+
 /*
 |--------------------------------------------------------------------------
 | Init client routes
@@ -29,7 +30,9 @@ require(base_path($client_path . 'doorAccess/main.php'));
 require(base_path($client_path . 'developer/main.php'));
 require(base_path($client_path . 'salary/main.php'));
 require(base_path($client_path . 'misc/main.php'));
-/*
+require(base_path($client_path . 'profile/main.php'));
+
+
 /*
 |--------------------------------------------------------------------------
 | Init Backend routes
@@ -42,6 +45,7 @@ require(base_path($backend_path . $type_helpdesk . 'salary.php'));
 require(base_path($backend_path . $type_helpdesk . 'developer.php'));
 require(base_path($backend_path . $type_helpdesk . 'component.php'));
 require(base_path($backend_path . $type_helpdesk . 'misc.php'));
+require(base_path($backend_path . $type_helpdesk . 'profile.php'));
 /*
 |--------------------------------------------------------------------------
 | Init general routes
