@@ -84,9 +84,21 @@
                         {{--</div>--}}
                     {{--</div>--}}
                 {{--</div>--}}
+                <div class="margin-center m-b-20" style="bottom: 0;position: absolute;">
+                    <h4>System Requirement</h4>
+                    <img src="{{asset('core/img/supported-browser.png')}}" alt="chrome" height="48">
+                    <p class="m-t-10">Currently supported browser : <span class="bold">Chrome</span> </p>
+                </div>
             </div>
+
+
+
         </div>
         <!-- END Login Right Container-->
+
+
+
+
     </div>
     <!-- END PAGE CONTAINER -->
     @include('layouts.partials._overlay')
