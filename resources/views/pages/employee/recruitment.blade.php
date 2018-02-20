@@ -206,55 +206,24 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Spouse's Name</label>
-                                                <input type="text" class="form-control" name="spousesName"
-                                                       value="{{old('spousesName')}}">
+                                            <div id="spouse-form">
+                                                <div class="form-group form-group-default">
+                                                    <label>Spouse's Name</label>
+                                                    <input type="text" class="form-control" name="spousesName"
+                                                           value="{{old('spousesName')}}">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Number of Children</label>
+                                                    <input type="number" min="0" class="form-control" name="totalChildren"
+                                                           value="{{old('totalChildren')}}">
+                                                </div>
                                             </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Number of Children</label>
-                                                <input type="number" min="0" class="form-control" name="totalChildren"
-                                                       value="{{old('totalChildren')}}">
-                                            </div>
+
 
                                         </div>
                                         <br>
                                         <p class="form-title">Family</p>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default required">
-                                                <label>Father's Name</label>
-                                                <input type="text" class="form-control" name="fatherName"
-                                                       value="{{old('fatherName')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Father's Address</label>
-                                                <input type="text" class="form-control" name="fatherAddress"
-                                                       value="{{old('fatherAddress')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Father's City</label>
-                                                <input type="text" class="form-control" name="fatherCity"
-                                                       value="{{old('fatherCity')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Father's Phone Number</label>
-                                                <input type="number" min="0" class="form-control" name="fatherPhoneNo"
-                                                       value="{{old('fatherPhoneNo')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
-                                                <label class="">Father's Marital Status</label>
-                                                <select class="full-width"
-                                                        data-placeholder="Select Marital Status"
-                                                        data-init-plugin="select2"
-
-                                                        name="fatherMaritalStatusId"
-                                                        required>
-                                                    <option value="" disabled selected></option>
-                                                    @foreach($maritalStatuses as $maritalStatus)
-                                                        <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Father is deceased?</label>
                                                 <select class="full-width" data-placeholder="Select"
@@ -267,42 +236,47 @@
                                                     <option value="1">Yes</option>
                                                 </select>
                                             </div>
+                                            <div id="father-form">
+                                                <div class="form-group form-group-default required">
+                                                    <label>Father's Name</label>
+                                                    <input type="text" class="form-control" name="fatherName"
+                                                           value="{{old('fatherName')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Father's Address</label>
+                                                    <input type="text" class="form-control" name="fatherAddress"
+                                                           value="{{old('fatherAddress')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Father's City</label>
+                                                    <input type="text" class="form-control" name="fatherCity"
+                                                           value="{{old('fatherCity')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Father's Phone Number</label>
+                                                    <input type="number" min="0" class="form-control" name="fatherPhoneNo"
+                                                           value="{{old('fatherPhoneNo')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default form-group-default-select2 required">
+                                                    <label class="">Father's Marital Status</label>
+                                                    <select class="full-width"
+                                                            data-placeholder="Select Marital Status"
+                                                            data-init-plugin="select2"
+
+                                                            name="fatherMaritalStatusId"
+                                                            required>
+                                                        <option value="" disabled selected></option>
+                                                        @foreach($maritalStatuses as $maritalStatus)
+                                                            <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                         <br>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default required">
-                                                <label>Mother's Name</label>
-                                                <input type="text" class="form-control" name="motherName"
-                                                       value="{{old('motherName')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Mother's Address</label>
-                                                <input type="text" class="form-control" name="motherAddress"
-                                                       value="{{old('motherAddress')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Mother's City</label>
-                                                <input type="text" class="form-control" name="motherCity"
-                                                       value="{{old('motherCity')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Mother's Phone Number</label>
-                                                <input type="number" min="0" class="form-control" name="motherPhoneNo"
-                                                       value="{{old('motherPhoneNo')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
-                                                <label class="">Mother's Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Marital Status"
-                                                        data-init-plugin="select2"
-
-                                                        name="motherMaritalStatusId"
-                                                        required>
-                                                    <option disabled selected></option>
-                                                    @foreach($maritalStatuses as $maritalStatus)
-                                                        <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
                                             <div class="form-group form-group-default form-group-default-select2 required">
                                                 <label class="">Mother is deceased?</label>
                                                 <select class="full-width" data-placeholder="Select"
@@ -314,6 +288,43 @@
                                                     <option value="1">Yes</option>
                                                 </select>
                                             </div>
+                                            <div id="mother-form">
+                                                <div class="form-group form-group-default required">
+                                                    <label>Mother's Name</label>
+                                                    <input type="text" class="form-control" name="motherName"
+                                                           value="{{old('motherName')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Mother's Address</label>
+                                                    <input type="text" class="form-control" name="motherAddress"
+                                                           value="{{old('motherAddress')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Mother's City</label>
+                                                    <input type="text" class="form-control" name="motherCity"
+                                                           value="{{old('motherCity')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Mother's Phone Number</label>
+                                                    <input type="number" min="0" class="form-control" name="motherPhoneNo"
+                                                           value="{{old('motherPhoneNo')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default form-group-default-select2 required">
+                                                    <label class="">Mother's Marital Status</label>
+                                                    <select class="full-width" data-placeholder="Select Marital Status"
+                                                            data-init-plugin="select2"
+
+                                                            name="motherMaritalStatusId"
+                                                            required>
+                                                        <option disabled selected></option>
+                                                        @foreach($maritalStatuses as $maritalStatus)
+                                                            <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                         <br>
                                         <div class="form-group form-group-default">

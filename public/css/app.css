@@ -402,3 +402,7 @@
   margin-bottom: 0 !important;
 }
 
+.disabled-form .form-group {
+  background: #ebebeb !important;
+}
+

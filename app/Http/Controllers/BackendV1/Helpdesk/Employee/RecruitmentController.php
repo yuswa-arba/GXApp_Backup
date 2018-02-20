@@ -32,6 +32,4 @@ class RecruitmentController extends Controller
     {
         return RecruitmentLogic::submitEmployment($request);
     }
-
-
 }

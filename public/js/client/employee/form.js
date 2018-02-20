@@ -2133,6 +2133,47 @@ $(document).ready(function () {
 
     /* End of Mesical Record Tab */
 
+    /* Marital, Father & Mother form*/
+
+    $('[name="fatherIsDeceased"]').change(function () {
+        if ($(this).val() == 1) {
+            /* Disable forms */
+            $('#father-form').addClass('disabled-form');
+            $("#father-form :input").attr("disabled", true);
+        } else {
+            /* Enable forms */
+            $("#father-form :input").attr("disabled", false);
+            $('#father-form').removeClass('disabled-form');
+        }
+    });
+
+    $('[name="motherIsDeceased"]').change(function () {
+        if ($(this).val() == 1) {
+            /* Disable forms */
+            $('#mother-form').addClass('disabled-form');
+            $("#mother-form :input").attr("disabled", true);
+        } else {
+            /* Enable forms */
+            $("#mother-form :input").attr("disabled", false);
+            $('#mother-form').removeClass('disabled-form');
+        }
+    });
+
+    $('[name="maritalStatusId"]').change(function () {
+        if ($(this).val() == 5) {
+            // Unmarried
+            /* Disable forms */
+            $('#spouse-form').addClass('disabled-form');
+            $("#spouse-form :input").attr("disabled", true);
+        } else {
+            /* Enable forms */
+            $("#spouse-form :input").attr("disabled", false);
+            $('#spouse-form').removeClass('disabled-form');
+        }
+    });
+
+    /* End of father & mother form*/
+
     /* Siblings form */
 
     $('[name="numberOfSiblings"]').keyup(function () {
