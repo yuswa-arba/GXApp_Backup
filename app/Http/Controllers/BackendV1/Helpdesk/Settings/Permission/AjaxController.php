@@ -11,6 +11,7 @@ use App\Permission\Transformers\VdByRoleTransformer;
 use App\Permission\Transformers\VdByUserTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
@@ -78,20 +79,27 @@ class AjaxController extends Controller
 
     public function assignByPermissionToUser(Request $request)
     {
+
+        Log::info($request);
+
         $request->validate(['permissionName' => 'required']);
 
         $permissionName = $request->permissionName;
         $assignUserIdArr = $request->assignUserIdArr;
 
         if ($assignUserIdArr != null && $assignUserIdArr != '') {
+
+
             /* Assign permission to User */
             $assignUsers = User::whereIn('employeeId', $assignUserIdArr)->get();
 
             foreach ($assignUsers as $assignUser) {
 
-                if (!$assignUser->hasPermissionTo($permissionName)) {
-                    $assignUser->givePermissionTo($permissionName);
-                }
+//                if (!$assignUser->hasPermissionTo($permissionName)) {
+//                    $assignUser->givePermissionTo($permissionName);
+//                }
+
+                $assignUser->givePermissionTo($permissionName);
 
             }
 
