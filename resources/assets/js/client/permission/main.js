@@ -2,8 +2,6 @@
  * Created by kevinpurwono on 8/11/17.
  */
 
-require('../../bootstrap'); // axio, vue , vue-router, lodash, etc
-
 import Vue from 'vue';
 // import router from './router'
 

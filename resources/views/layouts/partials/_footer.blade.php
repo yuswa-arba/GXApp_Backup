@@ -22,11 +22,10 @@
 <script src="{{mix('plugins/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
 
 
-@stack('child-scripts-plugins')
+
 
 <script src="{{mix('core/js/core-theme.js')}}" type="text/javascript"></script> <!-- core theme -->
 <script src="{{asset('plugins/socketioclient/dist/socket.io.js')}}"></script>
-<script src="{{mix('js/client/components/InternetConnection.js')}}"></script>
 
 
 {{--<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script> <!-- socket io client -->--}}
@@ -36,10 +35,14 @@
     {{--socketio.on('connect',function(){--}}
         {{--console.log('connected')--}}
     {{--})--}}
-
 {{--</script>--}}
 
-
-
-@stack('child-page-controller')
 <script src="{{mix('js/app.js')}}" type="text/javascript"></script> <!-- app -->
+
+@stack('child-scripts-plugins') <!-- Make sure it is put below app.js -->
+@stack('child-page-controller') <!-- Make sure it is put below app.js -->
+
+
+@if(request()->route()->getName()!='login') <!-- do not include in login page -->
+<script src="{{mix('js/client/components/InternetConnection.js')}}"></script>
+@endif

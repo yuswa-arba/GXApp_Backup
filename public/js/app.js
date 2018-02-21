@@ -19784,6 +19784,8 @@ __webpack_require__("./resources/assets/js/bootstrap.js");
 
 __webpack_require__("./resources/assets/js/global.js");
 
+__webpack_require__("./resources/assets/js/echo/main.js");
+
 /***/ }),
 
 /***/ "./resources/assets/js/bootstrap.js":
@@ -19802,8 +19804,8 @@ window._ = __webpack_require__("./node_modules/lodash/lodash.js");
  */
 
 try {
-    // window.$ = window.jQuery = require('jquery');
-    // require('bootstrap-sass');
+  // window.$ = window.jQuery = require('jquery');
+  // require('bootstrap-sass');
 } catch (e) {}
 
 /**
@@ -19825,9 +19827,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -19839,21 +19841,43 @@ if (token) {
 
 
 window.echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-    broadcaster: 'socket.io',
-    connector: 'socket.io',
-    host: window.location.hostname + ':6001',
-    namespace: 'App'
+  broadcaster: 'socket.io',
+  connector: 'socket.io',
+  host: window.location.hostname + ':6001',
+  namespace: 'App'
 });
 
-echo.channel('kiosk').listen('Clocking', function (data) {
-    console.log(data);
+/***/ }),
+
+/***/ "./resources/assets/js/echo/main.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+* Make sure to only put things in here that is global, means
+* its included in all page, otherwise create a specific file and
+* include it in the related page
+* */
+
+/* Init echo listeners */
+__webpack_require__("./resources/assets/js/echo/storage/main.js");
+
+/***/ }),
+
+/***/ "./resources/assets/js/echo/storage/main.js":
+/***/ (function(module, exports) {
+
+var orderId = 1;
+
+echo.private('orderRequested.' + orderId).listen('Storage.Events.OrderRequested', function (data) {
+
+    console.log('orderRequested', data);
 
     $('.page-container').pgNotification({
         style: 'flip',
-        message: data.message,
+        message: 'You have 1 new notification',
         position: 'top-right',
-        timeout: 3500,
-        type: 'info'
+        timeout: 2500,
+        type: 'success'
     }).show();
 });
 

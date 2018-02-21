@@ -1,15 +1,13 @@
 {
-	"authHost": "http://localhost",
+	"authHost": "http://gxemployee.dev/",
 	"authEndpoint": "/broadcasting/auth",
-	"clients": [
-		{
-			"appId": "1f8a50a0e1ec8b37",
-			"key": "263bbab99945790dd04e9d048e4f4a54"
-		}
-	],
+	"clients": [],
 	"database": "redis",
 	"databaseConfig": {
-		"redis": {},
+		"redis": {
+			"port":"6379",
+			"host":"localhost"
+		},
 		"sqlite": {
 			"databasePath": "/database/laravel-echo-server.sqlite"
 		}

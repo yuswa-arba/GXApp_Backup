@@ -21,12 +21,15 @@
         methods: {
             listenToEcho(){
                 let self = this
+
                 echo.channel('connection')
                     .listen('Components.Events.HeartBeat', (data) => {
 
                         self.lastHeartBeatReceivedAt = moment()
 
                     })
+
+
             },
             determineConnectionStatus() {
 

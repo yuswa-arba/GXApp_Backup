@@ -9,6 +9,6 @@ require('./bootstrap');
 
 require('./global');
 
-
+require('./echo/main')
 
 

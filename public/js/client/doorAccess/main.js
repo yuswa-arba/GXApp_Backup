@@ -33505,8 +33505,8 @@ window._ = __webpack_require__("./node_modules/lodash/lodash.js");
  */
 
 try {
-    // window.$ = window.jQuery = require('jquery');
-    // require('bootstrap-sass');
+  // window.$ = window.jQuery = require('jquery');
+  // require('bootstrap-sass');
 } catch (e) {}
 
 /**
@@ -33528,9 +33528,9 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 var token = document.head.querySelector('meta[name="csrf-token"]');
 
 if (token) {
-    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
-    console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
 /**
@@ -33542,22 +33542,10 @@ if (token) {
 
 
 window.echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
-    broadcaster: 'socket.io',
-    connector: 'socket.io',
-    host: window.location.hostname + ':6001',
-    namespace: 'App'
-});
-
-echo.channel('kiosk').listen('Clocking', function (data) {
-    console.log(data);
-
-    $('.page-container').pgNotification({
-        style: 'flip',
-        message: data.message,
-        position: 'top-right',
-        timeout: 3500,
-        type: 'info'
-    }).show();
+  broadcaster: 'socket.io',
+  connector: 'socket.io',
+  host: window.location.hostname + ':6001',
+  namespace: 'App'
 });
 
 /***/ }),

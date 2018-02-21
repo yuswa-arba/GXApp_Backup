@@ -1,7 +1,6 @@
 /**
  * Created by kevinpurwono on 6/12/17.
  */
-require('../../bootstrap')
 
 import Vue from 'vue'
 import router from './router/slot'

@@ -55,21 +55,6 @@ window.echo = new Echo({
 
 
 
-echo.channel('kiosk')
-    .listen('Clocking', (data) => {
-        console.log(data)
-
-        $('.page-container').pgNotification({
-            style: 'flip',
-            message: data.message,
-            position: 'top-right',
-            timeout: 3500,
-            type: 'info'
-        }).show();
-    })
-
-
-
 
 
 

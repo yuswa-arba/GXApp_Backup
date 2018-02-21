@@ -2,7 +2,6 @@
  * Created by kevinpurwono on 9/11/17.
  */
 
-require('../../bootstrap'); // axio, vue , vue-router, lodash, etc
 window.Vue = require('vue');
 window.VueRouter = require('vue-router');
 

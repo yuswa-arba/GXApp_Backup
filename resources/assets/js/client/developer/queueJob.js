@@ -2,9 +2,6 @@
  * Created by kevinpurwono on 28/12/17.
  */
 
-
-require('../../bootstrap')
-
 import Vue from 'vue';
 import router from './router/queueJob'
 import MainQueueJob from './MainQueueJob.vue'

@@ -2,7 +2,7 @@
  * Created by kevinpurwono on 15/11/17.
  */
 
-require('../../bootstrap'); // axio, vue , vue-router, lodash, etc
+
 
 import Vue from 'vue'
 import MainList from './MainList.vue'

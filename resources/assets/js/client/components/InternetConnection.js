@@ -1,7 +1,7 @@
 /**
  * Created by kevinpurwono on 6/12/17.
  */
-require('../../bootstrap')
+// require('../../bootstrap')
 
 import Vue from 'vue'
 import InternetConnection from './InternetConnection.vue'
