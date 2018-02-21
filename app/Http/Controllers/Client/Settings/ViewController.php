@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Client\Settings\Permission;
+namespace App\Http\Controllers\Client\Settings;
 
 use App\Account\Models\User;
 use Illuminate\Http\Request;
@@ -17,12 +17,23 @@ class ViewController extends Controller
         $this->middleware(['permission:view setting']);
     }
 
-    public function index()
+    public function passport()
+    {
+        return view('pages.settings.passport');
+    }
+
+    public function permission()
     {
         $roles = Role::all();
         $permissions = Permission::all();
         $users = User::all();
-        return view('pages.permission.roles_permissions', compact('permissions','roles','users'));
+        return view('pages.settings.permission', compact('permissions','roles','users'));
     }
+
+    public function notification()
+    {
+        return view('pages.settings.notification');
+    }
+
 
 }

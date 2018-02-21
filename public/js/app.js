@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 24);
+/******/ 	return __webpack_require__(__webpack_require__.s = 25);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -19789,12 +19789,8 @@ __webpack_require__("./resources/assets/js/echo/main.js");
 /***/ }),
 
 /***/ "./resources/assets/js/bootstrap.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__("./node_modules/laravel-echo/dist/echo.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
 window._ = __webpack_require__("./node_modules/lodash/lodash.js");
 
 /**
@@ -19832,6 +19828,16 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
+/***/ }),
+
+/***/ "./resources/assets/js/echo/main.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo__ = __webpack_require__("./node_modules/laravel-echo/dist/echo.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_laravel_echo__);
+
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -19847,18 +19853,14 @@ window.echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
   namespace: 'App'
 });
 
-/***/ }),
-
-/***/ "./resources/assets/js/echo/main.js":
-/***/ (function(module, exports, __webpack_require__) {
-
 /*
 * Make sure to only put things in here that is global, means
 * its included in all page, otherwise create a specific file and
 * include it in the related page
 * */
 
-/* Init echo listeners */
+/* INIT ECHO LISTENERS */
+
 __webpack_require__("./resources/assets/js/echo/storage/main.js");
 
 /***/ }),
@@ -20027,7 +20029,7 @@ $(document).ready(function () {
 
 /***/ }),
 
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/assets/js/app.js");

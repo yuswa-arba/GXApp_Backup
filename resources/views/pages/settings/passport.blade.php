@@ -20,8 +20,8 @@
                 <div class="inner">
                     <!-- START BREADCRUMB -->
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">API Passport</a></li>
-                        <li class="breadcrumb-item active">Setting</li>
+                        <li class="breadcrumb-item"><a href="#">Setting</a></li>
+                        <li class="breadcrumb-item active">Passport</li>
                     </ol>
                     <!-- END BREADCRUMB -->
                 </div>

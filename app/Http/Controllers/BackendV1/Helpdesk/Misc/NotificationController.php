@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Validator;
 class NotificationController extends Controller
 {
 
-
     public function sendSingleNotification(Request $request)
     {
         $response = array();

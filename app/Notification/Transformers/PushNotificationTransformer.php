@@ -2,7 +2,7 @@
 
 namespace App\Notification\Transformers;
 
-use App\Account\Models\PushNotifications;
+use App\Notification\Models\Notifications;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
 use League\Fractal\TransformerAbstract;
@@ -10,7 +10,7 @@ use League\Fractal\TransformerAbstract;
 class PushNotificationTransformer extends TransformerAbstract
 {
 
-    public function transform(PushNotifications $pushNotifications)
+    public function transform(Notifications $pushNotifications)
     {
         return [
             'id' => $pushNotifications->id,

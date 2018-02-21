@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 24);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2458,7 +2458,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/misc/MainNotification.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/setting/MainNotification.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2494,7 +2494,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/misc/views/notification/Index.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/setting/views/notification/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2502,33 +2502,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -2654,22 +2627,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             selectedEmployee: {
                 employeeId: '', employeeNo: '', givenName: '', surname: ''
             },
-            formObject: {
+            recipientForm: {
                 employeeId: '',
-                title: 'GXApp Employee',
-                message: '',
-                intentType: '',
-                viaType: '',
-                url: ''
+                groupTypeId: ''
+            },
+            groupTypeForm: {
+                name: ''
             }
         };
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('notification', {
-        employeeCandidates: 'employeeCandidates'
+        employeeCandidates: 'employeeCandidates',
+        notificationGroupTypes: 'notificationGroupTypes',
+        notificationRecipients: 'notificationRecipients'
     })),
     mounted: function mounted() {},
     created: function created() {
+        this.$store.dispatch('notification/getDataOnCreate');
         this.$store.state.notification.employeeCandidates = []; //reset the first time
     },
 
@@ -2691,7 +2666,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             self.selectedEmployee.givenName = candidateGivenName;
             self.selectedEmployee.surname = candidateSurname;
 
-            self.formObject.employeeId = candidateId; //insert to form object
+            self.recipientForm.employeeId = candidateId; //insert to form object
 
             self.disableSubmitBtn = false;
         },
@@ -2707,32 +2682,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             self.selectedEmployee.givenName = '';
             self.selectedEmployee.surname = '';
 
-            self.formObject.employeeId = ''; //remove from form object
+            self.recipientForm.employeeId = ''; //remove from form object
 
             self.disableSubmitBtn = true;
         },
-        sendPushNotification: function sendPushNotification() {
+        addRecipient: function addRecipient() {
             var self = this;
+        },
+        createGroupType: function createGroupType() {
+            var self = this;
+            if (self.groupTypeForm.name) {
 
-            console.log(JSON.stringify(self.formObject));
-
-            if (self.formObject.employeeId && self.formObject.message && self.formObject.viaType) {
-
-                //submit to server
-                this.$store.commit({
-                    type: 'notification/sendSingleNotification',
-                    formObject: self.formObject
+                self.$store.commit({
+                    type: 'notification/createGroupType',
+                    name: self.groupTypeForm.name
                 });
 
-                this.$router.go(); //refresh
+                self.groupTypeForm.name = ''; //reset form
             } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: 'Form is not valid',
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
+                alert('Name cannot be empty');
             }
         }
     }
@@ -4282,7 +4250,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-052d9c80\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/misc/views/notification/Index.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-44850f30\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/setting/views/notification/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4526,71 +4494,7 @@ var render = function() {
                 "div",
                 { staticClass: "form-group form-group-default required" },
                 [
-                  _c("label", [_vm._v(" Title ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formObject.title,
-                        expression: "formObject.title"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", c: "", required: "" },
-                    domProps: { value: _vm.formObject.title },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formObject, "title", $event.target.value)
-                      }
-                    }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12" }, [
-              _c(
-                "div",
-                { staticClass: "form-group form-group-default required" },
-                [
-                  _c("label", [_vm._v(" Message ")]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.formObject.message,
-                        expression: "formObject.message"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "text", required: "" },
-                    domProps: { value: _vm.formObject.message },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(_vm.formObject, "message", $event.target.value)
-                      }
-                    }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12" }, [
-              _c(
-                "div",
-                { staticClass: "form-group form-group-default required" },
-                [
-                  _c("label", [_vm._v(" Send Via ")]),
+                  _c("label", [_vm._v(" Group Type ")]),
                   _vm._v(" "),
                   _c(
                     "select",
@@ -4599,8 +4503,8 @@ var render = function() {
                         {
                           name: "model",
                           rawName: "v-model",
-                          value: _vm.formObject.viaType,
-                          expression: "formObject.viaType"
+                          value: _vm.recipientForm.groupTypeId,
+                          expression: "recipientForm.groupTypeId"
                         }
                       ],
                       staticClass: "form-control",
@@ -4615,8 +4519,8 @@ var render = function() {
                               return val
                             })
                           _vm.$set(
-                            _vm.formObject,
-                            "viaType",
+                            _vm.recipientForm,
+                            "groupTypeId",
                             $event.target.multiple
                               ? $$selectedVal
                               : $$selectedVal[0]
@@ -4635,197 +4539,22 @@ var render = function() {
                             selected: ""
                           }
                         },
-                        [_vm._v("Select Via")]
+                        [_vm._v("Select Group Type")]
                       ),
                       _vm._v(" "),
-                      _c("option", { attrs: { value: "notification" } }, [
-                        _vm._v("Push Notification")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "sms", disabled: "" } }, [
-                        _vm._v("SMS")
-                      ])
-                    ]
+                      _vm._l(_vm.notificationGroupTypes, function(groupType) {
+                        return _c(
+                          "option",
+                          { domProps: { value: groupType.id } },
+                          [_vm._v(_vm._s(groupType.name))]
+                        )
+                      })
+                    ],
+                    2
                   )
                 ]
               )
             ]),
-            _vm._v(" "),
-            _vm.formObject.viaType == "notification"
-              ? _c("div", { staticClass: "col-lg-12" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group form-group-default required" },
-                    [
-                      _c("label", [_vm._v(" Send to Type ")]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formObject.sendToType,
-                              expression: "formObject.sendToType"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.formObject,
-                                "sendToType",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "option",
-                            {
-                              attrs: {
-                                value: "",
-                                disabled: "",
-                                hidden: "",
-                                selected: ""
-                              }
-                            },
-                            [_vm._v("Select Type")]
-                          ),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "android" } }, [
-                            _vm._v("Android")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "web" } }, [
-                            _vm._v("Web")
-                          ])
-                        ]
-                      )
-                    ]
-                  )
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.formObject.sendToType == "android"
-              ? _c("div", { staticClass: "col-lg-12" }, [
-                  _c(
-                    "div",
-                    { staticClass: "form-group form-group-default required" },
-                    [
-                      _c("label", [_vm._v(" Intent Type ")]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formObject.intentType,
-                              expression: "formObject.intentType"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          on: {
-                            change: function($event) {
-                              var $$selectedVal = Array.prototype.filter
-                                .call($event.target.options, function(o) {
-                                  return o.selected
-                                })
-                                .map(function(o) {
-                                  var val = "_value" in o ? o._value : o.value
-                                  return val
-                                })
-                              _vm.$set(
-                                _vm.formObject,
-                                "intentType",
-                                $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              )
-                            }
-                          }
-                        },
-                        [
-                          _c(
-                            "option",
-                            {
-                              attrs: {
-                                value: "",
-                                disabled: "",
-                                hidden: "",
-                                selected: ""
-                              }
-                            },
-                            [_vm._v("Select Intent Type")]
-                          ),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "home" } }, [
-                            _vm._v("Home Page")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "salary" } }, [
-                            _vm._v("Salary Page")
-                          ]),
-                          _vm._v(" "),
-                          _c("option", { attrs: { value: "profile" } }, [
-                            _vm._v("Profile Page")
-                          ])
-                        ]
-                      )
-                    ]
-                  )
-                ])
-              : _vm.formObject.sendToType == "web"
-                ? _c("div", { staticClass: "col-lg-12" }, [
-                    _c(
-                      "div",
-                      { staticClass: "form-group form-group-default required" },
-                      [
-                        _c("label", [_vm._v(" URL")]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.formObject.url,
-                              expression: "formObject.url"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: { type: "text" },
-                          domProps: { value: _vm.formObject.url },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.formObject,
-                                "url",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ]
-                    )
-                  ])
-                : _vm._e(),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-12" }, [
               _c(
@@ -4835,11 +4564,70 @@ var render = function() {
                   attrs: { disabled: _vm.disableSubmitBtn },
                   on: {
                     click: function($event) {
-                      _vm.sendPushNotification()
+                      _vm.addRecipient()
                     }
                   }
                 },
-                [_vm._v("Save\n                        ")]
+                [_vm._v("Add Recipient\n                        ")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default" }, [
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v(" Name ")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.groupTypeForm.name,
+                      expression: "groupTypeForm.name"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.groupTypeForm.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.groupTypeForm, "name", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "help" }, [
+                _vm._v("*To be use by developer ")
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary pull-right",
+                  on: {
+                    click: function($event) {
+                      _vm.createGroupType()
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                            Create\n                        "
+                  )
+                ]
               )
             ])
           ])
@@ -4855,8 +4643,16 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("div", { staticClass: "card-title" }, [
-        _vm._v("Send Push Notification / SMS")
+        _vm._v("Add Notification Recipient")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Add Group Type")])
     ])
   }
 ]
@@ -4865,13 +4661,13 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-052d9c80", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-44850f30", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7e752c95\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/misc/MainNotification.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d5fb6176\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/setting/MainNotification.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4911,7 +4707,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7e752c95", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-d5fb6176", module.exports)
   }
 }
 
@@ -19345,15 +19141,15 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/misc/MainNotification.vue":
+/***/ "./resources/assets/js/client/setting/MainNotification.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/misc/MainNotification.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/setting/MainNotification.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7e752c95\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/misc/MainNotification.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d5fb6176\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/setting/MainNotification.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -19370,7 +19166,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/misc/MainNotification.vue"
+Component.options.__file = "resources/assets/js/client/setting/MainNotification.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -19380,9 +19176,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7e752c95", Component.options)
+    hotAPI.createRecord("data-v-d5fb6176", Component.options)
   } else {
-    hotAPI.reload("data-v-7e752c95", Component.options)
+    hotAPI.reload("data-v-d5fb6176", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -19394,17 +19190,17 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/misc/notification.js":
+/***/ "./resources/assets/js/client/setting/notification.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_notification__ = __webpack_require__("./resources/assets/js/client/misc/router/notification.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainNotification_vue__ = __webpack_require__("./resources/assets/js/client/misc/MainNotification.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_notification__ = __webpack_require__("./resources/assets/js/client/setting/router/notification.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainNotification_vue__ = __webpack_require__("./resources/assets/js/client/setting/MainNotification.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainNotification_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainNotification_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_notification_store__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/store.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_notification_store__ = __webpack_require__("./resources/assets/js/client/setting/vuex/notification/store.js");
 /**
  * Created by kevinpurwono on 6/12/17.
  */
@@ -19415,7 +19211,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#vc-misc-notification',
+    el: '#vc-setting-notification',
     template: '<main-notification></main-notification>',
     components: { MainNotification: __WEBPACK_IMPORTED_MODULE_2__MainNotification_vue___default.a },
     router: __WEBPACK_IMPORTED_MODULE_1__router_notification__["a" /* default */],
@@ -19426,14 +19222,14 @@ $(document).ready(function () {});
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/misc/router/notification.js":
+/***/ "./resources/assets/js/client/setting/router/notification.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_notification_Index_vue__ = __webpack_require__("./resources/assets/js/client/misc/views/notification/Index.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_notification_Index_vue__ = __webpack_require__("./resources/assets/js/client/setting/views/notification/Index.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_notification_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_notification_Index_vue__);
 /**
  * Created by kevinpurwono on 9/11/17.
@@ -19454,15 +19250,15 @@ var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/misc/views/notification/Index.vue":
+/***/ "./resources/assets/js/client/setting/views/notification/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/misc/views/notification/Index.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/setting/views/notification/Index.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-052d9c80\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/misc/views/notification/Index.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-44850f30\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/setting/views/notification/Index.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -19479,7 +19275,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/misc/views/notification/Index.vue"
+Component.options.__file = "resources/assets/js/client/setting/views/notification/Index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -19489,9 +19285,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-052d9c80", Component.options)
+    hotAPI.createRecord("data-v-44850f30", Component.options)
   } else {
-    hotAPI.reload("data-v-052d9c80", Component.options)
+    hotAPI.reload("data-v-44850f30", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -19503,7 +19299,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/misc/vuex/notification/modules/actions.js":
+/***/ "./resources/assets/js/client/setting/vuex/notification/modules/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19517,11 +19313,19 @@ module.exports = Component.exports
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = ({});
+/* harmony default export */ __webpack_exports__["a"] = ({
+    getDataOnCreate: function getDataOnCreate(_ref, payload) {
+        var commit = _ref.commit,
+            state = _ref.state;
+
+        commit('getNotificationGroupType');
+        commit('getNotificationRecipient');
+    }
+});
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/misc/vuex/notification/modules/getters.js":
+/***/ "./resources/assets/js/client/setting/vuex/notification/modules/getters.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19532,13 +19336,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/misc/vuex/notification/modules/main.js":
+/***/ "./resources/assets/js/client/setting/vuex/notification/modules/main.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/modules/getters.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/modules/mutations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/modules/actions.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/setting/vuex/notification/modules/getters.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/setting/vuex/notification/modules/mutations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/setting/vuex/notification/modules/actions.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -19550,7 +19354,9 @@ module.exports = Component.exports
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        employeeCandidates: []
+        employeeCandidates: [],
+        notificationGroupTypes: [],
+        notificationRecipients: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -19559,7 +19365,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/misc/vuex/notification/modules/mutations.js":
+/***/ "./resources/assets/js/client/setting/vuex/notification/modules/mutations.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19613,40 +19419,60 @@ module.exports = Component.exports
             }).show();
         }
     },
-    sendSingleNotification: function sendSingleNotification(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'misc/notification/send/single', payload.formObject).then(function (res) {
-            if (!res.data.isFailed) {
+    getNotificationGroupType: function getNotificationGroupType(state, payload) {
+        var self = this;
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/notificationGroupTypes').then(function (res) {
+            state.notificationGroupTypes = res.data.data;
+        });
+    },
+    getNotificationRecipient: function getNotificationRecipient(state, payload) {
+        var self = this;
+    },
+    createGroupType: function createGroupType(state, payload) {
+        var self = this;
+
+        if (payload.name) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/notification/groupType/create', { name: payload.name }).then(function (res) {
+                if (!res.data.isFailed) {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    if (res.data.groupType.data) {
+                        //insert to array
+                        state.notificationGroupTypes.push(res.data.groupType.data);
+                    }
+                } else {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
                 $('.page-container').pgNotification({
                     style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'success'
-                }).show();
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
+                    message: err.message,
                     position: 'top-right',
                     timeout: 3500,
                     type: 'danger'
                 }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
+            });
+        }
     }
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/misc/vuex/notification/store.js":
+/***/ "./resources/assets/js/client/setting/vuex/notification/store.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19654,7 +19480,7 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/misc/vuex/notification/modules/main.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/setting/vuex/notification/modules/main.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -19700,10 +19526,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 /***/ }),
 
-/***/ 21:
+/***/ 24:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/misc/notification.js");
+module.exports = __webpack_require__("./resources/assets/js/client/setting/notification.js");
 
 
 /***/ })

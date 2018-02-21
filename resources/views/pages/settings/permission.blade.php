@@ -34,8 +34,8 @@
                 <div class="inner">
                     <!-- START BREADCRUMB -->
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Permission Control</a></li>
-                        <li class="breadcrumb-item active">Roles & Permission</li>
+                        <li class="breadcrumb-item"><a href="#">Setting</a></li>
+                        <li class="breadcrumb-item active">Permission</li>
                     </ol>
                     <!-- END BREADCRUMB -->
                 </div>

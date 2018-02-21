@@ -47,6 +47,9 @@ Route::prefix('v1/h')->group(function () {
         Route::get('leaveType/{id}','GetListController@leaveType')->name('v1.component.leaveType');
         Route::get('list/leaveTypes','GetListController@leaveTypes')->name('v1.component.list.leaveTypes');
 
+        Route::get('notificationGroupType/{id}','GetListController@notificationGroupType')->name('v1.component.notificationGroupType');
+        Route::get('list/notificationGroupTypes','GetListController@notificationGroupTypes')->name('v1.component.list.notificationGroupTypes');
+
     });
 
 });

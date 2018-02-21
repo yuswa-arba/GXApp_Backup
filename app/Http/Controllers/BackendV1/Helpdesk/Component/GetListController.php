@@ -21,6 +21,7 @@ use App\Components\Transformers\BasicComponentTrasnformer;
 use App\Components\Transformers\BasicSettingTrasnformer;
 use App\Components\Transformers\DivisionListTransfomer;
 
+use App\Notification\Models\NotificationGroupType;
 use App\Salary\Models\PayrollSetting;
 use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
@@ -42,7 +43,6 @@ class GetListController extends Controller
     {
         return fractal(JobPosition::find($id), new BasicComponentTrasnformer())->respond(200);
     }
-
 
     public function jobPositions()
     {
@@ -141,6 +141,16 @@ class GetListController extends Controller
     public function leaveTypes()
     {
         return fractal(LeaveType::all(),new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function notificationGroupType($id)
+    {
+        return fractal(NotificationGroupType::where('id',$id),new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function notificationGroupTypes()
+    {
+        return fractal(NotificationGroupType::all(),new BasicComponentTrasnformer())->respond(200);
     }
 
 }

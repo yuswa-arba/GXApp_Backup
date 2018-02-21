@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\BackendV1\API\Inbox;
 
-use App\Account\Models\PushNotifications;
+use App\Notification\Models\Notifications;
 use App\Http\Controllers\BackendV1\API\Traits\ApiUtils;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\Controller;
@@ -29,7 +29,7 @@ class PushNotificationController extends Controller
             $employee = $user->employee; // employee
 
             //is valid
-            $pushNotifications = PushNotifications::where('userId',$user->id)->orderBy('hasSeen','asc')->orderBy('created_at','desc')->paginate(30);
+            $pushNotifications = Notifications::where('userId',$user->id)->orderBy('hasSeen','asc')->orderBy('created_at','desc')->paginate(30);
 
             if($pushNotifications){
 
@@ -65,7 +65,7 @@ class PushNotificationController extends Controller
             $employee = $user->employee; // employee
 
             //is valid
-            $updateHasSeen = PushNotifications::where('userId',$user->id)->where('hasSeen','0')->update([
+            $updateHasSeen = Notifications::where('userId',$user->id)->where('hasSeen','0')->update([
                 'hasSeen'=>1,
                 'seenDate'=>Carbon::now()->format('d/m/Y'),
                 'seenTime'=>Carbon::now()->format('H:i')

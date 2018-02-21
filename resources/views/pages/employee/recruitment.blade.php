@@ -107,11 +107,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="form-group form-group-default form-group-default-select2 required">
+                                                    <div class="form-group form-group-default required">
                                                         <label class="">Gender</label>
-                                                        <select class="full-width"
-                                                                data-placeholder="Select Country"
-                                                                data-init-plugin="select2"
+                                                        <select class="form-control"
                                                                 name="gender"
                                                         >
                                                             <option value="Male">Male</option>
@@ -133,13 +131,12 @@
                                                        value="{{old('hometown')}}" required>
                                             </div>
 
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default required">
                                                 <label class="">Education Level</label>
-                                                <select class="full-width" data-placeholder="Select Education Level"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="educationLevelId"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Education</option>
                                                     @foreach($educationLevels as $edcLevel)
                                                         <option value="{{$edcLevel->id}}">{{$edcLevel->name}}</option>
                                                     @endforeach
@@ -147,13 +144,12 @@
                                             </div>
 
 
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Religion</label>
-                                                <select class="full-width" data-placeholder="Select Religion"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="religionId"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Religion</option>
                                                     @foreach($religions as $religion)
                                                         <option value="{{$religion->id}}">{{$religion->name}}</option>
                                                     @endforeach
@@ -193,14 +189,12 @@
                                         <br>
                                         <p class="form-title">Marriage</p>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Marital Status"
-                                                        data-init-plugin="select2"
-                                                        {{----}}
+                                                <select class="form-control"
                                                         name="maritalStatusId"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Status</option>
                                                     @foreach($maritalStatuses as $maritalStatus)
                                                         <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                     @endforeach
@@ -224,11 +218,9 @@
                                         <br>
                                         <p class="form-title">Family</p>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Father is deceased?</label>
-                                                <select class="full-width" data-placeholder="Select"
-
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="fatherIsDeceased"
                                                         required>
                                                     <option value="" disabled selected></option>
@@ -257,15 +249,12 @@
                                                     <input type="number" min="0" class="form-control" name="fatherPhoneNo"
                                                            value="{{old('fatherPhoneNo')}}" required>
                                                 </div>
-                                                <div class="form-group form-group-default form-group-default-select2 required">
+                                                <div class="form-group form-group-default  required">
                                                     <label class="">Father's Marital Status</label>
-                                                    <select class="full-width"
-                                                            data-placeholder="Select Marital Status"
-                                                            data-init-plugin="select2"
-
+                                                    <select class="form-control"
                                                             name="fatherMaritalStatusId"
                                                             required>
-                                                        <option value="" disabled selected></option>
+                                                        <option value="" disabled selected hidden>Select Status</option>
                                                         @foreach($maritalStatuses as $maritalStatus)
                                                             <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                         @endforeach
@@ -277,10 +266,9 @@
                                         </div>
                                         <br>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Mother is deceased?</label>
-                                                <select class="full-width" data-placeholder="Select"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="motherIsDeceased"
                                                         required>
                                                     <option value="" disabled selected></option>
@@ -309,14 +297,12 @@
                                                     <input type="number" min="0" class="form-control" name="motherPhoneNo"
                                                            value="{{old('motherPhoneNo')}}" required>
                                                 </div>
-                                                <div class="form-group form-group-default form-group-default-select2 required">
+                                                <div class="form-group form-group-default  required">
                                                     <label class="">Mother's Marital Status</label>
-                                                    <select class="full-width" data-placeholder="Select Marital Status"
-                                                            data-init-plugin="select2"
-
+                                                    <select class="form-control"
                                                             name="motherMaritalStatusId"
                                                             required>
-                                                        <option disabled selected></option>
+                                                        <option value="" disabled selected hidden>Select Status</option>
                                                         @foreach($maritalStatuses as $maritalStatus)
                                                             <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                         @endforeach
@@ -404,13 +390,12 @@
                                                 <input type="text" class="form-control" name="emergencyContact"
                                                        value="{{old('emergencyContact')}}" required>
                                             </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Relationship</label>
-                                                <select class="full-width" data-placeholder="Select Relationship"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="emergencyRelationship"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Relationship</option>
                                                     <option value="Family">Family</option>
                                                     <option value="Friend">Friend</option>
                                                 </select>
@@ -452,13 +437,12 @@
                                         <br>
                                         <p class="form-title">Bank Information</p>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default form-group-default-select2">
+                                            <div class="form-group form-group-default ">
                                                 <label class="">Bank</label>
-                                                <select class="full-width" data-placeholder="Select Bank"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="bankId"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Bank</option>
                                                     @foreach($banks as $bank)
                                                         <option value="{{$bank->id}}">{{$bank->name}}</option>
                                                     @endforeach
@@ -922,10 +906,9 @@
                                     <form role="form" id="employmentForm">
 
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Job Position</label>
-                                                <select class="full-width" data-placeholder="Select Job Position"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="jobPositionId"
                                                         required>
                                                     <option value="" disabled selected></option>
@@ -934,10 +917,9 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Division</label>
-                                                <select class="full-width" data-placeholder="Select Division"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="divisionId"
                                                         required
                                                 >
@@ -947,10 +929,9 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Office Branch</label>
-                                                <select class="full-width" data-placeholder="Select Branch Office"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="branchOfficeId"
                                                         required>
                                                     <option value="" disabled selected></option>
@@ -959,10 +940,9 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Recruitment Status</label>
-                                                <select class="full-width" data-placeholder="Select Recruitment Status"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="recruitmentStatusId"
                                                         required
                                                 >

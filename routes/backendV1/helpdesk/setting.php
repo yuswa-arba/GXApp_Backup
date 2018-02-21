@@ -36,5 +36,7 @@ Route::prefix('v1/h')->group(function () {
 
         Route::get('user/assigned/{employeeId}', 'Permission\AjaxController@vdByuser');
         Route::post('user/assign/by_user', 'Permission\AjaxController@assignByUser');
+
+        Route::post('notification/groupType/create','NotificationController@addGroupType');
     });
 });

@@ -13,14 +13,15 @@ class CreatePushNotificationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('pushNotifications', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('userId');
             $table->string('title')->nullable();
             $table->string('message');
-            $table->string('type')->nullable();
             $table->string('intentType')->nullable();//only applicable for android
             $table->string('viaType')->nullable();
+            $table->integer('groupType')->default(1);
+            $table->string('url')->nullable();//applicalbe for web only
             $table->string('sendBy');
             $table->string('sendDate');
             $table->string('sendTime');

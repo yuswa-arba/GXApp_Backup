@@ -374,7 +374,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                             'userID' => $ownerShiftUserId,
                             'title' => 'Exchange Shift',
                             'message' => 'Someone has requested to change shift with you!',
-                            'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
                             'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
                             'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
                             'sender' => $user
@@ -472,7 +471,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                         'userID' => $requesterUserId,
                                         'title' => 'Exchange Day Off Accepted',
                                         'message' => 'Your exchange day off request has been accepted!',
-                                        'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
                                         'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
                                         'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
                                         'sender' => $user
@@ -536,7 +534,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                         'userID' => $requesterUserId,
                                         'title' => 'Exchange Public Holiday Accepted',
                                         'message' => 'Your exchange day off request has been accepted!',
-                                        'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
                                         'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
                                         'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
                                         'sender' => $user
@@ -627,7 +624,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                         'userID' => $requesterUserId,
                                         'title' => 'Exchange Shift Accepted',
                                         'message' => 'Your exchange shift request has been accepted!',
-                                        'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
                                         'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
                                         'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
                                         'sender' => $user
@@ -701,7 +697,6 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                         'userID' => $requesterUserId,
                         'title' => 'Exchange Shift Declined',
                         'message' => $this->getResultWithNullChecker1Connection($exchangeReq, 'requesterEmployee', 'givenName') . ' has declined your exchange shift request.',
-                        'sendToType' => GlobalConfig::$TOKEN_TYPE['ANDROID'],
                         'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
                         'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
                         'sender' => $user

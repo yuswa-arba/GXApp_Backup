@@ -6,6 +6,7 @@ use App\Account\Traits\Utils;
 use App\Account\Traits\Uuids;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
+use App\Notification\Models\Notifications;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
@@ -55,7 +56,7 @@ class User extends Authenticatable
 
     public function pushNotifications()
     {
-        return $this->hasMany(PushNotifications::class,'userId');
+        return $this->hasMany(Notifications::class,'userId');
     }
 
 }

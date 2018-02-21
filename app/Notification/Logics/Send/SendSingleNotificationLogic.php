@@ -10,7 +10,7 @@
 namespace App\Notification\Logics\Send;
 
 
-use App\Account\Models\PushNotifications;
+use App\Notification\Models\Notifications;
 use App\Employee\Models\MasterEmployee;
 use App\Traits\FirebaseUtils;
 use App\Traits\GlobalUtils;
@@ -36,12 +36,12 @@ class SendSingleNotificationLogic extends SendSingleNotificationUseCase
 
         if($employee && $employee->user->id){
 
-            PushNotifications::create([
+            Notifications::create([
                 'userId'=>$employee->user->id,
                 'title'=>$request->title,
                 'message'=>$request->message,
-                'type'=>$request->sendToType,
                 'intentType'=>$request->intentType,
+                'url'=>$request->url,
                 'viaType'=>$request->viaType,
                 'sendBy'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
                 'sendDate'=>Carbon::now()->format('d/m/Y'),
@@ -53,8 +53,7 @@ class SendSingleNotificationLogic extends SendSingleNotificationUseCase
                 $request->title,
                 $request->message,
                 null,
-                $request->intentType,
-                $request->sendToType
+                $request->intentType
             ); //send notification
 
             $response['isFailed'] = false;

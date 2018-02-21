@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Log;
 trait FirebaseUtils
 {
 
-    public function sendSinglePush($userID, $title, $message, $image, $intentType, $type)
+    public function sendSinglePush($userID, $title, $message, $image, $intentType)
     {
 
         //getting the token from database object
-        if ($userID != null && $type != null) {
+        if ($userID != null) {
 
             if ($title == null || $title == '') {
                 $title = 'GXApp Employee'; //default

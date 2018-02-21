@@ -2,7 +2,7 @@
 
 namespace App\Notification\Services;
 
-use App\Account\Models\PushNotifications;
+use App\Notification\Models\Notifications;
 use App\Log\Models\LogRequest;
 use App\Traits\FirebaseUtils;
 use App\Traits\GlobalConst;
@@ -27,14 +27,13 @@ class PushNotificationService
     {
 
         try {
-            if ($data['sender'] && $data['userID'] && $data['title'] && $data['message'] && $data['sendToType']
+            if ($data['sender'] && $data['userID'] && $data['title'] && $data['message']
                 && $data['intentType'] && $data['viaType']
             ) {
-                PushNotifications::create([
+                Notifications::create([
                     'userId' => $data['userID'],
                     'title' => $data['title'],
                     'message' => $data['message'],
-                    'type' => $data['sendToType'],
                     'intentType' => $data['intentType'],
                     'viaType' => $data['viaType'],
                     'sendBy' => $this->getResultWithNullChecker1Connection($data['sender'], 'employee', 'givenName'),
@@ -48,8 +47,7 @@ class PushNotificationService
                     $data['title'],
                     $data['message'],
                     null,
-                    $data['intentType'],
-                    $data['sendToType']
+                    $data['intentType']
                 ); //send notification
             }
 

@@ -23,10 +23,12 @@ class ConfigCodes
         'DIVISION' => 'division'
     ];
 
+    //@depreciated TO REMOVE
     public static $TOKEN_TYPE = [
         'ANDROID' => 'android',
         'WEB' => 'web'
     ];
+
     /* Use to tell android client where to send the users intent page
         when they click the push notification
     */
@@ -38,15 +40,15 @@ class ConfigCodes
     ];
 
     public static $NOTIFY_TYPE = [
-        'NOTIFICATION'=>'notification',
-        'SMS'=>'sms'
+        'NOTIFICATION' => 'notification',
+        'SMS' => 'sms'
     ];
 
     public static $EXCHANGE_SHIFT_CONFIRM_TYPE = [
-        'WAITING'=>0,
-        'CONFIRM'=>1,
-        'DECLINE'=>2,
-        'INVALID'=>3
+        'WAITING' => 0,
+        'CONFIRM' => 1,
+        'DECLINE' => 2,
+        'INVALID' => 3
     ];
 
 }

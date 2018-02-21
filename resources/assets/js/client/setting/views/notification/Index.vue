@@ -3,7 +3,7 @@
         <div class="col-lg-6">
             <div class="card card-default">
                 <div class="card-header">
-                    <div class="card-title">Send Push Notification / SMS</div>
+                    <div class="card-title">Add Notification Recipient</div>
                 </div>
                 <div class="card-block">
                     <div class="row">
@@ -68,67 +68,40 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group form-group-default required">
-                                <label> Title </label>
-                                <input type="text"
-                                       class="form-control" c
-                                       v-model="formObject.title"
-                                       required>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group form-group-default required">
-                                <label> Message </label>
-                                <input type="text"
-                                       class="form-control"
-                                       v-model="formObject.message"
-                                       required>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-12">
-                            <div class="form-group form-group-default required">
-                                <label> Send Via </label>
-                                <select class="form-control" v-model="formObject.viaType">
-                                    <option value="" disabled hidden selected>Select Via</option>
-                                    <option value="notification">Push Notification</option>
-                                    <option value="sms" disabled>SMS</option> <!--currently not supported yet-->
+                                <label> Group Type </label>
+                                <select class="form-control" v-model="recipientForm.groupTypeId">
+                                    <option value="" disabled hidden selected>Select Group Type</option>
+                                    <option :value="groupType.id" v-for="groupType in notificationGroupTypes">{{groupType.name}}</option>
                                 </select>
-                            </div>
-                        </div>
-
-
-                        <div class="col-lg-12" v-if="formObject.viaType=='notification'">
-                            <div class="form-group form-group-default required">
-                                <label> Send to Type </label>
-                                <select class="form-control" v-model="formObject.sendToType">
-                                    <option value="" disabled hidden selected>Select Type</option>
-                                    <option value="android">Android</option>
-                                    <option value="web">Web</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12" v-if="formObject.sendToType=='android'">
-                            <div class="form-group form-group-default required">
-                                <label> Intent Type </label>
-                                <select class="form-control" v-model="formObject.intentType">
-                                    <option value="" disabled hidden selected>Select Intent Type</option>
-                                    <option value="home">Home Page</option>
-                                    <option value="salary">Salary Page</option>
-                                    <option value="profile">Profile Page</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-12" v-else-if="formObject.sendToType=='web'">
-                            <div class="form-group form-group-default required">
-                                <label> URL</label>
-                                <input type="text" class="form-control" v-model="formObject.url">
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <button class="pull-right btn btn-primary"
-                                    @click="sendPushNotification()"
+                                    @click="addRecipient()"
                                     :disabled="disableSubmitBtn"
-                            >Save
+                            >Add Recipient
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">Add Group Type</div>
+                </div>
+                <div class="card-block">
+                    <div class="row">
+
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label> Name </label>
+                                <input type="text" class="form-control" v-model="groupTypeForm.name">
+                            </div>
+                            <p class="help">*To be use by developer </p>
+                            <button class="btn btn-primary pull-right" @click="createGroupType()">
+                                Create
                             </button>
                         </div>
                     </div>
@@ -150,25 +123,27 @@
                 selectedEmployee: {
                     employeeId: '', employeeNo: '', givenName: '', surname: ''
                 },
-                formObject: {
+                recipientForm: {
                     employeeId: '',
-                    title: 'GXApp Employee',
-                    message: '',
-                    intentType: '',
-                    viaType: '',
-                    url:''
+                    groupTypeId:''
+                },
+                groupTypeForm:{
+                    name:''
                 }
             }
         },
         computed: {
             ...mapState('notification', {
-                employeeCandidates: 'employeeCandidates'
+                employeeCandidates: 'employeeCandidates',
+                notificationGroupTypes:'notificationGroupTypes',
+                notificationRecipients:'notificationRecipients'
             })
         },
         mounted(){
 
         },
         created(){
+            this.$store.dispatch('notification/getDataOnCreate')
             this.$store.state.notification.employeeCandidates = [] //reset the first time
         },
         methods: {
@@ -190,7 +165,7 @@
                 self.selectedEmployee.givenName = candidateGivenName
                 self.selectedEmployee.surname = candidateSurname
 
-                self.formObject.employeeId = candidateId //insert to form object
+                self.recipientForm.employeeId = candidateId //insert to form object
 
                 self.disableSubmitBtn = false
 
@@ -207,36 +182,26 @@
                 self.selectedEmployee.givenName = ''
                 self.selectedEmployee.surname = ''
 
-                self.formObject.employeeId = '' //remove from form object
+                self.recipientForm.employeeId = '' //remove from form object
 
                 self.disableSubmitBtn = true
             },
-            sendPushNotification(){
+            addRecipient(){
                 let self = this
+            },
+            createGroupType(){
+                let self = this
+                if(self.groupTypeForm.name){
 
-                console.log(JSON.stringify(self.formObject))
-
-                if (self.formObject.employeeId
-                    && self.formObject.message
-                    && self.formObject.viaType
-                ) {
-
-                    //submit to server
-                    this.$store.commit({
-                        type: 'notification/sendSingleNotification',
-                        formObject: self.formObject
+                    self.$store.commit({
+                        type:'notification/createGroupType',
+                        name:self.groupTypeForm.name
                     })
 
-                    this.$router.go()//refresh
+                    self.groupTypeForm.name = '' //reset form
 
                 } else {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: 'Form is not valid',
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
+                    alert('Name cannot be empty')
                 }
             }
         }

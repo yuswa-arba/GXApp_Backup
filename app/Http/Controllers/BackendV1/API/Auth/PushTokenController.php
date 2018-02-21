@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\BackendV1\API\Auth;
 
 use App\Account\Logics\Users\UserAuthLogic;
-use App\Account\Models\PushNotifications;
+use App\Notification\Models\Notifications;
 use App\Account\Models\User;
 use App\Account\Models\UserPushToken;
 use App\Http\Controllers\BackendV1\API\Traits\ApiUtils;
