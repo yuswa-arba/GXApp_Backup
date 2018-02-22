@@ -27,5 +27,4 @@ class PushNotificationTransformer extends TransformerAbstract
         ];
     }
 
-
 }

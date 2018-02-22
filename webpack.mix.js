@@ -187,6 +187,7 @@ mix.js('resources/assets/js/client/misc/notification','public/js/client/misc');
 mix.js('resources/assets/js/client/components/InternetConnection.js','public/js/client/components');
 mix.js('resources/assets/js/client/profile/user','public/js/client/profile');
 mix.js('resources/assets/js/client/setting/notification','public/js/client/setting');
+mix.js('resources/assets/js/client/notification/main','public/js/client/notification');
 /*
  |--------------------------------------------------------------------------
  | Application JS

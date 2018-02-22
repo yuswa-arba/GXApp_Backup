@@ -79,7 +79,7 @@ $(document).ready(function () {
 
     //Date picker
     // on init
-    $('.datepicker').datepicker({format: 'dd/mm/yyyy', todayHighlight: true, autoclose:true,});
+    $('.datepicker').datepicker({format: 'dd/mm/yyyy', todayHighlight: true, autoclose: true,});
 
     $(function ($) {
         $(".datepicker").mask("99/99/9999");
@@ -103,7 +103,6 @@ $(document).ready(function () {
     $('form').on('blur', 'input[type=number]', function (e) {
         $(this).off('mousewheel.disableScroll')
     })
-
 
 
     /**
@@ -134,7 +133,7 @@ $(document).ready(function () {
         }
     }
 
-    if(!isChrome()){
+    if (!isChrome()) {
         $('.page-container').pgNotification({
             style: 'flip-right',
             message: 'GXApp currently only supports <b>Chrome</b> browser, ' +

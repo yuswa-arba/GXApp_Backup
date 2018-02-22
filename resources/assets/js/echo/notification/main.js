@@ -45,50 +45,50 @@ let sounds = new Audio('/sounds/definite.ogg')
 //
 
 // GET EMPLOYEE ID
-get(api_path + 'profile/user/employee/id')
-    .then((res) => {
-        if (!res.data.isFailed) {
-            if (res.data.employeeId) {
-
-                let employeeId = res.data.employeeId
-
-                // Listen to echo
-                echo.private(`notify.${employeeId}`)
-                    .listen('Account.Events.UserNotified', (data) => {
-
-                        console.log('UserNotified', data)
-
-                        let message = data.message
-
-                        showNotificationBar(message, 10000, notifType.success)
-                        playNotifySound(2, 0)
-
-
-                    })
-            }
-
-        }
-    }).catch((err)=>{})
-
-
-function playNotifySound(times, current) {
-
-    if (current < times) {
-        sounds.play()
-        current++ //increment
-        playNotifySound(times, current)
-    }
-
-}
-
-function showNotificationBar(message, timeoutms, type) {
-
-    $('.page-container').pgNotification({
-        style: 'flip',
-        message: message,
-        position: 'top-right',
-        timeout: timeoutms, //miliseconds
-        type: type
-    }).show()
-
-}
+// get(api_path + 'profile/user/employee/id')
+//     .then((res) => {
+//         if (!res.data.isFailed) {
+//             if (res.data.employeeId) {
+//
+//                 let employeeId = res.data.employeeId
+//
+//                 // Listen to echo
+//                 echo.private(`notify.${employeeId}`)
+//                     .listen('Account.Events.UserNotified', (data) => {
+//
+//                         console.log('UserNotified', data)
+//
+//                         let message = data.message
+//
+//                         showNotificationBar(message, 10000, notifType.success)
+//                         playNotifySound(2, 0)
+//
+//
+//                     })
+//             }
+//
+//         }
+//     }).catch((err)=>{})
+//
+//
+// function playNotifySound(times, current) {
+//
+//     if (current < times) {
+//         sounds.play()
+//         current++ //increment
+//         playNotifySound(times, current)
+//     }
+//
+// }
+//
+// function showNotificationBar(message, timeoutms, type) {
+//
+//     $('.page-container').pgNotification({
+//         style: 'flip',
+//         message: message,
+//         position: 'top-right',
+//         timeout: timeoutms, //miliseconds
+//         type: type
+//     }).show()
+//
+// }

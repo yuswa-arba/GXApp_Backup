@@ -41,4 +41,5 @@
 
 @if(request()->route()->getName()!='login') <!-- do not include in login page -->
 <script src="{{mix('js/client/components/InternetConnection.js')}}"></script>
+<script src="{{mix('js/client/notification/main.js')}}"></script>
 @endif

@@ -9,6 +9,7 @@ use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\Controller;
 use App\Notification\Models\NotificationGroupType;
 use App\Notification\Models\NotificationRecipientGroup;
+use App\Notification\Models\Notifications;
 use App\Notification\Transformers\NotificationRecipientTransformer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -26,24 +27,23 @@ class NotificationController extends Controller
     {
         $groupTypeId = ''; //get all
 
-        if($request->groupTypeId!=null&& $request->groupTypeId!=""){
-            $groupTypeId=$request->groupTypeId;
+        if ($request->groupTypeId != null && $request->groupTypeId != "") {
+            $groupTypeId = $request->groupTypeId;
         }
 
         // get recipients based on group type ID
-        if($groupTypeId==''){
-            $recipients = NotificationRecipientGroup::orderBy('groupTypeId','desc')->get(); //get all
+        if ($groupTypeId == '') {
+            $recipients = NotificationRecipientGroup::orderBy('groupTypeId', 'desc')->get(); //get all
         } else {
-            $recipients = NotificationRecipientGroup::where('groupTypeId',$groupTypeId)->orderBy('groupTypeId','desc')->get();
+            $recipients = NotificationRecipientGroup::where('groupTypeId', $groupTypeId)->orderBy('groupTypeId', 'desc')->get();
         }
 
         /* Success response */
         $response['isFailed'] = false;
         $response['message'] = 'Success';
-        $response['recipients'] = fractal($recipients,new NotificationRecipientTransformer());
+        $response['recipients'] = fractal($recipients, new NotificationRecipientTransformer());
 
-        return response()->json($response,200);
-
+        return response()->json($response, 200);
     }
 
     public function addRecipient(Request $request)
@@ -83,18 +83,18 @@ class NotificationController extends Controller
                 []
             );
 
-            if($insert){ /* Success response */
+            if ($insert) { /* Success response */
 
                 $response['isFailed'] = false;
                 $response['message'] = 'Success';
                 $response['recipient'] = fractal($insert, new NotificationRecipientTransformer());
 
-                return response()->json($response,200);
+                return response()->json($response, 200);
 
             } else { /* Error response */
                 $response['isFailed'] = true;
                 $response['message'] = 'Unable to save recipient';
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
 
 
@@ -103,26 +103,25 @@ class NotificationController extends Controller
             $response['message'] = 'Unable to find employee data';
             return response()->json($response, 200);
         }
-
     }
 
     public function removeRecipient(Request $request)
     {
         $response = array();
 
-        $validator =Validator::make($request->all(),['recipientId'=>'required']);
+        $validator = Validator::make($request->all(), ['recipientId' => 'required']);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         //is valid
 
         $recipient = NotificationRecipientGroup::find($request->recipientId);
 
-        if($recipient){
+        if ($recipient) {
 
             //delete
             $recipient->delete();
@@ -130,21 +129,19 @@ class NotificationController extends Controller
             /* Success response */
             $response['isFailed'] = false;
             $response['message'] = 'Deleted Successfully';
-            return response()->json($response,200);
+            return response()->json($response, 200);
 
         } else {
 
             /* Error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to find recipient data';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
-
     }
 
     public function addGroupType(Request $request)
     {
-
         $response = array();
 
         $user = Auth::user();
@@ -163,13 +160,13 @@ class NotificationController extends Controller
 
             //is valid
 
-           $create =  NotificationGroupType::create(['name' => $request->name]);
+            $create = NotificationGroupType::create(['name' => $request->name]);
 
             /* Success response */
 
             $response['isFailed'] = false;
             $response['message'] = 'Success';
-            $response['groupType'] = fractal($create,new BasicComponentTrasnformer());
+            $response['groupType'] = fractal($create, new BasicComponentTrasnformer());
             return response()->json($response, 200);
 
 
