@@ -2607,6 +2607,23 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2617,7 +2634,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('notification', {
-        notificationList: 'notificationList'
+        notificationList: 'notificationList',
+        unreadExists: 'unreadExists'
     })),
     methods: {
         closeQuickview: function closeQuickview() {
@@ -4267,203 +4285,286 @@ var render = function() {
                     staticClass: "list-view boreded no-top-border",
                     attrs: { "data-init-list-view": "ioslist" }
                   },
-                  _vm._l(_vm.notificationList, function(notification) {
-                    return _c(
-                      "div",
-                      { staticClass: "list-view-group-container" },
-                      [
-                        notification.notifData
-                          ? _c("div", [
-                              _c(
+                  [
+                    _vm.unreadExists
+                      ? _c("div", { staticClass: "scrollable" }, [
+                          _c(
+                            "div",
+                            { staticStyle: { height: "1600px!important" } },
+                            _vm._l(_vm.notificationList, function(
+                              notification
+                            ) {
+                              return _c(
                                 "div",
-                                {
-                                  staticClass:
-                                    "list-view-group-header text-uppercase"
-                                },
+                                { staticClass: "list-view-group-container" },
                                 [
-                                  _vm._v(
-                                    "\n                                    " +
-                                      _vm._s(notification.groupTypeName) +
-                                      "\n                                "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "ul",
-                                _vm._l(notification.notifData, function(notif) {
-                                  return _c(
-                                    "li",
-                                    { staticClass: "alert-list" },
-                                    [
-                                      _c(
-                                        "a",
-                                        {
-                                          staticClass:
-                                            "p-t-10 p-b-10 align-items-center",
-                                          class: { cursor: notif.url },
-                                          staticStyle: {
-                                            height: "60px!important"
+                                  notification.notifData
+                                    ? _c("div", [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "list-view-group-header text-uppercase"
                                           },
-                                          attrs: {
-                                            href: "#",
-                                            "data-navigate": "view",
-                                            "data-view-port": "#chat",
-                                            "data-view-animation":
-                                              "push-parrallax"
-                                          },
-                                          on: {
-                                            click: function($event) {
-                                              _vm.openUrl(notif.url)
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("p", {}, [
-                                            notif.hasSeen == 0
-                                              ? _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "text-danger fs-10"
-                                                  },
-                                                  [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "fa fa-circle"
-                                                    })
-                                                  ]
-                                                )
-                                              : _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "text-master-light fs-10"
-                                                  },
-                                                  [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "fa fa-circle"
-                                                    })
-                                                  ]
-                                                )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c(
-                                            "p",
-                                            {
-                                              staticClass:
-                                                "col overflow-ellipsis fs-12 p-l-10 p-r-20",
-                                              staticStyle: {
-                                                "line-height": "18px!important",
-                                                width: "255px!important"
-                                              }
-                                            },
-                                            [
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "text-black fs-14 ",
-                                                  class: {
-                                                    bold: notif.hasSeen == 0
-                                                  }
-                                                },
+                                          [
+                                            _vm._v(
+                                              "\n                                            " +
+                                                _vm._s(
+                                                  notification.groupTypeName
+                                                ) +
+                                                "\n                                        "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "ul",
+                                          _vm._l(
+                                            notification.notifData,
+                                            function(notif) {
+                                              return _c(
+                                                "li",
+                                                { staticClass: "alert-list" },
                                                 [
-                                                  _vm._v(_vm._s(notif.title)),
-                                                  _c("br")
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "text-master fs-14"
-                                                },
-                                                [
-                                                  _vm._v(_vm._s(notif.message)),
-                                                  _c("br")
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "text-master link fs-12"
-                                                },
-                                                [
-                                                  _vm._v(_vm._s(notif.sendAt)),
-                                                  _c("br")
-                                                ]
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "p",
-                                            { staticClass: "pull-right" },
-                                            [
-                                              notif.url
-                                                ? _c(
-                                                    "span",
+                                                  _c(
+                                                    "a",
                                                     {
                                                       staticClass:
-                                                        "text-primary cursor",
+                                                        "p-t-10 p-b-10 align-items-center",
+                                                      class: {
+                                                        cursor: notif.url
+                                                      },
                                                       staticStyle: {
-                                                        "padding-right": "15px"
+                                                        height: "60px!important"
+                                                      },
+                                                      attrs: {
+                                                        href: "#",
+                                                        "data-navigate": "view",
+                                                        "data-view-port":
+                                                          "#chat",
+                                                        "data-view-animation":
+                                                          "push-parrallax"
+                                                      },
+                                                      on: {
+                                                        click: function(
+                                                          $event
+                                                        ) {
+                                                          _vm.openUrl(notif.url)
+                                                        }
                                                       }
                                                     },
                                                     [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "fa fa-chevron-right fs-14"
-                                                      })
+                                                      _c("p", {}, [
+                                                        notif.hasSeen == 0
+                                                          ? _c(
+                                                              "span",
+                                                              {
+                                                                staticClass:
+                                                                  "text-danger fs-10"
+                                                              },
+                                                              [
+                                                                _c("i", {
+                                                                  staticClass:
+                                                                    "fa fa-circle"
+                                                                })
+                                                              ]
+                                                            )
+                                                          : _c(
+                                                              "span",
+                                                              {
+                                                                staticClass:
+                                                                  "text-master-light fs-10"
+                                                              },
+                                                              [
+                                                                _c("i", {
+                                                                  staticClass:
+                                                                    "fa fa-circle"
+                                                                })
+                                                              ]
+                                                            )
+                                                      ]),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "p",
+                                                        {
+                                                          staticClass:
+                                                            "col overflow-ellipsis fs-12 p-l-10 p-r-20",
+                                                          staticStyle: {
+                                                            "line-height":
+                                                              "18px!important",
+                                                            width:
+                                                              "255px!important"
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "text-black fs-14 ",
+                                                              class: {
+                                                                bold:
+                                                                  notif.hasSeen ==
+                                                                  0
+                                                              }
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  notif.title
+                                                                )
+                                                              ),
+                                                              _c("br")
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "text-master fs-14"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  notif.message
+                                                                )
+                                                              ),
+                                                              _c("br")
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c(
+                                                            "span",
+                                                            {
+                                                              staticClass:
+                                                                "text-master link fs-12"
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  notif.sendAt
+                                                                )
+                                                              ),
+                                                              _c("br")
+                                                            ]
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "p",
+                                                        {
+                                                          staticClass:
+                                                            "pull-right"
+                                                        },
+                                                        [
+                                                          notif.url
+                                                            ? _c(
+                                                                "span",
+                                                                {
+                                                                  staticClass:
+                                                                    "text-primary cursor",
+                                                                  staticStyle: {
+                                                                    "padding-right":
+                                                                      "15px"
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _c("i", {
+                                                                    staticClass:
+                                                                      "fa fa-chevron-right fs-14"
+                                                                  })
+                                                                ]
+                                                              )
+                                                            : _vm._e()
+                                                        ]
+                                                      )
                                                     ]
                                                   )
-                                                : _vm._e()
-                                            ]
+                                                ]
+                                              )
+                                            }
                                           )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                })
-                              ),
-                              _vm._v(" "),
-                              notification.totalNew > 5
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "text-right text-black fs-14 bg-danger-lighter",
-                                      staticStyle: {
-                                        opacity: "0.7",
-                                        padding: "2px 10px"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        { staticClass: "text-right" },
-                                        [
-                                          _c("b", [
-                                            _vm._v(
-                                              _vm._s(notification.totalNew)
+                                        ),
+                                        _vm._v(" "),
+                                        notification.totalNew > 5
+                                          ? _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "text-right text-black fs-14 bg-danger-lighter",
+                                                staticStyle: {
+                                                  opacity: "0.7",
+                                                  padding: "2px 10px"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "text-right" },
+                                                  [
+                                                    _c("b", [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          notification.totalNew
+                                                        )
+                                                      )
+                                                    ]),
+                                                    _vm._v(
+                                                      " Unread Notifications"
+                                                    )
+                                                  ]
+                                                )
+                                              ]
                                             )
-                                          ]),
-                                          _vm._v(" Unread Notifications")
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                : _vm._e()
+                                          : _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "text-right text-black fs-12",
+                                                staticStyle: {
+                                                  opacity: "0.7",
+                                                  padding: "2px 10px"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "text-right text-primary cursor"
+                                                  },
+                                                  [_vm._v(" Show All ")]
+                                                )
+                                              ]
+                                            )
+                                      ])
+                                    : _vm._e()
+                                ]
+                              )
+                            })
+                          )
+                        ])
+                      : _c(
+                          "div",
+                          {
+                            staticClass: "text-center",
+                            staticStyle: { "padding-top": "250px" }
+                          },
+                          [
+                            _c("p", { staticClass: "text-master fs-18" }, [
+                              _vm._v(
+                                "\n                                There is no new notifications\n                            "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("button", { staticClass: "btn btn-primary" }, [
+                              _vm._v("Show all")
                             ])
-                          : _vm._e()
-                      ]
-                    )
-                  })
+                          ]
+                        )
+                  ]
                 )
               ])
             ]
@@ -4500,7 +4601,11 @@ var staticRenderFns = [
         staticClass: "inline action p-r-10 pull-right link text-master",
         attrs: { href: "#" }
       },
-      [_c("i", { staticClass: "pg-search" })]
+      [
+        _c("span", { staticClass: "text-primary cursor bold fs-12" }, [
+          _vm._v("Show All")
+        ])
+      ]
     )
   }
 ]
@@ -16568,7 +16673,8 @@ var notifType = {
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        notificationList: []
+        notificationList: [],
+        unreadExists: false
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -16595,7 +16701,7 @@ var notifType = {
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    listenToPersonalNotification: function listenToPersonalNotification() {
+    listenToPersonalNotification: function listenToPersonalNotification(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/user/employee/id').then(function (res) {
             if (!res.data.isFailed) {
                 if (res.data.employeeId) {
@@ -16608,6 +16714,20 @@ var notifType = {
                         var message = data.message;
 
                         Object(__WEBPACK_IMPORTED_MODULE_2__utils_util__["f" /* showNotificationBar */])(message, 10000, __WEBPACK_IMPORTED_MODULE_2__utils_util__["d" /* notifType */].success, true);
+
+                        // get notification list
+                        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/list').then(function (res) {
+
+                            if (!res.data.isFailed) {
+                                if (res.data.notifications) {
+                                    state.notificationList = res.data.notifications;
+                                }
+
+                                state.unreadExists = res.data.unreadExists;
+
+                                Object(__WEBPACK_IMPORTED_MODULE_2__utils_util__["g" /* showNotificationBubble */])();
+                            }
+                        });
                     });
                 }
             }
@@ -16621,6 +16741,8 @@ var notifType = {
                 if (res.data.notifications) {
                     state.notificationList = res.data.notifications;
                 }
+
+                state.unreadExists = res.data.unreadExists;
 
                 if (res.data.unreadExists) {
                     Object(__WEBPACK_IMPORTED_MODULE_2__utils_util__["g" /* showNotificationBubble */])();

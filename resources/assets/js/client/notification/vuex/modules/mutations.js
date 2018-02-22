@@ -8,7 +8,7 @@ import {showNotificationBar, notifType, showNotificationBubble, hideNotification
 import series from 'async/series';
 export default{
 
-    listenToPersonalNotification(){
+    listenToPersonalNotification(state,payload){
         get(api_path + 'profile/user/employee/id')
             .then((res) => {
                 if (!res.data.isFailed) {
@@ -23,6 +23,23 @@ export default{
                                 let message = data.message
 
                                 showNotificationBar(message, 10000, notifType.success, true)
+
+                                // get notification list
+                                get(api_path + 'profile/notification/list')
+                                    .then((res) => {
+
+                                        if (!res.data.isFailed) {
+                                            if (res.data.notifications) {
+                                                state.notificationList = res.data.notifications
+                                            }
+
+                                            state.unreadExists = res.data.unreadExists
+
+                                            showNotificationBubble()
+
+
+                                        }
+                                    })
 
                             })
                     }
@@ -41,6 +58,8 @@ export default{
                     if (res.data.notifications) {
                         state.notificationList = res.data.notifications
                     }
+
+                    state.unreadExists = res.data.unreadExists
 
                     if (res.data.unreadExists) {
                         showNotificationBubble()

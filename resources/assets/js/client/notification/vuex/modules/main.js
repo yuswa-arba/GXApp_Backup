@@ -9,7 +9,8 @@ import actions from './actions'
 export default {
     namespaced: true,
     state: {
-        notificationList:[]
+        notificationList:[],
+        unreadExists:false
     },
     getters,
     mutations,

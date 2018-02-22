@@ -51,10 +51,13 @@ class NotificationController extends Controller
             $notificationList[$g]['groupTypeName'] = NotificationGroupType::find($groupTypeId)->name;
             $notificationList[$g]['totalNew'] = Notifications::where('userId', $user->id)->where('groupTypeId', $groupTypeId)->where('hasSeen', 0)->count();
 
-            $notification = Notifications::where('userId', $user->id)->where('groupTypeId', $groupTypeId)
-                ->orderBy('hasSeen', 'asc')
+            //Only get unread notifications
+            $notification = Notifications::where('userId', $user->id)
+                ->where('groupTypeId', $groupTypeId)
+                ->where('hasSeen',0)
+//                ->orderBy('hasSeen', 'asc')
                 ->orderBy('created_at', 'desc')
-                ->take(5)->get();
+                ->take(6)->get();
 
             foreach ($notification as $n => $notif) {
 
