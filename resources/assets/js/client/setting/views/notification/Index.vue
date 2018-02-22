@@ -71,7 +71,10 @@
                                 <label> Group Type </label>
                                 <select class="form-control" v-model="recipientForm.groupTypeId">
                                     <option value="" disabled hidden selected>Select Group Type</option>
-                                    <option :value="groupType.id" v-for="groupType in notificationGroupTypes">{{groupType.name}}</option>
+                                    <option v-if="groupType.id!=1" :value="groupType.id"
+                                            v-for="groupType in notificationGroupTypes">
+                                        {{groupType.name}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -109,6 +112,49 @@
             </div>
         </div>
 
+        <div class="col-lg-6 m-b-10">
+            <div class="card card-default">
+                <div class="card-header">
+                    <div class="card-title">Recipients</div>
+                    <div class="pull-right">
+                        Sort By:
+                        <select v-model="sortGroupTypeId" @change="sortRecipients()">
+                            <option value="">All</option>
+                            <option v-if="groupType.id!=1" :value="groupType.id"  v-for="groupType in notificationGroupTypes">{{groupType.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="card-block">
+                    <div class="scrollable">
+                        <div class=" h-500">
+                            <div class="table-responsive">
+                                <div class="table-responsive">
+                                    <table class="table">
+                                        <thead class="bg-master-lighter">
+                                        <tr>
+                                            <th class="text-black">Name</th>
+                                            <th class="text-black">Group Type</th>
+                                            <th class="text-black">Action</th>
+                                            <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(recipient,index) in notificationRecipients">
+                                            <td>{{recipient.employeeName}}</td>
+                                            <td>{{recipient.groupTypeName}}</td>
+                                            <td><i class="fa fa-times text-danger fs-16 cursor"
+                                                   @click="removeRecipient(recipient.id,index)"></i></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </template>
@@ -125,18 +171,19 @@
                 },
                 recipientForm: {
                     employeeId: '',
-                    groupTypeId:''
+                    groupTypeId: ''
                 },
-                groupTypeForm:{
-                    name:''
-                }
+                groupTypeForm: {
+                    name: ''
+                },
+                sortGroupTypeId:''
             }
         },
         computed: {
             ...mapState('notification', {
                 employeeCandidates: 'employeeCandidates',
-                notificationGroupTypes:'notificationGroupTypes',
-                notificationRecipients:'notificationRecipients'
+                notificationGroupTypes: 'notificationGroupTypes',
+                notificationRecipients: 'notificationRecipients'
             })
         },
         mounted(){
@@ -188,14 +235,49 @@
             },
             addRecipient(){
                 let self = this
+
+                if (self.recipientForm.employeeId && self.recipientForm.groupTypeId) {
+
+                    self.$store.commit({
+                        type: 'notification/createRecipient',
+                        employeeId: self.recipientForm.employeeId,
+                        groupTypeId: self.recipientForm.groupTypeId
+                    })
+
+                    //reset form
+                    self.recipientForm = {
+                        employeeId: '',
+                        groupTypeId: ''
+                    }
+
+                } else {
+                    alert('Form is not completed')
+                }
+
+
+            },
+            removeRecipient(recipientId, index){
+                let self = this
+
+                if(confirm('Are you sure to remove this recipient?')){
+                    if (recipientId) {
+                        self.$store.commit({
+                            type:'notification/removeRecipient',
+                            recipientId:recipientId,
+                            index:index
+                        })
+                    }
+                }
+
+
             },
             createGroupType(){
                 let self = this
-                if(self.groupTypeForm.name){
+                if (self.groupTypeForm.name) {
 
                     self.$store.commit({
-                        type:'notification/createGroupType',
-                        name:self.groupTypeForm.name
+                        type: 'notification/createGroupType',
+                        name: self.groupTypeForm.name
                     })
 
                     self.groupTypeForm.name = '' //reset form
@@ -203,6 +285,13 @@
                 } else {
                     alert('Name cannot be empty')
                 }
+            },
+            sortRecipients(){
+                let self = this
+                this.$store.commit({
+                    type:'notification/getNotificationRecipient',
+                    groupTypeId:self.sortGroupTypeId
+                })
             }
         }
     }

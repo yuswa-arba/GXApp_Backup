@@ -2,10 +2,13 @@
  * Created by kevinpurwono on 8/11/17.
  */
 
+require('lodash')
+
 import Vue from 'vue';
 import * as VueGoogleMaps from 'vue2-google-maps'
 import router from './router/setting'
 import MainSetting from './MainSetting.vue'
+
 
 // Create a global Event Bus
 let EventBus = new Vue()

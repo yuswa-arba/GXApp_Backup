@@ -2616,6 +2616,52 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2633,7 +2679,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             groupTypeForm: {
                 name: ''
-            }
+            },
+            sortGroupTypeId: ''
         };
     },
 
@@ -2688,6 +2735,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         addRecipient: function addRecipient() {
             var self = this;
+
+            if (self.recipientForm.employeeId && self.recipientForm.groupTypeId) {
+
+                self.$store.commit({
+                    type: 'notification/createRecipient',
+                    employeeId: self.recipientForm.employeeId,
+                    groupTypeId: self.recipientForm.groupTypeId
+                });
+
+                //reset form
+                self.recipientForm = {
+                    employeeId: '',
+                    groupTypeId: ''
+                };
+            } else {
+                alert('Form is not completed');
+            }
+        },
+        removeRecipient: function removeRecipient(recipientId, index) {
+            var self = this;
+
+            if (confirm('Are you sure to remove this recipient?')) {
+                if (recipientId) {
+                    self.$store.commit({
+                        type: 'notification/removeRecipient',
+                        recipientId: recipientId,
+                        index: index
+                    });
+                }
+            }
         },
         createGroupType: function createGroupType() {
             var self = this;
@@ -2702,6 +2779,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             } else {
                 alert('Name cannot be empty');
             }
+        },
+        sortRecipients: function sortRecipients() {
+            var self = this;
+            this.$store.commit({
+                type: 'notification/getNotificationRecipient',
+                groupTypeId: self.sortGroupTypeId
+            });
         }
     }
 });
@@ -4543,11 +4627,19 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _vm._l(_vm.notificationGroupTypes, function(groupType) {
-                        return _c(
-                          "option",
-                          { domProps: { value: groupType.id } },
-                          [_vm._v(_vm._s(groupType.name))]
-                        )
+                        return groupType.id != 1
+                          ? _c(
+                              "option",
+                              { domProps: { value: groupType.id } },
+                              [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(groupType.name) +
+                                    "\n                                "
+                                )
+                              ]
+                            )
+                          : _vm._e()
                       })
                     ],
                     2
@@ -4633,6 +4725,103 @@ var render = function() {
           ])
         ])
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6 m-b-10" }, [
+      _c("div", { staticClass: "card card-default" }, [
+        _c("div", { staticClass: "card-header" }, [
+          _c("div", { staticClass: "card-title" }, [_vm._v("Recipients")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "pull-right" }, [
+            _vm._v("\n                    Sort By:\n                    "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sortGroupTypeId,
+                    expression: "sortGroupTypeId"
+                  }
+                ],
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.sortGroupTypeId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function($event) {
+                      _vm.sortRecipients()
+                    }
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
+                _vm._v(" "),
+                _vm._l(_vm.notificationGroupTypes, function(groupType) {
+                  return groupType.id != 1
+                    ? _c("option", { domProps: { value: groupType.id } }, [
+                        _vm._v(_vm._s(groupType.name))
+                      ])
+                    : _vm._e()
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "scrollable" }, [
+            _c("div", { staticClass: " h-500" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c("table", { staticClass: "table" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "tbody",
+                      _vm._l(_vm.notificationRecipients, function(
+                        recipient,
+                        index
+                      ) {
+                        return _c("tr", [
+                          _c("td", [_vm._v(_vm._s(recipient.employeeName))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(recipient.groupTypeName))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c("i", {
+                              staticClass:
+                                "fa fa-times text-danger fs-16 cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.removeRecipient(recipient.id, index)
+                                }
+                              }
+                            })
+                          ])
+                        ])
+                      })
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
     ])
   ])
 }
@@ -4653,6 +4842,22 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header" }, [
       _c("div", { staticClass: "card-title" }, [_vm._v("Add Group Type")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Group Type")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Action")]),
+        _vm._v(" "),
+        _c("th")
+      ])
     ])
   }
 ]
@@ -19319,7 +19524,7 @@ module.exports = Component.exports
             state = _ref.state;
 
         commit('getNotificationGroupType');
-        commit('getNotificationRecipient');
+        commit({ type: 'getNotificationRecipient', groupTypeId: '' });
     }
 });
 
@@ -19427,6 +19632,20 @@ module.exports = Component.exports
     },
     getNotificationRecipient: function getNotificationRecipient(state, payload) {
         var self = this;
+
+        var param = '';
+        if (payload.groupTypeId) {
+            param += 'groupTypeId=' + payload.groupTypeId;
+        }
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/notification/recipients/list?' + param).then(function (res) {
+            if (!res.data.isFailed) {
+                if (res.data.recipients.data) {
+
+                    state.notificationRecipients = res.data.recipients.data;
+                }
+            }
+        });
     },
     createGroupType: function createGroupType(state, payload) {
         var self = this;
@@ -19449,6 +19668,86 @@ module.exports = Component.exports
                     }
                 } else {
 
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        }
+    },
+    createRecipient: function createRecipient(state, payload) {
+        var self = this;
+        if (payload.employeeId && payload.groupTypeId) {
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/notification/recipient/create', {
+                employeeId: payload.employeeId,
+                groupTypeId: payload.groupTypeId
+            }).then(function (res) {
+
+                if (!res.data.isFailed) {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    if (res.data.recipient.data) {
+                        //insert to array
+                        state.notificationRecipients.push(res.data.recipient.data);
+                    }
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        }
+    },
+    removeRecipient: function removeRecipient(state, payload) {
+        if (payload.recipientId) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'setting/notification/recipient/delete', { recipientId: payload.recipientId }).then(function (res) {
+                if (!res.data.isFailed) {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    if (payload.index) {
+                        //remove from array
+                        state.notificationRecipients.splice(payload.index, 1);
+                    }
+                } else {
                     $('.page-container').pgNotification({
                         style: 'flip',
                         message: res.data.message,

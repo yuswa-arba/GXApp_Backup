@@ -5,8 +5,8 @@ import waterfall from 'async/waterfall';
 import series from 'async/series';
 
 export default{
-    getDataOnCreate({commit,state},payload){
+    getDataOnCreate({commit, state}, payload){
         commit('getNotificationGroupType')
-        commit('getNotificationRecipient')
+        commit({type: 'getNotificationRecipient',groupTypeId:''})
     }
 }

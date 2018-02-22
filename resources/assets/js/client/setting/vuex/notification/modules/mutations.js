@@ -54,12 +54,28 @@ export default{
     },
     getNotificationRecipient(state, payload){
         let self = this
+
+        let param = ''
+        if (payload.groupTypeId) {
+            param += 'groupTypeId=' + payload.groupTypeId;
+        }
+
+        get(api_path + 'setting/notification/recipients/list?' + param)
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    if (res.data.recipients.data) {
+
+                        state.notificationRecipients = res.data.recipients.data
+                    }
+                }
+            })
+
     },
     createGroupType(state, payload){
         let self = this
 
-        if(payload.name){
-            post(api_path + 'setting/notification/groupType/create',{name:payload.name})
+        if (payload.name) {
+            post(api_path + 'setting/notification/groupType/create', {name: payload.name})
                 .then((res) => {
                     if (!res.data.isFailed) {
 
@@ -71,7 +87,7 @@ export default{
                             type: 'info'
                         }).show();
 
-                        if(res.data.groupType.data){
+                        if (res.data.groupType.data) {
                             //insert to array
                             state.notificationGroupTypes.push(res.data.groupType.data)
                         }
@@ -98,8 +114,97 @@ export default{
                     }).show();
                 })
         }
+    },
+    createRecipient(state, payload){
+        let self = this
+        if (payload.employeeId && payload.groupTypeId) {
+
+            post(api_path + 'setting/notification/recipient/create', {
+                employeeId: payload.employeeId,
+                groupTypeId: payload.groupTypeId
+            })
+                .then((res) => {
+
+                    if (!res.data.isFailed) {
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        if (res.data.recipient.data) {
+                            //insert to array
+                            state.notificationRecipients.push(res.data.recipient.data)
+                        }
 
 
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
 
+                })
+                .catch((err) => {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                })
+        }
+    },
+    removeRecipient(state, payload){
+        if (payload.recipientId) {
+            post(api_path + 'setting/notification/recipient/delete', {recipientId: payload.recipientId})
+                .then((res) => {
+                    if (!res.data.isFailed) {
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        if(payload.index){
+                            //remove from array
+                            state.notificationRecipients.splice(payload.index,1)
+                        }
+
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+
+
+                })
+                .catch((err) => {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                })
+        }
     }
+
+
 }

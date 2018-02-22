@@ -22,7 +22,31 @@ class NotificationController extends Controller
         $this->middleware(['permission:edit setting']);
     }
 
-    public function addNotificationRecipient(Request $request)
+    public function getNotificationRecipients(Request $request)
+    {
+        $groupTypeId = ''; //get all
+
+        if($request->groupTypeId!=null&& $request->groupTypeId!=""){
+            $groupTypeId=$request->groupTypeId;
+        }
+
+        // get recipients based on group type ID
+        if($groupTypeId==''){
+            $recipients = NotificationRecipientGroup::orderBy('groupTypeId','desc')->get(); //get all
+        } else {
+            $recipients = NotificationRecipientGroup::where('groupTypeId',$groupTypeId)->orderBy('groupTypeId','desc')->get();
+        }
+
+        /* Success response */
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['recipients'] = fractal($recipients,new NotificationRecipientTransformer());
+
+        return response()->json($response,200);
+
+    }
+
+    public function addRecipient(Request $request)
     {
 
         $response = array();
@@ -80,6 +104,41 @@ class NotificationController extends Controller
             return response()->json($response, 200);
         }
 
+    }
+
+    public function removeRecipient(Request $request)
+    {
+        $response = array();
+
+        $validator =Validator::make($request->all(),['recipientId'=>'required']);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $recipient = NotificationRecipientGroup::find($request->recipientId);
+
+        if($recipient){
+
+            //delete
+            $recipient->delete();
+
+            /* Success response */
+            $response['isFailed'] = false;
+            $response['message'] = 'Deleted Successfully';
+            return response()->json($response,200);
+
+        } else {
+
+            /* Error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find recipient data';
+            return response()->json($response,200);
+        }
 
     }
 
