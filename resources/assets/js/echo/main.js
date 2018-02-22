@@ -24,4 +24,4 @@ window.echo = new Echo({
 
 /* INIT ECHO LISTENERS */
 
-require('./storage/main')
+require('./notification/main')

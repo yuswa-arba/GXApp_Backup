@@ -145,6 +145,18 @@ mix.copyDirectory('resources/assets/core/img', 'public/core/img');
 mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
 
 
+
+/*
+ |--------------------------------------------------------------------------
+ | Sounds
+ |--------------------------------------------------------------------------
+ |
+ | Sounds
+ |
+ */
+mix.copyDirectory('resources/assets/sounds', 'public/sounds');
+
+
 /*
  |--------------------------------------------------------------------------
  | Client Compiled JS

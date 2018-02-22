@@ -19861,27 +19861,71 @@ window.echo = new __WEBPACK_IMPORTED_MODULE_0_laravel_echo___default.a({
 
 /* INIT ECHO LISTENERS */
 
-__webpack_require__("./resources/assets/js/echo/storage/main.js");
+__webpack_require__("./resources/assets/js/echo/notification/main.js");
 
 /***/ }),
 
-/***/ "./resources/assets/js/echo/storage/main.js":
+/***/ "./resources/assets/js/echo/notification/main.js":
 /***/ (function(module, exports) {
 
-var orderId = 1;
+var groupTypeIds = [1, 2, 8, 7]; //test only
 
-echo.private('orderRequested.' + orderId).listen('Storage.Events.OrderRequested', function (data) {
+var notifType = {
+    success: 'success',
+    danger: 'danger',
+    info: 'info',
+    warning: 'warning'
+};
 
-    console.log('orderRequested', data);
+var requisitionStorageId = 2;
+var trackingOrderStorageId = 3;
+
+var sounds = new Audio('/sounds/definite.ogg');
+
+for (var i = 0; i < groupTypeIds.length; i++) {
+
+    switch (i) {
+        case 1:
+            break;
+        case requisitionStorageId:
+            //listen to requisition stoarge
+            echo.private('storage.' + requisitionStorageId).listen('Storage.Events.OrderRequested', function (data) {
+
+                console.log('orderRequested', data);
+
+                var message = 'New storage order has been requested';
+
+                showNotificationBar(message, 10000, notifType.success);
+                playNotifySound(2, 0);
+            });
+            break;
+        case trackingOrderStorageId:
+            //listen to tracking order storage
+            break;
+        default:
+            break;
+    }
+}
+
+function playNotifySound(times, current) {
+
+    if (current < times) {
+        sounds.play();
+        current++; //increment
+        playNotifySound(times, current);
+    }
+}
+
+function showNotificationBar(message, timeoutms, type) {
 
     $('.page-container').pgNotification({
         style: 'flip',
-        message: 'You have 1 new notification',
+        message: message,
         position: 'top-right',
-        timeout: 2500,
-        type: 'success'
+        timeout: timeoutms, //miliseconds
+        type: type
     }).show();
-});
+}
 
 /***/ }),
 

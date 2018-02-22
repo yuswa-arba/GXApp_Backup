@@ -41,7 +41,8 @@ class OrderRequested implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('orderRequested.'.'1');
+        $requisitionStorageId = 2;
+        return new PrivateChannel('storage.'.$requisitionStorageId);
     }
 
 
