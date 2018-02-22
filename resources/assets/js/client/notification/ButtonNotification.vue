@@ -17,9 +17,19 @@
         methods: {
             openOrCloseNotificationList(){
                 if(isNotificationListOpen()){
-                    closeNotificationList()
+
+                    closeNotificationList() //UI
+
                 } else {
-                    openNotificationList()
+                    openNotificationList() //UI
+
+                    //get data
+                    this.$store.commit({type:'notification/getNotificationList'})
+
+                    //has seen data
+                    setTimeout(() => {
+                        this.$store.commit({type:'notification/seenNotificationList'})
+                    }, 2000)
                 }
             }
         }

@@ -17,7 +17,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('user/change/password','UserController@changePassword')->name('v1.profile.user.changePwd');
 
         Route::get('notification/list','NotificationController@getNotificationList')->name('v1.profile.notification.list');
-
+        Route::get('notification/seen','NotificationController@seenNotificationList')->name('v1.profile.notification.seen');
     });
 
 });

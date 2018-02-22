@@ -2482,10 +2482,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         openOrCloseNotificationList: function openOrCloseNotificationList() {
-            if (Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["b" /* isNotificationListOpen */])()) {
-                Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["a" /* closeNotificationList */])();
+            var _this = this;
+
+            if (Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["c" /* isNotificationListOpen */])()) {
+
+                Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["a" /* closeNotificationList */])(); //UI
             } else {
-                Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["d" /* openNotificationList */])();
+                Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["e" /* openNotificationList */])(); //UI
+
+                //get data
+                this.$store.commit({ type: 'notification/getNotificationList' });
+
+                //has seen data
+                setTimeout(function () {
+                    _this.$store.commit({ type: 'notification/seenNotificationList' });
+                }, 2000);
             }
         }
     }
@@ -2588,6 +2599,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2603,6 +2622,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     methods: {
         closeQuickview: function closeQuickview() {
             Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["a" /* closeNotificationList */])();
+        },
+        openUrl: function openUrl(url) {
+            if (url) window.open(url, '_blank');
         }
     }
 });
@@ -4289,6 +4311,11 @@ var render = function() {
                                             "data-view-port": "#chat",
                                             "data-view-animation":
                                               "push-parrallax"
+                                          },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.openUrl(notif.url)
+                                            }
                                           }
                                         },
                                         [
@@ -4403,7 +4430,35 @@ var render = function() {
                                     ]
                                   )
                                 })
-                              )
+                              ),
+                              _vm._v(" "),
+                              notification.totalNew > 5
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "text-right text-black fs-14 bg-danger-lighter",
+                                      staticStyle: {
+                                        opacity: "0.7",
+                                        padding: "2px 10px"
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "text-right" },
+                                        [
+                                          _c("b", [
+                                            _vm._v(
+                                              _vm._s(notification.totalNew)
+                                            )
+                                          ]),
+                                          _vm._v(" Unread Notifications")
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                : _vm._e()
                             ])
                           : _vm._e()
                       ]
@@ -16390,13 +16445,13 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["e"] = showNotificationBar;
-/* unused harmony export showNotificationBubble */
-/* unused harmony export hideNotificationBubble */
-/* harmony export (immutable) */ __webpack_exports__["b"] = isNotificationListOpen;
-/* harmony export (immutable) */ __webpack_exports__["d"] = openNotificationList;
+/* harmony export (immutable) */ __webpack_exports__["f"] = showNotificationBar;
+/* harmony export (immutable) */ __webpack_exports__["g"] = showNotificationBubble;
+/* harmony export (immutable) */ __webpack_exports__["b"] = hideNotificationBubble;
+/* harmony export (immutable) */ __webpack_exports__["c"] = isNotificationListOpen;
+/* harmony export (immutable) */ __webpack_exports__["e"] = openNotificationList;
 /* harmony export (immutable) */ __webpack_exports__["a"] = closeNotificationList;
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return notifType; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return notifType; });
 /**
  * Created by kevinpurwono on 22/2/18.
  */
@@ -16552,7 +16607,7 @@ var notifType = {
 
                         var message = data.message;
 
-                        Object(__WEBPACK_IMPORTED_MODULE_2__utils_util__["e" /* showNotificationBar */])(message, 10000, __WEBPACK_IMPORTED_MODULE_2__utils_util__["c" /* notifType */].success, true);
+                        Object(__WEBPACK_IMPORTED_MODULE_2__utils_util__["f" /* showNotificationBar */])(message, 10000, __WEBPACK_IMPORTED_MODULE_2__utils_util__["d" /* notifType */].success, true);
                     });
                 }
             }
@@ -16561,14 +16616,24 @@ var notifType = {
     getNotificationList: function getNotificationList(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/list').then(function (res) {
 
-            console.log(JSON.stringify(res.data));
-
             if (!res.data.isFailed) {
+
                 if (res.data.notifications) {
                     state.notificationList = res.data.notifications;
                 }
+
+                if (res.data.unreadExists) {
+                    Object(__WEBPACK_IMPORTED_MODULE_2__utils_util__["g" /* showNotificationBubble */])();
+                }
             }
         });
+    },
+    seenNotificationList: function seenNotificationList(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/seen').then(function (res) {
+            if (!res.data.isFailed) {
+                Object(__WEBPACK_IMPORTED_MODULE_2__utils_util__["b" /* hideNotificationBubble */])();
+            }
+        }).catch(function (err) {});
     }
 });
 

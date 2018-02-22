@@ -36,13 +36,26 @@ export default{
         get(api_path + 'profile/notification/list')
             .then((res) => {
 
-                console.log(JSON.stringify(res.data))
-
                 if (!res.data.isFailed) {
+
                     if (res.data.notifications) {
                         state.notificationList = res.data.notifications
                     }
+
+                    if (res.data.unreadExists) {
+                        showNotificationBubble()
+                    }
                 }
+            })
+    },
+    seenNotificationList(state, payload){
+        get(api_path + 'profile/notification/seen')
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    hideNotificationBubble()
+                }
+            })
+            .catch((err) => {
             })
     }
 }

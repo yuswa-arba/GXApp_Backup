@@ -39,28 +39,32 @@
                                         {{notification.groupTypeName}}
                                     </div>
                                     <!-- END List Group Header!-->
-
                                     <ul>
                                         <!-- BEGIN List Group Item!-->
                                         <li class="alert-list" v-for="notif in notification.notifData">
                                             <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
                                             <a href="#" class="p-t-10 p-b-10 align-items-center" data-navigate="view"
                                                data-view-port="#chat" data-view-animation="push-parrallax"
+                                               @click="openUrl(notif.url)"
                                                :class="{'cursor':notif.url}"
                                                style="height: 60px!important;"
                                             >
                                                 <p class="">
-                                                    <span v-if="notif.hasSeen==0" class="text-danger fs-10"><i class="fa fa-circle"></i></span>
-                                                    <span v-else="" class="text-master-light fs-10"><i class="fa fa-circle"></i></span>
+                                                    <span v-if="notif.hasSeen==0" class="text-danger fs-10"><i
+                                                            class="fa fa-circle"></i></span>
+                                                    <span v-else="" class="text-master-light fs-10"><i
+                                                            class="fa fa-circle"></i></span>
                                                 </p>
-                                                <p class="col overflow-ellipsis fs-12 p-l-10 p-r-20" style="line-height:18px!important;width:255px!important">
+                                                <p class="col overflow-ellipsis fs-12 p-l-10 p-r-20"
+                                                   style="line-height:18px!important;width:255px!important">
                                                     <span class="text-black fs-14 " :class="{'bold':notif.hasSeen==0}">{{notif.title}}<br></span>
                                                     <span class="text-master fs-14">{{notif.message}}<br></span>
                                                     <span class="text-master link fs-12">{{notif.sendAt}}<br></span>
 
                                                 </p>
                                                 <p class="pull-right">
-                                                    <span v-if="notif.url" class="text-primary cursor" style="padding-right: 15px">
+                                                    <span v-if="notif.url" class="text-primary cursor"
+                                                          style="padding-right: 15px">
                                                     <i class="fa fa-chevron-right fs-14"></i>
                                                 </span>
                                                 </p>
@@ -69,6 +73,10 @@
                                         </li>
                                         <!-- END List Group Item!-->
                                     </ul>
+                                    <div class="text-right text-black fs-14 bg-danger-lighter"
+                                         style="opacity: 0.7;padding: 2px 10px" v-if="notification.totalNew>5">
+                                        <span class="text-right"> <b>{{notification.totalNew}}</b> Unread Notifications</span>
+                                    </div>
 
                                 </div>
 
@@ -100,6 +108,10 @@
         methods: {
             closeQuickview(){
                 closeNotificationList()
+            },
+            openUrl(url){
+                if (url)
+                    window.open(url, '_blank')
             }
         }
     }
