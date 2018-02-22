@@ -19830,6 +19830,202 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/helpers/api.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["g"] = get;
+/* harmony export (immutable) */ __webpack_exports__["h"] = post;
+/* unused harmony export multipartPost */
+/* harmony export (immutable) */ __webpack_exports__["a"] = del;
+/* unused harmony export interceptors */
+/* harmony export (immutable) */ __webpack_exports__["c"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["f"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceDel;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePost;
+/* unused harmony export facePutOctet */
+/* harmony export (immutable) */ __webpack_exports__["e"] = facePostOctet;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/**
+ * Created by kevinpurwono on 9/11/17.
+ */
+
+
+
+function get(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
+        }
+    });
+}
+
+function post(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
+        }
+    });
+}
+
+function multipartPost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+
+// delete is reserved keyword
+function del(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
+        }
+    });
+}
+
+function interceptors(cb) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (res) {
+        return res;
+    }, function (err) {
+        cb(err);
+        return Promise.reject(err);
+    });
+}
+
+function faceGet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePut(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function faceDel(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+function facePutOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePostOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/helpers/const.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return microsoftPersonGroupId; });
+/**
+ * Created by kevinpurwono on 9/11/17.
+ */
+
+var api_path = '/v1/h/';
+var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
+var faceSubKey = 'e498335112c8402a82967303033da0a4';
+var microsoftPersonGroupId = 'gx_development';
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/store/auth.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony default export */ var _unused_webpack_default_export = ({
+	state: {
+		api_token: null,
+		user_id: null
+	},
+	initialize: function initialize() {
+		this.state.api_token = localStorage.getItem('api_token');
+		this.state.user_id = parseInt(localStorage.getItem('user_id'));
+	},
+	set: function set(api_token, user_id) {
+		localStorage.setItem('api_token', api_token);
+		localStorage.setItem('user_id', user_id);
+		this.initialize();
+	},
+	remove: function remove() {
+		localStorage.removeItem('api_token');
+		localStorage.removeItem('user_id');
+		this.initialize();
+	}
+});
+
+/***/ }),
+
 /***/ "./resources/assets/js/echo/main.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -19866,9 +20062,14 @@ __webpack_require__("./resources/assets/js/echo/notification/main.js");
 /***/ }),
 
 /***/ "./resources/assets/js/echo/notification/main.js":
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var groupTypeIds = [1, 2, 8, 7]; //test only
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__client_helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__client_helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+
+
 
 var notifType = {
     success: 'success',
@@ -19877,35 +20078,62 @@ var notifType = {
     warning: 'warning'
 };
 
-var requisitionStorageId = 2;
-var trackingOrderStorageId = 3;
-
 var sounds = new Audio('/sounds/definite.ogg');
 
-for (var i = 0; i < groupTypeIds.length; i++) {
+// let requisitionStorageId = 2
+// let trackingOrderStorageId = 3
+//
+// let sounds = new Audio('/sounds/definite.ogg')
+//
+// for (let i = 0; i < groupTypeIds.length; i++) {
+//
+//     switch (i) {
+//         case 1:
+//             break;
+//         case requisitionStorageId: //listen to requisition stoarge
+//             echo.private(`storage.${requisitionStorageId}`)
+//                 .listen('Storage.Events.OrderRequested', (data) => {
+//
+//                     console.log('orderRequested', data)
+//
+//                     let message = 'New storage order has been requested'
+//
+//                     showNotificationBar(message, 10000, notifType.success)
+//                     playNotifySound(2, 0)
+//
+//
+//                 })
+//
+//             break;
+//         case trackingOrderStorageId: //listen to tracking order storage
+//             break;
+//         default:
+//             break;
+//     }
+//
+// }
+//
 
-    switch (i) {
-        case 1:
-            break;
-        case requisitionStorageId:
-            //listen to requisition stoarge
-            echo.private('storage.' + requisitionStorageId).listen('Storage.Events.OrderRequested', function (data) {
+// GET EMPLOYEE ID
+Object(__WEBPACK_IMPORTED_MODULE_0__client_helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__client_helpers_const__["a" /* api_path */] + 'profile/user/employee/id').then(function (res) {
+    if (!res.data.isFailed) {
+        if (res.data.employeeId) {
 
-                console.log('orderRequested', data);
+            var employeeId = res.data.employeeId;
 
-                var message = 'New storage order has been requested';
+            // Listen to echo
+            echo.private('notify.' + employeeId).listen('Account.Events.UserNotified', function (data) {
+
+                console.log('UserNotified', data);
+
+                var message = data.message;
 
                 showNotificationBar(message, 10000, notifType.success);
                 playNotifySound(2, 0);
             });
-            break;
-        case trackingOrderStorageId:
-            //listen to tracking order storage
-            break;
-        default:
-            break;
+        }
     }
-}
+}).catch(function (err) {});
 
 function playNotifySound(times, current) {
 

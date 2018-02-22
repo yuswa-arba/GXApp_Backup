@@ -46,6 +46,7 @@ require(base_path($backend_path . $type_helpdesk . 'developer.php'));
 require(base_path($backend_path . $type_helpdesk . 'component.php'));
 require(base_path($backend_path . $type_helpdesk . 'misc.php'));
 require(base_path($backend_path . $type_helpdesk . 'profile.php'));
+
 /*
 |--------------------------------------------------------------------------
 | Init general routes

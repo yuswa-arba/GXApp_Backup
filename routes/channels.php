@@ -14,8 +14,17 @@
 use App\Notification\Models\NotificationRecipientGroup;
 use Illuminate\Support\Facades\Broadcast;
 
-Broadcast::channel('App.User.{id}', function ($user, $id) {
-    return (int)$user->id === (int)$id;
+Broadcast::channel('notify.{employeeId}', function ($user, $employeeId) {
+
+    $employee = $user->employee;
+
+    if (!$employee){
+        return false;
+    }
+
+    return $employee->id==$employeeId;
+
+
 });
 
 

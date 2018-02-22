@@ -1,4 +1,5 @@
-let groupTypeIds = [1, 2, 8, 7] //test only
+import {get, post} from '../../client/helpers/api'
+import {api_path} from '../../client/helpers/const'
 
 let notifType = {
     success: 'success',
@@ -7,37 +8,67 @@ let notifType = {
     warning: 'warning'
 }
 
-let requisitionStorageId = 2
-let trackingOrderStorageId = 3
-
 let sounds = new Audio('/sounds/definite.ogg')
 
-for (let i = 0; i < groupTypeIds.length; i++) {
+// let requisitionStorageId = 2
+// let trackingOrderStorageId = 3
+//
+// let sounds = new Audio('/sounds/definite.ogg')
+//
+// for (let i = 0; i < groupTypeIds.length; i++) {
+//
+//     switch (i) {
+//         case 1:
+//             break;
+//         case requisitionStorageId: //listen to requisition stoarge
+//             echo.private(`storage.${requisitionStorageId}`)
+//                 .listen('Storage.Events.OrderRequested', (data) => {
+//
+//                     console.log('orderRequested', data)
+//
+//                     let message = 'New storage order has been requested'
+//
+//                     showNotificationBar(message, 10000, notifType.success)
+//                     playNotifySound(2, 0)
+//
+//
+//                 })
+//
+//             break;
+//         case trackingOrderStorageId: //listen to tracking order storage
+//             break;
+//         default:
+//             break;
+//     }
+//
+// }
+//
 
-    switch (i) {
-        case 1:
-            break;
-        case requisitionStorageId: //listen to requisition stoarge
-            echo.private(`storage.${requisitionStorageId}`)
-                .listen('Storage.Events.OrderRequested', (data) => {
+// GET EMPLOYEE ID
+get(api_path + 'profile/user/employee/id')
+    .then((res) => {
+        if (!res.data.isFailed) {
+            if (res.data.employeeId) {
 
-                    console.log('orderRequested', data)
+                let employeeId = res.data.employeeId
 
-                    let message = 'New storage order has been requested'
+                // Listen to echo
+                echo.private(`notify.${employeeId}`)
+                    .listen('Account.Events.UserNotified', (data) => {
 
-                    showNotificationBar(message, 10000, notifType.success)
-                    playNotifySound(2, 0)
+                        console.log('UserNotified', data)
+
+                        let message = data.message
+
+                        showNotificationBar(message, 10000, notifType.success)
+                        playNotifySound(2, 0)
 
 
-                })
-            break;
-        case trackingOrderStorageId: //listen to tracking order storage
-            break;
-        default:
-            break;
-    }
+                    })
+            }
 
-}
+        }
+    }).catch((err)=>{})
 
 
 function playNotifySound(times, current) {

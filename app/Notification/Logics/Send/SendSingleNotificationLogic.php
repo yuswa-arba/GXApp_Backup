@@ -10,6 +10,7 @@
 namespace App\Notification\Logics\Send;
 
 
+use App\Account\Events\UserNotified;
 use App\Notification\Models\Notifications;
 use App\Employee\Models\MasterEmployee;
 use App\Traits\FirebaseUtils;
@@ -36,7 +37,7 @@ class SendSingleNotificationLogic extends SendSingleNotificationUseCase
 
         if($employee && $employee->user->id){
 
-            Notifications::create([
+           $notification =  Notifications::create([
                 'userId'=>$employee->user->id,
                 'title'=>$request->title,
                 'message'=>$request->message,
@@ -48,13 +49,22 @@ class SendSingleNotificationLogic extends SendSingleNotificationUseCase
                 'sendTime'=>Carbon::now()->format('H:i')
             ]);
 
-            $this->sendSinglePush(
-                $employee->user->id,
-                $request->title,
-                $request->message,
-                null,
-                $request->intentType
-            ); //send notification
+           if($notification){
+
+               //EVENT BROADCAST ECHO (FOR WEB)
+               broadcast(new UserNotified($employee->id,$notification->id))->toOthers();
+
+               //FIREBASE PUSH NOTIFICATION
+               $this->sendSinglePush(
+                   $employee->user->id,
+                   $request->title,
+                   $request->message,
+                   null,
+                   $request->intentType
+               );
+
+           }
+
 
             $response['isFailed'] = false;
             $response['message'] = 'Success';
