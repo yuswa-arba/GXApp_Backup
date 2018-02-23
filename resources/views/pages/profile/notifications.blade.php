@@ -18,7 +18,7 @@
 @section('content')
 
     <!-- START PAGE CONTENT -->
-    <div class="content">
+    <div class="content filter-container">
         <div id="vc-detail-notifications">
         </div>
     </div>

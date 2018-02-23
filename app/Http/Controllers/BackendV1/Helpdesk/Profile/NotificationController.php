@@ -221,7 +221,6 @@ class NotificationController extends Controller
             return response()->json($response, 200);
         }
 
-
         //is valid
 
         $notification = Notifications::find($request->notificationId);

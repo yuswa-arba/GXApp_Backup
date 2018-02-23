@@ -1622,6 +1622,8 @@ module.exports = {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_valid_url__ = __webpack_require__("./node_modules/valid-url/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_valid_url___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_valid_url__);
 //
 //
 //
@@ -1689,6 +1691,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -1715,35 +1727,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
 
         //get group types
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/recipient/groupTypes').then(function (res) {
-            if (!res.data.isFailed) {
-
-                // insert to array
-                self.notificationGroupTypes = res.data.groupTypes;
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
+        self.getGroupTypes();
 
         //get notification
         self.getNotificationListOf(self.currentGroupTypeId);
     },
 
     methods: {
+        getGroupTypes: function getGroupTypes() {
+            var self = this;
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/recipient/groupTypes').then(function (res) {
+                if (!res.data.isFailed) {
+
+                    // insert to array
+                    self.notificationGroupTypes = res.data.groupTypes;
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        },
         getNotificationListOf: function getNotificationListOf(groupTypeId) {
             var self = this;
 
@@ -1751,8 +1767,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             param += '&month=' + self.sortMonth;
             param += '&year=' + self.sortYear;
 
-            // set current group types
-
+            //get notifications
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/listOf' + param).then(function (res) {
 
                 if (!res.data.isFailed) {
@@ -1777,6 +1792,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }).show();
             });
         },
+        seenAllNotification: function seenAllNotification() {
+            var self = this;
+            if (confirm("Are you sure to mark all as read")) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/seenAll').then(function (res) {}).catch(function (err) {});
+
+                self.getGroupTypes();
+                self.getNotificationListOf(self.currentGroupTypeId);
+            }
+        },
+        seenNotification: function seenNotification(notificationId, index) {
+            var self = this;
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/seen?notificationId=' + notificationId).then(function (res) {
+                if (!res.data.isFailed) {
+                    self.notificationList[index].hasSeen = 1;
+                    self.getGroupTypes(); // update group types
+                }
+            }).catch(function (err) {});
+        },
         changeGroupType: function changeGroupType(groupTypeId, index) {
             var self = this;
             self.currentGroupTypeId = groupTypeId;
@@ -1786,6 +1819,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         sortNotificationList: function sortNotificationList() {
             var self = this;
             self.getNotificationListOf(self.currentGroupTypeId);
+        },
+        openUrl: function openUrl(url, notificationId, index) {
+
+            var self = this;
+
+            self.seenNotification(notificationId, index);
+
+            if (Object(__WEBPACK_IMPORTED_MODULE_2_valid_url__["isWebUri"])(url)) {
+                window.open(url, '_blank');
+            }
         }
     }
 });
@@ -2265,6 +2308,167 @@ exports.clearImmediate = clearImmediate;
 
 /***/ }),
 
+/***/ "./node_modules/valid-url/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+/* WEBPACK VAR INJECTION */(function(module) {(function(module) {
+    'use strict';
+
+    module.exports.is_uri = is_iri;
+    module.exports.is_http_uri = is_http_iri;
+    module.exports.is_https_uri = is_https_iri;
+    module.exports.is_web_uri = is_web_iri;
+    // Create aliases
+    module.exports.isUri = is_iri;
+    module.exports.isHttpUri = is_http_iri;
+    module.exports.isHttpsUri = is_https_iri;
+    module.exports.isWebUri = is_web_iri;
+
+
+    // private function
+    // internal URI spitter method - direct from RFC 3986
+    var splitUri = function(uri) {
+        var splitted = uri.match(/(?:([^:\/?#]+):)?(?:\/\/([^\/?#]*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?/);
+        return splitted;
+    };
+
+    function is_iri(value) {
+        if (!value) {
+            return;
+        }
+
+        // check for illegal characters
+        if (/[^a-z0-9\:\/\?\#\[\]\@\!\$\&\'\(\)\*\+\,\;\=\.\-\_\~\%]/i.test(value)) return;
+
+        // check for hex escapes that aren't complete
+        if (/%[^0-9a-f]/i.test(value)) return;
+        if (/%[0-9a-f](:?[^0-9a-f]|$)/i.test(value)) return;
+
+        var splitted = [];
+        var scheme = '';
+        var authority = '';
+        var path = '';
+        var query = '';
+        var fragment = '';
+        var out = '';
+
+        // from RFC 3986
+        splitted = splitUri(value);
+        scheme = splitted[1]; 
+        authority = splitted[2];
+        path = splitted[3];
+        query = splitted[4];
+        fragment = splitted[5];
+
+        // scheme and path are required, though the path can be empty
+        if (!(scheme && scheme.length && path.length >= 0)) return;
+
+        // if authority is present, the path must be empty or begin with a /
+        if (authority && authority.length) {
+            if (!(path.length === 0 || /^\//.test(path))) return;
+        } else {
+            // if authority is not present, the path must not start with //
+            if (/^\/\//.test(path)) return;
+        }
+
+        // scheme must begin with a letter, then consist of letters, digits, +, ., or -
+        if (!/^[a-z][a-z0-9\+\-\.]*$/.test(scheme.toLowerCase()))  return;
+
+        // re-assemble the URL per section 5.3 in RFC 3986
+        out += scheme + ':';
+        if (authority && authority.length) {
+            out += '//' + authority;
+        }
+
+        out += path;
+
+        if (query && query.length) {
+            out += '?' + query;
+        }
+
+        if (fragment && fragment.length) {
+            out += '#' + fragment;
+        }
+
+        return out;
+    }
+
+    function is_http_iri(value, allowHttps) {
+        if (!is_iri(value)) {
+            return;
+        }
+
+        var splitted = [];
+        var scheme = '';
+        var authority = '';
+        var path = '';
+        var port = '';
+        var query = '';
+        var fragment = '';
+        var out = '';
+
+        // from RFC 3986
+        splitted = splitUri(value);
+        scheme = splitted[1]; 
+        authority = splitted[2];
+        path = splitted[3];
+        query = splitted[4];
+        fragment = splitted[5];
+
+        if (!scheme)  return;
+
+        if(allowHttps) {
+            if (scheme.toLowerCase() != 'https') return;
+        } else {
+            if (scheme.toLowerCase() != 'http') return;
+        }
+
+        // fully-qualified URIs must have an authority section that is
+        // a valid host
+        if (!authority) {
+            return;
+        }
+
+        // enable port component
+        if (/:(\d+)$/.test(authority)) {
+            port = authority.match(/:(\d+)$/)[0];
+            authority = authority.replace(/:\d+$/, '');
+        }
+
+        out += scheme + ':';
+        out += '//' + authority;
+        
+        if (port) {
+            out += port;
+        }
+        
+        out += path;
+        
+        if(query && query.length){
+            out += '?' + query;
+        }
+
+        if(fragment && fragment.length){
+            out += '#' + fragment;
+        }
+        
+        return out;
+    }
+
+    function is_https_iri(value) {
+        return is_http_iri(value, true);
+    }
+
+    function is_web_iri(value) {
+        return (is_http_iri(value) || is_https_iri(value));
+    }
+
+})(module);
+
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/component-normalizer.js":
 /***/ (function(module, exports) {
 
@@ -2513,6 +2717,21 @@ var render = function() {
                     ])
                   })
                 )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "pull-right" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary m-r-15",
+                    on: {
+                      click: function($event) {
+                        _vm.seenAllNotification()
+                      }
+                    }
+                  },
+                  [_vm._v("Mark all as read")]
+                )
               ])
             ]),
             _vm._v(" "),
@@ -2522,7 +2741,7 @@ var render = function() {
                 staticClass: "auto-overflow widget-11-2-table",
                 staticStyle: { height: "1600px" }
               },
-              _vm._l(_vm.notificationList, function(notification) {
+              _vm._l(_vm.notificationList, function(notification, index) {
                 return _c(
                   "div",
                   {
@@ -2533,7 +2752,7 @@ var render = function() {
                       "div",
                       {
                         staticClass:
-                          "card social-card share  m-b-0 full-width d-flex flex-1 full-height ",
+                          "card social-card share  m-b-0 full-width d-flex flex-1 full-height bg-transparent",
                         attrs: { "data-social": "item" }
                       },
                       [
@@ -2542,7 +2761,18 @@ var render = function() {
                           {
                             staticClass: "card-header clearfix",
                             class: {
-                              "bg-warning-lighter": notification.hasSeen == 0
+                              "bg-warning-lighter-important":
+                                notification.hasSeen == 0,
+                              "bg-transparent": notification.hasSeen == 1
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.openUrl(
+                                  notification.url,
+                                  notification.id,
+                                  index
+                                )
+                              }
                             }
                           },
                           [
@@ -13237,6 +13467,35 @@ try {
 // easier to handle this case. if(!global) { ...}
 
 module.exports = g;
+
+
+/***/ }),
+
+/***/ "./node_modules/webpack/buildin/module.js":
+/***/ (function(module, exports) {
+
+module.exports = function(module) {
+	if(!module.webpackPolyfill) {
+		module.deprecate = function() {};
+		module.paths = [];
+		// module.parent = undefined by default
+		if(!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
 
 
 /***/ }),

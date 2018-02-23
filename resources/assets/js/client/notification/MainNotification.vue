@@ -21,7 +21,7 @@
                                         </button>
 
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item pointer">
+                                            <a @click="goToAllNotifications()" class="dropdown-item pointer">
                                                 Show all</a>
                                             <a class="dropdown-item pointer" @click="markAllAsRead()">
                                                 Mark all as read</a>
@@ -113,7 +113,7 @@
                                 <p class="text-master fs-18">
                                     There is no new notifications
                                 </p>
-                                <button class="btn btn-primary">Show all</button>
+                                <button class="btn btn-primary" @click="goToAllNotifications()">Show all</button>
                             </div>
                         </div>
                         <!-- END Alert List !-->
@@ -129,6 +129,7 @@
 <script type="text/javascript">
     import{mapState, mapGetters} from 'vuex'
     import {closeNotificationList} from './utils/util'
+    import {isWebUri} from 'valid-url'
     export default{
         created(){
             this.$store.dispatch({type: 'notification/initConfigsFirstTIme'})
@@ -145,7 +146,7 @@
                 closeNotificationList()
             },
             openUrl(url,notificationId,indexList,indexItem){
-                if (url){
+                if (isWebUri(url)) {
                     window.open(url, '_blank')
                 }
 
@@ -159,6 +160,9 @@
             },
             markAllAsRead(){
                 this.$store.commit({type:'notification/seenNotificationList'})
+            },
+            goToAllNotifications(){
+                window.open('/profile/notifications')
             }
         }
     }
