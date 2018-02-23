@@ -8,7 +8,8 @@ import {showNotificationBar, notifType, showNotificationBubble, hideNotification
 import series from 'async/series';
 export default{
 
-    listenToPersonalNotification(state,payload){
+    listenToPersonalNotification(state, payload){
+
         get(api_path + 'profile/user/employee/id')
             .then((res) => {
                 if (!res.data.isFailed) {
@@ -43,12 +44,16 @@ export default{
 
                             })
                     }
-
+                    a
                 }
             }).catch((err) => {
         })
 
     },
+
+    //TODO listen to assigned notificaiton recipients
+
+
     getNotificationList(state, payload){
         get(api_path + 'profile/notification/list')
             .then((res) => {
@@ -68,10 +73,28 @@ export default{
             })
     },
     seenNotificationList(state, payload){
-        get(api_path + 'profile/notification/seen')
+        get(api_path + 'profile/notification/seenAll')
             .then((res) => {
                 if (!res.data.isFailed) {
+
                     hideNotificationBubble()
+
+                    state.unreadExists = false
+                }
+            })
+            .catch((err) => {
+            })
+    },
+    seenNotification(state, payload){
+
+        get(api_path + 'profile/notification/seen?notificationId=' + payload.notificationId)
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                    // Update array has seen to true
+                    state.notificationList[payload.indexList].notifData[payload.indexItem].hasSeen = 1
+
+
                 }
             })
             .catch((err) => {

@@ -17,4 +17,9 @@ class ViewController extends Controller
     {
         return view('pages.profile.index');
     }
+
+    public function notifications()
+    {
+        return view('pages.profile.notifications');
+    }
 }

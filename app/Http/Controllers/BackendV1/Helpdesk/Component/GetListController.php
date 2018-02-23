@@ -31,6 +31,51 @@ class GetListController extends Controller
 {
     use GlobalUtils;
 
+
+    public function months()
+    {
+        $months = array();
+
+        $months[0]['number']='01';
+        $months[0]['name'] = 'January';
+
+        $months[1]['number']='02';
+        $months[1]['name'] = 'February';
+
+        $months[2]['number']='03';
+        $months[2]['name'] = 'March';
+
+        $months[3]['number']='04';
+        $months[3]['name'] = 'April';
+
+        $months[4]['number']='05';
+        $months[4]['name'] = 'May';
+
+        $months[5]['number']='06';
+        $months[5]['name'] = 'June';
+
+        $months[6]['number']='07';
+        $months[6]['name'] = 'July';
+
+        $months[7]['number']='08';
+        $months[7]['name'] = 'August';
+
+        $months[8]['number']='09';
+        $months[8]['name'] = 'September';
+
+        $months[9]['number']='10';
+        $months[9]['name'] = 'October';
+
+        $months[10]['number']='11';
+        $months[10]['name'] = 'November';
+
+        $months[11]['number']='12';
+        $months[11]['name'] = 'December';
+
+        return response()->json($months,200);
+
+    }
+
     public function religion($id)
     {
         return fractal(Religion::find($id), new BasicComponentTrasnformer())->respond(200);

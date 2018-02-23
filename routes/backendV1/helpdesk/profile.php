@@ -17,7 +17,11 @@ Route::prefix('v1/h')->group(function () {
         Route::post('user/change/password','UserController@changePassword')->name('v1.profile.user.changePwd');
 
         Route::get('notification/list','NotificationController@getNotificationList')->name('v1.profile.notification.list');
-        Route::get('notification/seen','NotificationController@seenNotificationList')->name('v1.profile.notification.seen');
+        Route::get('notification/listOf','NotificationController@getNotificationListOfGroupType')->name('v1.profile.notification.listOf');
+        Route::get('notification/seenAll','NotificationController@seenAllNotification')->name('v1.profile.notification.seenAll');
+        Route::get('notification/seen','NotificationController@seenNotification')->name('v1.profile.notification.seen');
+        Route::get('notification/recipient/groupTypes','NotificationController@getRecipientGroups')->name('v1.profile.notification.recipients');
+
     });
 
 });

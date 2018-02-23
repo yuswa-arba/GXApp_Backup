@@ -16,8 +16,6 @@ class NotificationListTransformer extends TransformerAbstract
             'id' => $notifications->id,
             'title' => $notifications->title,
             'message' => $notifications->message,
-            'groupTypeId'=>$notifications->groupTypeId,
-            'groupTypeName'=>$this->getResultWithNullChecker1Connection($notifications,'groupType','name'),
             'url'=>$notifications->url,
             'sendBy' => $notifications->sendBy,
             'sendAt' => $notifications->sendDate . ' '. $notifications->sendTime,

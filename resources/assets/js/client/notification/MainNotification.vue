@@ -1,7 +1,5 @@
 <template>
     <div>
-        <a class="btn-link quickview-toggle" data-toggle-element="#quickview-notification" data-toggle="quickview"><i
-                class="pg-close"></i></a>
         <!-- Tab panes -->
         <div class="tab-content">
             <!-- BEGIN Alerts !-->
@@ -13,18 +11,37 @@
                         <div class="navbar navbar-default navbar-sm">
                             <div class="navbar-inner">
                                 <!-- BEGIN Header Controler !-->
-                                <a href="javascript:;" class=" inline action p-l-10 link text-master"
-                                   @click="closeQuickview()">
-                                    <i class="fs-18 fa fa-arrow-circle-right"></i>
-                                </a>
+                                <div class="pull-left inline action link text-master">
+                                    <div class="dropdown dropdown-default">
+                                        <button class="btn dropdown-toggle text-center text-primary"
+                                                style="padding-top: 2px;padding-bottom: 2px;border: none"
+                                                type="button"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            More
+                                        </button>
+
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item pointer">
+                                                Show all</a>
+                                            <a class="dropdown-item pointer" @click="markAllAsRead()">
+                                                Mark all as read</a>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
                                 <!-- END Header Controler !-->
                                 <div class="view-heading">
                                     Notifications
                                 </div>
                                 <!-- BEGIN Header Controler !-->
-                                <a href="#" class="inline action p-r-10 pull-right link text-master">
-                                   <span class="text-primary cursor bold fs-12">Show All</span>
+
+                                <a href="javascript:;" class=" pull-right inline action p-r-15 link text-master"
+                                   @click="closeQuickview()">
+                                    <i class="fs-18 fa fa-times"></i>
                                 </a>
+
                                 <!-- END Header Controler !-->
                             </div>
                         </div>
@@ -33,21 +50,21 @@
                         <div data-init-list-view="ioslist" class="list-view boreded no-top-border" >
                             <div class="scrollable" v-if="unreadExists">
                                 <div style="height: 1600px!important;">
-                                    <div class="list-view-group-container" v-for="notification in notificationList">
+                                    <div class="list-view-group-container" v-for="(notification,indexList) in notificationList">
                                         <div v-if="notification.notifData">
                                             <!-- BEGIN List Group Header!-->
-                                            <div class="list-view-group-header text-uppercase">
+                                            <div class="list-view-group-header text-uppercase" style="z-index: 0">
                                                 {{notification.groupTypeName}}
                                             </div>
                                             <!-- END List Group Header!-->
                                             <ul>
                                                 <!-- BEGIN List Group Item!-->
-                                                <li class="alert-list" v-for="notif in notification.notifData">
+                                                <li class="alert-list" v-for="(notif,indexItem) in notification.notifData">
                                                     <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
                                                     <a href="#" class="p-t-10 p-b-10 align-items-center"
                                                        data-navigate="view"
                                                        data-view-port="#chat" data-view-animation="push-parrallax"
-                                                       @click="openUrl(notif.url)"
+                                                       @click="openUrl(notif.url,notif.id,indexList,indexItem)"
                                                        :class="{'cursor':notif.url}"
                                                        style="height: 60px!important;"
                                                     >
@@ -127,9 +144,21 @@
             closeQuickview(){
                 closeNotificationList()
             },
-            openUrl(url){
-                if (url)
+            openUrl(url,notificationId,indexList,indexItem){
+                if (url){
                     window.open(url, '_blank')
+                }
+
+                this.$store.commit({
+                    type:'notification/seenNotification',
+                    notificationId:notificationId,
+                    indexList:indexList,
+                    indexItem:indexItem
+                })
+
+            },
+            markAllAsRead(){
+                this.$store.commit({type:'notification/seenNotificationList'})
             }
         }
     }

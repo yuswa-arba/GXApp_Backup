@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 25);
+/******/ 	return __webpack_require__(__webpack_require__.s = 26);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2482,21 +2482,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         openOrCloseNotificationList: function openOrCloseNotificationList() {
-            var _this = this;
-
             if (Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["c" /* isNotificationListOpen */])()) {
 
                 Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["a" /* closeNotificationList */])(); //UI
             } else {
+
                 Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["e" /* openNotificationList */])(); //UI
 
                 //get data
                 this.$store.commit({ type: 'notification/getNotificationList' });
 
-                //has seen data
-                setTimeout(function () {
-                    _this.$store.commit({ type: 'notification/seenNotificationList' });
-                }, 2000);
+                Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["b" /* hideNotificationBubble */])();
             }
         }
     }
@@ -2513,6 +2509,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_util__ = __webpack_require__("./resources/assets/js/client/notification/utils/util.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2641,8 +2654,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         closeQuickview: function closeQuickview() {
             Object(__WEBPACK_IMPORTED_MODULE_1__utils_util__["a" /* closeNotificationList */])();
         },
-        openUrl: function openUrl(url) {
-            if (url) window.open(url, '_blank');
+        openUrl: function openUrl(url, notificationId, indexList, indexItem) {
+            if (url) {
+                window.open(url, '_blank');
+            }
+
+            this.$store.commit({
+                type: 'notification/seenNotification',
+                notificationId: notificationId,
+                indexList: indexList,
+                indexItem: indexItem
+            });
+        },
+        markAllAsRead: function markAllAsRead() {
+            this.$store.commit({ type: 'notification/seenNotificationList' });
         }
     }
 });
@@ -4234,8 +4259,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
-    _vm._v(" "),
     _c("div", { staticClass: "tab-content" }, [
       _c(
         "div",
@@ -4252,20 +4275,69 @@ var render = function() {
                 _c("div", { staticClass: "navbar navbar-default navbar-sm" }, [
                   _c("div", { staticClass: "navbar-inner" }, [
                     _c(
-                      "a",
+                      "div",
                       {
-                        staticClass: " inline action p-l-10 link text-master",
-                        attrs: { href: "javascript:;" },
-                        on: {
-                          click: function($event) {
-                            _vm.closeQuickview()
-                          }
-                        }
+                        staticClass: "pull-left inline action link text-master"
                       },
                       [
-                        _c("i", {
-                          staticClass: "fs-18 fa fa-arrow-circle-right"
-                        })
+                        _c(
+                          "div",
+                          { staticClass: "dropdown dropdown-default" },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn dropdown-toggle text-center text-primary",
+                                staticStyle: {
+                                  "padding-top": "2px",
+                                  "padding-bottom": "2px",
+                                  border: "none"
+                                },
+                                attrs: {
+                                  type: "button",
+                                  "data-toggle": "dropdown",
+                                  "aria-haspopup": "true",
+                                  "aria-expanded": "false"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                        More\n                                    "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dropdown-menu" }, [
+                              _c(
+                                "a",
+                                { staticClass: "dropdown-item pointer" },
+                                [
+                                  _vm._v(
+                                    "\n                                            Show all"
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item pointer",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.markAllAsRead()
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                            Mark all as read"
+                                  )
+                                ]
+                              )
+                            ])
+                          ]
+                        )
                       ]
                     ),
                     _vm._v(" "),
@@ -4275,7 +4347,20 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _c(
+                      "a",
+                      {
+                        staticClass:
+                          " pull-right inline action p-r-15 link text-master",
+                        attrs: { href: "javascript:;" },
+                        on: {
+                          click: function($event) {
+                            _vm.closeQuickview()
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fs-18 fa fa-times" })]
+                    )
                   ])
                 ]),
                 _vm._v(" "),
@@ -4292,7 +4377,8 @@ var render = function() {
                             "div",
                             { staticStyle: { height: "1600px!important" } },
                             _vm._l(_vm.notificationList, function(
-                              notification
+                              notification,
+                              indexList
                             ) {
                               return _c(
                                 "div",
@@ -4304,7 +4390,8 @@ var render = function() {
                                           "div",
                                           {
                                             staticClass:
-                                              "list-view-group-header text-uppercase"
+                                              "list-view-group-header text-uppercase",
+                                            staticStyle: { "z-index": "0" }
                                           },
                                           [
                                             _vm._v(
@@ -4321,7 +4408,7 @@ var render = function() {
                                           "ul",
                                           _vm._l(
                                             notification.notifData,
-                                            function(notif) {
+                                            function(notif, indexItem) {
                                               return _c(
                                                 "li",
                                                 { staticClass: "alert-list" },
@@ -4349,7 +4436,12 @@ var render = function() {
                                                         click: function(
                                                           $event
                                                         ) {
-                                                          _vm.openUrl(notif.url)
+                                                          _vm.openUrl(
+                                                            notif.url,
+                                                            notif.id,
+                                                            indexList,
+                                                            indexItem
+                                                          )
                                                         }
                                                       }
                                                     },
@@ -4574,41 +4666,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "btn-link quickview-toggle",
-        attrs: {
-          "data-toggle-element": "#quickview-notification",
-          "data-toggle": "quickview"
-        }
-      },
-      [_c("i", { staticClass: "pg-close" })]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "inline action p-r-10 pull-right link text-master",
-        attrs: { href: "#" }
-      },
-      [
-        _c("span", { staticClass: "text-primary cursor bold fs-12" }, [
-          _vm._v("Show All")
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -16702,6 +16760,7 @@ var notifType = {
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     listenToPersonalNotification: function listenToPersonalNotification(state, payload) {
+
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/user/employee/id').then(function (res) {
             if (!res.data.isFailed) {
                 if (res.data.employeeId) {
@@ -16730,9 +16789,15 @@ var notifType = {
                         });
                     });
                 }
+                a;
             }
         }).catch(function (err) {});
     },
+
+
+    //TODO listen to assigned notificaiton recipients
+
+
     getNotificationList: function getNotificationList(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/list').then(function (res) {
 
@@ -16751,9 +16816,22 @@ var notifType = {
         });
     },
     seenNotificationList: function seenNotificationList(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/seen').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/seenAll').then(function (res) {
             if (!res.data.isFailed) {
+
                 Object(__WEBPACK_IMPORTED_MODULE_2__utils_util__["b" /* hideNotificationBubble */])();
+
+                state.unreadExists = false;
+            }
+        }).catch(function (err) {});
+    },
+    seenNotification: function seenNotification(state, payload) {
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'profile/notification/seen?notificationId=' + payload.notificationId).then(function (res) {
+            if (!res.data.isFailed) {
+
+                // Update array has seen to true
+                state.notificationList[payload.indexList].notifData[payload.indexItem].hasSeen = 1;
             }
         }).catch(function (err) {});
     }
@@ -16815,7 +16893,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 /***/ }),
 
-/***/ 25:
+/***/ 26:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/assets/js/client/notification/main.js");

@@ -9,7 +9,7 @@
 
 <script type="text/javascript">
     import{mapState, mapGetters} from 'vuex'
-    import {isNotificationListOpen,openNotificationList,closeNotificationList} from './utils/util'
+    import {isNotificationListOpen,openNotificationList,closeNotificationList,hideNotificationBubble} from './utils/util'
     export default{
         created(){
 
@@ -21,15 +21,13 @@
                     closeNotificationList() //UI
 
                 } else {
+
                     openNotificationList() //UI
 
                     //get data
                     this.$store.commit({type:'notification/getNotificationList'})
 
-                    //has seen data
-                    setTimeout(() => {
-                        this.$store.commit({type:'notification/seenNotificationList'})
-                    }, 2000)
+                    hideNotificationBubble()
                 }
             }
         }

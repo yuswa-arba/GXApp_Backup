@@ -67,7 +67,7 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
   direction: ltr;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -123,10 +123,10 @@ body.no-header .header {
   border-bottom-color: transparent;
 }
 body.dashboard {
-  background: #f6f9fa;
+  background: #f4f6f9;
 }
 body.dashboard .page-container {
-  background: #f6f9fa;
+  background: #f4f6f9;
 }
 body.rtl [class^="col-"],
 body.rtl [class*="col-"] {
@@ -2970,7 +2970,7 @@ hr.dotted {
   background-color: #f2f4f5!important;
 }
 .bg-master-lightest {
-  background-color: #f6f9fa!important;
+  background-color: #f4f6f9!important;
 }
 .bg-master-dark {
   background-color: #373e43!important;
@@ -3819,7 +3819,7 @@ fieldset[disabled] .btn-danger.active {
 }
 .btn-default.hover,
 .btn-default:hover {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
   border-color: rgba(122, 137, 148, 0.27);
   color: #212528;
 }
@@ -4094,7 +4094,7 @@ Rounded buttons
   border-radius: 3px;
   font-size: 13px;
   margin: 0;
-  background: #f6f9fa;
+  background: #f4f6f9;
   min-width: 50px;
   z-index: 700 !important;
 }
@@ -4620,7 +4620,7 @@ Misc buttons
   text-align: center;
   vertical-align: middle;
   line-height: 44px;
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
   height: 100%;
 }
 .notification-panel .notification-body .notification-item .option .mark {
@@ -6517,14 +6517,14 @@ span.dynatree-drag-helper-img,
   color: #7a8994;
 }
 .dd-handle:hover {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .dark .dd-handle {
   color: #7a8994;
   background: #f2f4f5;
 }
 .dark .dd-handle:hover {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .dark .dd-placeholder {
   background-color: #eaecee;
@@ -6535,7 +6535,7 @@ span.dynatree-drag-helper-img,
   color: #7a8994;
 }
 .dd3-content:hover {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .dd3-handle {
   background: transparent;
@@ -7523,7 +7523,7 @@ https://github.com/eternicode/bootstrap-datepicker
   font-size: 12px;
 }
 .datepicker:after {
-  border-bottom-color: #f6f9fa;
+  border-bottom-color: #f4f6f9;
 }
 .datepicker thead tr .datepicker-switch {
   color: #6f7b8a;
@@ -8127,7 +8127,7 @@ https://github.com/Waxolunist/bootstrap3-wysihtml5-bower
   border: 0;
 }
 .wysiwyg5-wrapper .wysiwyg:focus {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
   outline: 0 !important;
   -webkit-box-shadow: none;
   box-shadow: none;
@@ -8525,7 +8525,7 @@ div.cs-skin-slide.cs-transparent .cs-backdrop {
   background: none;
 }
 div.cs-skin-slide.cs-transparent.cs-active .cs-backdrop {
-  background: #f6f9fa;
+  background: #f4f6f9;
 }
 div.cs-skin-slide > span {
   height: 35px;
@@ -8542,7 +8542,7 @@ div.cs-skin-slide.cs-active:before {
 }
 div.cs-skin-slide.cs-active .cs-backdrop {
   border: transparent;
-  background: #f6f9fa;
+  background: #f4f6f9;
   box-shadow: -1px 0 1px #ccc, 1px 0 1px #ccc;
 }
 div.cs-skin-slide > span:after,
@@ -9481,7 +9481,7 @@ table.dataTable.table-condensed .sorting_desc:after {
 }
 .list-view-group-header,
 .list-view-fake-header {
-  background: #f6f9fa;
+  background: #f4f6f9;
   color: #232830;
   font: normal 11px/14px 'Montserrat', Arial;
   text-transform: uppercase;
@@ -10199,7 +10199,7 @@ Events / .event-container
 }
 .calendar .calendar-header {
   height: 43px;
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
   line-height: 43px;
   padding-left: 60px;
 }
@@ -10409,10 +10409,10 @@ Events / .event-container
   background-color: #fef8e7;
 }
 .calendar .calendar-container .view.month-view .tble .trow .tcell.not {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .calendar .calendar-container .view.month-view .tble .trow .tcell.drop-target .cell-inner {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .calendar .calendar-container .view.month-view .tble .trow .tcell .cell-inner:only-child,
 .calendar .calendar-container .view.month-view .tble .trow .tcell .cell-inner {
@@ -10570,7 +10570,7 @@ Events / .event-container
   border-color: rgba(0, 0, 0, 0.1) !important;
 }
 .calendar .calendar-container .view .tble .trow .tcell.disable {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .calendar .calendar-container .view .tble .loading {
   left: 10px;
@@ -13725,7 +13725,7 @@ Main components
   body.box-layout > .full-height > .container {
     height: 100%;
     padding: 0;
-    background-color: #f6f9fa;
+    background-color: #f4f6f9;
   }
   body.box-layout .header {
     background-color: transparent;
@@ -14721,10 +14721,10 @@ Main components
 }
 .theme .header {
   border-bottom: transparent;
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .theme .header.light {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 .theme .header.light.bg-white {
@@ -14737,16 +14737,16 @@ Main components
   border: 1px solid #f2f2f2;
 }
 .theme .jumbotron {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .theme .breadcrumb > .breadcrumb-item.active {
   color: #000;
 }
 .theme .secondary-sidebar.light {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .theme .split-view .split-list .item {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 @media (max-width: 979px) {
   .theme .header {
@@ -14758,10 +14758,10 @@ Main components
 }
 .header {
   border-bottom: transparent;
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .header.light {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
   border-bottom: 1px solid rgba(0, 0, 0, 0.07);
 }
 .header.light.bg-white {
@@ -14774,17 +14774,17 @@ Main components
   border: 1px solid #f2f2f2;
 }
 .jumbotron {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
   margin-bottom:0!important;
 }
 .breadcrumb > .breadcrumb-item.active {
   color: #000;
 }
 .secondary-sidebar.light {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 .split-view .split-list .item {
-  background-color: #f6f9fa;
+  background-color: #f4f6f9;
 }
 @media (max-width: 979px) {
   .header {

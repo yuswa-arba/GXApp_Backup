@@ -17,6 +17,7 @@ Route::namespace('Client\Profile')->prefix('profile')->middleware('auth')->group
 
     })->name('employee');
 
-    Route::get('index', 'ViewController@index')->name('profile.index');
+    Route::get('', 'ViewController@index')->name('profile.index');
+    Route::get('notifications','ViewController@notifications')->name('profile.notifications');
 
 });

@@ -10,8 +10,8 @@
 @endpush
 
 @push('child-page-controller')
-
 <script src="{{mix('js/client/profile/user.js')}}"></script>
+
 
 @endpush
 

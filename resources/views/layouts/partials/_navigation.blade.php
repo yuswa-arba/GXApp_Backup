@@ -54,7 +54,7 @@
             </button>
             <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
                 <a href="{{route('profile.index')}}" class="dropdown-item"><i class="fa fa-user"></i> Profile</a>
-                <a href="#" class="dropdown-item"><i class="pg-settings_small"></i> Settings</a>
+                <a href="{{route('profile.notifications')}}" class="dropdown-item"><i class="fa fa-envelope"></i> Notifications</a>
                 <a href="#" class="dropdown-item"><i class="pg-signals"></i> Help</a>
                 <a href="#" id="logout-btn" class="clearfix bg-master-lighter dropdown-item">
                     <span class="pull-left">Logout</span>
