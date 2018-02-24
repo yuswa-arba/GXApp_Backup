@@ -1700,6 +1700,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -2787,7 +2789,17 @@ var render = function() {
                             _c(
                               "h5",
                               { staticClass: "fs-16 text-primary m-b-5" },
-                              [_vm._v(_vm._s(notification.title))]
+                              [
+                                _vm._v(
+                                  _vm._s(notification.title) +
+                                    "\n                                "
+                                ),
+                                notification.url
+                                  ? _c("i", {
+                                      staticClass: "fa fa-chevron-right fs-12"
+                                    })
+                                  : _vm._e()
+                              ]
                             ),
                             _vm._v(" "),
                             _c("h5", { staticClass: "fs-16 m-b-5" }, [

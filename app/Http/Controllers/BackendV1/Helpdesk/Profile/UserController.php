@@ -83,13 +83,13 @@ class UserController extends Controller
 
                 //Logging
                 app()->make('LogService')->logging([
-                    'causer'=>$this->getResultWithNullChecker1Connection($user,'employee','givenName'),
-                    'via'=>'web client',
-                    'subject'=>'Change Password',
-                    'action'=>'write',
-                    'level'=>3,
-                    'description'=>$this->getResultWithNullChecker1Connection($user,'employee','givenName').' has changed their password',
-                    'causerIPAddress'=> \Request::ip()
+                    'causer' => $this->getResultWithNullChecker1Connection($user, 'employee', 'givenName'),
+                    'via' => 'web client',
+                    'subject' => 'Change Password',
+                    'action' => 'write',
+                    'level' => 3,
+                    'description' => $this->getResultWithNullChecker1Connection($user, 'employee', 'givenName') . ' has changed their password',
+                    'causerIPAddress' => \Request::ip()
                 ]);
 
                 $response['isFailed'] = false;
@@ -99,7 +99,7 @@ class UserController extends Controller
             } else { /* Error repsonse */
                 $response['isFailed'] = true;
                 $response['message'] = 'Unable to save new password';
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
 
         } else { /* Error repsonse */
@@ -118,29 +118,26 @@ class UserController extends Controller
 
         $response = array();
 
-        if($employee){
+        if ($employee) {
 
-            if($employee->hasResigned==1){
+            if ($employee->hasResigned == 1) {
                 $response['isFailed'] = true;
                 $response['message'] = 'Employee has resigned';
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
 
             //is valid
-            $response['isFailed'] =false;
+            $response['isFailed'] = false;
             $response['message'] = 'Success';
             $response['employeeId'] = $employee->id;
 
-            return response()->json($response,200);
+            return response()->json($response, 200);
 
 
         } else {
             $response['isFailed'] = true;
             $response['message'] = 'Unable to get employee data';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
     }
-
-
-
 }

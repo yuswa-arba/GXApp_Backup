@@ -62,7 +62,7 @@ class CheckUnconfirmedAtStage1 implements ShouldQueue
 
             /* Salary Reports Data */
             $salaryReports = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->where(function ($query) {
-                $query->where('confirmationStatusId', 2)->where('confirmationStatusId', 3);
+                $query->where('confirmationStatusId', 2)->orWhere('confirmationStatusId', 3);
             })->get();
 
 

@@ -57,7 +57,9 @@
                                      @click="openUrl(notification.url,notification.id,index)"
                                      >
                                     <h6 class="fs-14 pull-right">{{notification.sendAt}} by {{notification.sendBy}}</h6>
-                                    <h5 class="fs-16 text-primary m-b-5">{{notification.title}}</h5>
+                                    <h5 class="fs-16 text-primary m-b-5">{{notification.title}}
+                                    <i class="fa fa-chevron-right fs-12" v-if="notification.url"></i>
+                                    </h5>
                                     <h5 class="fs-16 m-b-5">{{notification.message}}</h5>
                                 </div>
                             </div>
