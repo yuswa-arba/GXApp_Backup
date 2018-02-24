@@ -12,5 +12,5 @@ class StorageItemStatus extends Model
     protected $table = 'storageItemStatus';
     protected $guarded = ['id'];
 
-
+s
 }
