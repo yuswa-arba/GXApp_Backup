@@ -1,8 +1,16 @@
 @can('view employee')
-    <li class="">
+    @if(request()->route()->getPrefix()=='/employee')
+        <li class="open active">
+    @else
+        <li class="">
+            @endif
         <a href="javascript:;">
             <span class="title">Employee</span>
-            <span class=" arrow"></span>
+            @if(request()->route()->getPrefix()=='/employee')
+                <span class="arrow open active"></span>
+            @else
+                <span class="arrow"></span>
+            @endif
         </a>
         <span class="icon-thumbnail"><i data-feather="users"></i></span>
         <ul class="sub-menu">

@@ -1,8 +1,16 @@
 @role('developer')
-<li class="">
+    @if(request()->route()->getPrefix()=='/misc')
+        <li class="open active">
+    @else
+        <li class="">
+    @endif
     <a  href="javascript:;"class="">
         <span class="title">Misc</span>
-        <span class=" arrow"></span>
+        @if(request()->route()->getPrefix()=='/misc')
+            <span class="arrow open active"></span>
+        @else
+            <span class="arrow"></span>
+        @endif
     </a>
     <span class="icon-thumbnail "><i data-feather="triangle"></i></span>
     <ul class="sub-menu">

@@ -31,7 +31,7 @@ require(base_path($client_path . 'developer/main.php'));
 require(base_path($client_path . 'salary/main.php'));
 require(base_path($client_path . 'misc/main.php'));
 require(base_path($client_path . 'profile/main.php'));
-
+require(base_path($client_path . 'storage/main.php'));
 
 /*
 |--------------------------------------------------------------------------

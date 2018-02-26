@@ -25,5 +25,10 @@ Route::prefix('v1/h')->group(function () {
         Route::post('report/problem/submit','ReportProblemController@submit');
         Route::post('report/problem/update','ReportProblemController@update');
 
+
+        Route::get('backup/create','BackupController@create');
+        Route::get('backup/download/{file_name?}','BackupController@download');
+        Route::get('backup/delete/{file_name?}','BackupController@delete')->where('file_name', '(.*)');
+
     });
 });

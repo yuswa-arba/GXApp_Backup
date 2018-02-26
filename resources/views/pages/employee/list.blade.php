@@ -7,7 +7,8 @@
 @endpush
 
 @push('child-page-controller')
-@include('layouts.partials.snippets._notification_to_zoom_out')
+
+@include('layouts.partials.snippets._notification_to_zoom_out80')
 <script src="{{mix('js/client/employee/list.js')}}"></script>
 
 @endpush

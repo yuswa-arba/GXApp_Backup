@@ -50,7 +50,7 @@
 </script>
 
 
-@include('layouts.partials.snippets._notification_to_zoom_out')
+@include('layouts.partials.snippets._notification_to_zoom_out80')
 @endpush
 
 @section('content')

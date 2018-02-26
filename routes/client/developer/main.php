@@ -18,5 +18,7 @@ Route::prefix('developer')->namespace('Client')->group(function () {
     Route::get('/face', 'Developer\ViewController@face')->name('developer.face');
     Route::get('/logs', 'Developer\ViewController@logs')->name('developer.logs');
     Route::get('/queueJob', 'Developer\ViewController@queueJob')->name('developer.queueJob');
+    Route::get('/backup', 'Developer\ViewController@backup')->name('developer.backup');
+
     Route::get('/test','Developer\ViewController@test')->name('developer.test');
 });

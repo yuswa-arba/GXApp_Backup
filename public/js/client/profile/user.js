@@ -1765,9 +1765,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
 
 
 
@@ -2564,7 +2561,7 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "clearfix" }),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+            _c("div", { staticClass: "col-lg-8 employee-details" }, [
               _c("label", [_vm._v("Surname/Given name")]),
               _vm._v(" "),
               _c("h5", [
@@ -2577,21 +2574,19 @@ var render = function() {
               _vm._v(" "),
               _c("label", [_vm._v("Employee No")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.userDetail.employeeNo))])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4 employee-details" }, [
+              _c("h5", [_vm._v(_vm._s(_vm.userDetail.employeeNo))]),
+              _vm._v(" "),
               _c("label", [_vm._v("Email")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.userDetail.email))]),
+              _c("p", [_vm._v(_vm._s(_vm.userDetail.email))]),
               _vm._v(" "),
               _c("label", [_vm._v("Phone Number")]),
               _vm._v(" "),
-              _c("h5", [_vm._v(_vm._s(_vm.userDetail.phoneNo))]),
+              _c("p", [_vm._v(_vm._s(_vm.userDetail.phoneNo))]),
               _vm._v(" "),
               _c("label", [_vm._v("Bank ")]),
               _vm._v(" "),
-              _c("h5", [
+              _c("p", [
                 _vm._v(
                   _vm._s(_vm.userDetail.bankAccNo) +
                     " (" +

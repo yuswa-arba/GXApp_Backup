@@ -1,8 +1,16 @@
 @can('view attendance')
-    <li class="">
+    @if(request()->route()->getPrefix()=='/attendance')
+        <li class="open active">
+    @else
+        <li class="">
+    @endif
         <a href="javascript:;">
             <span class="title">Attendance</span>
-            <span class=" arrow"></span>
+            @if(request()->route()->getPrefix()=='/attendance')
+                <span class="arrow open active"></span>
+            @else
+                <span class="arrow"></span>
+            @endif
         </a>
         <span class="icon-thumbnail"><i data-feather="clock"></i></span>
         <ul class="sub-menu">

@@ -189,6 +189,13 @@ mix.js('resources/assets/js/client/profile/user','public/js/client/profile');
 mix.js('resources/assets/js/client/profile/notification','public/js/client/profile');
 mix.js('resources/assets/js/client/setting/notification','public/js/client/setting');
 mix.js('resources/assets/js/client/notification/main','public/js/client/notification');
+mix.js('resources/assets/js/client/storage/misc/items','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/itemCategories','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/itemTypes','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/shipments','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/suppliers','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/warehouses','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/units','public/js/client/storage/misc');
 /*
  |--------------------------------------------------------------------------
  | Application JS

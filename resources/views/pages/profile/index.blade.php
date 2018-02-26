@@ -10,8 +10,9 @@
 @endpush
 
 @push('child-page-controller')
-<script src="{{mix('js/client/profile/user.js')}}"></script>
 
+@include('layouts.partials.snippets._zoom_out80')
+<script src="{{mix('js/client/profile/user.js')}}"></script>
 
 @endpush
 

@@ -1,8 +1,16 @@
 @role('developer')
-<li class="">
+    @if(request()->route()->getPrefix()=='/developer')
+    <li class="open active">
+    @else
+    <li class="">
+        @endif
     <a  href="javascript:;"class="">
         <span class="title">Developer</span>
-        <span class=" arrow"></span>
+        @if(request()->route()->getPrefix()=='/developer')
+            <span class="arrow open active"></span>
+        @else
+            <span class="arrow"></span>
+        @endif
     </a>
     <span class="icon-thumbnail "><i data-feather="cpu"></i></span>
     <ul class="sub-menu">
@@ -17,6 +25,10 @@
         <li class="">
             <a href="{{route('developer.logs')}}">Logs</a>
             <span class="icon-thumbnail">l</span>
+        </li>
+        <li class="">
+            <a href="{{route('developer.backup')}}">Backup</a>
+            <span class="icon-thumbnail">b</span>
         </li>
         <li class="">
             <a href="{{route('developer.queueJob')}}">Queue Jobs</a>

@@ -17,7 +17,7 @@
 
                         </div>
                         <div class="clearfix"></div>
-                        <div class="col-lg-4 employee-details">
+                        <div class="col-lg-8 employee-details">
 
                             <label>Surname/Given name</label>
                             <h5>{{userDetail.surname}}/{{userDetail.givenName}}</h5>
@@ -25,19 +25,16 @@
                             <label>Employee No</label>
                             <h5>{{userDetail.employeeNo}}</h5>
 
-                        </div>
-                        <div class="col-lg-4 employee-details">
                             <label>Email</label>
-                            <h5>{{userDetail.email}}</h5>
+                            <p>{{userDetail.email}}</p>
 
                             <label>Phone Number</label>
-                            <h5>{{userDetail.phoneNo}}</h5>
+                            <p>{{userDetail.phoneNo}}</p>
 
                             <label>Bank </label>
-                            <h5>{{userDetail.bankAccNo}} ({{userDetail.bankName}})</h5>
+                            <p>{{userDetail.bankAccNo}} ({{userDetail.bankName}})</p>
 
                         </div>
-
                     </div>
                 </div>
             </div>

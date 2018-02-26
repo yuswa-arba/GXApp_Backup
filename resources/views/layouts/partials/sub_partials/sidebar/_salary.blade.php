@@ -1,14 +1,22 @@
 @can('access salary')
-    <li class="">
+    @if(request()->route()->getPrefix()=='/salary')
+        <li class="open active">
+    @else
+        <li class="">
+            @endif
         <a href="javascript:;">
             <span class="title">Salary</span>
-            <span class=" arrow"></span>
+            @if(request()->route()->getPrefix()=='/salary')
+                <span class="arrow open active"></span>
+            @else
+                <span class="arrow"></span>
+            @endif
         </a>
         <span class="icon-thumbnail"><i data-feather="credit-card"></i></span>
         <ul class="sub-menu">
             <li class="">
                 <a href="{{route('salary.report')}}">Report & Generate</a>
-                <span class="icon-thumbnail">rg</span>
+                <span class="icon-thumbnail">rg</span>s
             </li>
             <li class="">
                 <a href="{{route('salary.payroll')}}">Payroll</a>
