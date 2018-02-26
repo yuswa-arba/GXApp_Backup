@@ -9,7 +9,7 @@
 @endpush
 
 @push('child-page-controller')
-@include('layouts.partials.snippets._notification_to_zoom_out80')
+@include('layouts.partials.snippets._zoom_out80')
 <script src="{{mix('js/client/storage/misc/items.js')}}"></script>
 @endpush
 

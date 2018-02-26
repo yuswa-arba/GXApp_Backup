@@ -13,6 +13,9 @@ const app =  new Vue({
 
 
 $(document).ready(function(){
-
+    $('.filter-container').sieve({
+        searchInput: $('#search-types-box'),
+        itemSelector: ".filter-item-types"
+    });
 });
 

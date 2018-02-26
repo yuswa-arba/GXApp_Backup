@@ -76,11 +76,73 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {},
 
-    methods: {}
+    methods: {
+        createCategory: function createCategory() {}
+    }
 });
 
 /***/ }),
@@ -647,9 +709,137 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid container-fixed-lg" })
+  return _c("div", { staticClass: "container-fluid container-fixed-lg" }, [
+    _c("div", { staticClass: "row" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-4 m-b-10" }, [
+        _c("div", { staticClass: "card card-bordered" }, [
+          _c("div", { staticClass: "card-block" }, [
+            _c("form", { attrs: { id: "item-category-form" } }, [
+              _c("h4", [_vm._v("Item Category Form")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-12" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-complete pull-right",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.createCategory()
+                        }
+                      }
+                    },
+                    [_vm._v("Create")]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block" }, [
+            _c("input", {
+              staticClass: "form-control",
+              staticStyle: { height: "40px" },
+              attrs: {
+                type: "text",
+                id: "search-categories-box",
+                placeholder: "Search Categories"
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticStyle: { height: "700px" } }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped table-hover " },
+                    [
+                      _c("thead", { staticClass: "bg-master-lighter" }, [
+                        _c("tr", [
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Code")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Name")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Action")
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", { staticClass: "filter-item-categories" }, [
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td")
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Code")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", name: "code", required: "" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: { type: "text", name: "name", required: "" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -11384,7 +11574,12 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     components: { MainItemCategories: __WEBPACK_IMPORTED_MODULE_1__MainItemCategories_vue___default.a }
 });
 
-$(document).ready(function () {});
+$(document).ready(function () {
+    $('.filter-container').sieve({
+        searchInput: $('#search-categories-box'),
+        itemSelector: ".filter-item-categories"
+    });
+});
 
 /***/ }),
 

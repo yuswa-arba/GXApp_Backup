@@ -15,8 +15,8 @@
 @endpush
 
 @push('child-page-controller')
+@include('layouts.partials.snippets._zoom_out90')
 <script src="{{mix('js/client/employee/resignation.js')}}"></script>
-
 
 @endpush
 

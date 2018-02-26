@@ -14,13 +14,13 @@ class CreateStorageItemCategoryTable extends Migration
     public function up()
     {
         Schema::create('storageItemCategory', function (Blueprint $table) {
-            $table->increments('id');
+            $table->string('code')->unique();
             $table->string('name');
             $table->timestamps();
         });
     }
 
-    /**
+    /**c
      * Reverse the migrations.
      *
      * @return void
