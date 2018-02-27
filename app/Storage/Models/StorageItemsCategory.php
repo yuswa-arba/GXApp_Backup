@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
 class StorageItemsCategory extends Model
 {
     protected $table = 'storageItemCategory';
-    protected $guarded = ['id'];
+    protected $guarded = [''];
 
 
 }

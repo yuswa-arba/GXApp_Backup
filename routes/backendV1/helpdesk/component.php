@@ -50,8 +50,10 @@ Route::prefix('v1/h')->group(function () {
         Route::get('notificationGroupType/{id}','GetListController@notificationGroupType')->name('v1.component.notificationGroupType');
         Route::get('list/notificationGroupTypes','GetListController@notificationGroupTypes')->name('v1.component.list.notificationGroupTypes');
 
-
         Route::get('list/months','GetListController@months')->name('v1.component.list.months');
+
+        Route::get('list/unitOfMeasurementTypes','GetListController@unitOfMeasurementTypes')->name('v1.component.unitOfMeasurementTypes');
+
 
     });
 

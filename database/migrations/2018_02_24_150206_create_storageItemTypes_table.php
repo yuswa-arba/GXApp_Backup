@@ -16,6 +16,7 @@ class CreateStorageItemTypesTable extends Migration
         Schema::create('storageItemTypes', function (Blueprint $table) {
             $table->string('code');
             $table->string('name');
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }

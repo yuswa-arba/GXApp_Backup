@@ -16,6 +16,7 @@ class CreateStorageItemCategoryTable extends Migration
         Schema::create('storageItemCategory', function (Blueprint $table) {
             $table->string('code')->unique();
             $table->string('name');
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }

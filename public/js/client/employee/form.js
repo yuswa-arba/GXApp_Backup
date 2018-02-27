@@ -1912,7 +1912,7 @@ $(document).ready(function () {
                     /* Show error notification */
                     $('.page-container').pgNotification({
                         style: 'flip',
-                        message: 'Invalid repsonse from server',
+                        message: 'Invalid response from server',
                         position: 'top-right',
                         timeout: 0,
                         type: 'danger'

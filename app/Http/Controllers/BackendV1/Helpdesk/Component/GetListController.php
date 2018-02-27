@@ -17,6 +17,7 @@ use App\Components\Models\BranchOffice;
 use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
 use App\Components\Models\Religion;
+use App\Components\Models\UnitOfMeasurementType;
 use App\Components\Transformers\BasicComponentTrasnformer;
 use App\Components\Transformers\BasicSettingTrasnformer;
 use App\Components\Transformers\DivisionListTransfomer;
@@ -180,7 +181,7 @@ class GetListController extends Controller
 
     public function leaveType($id)
     {
-        return fractal(LeaveType::where('id',$id),new BasicComponentTrasnformer())->respond(200);
+        return fractal(LeaveType::where('id',$id)->first(),new BasicComponentTrasnformer())->respond(200);
     }
 
     public function leaveTypes()
@@ -190,12 +191,18 @@ class GetListController extends Controller
 
     public function notificationGroupType($id)
     {
-        return fractal(NotificationGroupType::where('id',$id),new BasicComponentTrasnformer())->respond(200);
+        return fractal(NotificationGroupType::where('id',$id)->first(),new BasicComponentTrasnformer())->respond(200);
     }
 
     public function notificationGroupTypes()
     {
         return fractal(NotificationGroupType::all(),new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function unitOfMeasurementTypes()
+    {
+        return fractal(UnitOfMeasurementType::all(),new BasicComponentTrasnformer())->respond(200);
+
     }
 
 }
