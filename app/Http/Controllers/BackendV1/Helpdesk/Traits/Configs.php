@@ -15,6 +15,7 @@ class Configs
         'FACES_PHOTO' => 'public/images/faces/',
         'EMPLOYEE_PHOTO' => 'public/images/employee/',
         'RESIGNATION_PHOTO' => 'public/images/resignation/',
+        'SUPPLIERS_LOGO'=>'public/images/suppliers/logo/'
     ];
     
     public static $DOWNLOAD_PATH = [
