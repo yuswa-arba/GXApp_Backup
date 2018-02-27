@@ -8,4 +8,9 @@ class UnitOfMeasurements extends Model
 {
     protected $table = 'unitOfMeasurements';
     protected $guarded = ['id'];
+
+    public function uomType()
+    {
+     return $this->belongsTo(UnitOfMeasurementType::class,'unitOfMeasurementTypeId');
+    }
 }

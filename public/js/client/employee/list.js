@@ -1695,14 +1695,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -7428,7 +7420,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                            Master")]
+                    [_vm._v("Master")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -7441,7 +7433,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                            Employment")]
+                    [_vm._v("Employment")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -7454,7 +7446,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                            Medical Records")]
+                    [_vm._v("Medical Records")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -7467,7 +7459,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                            Face API")]
+                    [_vm._v("Face API")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -7480,11 +7472,7 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _vm._v(
-                        "\n                            Login Details\n                        "
-                      )
-                    ]
+                    [_vm._v("Login Details\n                        ")]
                   )
                 ])
               ])
@@ -7560,7 +7548,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                            Master")]
+                    [_vm._v("Master")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -7573,7 +7561,20 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                            Employment")]
+                    [_vm._v("Employment")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "dropdown-item pointer",
+                      on: {
+                        click: function($event) {
+                          _vm.viewMedicalRecordsDetail()
+                        }
+                      }
+                    },
+                    [_vm._v("Medical Records")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -7586,7 +7587,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("\n                            Face API")]
+                    [_vm._v("Face API")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -7599,11 +7600,7 @@ var render = function() {
                         }
                       }
                     },
-                    [
-                      _vm._v(
-                        "\n                            Login Details\n                        "
-                      )
-                    ]
+                    [_vm._v("Login Details\n                        ")]
                   )
                 ])
               ])

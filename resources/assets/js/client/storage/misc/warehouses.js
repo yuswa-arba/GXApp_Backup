@@ -13,6 +13,9 @@ const app =  new Vue({
 
 
 $(document).ready(function(){
-
+    $('.filter-container').sieve({
+        searchInput: $('#search-warehouses-box'),
+        itemSelector: ".filter-item-warehouses"
+    });
 });
 

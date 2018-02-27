@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUnitOfMeasurementsTable extends Migration
+class CreateUnitOfMeasurementTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,9 @@ class CreateUnitOfMeasurementsTable extends Migration
      */
     public function up()
     {
-        Schema::create('unitOfMeasurements', function (Blueprint $table) {
+        Schema::create('unitOfMeasurementType', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('format');
-            $table->string('description');
-            $table->integer('unitOfMeasurementTypeId');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ class CreateUnitOfMeasurementsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('unitOfMeasurements');
+        Schema::dropIfExists('unitOfMeasurementType');
     }
 }

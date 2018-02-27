@@ -158,7 +158,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {},
@@ -11672,7 +11671,12 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     components: { MainWarehouses: __WEBPACK_IMPORTED_MODULE_1__MainWarehouses_vue___default.a }
 });
 
-$(document).ready(function () {});
+$(document).ready(function () {
+    $('.filter-container').sieve({
+        searchInput: $('#search-warehouses-box'),
+        itemSelector: ".filter-item-warehouses"
+    });
+});
 
 /***/ }),
 

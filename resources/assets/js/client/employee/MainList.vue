@@ -15,16 +15,11 @@
                         </button>
 
                         <div class="dropdown-menu">
-                            <a class="dropdown-item pointer" @click="viewMasterDetail()">
-                                Master</a>
-                            <a class="dropdown-item pointer" @click="viewEmploymentDetail()">
-                                Employment</a>
-                            <a class="dropdown-item pointer" @click="viewMedicalRecordsDetail()">
-                                Medical Records</a>
-                            <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">
-                                Face API</a>
-                            <a class="dropdown-item pointer" @click="viewLoginDetail()">
-                                Login Details
+                            <a class="dropdown-item pointer" @click="viewMasterDetail()">Master</a>
+                            <a class="dropdown-item pointer" @click="viewEmploymentDetail()">Employment</a>
+                            <a class="dropdown-item pointer" @click="viewMedicalRecordsDetail()">Medical Records</a>
+                            <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">Face API</a>
+                            <a class="dropdown-item pointer" @click="viewLoginDetail()">Login Details
                             </a>
                         </div>
 
@@ -49,14 +44,11 @@
                         </button>
 
                         <div class="dropdown-menu">
-                            <a class="dropdown-item pointer" @click="viewMasterDetail()">
-                                Master</a>
-                            <a class="dropdown-item pointer" @click="viewEmploymentDetail()">
-                                Employment</a>
-                            <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">
-                                Face API</a>
-                            <a class="dropdown-item pointer" @click="viewLoginDetail()">
-                                Login Details
+                            <a class="dropdown-item pointer" @click="viewMasterDetail()">Master</a>
+                            <a class="dropdown-item pointer" @click="viewEmploymentDetail()">Employment</a>
+                            <a class="dropdown-item pointer" @click="viewMedicalRecordsDetail()">Medical Records</a>
+                            <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">Face API</a>
+                            <a class="dropdown-item pointer" @click="viewLoginDetail()">Login Details
                             </a>
                         </div>
 

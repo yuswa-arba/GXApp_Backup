@@ -5,31 +5,30 @@
                 <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                     <div class="card-block">
                         <input type="text" style="height: 40px;" class="form-control" id="search-warehouses-box"
-                               placeholder="Search Categories"
-                        >
+                               placeholder="Search Categories">
                         <div class="scrollable">
                             <div class="" style="height:700px">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover ">
                                         <thead class="bg-master-lighter">
-                                        <tr>
-                                            <th class="text-black">ID</th>
-                                            <th class="text-black">Name</th>
-                                            <th class="text-black">Address</th>
-                                            <th class="text-black">Country, City, Postal Code</th>
-                                            <th class="text-black">Phone</th>
-                                            <th class="text-black">Action</th>
-                                        </tr>
+                                            <tr>
+                                                <th class="text-black">ID</th>
+                                                <th class="text-black">Name</th>
+                                                <th class="text-black">Address</th>
+                                                <th class="text-black">Country, City, Postal Code</th>
+                                                <th class="text-black">Phone</th>
+                                                <th class="text-black">Action</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="filter-item-warehouses">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
+                                            <tr class="filter-item-warehouses">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
                                         </tbody>
                                     </table>
 

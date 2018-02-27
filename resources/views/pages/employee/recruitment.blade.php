@@ -208,7 +208,8 @@
                                                 </div>
                                                 <div class="form-group form-group-default">
                                                     <label>Number of Children</label>
-                                                    <input type="number" min="0" class="form-control" name="totalChildren"
+                                                    <input type="number" min="0" class="form-control"
+                                                           name="totalChildren"
                                                            value="{{old('totalChildren')}}">
                                                 </div>
                                             </div>
@@ -246,7 +247,8 @@
                                                 </div>
                                                 <div class="form-group form-group-default required">
                                                     <label>Father's Phone Number</label>
-                                                    <input type="number" min="0" class="form-control" name="fatherPhoneNo"
+                                                    <input type="number" min="0" class="form-control"
+                                                           name="fatherPhoneNo"
                                                            value="{{old('fatherPhoneNo')}}" required>
                                                 </div>
                                                 <div class="form-group form-group-default  required">
@@ -294,7 +296,8 @@
                                                 </div>
                                                 <div class="form-group form-group-default required">
                                                     <label>Mother's Phone Number</label>
-                                                    <input type="number" min="0" class="form-control" name="motherPhoneNo"
+                                                    <input type="number" min="0" class="form-control"
+                                                           name="motherPhoneNo"
                                                            value="{{old('motherPhoneNo')}}" required>
                                                 </div>
                                                 <div class="form-group form-group-default  required">
@@ -325,7 +328,8 @@
                                                 <br>
                                                 <div class="form-group form-group-default">
                                                     <label>Sibling's Name</label>
-                                                    <input type="text" class="form-control" name="siblingName[]" value="{{old('siblingName')}}">
+                                                    <input type="text" class="form-control" name="siblingName[]"
+                                                           value="{{old('siblingName')}}">
                                                 </div>
                                                 <div class="form-group form-group-default">
                                                     <label>Sibling's Address</label>
@@ -339,7 +343,8 @@
                                                 </div>
                                                 <div class="form-group form-group-default">
                                                     <label>Sibling's Phone Number</label>
-                                                    <input type="number" min="0" class="form-control" name="siblingPhoneNo[]"
+                                                    <input type="number" min="0" class="form-control"
+                                                           name="siblingPhoneNo[]"
                                                            value="{{old('siblingPhoneNo')}}">
                                                 </div>
                                                 <br>
@@ -395,7 +400,8 @@
                                                 <select class="form-control"
                                                         name="emergencyRelationship"
                                                         required>
-                                                    <option value="" disabled selected hidden>Select Relationship</option>
+                                                    <option value="" disabled selected hidden>Select Relationship
+                                                    </option>
                                                     <option value="Family">Family</option>
                                                     <option value="Friend">Friend</option>
                                                 </select>
@@ -567,7 +573,7 @@
                                                     <input type="text"
                                                            name="typeOfDrug"
                                                            class="form-control" placeholder="Type of drug"
-                                                           >
+                                                    >
                                                 </div>
                                             </div>
                                         </div>
@@ -631,7 +637,7 @@
                                                                    value="1"
                                                                    class="form-control"
                                                                    name="drinkAmountPerDay"
-                                                                   placeholder="Amount" >
+                                                                   placeholder="Amount">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
@@ -640,7 +646,7 @@
                                                             <input type="text"
                                                                    class="form-control datepickerGet"
                                                                    name="drinkingSinceWhen"
-                                                                   placeholder="dd/mm/yyyy" >
+                                                                   placeholder="dd/mm/yyyy">
                                                         </div>
                                                     </div>
 
@@ -675,7 +681,7 @@
                                                             <input type="text"
                                                                    name="accidentDate"
                                                                    class="form-control datepickerGet"
-                                                                   placeholder="dd/mm/yyyy" >
+                                                                   placeholder="dd/mm/yyyy">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -686,7 +692,7 @@
                                                             <input type="text"
                                                                    class="form-control"
                                                                    name="typeOfAccident"
-                                                                   placeholder="Type of Accident" >
+                                                                   placeholder="Type of Accident">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -714,7 +720,7 @@
                                                             <input type="text"
                                                                    name="surgeryDate"
                                                                    class="form-control datepickerGet"
-                                                                   placeholder="dd/mm/yyyy" >
+                                                                   placeholder="dd/mm/yyyy">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -725,7 +731,7 @@
                                                             <input type="text"
                                                                    class="form-control"
                                                                    name="typeOfSurgery"
-                                                                   placeholder="Type of Surgery" >
+                                                                   placeholder="Type of Surgery">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -754,7 +760,7 @@
                                                             <input type="text"
                                                                    class="form-control datepickerGet"
                                                                    name="dateHospitalized"
-                                                                   placeholder="dd/mm/yyyy" >
+                                                                   placeholder="dd/mm/yyyy">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -765,7 +771,7 @@
                                                             <input type="text"
                                                                    class="form-control"
                                                                    name="typeOfMedication"
-                                                                   placeholder="Type of Medication" >
+                                                                   placeholder="Type of Medication">
                                                         </div>
                                                     </div>
                                                 </div>

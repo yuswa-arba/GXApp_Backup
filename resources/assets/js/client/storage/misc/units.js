@@ -13,6 +13,9 @@ const app =  new Vue({
 
 
 $(document).ready(function(){
-
+    $('.filter-container').sieve({
+        searchInput: $('#search-units-box'),
+        itemSelector: ".filter-item-units"
+    });
 });
 

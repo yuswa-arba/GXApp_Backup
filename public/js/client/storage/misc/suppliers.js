@@ -76,11 +76,144 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {},
 
-    methods: {}
+    methods: {
+        createSupplier: function createSupplier() {}
+    }
 });
 
 /***/ }),
@@ -647,9 +780,278 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-fluid container-fixed-lg" })
+  return _c("div", { staticClass: "container-fluid container-fixed-lg" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+          },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-block" }, [
+              _c("div", { staticClass: "row" }, [
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _vm._m(3),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-12" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-complete pull-right",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.createSupplier()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Create\n                            "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm._m(4)
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c(
+        "p",
+        {
+          staticClass: "card-title text-uppercase text-black",
+          staticStyle: { opacity: "1" }
+        },
+        [_vm._v("Supplier Form")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4" }, [
+      _c("div", { staticClass: "form-group-attached" }, [
+        _c("div", { staticClass: "form-group form-group-default required" }, [
+          _c("label", [_vm._v(" Name ")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default required" }, [
+          _c("label", [_vm._v(" Address ")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default required" }, [
+          _c("label", [_vm._v("Country")]),
+          _vm._v(" "),
+          _c("select", {
+            staticClass: "form-control",
+            attrs: { name: "", id: "" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default required" }, [
+          _c("label", [_vm._v("City")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default required" }, [
+          _c("label", [_vm._v("Postal Code")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default required" }, [
+          _c("label", [_vm._v("Telephone Number")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4" }, [
+      _c("div", { staticClass: "form-group-attached" }, [
+        _c("div", { staticClass: "form-group form-group-default" }, [
+          _c("label", [_vm._v(" Contact Person 1")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default" }, [
+          _c("label", [_vm._v(" Mobile Number 1")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default" }, [
+          _c("label", [_vm._v(" Email 1")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default" }, [
+          _c("label", [_vm._v(" Contact Person 2")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default" }, [
+          _c("label", [_vm._v(" Mobile Number 2")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default" }, [
+          _c("label", [_vm._v(" Email 2")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4" }, [
+      _c("div", { staticClass: "form-group-attached" }, [
+        _c("div", { staticClass: "form-group form-group-default" }, [
+          _c("label", [_vm._v(" Accounting Number ")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group form-group-default" }, [
+          _c("label", [_vm._v("Notes")]),
+          _vm._v(" "),
+          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block" }, [
+            _c("input", {
+              staticClass: "form-control",
+              staticStyle: { height: "40px" },
+              attrs: {
+                type: "text",
+                id: "search-suppliers-box",
+                placeholder: "Search Suppliers"
+              }
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticStyle: { height: "700px" } }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped table-hover " },
+                    [
+                      _c("thead", { staticClass: "bg-master-lighter" }, [
+                        _c("tr", [
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Name")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Address")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Telephone")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Contact 1")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Contact 2")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Accounting No.")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Notes")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { staticClass: "text-black" }, [
+                            _vm._v("Action")
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", { staticClass: "filter-item-suppliers" }, [
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td"),
+                          _vm._v(" "),
+                          _c("td")
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -11384,7 +11786,12 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     components: { MainSuppliers: __WEBPACK_IMPORTED_MODULE_1__MainSuppliers_vue___default.a }
 });
 
-$(document).ready(function () {});
+$(document).ready(function () {
+    $('.filter-container').sieve({
+        searchInput: $('#search-suppliers-box'),
+        itemSelector: ".filter-item-suppliers"
+    });
+});
 
 /***/ }),
 
