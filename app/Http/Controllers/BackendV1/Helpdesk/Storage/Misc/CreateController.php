@@ -68,7 +68,7 @@ class CreateController extends Controller
     {
         $response = array();
 
-        $validator = Validator::make($request->all, ['code' => 'required', 'name' => 'required']);
+        $validator = Validator::make($request->all(), ['code' => 'required', 'name' => 'required']);
 
         if ($validator->fails()) {
             $response['isFailed'] = true;
@@ -80,17 +80,19 @@ class CreateController extends Controller
 
         $create = StorageItemTypes::create(['code' => strtoupper($request->code), 'name' => ucwords($request->name),'isDeleted'=>0]);
 
-
         if ($create) {
 
             $response['isFailed'] = false;
             $response['message'] = 'Success';
             $response['itemType'] = fractal($create, new BasicCodeNameTransformer());
+
             return response()->json($response, 200);
 
         } else {
+
             $response['isFailed'] = true;
             $response['message'] = 'Unable to create item category';
+
             return response()->json($response, 200);
         }
 

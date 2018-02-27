@@ -44,5 +44,8 @@ Route::prefix('v1/h')->group(function () {
         Route::post('delete/itemCategory', 'Misc\UpdateDeleteController@deleteItemCategory');
         Route::post('undoDelete/itemCategory', 'Misc\UpdateDeleteController@undoDeleteItemCategory');
 
+        Route::post('update/itemType', 'Misc\UpdateDeleteController@updateItemType');
+        Route::post('delete/itemType', 'Misc\UpdateDeleteController@deleteItemType');
+        Route::post('undoDelete/itemType', 'Misc\UpdateDeleteController@undoDeleteItemType');
     });
 });

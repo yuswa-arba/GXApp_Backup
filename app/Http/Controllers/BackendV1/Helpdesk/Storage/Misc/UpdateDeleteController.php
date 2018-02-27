@@ -112,4 +112,89 @@ class UpdateDeleteController extends Controller
             return response()->json($response, 200);
         }
     }
+
+
+    public function updateItemType(Request $request)
+    {
+        $response = array();
+        $validator = Validator::make($request->all(), ['code' => 'required', 'name' => 'required']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $update = StorageItemTypes::where('code',strtoupper($request->code))->update([ 'name' => ucwords($request->name)]);
+
+        if ($update) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update item type';
+            return response()->json($response, 200);
+        }
+    }
+
+    public function deleteItemType(Request $request)
+    {
+        $response = array();
+        $validator = Validator::make($request->all(), ['code' => 'required']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $delete = StorageItemTypes::where('code',strtoupper($request->code))->update(['isDeleted'=>1]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update item type';
+            return response()->json($response, 200);
+        }
+    }
+
+    public function undoDeleteItemType(Request $request)
+    {
+        $response = array();
+        $validator = Validator::make($request->all(), ['code' => 'required']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $delete = StorageItemTypes::where('code',strtoupper($request->code))->update(['isDeleted'=>0]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update item type';
+            return response()->json($response, 200);
+        }
+    }
 }
