@@ -207,9 +207,9 @@
             saveUpdateShipment(id, index){
                 let self = this
 
-                let shipmentName = $('input[name="' + 'shipmentName' + id + '"').val()
-                let shipmentWebsite = $('input[name="' + 'shipmentWebsite' + id + '"').val()
-                let shipmentCallCenter = $('input[name="' + 'shipmentCallCenter' + id + '"').val()
+                let shipmentName = $('input[name="' + 'shipmentName' + id + '"]').val()
+                let shipmentWebsite = $('input[name="' + 'shipmentWebsite' + id + '"]').val()
+                let shipmentCallCenter = $('input[name="' + 'shipmentCallCenter' + id + '"]').val()
 
                 post(api_path + 'storage/update/shipment', {
                     id: id,

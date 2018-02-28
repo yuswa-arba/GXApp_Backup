@@ -206,9 +206,9 @@
             saveUpdateUnit(id, index){
                 let self = this
 
-                let unitFormat = $('input[name="' + 'unitFormat' + id + '"').val()
-                let unitDescription = $('input[name="' + 'unitDescription' + id + '"').val()
-                let unitTypeId = $('select[name="' + 'unitTypeId' + id + '"').val()
+                let unitFormat = $('input[name="' + 'unitFormat' + id + '"]').val()
+                let unitDescription = $('input[name="' + 'unitDescription' + id + '"]').val()
+                let unitTypeId = $('select[name="' + 'unitTypeId' + id + '"]').val()
                 let unitTypeName = $('select[name="' + 'unitTypeId' + id + '"] option:selected').text()
 
                 post(api_path + 'storage/update/unit', {

@@ -160,7 +160,7 @@ class CreateController extends Controller
         if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
             /*Save new logo*/
             $filename = $this->getImageName($request->logo, $request->name);
-            $request->idCardPhoto->move(base_path(Configs::$IMAGE_PATH['SUPPLIERS_LOGO']), $filename);
+            $request->logo->move(base_path(Configs::$IMAGE_PATH['SUPPLIERS_LOGO']), $filename);
         }
 
         $create = StorageSuppliers::create([
@@ -178,7 +178,8 @@ class CreateController extends Controller
             'email2' => $request->email2,
             'accountingNumber' => $request->accountingNumber,
             'notes' => $request->notes,
-            'logo' => $filename
+            'logo' => $filename,
+            'isDeleted'=>0
         ]);
 
         if ($create) {
@@ -188,6 +189,12 @@ class CreateController extends Controller
             return response()->json($response, 200);
 
         } else {
+
+            /* Remove photo */
+            if(file_exists(base_path(Configs::$IMAGE_PATH['SUPPLIERS_LOGO']).$filename)){
+                unlink(base_path(Configs::$IMAGE_PATH['SUPPLIERS_LOGO']).$filename);
+            }
+
             $response['isFailed'] = true;
             $response['message'] = 'Unable to create item category';
             return response()->json($response, 200);

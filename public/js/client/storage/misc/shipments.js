@@ -1826,9 +1826,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         saveUpdateShipment: function saveUpdateShipment(id, index) {
             var self = this;
 
-            var shipmentName = $('input[name="' + 'shipmentName' + id + '"').val();
-            var shipmentWebsite = $('input[name="' + 'shipmentWebsite' + id + '"').val();
-            var shipmentCallCenter = $('input[name="' + 'shipmentCallCenter' + id + '"').val();
+            var shipmentName = $('input[name="' + 'shipmentName' + id + '"]').val();
+            var shipmentWebsite = $('input[name="' + 'shipmentWebsite' + id + '"]').val();
+            var shipmentCallCenter = $('input[name="' + 'shipmentCallCenter' + id + '"]').val();
 
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/update/shipment', {
                 id: id,

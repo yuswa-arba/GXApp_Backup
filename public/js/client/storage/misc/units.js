@@ -1826,9 +1826,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         saveUpdateUnit: function saveUpdateUnit(id, index) {
             var self = this;
 
-            var unitFormat = $('input[name="' + 'unitFormat' + id + '"').val();
-            var unitDescription = $('input[name="' + 'unitDescription' + id + '"').val();
-            var unitTypeId = $('select[name="' + 'unitTypeId' + id + '"').val();
+            var unitFormat = $('input[name="' + 'unitFormat' + id + '"]').val();
+            var unitDescription = $('input[name="' + 'unitDescription' + id + '"]').val();
+            var unitTypeId = $('select[name="' + 'unitTypeId' + id + '"]').val();
             var unitTypeName = $('select[name="' + 'unitTypeId' + id + '"] option:selected').text();
 
             Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/update/unit', {

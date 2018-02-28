@@ -27,7 +27,7 @@ trait GlobalUtils
 
     public function getImageName($file, $text)
     {
-        return str_random(20) . str_shuffle($text) . '.' . $file->extension();
+        return str_random(20) . str_shuffle(str_replace(' ','',$text)) . '.' . $file->extension();
     }
 
 

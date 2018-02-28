@@ -435,7 +435,7 @@
         methods: {
             save(){
                 let self = this
-                delete self.form.formComponents // remove form components during submit
+                delete self.form.formComponents // remove form components before submit
                 self.$bus.$emit('save:master_detail',this.form)
             },
             insertEmployeePhotoToForm(e){

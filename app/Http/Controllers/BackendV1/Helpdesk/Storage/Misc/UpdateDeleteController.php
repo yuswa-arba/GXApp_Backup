@@ -240,19 +240,19 @@ class UpdateDeleteController extends Controller
 
     public function deleteShipment(Request $request)
     {
-        $response =array();
+        $response = array();
 
-        $validator = Validator::make($request->all(),['id'=>'required']);
+        $validator = Validator::make($request->all(), ['id' => 'required']);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         //is valid
 
-        $delete = StorageShipments::where('id', $request->id)->update(['isDeleted'=>1]);
+        $delete = StorageShipments::where('id', $request->id)->update(['isDeleted' => 1]);
 
         if ($delete) {
 
@@ -270,19 +270,19 @@ class UpdateDeleteController extends Controller
 
     public function undoDeleteShipment(Request $request)
     {
-        $response =array();
+        $response = array();
 
-        $validator = Validator::make($request->all(),['id'=>'required']);
+        $validator = Validator::make($request->all(), ['id' => 'required']);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         //is valid
 
-        $delete = StorageShipments::where('id', $request->id)->update(['isDeleted'=>0]);
+        $delete = StorageShipments::where('id', $request->id)->update(['isDeleted' => 0]);
 
         if ($delete) {
 
@@ -345,19 +345,19 @@ class UpdateDeleteController extends Controller
 
     public function deleteWarehouse(Request $request)
     {
-        $response =array();
+        $response = array();
 
-        $validator = Validator::make($request->all(),['id'=>'required']);
+        $validator = Validator::make($request->all(), ['id' => 'required']);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         //is valid
 
-        $delete = StorageWarehouses::where('id', $request->id)->update(['isDeleted'=>1]);
+        $delete = StorageWarehouses::where('id', $request->id)->update(['isDeleted' => 1]);
 
         if ($delete) {
 
@@ -375,19 +375,19 @@ class UpdateDeleteController extends Controller
 
     public function undoDeleteWarehouse(Request $request)
     {
-        $response =array();
+        $response = array();
 
-        $validator = Validator::make($request->all(),['id'=>'required']);
+        $validator = Validator::make($request->all(), ['id' => 'required']);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         //is valid
 
-        $delete = StorageWarehouses::where('id', $request->id)->update(['isDeleted'=>0]);
+        $delete = StorageWarehouses::where('id', $request->id)->update(['isDeleted' => 0]);
 
         if ($delete) {
 
@@ -412,7 +412,7 @@ class UpdateDeleteController extends Controller
         $validator = Validator::make($request->all(), [
             'id' => 'required',
             'formatValue' => 'required',
-            'uomTypeId'=>'required'
+            'uomTypeId' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -439,7 +439,7 @@ class UpdateDeleteController extends Controller
         } else {
 
             $response['isFailed'] = true;
-            $response['message'] = 'Unable to update shipmnet';
+            $response['message'] = 'Unable to update unit';
             return response()->json($response, 200);
 
         }
@@ -448,19 +448,19 @@ class UpdateDeleteController extends Controller
 
     public function deleteUnit(Request $request)
     {
-        $response =array();
+        $response = array();
 
-        $validator = Validator::make($request->all(),['id'=>'required']);
+        $validator = Validator::make($request->all(), ['id' => 'required']);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         //is valid
 
-        $delete = UnitOfMeasurements::where('id', $request->id)->update(['isDeleted'=>1]);
+        $delete = UnitOfMeasurements::where('id', $request->id)->update(['isDeleted' => 1]);
 
         if ($delete) {
 
@@ -478,19 +478,19 @@ class UpdateDeleteController extends Controller
 
     public function undoDeleteUnit(Request $request)
     {
-        $response =array();
+        $response = array();
 
-        $validator = Validator::make($request->all(),['id'=>'required']);
+        $validator = Validator::make($request->all(), ['id' => 'required']);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         //is valid
 
-        $delete = UnitOfMeasurements::where('id', $request->id)->update(['isDeleted'=>0]);
+        $delete = UnitOfMeasurements::where('id', $request->id)->update(['isDeleted' => 0]);
 
         if ($delete) {
 
@@ -505,5 +505,150 @@ class UpdateDeleteController extends Controller
         }
 
     }
+
+    //SUPPLIER
+
+    public function updateSupplier(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'name' => 'required',
+            'address' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'postalCode' => 'required',
+            'telephoneNumber' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $update = StorageSuppliers::where('id', $request->id)->update([
+            'name' => $request->name,
+            'address' => $request->address,
+            'country' => $request->country,
+            'city' => $request->city,
+            'postalCode' => $request->postalCode,
+            'telephoneNumber' => $request->telephoneNumber,
+            'contactPerson1' => $request->contactPerson1,
+            'mobileNumber1' => $request->mobileNumber1,
+            'email1' => $request->email1,
+            'contactPerson2' => $request->contactPerson2,
+            'mobileNumber2' => $request->mobileNumber2,
+            'email2' => $request->email2,
+            'accountingNumber' => $request->accountingNumber,
+            'notes' => $request->notes,
+        ]);
+
+
+        if ($update) {
+
+            /*Handle logo uploads*/
+            if ($request->hasFile('logo') && $request->file('logo')->isValid()) {
+
+                /*Save new logo*/
+                $filename = $this->getImageName($request->logo, $request->name);
+                $request->logo->move(base_path(Configs::$IMAGE_PATH['SUPPLIERS_LOGO']), $filename);
+
+                $supplier = StorageSuppliers::find($request->id);
+
+                if ($supplier) {
+
+                    /*Remove previous logo */
+                    if ($supplier->logo) {
+                        if (file_exists(base_path(Configs::$IMAGE_PATH['SUPPLIERS_LOGO']) . $supplier->logo)) {
+                            unlink(base_path(Configs::$IMAGE_PATH['SUPPLIERS_LOGO']) . $supplier->logo);
+                        }
+                    }
+
+                    /* Save new path */
+                    $supplier->logo =$filename;
+                    $supplier->save();
+
+                }
+
+            }
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Supplier has been updated successfully';
+            return response()->json($response, 200);
+
+        } else {
+
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update supplier';
+            return response()->json($response, 200);
+
+        }
+
+    }
+
+    public function deleteSupplier(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), ['id' => 'required']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $delete = StorageSuppliers::where('id', $request->id)->update(['isDeleted' => 1]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update supplier';
+            return response()->json($response, 200);
+        }
+
+    }
+
+    public function undoDeleteSupplier(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), ['id' => 'required']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $delete = StorageSuppliers::where('id', $request->id)->update(['isDeleted' => 0]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update supplier';
+            return response()->json($response, 200);
+        }
+
+    }
+
 
 }

@@ -30,6 +30,8 @@ class SupplierTransformer extends TransformerAbstract
             'accountingNumber'=>$storageSuppliers->accountingNumber,
             'notes'=>$storageSuppliers->notes,
             'logo'=>$storageSuppliers->logo,
+            'editing'=>false,
+            'isDeleted'=>$storageSuppliers->isDeleted
         ];
     }
 }

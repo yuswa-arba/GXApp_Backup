@@ -27,8 +27,10 @@ class CreateStorageSuppliersTable extends Migration
             $table->string('contactPerson2')->nullable();
             $table->string('mobileNumber2')->nullable();
             $table->string('email2')->nullable();
-            $table->string('accountingNumber');
+            $table->string('accountingNumber')->nullable();
             $table->string('notes')->nullable();
+            $table->string('logo')->nullable();
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }

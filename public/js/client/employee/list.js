@@ -4143,7 +4143,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         save: function save() {
             var self = this;
-            delete self.form.formComponents; // remove form components during submit
+            delete self.form.formComponents; // remove form components before submit
             self.$bus.$emit('save:master_detail', this.form);
         },
         insertEmployeePhotoToForm: function insertEmployeePhotoToForm(e) {
