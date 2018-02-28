@@ -102,7 +102,7 @@ class CreateController extends Controller
     {
         $response = array();
 
-        $validator = Validator::make($request->all, ['name' => 'required', 'shippingTpyeId' => 'required']);
+        $validator = Validator::make($request->all(), ['name' => 'required']);
 
         if ($validator->fails()) {
             $response['isFailed'] = true;
@@ -114,9 +114,9 @@ class CreateController extends Controller
 
         $create = StorageShipments::create([
             'name' => $request->name,
-            'shippingTypeId' => $request->shippingTypeId,
             'website' => $request->website,
-            'callCenter' => $request->callCenter
+            'callCenter' => $request->callCenter,
+            'isDeleted'=>0
         ]);
 
         if ($create) {

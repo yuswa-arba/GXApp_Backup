@@ -42,7 +42,7 @@ class UpdateDeleteController extends Controller
 
         //is valid
 
-        $update = StorageItemsCategory::where('code',strtoupper($request->code))->update([ 'name' => ucwords($request->name)]);
+        $update = StorageItemsCategory::where('code', strtoupper($request->code))->update(['name' => ucwords($request->name)]);
 
         if ($update) {
 
@@ -70,7 +70,7 @@ class UpdateDeleteController extends Controller
 
         //is valid
 
-        $delete = StorageItemsCategory::where('code',strtoupper($request->code))->update(['isDeleted'=>1]);
+        $delete = StorageItemsCategory::where('code', strtoupper($request->code))->update(['isDeleted' => 1]);
 
         if ($delete) {
 
@@ -98,7 +98,7 @@ class UpdateDeleteController extends Controller
 
         //is valid
 
-        $delete = StorageItemsCategory::where('code',strtoupper($request->code))->update(['isDeleted'=>0]);
+        $delete = StorageItemsCategory::where('code', strtoupper($request->code))->update(['isDeleted' => 0]);
 
         if ($delete) {
 
@@ -127,7 +127,7 @@ class UpdateDeleteController extends Controller
 
         //is valid
 
-        $update = StorageItemTypes::where('code',strtoupper($request->code))->update([ 'name' => ucwords($request->name)]);
+        $update = StorageItemTypes::where('code', strtoupper($request->code))->update(['name' => ucwords($request->name)]);
 
         if ($update) {
 
@@ -155,7 +155,7 @@ class UpdateDeleteController extends Controller
 
         //is valid
 
-        $delete = StorageItemTypes::where('code',strtoupper($request->code))->update(['isDeleted'=>1]);
+        $delete = StorageItemTypes::where('code', strtoupper($request->code))->update(['isDeleted' => 1]);
 
         if ($delete) {
 
@@ -183,7 +183,7 @@ class UpdateDeleteController extends Controller
 
         //is valid
 
-        $delete = StorageItemTypes::where('code',strtoupper($request->code))->update(['isDeleted'=>0]);
+        $delete = StorageItemTypes::where('code', strtoupper($request->code))->update(['isDeleted' => 0]);
 
         if ($delete) {
 
@@ -196,5 +196,105 @@ class UpdateDeleteController extends Controller
             $response['message'] = 'Unable to update item type';
             return response()->json($response, 200);
         }
+    }
+
+    public function updateShipment(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'name' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $update = StorageShipments::where('id', $request->id)->update([
+            'name' => ucwords($request->name),
+            'website' => $request->website,
+            'callCenter' => $request->callCenter
+        ]);
+
+
+        if ($update) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Shipment has been updated successfully';
+            return response()->json($response, 200);
+
+        } else {
+
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update shipmnet';
+            return response()->json($response, 200);
+
+        }
+
+    }
+
+    public function deleteShipment(Request $request)
+    {
+        $response =array();
+
+        $validator = Validator::make($request->all(),['id'=>'required']);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $delete = StorageShipments::where('id', $request->id)->update(['isDeleted'=>1]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update shipment';
+            return response()->json($response, 200);
+        }
+
+    }
+
+    public function undoDeleteShipment(Request $request)
+    {
+        $response =array();
+
+        $validator = Validator::make($request->all(),['id'=>'required']);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $delete = StorageShipments::where('id', $request->id)->update(['isDeleted'=>0]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update shipment';
+            return response()->json($response, 200);
+        }
+
     }
 }

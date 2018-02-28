@@ -16,9 +16,9 @@ class CreateStorageShipmentsTable extends Migration
         Schema::create('storageShipments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('shippingTypeId');
             $table->string('website');
             $table->string('callCenter');
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }

@@ -13,10 +13,4 @@ class StorageShipments extends Model
     protected $guarded = ['id'];
 
 
-    public function shippingType()
-    {
-        return $this->belongsTo(ShippingTypes::class, 'shippingTypeId');
-    }
-
-
 }

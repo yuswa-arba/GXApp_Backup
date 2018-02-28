@@ -53,8 +53,6 @@ Route::prefix('v1/h')->group(function () {
         Route::get('list/months','GetListController@months')->name('v1.component.list.months');
 
         Route::get('list/unitOfMeasurementTypes','GetListController@unitOfMeasurementTypes')->name('v1.component.unitOfMeasurementTypes');
-
-
     });
 
 });

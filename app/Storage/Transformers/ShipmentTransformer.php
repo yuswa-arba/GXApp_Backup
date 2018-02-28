@@ -15,11 +15,12 @@ class ShipmentTransformer extends TransformerAbstract
     public function transform(StorageShipments $storageShipments)
     {
         return [
-           'id'=>$storageShipments->id,
-           'name'=>$storageShipments->name,
-           'shippingTypeName'=>$this->getResultWithNullChecker1Connection($storageShipments,'shippingType','name'),
-           'website'=>$storageShipments->website,
-           'callCenter'=>$storageShipments->callCenter,
+            'id' => $storageShipments->id,
+            'name' => $storageShipments->name,
+            'website' => $storageShipments->website,
+            'callCenter' => $storageShipments->callCenter,
+            'editing' => false,
+            'isDeleted'=>$storageShipments->isDeleted
         ];
     }
 }

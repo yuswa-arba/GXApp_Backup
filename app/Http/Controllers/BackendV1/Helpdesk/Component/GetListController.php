@@ -17,6 +17,7 @@ use App\Components\Models\BranchOffice;
 use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
 use App\Components\Models\Religion;
+use App\Components\Models\ShippingTypes;
 use App\Components\Models\UnitOfMeasurementType;
 use App\Components\Transformers\BasicComponentTrasnformer;
 use App\Components\Transformers\BasicSettingTrasnformer;
@@ -202,7 +203,11 @@ class GetListController extends Controller
     public function unitOfMeasurementTypes()
     {
         return fractal(UnitOfMeasurementType::all(),new BasicComponentTrasnformer())->respond(200);
+    }
 
+    public function shippingTypes()
+    {
+        return fractal(ShippingTypes::all(),new BasicComponentTrasnformer())->respond(200);
     }
 
 }
