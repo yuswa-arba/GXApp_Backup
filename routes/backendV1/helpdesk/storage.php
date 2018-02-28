@@ -55,5 +55,9 @@ Route::prefix('v1/h')->group(function () {
         Route::post('update/warehouse', 'Misc\UpdateDeleteController@updateWarehouse');
         Route::post('delete/warehouse', 'Misc\UpdateDeleteController@deleteWarehouse');
         Route::post('undoDelete/warehouse', 'Misc\UpdateDeleteController@undoDeleteWarehouse');
+
+        Route::post('update/unit', 'Misc\UpdateDeleteController@updateUnit');
+        Route::post('delete/unit', 'Misc\UpdateDeleteController@deleteUnit');
+        Route::post('undoDelete/unit', 'Misc\UpdateDeleteController@undoDeleteUnit');
     });
 });

@@ -2556,7 +2556,7 @@ var render = function() {
                 attrs: {
                   type: "text",
                   id: "search-shipments-box",
-                  placeholder: "Search Categories"
+                  placeholder: "Search Shipments"
                 }
               }),
               _vm._v(" "),

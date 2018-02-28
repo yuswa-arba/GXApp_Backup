@@ -402,4 +402,108 @@ class UpdateDeleteController extends Controller
         }
 
     }
+
+    //UNITS
+
+    public function updateUnit(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'formatValue' => 'required',
+            'uomTypeId'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $update = UnitOfMeasurements::where('id', $request->id)->update([
+            'format' => $request->formatValue,
+            'description' => $request->description,
+            'unitOfMeasurementTypeId' => $request->uomTypeId,
+        ]);
+
+
+        if ($update) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Unit has been updated successfully';
+            return response()->json($response, 200);
+
+        } else {
+
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update shipmnet';
+            return response()->json($response, 200);
+
+        }
+
+    }
+
+    public function deleteUnit(Request $request)
+    {
+        $response =array();
+
+        $validator = Validator::make($request->all(),['id'=>'required']);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $delete = UnitOfMeasurements::where('id', $request->id)->update(['isDeleted'=>1]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update unit';
+            return response()->json($response, 200);
+        }
+
+    }
+
+    public function undoDeleteUnit(Request $request)
+    {
+        $response =array();
+
+        $validator = Validator::make($request->all(),['id'=>'required']);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $delete = UnitOfMeasurements::where('id', $request->id)->update(['isDeleted'=>0]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update unit';
+            return response()->json($response, 200);
+        }
+
+    }
+
 }

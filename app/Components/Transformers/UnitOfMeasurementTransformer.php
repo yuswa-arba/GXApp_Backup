@@ -16,7 +16,10 @@ class UnitOfMeasurementTransformer extends TransformerAbstract
             'id' => $unitOfMeasurements->id,
             'format' => $unitOfMeasurements->format,
             'description' => $unitOfMeasurements->description,
-            'unitOfMeasurementTypeName' => $this->getResultWithNullChecker1Connection($unitOfMeasurements,'uomType','name')
+            'uomTypeId'=>$unitOfMeasurements->unitOfMeasurementTypeId,
+            'uomTypeName' => $this->getResultWithNullChecker1Connection($unitOfMeasurements, 'uomType', 'name'),
+            'editing' => false,
+            'isDeleted' => $unitOfMeasurements->isDeleted
         ];
     }
 }

@@ -247,7 +247,7 @@ class CreateController extends Controller
         $response = array();
 
         $validator = Validator::make($request->all(), [
-            'format' => 'required',
+            'formatValue' => 'required',
             'description' => 'required',
             'uomTypeId' => 'required'
         ]);
@@ -263,7 +263,8 @@ class CreateController extends Controller
         $create = UnitOfMeasurements::create([
             'format' => $request->formatValue, // use formatValue because 'format' has protected access
             'description' => $request->description,
-            'uomTypeId' => $request->uomTypeId
+            'unitOfMeasurementTypeId' => $request->uomTypeId,
+            'isDeleted'=>0
         ]);
 
         if ($create) {

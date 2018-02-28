@@ -5,7 +5,7 @@
                 <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                     <div class="card-block">
                         <input type="text" style="height: 40px;" class="form-control" id="search-warehouses-box"
-                               placeholder="Search Categories">
+                               placeholder="Search Warehouse">
                         <div class="scrollable">
                             <div class="" style="height:700px">
                                 <div class="table-responsive">

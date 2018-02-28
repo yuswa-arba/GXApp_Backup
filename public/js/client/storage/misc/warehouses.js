@@ -2608,7 +2608,7 @@ var render = function() {
                 attrs: {
                   type: "text",
                   id: "search-warehouses-box",
-                  placeholder: "Search Categories"
+                  placeholder: "Search Warehouse"
                 }
               }),
               _vm._v(" "),

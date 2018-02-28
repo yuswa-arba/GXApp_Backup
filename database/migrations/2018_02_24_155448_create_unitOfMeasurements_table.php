@@ -18,6 +18,7 @@ class CreateUnitOfMeasurementsTable extends Migration
             $table->string('format');
             $table->string('description');
             $table->integer('unitOfMeasurementTypeId');
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }
