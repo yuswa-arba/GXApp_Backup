@@ -13,13 +13,15 @@ class WarehouseTransformer extends TransformerAbstract
     public function transform(StorageWarehouses $storageWarehouses)
     {
         return [
-            'id'=>$storageWarehouses->id,
-            'name'=>$storageWarehouses->name,
-            'address'=>$storageWarehouses->address,
-            'country'=>$storageWarehouses->country,
-            'city'=>$storageWarehouses->city,
-            'postalCode'=>$storageWarehouses->postalCode,
-            'phoneNumber'=>$storageWarehouses->phoneNumber,
+            'id' => $storageWarehouses->id,
+            'name' => $storageWarehouses->name,
+            'address' => $storageWarehouses->address,
+            'country' => $storageWarehouses->country,
+            'city' => $storageWarehouses->city,
+            'postalCode' => $storageWarehouses->postalCode,
+            'phoneNumber' => $storageWarehouses->phoneNumber,
+            'editing' => false,
+            'isDeleted' => $storageWarehouses->isDeleted
         ];
     }
 }

@@ -297,4 +297,109 @@ class UpdateDeleteController extends Controller
         }
 
     }
+
+    //WAREHOUSE
+
+    public function updateWarehouse(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'name' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $update = StorageWarehouses::where('id', $request->id)->update([
+            'name' => ucwords($request->name),
+            'address' => $request->address,
+            'country' => $request->country,
+            'city' => $request->city,
+            'postalCode' => $request->postalCode,
+            'phoneNumber' => $request->phoneNumber,
+        ]);
+
+
+        if ($update) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Warehouse has been updated successfully';
+            return response()->json($response, 200);
+
+        } else {
+
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update shipmnet';
+            return response()->json($response, 200);
+
+        }
+
+    }
+
+    public function deleteWarehouse(Request $request)
+    {
+        $response =array();
+
+        $validator = Validator::make($request->all(),['id'=>'required']);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $delete = StorageWarehouses::where('id', $request->id)->update(['isDeleted'=>1]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update warehouse';
+            return response()->json($response, 200);
+        }
+
+    }
+
+    public function undoDeleteWarehouse(Request $request)
+    {
+        $response =array();
+
+        $validator = Validator::make($request->all(),['id'=>'required']);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $delete = StorageWarehouses::where('id', $request->id)->update(['isDeleted'=>0]);
+
+        if ($delete) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update warehouse';
+            return response()->json($response, 200);
+        }
+
+    }
 }

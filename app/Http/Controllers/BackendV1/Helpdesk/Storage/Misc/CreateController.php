@@ -224,6 +224,7 @@ class CreateController extends Controller
             'city' => $request->city,
             'postalCode' => $request->postalCode,
             'phoneNumber' => $request->phoneNumber,
+            'isDeleted'=>0
         ]);
 
         if ($create) {

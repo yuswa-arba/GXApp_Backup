@@ -21,6 +21,7 @@ class CreateStorageWarehousesTable extends Migration
             $table->string('city');
             $table->string('postalCode');
             $table->string('phoneNumber');
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }

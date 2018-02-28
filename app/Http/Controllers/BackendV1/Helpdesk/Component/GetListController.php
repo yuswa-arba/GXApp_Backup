@@ -14,6 +14,7 @@ use App\Attendance\Transformers\ShiftListTransformer;
 use App\Attendance\Transformers\SlotListTransformer;
 use App\Attendance\Transformers\SlotMakerListTransformer;
 use App\Components\Models\BranchOffice;
+use App\Components\Models\Countries;
 use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
 use App\Components\Models\Religion;
@@ -205,9 +206,9 @@ class GetListController extends Controller
         return fractal(UnitOfMeasurementType::all(),new BasicComponentTrasnformer())->respond(200);
     }
 
-    public function shippingTypes()
+    public function countries()
     {
-        return fractal(ShippingTypes::all(),new BasicComponentTrasnformer())->respond(200);
+       return fractal(Countries::all(),new BasicComponentTrasnformer())->respond(200);
     }
 
 }
