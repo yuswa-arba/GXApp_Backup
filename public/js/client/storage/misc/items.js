@@ -1708,6 +1708,77 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1759,7 +1830,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
 
         //get item list
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/item/list?' + 'typeCode=C' + '&accNo=1234').then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/item/list').then(function (res) {
             if (!res.data.isFailed) {
                 if (res.data.items.data) {
                     self.items = res.data.items.data;
@@ -1775,6 +1846,145 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         createItem: function createItem() {
             var self = this;
+
+            if (self.formObject.name && self.formObject.unitId && self.formObject.itemTypeCode && self.formObject.categoryCode && self.formObject.accountingNumber) {
+
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/create/item', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["b" /* objectToFormData */])(self.formObject)).then(function (res) {
+
+                    if (!res.data.isFailed) {
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+
+                        //push to array
+                        if (res.data.item.data) {
+                            self.items.push(res.data.item.data);
+                        }
+
+                        //reset form
+                        self.formObject = {
+                            name: '',
+                            unitId: '',
+                            itemTypeCode: '',
+                            categoryCode: '',
+                            accountingNumber: '',
+                            reminder1: '',
+                            reminder2: '',
+                            minimumStock: '',
+                            allowNotification: '',
+                            statusId: '',
+                            photo: ''
+                        };
+                    } else {
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                });
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: "Form is invalid",
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        },
+        deleteItem: function deleteItem(id, index) {
+            var self = this;
+            if (id) {
+                if (confirm('Are you sure to delete this item?')) {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/delete/item', { id: id }).then(function (res) {
+                        if (!res.data.isFailed) {
+
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            self.items[index].isDeleted = 1;
+                        } else {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        }
+                    }).catch(function (err) {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    });
+                }
+            }
+        },
+        undoDeleteItem: function undoDeleteItem(id, index) {
+            var self = this;
+            if (id) {
+                if (confirm('Undo delete this item?')) {
+                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/undoDelete/item', { id: id }).then(function (res) {
+                        if (!res.data.isFailed) {
+
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            self.items[index].isDeleted = 0;
+                        } else {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        }
+                    }).catch(function (err) {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: err.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    });
+                }
+            }
+        },
+        viewImage: function viewImage(url) {
+            window.open(url, '_blank');
         }
     }
 });
@@ -2466,11 +2676,11 @@ var render = function() {
                               [
                                 _vm._v(
                                   _vm._s(unit.format) +
-                                    " - " +
+                                    " -\n                                            " +
                                     _vm._s(unit.description) +
                                     " (" +
                                     _vm._s(unit.uomTypeName) +
-                                    ")"
+                                    ")\n                                        "
                                 )
                               ]
                             )
@@ -2572,10 +2782,11 @@ var render = function() {
                               { domProps: { value: category.code } },
                               [
                                 _vm._v(
-                                  _vm._s(category.name) +
+                                  "\n                                            " +
+                                    _vm._s(category.name) +
                                     " (" +
                                     _vm._s(category.code) +
-                                    ")"
+                                    ")\n                                        "
                                 )
                               ]
                             )
@@ -2817,7 +3028,12 @@ var render = function() {
                             return _c(
                               "option",
                               { domProps: { value: status.id } },
-                              [_vm._v(_vm._s(status.name))]
+                              [
+                                _vm._v(
+                                  _vm._s(status.name) +
+                                    "\n                                        "
+                                )
+                              ]
                             )
                           })
                         )
@@ -2867,6 +3083,144 @@ var render = function() {
             ])
           ]
         )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+          },
+          [
+            _c("div", { staticClass: "card-block" }, [
+              _c("input", {
+                staticClass: "form-control",
+                staticStyle: { height: "40px" },
+                attrs: {
+                  type: "text",
+                  id: "search-items-box",
+                  placeholder: "Search Items"
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "scrollable" }, [
+                _c("div", { staticStyle: { height: "700px" } }, [
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c(
+                      "table",
+                      { staticClass: "table table-striped table-hover" },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.items, function(item, index) {
+                            return _c(
+                              "tr",
+                              { staticClass: "filter-item-item" },
+                              [
+                                _c("td", [_vm._v(_vm._s(item.id))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  !item.editing && item.photo
+                                    ? _c(
+                                        "div",
+                                        {
+                                          staticClass: "cursor",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.viewImage(
+                                                "/images/storage/items/" +
+                                                  item.photo
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("img", {
+                                            attrs: {
+                                              src:
+                                                "/images/storage/items/" +
+                                                item.photo,
+                                              height: "70px",
+                                              alt: ""
+                                            }
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e()
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.name))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.itemCode))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.unitFormat))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    _vm._s(item.reminder1) +
+                                      "," +
+                                      _vm._s(item.reminder2)
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.minimumStock))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(item.statusName))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  item.isDeleted == 0
+                                    ? _c("div", [
+                                        _c("i", {
+                                          staticClass:
+                                            "fa fa-times text-danger cursor fs-16",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.deleteItem(item.id, index)
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(
+                                          "\n                                                  \n                                                "
+                                        )
+                                      ])
+                                    : _c("div", [
+                                        _c(
+                                          "span",
+                                          {
+                                            staticClass:
+                                              "fs-12 text-info cursor",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.undoDeleteItem(
+                                                  item.id,
+                                                  index
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                    UNDELETE\n                                                "
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                ])
+                              ]
+                            )
+                          })
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ]
+        )
       ])
     ])
   ])
@@ -2885,6 +3239,32 @@ var staticRenderFns = [
         },
         [_vm._v("Item Form")]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("ID")]),
+        _vm._v(" "),
+        _c("th"),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Item Code")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Unit")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Reminder 1,2")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Min. Stock")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Action")])
+      ])
     ])
   }
 ]
@@ -13860,7 +14240,12 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     components: { MainItems: __WEBPACK_IMPORTED_MODULE_1__MainItems_vue___default.a }
 });
 
-$(document).ready(function () {});
+$(document).ready(function () {
+    $('.filter-container').sieve({
+        searchInput: $('#search-items-box'),
+        itemSelector: ".filter-item-item"
+    });
+});
 
 /***/ }),
 

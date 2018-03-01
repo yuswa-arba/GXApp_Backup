@@ -17,7 +17,9 @@
                                     <div class="form-group form-group-default required">
                                         <label> Unit </label>
                                         <select v-model="formObject.unitId" class="form-control">
-                                            <option :value="unit.id" v-for="unit in units">{{unit.format}} - {{unit.description}} ({{unit.uomTypeName}})</option>
+                                            <option :value="unit.id" v-for="unit in units">{{unit.format}} -
+                                                {{unit.description}} ({{unit.uomTypeName}})
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="form-group form-group-default required">
@@ -29,7 +31,9 @@
                                     <div class="form-group form-group-default required">
                                         <label> Category </label>
                                         <select v-model="formObject.categoryCode" class="form-control">
-                                            <option :value="category.code" v-for="category in categories">{{category.name}} ({{category.code}})</option>
+                                            <option :value="category.code" v-for="category in categories">
+                                                {{category.name}} ({{category.code}})
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="form-group form-group-default required">
@@ -62,7 +66,8 @@
                                     <div class="form-group form-group-default">
                                         <label>Status</label>
                                         <select v-model="formObject.statusId" class="form-control">
-                                            <option :value="status.id" v-for="status in statuses">{{status.name}}</option>
+                                            <option :value="status.id" v-for="status in statuses">{{status.name}}
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="form-group form-group-default">
@@ -73,6 +78,72 @@
                                     <button class="btn btn-complete pull-right" type="button" @click="createItem()">
                                         Create
                                     </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 m-b-10">
+                <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
+                    <div class="card-block">
+                        <input type="text" style="height: 40px;" class="form-control" id="search-items-box"
+                               placeholder="Search Items">
+                        <div class="scrollable">
+                            <div class="" style="height:700px">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover">
+                                        <thead class="bg-master-lighter">
+                                        <tr>
+                                            <th class="text-black">ID</th>
+                                            <th></th>
+                                            <th class="text-black">Name</th>
+                                            <th class="text-black">Item Code</th>
+                                            <th class="text-black">Unit</th>
+                                            <th class="text-black">Reminder 1,2</th>
+                                            <th class="text-black">Min. Stock</th>
+                                            <th class="text-black">Status</th>
+                                            <th class="text-black">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr v-for="(item,index) in items" class="filter-item-item">
+                                            <td>{{item.id}}</td>
+                                            <td>
+                                                <div v-if="!item.editing && item.photo"  class="cursor" @click="viewImage('/images/storage/items/'+item.photo)">
+                                                    <img :src="'/images/storage/items/'+item.photo" height="70px" alt="">
+                                                </div>
+                                            </td>
+                                            <td>{{item.name}}</td>
+                                            <td>{{item.itemCode}}</td>
+                                            <td>{{item.unitFormat}}</td>
+                                            <td>{{item.reminder1}},{{item.reminder2}}</td>
+                                            <td>{{item.minimumStock}}</td>
+                                            <td>{{item.statusName}}</td>
+                                            <td>
+                                                <div v-if="item.isDeleted==0">
+                                                    <i class="fa fa-times text-danger cursor fs-16"
+                                                       @click="deleteItem(item.id,index)"></i>
+                                                    &nbsp;&nbsp;
+                                                    <!--<i class="fa fa-pencil text-primary cursor fs-16"-->
+                                                       <!--v-if="!item.editing"-->
+                                                       <!--@click="attemptUpdateItem(index)"></i>-->
+                                                    <!--<span class="fs-12 text-danger cursor"-->
+                                                          <!--v-else=""-->
+                                                          <!--@click="saveUpdateItem(item.id,index)">-->
+                                                        <!--DONE-->
+                                                    <!--</span>-->
+                                                </div>
+                                                <div v-else="">
+                                                    <span class="fs-12 text-info cursor"
+                                                          @click="undoDeleteItem(item.id,index)">
+                                                        UNDELETE
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -138,7 +209,7 @@
                 })
 
             //get item list
-            get(api_path + 'storage/item/list?'+'typeCode=C'+'&accNo=1234')
+            get(api_path + 'storage/item/list')
                 .then((res) => {
                     if (!res.data.isFailed) {
                         if (res.data.items.data) {
@@ -155,6 +226,164 @@
             },
             createItem(){
                 let self = this
+
+                if (
+                    self.formObject.name &&
+                    self.formObject.unitId &&
+                    self.formObject.itemTypeCode &&
+                    self.formObject.categoryCode &&
+                    self.formObject.accountingNumber
+                ) {
+
+                    post(api_path + 'storage/create/item', objectToFormData(self.formObject))
+                        .then((res) => {
+
+                            if (!res.data.isFailed) {
+
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+                                //push to array
+                                if (res.data.item.data) {
+                                    self.items.push(res.data.item.data)
+                                }
+
+                                //reset form
+                                self.formObject = {
+                                    name: '',
+                                    unitId: '',
+                                    itemTypeCode: '',
+                                    categoryCode: '',
+                                    accountingNumber: '',
+                                    reminder1: '',
+                                    reminder2: '',
+                                    minimumStock: '',
+                                    allowNotification: '',
+                                    statusId: '',
+                                    photo: '',
+                                }
+
+                            } else {
+
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+
+                            }
+
+                        })
+                        .catch((err) => {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        })
+
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: "Form is invalid",
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            },
+            deleteItem(id,index){
+                let self =this
+                if(id){
+                    if(confirm('Are you sure to delete this item?')){
+                        post(api_path+'storage/delete/item',{id:id})
+                            .then((res) => {
+                                if (!res.data.isFailed) {
+
+                                    $('.page-container').pgNotification({
+                                        style: 'flip',
+                                        message: res.data.message,
+                                        position: 'top-right',
+                                        timeout: 3500,
+                                        type: 'info'
+                                    }).show();
+
+                                    self.items[index].isDeleted = 1
+
+                                } else {
+                                    $('.page-container').pgNotification({
+                                        style: 'flip',
+                                        message: res.data.message,
+                                        position: 'top-right',
+                                        timeout: 3500,
+                                        type: 'danger'
+                                    }).show();
+                                }
+                            })
+                            .catch((err) => {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: err.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            })
+                    }
+                }
+            },
+            undoDeleteItem(id,index){
+                let self = this
+                if (id) {
+                    if (confirm('Undo delete this item?')) {
+                        post(api_path + 'storage/undoDelete/item', {id: id})
+                            .then((res) => {
+                                if (!res.data.isFailed) {
+
+                                    $('.page-container').pgNotification({
+                                        style: 'flip',
+                                        message: res.data.message,
+                                        position: 'top-right',
+                                        timeout: 3500,
+                                        type: 'info'
+                                    }).show();
+
+                                    self.items[index].isDeleted = 0
+
+                                } else {
+                                    $('.page-container').pgNotification({
+                                        style: 'flip',
+                                        message: res.data.message,
+                                        position: 'top-right',
+                                        timeout: 3500,
+                                        type: 'danger'
+                                    }).show();
+                                }
+                            })
+                            .catch((err) => {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: err.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                            })
+                    }
+                }
+            },
+            viewImage(url){
+                window.open(url,'_blank')
             }
         }
     }

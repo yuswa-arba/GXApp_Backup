@@ -78,7 +78,7 @@ class GetItemListLogic extends GetListUseCase
 
         if ($items) {
 
-            $response['isFailed'] = true;
+            $response['isFailed'] = false;
             $response['message'] = 'Success';
             $response['items'] = fractal($items, new StorageItemDetailTransformer());
 

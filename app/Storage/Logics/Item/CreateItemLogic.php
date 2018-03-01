@@ -24,7 +24,7 @@ class CreateItemLogic extends CreateUseCase
         $itemNumber = $this->zeroPrefix($currentTotalItemOfCategory + 1, 3);
 
         // Add prefix on Accounting Number
-        $accNumber = $this->zeroPrefix($request->accountingNumber, 5);
+        $accNumber = $this->zeroPrefix(str_replace('0','',$request->accountingNumber), 5);
 
         // Get Item Code e.g. CAA-001234-0005
         $itemCode = $request->itemTypeCode . $request->categoryCode . '-' . $accNumber . '-' . $itemNumber;

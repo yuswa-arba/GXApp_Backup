@@ -47,7 +47,7 @@ class ItemController extends Controller
 
         if($items){
 
-            $response['isFailed'] = true;
+            $response['isFailed'] = false;
             $response['message'] = 'Success';
             $response['items']= fractal($items, new StorageItemDetailTransformer());
 
@@ -145,7 +145,6 @@ class ItemController extends Controller
             $response['message'] = 'Unable to update item';
             return response()->json($response, 200);
         }
-
     }
 
 

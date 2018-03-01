@@ -28,6 +28,7 @@ class StorageItemDetailTransformer extends TransformerAbstract
             'minimumStock' => $storageItems->minimumStock,
             'allowNotification' => $storageItems->allowNotification,
             'statusId' => $storageItems->statusId,
+            'statusName'=>$this->getResultWithNullChecker1Connection($storageItems,'itemStatus','name'),
             'photo' => $storageItems->photo,
             'isDeleted' => $storageItems->isDeleted,
             'editing'=>false
