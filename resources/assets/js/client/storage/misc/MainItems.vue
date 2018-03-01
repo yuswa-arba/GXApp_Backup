@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid container-fixed-lg">
         <div class="row">
-            <div class="col-lg-8 m-b-10">
+            <div class="col-lg-8 m-b-25">
                 <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                     <div class="card-header">
                         <p class="card-title text-uppercase text-black" style="opacity: 1">Item Form</p>
@@ -95,14 +95,14 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="row">
-                                    <dic class="col-lg-3">
+                                    <div class="col-lg-3">
                                         <select class="btn btn-outline-primary h-35 w-100 pull-right" v-model="sortStatusId" @change="changeFilter()">
                                             <option value="" disabled selected hidden>Sort Status</option>
                                             <option value="">All</option>
                                             <option :value="status.id" v-for="status in statuses">{{status.name}}</option>
                                         </select>
-                                    </dic>
-                                    <dic class="col-lg-3">
+                                    </div>
+                                    <div class="col-lg-3">
                                         <select class="btn btn-outline-primary h-35 w-100 pull-right" v-model="sortCategoryCode" @change="changeFilter()">
                                             <option value="" disabled selected hidden>Sort Category</option>
                                             <option value="">All</option>
@@ -110,14 +110,14 @@
                                                 {{category.name}} ({{category.code}})
                                             </option>
                                         </select>
-                                    </dic>
-                                    <dic class="col-lg-3">
+                                    </div>
+                                    <div class="col-lg-3">
                                         <select class="btn btn-outline-primary h-35 w-100 pull-right" v-model="sortTypeCode" @change="changeFilter()">
                                             <option value="" disabled selected hidden>Sort Type</option>
                                             <option value="">All</option>
                                             <option :value="type.code" v-for="type in types">{{type.name}}</option>
                                         </select>
-                                    </dic>
+                                    </div>
                                 </div>
 
                             </div>

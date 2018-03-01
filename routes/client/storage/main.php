@@ -25,4 +25,6 @@ Route::prefix('storage')->namespace('Client\Storage')->group(function () {
     Route::get('misc/warehouses', 'ViewController@warehouses')->name('storage.misc.warehouses');
     Route::get('misc/units', 'ViewController@units')->name('storage.misc.units');
 
+    Route::get('requisition/shop','ViewController@requisitionShop')->name('storage.requisition.shop');
+
 });

@@ -19,7 +19,7 @@
                     <span class="icon-thumbnail">c</span>
                 </li>
                 <li class="">
-                    <a href="#">Requisition</a>
+                    <a href="{{route('storage.requisition.shop')}}">Requisition / Shop</a>
                     <span class="icon-thumbnail">r</span>
                 </li>
                 <li class="">

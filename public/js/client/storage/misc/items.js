@@ -2760,7 +2760,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid container-fixed-lg" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-8 m-b-10" }, [
+      _c("div", { staticClass: "col-lg-8 m-b-25" }, [
         _c(
           "div",
           {
@@ -3275,218 +3275,210 @@ var render = function() {
                 _vm._m(1),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-lg-6" }, [
-                  _c(
-                    "div",
-                    { staticClass: "row" },
-                    [
-                      _c("dic", { staticClass: "col-lg-3" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.sortStatusId,
-                                expression: "sortStatusId"
-                              }
-                            ],
-                            staticClass:
-                              "btn btn-outline-primary h-35 w-100 pull-right",
-                            on: {
-                              change: [
-                                function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.sortStatusId = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                },
-                                function($event) {
-                                  _vm.changeFilter()
-                                }
-                              ]
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-3" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.sortStatusId,
+                              expression: "sortStatusId"
                             }
-                          },
-                          [
-                            _c(
-                              "option",
-                              {
-                                attrs: {
-                                  value: "",
-                                  disabled: "",
-                                  selected: "",
-                                  hidden: ""
-                                }
-                              },
-                              [_vm._v("Sort Status")]
-                            ),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("All")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.statuses, function(status) {
-                              return _c(
-                                "option",
-                                { domProps: { value: status.id } },
-                                [_vm._v(_vm._s(status.name))]
-                              )
-                            })
                           ],
-                          2
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("dic", { staticClass: "col-lg-3" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.sortCategoryCode,
-                                expression: "sortCategoryCode"
+                          staticClass:
+                            "btn btn-outline-primary h-35 w-100 pull-right",
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.sortStatusId = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                              function($event) {
+                                _vm.changeFilter()
                               }
-                            ],
-                            staticClass:
-                              "btn btn-outline-primary h-35 w-100 pull-right",
-                            on: {
-                              change: [
-                                function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.sortCategoryCode = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                },
-                                function($event) {
-                                  _vm.changeFilter()
-                                }
-                              ]
-                            }
-                          },
-                          [
-                            _c(
-                              "option",
-                              {
-                                attrs: {
-                                  value: "",
-                                  disabled: "",
-                                  selected: "",
-                                  hidden: ""
-                                }
-                              },
-                              [_vm._v("Sort Category")]
-                            ),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("All")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.categories, function(category) {
-                              return _c(
-                                "option",
-                                { domProps: { value: category.code } },
-                                [
-                                  _vm._v(
-                                    "\n                                            " +
-                                      _vm._s(category.name) +
-                                      " (" +
-                                      _vm._s(category.code) +
-                                      ")\n                                        "
-                                  )
-                                ]
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("dic", { staticClass: "col-lg-3" }, [
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.sortTypeCode,
-                                expression: "sortTypeCode"
+                            ]
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: {
+                                value: "",
+                                disabled: "",
+                                selected: "",
+                                hidden: ""
                               }
-                            ],
-                            staticClass:
-                              "btn btn-outline-primary h-35 w-100 pull-right",
-                            on: {
-                              change: [
-                                function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.sortTypeCode = $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                },
-                                function($event) {
-                                  _vm.changeFilter()
-                                }
-                              ]
-                            }
-                          },
-                          [
-                            _c(
+                            },
+                            [_vm._v("Sort Status")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("All")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.statuses, function(status) {
+                            return _c(
                               "option",
-                              {
-                                attrs: {
-                                  value: "",
-                                  disabled: "",
-                                  selected: "",
-                                  hidden: ""
-                                }
-                              },
-                              [_vm._v("Sort Type")]
-                            ),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v("All")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.types, function(type) {
-                              return _c(
-                                "option",
-                                { domProps: { value: type.code } },
-                                [_vm._v(_vm._s(type.name))]
-                              )
-                            })
+                              { domProps: { value: status.id } },
+                              [_vm._v(_vm._s(status.name))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.sortCategoryCode,
+                              expression: "sortCategoryCode"
+                            }
                           ],
-                          2
-                        )
-                      ])
-                    ],
-                    1
-                  )
+                          staticClass:
+                            "btn btn-outline-primary h-35 w-100 pull-right",
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.sortCategoryCode = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                              function($event) {
+                                _vm.changeFilter()
+                              }
+                            ]
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: {
+                                value: "",
+                                disabled: "",
+                                selected: "",
+                                hidden: ""
+                              }
+                            },
+                            [_vm._v("Sort Category")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("All")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.categories, function(category) {
+                            return _c(
+                              "option",
+                              { domProps: { value: category.code } },
+                              [
+                                _vm._v(
+                                  "\n                                            " +
+                                    _vm._s(category.name) +
+                                    " (" +
+                                    _vm._s(category.code) +
+                                    ")\n                                        "
+                                )
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3" }, [
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.sortTypeCode,
+                              expression: "sortTypeCode"
+                            }
+                          ],
+                          staticClass:
+                            "btn btn-outline-primary h-35 w-100 pull-right",
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.sortTypeCode = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              },
+                              function($event) {
+                                _vm.changeFilter()
+                              }
+                            ]
+                          }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: {
+                                value: "",
+                                disabled: "",
+                                selected: "",
+                                hidden: ""
+                              }
+                            },
+                            [_vm._v("Sort Type")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "" } }, [
+                            _vm._v("All")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.types, function(type) {
+                            return _c(
+                              "option",
+                              { domProps: { value: type.code } },
+                              [_vm._v(_vm._s(type.name))]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    ])
+                  ])
                 ])
               ]),
               _vm._v(" "),

@@ -21,6 +21,7 @@
 @endpush
 
 @push('child-page-controller')
+@include('layouts.partials.snippets._zoom_out80')
 <script src="{{mix('js/client/permission/main.js')}}"></script>
 @endpush
 

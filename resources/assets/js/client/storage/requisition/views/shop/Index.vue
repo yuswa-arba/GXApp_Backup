@@ -1,12 +1,11 @@
 <template>
-
-    <employee-card></employee-card>
+    <category-card></category-card>
 </template>
 <script type="text/javascript">
-    import EmployeeCard from '../../components/employee/EmployeeCard.vue'
+    import CategoryCard from '../../components/shop/CategoryCard.vue'
     export default{
         components: {
-            "employee-card":EmployeeCard
+            'category-card': CategoryCard
         },
         mounted(){
 

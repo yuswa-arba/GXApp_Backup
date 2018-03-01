@@ -35,26 +35,91 @@
             </div>
             <!-- END ITEM -->
         </div>
+        <infinite-loading @infinite="infiniteHandler" spinner="waveDots"
+                          ref="infiniteLoading">
+                                        <span slot="no-more">
+                                          <!--There is no more Empoyees-->
+                                        </span>
+        </infinite-loading>
     </div>
 </template>
 
 <script type="text/javascript">
     import {get} from '../../helpers/api'
     import {api_path} from '../../helpers/const'
+    import InfiniteLoading from 'vue-infinite-loading';
     export default{
+        components: {
+            InfiniteLoading,
+        },
         data(){
             return {
-                employees: []
+                employees: [],
+                paginationMeta: {
+                    count: '',
+                    current_page: '',
+                    links: [],
+                    per_page: '',
+                    total: '',
+                    total_pages: ''
+                },
             }
         },
         created(){
             let self = this;
-            get(api_path + 'employee/list')
-                .then((res) => {
-                    this.employees = res.data.data;
-                })
+//            get(api_path + 'employee/list')
+//                .then((res) => {
+//                    this.employees = res.data.data;
+//                })
         },
         methods: {
+            infiniteHandler($state) { //getting item list data from server using vue-infinit-scroll
+                let self = this
+
+                if (self.paginationMeta.current_page >= self.paginationMeta.total_pages && self.paginationMeta.current_page != '') {
+
+                    $state.complete()
+
+                } else {
+
+                    let nextPage = self.paginationMeta.current_page + 1
+
+                    get(api_path + 'employee/list'+'?page='+nextPage)
+                        .then((res) => {
+                            let employeesData = res.data.data
+                            if (employeesData) {
+
+                                self.employees = self.employees.concat(employeesData);
+
+                                //insert pagination
+                                self.paginationMeta = res.data.meta.pagination
+
+                                $state.loaded();
+
+                                if (self.employees.length === self.paginationMeta.total) {
+                                    $state.complete()
+                                }
+
+                            }
+
+                        })
+                        .catch((err) => {
+
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+
+                            $state.complete()
+                        })
+
+
+                }
+
+            },
             viewDetail(id){
                 this.$router.push({name: 'detailMaster', params: {id: id}})
             }

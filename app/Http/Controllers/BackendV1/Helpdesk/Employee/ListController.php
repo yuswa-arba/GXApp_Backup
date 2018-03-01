@@ -19,7 +19,7 @@ class ListController extends Controller
 
     public function mainList()
     {
-        $employees = MasterEmployee::where('hasResigned','!=',1)->get()->sortBy('givenName');
+        $employees = MasterEmployee::where('hasResigned','!=',1)->orderBy('givenName','asc')->paginate(100);
         return fractal($employees,new EmployeeListTransfomer())->respond(200);
     }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client\Storage;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ViewController extends Controller
 {
@@ -15,40 +16,75 @@ class ViewController extends Controller
 
     public function cart()
     {
-        
+
     }
 
     public function items()
     {
-     return view('pages.storage.misc.items');
+        if (Auth::user()->hasPermissionTo('access storage setting')) {
+            return view('pages.storage.misc.items');
+        } else {
+            return redirect()->back();
+        }
+
     }
 
-    public function itemCategories(){
-        return view('pages.storage.misc.itemCategories');
+    public function itemCategories()
+    {
+        if (Auth::user()->hasPermissionTo('access storage setting')) {
+            return view('pages.storage.misc.itemCategories');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function itemTypes()
     {
-        return view('pages.storage.misc.itemTypes');
+        if (Auth::user()->hasPermissionTo('access storage setting')) {
+            return view('pages.storage.misc.itemTypes');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function shipments()
     {
-        return view('pages.storage.misc.shipments');
+        if (Auth::user()->hasPermissionTo('access storage setting')) {
+            return view('pages.storage.misc.shipments');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function suppliers()
     {
-        return view('pages.storage.misc.suppliers');
+        if (Auth::user()->hasPermissionTo('access storage setting')) {
+            return view('pages.storage.misc.suppliers');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function warehouses()
     {
-        return view('pages.storage.misc.warehouses');
+        if (Auth::user()->hasPermissionTo('access storage setting')) {
+            return view('pages.storage.misc.warehouses');
+        } else {
+            return redirect()->back();
+        }
     }
 
     public function units()
     {
-        return view('pages.storage.misc.units');
+        if (Auth::user()->hasPermissionTo('access storage setting')) {
+            return view('pages.storage.misc.units');
+        } else {
+            return redirect()->back();
+        }
+    }
+
+    public function requisitionShop()
+    {
+        return view('pages.storage.requisition.shop');
     }
 }
