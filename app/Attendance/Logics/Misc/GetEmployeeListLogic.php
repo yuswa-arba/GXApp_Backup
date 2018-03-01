@@ -26,7 +26,7 @@ class GetEmployeeListLogic extends GetDataUseCase
         if ($slot->slotMaker->relatedToJobPosition) {
             $employees = $this->getEmployee($slot);
         } else {
-            $employees = MasterEmployee::where('hasResigned',0)->get();
+            $employees = MasterEmployee::where('hasResigned',0)->paginate(100);
         }
 
         return fractal($employees, new EmployeeAssignListTransformer())->respond(200);
@@ -38,7 +38,7 @@ class GetEmployeeListLogic extends GetDataUseCase
     {
         $employeeIds = array();
 
-        $employments = Employment::where('jobPositionId', $slot->slotMaker->jobPositionId)->get();
+        $employments = Employment::where('jobPositionId', $slot->slotMaker->jobPositionId)->paginate(100);
 
         foreach ($employments as $employment) {
             array_push($employeeIds,$employment->employeeId);

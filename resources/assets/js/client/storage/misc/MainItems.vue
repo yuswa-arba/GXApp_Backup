@@ -72,7 +72,8 @@
                                     </div>
                                     <div class="form-group form-group-default">
                                         <label>Photo</label>
-                                        <input type="file" class="form-control" @change="insertItemPhoto($event)">
+                                        <input name="itemPhoto" type="file" class="form-control"
+                                               @change="insertItemPhoto($event)">
                                     </div>
                                     <br>
                                     <button class="btn btn-complete pull-right" type="button" @click="createItem()">
@@ -87,12 +88,44 @@
             <div class="col-lg-12 m-b-10">
                 <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                     <div class="card-block">
-                        <input type="text" style="height: 40px;" class="form-control" id="search-items-box"
-                               placeholder="Search Items">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <input type="text" style="height: 40px;" class="form-control" id="search-items-box"
+                                       placeholder="Search Items">
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="row">
+                                    <dic class="col-lg-3">
+                                        <select class="btn btn-outline-primary h-35 w-100 pull-right" v-model="sortStatusId" @change="changeFilter()">
+                                            <option value="" disabled selected hidden>Sort Status</option>
+                                            <option value="">All</option>
+                                            <option :value="status.id" v-for="status in statuses">{{status.name}}</option>
+                                        </select>
+                                    </dic>
+                                    <dic class="col-lg-3">
+                                        <select class="btn btn-outline-primary h-35 w-100 pull-right" v-model="sortCategoryCode" @change="changeFilter()">
+                                            <option value="" disabled selected hidden>Sort Category</option>
+                                            <option value="">All</option>
+                                            <option :value="category.code" v-for="category in categories">
+                                                {{category.name}} ({{category.code}})
+                                            </option>
+                                        </select>
+                                    </dic>
+                                    <dic class="col-lg-3">
+                                        <select class="btn btn-outline-primary h-35 w-100 pull-right" v-model="sortTypeCode" @change="changeFilter()">
+                                            <option value="" disabled selected hidden>Sort Type</option>
+                                            <option value="">All</option>
+                                            <option :value="type.code" v-for="type in types">{{type.name}}</option>
+                                        </select>
+                                    </dic>
+                                </div>
+
+                            </div>
+                        </div>
                         <div class="scrollable">
                             <div class="" style="height:700px">
                                 <div class="table-responsive">
-                                    <table class="table table-striped table-hover">
+                                    <table class="table table-hover">
                                         <thead class="bg-master-lighter">
                                         <tr>
                                             <th class="text-black">ID</th>
@@ -110,8 +143,10 @@
                                         <tr v-for="(item,index) in items" class="filter-item-item">
                                             <td>{{item.id}}</td>
                                             <td>
-                                                <div v-if="!item.editing && item.photo"  class="cursor" @click="viewImage('/images/storage/items/'+item.photo)">
-                                                    <img :src="'/images/storage/items/'+item.photo" height="70px" alt="">
+                                                <div v-if="!item.editing && item.photo" class="cursor"
+                                                     @click="viewImage('/images/storage/items/'+item.photo)">
+                                                    <img :src="'/images/storage/items/'+item.photo" height="70px"
+                                                         alt="">
                                                 </div>
                                             </td>
                                             <td>{{item.name}}</td>
@@ -126,12 +161,12 @@
                                                        @click="deleteItem(item.id,index)"></i>
                                                     &nbsp;&nbsp;
                                                     <!--<i class="fa fa-pencil text-primary cursor fs-16"-->
-                                                       <!--v-if="!item.editing"-->
-                                                       <!--@click="attemptUpdateItem(index)"></i>-->
+                                                    <!--v-if="!item.editing"-->
+                                                    <!--@click="attemptUpdateItem(index)"></i>-->
                                                     <!--<span class="fs-12 text-danger cursor"-->
-                                                          <!--v-else=""-->
-                                                          <!--@click="saveUpdateItem(item.id,index)">-->
-                                                        <!--DONE-->
+                                                    <!--v-else=""-->
+                                                    <!--@click="saveUpdateItem(item.id,index)">-->
+                                                    <!--DONE-->
                                                     <!--</span>-->
                                                 </div>
                                                 <div v-else="">
@@ -144,7 +179,14 @@
                                         </tr>
                                         </tbody>
                                     </table>
+                                    <infinite-loading @infinite="infiniteHandler" spinner="waveDots"
+                                                      ref="infiniteLoading">
+                                        <span slot="no-more">
+                                          There is no more Items
+                                        </span>
+                                    </infinite-loading>
                                 </div>
+
                             </div>
                         </div>
                     </div>
@@ -158,7 +200,11 @@
     import{get, post} from '../../helpers/api'
     import {api_path} from '../../helpers/const'
     import {objectToFormData} from '../../helpers/utils'
+    import InfiniteLoading from 'vue-infinite-loading';
     export default{
+        components: {
+            InfiniteLoading,
+        },
         data(){
             return {
                 items: [],
@@ -178,7 +224,18 @@
                     allowNotification: '',
                     statusId: '',
                     photo: '',
-                }
+                },
+                paginationMeta: {
+                    count: '',
+                    current_page: '',
+                    links: [],
+                    per_page: '',
+                    total: '',
+                    total_pages: ''
+                },
+                sortStatusId: '',
+                sortCategoryCode:'',
+                sortTypeCode:''
             }
         },
         created(){
@@ -209,17 +266,128 @@
                 })
 
             //get item list
-            get(api_path + 'storage/item/list')
-                .then((res) => {
-                    if (!res.data.isFailed) {
-                        if (res.data.items.data) {
-                            self.items = res.data.items.data
-                        }
-                    }
-                })
+            //            get(api_path + 'storage/item/list')
+            //                .then((res) => {
+            //                    if (!res.data.isFailed) {
+            //                        if (res.data.items.data) {
+            //
+            //                            //insert items
+            //                            self.items = res.data.items.data
+            //
+            //                            //insert pagination
+            //                            self.paginationMeta = res.data.items.meta.pagination
+            //
+            //                        }
+            //                    }
+            //                })
 
         },
         methods: {
+            infiniteHandler($state) { //getting item list data from server using vue-infinit-scroll
+
+                let self = this
+
+                if (self.paginationMeta.current_page >= self.paginationMeta.total_pages && self.paginationMeta.current_page != '') {
+
+                    $state.complete()
+
+                } else {
+
+                    let param = '';
+
+                    if (self.sortStatusId) { // sort by status
+                        if (param != '') {
+                            param += '&'
+                        }
+                        param += 'status=' + self.sortStatusId
+                    }
+
+                    if (self.sortCategoryCode) { // sort by category
+                        if (param != '') {
+                            param += '&'
+                        }
+                        param += 'categoryCode=' + self.sortCategoryCode
+                    }
+
+                    if (self.sortTypeCode) { // sort by type
+                        if (param != '') {
+                            param += '&'
+                        }
+                        param += 'typeCode=' + self.sortTypeCode
+                    }
+
+
+
+                    let nextPage = self.paginationMeta.current_page + 1
+
+                    //get next page
+                    get(api_path + 'storage/item/list?' + param + '&page=' + nextPage)
+                        .then((res) => {
+                            if (!res.data.isFailed) {
+                                if (res.data.items.data) {
+
+                                    //insert items
+                                    let itemsData = res.data.items.data
+                                    if (itemsData) {
+                                        self.items = self.items.concat(itemsData)
+                                    }
+
+                                    //insert pagination
+                                    self.paginationMeta = res.data.items.meta.pagination
+
+                                    $state.loaded();
+
+                                    if (self.items.length === self.paginationMeta.total) {
+                                        $state.complete()
+                                    }
+
+                                } else {
+                                    $state.complete()
+                                }
+                            } else {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                                $state.complete()
+                            }
+                        })
+                        .catch((err) => {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                            $state.complete()
+                        })
+                }
+
+            },
+            changeFilter(){ // update data by sorted data , infiniteHandler() method will be called again
+
+                let self = this
+
+                self.items = []
+
+                self.paginationMeta = {
+                    count: '',
+                    current_page: '',
+                    links: [],
+                    per_page: '',
+                    total: '',
+                    total_pages: ''
+                }
+
+                self.$nextTick(() => {
+                    self.$refs.infiniteLoading.$emit('$InfiniteLoading:reset')
+                });
+
+            },
             insertItemPhoto(e){
                 let self = this
                 self.formObject.photo = e.target.files[0]
@@ -268,6 +436,8 @@
                                     photo: '',
                                 }
 
+                                $('input[name="itemPhoto"]').val('')
+
                             } else {
 
                                 $('.page-container').pgNotification({
@@ -302,11 +472,11 @@
                     }).show();
                 }
             },
-            deleteItem(id,index){
-                let self =this
-                if(id){
-                    if(confirm('Are you sure to delete this item?')){
-                        post(api_path+'storage/delete/item',{id:id})
+            deleteItem(id, index){
+                let self = this
+                if (id) {
+                    if (confirm('Are you sure to delete this item?')) {
+                        post(api_path + 'storage/delete/item', {id: id})
                             .then((res) => {
                                 if (!res.data.isFailed) {
 
@@ -342,7 +512,7 @@
                     }
                 }
             },
-            undoDeleteItem(id,index){
+            undoDeleteItem(id, index){
                 let self = this
                 if (id) {
                     if (confirm('Undo delete this item?')) {
@@ -383,7 +553,7 @@
                 }
             },
             viewImage(url){
-                window.open(url,'_blank')
+                window.open(url, '_blank')
             }
         }
     }

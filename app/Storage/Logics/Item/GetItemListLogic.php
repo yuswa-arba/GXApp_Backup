@@ -65,7 +65,7 @@ class GetItemListLogic extends GetListUseCase
             $query .= $rawQueryStatus;
         }
 
-        $items = StorageItems::whereNotNull('itemCode')->get();
+        $items = StorageItems::whereNotNull('itemCode')->paginate(50);
 
         if ($query != '') {
 
@@ -73,7 +73,7 @@ class GetItemListLogic extends GetListUseCase
 
             $items = StorageItems::whereNotNull('itemCode')
                 ->whereRaw($query)
-                ->get();
+                ->paginate(50);
         }
 
         if ($items) {

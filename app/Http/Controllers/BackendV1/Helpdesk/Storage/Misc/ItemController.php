@@ -52,12 +52,14 @@ class ItemController extends Controller
             $response['items']= fractal($items, new StorageItemDetailTransformer());
 
             return response()->json($response,200);
+
         } else {
 
             $response['isFailed'] = true;
             $response['message'] = 'Items not found';
 
             return response()->json($response,200);
+
         }
 
     }
