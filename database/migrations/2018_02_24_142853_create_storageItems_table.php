@@ -22,11 +22,13 @@ class CreateStorageItemsTable extends Migration
             $table->string('categoryCode');
             $table->string('accountingNumber');
             $table->integer('itemNumber');
-            $table->integer('reminder1')->nullable();
-            $table->integer('reminder2')->nullable();
+            $table->integer('reminder1')->default(0);
+            $table->integer('reminder2')->default(0);
             $table->integer('minimumStock')->default(0);
             $table->tinyInteger('allowNotification')->default(0);
-            $table->integer('statusId');
+            $table->integer('statusId')->default(0);
+            $table->string('photo')->nullable();
+            $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });
     }

@@ -98,6 +98,18 @@ Route::prefix('testing')->group(function () {
 
     Route::get('td','TestUploadController@td');
 
+    Route::get('num',function(){
+
+//        $num = 120;
+//        $leadingNum = 4;
+//        $format = "%0".$leadingNum."d";
+//        $num_padded = sprintf($format, $num);
+//        echo $num_padded; // returns 04
+
+        echo str_pad(23, 4, '0', STR_PAD_LEFT);
+
+    });
+
 
 });
 

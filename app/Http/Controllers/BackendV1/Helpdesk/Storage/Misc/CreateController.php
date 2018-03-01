@@ -29,11 +29,6 @@ class CreateController extends Controller
         $this->middleware('auth.admin');
     }
 
-    public function createItem(Request $request)
-    {
-
-    }
-
     public function createItemCategory(Request $request)
     {
         $response = array();

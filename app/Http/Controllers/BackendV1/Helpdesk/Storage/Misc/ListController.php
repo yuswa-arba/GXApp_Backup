@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Misc;
 
 use App\Components\Models\UnitOfMeasurements;
+use App\Components\Transformers\BasicComponentTrasnformer;
 use App\Components\Transformers\UnitOfMeasurementTransformer;
 use App\Http\Controllers\Controller;
 use App\Storage\Models\StorageItemsCategory;
+use App\Storage\Models\StorageItemStatus;
 use App\Storage\Models\StorageItemTypes;
 use App\Storage\Models\StorageShipments;
 use App\Storage\Models\StorageSuppliers;
@@ -68,6 +70,20 @@ class ListController extends Controller
 
         return response()->json($response, 200);
     }
+
+    public function statusList()
+    {
+        $response = array();
+
+        $status = StorageItemStatus::orderBy('name', 'asc')->get();
+
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['status'] = fractal($status, new BasicComponentTrasnformer());
+
+        return response()->json($response, 200);
+    }
+
 
     public function supplierList()
     {

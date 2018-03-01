@@ -134,6 +134,7 @@ class RecruitmentLogic extends RecruitmentUseCase
             $response['isFailed'] = false;
             $response['message'] = 'Medical Records has been saved successfully';
             return response()->json($response, 200);
+
         } else {
 
             /* Return error response */
