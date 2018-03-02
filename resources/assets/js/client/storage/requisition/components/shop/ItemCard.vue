@@ -3,6 +3,10 @@
         <div class="col-lg-6 m-b-10">
             <div style="padding-top: 20px">
                 <h4 class="text-master" v-if="isSearchingItem"> Searching item.. Please wait..</h4>
+
+                <h4 class="text-master" v-if="items.length>0"></h4>
+                <h4 class="text-master" v-else="">No Items Found</h4>
+
             </div>
         </div>
         <div class="col-lg-6 m-b-10" style="margin-top: 20px">
@@ -25,7 +29,8 @@
                 <div class="card-block">
                     <div class="storage-item-container">
                         <div class="storage-item">
-                            <img :src="'/images/storage/items/'+item.photo" height="120px" alt="No Image Found">
+                            <img :src="'/images/storage/items/'+item.photo" height="120px"
+                                 alt="No Image Found">
                             <h4 class="text-primary bold">{{item.name}}</h4>
                             <p>{{item.itemCode}}</p>
                         </div>
@@ -68,7 +73,7 @@
         computed: {
             ...mapState('shop', {
                 items: 'items',
-                isSearchingItem:'isSearchingItem'
+                isSearchingItem: 'isSearchingItem'
             })
         },
 

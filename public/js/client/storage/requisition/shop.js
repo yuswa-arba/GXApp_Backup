@@ -2530,6 +2530,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2550,7 +2564,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        sortByCategory: function sortByCategory(categoryCode) {}
+        sortByCategory: function sortByCategory(categoryCode) {
+
+            var shopVuexState = this.$store.state.shop;
+            shopVuexState.isSearchingItem = true;
+
+            this.$store.commit({
+                type: 'shop/getItemList',
+                sortCategoryCode: categoryCode
+
+            });
+        }
     },
     mounted: function mounted() {}
 });
@@ -2569,6 +2593,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4390,7 +4419,13 @@ var render = function() {
             ? _c("h4", { staticClass: "text-master" }, [
                 _vm._v(" Searching item.. Please wait..")
               ])
-            : _vm._e()
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.items.length > 0
+            ? _c("h4", { staticClass: "text-master" })
+            : _c("h4", { staticClass: "text-master" }, [
+                _vm._v("No Items Found")
+              ])
         ])
       ]),
       _vm._v(" "),
@@ -4531,37 +4566,54 @@ var render = function() {
           _c(
             "div",
             { staticClass: "row" },
-            _vm._l(_vm.categories, function(category, index) {
-              return _c(
+            [
+              _c(
                 "div",
                 {
                   staticClass:
                     "col-lg-12 col-sm-6 d-flex-not-important flex-column",
                   on: {
                     click: function($event) {
-                      _vm.sortByCategory(category.code)
+                      _vm.sortByCategory("")
                     }
                   }
                 },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75",
-                      attrs: { "data-social": "item" }
-                    },
-                    [
-                      _c("div", { staticClass: "card-header clearfix" }, [
-                        _c("h5", { staticClass: "fs-16 overflow-ellipsis" }, [
-                          _vm._v(_vm._s(category.name))
+                [_vm._m(1)]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.categories, function(category, index) {
+                return _c(
+                  "div",
+                  {
+                    staticClass:
+                      "col-lg-12 col-sm-6 d-flex-not-important flex-column",
+                    on: {
+                      click: function($event) {
+                        _vm.sortByCategory(category.code)
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75",
+                        attrs: { "data-social": "item" }
+                      },
+                      [
+                        _c("div", { staticClass: "card-header clearfix" }, [
+                          _c("h5", { staticClass: "fs-16 overflow-ellipsis" }, [
+                            _vm._v(_vm._s(category.name))
+                          ])
                         ])
-                      ])
-                    ]
-                  )
-                ]
-              )
-            })
+                      ]
+                    )
+                  ]
+                )
+              })
+            ],
+            2
           )
         ])
       ])
@@ -4576,6 +4628,24 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-lg-12 m-b-10" }, [
       _c("h4", [_vm._v("Categories")])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75",
+        attrs: { "data-social": "item" }
+      },
+      [
+        _c("div", { staticClass: "card-header clearfix" }, [
+          _c("h5", { staticClass: "fs-16 overflow-ellipsis" }, [_vm._v("ALL")])
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -19407,7 +19477,12 @@ module.exports = Component.exports
 /* harmony default export */ __webpack_exports__["a"] = ({
     searchItems: function searchItems(state, payload) {
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/item/search?v=' + payload.searchText).then(function (res) {
+        var search = '';
+        if (payload.searchText) {
+            search = payload.searchText;
+        }
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/item/search?v=' + search).then(function (res) {
 
             state.isSearchingItem = true;
 
@@ -19430,6 +19505,79 @@ module.exports = Component.exports
             } else {
                 state.isSearchingItem = false;
             }
+        });
+    },
+    getItemList: function getItemList(state, payload) {
+
+        var param = '';
+
+        if (payload.sortStatusId) {
+            // sort by status
+            if (param != '') {
+                param += '&';
+            }
+            param += 'status=' + payload.sortStatusId;
+        }
+
+        if (payload.sortCategoryCode) {
+            // sort by category
+            if (param != '') {
+                param += '&';
+            }
+            param += 'categoryCode=' + payload.sortCategoryCode;
+        }
+
+        if (payload.sortTypeCode) {
+            // sort by type
+            if (param != '') {
+                param += '&';
+            }
+            param += 'typeCode=' + payload.sortTypeCode;
+        }
+
+        //get next page
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/item/list?' + param).then(function (res) {
+
+            state.isSearchingItem = true;
+
+            if (!res.data.isFailed) {
+
+                if (res.data.items.data) {
+
+                    state.items = [];
+
+                    //insert items
+                    var itemsData = res.data.items.data;
+                    if (itemsData) {
+                        state.items = state.items.concat(itemsData);
+                    }
+
+                    //insert pagination
+                    state.paginationMeta = res.data.items.meta.pagination;
+                }
+
+                state.isSearchingItem = false;
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+
+                state.isSearchingItem = false;
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+
+            state.isSearchingItem = false;
         });
     }
 });

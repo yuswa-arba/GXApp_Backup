@@ -7,6 +7,20 @@
             <div class="scrollable">
                 <div style="height: 700px">
                     <div class="row">
+
+                        <!-- ALL-->
+                        <div class="col-lg-12 col-sm-6 d-flex-not-important flex-column" @click="sortByCategory('')">
+                            <!-- START ITEM -->
+                            <div class="card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75"
+                                 data-social="item">
+                                <div class="card-header clearfix">
+                                    <h5 class="fs-16 overflow-ellipsis">ALL</h5>
+                                </div>
+                            </div>
+                            <!-- END ITEM -->
+                        </div>
+
+                        <!-- CATEGORIES -->
                         <div class="col-lg-12 col-sm-6 d-flex-not-important flex-column"
                              v-for="(category,index) in categories" @click="sortByCategory(category.code)">
                             <!-- START ITEM -->
@@ -51,6 +65,15 @@
         },
         methods: {
             sortByCategory(categoryCode){
+
+                let shopVuexState = this.$store.state.shop
+                shopVuexState.isSearchingItem = true
+
+                this.$store.commit({
+                    type:'shop/getItemList',
+                    sortCategoryCode:categoryCode
+
+                })
 
             }
         },
