@@ -1,6 +1,7 @@
 <!-- START PAGE HEADER WRAPPER -->
 <!-- START HEADER -->
-<div class="header light bg-white ">
+<div class="header bg-primary-dark"></div>
+<div class="header light bg-primary m-t-10">
     <!-- START MOBILE SIDEBAR TOGGLE -->
     <a href="#" class="btn-link toggle-sidebar hidden-lg-up pg pg-menu" data-toggle="sidebar">
     </a>
@@ -8,7 +9,7 @@
     <div class="">
         <div class="brand inline">
             <img src="{{asset('core/img/logo_blue.png')}}" alt="logo" data-src="{{asset('core/img/logo_blue.png')}}"
-                 data-src-retina="{{asset('core/img/logo_blue_2x.png')}}" width="78" height="22"
+                 data-src-retina="{{asset('core/img/logo_white_2x.png')}}" width="78" height="22"
                  class="m-t-5"
             >
         </div>
@@ -17,9 +18,9 @@
         <div class="input-group">
             <input type="text" id="search-box" class="form-control"
             placeholder="Type here to search">
-            <span class="input-group-addon primary">
-                        <i class="fa fa-search"></i>
-                        </span>
+            {{--<span class="input-group-addon primary">--}}
+                        {{--<i class="fa fa-search"></i>--}}
+                        {{--</span>--}}
         </div>
     </div>
 
@@ -32,16 +33,16 @@
                 </div>
             </li>
             <li class="p-r-10 inline">
-                <a href="{{route('misc.notification')}}" class="header-icon fa fa-comment cursor m-b-5" style="font-size: 18px"></a>
+                <a href="{{route('misc.notification')}}" class="header-icon fa fa-comment white cursor m-b-5" style="font-size: 18px"></a>
             </li>
             <li class="p-r-10 inline">
-                <a href="#" class="header-icon pg pg-thumbs"></a>
+                <a href="#" class="header-icon pg pg-thumbs white"></a>
             </li>
         </ul>
         <!-- END NOTIFICATIONS LIST -->
         <!-- START User Info-->
         <div class="pull-left p-r-10 fs-14 font-heading hidden-md-down m-l-20">
-            <span class="semi-bold">{{Auth::user()->email}}</span>
+            <span class="semi-bold white">{{Auth::user()->email}}</span>
         </div>
         <div class="dropdown pull-right hidden-md-down">
             <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"

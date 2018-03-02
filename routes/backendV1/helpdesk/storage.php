@@ -76,5 +76,15 @@ Route::prefix('v1/h')->group(function () {
         Route::post('undoDelete/item', 'Misc\ItemController@undoDeleteItem');
         Route::get('item/list/search', 'Misc\ItemController@searchItem');
 
+        /*
+        |--------------------------------------------------------------------------
+        | Requisition Shop
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('requisition/shop/item/list', 'Requisition\ShopController@itemList');
+
+
+
     });
 });

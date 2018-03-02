@@ -149,6 +149,10 @@
   font-weight: 900 !important;
 }
 
+.white {
+  color: #fff !important;
+}
+
 .employee-details label {
   font-size: 11px !important;
   text-transform: uppercase !important;
@@ -404,5 +408,19 @@
 
 .disabled-form .form-group {
   background: #ebebeb !important;
+}
+
+.storage-item-container .storage-item {
+  text-align: center;
+}
+
+.storage-item-container .storage-item img {
+  margin: 0 auto;
+  display: block;
+}
+
+.storage-item-container .storage-item h4 {
+  margin: 0;
+  padding: 0;
 }
 

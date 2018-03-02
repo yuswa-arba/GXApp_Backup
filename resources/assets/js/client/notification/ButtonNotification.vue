@@ -1,6 +1,6 @@
 <template>
 <div>
-    <a href="javascript:;" id="notification-center" class="header-icon pg pg-world"
+    <a href="javascript:;" id="notification-center" class="header-icon pg pg-world white"
        @click="openOrCloseNotificationList()">
         <span class="bubble hide"></span>
     </a>

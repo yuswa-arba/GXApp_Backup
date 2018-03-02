@@ -2991,13 +2991,13 @@ hr.dotted {
   background-color: #007be8 !important;
 }
 .bg-primary-dark {
-  background-color: #0064bc;
+  background-color: #0064bc !important;
 }
 .bg-primary-darker {
-  background-color: #004a8b;
+  background-color: #004a8b !important;
 }
 .bg-primary-light {
-  background-color: #3395ed;
+  background-color: #3395ed !important;
 }
 .bg-primary-lighter {
   background-color: #cce5fa;

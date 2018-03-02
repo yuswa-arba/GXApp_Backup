@@ -42,7 +42,7 @@ class CreateItemLogic extends CreateUseCase
         // Save Item to DB
         $create = StorageItems::create([
             'itemCode'=>$itemCode,
-            'name' => $request->name,
+            'name' => ucwords($request->name),
             'unitId' => $request->unitId,
             'itemTypeCode' => $request->itemTypeCode,
             'categoryCode' => $request->categoryCode,

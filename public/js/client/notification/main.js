@@ -4394,7 +4394,7 @@ var render = function() {
     _c(
       "a",
       {
-        staticClass: "header-icon pg pg-world",
+        staticClass: "header-icon pg pg-world white",
         attrs: { href: "javascript:;", id: "notification-center" },
         on: {
           click: function($event) {

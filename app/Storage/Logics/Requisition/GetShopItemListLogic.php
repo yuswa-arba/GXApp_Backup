@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Storage\Logics\Item;
+namespace App\Storage\Logics\Requisition;
 
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeListTransfomer;
@@ -10,7 +10,7 @@ use App\Storage\Transformers\StorageItemDetailTransformer;
 use App\Traits\GlobalUtils;
 use Illuminate\Support\Facades\Log;
 
-class GetItemListLogic extends GetListUseCase
+class GetShopItemListLogic extends GetListUseCase
 {
 
     use GlobalUtils;
@@ -65,15 +65,15 @@ class GetItemListLogic extends GetListUseCase
             $query .= $rawQueryStatus;
         }
 
-        $items = StorageItems::whereNotNull('itemCode')->orderBy('isDeleted','asc')->paginate(50);
+        $items = StorageItems::whereNotNull('itemCode')->where('isDeleted',0)->paginate(50);
 
         if ($query != '') {
 
 //            Log::info('raw query called: ' . $query);
 
             $items = StorageItems::whereNotNull('itemCode')
+                ->where('isDeleted',0)
                 ->whereRaw($query)
-                ->orderBy('isDeleted','asc')
                 ->paginate(50);
         }
 
