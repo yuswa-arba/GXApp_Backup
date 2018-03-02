@@ -1,7 +1,7 @@
 <!-- START PAGE HEADER WRAPPER -->
 <!-- START HEADER -->
 <div class="header bg-primary-dark"></div>
-<div class="header light bg-primary m-t-10">
+<div class="header light bg-primary" style="margin-top: 8px">
     <!-- START MOBILE SIDEBAR TOGGLE -->
     <a href="#" class="btn-link toggle-sidebar hidden-lg-up pg pg-menu" data-toggle="sidebar">
     </a>

@@ -2608,6 +2608,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -2630,7 +2631,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             sortStatusId: '',
             sortCategoryCode: '',
             sortTypeCode: '',
-            searchText: ''
+            searchText: '',
+            delayTimer: null // use for search on finish typing at searchItemsOnTyping() method
         };
     },
     created: function created() {
@@ -2738,6 +2740,50 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     $state.complete();
                 });
             }
+        },
+        searchItems: function searchItems() {
+            var self = this;
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/item/search?v=' + self.searchText).then(function (res) {
+                if (!res.data.isFailed) {
+                    if (res.data.items.data) {
+
+                        self.items = [];
+
+                        //insert items
+                        var itemsData = res.data.items.data;
+                        if (itemsData) {
+                            self.items = self.items.concat(itemsData);
+                        }
+
+                        //insert pagination
+                        self.paginationMeta = res.data.items.meta.pagination;
+                    }
+                }
+            });
+        },
+        searchItemsOnTyping: function searchItemsOnTyping() {
+            var self = this;
+            clearTimeout(self.delayTimer); // clear dealy timer wait for user to finish typing
+            self.delayTimer = setTimeout(function () {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/item/search?v=' + self.searchText).then(function (res) {
+                    if (!res.data.isFailed) {
+                        if (res.data.items.data) {
+
+                            self.items = [];
+
+                            //insert items
+                            var itemsData = res.data.items.data;
+                            if (itemsData) {
+                                self.items = self.items.concat(itemsData);
+                            }
+
+                            //insert pagination
+                            self.paginationMeta = res.data.items.meta.pagination;
+                        }
+                    }
+                });
+            }, 500); //delay 0.5 second
         }
     },
     mounted: function mounted() {}
@@ -4400,6 +4446,9 @@ var render = function() {
               },
               domProps: { value: _vm.searchText },
               on: {
+                keyup: function($event) {
+                  _vm.searchItemsOnTyping()
+                },
                 input: function($event) {
                   if ($event.target.composing) {
                     return
@@ -4409,7 +4458,16 @@ var render = function() {
               }
             }),
             _vm._v(" "),
-            _vm._m(0)
+            _c("span", { staticClass: "input-group-addon master" }, [
+              _c("i", {
+                staticClass: "fa fa-search cursor",
+                on: {
+                  click: function($event) {
+                    _vm.searchItems()
+                  }
+                }
+              })
+            ])
           ])
         ]
       ),
@@ -4442,7 +4500,7 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _vm._m(1, true)
+                _vm._m(0, true)
               ])
             ])
           ]
@@ -4463,14 +4521,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "input-group-addon master" }, [
-      _c("i", { staticClass: "fa fa-search cursor" })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

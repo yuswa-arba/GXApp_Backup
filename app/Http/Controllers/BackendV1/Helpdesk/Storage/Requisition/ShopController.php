@@ -22,6 +22,7 @@ use App\Storage\Transformers\SupplierTransformer;
 use App\Storage\Transformers\WarehouseTransformer;
 use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class ShopController extends Controller
@@ -41,31 +42,42 @@ class ShopController extends Controller
 
     public function searchItem(Request $request)
     {
+        $search = $request->v;
 
-        $items = StorageItems::where('itemCode', 'like', '%' . $request->search . '%')
-            ->where('name', 'like', '%' . $request->search . '%')
-            ->get();
+        if ($search != '') {
 
-        if($items){
+            $items = StorageItems::where('isDeleted', 0) // where its not deleted
+                ->where(function ($query) use ($search) {
+                    $query->where('itemCode', 'like', '%' . $search . '%') // where matches item code
+                        ->orWhere('name', 'like', '%' . $search . '%'); // or matches item name
+                })
+                ->paginate(50); //paginate it
 
-            $response['isFailed'] = false;
-            $response['message'] = 'Success';
-            $response['items']= fractal($items, new StorageItemDetailTransformer());
+            if ($items) {
 
-            return response()->json($response,200);
+                $response['isFailed'] = false;
+                $response['message'] = 'Success';
+                $response['items'] = fractal($items, new StorageItemDetailTransformer());
+
+                return response()->json($response, 200);
+
+            } else {
+
+                $response['isFailed'] = true;
+                $response['message'] = 'Items not found';
+
+                return response()->json($response, 200);
+
+            }
 
         } else {
 
-            $response['isFailed'] = true;
-            $response['message'] = 'Items not found';
-
-            return response()->json($response,200);
+            return GetShopItemListLogic::getData($request);
 
         }
 
+
     }
-
-
 
 
 }

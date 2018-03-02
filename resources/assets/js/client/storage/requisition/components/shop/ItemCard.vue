@@ -6,10 +6,11 @@
             <div class="input-group">
                 <input type="text" style="height: 40px;" class="form-control" id="search-items-box"
                        placeholder="Search Item Name / Item Code"
+                       @keyup="searchItemsOnTyping()"
                        v-model="searchText"
                 >
                 <span class="input-group-addon master"><i
-                        class="fa fa-search cursor"></i></span>
+                        class="fa fa-search cursor" @click="searchItems()"></i></span>
             </div>
         </div>
         <div class="col-lg-3 col-sm-6 d-flex-not-important flex-column filter-item-item"
@@ -64,7 +65,8 @@
                 sortStatusId: '',
                 sortCategoryCode: '',
                 sortTypeCode: '',
-                searchText:''
+                searchText: '',
+                delayTimer:null // use for search on finish typing at searchItemsOnTyping() method
             }
         },
         created(){
@@ -175,6 +177,54 @@
                 }
 
             },
+            searchItems(){
+                let self = this
+
+                get(api_path + 'storage/requisition/shop/item/search?v=' + self.searchText)
+                    .then((res) => {
+                            if (!res.data.isFailed) {
+                                if (res.data.items.data) {
+
+                                    self.items = []
+
+                                    //insert items
+                                    let itemsData = res.data.items.data
+                                    if (itemsData) {
+                                        self.items = self.items.concat(itemsData)
+                                    }
+
+                                    //insert pagination
+                                    self.paginationMeta = res.data.items.meta.pagination
+                                }
+                            }
+                        }
+                    )
+            },
+            searchItemsOnTyping(){
+                let self = this
+                clearTimeout(self.delayTimer) // clear dealy timer wait for user to finish typing
+                self.delayTimer = setTimeout(() => {
+                    get(api_path + 'storage/requisition/shop/item/search?v=' + self.searchText)
+                        .then((res) => {
+                                if (!res.data.isFailed) {
+                                    if (res.data.items.data) {
+
+                                        self.items = []
+
+                                        //insert items
+                                        let itemsData = res.data.items.data
+                                        if (itemsData) {
+                                            self.items = self.items.concat(itemsData)
+                                        }
+
+                                        //insert pagination
+                                        self.paginationMeta = res.data.items.meta.pagination
+                                    }
+                                }
+                            }
+                        )
+                },500) //delay 0.5 second
+            }
         },
         mounted(){
 

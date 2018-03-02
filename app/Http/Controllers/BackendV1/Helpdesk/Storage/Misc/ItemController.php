@@ -38,32 +38,6 @@ class ItemController extends Controller
         return GetItemListLogic::getData($request);
     }
 
-    public function searchItem(Request $request)
-    {
-
-        $items = StorageItems::where('itemCode', 'like', '%' . $request->search . '%')
-            ->where('name', 'like', '%' . $request->search . '%')
-            ->get();
-
-        if($items){
-
-            $response['isFailed'] = false;
-            $response['message'] = 'Success';
-            $response['items']= fractal($items, new StorageItemDetailTransformer());
-
-            return response()->json($response,200);
-
-        } else {
-
-            $response['isFailed'] = true;
-            $response['message'] = 'Items not found';
-
-            return response()->json($response,200);
-
-        }
-
-    }
-
     public function createItem(Request $request)
     {
 
