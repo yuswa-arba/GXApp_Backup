@@ -9,6 +9,17 @@ import actions from './actions'
 export default {
     namespaced: true,
     state: {
+        items:[],
+        paginationMeta: {
+            count: '',
+            current_page: '',
+            links: [],
+            per_page: '',
+            total: '',
+            total_pages: ''
+        },
+        searchText: '',
+        isSearchingItem:false
     },
     getters,
     mutations,

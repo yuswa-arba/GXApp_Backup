@@ -8,7 +8,7 @@
                 <div style="height: 700px">
                     <div class="row">
                         <div class="col-lg-12 col-sm-6 d-flex-not-important flex-column"
-                             v-for="(category,index) in categories">
+                             v-for="(category,index) in categories" @click="sortByCategory(category.code)">
                             <!-- START ITEM -->
                             <div class="card social-card share  full-width m-b-10 d-flex flex-1 full-height no-border sm-vh-75"
                                  data-social="item">
@@ -49,7 +49,11 @@
                 })
 
         },
-        methods: {},
+        methods: {
+            sortByCategory(categoryCode){
+
+            }
+        },
         mounted(){
 
         }

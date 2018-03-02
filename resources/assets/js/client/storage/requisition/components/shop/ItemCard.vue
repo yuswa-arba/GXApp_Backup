@@ -1,6 +1,10 @@
 <template>
     <div class="row">
-        <div class="col-lg-6 m-b-10"></div>
+        <div class="col-lg-6 m-b-10">
+            <div style="padding-top: 20px">
+                <h4 class="text-master" v-if="isSearchingItem"> Searching item.. Please wait..</h4>
+            </div>
+        </div>
         <div class="col-lg-6 m-b-10" style="margin-top: 20px">
             <!--<input type="text" placeholder="Search Items" class="form-control" id="search-items-box">-->
             <div class="input-group">
@@ -46,6 +50,7 @@
 <script type="text/javascript">
     import {get} from '../../../../helpers/api'
     import {api_path} from '../../../../helpers/const'
+    import {mapGetters, mapState} from 'vuex'
     import InfiniteLoading from 'vue-infinite-loading';
     export default{
         components: {
@@ -53,51 +58,32 @@
         },
         data(){
             return {
-                items: [],
-                paginationMeta: {
-                    count: '',
-                    current_page: '',
-                    links: [],
-                    per_page: '',
-                    total: '',
-                    total_pages: ''
-                },
                 sortStatusId: '',
                 sortCategoryCode: '',
                 sortTypeCode: '',
                 searchText: '',
-                delayTimer:null // use for search on finish typing at searchItemsOnTyping() method
+                delayTimer: null // use for search on finish typing at searchItemsOnTyping() method
             }
         },
+        computed: {
+            ...mapState('shop', {
+                items: 'items',
+                isSearchingItem:'isSearchingItem'
+            })
+        },
+
         created(){
             let self = this
-
-            //get data on create
-//            get(api_path + 'storage/item/list')
-//                .then((res) => {
-//                        if (!res.data.isFailed) {
-//                            if (res.data.items.data) {
-//
-//                                //insert items
-//                                let itemsData = res.data.items.data
-//                                if (itemsData) {
-//                                    self.items = self.items.concat(itemsData)
-//                                }
-//
-//                                //insert pagination
-//                                self.paginationMeta = res.data.items.meta.pagination
-//                            }
-//                        }
-//                    }
-//                )
-
 
         },
         methods: {
             infiniteHandler($state) { //getting item list data from server using vue-infinit-scroll
+
                 let self = this
 
-                if (self.paginationMeta.current_page >= self.paginationMeta.total_pages && self.paginationMeta.current_page != '') {
+                let shopVuexState = this.$store.state.shop
+
+                if (shopVuexState.paginationMeta.current_page >= shopVuexState.paginationMeta.total_pages && shopVuexState.paginationMeta.current_page != '') {
 
                     $state.complete()
 
@@ -127,7 +113,7 @@
                     }
 
 
-                    let nextPage = self.paginationMeta.current_page + 1
+                    let nextPage = shopVuexState.paginationMeta.current_page + 1
 
                     //get next page
                     get(api_path + 'storage/requisition/shop/item/list?' + param + '&page=' + nextPage)
@@ -138,15 +124,15 @@
                                     //insert items
                                     let itemsData = res.data.items.data
                                     if (itemsData) {
-                                        self.items = self.items.concat(itemsData)
+                                        shopVuexState.items = shopVuexState.items.concat(itemsData)
                                     }
 
                                     //insert pagination
-                                    self.paginationMeta = res.data.items.meta.pagination
+                                    shopVuexState.paginationMeta = res.data.items.meta.pagination
 
                                     $state.loaded();
 
-                                    if (self.items.length === self.paginationMeta.total) {
+                                    if (shopVuexState.items.length === shopVuexState.paginationMeta.total) {
                                         $state.complete()
                                     }
 
@@ -180,50 +166,25 @@
             searchItems(){
                 let self = this
 
-                get(api_path + 'storage/requisition/shop/item/search?v=' + self.searchText)
-                    .then((res) => {
-                            if (!res.data.isFailed) {
-                                if (res.data.items.data) {
+                let shopVuexState = this.$store.state.shop
+                shopVuexState.isSearchingItem = true
 
-                                    self.items = []
+                this.$store.commit({
+                    type: 'shop/searchItems',
+                    searchText: self.searchText
+                })
 
-                                    //insert items
-                                    let itemsData = res.data.items.data
-                                    if (itemsData) {
-                                        self.items = self.items.concat(itemsData)
-                                    }
-
-                                    //insert pagination
-                                    self.paginationMeta = res.data.items.meta.pagination
-                                }
-                            }
-                        }
-                    )
             },
             searchItemsOnTyping(){
                 let self = this
-                clearTimeout(self.delayTimer) // clear dealy timer wait for user to finish typing
+
+                clearTimeout(self.delayTimer) // clear delay timer wait for user to finish typing
                 self.delayTimer = setTimeout(() => {
-                    get(api_path + 'storage/requisition/shop/item/search?v=' + self.searchText)
-                        .then((res) => {
-                                if (!res.data.isFailed) {
-                                    if (res.data.items.data) {
 
-                                        self.items = []
+                    self.searchItems() // call searchItems function()
 
-                                        //insert items
-                                        let itemsData = res.data.items.data
-                                        if (itemsData) {
-                                            self.items = self.items.concat(itemsData)
-                                        }
+                }, 500) //delay 0.5 second
 
-                                        //insert pagination
-                                        self.paginationMeta = res.data.items.meta.pagination
-                                    }
-                                }
-                            }
-                        )
-                },500) //delay 0.5 second
             }
         },
         mounted(){

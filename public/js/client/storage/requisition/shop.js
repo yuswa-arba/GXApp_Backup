@@ -2549,7 +2549,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }).catch(function (err) {});
     },
 
-    methods: {},
+    methods: {
+        sortByCategory: function sortByCategory(categoryCode) {}
+    },
     mounted: function mounted() {}
 });
 
@@ -2562,8 +2564,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_infinite_loading__ = __webpack_require__("./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_vue_infinite_loading__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__ = __webpack_require__("./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -2609,25 +2614,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        InfiniteLoading: __WEBPACK_IMPORTED_MODULE_2_vue_infinite_loading___default.a
+        InfiniteLoading: __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default.a
     },
     data: function data() {
         return {
-            items: [],
-            paginationMeta: {
-                count: '',
-                current_page: '',
-                links: [],
-                per_page: '',
-                total: '',
-                total_pages: ''
-            },
             sortStatusId: '',
             sortCategoryCode: '',
             sortTypeCode: '',
@@ -2635,36 +2636,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             delayTimer: null // use for search on finish typing at searchItemsOnTyping() method
         };
     },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('shop', {
+        items: 'items',
+        isSearchingItem: 'isSearchingItem'
+    })),
+
     created: function created() {
         var self = this;
-
-        //get data on create
-        //            get(api_path + 'storage/item/list')
-        //                .then((res) => {
-        //                        if (!res.data.isFailed) {
-        //                            if (res.data.items.data) {
-        //
-        //                                //insert items
-        //                                let itemsData = res.data.items.data
-        //                                if (itemsData) {
-        //                                    self.items = self.items.concat(itemsData)
-        //                                }
-        //
-        //                                //insert pagination
-        //                                self.paginationMeta = res.data.items.meta.pagination
-        //                            }
-        //                        }
-        //                    }
-        //                )
-
     },
 
     methods: {
         infiniteHandler: function infiniteHandler($state) {
             //getting item list data from server using vue-infinit-scroll
+
             var self = this;
 
-            if (self.paginationMeta.current_page >= self.paginationMeta.total_pages && self.paginationMeta.current_page != '') {
+            var shopVuexState = this.$store.state.shop;
+
+            if (shopVuexState.paginationMeta.current_page >= shopVuexState.paginationMeta.total_pages && shopVuexState.paginationMeta.current_page != '') {
 
                 $state.complete();
             } else {
@@ -2695,7 +2685,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     param += 'typeCode=' + self.sortTypeCode;
                 }
 
-                var nextPage = self.paginationMeta.current_page + 1;
+                var nextPage = shopVuexState.paginationMeta.current_page + 1;
 
                 //get next page
                 Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/item/list?' + param + '&page=' + nextPage).then(function (res) {
@@ -2705,15 +2695,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             //insert items
                             var itemsData = res.data.items.data;
                             if (itemsData) {
-                                self.items = self.items.concat(itemsData);
+                                shopVuexState.items = shopVuexState.items.concat(itemsData);
                             }
 
                             //insert pagination
-                            self.paginationMeta = res.data.items.meta.pagination;
+                            shopVuexState.paginationMeta = res.data.items.meta.pagination;
 
                             $state.loaded();
 
-                            if (self.items.length === self.paginationMeta.total) {
+                            if (shopVuexState.items.length === shopVuexState.paginationMeta.total) {
                                 $state.complete();
                             }
                         } else {
@@ -2744,45 +2734,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         searchItems: function searchItems() {
             var self = this;
 
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/item/search?v=' + self.searchText).then(function (res) {
-                if (!res.data.isFailed) {
-                    if (res.data.items.data) {
+            var shopVuexState = this.$store.state.shop;
+            shopVuexState.isSearchingItem = true;
 
-                        self.items = [];
-
-                        //insert items
-                        var itemsData = res.data.items.data;
-                        if (itemsData) {
-                            self.items = self.items.concat(itemsData);
-                        }
-
-                        //insert pagination
-                        self.paginationMeta = res.data.items.meta.pagination;
-                    }
-                }
+            this.$store.commit({
+                type: 'shop/searchItems',
+                searchText: self.searchText
             });
         },
         searchItemsOnTyping: function searchItemsOnTyping() {
             var self = this;
-            clearTimeout(self.delayTimer); // clear dealy timer wait for user to finish typing
+
+            clearTimeout(self.delayTimer); // clear delay timer wait for user to finish typing
             self.delayTimer = setTimeout(function () {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/item/search?v=' + self.searchText).then(function (res) {
-                    if (!res.data.isFailed) {
-                        if (res.data.items.data) {
 
-                            self.items = [];
-
-                            //insert items
-                            var itemsData = res.data.items.data;
-                            if (itemsData) {
-                                self.items = self.items.concat(itemsData);
-                            }
-
-                            //insert pagination
-                            self.paginationMeta = res.data.items.meta.pagination;
-                        }
-                    }
-                });
+                self.searchItems(); // call searchItems function()
             }, 500); //delay 0.5 second
         }
     },
@@ -4418,7 +4384,15 @@ var render = function() {
     "div",
     { staticClass: "row" },
     [
-      _c("div", { staticClass: "col-lg-6 m-b-10" }),
+      _c("div", { staticClass: "col-lg-6 m-b-10" }, [
+        _c("div", { staticStyle: { "padding-top": "20px" } }, [
+          _vm.isSearchingItem
+            ? _c("h4", { staticClass: "text-master" }, [
+                _vm._v(" Searching item.. Please wait..")
+              ])
+            : _vm._e()
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -4562,7 +4536,12 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "col-lg-12 col-sm-6 d-flex-not-important flex-column"
+                    "col-lg-12 col-sm-6 d-flex-not-important flex-column",
+                  on: {
+                    click: function($event) {
+                      _vm.sortByCategory(category.code)
+                    }
+                  }
                 },
                 [
                   _c(
@@ -19391,7 +19370,19 @@ module.exports = Component.exports
 
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
-    state: {},
+    state: {
+        items: [],
+        paginationMeta: {
+            count: '',
+            current_page: '',
+            links: [],
+            per_page: '',
+            total: '',
+            total_pages: ''
+        },
+        searchText: '',
+        isSearchingItem: false
+    },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
     actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */]
@@ -19413,7 +19404,35 @@ module.exports = Component.exports
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = ({});
+/* harmony default export */ __webpack_exports__["a"] = ({
+    searchItems: function searchItems(state, payload) {
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/item/search?v=' + payload.searchText).then(function (res) {
+
+            state.isSearchingItem = true;
+
+            if (!res.data.isFailed) {
+                if (res.data.items.data) {
+
+                    state.items = [];
+
+                    //insert items
+                    var itemsData = res.data.items.data;
+                    if (itemsData) {
+                        state.items = state.items.concat(itemsData);
+                    }
+
+                    //insert pagination
+                    state.paginationMeta = res.data.items.meta.pagination;
+                }
+
+                state.isSearchingItem = false;
+            } else {
+                state.isSearchingItem = false;
+            }
+        });
+    }
+});
 
 /***/ }),
 
