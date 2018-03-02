@@ -9,7 +9,7 @@
 
             </div>
         </div>
-        <div class="col-lg-6 m-b-10" style="margin-top: 20px">
+        <div class="col-lg-5 m-b-10" style="margin-top: 20px;margin-right: -20px">
             <!--<input type="text" placeholder="Search Items" class="form-control" id="search-items-box">-->
             <div class="input-group">
                 <input type="text" style="height: 40px;" class="form-control" id="search-items-box"
@@ -20,6 +20,10 @@
                 <span class="input-group-addon master"><i
                         class="fa fa-search cursor" @click="searchItems()"></i></span>
             </div>
+            <p class="pull-right"style="padding-top: 3px"> <i class="fa fa-info"></i> Sometimes search need to be triggered on <i class="fa fa-search"></i> button click </p>
+        </div>
+        <div class="col-lg-1 m-b-10" style="margin-top: 25px">
+          <div class="btn btn-default">  <i class="fa fa-shopping-cart fs-18 cursor"></i></div>
         </div>
         <div class="col-lg-3 col-sm-6 d-flex-not-important flex-column filter-item-item"
              v-for="(item,index) in items">
@@ -29,13 +33,13 @@
                 <div class="card-block">
                     <div class="storage-item-container">
                         <div class="storage-item">
-                            <img :src="'/images/storage/items/'+item.photo" height="120px"
-                                 alt="No Image Found">
-                            <h4 class="text-primary bold">{{item.name}}</h4>
+                            <img :src="'/images/storage/items/'+item.photo" height="120px" style="max-width: 160px"
+                                 alt="No Image Found" class="img-responsive">
+                            <h5 class="text-primary bold overflow-ellipsis">{{item.name}}</h5>
                             <p>{{item.itemCode}}</p>
                         </div>
                     </div>
-                    <div class="bg-primary text-center cursor">
+                    <div class="bg-primary text-center cursor" @click="goToDetail(item.id)">
                         <h5 class="text-white bold">Add to Request</h5>
                     </div>
                 </div>
@@ -189,6 +193,10 @@
                     self.searchItems() // call searchItems function()
 
                 }, 500) //delay 0.5 second
+
+            },
+            goToDetail(itemId){
+                this.$router.push({name:'detailItem',params:{id:itemId}})
 
             }
         },

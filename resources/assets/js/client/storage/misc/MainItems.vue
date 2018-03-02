@@ -7,7 +7,7 @@
                         <p class="card-title text-uppercase text-black" style="opacity: 1">Item Form</p>
                     </div>
                     <div class="card-block">
-                        <div class="row">
+                        <div class="row" @keyup.enter="createItem()">
                             <div class="col-lg-6">
                                 <div class="form-group-attached">
                                     <div class="form-group form-group-default required">

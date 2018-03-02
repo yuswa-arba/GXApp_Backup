@@ -82,7 +82,9 @@ export default{
                         //insert items
                         let itemsData = res.data.items.data
                         if (itemsData) {
-                            state.items = state.items.concat(itemsData)
+                            setTimeout(()=>{
+                                state.items = state.items.concat(itemsData)
+                            },500)
                         }
 
                         //insert pagination

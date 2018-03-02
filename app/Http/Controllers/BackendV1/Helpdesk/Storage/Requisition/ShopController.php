@@ -8,6 +8,7 @@ use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Controllers\Controller;
 use App\Storage\Logics\Item\CreateItemLogic;
 use App\Storage\Logics\Item\GetItemListLogic;
+use App\Storage\Logics\Requisition\GetShopItemDetailLogic;
 use App\Storage\Logics\Requisition\GetShopItemListLogic;
 use App\Storage\Models\StorageItems;
 use App\Storage\Models\StorageItemsCategory;
@@ -76,6 +77,24 @@ class ShopController extends Controller
 
         }
 
+    }
+
+    public function itemDetail(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(),[
+            'id'=>'required'
+        ]);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+        return GetShopItemDetailLogic::getData($request);
 
     }
 

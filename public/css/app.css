@@ -419,7 +419,8 @@
   display: block;
 }
 
-.storage-item-container .storage-item h4 {
+.storage-item-container .storage-item h4,
+.storage-item-container .storage-item h5 {
   margin: 0;
   padding: 0;
 }

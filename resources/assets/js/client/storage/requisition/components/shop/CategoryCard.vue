@@ -5,7 +5,7 @@
         </div>
         <div class="col-lg-12 m-b-10">
             <div class="scrollable">
-                <div style="height: 700px">
+                <div style="height: 1000px">
                     <div class="row">
 
                         <!-- ALL-->
