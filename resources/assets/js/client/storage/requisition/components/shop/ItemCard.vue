@@ -20,10 +20,15 @@
                 <span class="input-group-addon master"><i
                         class="fa fa-search cursor" @click="searchItems()"></i></span>
             </div>
-            <p class="pull-right"style="padding-top: 3px"> <i class="fa fa-info"></i> Sometimes search need to be triggered on <i class="fa fa-search"></i> button click </p>
+            <p class="pull-right" style="padding-top: 3px"><i class="fa fa-info"></i> Sometimes search need to be
+                triggered on <i class="fa fa-search"></i> button click </p>
         </div>
         <div class="col-lg-1 m-b-10" style="margin-top: 25px">
-          <div class="btn btn-default">  <i class="fa fa-shopping-cart fs-18 cursor"></i></div>
+            <div class="btn btn-default">
+                <i class="fa fa-shopping-cart fs-18 cursor"></i>
+                <span class="bubble">{{totalItemInCart}}</span>
+            </div>
+
         </div>
         <div class="col-lg-3 col-sm-6 d-flex-not-important flex-column filter-item-item"
              v-for="(item,index) in items">
@@ -33,13 +38,14 @@
                 <div class="card-block">
                     <div class="storage-item-container">
                         <div class="storage-item">
-                            <img :src="'/images/storage/items/'+item.photo" height="120px" style="max-width: 160px"
+                            <img :src="'/images/storage/items/'+item.photo" height="120px"
+                                 style="max-width: 200px;object-fit: cover"
                                  alt="No Image Found" class="img-responsive">
                             <h5 class="text-primary bold overflow-ellipsis">{{item.name}}</h5>
                             <p>{{item.itemCode}}</p>
                         </div>
                     </div>
-                    <div class="bg-primary text-center cursor" @click="goToDetail(item.id)">
+                    <div class="bg-primary text-center cursor" @click="attemptAddItemToCart(item.id)">
                         <h5 class="text-white bold">Add to Request</h5>
                     </div>
                 </div>
@@ -77,7 +83,8 @@
         computed: {
             ...mapState('shop', {
                 items: 'items',
-                isSearchingItem: 'isSearchingItem'
+                isSearchingItem: 'isSearchingItem',
+                totalItemInCart: 'totalItemInCart'
             })
         },
 
@@ -195,8 +202,13 @@
                 }, 500) //delay 0.5 second
 
             },
-            goToDetail(itemId){
-                this.$router.push({name:'detailItem',params:{id:itemId}})
+            attemptAddItemToCart(itemId){
+
+                //call vuex actions to show modal and get item detail
+                this.$store.dispatch({
+                    type: 'shop/attemptAddItemToCart',
+                    id: itemId
+                })
 
             }
         },

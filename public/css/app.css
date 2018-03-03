@@ -49,6 +49,13 @@
 
 /* Buttons */
 
+.btn-grey {
+  color: #969696 !important;
+  background-image: none !important;
+  background-color: #e5e5e5 !important;
+  border-color: #dbdbdb;
+}
+
 .btn-outline-primary {
   color: #0275d8 !important;
   background-image: none !important;

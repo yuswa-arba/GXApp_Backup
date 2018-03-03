@@ -14,11 +14,6 @@ class ViewController extends Controller
         $this->middleware('auth');
     }
 
-    public function cart()
-    {
-
-    }
-
     public function items()
     {
         if (Auth::user()->hasPermissionTo('access storage setting')) {
@@ -86,5 +81,10 @@ class ViewController extends Controller
     public function requisitionShop()
     {
         return view('pages.storage.requisition.shop');
+    }
+
+    public function requisitionCart()
+    {
+        return view('pages.storage.requisition.cart');
     }
 }

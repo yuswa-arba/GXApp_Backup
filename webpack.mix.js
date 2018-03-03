@@ -197,6 +197,8 @@ mix.js('resources/assets/js/client/storage/misc/suppliers','public/js/client/sto
 mix.js('resources/assets/js/client/storage/misc/warehouses','public/js/client/storage/misc');
 mix.js('resources/assets/js/client/storage/misc/units','public/js/client/storage/misc');
 mix.js('resources/assets/js/client/storage/requisition/shop','public/js/client/storage/requisition');
+mix.js('resources/assets/js/client/storage/requisition/cart','public/js/client/storage/requisition');
+
 /*
  |--------------------------------------------------------------------------
  | Application JS

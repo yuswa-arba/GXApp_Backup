@@ -19,7 +19,18 @@ export default {
             total_pages: ''
         },
         searchText: '',
-        isSearchingItem:false
+        isSearchingItem:false,
+        itemToAdd:{
+            id:'',
+            itemCode:'',
+            name:'',
+            unitFormat:'',
+            statusName:'',
+            photo:'',
+            isDeleted:''
+        },
+        addItemToCartAmount:1,
+        totalItemInCart:0
     },
     getters,
     mutations,

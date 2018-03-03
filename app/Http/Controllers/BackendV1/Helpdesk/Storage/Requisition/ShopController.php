@@ -18,6 +18,7 @@ use App\Storage\Models\StorageSuppliers;
 use App\Storage\Models\StorageWarehouses;
 use App\Storage\Transformers\BasicCodeNameTransformer;
 use App\Storage\Transformers\ShipmentTransformer;
+use App\Storage\Transformers\StorageItemBriefDetailTransformer;
 use App\Storage\Transformers\StorageItemDetailTransformer;
 use App\Storage\Transformers\SupplierTransformer;
 use App\Storage\Transformers\WarehouseTransformer;
@@ -41,17 +42,50 @@ class ShopController extends Controller
         return GetShopItemListLogic::getData($request);
     }
 
+    public function itemDetail(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $item = StorageItems::find($request->id);
+
+        if ($item) {
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            $response['item'] = fractal($item , new StorageItemBriefDetailTransformer());
+
+            return response()->json($response, 200);
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find item detail';
+
+            return response()->json($response, 200);
+        }
+
+    }
+
     public function searchItem(Request $request)
     {
         $search = $request->v;
 
         if ($search != '') {
 
-            $items = StorageItems::where('isDeleted', 0) // where its not deleted
-                ->where(function ($query) use ($search) {
-                    $query->where('itemCode', 'like', '%' . $search . '%') // where matches item code
-                        ->orWhere('name', 'like', '%' . $search . '%'); // or matches item name
-                })
+            $items = StorageItems::where('isDeleted', 0)// where its not deleted
+            ->where(function ($query) use ($search) {
+                $query->where('itemCode', 'like', '%' . $search . '%')// where matches item code
+                ->orWhere('name', 'like', '%' . $search . '%'); // or matches item name
+            })
                 ->paginate(50); //paginate it
 
             if ($items) {
@@ -73,30 +107,11 @@ class ShopController extends Controller
 
         } else {
 
+
             return GetShopItemListLogic::getData($request);
 
         }
 
     }
-
-    public function itemDetail(Request $request)
-    {
-        $response = array();
-
-        $validator = Validator::make($request->all(),[
-            'id'=>'required'
-        ]);
-
-        if($validator->fails()){
-            $response['isFailed'] = true;
-            $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
-        }
-
-        //is valid
-        return GetShopItemDetailLogic::getData($request);
-
-    }
-
 
 }

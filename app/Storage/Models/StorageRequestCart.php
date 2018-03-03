@@ -15,4 +15,9 @@ class StorageRequestCart extends Model
     {
         return $this->belongsTo(MasterEmployee::class,'employeeId');
     }
+
+    public function item()
+    {
+        return $this->belongsTo(StorageItems::class,'itemId');
+    }
 }

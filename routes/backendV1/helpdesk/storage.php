@@ -6,13 +6,11 @@
  * Time: 4:50 PM
  */
 
-
 /*
  |--------------------------------------------------------------------------
  | Storage Route
  |--------------------------------------------------------------------------
  */
-
 
 use Illuminate\Support\Facades\Route;
 
@@ -69,7 +67,6 @@ Route::prefix('v1/h')->group(function () {
          | Misc Item
          |--------------------------------------------------------------------------
          */
-
         Route::get('item/list', 'Misc\ItemController@itemList');
         Route::post('create/item', 'Misc\ItemController@createItem');
         Route::post('delete/item', 'Misc\ItemController@deleteItem');
@@ -80,11 +77,20 @@ Route::prefix('v1/h')->group(function () {
         | Requisition Shop
         |--------------------------------------------------------------------------
         */
-
         Route::get('requisition/shop/item/list', 'Requisition\ShopController@itemList');
+        Route::get('requisition/shop/item/detail', 'Requisition\ShopController@itemDetail');
         Route::get('requisition/shop/item/search','Requisition\ShopController@searchItem');
 
-
+        /*
+        |--------------------------------------------------------------------------
+        | Requisition Shop Cart
+        |--------------------------------------------------------------------------
+        */
+        Route::get('requisition/shop/cart/totalItemInCart','Cart\CartController@getTotalItemInCart');
+        Route::post('requisition/shop/cart/add','Cart\CartController@addToCart');
+        Route::post('requisition/shop/cart/remove','Cart\CartController@removeFromCart');
+        Route::post('requisition/shop/cart/update','Cart\CartController@updateItemInsideCart');
+        Route::get('requisition/shop/cart/list','Cart\CartController@itemInsideCartList');
 
     });
 });

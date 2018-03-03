@@ -4,7 +4,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Index from '../views/shop/Index.vue'
+import Index from '../views/cart/Index.vue'
 
 Vue.use(VueRouter)
 

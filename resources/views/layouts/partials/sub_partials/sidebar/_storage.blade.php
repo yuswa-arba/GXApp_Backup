@@ -15,7 +15,7 @@
             <span class="icon-thumbnail"><i data-feather="package"></i></span>
             <ul class="sub-menu">
                 <li class="">
-                    <a href="#">Cart</a>
+                    <a href="{{route('storage.requisition.cart')}}">Cart</a>
                     <span class="icon-thumbnail">c</span>
                 </li>
                 <li class="">
