@@ -86,9 +86,13 @@
                 <div class="card-block " style="padding: 10px 20px">
                     <div class="row">
                         <div class="col-lg-2">
-                            <p class="text-black fs-16"> Total: {{selectedItemsIdToRequest.length}} </p>
+                            <p class="text-black fs-24 m-t-10"> Total: {{selectedItemsIdToRequest.length}} </p>
                         </div>
-                        <div class="col-lg-10"></div>
+                        <div class="col-lg-10">
+                            <button class="m-t-5 pull-right btn btn-primary text-uppercase fs-18" @click="createRequisition()">
+                                Create Requisition <i class="fa fa-angle-right fs-20"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,7 +109,6 @@
     export default{
         data(){
             return {
-                selectedItemsIdToRequest: []
             }
         },
         created(){
@@ -116,7 +119,8 @@
         },
         computed: {
             ...mapState('cart', {
-                itemInsideCart: 'itemInsideCart'
+                itemInsideCart: 'itemInsideCart',
+                selectedItemsIdToRequest:'selectedItemsIdToRequest'
             })
         },
         methods: {
@@ -182,15 +186,15 @@
 
                 if (itemCb.prop('checked')) {
 
-                    self.selectedItemsIdToRequest.push(itemCartId) //push to array
+                    cartVuexState.selectedItemsIdToRequest.push(itemCartId) //push to array
 
                 } else {
 
-                    let itemIndex = _.findIndex(self.selectedItemsIdToRequest, (o) => { // get index of this item id
+                    let itemIndex = _.findIndex(cartVuexState.selectedItemsIdToRequest, (o) => { // get index of this item id
                         return o == itemCartId
                     })
 
-                    self.selectedItemsIdToRequest.splice(itemIndex,1) //remove from array
+                    cartVuexState.selectedItemsIdToRequest.splice(itemIndex,1) //remove from array
 
                     //unchecked all item cb
                     $('#all-item-cb').prop('checked',false)
@@ -205,7 +209,7 @@
                 let allItemCb = $('#all-item-cb')
 
                 //reset the first time
-                self.selectedItemsIdToRequest = []
+                cartVuexState.selectedItemsIdToRequest = []
 
                 if (allItemCb.prop('checked')) { // check all
 
@@ -215,7 +219,7 @@
                         cb.prop('checked', true)
 
                         if(i<totalItems-1){ // do not include the last one
-                            self.selectedItemsIdToRequest.push(cartVuexState.itemInsideCart[i].id)
+                            cartVuexState.selectedItemsIdToRequest.push(cartVuexState.itemInsideCart[i].id)
                         }
 
                     }
@@ -226,7 +230,7 @@
                         cb.prop('checked', false)
                     }
 
-                    self.selectedItemsIdToRequest = []
+                    cartVuexState.selectedItemsIdToRequest = []
 
                 }
             },
@@ -234,6 +238,29 @@
             removeAllItems(){
                 if (confirm('Are you sure to remove all items from cart?')) {
                 }
+            },
+            createRequisition(){
+
+                let self = this
+                let cartVuexState = this.$store.state.cart
+                
+                if(cartVuexState.selectedItemsIdToRequest.length>0){
+                    
+                    // create requisition
+                    // move to requisition form
+
+                    console.log(JSON.stringify(cartVuexState.selectedItemsIdToRequest))
+                    
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'There is no item selected',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();  
+                }
+                
             }
         }
     }

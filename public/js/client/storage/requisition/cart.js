@@ -2604,15 +2604,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {
-            selectedItemsIdToRequest: []
-        };
+        return {};
     },
     created: function created() {
         this.$store.dispatch({
@@ -2621,7 +2623,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('cart', {
-        itemInsideCart: 'itemInsideCart'
+        itemInsideCart: 'itemInsideCart',
+        selectedItemsIdToRequest: 'selectedItemsIdToRequest'
     })),
     methods: {
         viewImage: function viewImage(url) {
@@ -2684,15 +2687,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             if (itemCb.prop('checked')) {
 
-                self.selectedItemsIdToRequest.push(itemCartId); //push to array
+                cartVuexState.selectedItemsIdToRequest.push(itemCartId); //push to array
             } else {
 
-                var itemIndex = _.findIndex(self.selectedItemsIdToRequest, function (o) {
+                var itemIndex = _.findIndex(cartVuexState.selectedItemsIdToRequest, function (o) {
                     // get index of this item id
                     return o == itemCartId;
                 });
 
-                self.selectedItemsIdToRequest.splice(itemIndex, 1); //remove from array
+                cartVuexState.selectedItemsIdToRequest.splice(itemIndex, 1); //remove from array
 
                 //unchecked all item cb
                 $('#all-item-cb').prop('checked', false);
@@ -2706,7 +2709,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var allItemCb = $('#all-item-cb');
 
             //reset the first time
-            self.selectedItemsIdToRequest = [];
+            cartVuexState.selectedItemsIdToRequest = [];
 
             if (allItemCb.prop('checked')) {
                 // check all
@@ -2718,7 +2721,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                     if (i < totalItems - 1) {
                         // do not include the last one
-                        self.selectedItemsIdToRequest.push(cartVuexState.itemInsideCart[i].id);
+                        cartVuexState.selectedItemsIdToRequest.push(cartVuexState.itemInsideCart[i].id);
                     }
                 }
             } else {
@@ -2728,11 +2731,32 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     _cb.prop('checked', false);
                 }
 
-                self.selectedItemsIdToRequest = [];
+                cartVuexState.selectedItemsIdToRequest = [];
             }
         },
         removeAllItems: function removeAllItems() {
             if (confirm('Are you sure to remove all items from cart?')) {}
+        },
+        createRequisition: function createRequisition() {
+
+            var self = this;
+            var cartVuexState = this.$store.state.cart;
+
+            if (cartVuexState.selectedItemsIdToRequest.length > 0) {
+
+                // create requisition
+                // move to requisition form
+
+                console.log(JSON.stringify(cartVuexState.selectedItemsIdToRequest));
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: 'There is no item selected',
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
         }
     }
 });
@@ -4486,7 +4510,7 @@ var render = function() {
           [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-lg-2" }, [
-                _c("p", { staticClass: "text-black fs-16" }, [
+                _c("p", { staticClass: "text-black fs-24 m-t-10" }, [
                   _vm._v(
                     " Total: " +
                       _vm._s(_vm.selectedItemsIdToRequest.length) +
@@ -4495,7 +4519,24 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-lg-10" })
+              _c("div", { staticClass: "col-lg-10" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass:
+                      "m-t-5 pull-right btn btn-primary text-uppercase fs-18",
+                    on: {
+                      click: function($event) {
+                        _vm.createRequisition()
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("\n                            Create Requisition "),
+                    _c("i", { staticClass: "fa fa-angle-right fs-20" })
+                  ]
+                )
+              ])
             ])
           ]
         )
@@ -19241,7 +19282,8 @@ module.exports = Component.exports
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        itemInsideCart: []
+        itemInsideCart: [],
+        selectedItemsIdToRequest: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
