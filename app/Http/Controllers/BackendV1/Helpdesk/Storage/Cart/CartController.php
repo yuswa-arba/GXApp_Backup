@@ -163,10 +163,47 @@ class CartController extends Controller
 
     }
 
-    public function updateItemInsideCart(Request $request)
+    public function updateItemAmountInCart(Request $request)
     {
         $response = array();
 
+        $validator = Validator::make($request->all(),[
+            'itemCartId'=>'required',
+            'amount'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $cartItem = StorageRequestCart::find($request->itemCartId);
+
+        if($cartItem){
+
+            $cartItem->amount = $request->amount;
+
+            if($cartItem->save()){
+
+                $response['isFailed'] = false;
+                $response['message'] = 'Success';
+                return response()->json($response,200);
+
+            } else {
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to save amount';
+                return response()->json($response,200);
+            }
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find item in cart';
+            return response()->json($response,200);
+
+        }
 
     }
 

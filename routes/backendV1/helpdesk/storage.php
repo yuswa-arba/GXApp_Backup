@@ -91,6 +91,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('requisition/shop/cart/remove','Cart\CartController@removeFromCart');
         Route::post('requisition/shop/cart/update','Cart\CartController@updateItemInsideCart');
         Route::get('requisition/shop/cart/list','Cart\CartController@itemInsideCartList');
+        Route::post('requisition/shop/cart/updateItemAmountInCart','Cart\CartController@updateItemAmountInCart');
 
     });
 });

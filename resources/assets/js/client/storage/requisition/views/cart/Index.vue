@@ -7,7 +7,7 @@
                         <div class="col-lg-1">
                             <div class="checkbox check-success ">
                                 <input type="checkbox" id="all-item-cb" @change="checkAllItems()">
-                                <label for="all-item-cb" class="fs-16" >All</label>
+                                <label for="all-item-cb" class="fs-16">All</label>
                             </div>
                         </div>
                         <div class="col-lg-4"><p class="text-black fs-16 p-t-10">Item</p></div>
@@ -24,6 +24,7 @@
             </div>
         </div>
 
+        <!--items in cart-->
         <div class="col-lg-12">
             <div class="card card-default card-bordered">
                 <div class="card-block " style="padding: 10px 20px">
@@ -31,7 +32,8 @@
                         <div class="row">
                             <div class="col-lg-1 p-t-10">
                                 <div class="checkbox check-success ">
-                                    <input type="checkbox" :id="'item-cb-'+item.id">
+                                    <input type="checkbox" :id="'item-cb-'+item.id"
+                                           @change="toggleItemCb(index,item.id)">
                                     <label :for="'item-cb-'+item.id"></label>
                                 </div>
                             </div>
@@ -50,13 +52,15 @@
                             </div>
                             <div class="col-lg-2 p-t-10">
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-grey" @click="minusAmount(index)"><i
+                                    <button type="button" class="btn btn-grey" @click="minusAmount(item.id,index)"><i
                                             class="fa fa-minus"></i>
                                     </button>
-                                    <input type="text" class="btn text-true-black"
+                                    <input type="number" class="btn text-true-black"
                                            style="width: 60px;border-color: #b7b7b7"
+                                           :id="'input-amount-'+item.id"
+                                           @change="editInputAmount(item.id,index)"
                                            :value="item.amount">
-                                    <button type="button" class="btn btn-grey"@click="plusAmount(index)"><i
+                                    <button type="button" class="btn btn-grey" @click="plusAmount(item.id,index)"><i
                                             class="fa fa-plus"></i>
                                     </button>
                                 </div>
@@ -65,7 +69,8 @@
                             <div class="col-lg-3 p-t-10">
                                 <input type="text" class="form-control" :value="item.notes">
                             </div>
-                            <div class="col-lg-1 p-t-10"><i class="text-danger fa fa-times fs-16 cursor p-t-10"></i></div>
+                            <div class="col-lg-1 p-t-10"><i class="text-danger fa fa-times fs-16 cursor p-t-10"></i>
+                            </div>
                         </div>
                         <div class="clearfix"></div>
                         <hr>
@@ -73,6 +78,22 @@
                 </div>
             </div>
         </div>
+        <!--end of items in cart-->
+
+        <!--footer total items-->
+        <div class="col-lg-12">
+            <div class="card card-default card-bordered">
+                <div class="card-block " style="padding: 10px 20px">
+                    <div class="row">
+                        <div class="col-lg-2">
+                            <p class="text-black fs-16"> Total: {{selectedItemsIdToRequest.length}} </p>
+                        </div>
+                        <div class="col-lg-10"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end of footer total items-->
 
     </div>
 </template>
@@ -83,7 +104,9 @@
     import {mapGetters, mapState} from 'vuex'
     export default{
         data(){
-            return {}
+            return {
+                selectedItemsIdToRequest: []
+            }
         },
         created(){
             this.$store.dispatch({
@@ -96,43 +119,120 @@
                 itemInsideCart: 'itemInsideCart'
             })
         },
-        methods:{
+        methods: {
             viewImage(url){
-                window.open(url,'_blank')
+                window.open(url, '_blank')
             },
-            plusAmount(index){
+            editInputAmount(itemCartId,index){
+
+                let cartVuexState = this.$store.state.cart
+
+                let inputAmount = $('#input-amount-'+itemCartId)
+                cartVuexState.itemInsideCart[index].amount = inputAmount.val()
+
+                setTimeout(()=>{
+                    //commit vuex to save it to DB
+                    this.$store.commit({
+                        type:'cart/updateItemAmountInCart',
+                        itemCartId:itemCartId,
+                        amount:cartVuexState.itemInsideCart[index].amount
+                    })
+
+                },2000)
+
+            },
+            plusAmount(itemCartId,index){
+
                 let cartVuexState = this.$store.state.cart
                 cartVuexState.itemInsideCart[index].amount++
+
+                setTimeout(()=>{
+                    //commit vuex to save it to DB
+                    this.$store.commit({
+                        type:'cart/updateItemAmountInCart',
+                        itemCartId:itemCartId,
+                        amount:cartVuexState.itemInsideCart[index].amount
+                    })
+
+                },1000)
+
             },
-            minusAmount(index){
+            minusAmount(itemCartId,index){
                 let cartVuexState = this.$store.state.cart
                 if (cartVuexState.itemInsideCart[index].amount > 0) {
                     cartVuexState.itemInsideCart[index].amount--
                 }
+
+                setTimeout(()=>{
+                    //commit vuex to save it to DB
+                    this.$store.commit({
+                        type:'cart/updateItemAmountInCart',
+                        itemCartId:itemCartId,
+                        amount:cartVuexState.itemInsideCart[index].amount
+                    })
+
+                },1000)
+
             },
-            checkAllItems(){
+            toggleItemCb(index, itemCartId){
 
+                let self  = this
                 let cartVuexState = this.$store.state.cart
-                let totalItems = cartVuexState.itemInsideCart.length + 1 //total items in cart
+                let itemCb = $('#item-cb-' + itemCartId)
 
-                let allItemCb = $('#all-item-cb')
+                if (itemCb.prop('checked')) {
 
-                if(allItemCb.prop('checked')){ // check all
-                    for (let i = 0;i<totalItems;i++){
-                        let cb = $('#item-cb-'+i)
-                        cb.prop('checked',true)
-                    }
-                } else { //uncheck all
-                    for (let i = 0;i<totalItems;i++){
-                        let cb = $('#item-cb-'+i)
-                        cb.prop('checked',false)
-                    }
+                    self.selectedItemsIdToRequest.push(itemCartId) //push to array
+
+                } else {
+
+                    let itemIndex = _.findIndex(self.selectedItemsIdToRequest, (o) => { // get index of this item id
+                        return o == itemCartId
+                    })
+
+                    self.selectedItemsIdToRequest.splice(itemIndex,1) //remove from array
+
+                    //unchecked all item cb
+                    $('#all-item-cb').prop('checked',false)
                 }
 
             },
-            removeAllItems(){
-                if(confirm('Are you sure to remove all items from cart?')){
+            checkAllItems(){
+                let self = this
 
+                let cartVuexState = this.$store.state.cart
+                let totalItems = cartVuexState.itemInsideCart.length + 1 //total items in cart
+                let allItemCb = $('#all-item-cb')
+
+                //reset the first time
+                self.selectedItemsIdToRequest = []
+
+                if (allItemCb.prop('checked')) { // check all
+
+                    for (let i = 0; i < totalItems; i++) {
+
+                        let cb = $('#item-cb-' + i)
+                        cb.prop('checked', true)
+
+                        if(i<totalItems-1){ // do not include the last one
+                            self.selectedItemsIdToRequest.push(cartVuexState.itemInsideCart[i].id)
+                        }
+
+                    }
+
+                } else { //uncheck all
+                    for (let i = 0; i < totalItems; i++) {
+                        let cb = $('#item-cb-' + i)
+                        cb.prop('checked', false)
+                    }
+
+                    self.selectedItemsIdToRequest = []
+
+                }
+            },
+
+            removeAllItems(){
+                if (confirm('Are you sure to remove all items from cart?')) {
                 }
             }
         }

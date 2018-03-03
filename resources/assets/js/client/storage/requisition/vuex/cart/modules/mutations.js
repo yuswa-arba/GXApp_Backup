@@ -10,12 +10,25 @@ export default{
 
         get(api_path + 'storage/requisition/shop/cart/list')
             .then((res) => {
-                if(!res.data.isFailed){
-                    if(res.data.itemInsideCart.data){
+                if (!res.data.isFailed) {
+                    if (res.data.itemInsideCart.data) {
                         state.itemInsideCart = res.data.itemInsideCart.data
                     }
                 }
             })
+    },
+    updateItemAmountInCart(state, payload){
+        if (payload.itemCartId) {
+                post(api_path + 'storage/requisition/shop/cart/updateItemAmountInCart', {
+                        itemCartId: payload.itemCartId,
+                        amount: payload.amount
+                    }
+                )
+                .then((res) => {
+                })
+                .catch((err) => {
+                })
+        }
 
     }
 }

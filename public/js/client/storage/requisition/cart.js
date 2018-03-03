@@ -2583,13 +2583,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            selectedItemsIdToRequest: []
+        };
     },
     created: function created() {
         this.$store.dispatch({
@@ -2604,28 +2627,99 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         viewImage: function viewImage(url) {
             window.open(url, '_blank');
         },
-        plusAmount: function plusAmount(index) {
+        editInputAmount: function editInputAmount(itemCartId, index) {
+            var _this = this;
+
+            var cartVuexState = this.$store.state.cart;
+
+            var inputAmount = $('#input-amount-' + itemCartId);
+            cartVuexState.itemInsideCart[index].amount = inputAmount.val();
+
+            setTimeout(function () {
+                //commit vuex to save it to DB
+                _this.$store.commit({
+                    type: 'cart/updateItemAmountInCart',
+                    itemCartId: itemCartId,
+                    amount: cartVuexState.itemInsideCart[index].amount
+                });
+            }, 2000);
+        },
+        plusAmount: function plusAmount(itemCartId, index) {
+            var _this2 = this;
+
             var cartVuexState = this.$store.state.cart;
             cartVuexState.itemInsideCart[index].amount++;
+
+            setTimeout(function () {
+                //commit vuex to save it to DB
+                _this2.$store.commit({
+                    type: 'cart/updateItemAmountInCart',
+                    itemCartId: itemCartId,
+                    amount: cartVuexState.itemInsideCart[index].amount
+                });
+            }, 1000);
         },
-        minusAmount: function minusAmount(index) {
+        minusAmount: function minusAmount(itemCartId, index) {
+            var _this3 = this;
+
             var cartVuexState = this.$store.state.cart;
             if (cartVuexState.itemInsideCart[index].amount > 0) {
                 cartVuexState.itemInsideCart[index].amount--;
             }
+
+            setTimeout(function () {
+                //commit vuex to save it to DB
+                _this3.$store.commit({
+                    type: 'cart/updateItemAmountInCart',
+                    itemCartId: itemCartId,
+                    amount: cartVuexState.itemInsideCart[index].amount
+                });
+            }, 1000);
+        },
+        toggleItemCb: function toggleItemCb(index, itemCartId) {
+
+            var self = this;
+            var cartVuexState = this.$store.state.cart;
+            var itemCb = $('#item-cb-' + itemCartId);
+
+            if (itemCb.prop('checked')) {
+
+                self.selectedItemsIdToRequest.push(itemCartId); //push to array
+            } else {
+
+                var itemIndex = _.findIndex(self.selectedItemsIdToRequest, function (o) {
+                    // get index of this item id
+                    return o == itemCartId;
+                });
+
+                self.selectedItemsIdToRequest.splice(itemIndex, 1); //remove from array
+
+                //unchecked all item cb
+                $('#all-item-cb').prop('checked', false);
+            }
         },
         checkAllItems: function checkAllItems() {
+            var self = this;
 
             var cartVuexState = this.$store.state.cart;
             var totalItems = cartVuexState.itemInsideCart.length + 1; //total items in cart
-
             var allItemCb = $('#all-item-cb');
+
+            //reset the first time
+            self.selectedItemsIdToRequest = [];
 
             if (allItemCb.prop('checked')) {
                 // check all
+
                 for (var i = 0; i < totalItems; i++) {
+
                     var cb = $('#item-cb-' + i);
                     cb.prop('checked', true);
+
+                    if (i < totalItems - 1) {
+                        // do not include the last one
+                        self.selectedItemsIdToRequest.push(cartVuexState.itemInsideCart[i].id);
+                    }
                 }
             } else {
                 //uncheck all
@@ -2633,6 +2727,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     var _cb = $('#item-cb-' + _i);
                     _cb.prop('checked', false);
                 }
+
+                self.selectedItemsIdToRequest = [];
             }
         },
         removeAllItems: function removeAllItems() {
@@ -4261,7 +4357,12 @@ var render = function() {
                 _c("div", { staticClass: "col-lg-1 p-t-10" }, [
                   _c("div", { staticClass: "checkbox check-success " }, [
                     _c("input", {
-                      attrs: { type: "checkbox", id: "item-cb-" + item.id }
+                      attrs: { type: "checkbox", id: "item-cb-" + item.id },
+                      on: {
+                        change: function($event) {
+                          _vm.toggleItemCb(index, item.id)
+                        }
+                      }
                     }),
                     _vm._v(" "),
                     _c("label", { attrs: { for: "item-cb-" + item.id } })
@@ -4316,7 +4417,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            _vm.minusAmount(index)
+                            _vm.minusAmount(item.id, index)
                           }
                         }
                       },
@@ -4326,8 +4427,13 @@ var render = function() {
                     _c("input", {
                       staticClass: "btn text-true-black",
                       staticStyle: { width: "60px", "border-color": "#b7b7b7" },
-                      attrs: { type: "text" },
-                      domProps: { value: item.amount }
+                      attrs: { type: "number", id: "input-amount-" + item.id },
+                      domProps: { value: item.amount },
+                      on: {
+                        change: function($event) {
+                          _vm.editInputAmount(item.id, index)
+                        }
+                      }
                     }),
                     _vm._v(" "),
                     _c(
@@ -4337,7 +4443,7 @@ var render = function() {
                         attrs: { type: "button" },
                         on: {
                           click: function($event) {
-                            _vm.plusAmount(index)
+                            _vm.plusAmount(item.id, index)
                           }
                         }
                       },
@@ -4368,6 +4474,30 @@ var render = function() {
               _c("hr")
             ])
           })
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "card card-default card-bordered" }, [
+        _c(
+          "div",
+          { staticClass: "card-block ", staticStyle: { padding: "10px 20px" } },
+          [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-2" }, [
+                _c("p", { staticClass: "text-black fs-16" }, [
+                  _vm._v(
+                    " Total: " +
+                      _vm._s(_vm.selectedItemsIdToRequest.length) +
+                      " "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-10" })
+            ])
+          ]
         )
       ])
     ])
@@ -19145,6 +19275,14 @@ module.exports = Component.exports
                 }
             }
         });
+    },
+    updateItemAmountInCart: function updateItemAmountInCart(state, payload) {
+        if (payload.itemCartId) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/cart/updateItemAmountInCart', {
+                itemCartId: payload.itemCartId,
+                amount: payload.amount
+            }).then(function (res) {}).catch(function (err) {});
+        }
     }
 });
 
