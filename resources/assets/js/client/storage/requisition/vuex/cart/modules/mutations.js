@@ -166,6 +166,7 @@ export default{
                      setTimeout(()=>{
 
                          //move to track & history page8
+                         window.location.href='/storage/requisition/history'
 
                      },2000)
 

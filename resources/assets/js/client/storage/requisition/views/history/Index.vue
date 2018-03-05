@@ -1,0 +1,181 @@
+<template>
+    <div class="row">
+
+        <div class="col-lg-12" style="margin-top: 50px">
+            <div class="card card-default card-bordered" v-for="requisition in requisitions">
+                <div class="card-block no-padding">
+                    <div class="col-lg-12" style="background:#fafafa;border-bottom:1px solid #eaecee">
+                        <div class="row">
+                            <div class="col-lg-3 m-t-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Requisition No.</p>
+                                <p class="text-black fs-18 m-b-10">{{requisition.requisitionNumber}}</p>
+
+                                <p class="text-uppercase m-b-10">Approval No.</p>
+                                <p class="text-black fs-16 m-b-10" v-if="requisition.approvalNumber">{{requisition.approvalNumber}}</p>
+                                <p v-else="">-</p>
+
+                            </div>
+                            <div class="col-lg-3 m-t-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Requested At</p>
+                                <p class="text-black fs-16 m-b-10">{{requisition.requestedAt}}</p>
+
+                                <p class="text-uppercase m-b-0">Date Needed By</p>
+                                <p class="text-black fs-16 m-b-10">{{requisition.dateNeededBy}}</p>
+
+                            </div>
+                            <div class="col-lg-3 m-t-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Description</p>
+                                <p class="text-black fs-14 m-b-10">{{requisition.description}}</p>
+                            </div>
+                            <div class="col-lg-3 m-t-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Approval Status</p>
+                                <p class="text-black fs-14 m-b-10">{{requisition.approvalName}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-t-20"></div>
+                    <div class="col-lg-12" v-for="item in requisition.requisitionItems.data">
+                        <div class="row">
+                            <div class="col-lg-4 p-t-10">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="cursor" @click="viewImage('/images/storage/items/'+item.itemPhoto)">
+                                            <img :src="'/images/storage/items/'+item.itemPhoto" height="60px" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-black fs-16 m-b-0">{{item.itemName}}</p>
+                                        <p class="no-padding fs-14">{{item.itemCode}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 p-t-10">
+                                <p class="fs-16 m-b-0">Amount: <span class="text-black">{{item.amount}}</span></p>
+                                <p class=" fs-16 m-b-0">Unit: <span class="text-black">{{item.itemUnit}}</span></p>
+                            </div>
+                            <div class="col-lg-3 p-t-10">
+                                <p class="text-uppercase">Notes</p>
+                                <p class="text-black fs-16 m-b-0">{{item.notes}}</p>
+                            </div>
+                            <div class="col-lg-2 p-t-10">
+                                <p>
+                                    <span class="text-uppercase">Approved: </span>
+                                    <i class="fa fa-check text-success fs-16" v-if="item.isApproved"></i>
+                                    <i class="fa fa-times text-danger fs-16" v-else=""></i>
+                                </p>
+                                <div v-if="item.updatedAt&&item.updatedBy">
+                                    <p class="text-uppercase">Latest Update</p>
+                                    <p class="text-black fs-16 m-b-0">
+                                        Updated at {{item.updatedAt}} by {{item.updatedBy}}
+                                    </p>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+                        <hr>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <infinite-loading @infinite="infiniteHandler" spinner="waveDots"
+                          ref="infiniteLoading">
+                                        <span slot="no-more">
+                                          <!--There is no more Items-->
+                                        </span>
+        </infinite-loading>
+    </div>
+</template>
+
+<script type="text/javascript">
+    import {get} from '../../../../helpers/api'
+    import {api_path} from '../../../../helpers/const'
+    import {mapGetters, mapState} from 'vuex'
+    import InfiniteLoading from 'vue-infinite-loading';
+    export default{
+        components: {
+            InfiniteLoading,
+        },
+        data(){
+            return {}
+        },
+        created(){
+
+        },
+        computed: {
+            ...mapState('history',{
+                requisitions:'requisitions'
+            })
+        },
+        methods: {
+            infiniteHandler($state) { //getting item list data from server using vue-infinit-scroll
+
+                let self = this
+
+                let historyVuexState = this.$store.state.history
+
+                if (historyVuexState.paginationMeta.current_page >= historyVuexState.paginationMeta.total_pages && historyVuexState.paginationMeta.current_page != '') {
+
+                    $state.complete()
+
+                } else {
+
+                    let nextPage = historyVuexState.paginationMeta.current_page + 1
+
+                    //get next page
+                    get(api_path + 'storage/requisition/history?page=' + nextPage)
+                        .then((res) => {
+                            if (!res.data.isFailed) {
+                                if (res.data.requisitions.data) {
+
+                                    //insert requisitions
+                                    let requisitionsData = res.data.requisitions.data
+                                    if (requisitionsData) {
+                                        historyVuexState.requisitions = historyVuexState.requisitions.concat(requisitionsData)
+                                    }
+
+                                    //insert pagination
+                                    historyVuexState.paginationMeta = res.data.requisitions.meta.pagination
+
+                                    $state.loaded();
+
+                                    if (historyVuexState.requisitions.length === historyVuexState.paginationMeta.total) {
+                                        $state.complete()
+                                    }
+
+                                } else {
+                                    $state.complete()
+                                }
+                            } else {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'danger'
+                                }).show();
+                                $state.complete()
+                            }
+                        })
+                        .catch((err) => {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: err.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                            $state.complete()
+                        })
+
+                }
+
+            }
+        }
+    }
+</script>

@@ -87,4 +87,9 @@ class ViewController extends Controller
     {
         return view('pages.storage.requisition.cart');
     }
+
+    public function requisitionHistory()
+    {
+        return view('pages.storage.requisition.history');
+    }
 }

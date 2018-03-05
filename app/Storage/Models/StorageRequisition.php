@@ -17,12 +17,15 @@ class StorageRequisition extends Model
         return $this->belongsTo(Division::class,'divisionId');
     }
 
+    public function requesterEmployee()
+    {
+        return $this->belongsTo(MasterEmployee::class,'requesterEmployeeId');
+    }
 
     public function approval()
     {
         return $this->belongsTo(StorageRequisitionApproval::class,'approvalId');
     }
-
 
     public function requisitionItems()
     {

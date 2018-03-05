@@ -19,6 +19,7 @@ class CreateStorageRequisitionTable extends Migration
             $table->string('approvalNumber')->nullable();
             $table->string('requestedAt');
             $table->string('requestedBy');
+            $table->string('requesterEmployeeId');
             $table->string('dateNeededBy');
             $table->integer('divisionId')->nullable();
             $table->integer('deliveryWarehouseId');

@@ -78,11 +78,11 @@
 
 @push('child-page-controller')
 <script>
-    (function ($) {
+    $(document).ready(function () {
         $('#logout-btn').on('click', function (e) {
             e.preventDefault();
             $('#logout-form').submit();
         });
-    })(window.jQuery);
+    })
 </script>
 @endpush

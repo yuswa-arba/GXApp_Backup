@@ -23,7 +23,7 @@
                     <span class="icon-thumbnail">r</span>
                 </li>
                 <li class="">
-                    <a href="#">Track & History</a>
+                    <a href="{{route('storage.requisition.history')}}">Track & History</a>
                     <span class="icon-thumbnail">th</span>
                 </li>
                 <li class="">

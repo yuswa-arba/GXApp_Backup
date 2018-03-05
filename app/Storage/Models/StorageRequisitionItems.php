@@ -12,6 +12,11 @@ class StorageRequisitionItems extends Model
     protected $guarded = ['id'];
 
 
+    public function item()
+    {
+        return $this->belongsTo(StorageItems::class,'itemId');
+    }
+
     public function requisition()
     {
         return $this->belongsTo(StorageRequisition::class,'requisitionNumber','requisitionNumber');

@@ -19,9 +19,11 @@ class CreateStorageRequisitionItemsTable extends Migration
             $table->string('employeeId');
             $table->integer('itemId');
             $table->string('amount');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->string('insertedAt');
             $table->tinyInteger('isApproved')->default(0);
+            $table->string('updatedAt')->nullable();
+            $table->string('updatedBy')->nullable();
             $table->timestamps();
         });
     }

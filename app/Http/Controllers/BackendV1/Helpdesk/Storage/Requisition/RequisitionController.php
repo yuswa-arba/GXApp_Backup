@@ -120,8 +120,8 @@ class RequisitionController extends Controller
 
         if ($employee && $employee->hasResigned != 1) {
 
-            $latestRequisition  = StorageRequisition::latest('id')->first();
-            $incrementNumber = $latestRequisition?$latestRequisition->id:0 + 1;//get latest id and add by 1
+            $latestRequisition  = StorageRequisition::orderBy('id','desc')->first();
+            $incrementNumber = $latestRequisition?($latestRequisition->id+1): 1;//get latest id and add by 1
             $requisitionNumber = Carbon::now()->format('Ymd') . $this->zeroPrefix($incrementNumber, 3); //  yyyymmdd001 format
 
 
@@ -129,10 +129,12 @@ class RequisitionController extends Controller
             $createRequisition = StorageRequisition::create([
                 'requisitionNumber' => $requisitionNumber,
                 'requestedAt' => Carbon::now()->format('d/m/Y'),
-                'requestedBy'=>$employee->givenName,
+                'requestedBy'=>$employee->givenName . ' ' . $employee->surname,
+                'requesterEmployeeId'=>$employee->id,
                 'divisionId'=>$request->divisionId,
                 'deliveryWarehouseId'=>$request->deliveryWarehouseId,
                 'description'=>$request->description,
+                'dateNeededBy'=>$request->dateNeededBy,
                 'approvalId'=>ConfigCodes::$REQUISITION_APPROVAL_STATUS['WAITING'] // waiting for approval ( source: storageRequisitionApproval table)
             ]);
 
@@ -168,6 +170,7 @@ class RequisitionController extends Controller
                 }
 
                 //TODO: Trigger event to notify someone has requested some items
+
 
 
                 // Return success response

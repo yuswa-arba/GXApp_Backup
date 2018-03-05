@@ -102,5 +102,13 @@ Route::prefix('v1/h')->group(function () {
         Route::post('requisition/itemBeingRequested/list','Requisition\RequisitionController@itemsBeingRequestedList');
         Route::post('requisition/create','Requisition\RequisitionController@createRequisition');
 
+        /*
+       |--------------------------------------------------------------------------
+       | Requisition History
+       |--------------------------------------------------------------------------
+       */
+
+        Route::get('requisition/history','Requisition\HistoryTrackController@requisitionHistory');
+
     });
 });

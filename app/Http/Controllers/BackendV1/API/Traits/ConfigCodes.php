@@ -55,7 +55,8 @@ class ConfigCodes
     public static $REQUISITION_APPROVAL_STATUS = [
         'APPROVAL'=>1,
         'DECLINED'=>2,
-        'WAITING'=>3
+        'WAITING'=>3,
+        'IN_PROCESS'=>4
     ];
 
 }
