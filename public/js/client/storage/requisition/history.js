@@ -2596,10 +2596,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -2675,6 +2671,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     $state.complete();
                 });
             }
+        },
+        viewImage: function viewImage(url) {
+            window.open(url, '_blank');
         }
     }
 });
@@ -4253,11 +4252,8 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass: "col-lg-12",
-                    staticStyle: {
-                      background: "#fafafa",
-                      "border-bottom": "1px solid #eaecee"
-                    }
+                    staticClass: "col-lg-12 border-bottom-grey",
+                    staticStyle: { background: "#fafafa" }
                   },
                   [
                     _c("div", { staticClass: "row" }, [
@@ -4280,7 +4276,12 @@ var render = function() {
                           ? _c(
                               "p",
                               { staticClass: "text-black fs-16 m-b-10" },
-                              [_vm._v(_vm._s(requisition.approvalNumber))]
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(requisition.approvalNumber)
+                                )
+                              ]
                             )
                           : _c("p", [_vm._v("-")])
                       ]),
@@ -4332,117 +4333,124 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "p-t-20" }),
+                _c("div", { staticClass: "p-t-10" }),
                 _vm._v(" "),
                 _vm._l(requisition.requisitionItems.data, function(item) {
                   return _c("div", { staticClass: "col-lg-12" }, [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-lg-4 p-t-10" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-lg-6" }, [
-                            _c(
-                              "div",
-                              {
-                                staticClass: "cursor",
-                                on: {
-                                  click: function($event) {
-                                    _vm.viewImage(
-                                      "/images/storage/items/" + item.itemPhoto
-                                    )
+                    _c(
+                      "div",
+                      { staticClass: "row border-bottom-grey p-t-10 p-b-10" },
+                      [
+                        _c("div", { staticClass: "col-lg-4 p-t-10" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-lg-6" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "cursor",
+                                  staticStyle: { "margin-top": "-10px" },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.viewImage(
+                                        "/images/storage/items/" +
+                                          item.itemPhoto
+                                      )
+                                    }
                                   }
-                                }
-                              },
-                              [
-                                _c("img", {
-                                  attrs: {
-                                    src:
-                                      "/images/storage/items/" + item.itemPhoto,
-                                    height: "60px",
-                                    alt: ""
-                                  }
-                                })
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-lg-6" }, [
-                            _c("p", { staticClass: "text-black fs-16 m-b-0" }, [
-                              _vm._v(_vm._s(item.itemName))
+                                },
+                                [
+                                  _c("img", {
+                                    attrs: {
+                                      src:
+                                        "/images/storage/items/" +
+                                        item.itemPhoto,
+                                      height: "60px",
+                                      alt: ""
+                                    }
+                                  })
+                                ]
+                              )
                             ]),
                             _vm._v(" "),
-                            _c("p", { staticClass: "no-padding fs-14" }, [
-                              _vm._v(_vm._s(item.itemCode))
-                            ])
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-3 p-t-10" }, [
-                        _c("p", { staticClass: "fs-16 m-b-0" }, [
-                          _vm._v("Amount: "),
-                          _c("span", { staticClass: "text-black" }, [
-                            _vm._v(_vm._s(item.amount))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: " fs-16 m-b-0" }, [
-                          _vm._v("Unit: "),
-                          _c("span", { staticClass: "text-black" }, [
-                            _vm._v(_vm._s(item.itemUnit))
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-3 p-t-10" }, [
-                        _c("p", { staticClass: "text-uppercase" }, [
-                          _vm._v("Notes")
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-black fs-16 m-b-0" }, [
-                          _vm._v(_vm._s(item.notes))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-2 p-t-10" }, [
-                        _c("p", [
-                          _c("span", { staticClass: "text-uppercase" }, [
-                            _vm._v("Approved: ")
-                          ]),
-                          _vm._v(" "),
-                          item.isApproved
-                            ? _c("i", {
-                                staticClass: "fa fa-check text-success fs-16"
-                              })
-                            : _c("i", {
-                                staticClass: "fa fa-times text-danger fs-16"
-                              })
-                        ]),
-                        _vm._v(" "),
-                        item.updatedAt && item.updatedBy
-                          ? _c("div", [
-                              _c("p", { staticClass: "text-uppercase" }, [
-                                _vm._v("Latest Update")
-                              ]),
-                              _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-6" }, [
                               _c(
                                 "p",
                                 { staticClass: "text-black fs-16 m-b-0" },
-                                [
-                                  _vm._v(
-                                    "\n                                    Updated at " +
-                                      _vm._s(item.updatedAt) +
-                                      " by " +
-                                      _vm._s(item.updatedBy) +
-                                      "\n                                "
-                                  )
-                                ]
-                              )
+                                [_vm._v(_vm._s(item.itemName))]
+                              ),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "no-padding fs-14" }, [
+                                _vm._v(_vm._s(item.itemCode))
+                              ])
                             ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("hr")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                          _c("p", { staticClass: "fs-16 m-b-0" }, [
+                            _vm._v("Amount: "),
+                            _c("span", { staticClass: "text-black" }, [
+                              _vm._v(_vm._s(item.amount))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: " fs-16 m-b-0" }, [
+                            _vm._v("Unit: "),
+                            _c("span", { staticClass: "text-black" }, [
+                              _vm._v(_vm._s(item.itemUnit))
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                          _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                            _vm._v("Notes")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                            _vm._v(_vm._s(item.notes))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-2 p-t-10" }, [
+                          _c("p", [
+                            _c("span", { staticClass: "text-uppercase" }, [
+                              _vm._v("Approved: ")
+                            ]),
+                            _vm._v(" "),
+                            item.isApproved
+                              ? _c("i", {
+                                  staticClass: "fa fa-check text-success fs-16"
+                                })
+                              : _c("i", {
+                                  staticClass: "fa fa-times text-danger fs-16"
+                                })
+                          ]),
+                          _vm._v(" "),
+                          item.updatedAt && item.updatedBy
+                            ? _c("div", [
+                                _c("p", { staticClass: "text-uppercase" }, [
+                                  _vm._v("Latest Update")
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "p",
+                                  { staticClass: "text-black fs-16 m-b-0" },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Updated at " +
+                                        _vm._s(item.updatedAt) +
+                                        " by " +
+                                        _vm._s(item.updatedBy) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      ]
+                    )
                   ])
                 })
               ],

@@ -432,6 +432,10 @@
   padding: 0;
 }
 
+.border-bottom-grey {
+  border-bottom: 1px solid #eaecee !important;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   /* display: none; <- Crashes Chrome on hover */
