@@ -24,7 +24,7 @@
                 triggered on <i class="fa fa-search"></i> button click </p>
         </div>
         <div class="col-lg-1 m-b-10" style="margin-top: 25px">
-            <div class="btn btn-default">
+            <div class="btn btn-default" @click="goToCartPage()">
                 <i class="fa fa-shopping-cart fs-18 cursor"></i>
                 <span class="bubble">{{totalItemInCart}}</span>
             </div>
@@ -210,6 +210,9 @@
                     id: itemId
                 })
 
+            },
+            goToCartPage(){
+                window.open('/storage/requisition/cart')
             }
         },
         mounted(){

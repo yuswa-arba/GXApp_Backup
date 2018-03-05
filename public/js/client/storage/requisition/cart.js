@@ -2608,6 +2608,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2629,6 +2647,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     methods: {
         viewImage: function viewImage(url) {
             window.open(url, '_blank');
+        },
+        notesOnFocus: function notesOnFocus(itemCartId, index) {
+            $('#save-btn-notes-' + itemCartId).show();
+        },
+        saveNotes: function saveNotes(itemCartId, index) {
+            var notes = $('#item-notes-' + itemCartId).val();
+
+            var cartVuexState = this.$store.state.cart;
+            cartVuexState.itemInsideCart[index].notes = notes;
+
+            //commit vuex to save it to DB
+            this.$store.commit({
+                type: 'cart/updateItemNotesInCart',
+                itemCartId: itemCartId,
+                notes: notes
+            });
+
+            //hide button
+            $('#save-btn-notes-' + itemCartId).hide();
         },
         editInputAmount: function editInputAmount(itemCartId, index) {
             var _this = this;
@@ -2734,8 +2771,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 cartVuexState.selectedItemsIdToRequest = [];
             }
         },
+        removeItem: function removeItem(itemCartId, index) {
+
+            if (confirm('Are you sure to remove this item from cart?')) {
+
+                //remove all item in cart
+                this.$store.commit({
+                    type: 'cart/removeItem',
+                    itemCartId: itemCartId,
+                    index: index
+                });
+            }
+        },
         removeAllItems: function removeAllItems() {
-            if (confirm('Are you sure to remove all items from cart?')) {}
+            if (confirm('Are you sure to remove all items from cart?')) {
+
+                //remove all item in cart
+                this.$store.commit({
+                    type: 'cart/removeAllItems'
+                });
+            }
         },
         createRequisition: function createRequisition() {
 
@@ -2747,7 +2802,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 // create requisition
                 // move to requisition form
 
-                console.log(JSON.stringify(cartVuexState.selectedItemsIdToRequest));
+
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -4372,138 +4427,199 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-12" }, [
       _c("div", { staticClass: "card card-default card-bordered" }, [
-        _c(
-          "div",
-          { staticClass: "card-block ", staticStyle: { padding: "10px 20px" } },
-          _vm._l(_vm.itemInsideCart, function(item, index) {
-            return _c("div", { staticClass: "col-lg-12" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-lg-1 p-t-10" }, [
-                  _c("div", { staticClass: "checkbox check-success " }, [
-                    _c("input", {
-                      attrs: { type: "checkbox", id: "item-cb-" + item.id },
-                      on: {
-                        change: function($event) {
-                          _vm.toggleItemCb(index, item.id)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("label", { attrs: { for: "item-cb-" + item.id } })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-4 p-t-10" }, [
+        _vm.itemInsideCart.length > 0
+          ? _c(
+              "div",
+              {
+                staticClass: "card-block ",
+                staticStyle: { padding: "10px 20px" }
+              },
+              _vm._l(_vm.itemInsideCart, function(item, index) {
+                return _c("div", { staticClass: "col-lg-12" }, [
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "cursor",
+                    _c("div", { staticClass: "col-lg-1 p-t-10" }, [
+                      _c("div", { staticClass: "checkbox check-success " }, [
+                        _c("input", {
+                          attrs: { type: "checkbox", id: "item-cb-" + item.id },
                           on: {
-                            click: function($event) {
-                              _vm.viewImage(
-                                "/images/storage/items/" + item.itemPhoto
-                              )
+                            change: function($event) {
+                              _vm.toggleItemCb(index, item.id)
                             }
                           }
-                        },
-                        [
-                          _c("img", {
-                            attrs: {
-                              src: "/images/storage/items/" + item.itemPhoto,
-                              height: "60px",
-                              alt: ""
-                            }
-                          })
-                        ]
-                      )
+                        }),
+                        _vm._v(" "),
+                        _c("label", { attrs: { for: "item-cb-" + item.id } })
+                      ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c("p", { staticClass: "text-black fs-16 m-b-0" }, [
-                        _vm._v(_vm._s(item.itemName))
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "no-padding fs-14" }, [
-                        _vm._v(_vm._s(item.itemCode))
+                    _c("div", { staticClass: "col-lg-4 p-t-10" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-lg-6" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.viewImage(
+                                    "/images/storage/items/" + item.itemPhoto
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src:
+                                    "/images/storage/items/" + item.itemPhoto,
+                                  height: "60px",
+                                  alt: ""
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-6" }, [
+                          _c("p", { staticClass: "text-black fs-16 m-b-0" }, [
+                            _vm._v(_vm._s(item.itemName))
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "no-padding fs-14" }, [
+                            _vm._v(_vm._s(item.itemCode))
+                          ])
+                        ])
                       ])
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-2 p-t-10" }, [
-                  _c("div", { staticClass: "btn-group" }, [
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 p-t-10" }, [
+                      _c("div", { staticClass: "btn-group" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-grey",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.minusAmount(item.id, index)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-minus" })]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "btn text-true-black",
+                          staticStyle: {
+                            width: "60px",
+                            "border-color": "#b7b7b7"
+                          },
+                          attrs: {
+                            type: "number",
+                            id: "input-amount-" + item.id
+                          },
+                          domProps: { value: item.amount },
+                          on: {
+                            change: function($event) {
+                              _vm.editInputAmount(item.id, index)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-grey",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.plusAmount(item.id, index)
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-plus" })]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-1 p-t-10" }, [
+                      _c("p", { staticClass: "text-black fs-16 p-t-10" }, [
+                        _vm._v(_vm._s(item.itemUnit))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                      _c("div", { staticClass: "btn-group" }, [
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: { type: "text", id: "item-notes-" + item.id },
+                          domProps: { value: item.notes },
+                          on: {
+                            focus: function($event) {
+                              _vm.notesOnFocus(item.id, index)
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn",
+                            staticStyle: { display: "none" },
+                            attrs: {
+                              type: "button",
+                              id: "save-btn-notes-" + item.id
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.saveNotes(item.id, index)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                       SAVE\n                                "
+                            )
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
                     _c(
-                      "button",
+                      "div",
                       {
-                        staticClass: "btn btn-grey",
-                        attrs: { type: "button" },
+                        staticClass: "col-lg-1 p-t-10",
                         on: {
                           click: function($event) {
-                            _vm.minusAmount(item.id, index)
+                            _vm.removeItem(item.id, index)
                           }
                         }
                       },
-                      [_c("i", { staticClass: "fa fa-minus" })]
-                    ),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "btn text-true-black",
-                      staticStyle: { width: "60px", "border-color": "#b7b7b7" },
-                      attrs: { type: "number", id: "input-amount-" + item.id },
-                      domProps: { value: item.amount },
-                      on: {
-                        change: function($event) {
-                          _vm.editInputAmount(item.id, index)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-grey",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.plusAmount(item.id, index)
-                          }
-                        }
-                      },
-                      [_c("i", { staticClass: "fa fa-plus" })]
+                      [
+                        _c("i", {
+                          staticClass:
+                            "text-danger fa fa-times fs-16 cursor p-t-10"
+                        })
+                      ]
                     )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-1 p-t-10" }, [
-                  _c("p", { staticClass: "text-black fs-16 p-t-10" }, [
-                    _vm._v(_vm._s(item.itemUnit))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-3 p-t-10" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: item.notes }
-                  })
-                ]),
-                _vm._v(" "),
-                _vm._m(4, true)
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "clearfix" }),
-              _vm._v(" "),
-              _c("hr")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("hr")
+                ])
+              })
+            )
+          : _c("div", { staticClass: "card-block" }, [
+              _c("h4", { staticClass: "text-center" }, [
+                _vm._v("Your cart is empty")
+              ])
             ])
-          })
-        )
       ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "card card-default card-bordered" }, [
+      _c("div", { staticClass: "card card-default card-bordered " }, [
         _c(
           "div",
           { staticClass: "card-block ", staticStyle: { padding: "10px 20px" } },
@@ -4575,14 +4691,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-lg-3" }, [
       _c("p", { staticClass: "text-black fs-16 p-t-10" }, [_vm._v("Notes")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-1 p-t-10" }, [
-      _c("i", { staticClass: "text-danger fa fa-times fs-16 cursor p-t-10" })
     ])
   }
 ]
@@ -19325,6 +19433,83 @@ module.exports = Component.exports
                 amount: payload.amount
             }).then(function (res) {}).catch(function (err) {});
         }
+    },
+    updateItemNotesInCart: function updateItemNotesInCart(state, payload) {
+        if (payload.itemCartId) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/cart/updateItemNotesInCart', {
+                itemCartId: payload.itemCartId,
+                notes: payload.notes
+            }).then(function (res) {}).catch(function (err) {});
+        }
+    },
+    removeItem: function removeItem(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/cart/remove', {
+            itemCartId: payload.itemCartId
+        }).then(function (res) {
+
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                //remove from array
+                state.itemInsideCart.splice(payload.index, 1);
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    removeAllItems: function removeAllItems(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/cart/removeAll').then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                //empty array
+                state.itemInsideCart = [];
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
     }
 });
 

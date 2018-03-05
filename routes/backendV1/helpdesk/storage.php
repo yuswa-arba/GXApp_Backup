@@ -89,9 +89,10 @@ Route::prefix('v1/h')->group(function () {
         Route::get('requisition/shop/cart/totalItemInCart','Cart\CartController@getTotalItemInCart');
         Route::post('requisition/shop/cart/add','Cart\CartController@addToCart');
         Route::post('requisition/shop/cart/remove','Cart\CartController@removeFromCart');
-        Route::post('requisition/shop/cart/update','Cart\CartController@updateItemInsideCart');
+        Route::post('requisition/shop/cart/removeAll','Cart\CartController@removeAllFromCart');
         Route::get('requisition/shop/cart/list','Cart\CartController@itemInsideCartList');
         Route::post('requisition/shop/cart/updateItemAmountInCart','Cart\CartController@updateItemAmountInCart');
+        Route::post('requisition/shop/cart/updateItemNotesInCart','Cart\CartController@updateItemNotesInCart');
 
     });
 });

@@ -2904,6 +2904,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 type: 'shop/attemptAddItemToCart',
                 id: itemId
             });
+        },
+        goToCartPage: function goToCartPage() {
+            window.open('/storage/requisition/cart');
         }
     },
     mounted: function mounted() {}
@@ -4794,13 +4797,24 @@ var render = function() {
           staticStyle: { "margin-top": "25px" }
         },
         [
-          _c("div", { staticClass: "btn btn-default" }, [
-            _c("i", { staticClass: "fa fa-shopping-cart fs-18 cursor" }),
-            _vm._v(" "),
-            _c("span", { staticClass: "bubble" }, [
-              _vm._v(_vm._s(_vm.totalItemInCart))
-            ])
-          ])
+          _c(
+            "div",
+            {
+              staticClass: "btn btn-default",
+              on: {
+                click: function($event) {
+                  _vm.goToCartPage()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fa fa-shopping-cart fs-18 cursor" }),
+              _vm._v(" "),
+              _c("span", { staticClass: "bubble" }, [
+                _vm._v(_vm._s(_vm.totalItemInCart))
+              ])
+            ]
+          )
         ]
       ),
       _vm._v(" "),

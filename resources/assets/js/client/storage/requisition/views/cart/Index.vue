@@ -27,7 +27,7 @@
         <!--items in cart-->
         <div class="col-lg-12">
             <div class="card card-default card-bordered">
-                <div class="card-block " style="padding: 10px 20px">
+                <div class="card-block " style="padding: 10px 20px" v-if="itemInsideCart.length>0">
                     <div class="col-lg-12" v-for="(item,index) in itemInsideCart">
                         <div class="row">
                             <div class="col-lg-1 p-t-10">
@@ -67,14 +67,32 @@
                             </div>
                             <div class="col-lg-1 p-t-10"><p class="text-black fs-16 p-t-10">{{item.itemUnit}}</p></div>
                             <div class="col-lg-3 p-t-10">
-                                <input type="text" class="form-control" :value="item.notes">
+                                <div class="btn-group">
+                                    <input type="text"
+                                           class="form-control"
+                                           :id="'item-notes-'+item.id"
+                                           :value="item.notes"
+                                           @focus="notesOnFocus(item.id,index)">
+                                    <button type="button"
+                                            class="btn"
+                                            style="display: none"
+                                            :id="'save-btn-notes-'+item.id"
+                                            @click="saveNotes(item.id,index)"
+                                    >
+                                           SAVE
+                                    </button>
+                                </div>
+
                             </div>
-                            <div class="col-lg-1 p-t-10"><i class="text-danger fa fa-times fs-16 cursor p-t-10"></i>
+                            <div class="col-lg-1 p-t-10" @click="removeItem(item.id,index)"><i class="text-danger fa fa-times fs-16 cursor p-t-10"></i>
                             </div>
                         </div>
                         <div class="clearfix"></div>
                         <hr>
                     </div>
+                </div>
+                <div class="card-block" v-else="">
+                    <h4 class="text-center">Your cart is empty</h4>
                 </div>
             </div>
         </div>
@@ -82,7 +100,7 @@
 
         <!--footer total items-->
         <div class="col-lg-12">
-            <div class="card card-default card-bordered">
+            <div class="card card-default card-bordered ">
                 <div class="card-block " style="padding: 10px 20px">
                     <div class="row">
                         <div class="col-lg-2">
@@ -126,6 +144,25 @@
         methods: {
             viewImage(url){
                 window.open(url, '_blank')
+            },
+            notesOnFocus(itemCartId,index){
+               $('#save-btn-notes-'+itemCartId).show();
+            },
+            saveNotes(itemCartId,index){
+                let notes = $('#item-notes-'+itemCartId).val()
+
+                let cartVuexState = this.$store.state.cart
+                cartVuexState.itemInsideCart[index].notes = notes
+
+                //commit vuex to save it to DB
+                this.$store.commit({
+                    type:'cart/updateItemNotesInCart',
+                    itemCartId:itemCartId,
+                    notes: notes
+                })
+
+                //hide button
+                $('#save-btn-notes-'+itemCartId).hide();
             },
             editInputAmount(itemCartId,index){
 
@@ -234,9 +271,29 @@
 
                 }
             },
+            removeItem(itemCartId,index){
 
+                if (confirm('Are you sure to remove this item from cart?')) {
+
+                    //remove all item in cart
+                    this.$store.commit({
+                        type:'cart/removeItem',
+                        itemCartId:itemCartId,
+                        index:index
+                    })
+
+
+                }
+            },
             removeAllItems(){
                 if (confirm('Are you sure to remove all items from cart?')) {
+
+                    //remove all item in cart
+                    this.$store.commit({
+                        type:'cart/removeAllItems'
+                    })
+
+
                 }
             },
             createRequisition(){
@@ -249,7 +306,7 @@
                     // create requisition
                     // move to requisition form
 
-                    console.log(JSON.stringify(cartVuexState.selectedItemsIdToRequest))
+
                     
                 } else {
                     $('.page-container').pgNotification({
@@ -260,7 +317,6 @@
                         type: 'danger'
                     }).show();  
                 }
-                
             }
         }
     }
