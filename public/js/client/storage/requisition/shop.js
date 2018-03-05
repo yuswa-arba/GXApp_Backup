@@ -2556,6 +2556,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2579,6 +2582,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             shopVuexState.addItemToCartAmount = 1; //reset to default
         },
         addToCart: function addToCart() {
+
+            var shopVuexState = this.$store.state.shop;
+            shopVuexState.addItemToCartAmount = $('#item-add-to-cart-amount').val();
 
             //commit vuex add item to cart
             this.$store.commit({
@@ -4641,7 +4647,7 @@ var render = function() {
                     ],
                     staticClass: "btn text-true-black",
                     staticStyle: { width: "60px", "border-color": "#b7b7b7" },
-                    attrs: { type: "text" },
+                    attrs: { type: "text", id: "item-add-to-cart-amount" },
                     domProps: { value: _vm.addItemToCartAmount },
                     on: {
                       input: function($event) {
@@ -20123,8 +20129,6 @@ module.exports = Component.exports
         }
     },
     addToCart: function addToCart(state, payload) {
-
-        console.log(JSON.stringify(state.itemToAdd));
 
         if (state.itemToAdd.id != '' && state.addItemToCartAmount > 0) {
 

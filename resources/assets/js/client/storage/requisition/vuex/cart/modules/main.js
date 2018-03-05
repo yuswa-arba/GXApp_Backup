@@ -10,7 +10,18 @@ export default {
     namespaced: true,
     state: {
         itemInsideCart:[],
-        selectedItemsIdToRequest:[]
+        selectedItemsIdToRequest:[],
+        itemsBeingRequested:[],
+        requisitionForm:{
+            divisionId:'',
+            deliveryWarehouseId:'',
+            dateNeededBy:'',
+            itemCartIds:[],
+            description:''
+        },
+        deliveryWarehouses:[],
+        divisions:[],
+        isSubmittingRequisition:false
     },
     getters,
     mutations,

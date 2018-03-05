@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Requisition;
+namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Shop;
 
 use App\Components\Models\UnitOfMeasurements;
 use App\Components\Transformers\UnitOfMeasurementTransformer;

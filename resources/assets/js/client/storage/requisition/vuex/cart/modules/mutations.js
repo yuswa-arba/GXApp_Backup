@@ -6,6 +6,21 @@ import {get, post} from '../../../../../helpers/api'
 import {api_path} from '../../../../../helpers/const'
 import series from 'async/series';
 export default{
+    getDeliveryWarehouses(state, payload){
+        get(api_path + 'storage/warehouse/list')
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    state.deliveryWarehouses = res.data.warehouses.data
+                }
+            })
+    },
+    getDivisions(state, payload){
+        get(api_path + 'component/list/divisions')
+            .then((res) => {
+                state.divisions = res.data.data
+            })
+
+    },
     getItemInsideCarts(state, payload){
 
         get(api_path + 'storage/requisition/shop/cart/list')
@@ -13,6 +28,18 @@ export default{
                 if (!res.data.isFailed) {
                     if (res.data.itemInsideCart.data) {
                         state.itemInsideCart = res.data.itemInsideCart.data
+                    }
+                }
+            })
+    },
+    getItemBeingRequestedDetails(state, payload){
+        post(api_path + 'storage/requisition/itemBeingRequested/list', {
+            itemCartIds: state.selectedItemsIdToRequest
+        })
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    if (res.data.itemsBeingRequested.data) {
+                        state.itemsBeingRequested = res.data.itemsBeingRequested.data
                     }
                 }
             })
@@ -52,25 +79,25 @@ export default{
 
                 if (!res.data.isFailed) {
 
-                     $('.page-container').pgNotification({
-                          style: 'flip',
-                          message: res.data.message,
-                          position: 'top-right',
-                          timeout: 3500,
-                          type: 'info'
-                      }).show();
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
 
                     //remove from array
-                     state.itemInsideCart.splice(payload.index,1)
+                    state.itemInsideCart.splice(payload.index, 1)
 
                 } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
                 }
 
             })
@@ -112,6 +139,53 @@ export default{
                 }
             })
             .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    createRequisition(state, payload){
+        post(api_path + 'storage/requisition/create', state.requisitionForm)
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                    state.isSubmittingRequisition = false
+
+                     $('.page-container').pgNotification({
+                          style: 'flip',
+                          message: res.data.message,
+                          position: 'top-right',
+                          timeout: 3500,
+                          type: 'info'
+                      }).show();
+
+                     setTimeout(()=>{
+
+                         //move to track & history page8
+
+                     },2000)
+
+                } else {
+
+                    state.isSubmittingRequisition = false
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+
+                state.isSubmittingRequisition = false
+
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: err.message,

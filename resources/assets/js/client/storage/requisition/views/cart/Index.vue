@@ -32,9 +32,9 @@
                         <div class="row">
                             <div class="col-lg-1 p-t-10">
                                 <div class="checkbox check-success ">
-                                    <input type="checkbox" :id="'item-cb-'+item.id"
+                                    <input type="checkbox" :id="'item-cb-'+index"
                                            @change="toggleItemCb(index,item.id)">
-                                    <label :for="'item-cb-'+item.id"></label>
+                                    <label :for="'item-cb-'+index"></label>
                                 </div>
                             </div>
                             <div class="col-lg-4 p-t-10">
@@ -130,6 +130,7 @@
             }
         },
         created(){
+
             this.$store.dispatch({
                 type: 'cart/getDataOnCreate'
             })
@@ -219,7 +220,7 @@
 
                 let self  = this
                 let cartVuexState = this.$store.state.cart
-                let itemCb = $('#item-cb-' + itemCartId)
+                let itemCb = $('#item-cb-' + index)
 
                 if (itemCb.prop('checked')) {
 
@@ -302,10 +303,17 @@
                 let cartVuexState = this.$store.state.cart
                 
                 if(cartVuexState.selectedItemsIdToRequest.length>0){
-                    
-                    // create requisition
-                    // move to requisition form
 
+                    // start create requisition
+                    this.$store.dispatch({
+                        type: 'cart/getDataOnRequisitionForm'
+                    })
+
+                    // move to requisition form
+                    // add delay 0.3 sec to fetch item details from server first
+                    setTimeout(()=>{
+                        this.$router.push({name:'requisitionForm'})
+                    },300)
 
                     
                 } else {

@@ -51,4 +51,11 @@ class ConfigCodes
         'INVALID' => 3
     ];
 
+
+    public static $REQUISITION_APPROVAL_STATUS = [
+        'APPROVAL'=>1,
+        'DECLINED'=>2,
+        'WAITING'=>3
+    ];
+
 }

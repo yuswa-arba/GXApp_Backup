@@ -24,7 +24,10 @@
                                 <button type="button" class="btn btn-grey" @click="minusAmount()"><i
                                         class="fa fa-minus"></i>
                                 </button>
-                                <input type="text" class="btn text-true-black" style="width: 60px;border-color: #b7b7b7"
+                                <input type="text"
+                                       class="btn text-true-black"
+                                       style="width: 60px;border-color: #b7b7b7"
+                                       id="item-add-to-cart-amount"
                                        v-model="addItemToCartAmount">
                                 <button type="button" class="btn btn-grey" @click="plusAmount()"><i
                                         class="fa fa-plus"></i>
@@ -78,6 +81,9 @@
                 shopVuexState.addItemToCartAmount = 1 //reset to default
             },
             addToCart(){
+
+                let shopVuexState = this.$store.state.shop
+                shopVuexState.addItemToCartAmount = $('#item-add-to-cart-amount').val()
 
                 //commit vuex add item to cart
                 this.$store.commit({

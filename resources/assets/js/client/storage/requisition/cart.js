@@ -17,5 +17,6 @@ const app =  new Vue({
 
 $(document).ready(function(){
 
+
 });
 

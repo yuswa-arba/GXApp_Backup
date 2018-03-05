@@ -111,7 +111,7 @@ class CartController extends Controller
             if ($insert) {
 
                 $response['isFailed'] = false;
-                $response['message'] = 'Success';
+                $response['message'] = 'Added to cart successfully';
                 $response['item'] = fractal($insert, new StorageItemInsideCartDetailTransformer());
 
                 return response()->json($response, 200);

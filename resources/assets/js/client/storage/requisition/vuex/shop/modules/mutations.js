@@ -200,8 +200,6 @@ export default{
     },
     addToCart(state, payload){
 
-        console.log(JSON.stringify(state.itemToAdd))
-
         if (state.itemToAdd.id != '' && state.addItemToCartAmount > 0) {
 
             post(api_path + 'storage/requisition/shop/cart/add', {

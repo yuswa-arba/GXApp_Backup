@@ -2635,6 +2635,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {};
     },
     created: function created() {
+
         this.$store.dispatch({
             type: 'cart/getDataOnCreate'
         });
@@ -2720,7 +2721,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             var self = this;
             var cartVuexState = this.$store.state.cart;
-            var itemCb = $('#item-cb-' + itemCartId);
+            var itemCb = $('#item-cb-' + index);
 
             if (itemCb.prop('checked')) {
 
@@ -2793,16 +2794,23 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             }
         },
         createRequisition: function createRequisition() {
+            var _this4 = this;
 
             var self = this;
             var cartVuexState = this.$store.state.cart;
 
             if (cartVuexState.selectedItemsIdToRequest.length > 0) {
 
-                // create requisition
+                // start create requisition
+                this.$store.dispatch({
+                    type: 'cart/getDataOnRequisitionForm'
+                });
+
                 // move to requisition form
-
-
+                // add delay 0.3 sec to fetch item details from server first
+                setTimeout(function () {
+                    _this4.$router.push({ name: 'requisitionForm' });
+                }, 300);
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',
@@ -2812,6 +2820,203 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     type: 'danger'
                 }).show();
             }
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/requisition/views/cart/RequisitionForm.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+    created: function created() {},
+
+    mounted: function mounted() {
+        $('#date-needed-by').datepicker({ format: 'dd/mm/yyyy', autoclose: true, todayHighlight: true });
+    },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('cart', {
+        itemsBeingRequested: 'itemsBeingRequested',
+        requisitionForm: 'requisitionForm',
+        deliveryWarehouses: 'deliveryWarehouses',
+        divisions: 'divisions',
+        isSubmittingRequisition: 'isSubmittingRequisition'
+    })),
+    methods: {
+        viewImage: function viewImage(url) {
+            window.open(url, '_blank');
+        },
+        sendRequisition: function sendRequisition() {
+            var _this = this;
+
+            var cartVuexState = this.$store.state.cart;
+
+            //insert date needed by
+            cartVuexState.requisitionForm.dateNeededBy = $('#date-needed-by').val();
+
+            //insert itemCartIds to form
+            cartVuexState.requisitionForm.itemCartIds = cartVuexState.selectedItemsIdToRequest;
+
+            setTimeout(function () {
+
+                if (cartVuexState.requisitionForm.itemCartIds.length > 0 && cartVuexState.requisitionForm.divisionId != null && cartVuexState.requisitionForm.deliveryWarehouseId != null && cartVuexState.requisitionForm.dateNeededBy != null && cartVuexState.requisitionForm.divisionId != '' && cartVuexState.requisitionForm.deliveryWarehouseId != '' && cartVuexState.requisitionForm.dateNeededBy != '') {
+
+                    cartVuexState.isSubmittingRequisition = true;
+
+                    _this.$store.commit({
+                        type: 'cart/createRequisition'
+                    });
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: "Form is invalid. Please check your requisition form",
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }, 300);
         }
     }
 });
@@ -4440,7 +4645,7 @@ var render = function() {
                     _c("div", { staticClass: "col-lg-1 p-t-10" }, [
                       _c("div", { staticClass: "checkbox check-success " }, [
                         _c("input", {
-                          attrs: { type: "checkbox", id: "item-cb-" + item.id },
+                          attrs: { type: "checkbox", id: "item-cb-" + index },
                           on: {
                             change: function($event) {
                               _vm.toggleItemCb(index, item.id)
@@ -4448,7 +4653,7 @@ var render = function() {
                           }
                         }),
                         _vm._v(" "),
-                        _c("label", { attrs: { for: "item-cb-" + item.id } })
+                        _c("label", { attrs: { for: "item-cb-" + index } })
                       ])
                     ]),
                     _vm._v(" "),
@@ -4700,6 +4905,411 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-0b237f26", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-27f8674a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/requisition/views/cart/RequisitionForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-12 m-t-20" }, [
+      _c("div", { staticClass: "card card-default card-bordered" }, [
+        _c(
+          "div",
+          { staticClass: "card-block ", staticStyle: { padding: "10px 20px" } },
+          [
+            _c("div", { staticClass: "row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._m(2),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-2" }, [
+                _c("p", { staticClass: "text-black fs-24 m-t-10" }, [
+                  _vm._v(
+                    " Total: " + _vm._s(_vm.itemsBeingRequested.length) + " "
+                  )
+                ])
+              ])
+            ])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "card card-default card-bordered" }, [
+        _vm.itemsBeingRequested.length > 0
+          ? _c(
+              "div",
+              {
+                staticClass: "card-block ",
+                staticStyle: { padding: "10px 20px" }
+              },
+              _vm._l(_vm.itemsBeingRequested, function(item, index) {
+                return _c("div", { staticClass: "col-lg-12" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-4 p-t-10" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-lg-6" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "cursor",
+                              on: {
+                                click: function($event) {
+                                  _vm.viewImage(
+                                    "/images/storage/items/" + item.itemPhoto
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("img", {
+                                attrs: {
+                                  src:
+                                    "/images/storage/items/" + item.itemPhoto,
+                                  height: "60px",
+                                  alt: ""
+                                }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-6" }, [
+                          _c("p", { staticClass: "text-black fs-16 m-b-0" }, [
+                            _vm._v(_vm._s(item.itemName))
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "no-padding fs-14" }, [
+                            _vm._v(_vm._s(item.itemCode))
+                          ])
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 p-t-10" }, [
+                      _c("p", { staticClass: "text-black fs-16 m-b-0" }, [
+                        _vm._v(_vm._s(item.amount))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-1 p-t-10" }, [
+                      _c("p", { staticClass: "text-black fs-16 p-t-10" }, [
+                        _vm._v(_vm._s(item.itemUnit))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                      _c("p", { staticClass: "text-black fs-16 m-b-0" }, [
+                        _vm._v(_vm._s(item.notes))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "clearfix" }),
+                  _vm._v(" "),
+                  _c("hr")
+                ])
+              })
+            )
+          : _c("div", { staticClass: "card-block" }, [
+              _c("h4", { staticClass: "text-center" }, [
+                _vm._v("Your cart is empty")
+              ])
+            ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "card card-default card-bordered" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v(" Division ")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.requisitionForm.divisionId,
+                        expression: "requisitionForm.divisionId"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.requisitionForm,
+                          "divisionId",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: {
+                          value: "",
+                          selected: "",
+                          disabled: "",
+                          hidden: ""
+                        }
+                      },
+                      [_vm._v("Select Division")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.divisions, function(division) {
+                      return _c(
+                        "option",
+                        { domProps: { value: division.id } },
+                        [
+                          _vm._v(
+                            _vm._s(division.name) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v(" Delivery Warehouse ")]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.requisitionForm.deliveryWarehouseId,
+                        expression: "requisitionForm.deliveryWarehouseId"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.requisitionForm,
+                          "deliveryWarehouseId",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c(
+                      "option",
+                      {
+                        attrs: {
+                          value: "",
+                          selected: "",
+                          disabled: "",
+                          hidden: ""
+                        }
+                      },
+                      [_vm._v("Select Delivery Warehouse")]
+                    ),
+                    _vm._v(" "),
+                    _vm._l(_vm.deliveryWarehouses, function(warehouse) {
+                      return _c(
+                        "option",
+                        { domProps: { value: warehouse.id } },
+                        [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(warehouse.name) +
+                              "\n                                "
+                          )
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(5),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c("label", [_vm._v(" Description ")]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.requisitionForm.description,
+                      expression: "requisitionForm.description"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.requisitionForm.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.requisitionForm,
+                        "description",
+                        $event.target.value
+                      )
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12" }, [
+              !_vm.isSubmittingRequisition
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-lg btn-primary fs-18 pull-right",
+                      on: {
+                        click: function($event) {
+                          _vm.sendRequisition()
+                        }
+                      }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Send Requisition\n                        "
+                      )
+                    ]
+                  )
+                : _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-disabled fs-18 pull-right",
+                      attrs: { disabled: "" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                            Submitting.. Please wait..\n                        "
+                      )
+                    ]
+                  )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-4" }, [
+      _c("p", { staticClass: "text-black fs-16 p-t-10" }, [_vm._v("Item")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-2" }, [
+      _c("p", { staticClass: "text-black fs-16 p-t-10" }, [_vm._v("Amount")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-1" }, [
+      _c("p", { staticClass: "text-black fs-16 p-t-10" }, [_vm._v("Unit")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-3" }, [
+      _c("p", { staticClass: "text-black fs-16 p-t-10" }, [_vm._v("Notes")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "card-title" }, [
+        _vm._v("\n                    Requisition Form\n                ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-2" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", [_vm._v("Date Needed By")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", id: "date-needed-by" }
+        })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-27f8674a", module.exports)
   }
 }
 
@@ -19268,9 +19878,12 @@ $(document).ready(function () {});
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_cart_Index_vue__ = __webpack_require__("./resources/assets/js/client/storage/requisition/views/cart/Index.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_cart_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_cart_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_cart_RequisitionForm_vue__ = __webpack_require__("./resources/assets/js/client/storage/requisition/views/cart/RequisitionForm.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_cart_RequisitionForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_cart_RequisitionForm_vue__);
 /**
  * Created by kevinpurwono on 23/11/17.
  */
+
 
 
 
@@ -19280,7 +19893,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_cart_Index_vue___default.a }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_cart_Index_vue___default.a }, { path: '/form', component: __WEBPACK_IMPORTED_MODULE_3__views_cart_RequisitionForm_vue___default.a, name: 'requisitionForm' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -19336,6 +19949,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/storage/requisition/views/cart/RequisitionForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/requisition/views/cart/RequisitionForm.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-27f8674a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/requisition/views/cart/RequisitionForm.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/storage/requisition/views/cart/RequisitionForm.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-27f8674a", Component.options)
+  } else {
+    hotAPI.reload("data-v-27f8674a", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/storage/requisition/vuex/cart/modules/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -19355,7 +20017,19 @@ module.exports = Component.exports
         var commit = _ref.commit,
             state = _ref.state;
 
+
+        //empty selected items
+        state.selectedItemsIdToRequest = [];
+
         commit('getItemInsideCarts');
+    },
+    getDataOnRequisitionForm: function getDataOnRequisitionForm(_ref2, payload) {
+        var commit = _ref2.commit,
+            state = _ref2.state;
+
+        commit('getDeliveryWarehouses');
+        commit('getDivisions');
+        commit('getItemBeingRequestedDetails');
     }
 });
 
@@ -19391,7 +20065,18 @@ module.exports = Component.exports
     namespaced: true,
     state: {
         itemInsideCart: [],
-        selectedItemsIdToRequest: []
+        selectedItemsIdToRequest: [],
+        itemsBeingRequested: [],
+        requisitionForm: {
+            divisionId: '',
+            deliveryWarehouseId: '',
+            dateNeededBy: '',
+            itemCartIds: [],
+            description: ''
+        },
+        deliveryWarehouses: [],
+        divisions: [],
+        isSubmittingRequisition: false
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -19416,12 +20101,35 @@ module.exports = Component.exports
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+    getDeliveryWarehouses: function getDeliveryWarehouses(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/warehouse/list').then(function (res) {
+            if (!res.data.isFailed) {
+                state.deliveryWarehouses = res.data.warehouses.data;
+            }
+        });
+    },
+    getDivisions: function getDivisions(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/divisions').then(function (res) {
+            state.divisions = res.data.data;
+        });
+    },
     getItemInsideCarts: function getItemInsideCarts(state, payload) {
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/shop/cart/list').then(function (res) {
             if (!res.data.isFailed) {
                 if (res.data.itemInsideCart.data) {
                     state.itemInsideCart = res.data.itemInsideCart.data;
+                }
+            }
+        });
+    },
+    getItemBeingRequestedDetails: function getItemBeingRequestedDetails(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/itemBeingRequested/list', {
+            itemCartIds: state.selectedItemsIdToRequest
+        }).then(function (res) {
+            if (!res.data.isFailed) {
+                if (res.data.itemsBeingRequested.data) {
+                    state.itemsBeingRequested = res.data.itemsBeingRequested.data;
                 }
             }
         });
@@ -19502,6 +20210,50 @@ module.exports = Component.exports
                 }).show();
             }
         }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    createRequisition: function createRequisition(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/create', state.requisitionForm).then(function (res) {
+            if (!res.data.isFailed) {
+
+                state.isSubmittingRequisition = false;
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                setTimeout(function () {
+
+                    //move to track & history page8
+
+                }, 2000);
+            } else {
+
+                state.isSubmittingRequisition = false;
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+
+            state.isSubmittingRequisition = false;
+
             $('.page-container').pgNotification({
                 style: 'flip',
                 message: err.message,

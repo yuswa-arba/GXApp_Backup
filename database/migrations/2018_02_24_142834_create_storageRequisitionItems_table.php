@@ -21,7 +21,7 @@ class CreateStorageRequisitionItemsTable extends Migration
             $table->string('amount');
             $table->string('notes');
             $table->string('insertedAt');
-            $table->integer('approvalStatusId');
+            $table->tinyInteger('isApproved')->default(0);
             $table->timestamps();
         });
     }

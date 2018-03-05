@@ -77,9 +77,9 @@ Route::prefix('v1/h')->group(function () {
         | Requisition Shop
         |--------------------------------------------------------------------------
         */
-        Route::get('requisition/shop/item/list', 'Requisition\ShopController@itemList');
-        Route::get('requisition/shop/item/detail', 'Requisition\ShopController@itemDetail');
-        Route::get('requisition/shop/item/search','Requisition\ShopController@searchItem');
+        Route::get('requisition/shop/item/list', 'Shop\ShopController@itemList');
+        Route::get('requisition/shop/item/detail', 'Shop\ShopController@itemDetail');
+        Route::get('requisition/shop/item/search','Shop\ShopController@searchItem');
 
         /*
         |--------------------------------------------------------------------------
@@ -93,6 +93,14 @@ Route::prefix('v1/h')->group(function () {
         Route::get('requisition/shop/cart/list','Cart\CartController@itemInsideCartList');
         Route::post('requisition/shop/cart/updateItemAmountInCart','Cart\CartController@updateItemAmountInCart');
         Route::post('requisition/shop/cart/updateItemNotesInCart','Cart\CartController@updateItemNotesInCart');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Requisition
+        |--------------------------------------------------------------------------
+        */
+        Route::post('requisition/itemBeingRequested/list','Requisition\RequisitionController@itemsBeingRequestedList');
+        Route::post('requisition/create','Requisition\RequisitionController@createRequisition');
 
     });
 });
