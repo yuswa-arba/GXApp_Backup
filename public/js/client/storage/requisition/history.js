@@ -2596,6 +2596,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -4407,9 +4408,13 @@ var render = function() {
                             _vm._v("Notes")
                           ]),
                           _vm._v(" "),
-                          _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
-                            _vm._v(_vm._s(item.notes))
-                          ])
+                          item.notes
+                            ? _c(
+                                "p",
+                                { staticClass: "text-black fs-16 m-b-10" },
+                                [_vm._v(_vm._s(item.notes))]
+                              )
+                            : _c("p", [_vm._v("-")])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-lg-2 p-t-10" }, [

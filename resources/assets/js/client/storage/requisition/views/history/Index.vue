@@ -56,7 +56,8 @@
                             </div>
                             <div class="col-lg-3 p-t-10">
                                 <p class="text-uppercase m-b-0">Notes</p>
-                                <p class="text-black fs-16 m-b-10">{{item.notes}}</p>
+                                <p class="text-black fs-16 m-b-10" v-if="item.notes">{{item.notes}}</p>
+                                <p v-else="">-</p>
                             </div>
                             <div class="col-lg-2 p-t-10">
                                 <p>
