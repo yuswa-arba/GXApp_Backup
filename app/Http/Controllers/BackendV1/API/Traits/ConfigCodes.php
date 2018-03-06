@@ -51,6 +51,10 @@ class ConfigCodes
         'INVALID' => 3
     ];
 
+    public static $EXCHANGE_ANSWER_TYPE = [
+        'DECLINE'=>'decline',
+        'ACCEPT'=>'accept'
+    ];
 
     public static $REQUISITION_APPROVAL_STATUS = [
         'APPROVAL'=>1,

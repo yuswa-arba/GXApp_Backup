@@ -11,7 +11,7 @@
 
 @push('child-page-controller')
 <script src="{{mix('js/client/setting/notification.js')}}"></script>
-{{--@include('layouts.partials.snippets._notification_to_zoom_out80')--}}
+@include('layouts.partials.snippets._zoom_out80')
 @endpush
 
 @section('content')

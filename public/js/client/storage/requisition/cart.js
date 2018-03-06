@@ -4678,7 +4678,7 @@ var render = function() {
                                   src:
                                     "/images/storage/items/" + item.itemPhoto,
                                   height: "60px",
-                                  alt: ""
+                                  alt: "No Image Found"
                                 }
                               })
                             ]
@@ -4979,7 +4979,7 @@ var render = function() {
                                   src:
                                     "/images/storage/items/" + item.itemPhoto,
                                   height: "60px",
-                                  alt: ""
+                                  alt: "No Image Found"
                                 }
                               })
                             ]
@@ -20223,8 +20223,6 @@ module.exports = Component.exports
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/create', state.requisitionForm).then(function (res) {
             if (!res.data.isFailed) {
 
-                state.isSubmittingRequisition = false;
-
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: res.data.message,
@@ -20234,10 +20232,12 @@ module.exports = Component.exports
                 }).show();
 
                 setTimeout(function () {
-
                     //move to track & history page8
                     window.location.href = '/storage/requisition/history';
-                }, 2000);
+                }, 500);
+
+                // no need because it is being redirected to history page
+                // state.isSubmittingRequisition = false
             } else {
 
                 state.isSubmittingRequisition = false;

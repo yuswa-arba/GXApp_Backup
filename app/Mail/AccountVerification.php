@@ -22,7 +22,6 @@ class AccountVerification extends Mailable
 
     public function build()
     {
-        return $this->view('layouts.mails.employment.accountVerification')
-            ->subject('GXApp Account Verification');
+        return $this->view('layouts.mails.employment.accountVerification')->subject('GXApp Account Verification');
     }
 }

@@ -2597,6 +2597,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -4245,223 +4250,234 @@ var render = function() {
         "div",
         { staticClass: "col-lg-12", staticStyle: { "margin-top": "50px" } },
         _vm._l(_vm.requisitions, function(requisition) {
-          return _c("div", { staticClass: "card card-default card-bordered" }, [
-            _c(
-              "div",
-              { staticClass: "card-block no-padding" },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "col-lg-12 border-bottom-grey",
-                    staticStyle: { background: "#fafafa" }
-                  },
-                  [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-lg-3 m-t-20" }, [
-                        _c(
-                          "p",
-                          { staticClass: "text-uppercase m-t-10 m-b-0" },
-                          [_vm._v("Requisition No.")]
-                        ),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
-                          _vm._v(_vm._s(requisition.requisitionNumber))
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-uppercase m-b-10" }, [
-                          _vm._v("Approval No.")
-                        ]),
-                        _vm._v(" "),
-                        requisition.approvalNumber
-                          ? _c(
-                              "p",
-                              { staticClass: "text-black fs-16 m-b-10" },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(requisition.approvalNumber)
-                                )
-                              ]
-                            )
-                          : _c("p", [_vm._v("-")])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-3 m-t-20" }, [
-                        _c(
-                          "p",
-                          { staticClass: "text-uppercase m-t-10 m-b-0" },
-                          [_vm._v("Requested At")]
-                        ),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
-                          _vm._v(_vm._s(requisition.requestedAt))
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-uppercase m-b-0" }, [
-                          _vm._v("Date Needed By")
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
-                          _vm._v(_vm._s(requisition.dateNeededBy))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-3 m-t-20" }, [
-                        _c(
-                          "p",
-                          { staticClass: "text-uppercase m-t-10 m-b-0" },
-                          [_vm._v("Description")]
-                        ),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
-                          _vm._v(_vm._s(requisition.description))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-3 m-t-20" }, [
-                        _c(
-                          "p",
-                          { staticClass: "text-uppercase m-t-10 m-b-0" },
-                          [_vm._v("Approval Status")]
-                        ),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
-                          _vm._v(_vm._s(requisition.approvalName))
-                        ])
-                      ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "p-t-10" }),
-                _vm._v(" "),
-                _vm._l(requisition.requisitionItems.data, function(item) {
-                  return _c("div", { staticClass: "col-lg-12" }, [
-                    _c(
-                      "div",
-                      { staticClass: "row border-bottom-grey p-t-10 p-b-10" },
-                      [
-                        _c("div", { staticClass: "col-lg-4 p-t-10" }, [
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-lg-6" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "cursor",
-                                  staticStyle: { "margin-top": "-10px" },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.viewImage(
-                                        "/images/storage/items/" +
-                                          item.itemPhoto
-                                      )
-                                    }
-                                  }
-                                },
-                                [
-                                  _c("img", {
-                                    attrs: {
-                                      src:
-                                        "/images/storage/items/" +
-                                        item.itemPhoto,
-                                      height: "60px",
-                                      alt: ""
-                                    }
-                                  })
-                                ]
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-lg-6" }, [
-                              _c(
-                                "p",
-                                { staticClass: "text-black fs-16 m-b-0" },
-                                [_vm._v(_vm._s(item.itemName))]
-                              ),
-                              _vm._v(" "),
-                              _c("p", { staticClass: "no-padding fs-14" }, [
-                                _vm._v(_vm._s(item.itemCode))
-                              ])
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-lg-3 p-t-10" }, [
-                          _c("p", { staticClass: "fs-16 m-b-0" }, [
-                            _vm._v("Amount: "),
-                            _c("span", { staticClass: "text-black" }, [
-                              _vm._v(_vm._s(item.amount))
-                            ])
+          return _c(
+            "div",
+            {
+              staticClass: "card card-default card-bordered border-solid-grey"
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "card-block no-padding" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-lg-12 border-bottom-grey",
+                      staticStyle: { background: "#fafafa" }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-lg-3 m-t-20" }, [
+                          _c(
+                            "p",
+                            { staticClass: "text-uppercase m-t-10 m-b-0" },
+                            [_vm._v("Requisition No.")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
+                            _vm._v(_vm._s(requisition.requisitionNumber))
                           ]),
                           _vm._v(" "),
-                          _c("p", { staticClass: " fs-16 m-b-0" }, [
-                            _vm._v("Unit: "),
-                            _c("span", { staticClass: "text-black" }, [
-                              _vm._v(_vm._s(item.itemUnit))
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-lg-3 p-t-10" }, [
-                          _c("p", { staticClass: "text-uppercase m-b-0" }, [
-                            _vm._v("Notes")
+                          _c("p", { staticClass: "text-uppercase m-b-10" }, [
+                            _vm._v("Approval No.")
                           ]),
                           _vm._v(" "),
-                          item.notes
+                          requisition.approvalNumber
                             ? _c(
                                 "p",
                                 { staticClass: "text-black fs-16 m-b-10" },
-                                [_vm._v(_vm._s(item.notes))]
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(requisition.approvalNumber)
+                                  )
+                                ]
                               )
                             : _c("p", [_vm._v("-")])
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-lg-2 p-t-10" }, [
-                          _c("p", [
-                            _c("span", { staticClass: "text-uppercase" }, [
-                              _vm._v("Approved: ")
-                            ]),
-                            _vm._v(" "),
-                            item.isApproved
-                              ? _c("i", {
-                                  staticClass: "fa fa-check text-success fs-16"
-                                })
-                              : _c("i", {
-                                  staticClass: "fa fa-times text-danger fs-16"
-                                })
+                        _c("div", { staticClass: "col-lg-2 m-t-20" }, [
+                          _c(
+                            "p",
+                            { staticClass: "text-uppercase m-t-10 m-b-0" },
+                            [_vm._v("Requested At")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                            _vm._v(_vm._s(requisition.requestedAt))
                           ]),
                           _vm._v(" "),
-                          item.updatedAt && item.updatedBy
-                            ? _c("div", [
-                                _c("p", { staticClass: "text-uppercase" }, [
-                                  _vm._v("Latest Update")
-                                ]),
-                                _vm._v(" "),
+                          _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                            _vm._v("Date Needed By")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                            _vm._v(_vm._s(requisition.dateNeededBy))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-3 m-t-20" }, [
+                          _c(
+                            "p",
+                            { staticClass: "text-uppercase m-t-10 m-b-0" },
+                            [_vm._v("Description")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                            _vm._v(_vm._s(requisition.description))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-3 m-t-20" }, [
+                          _c(
+                            "p",
+                            { staticClass: "text-uppercase m-t-10 m-b-0" },
+                            [_vm._v("Approval Status")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                            _vm._v(_vm._s(requisition.approvalName))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(0, true)
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "p-t-10" }),
+                  _vm._v(" "),
+                  _vm._l(requisition.requisitionItems.data, function(item) {
+                    return _c("div", { staticClass: "col-lg-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "row border-bottom-grey p-t-10 p-b-10" },
+                        [
+                          _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-lg-6" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "cursor",
+                                    staticStyle: { "margin-top": "-10px" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.viewImage(
+                                          "/images/storage/items/" +
+                                            item.itemPhoto
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src:
+                                          "/images/storage/items/" +
+                                          item.itemPhoto,
+                                        height: "60px",
+                                        alt: "No Image Found"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-lg-6" }, [
                                 _c(
                                   "p",
                                   { staticClass: "text-black fs-16 m-b-0" },
-                                  [
-                                    _vm._v(
-                                      "\n                                    Updated at " +
-                                        _vm._s(item.updatedAt) +
-                                        " by " +
-                                        _vm._s(item.updatedBy) +
-                                        "\n                                "
-                                    )
-                                  ]
-                                )
+                                  [_vm._v(_vm._s(item.itemName))]
+                                ),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "no-padding fs-14" }, [
+                                  _vm._v(_vm._s(item.itemCode))
+                                ])
                               ])
-                            : _vm._e()
-                        ])
-                      ]
-                    )
-                  ])
-                })
-              ],
-              2
-            )
-          ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-2 p-t-10" }, [
+                            _c("p", { staticClass: "fs-16 m-b-0" }, [
+                              _vm._v("Amount: "),
+                              _c("span", { staticClass: "text-black" }, [
+                                _vm._v(_vm._s(item.amount))
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: " fs-16 m-b-0" }, [
+                              _vm._v("Unit: "),
+                              _c("span", { staticClass: "text-black" }, [
+                                _vm._v(_vm._s(item.itemUnit))
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                            _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                              _vm._v("Notes")
+                            ]),
+                            _vm._v(" "),
+                            item.notes
+                              ? _c(
+                                  "p",
+                                  { staticClass: "text-black fs-16 m-b-10" },
+                                  [_vm._v(_vm._s(item.notes))]
+                                )
+                              : _c("p", [_vm._v("-")])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                            _c("p", [
+                              _c("span", { staticClass: "text-uppercase" }, [
+                                _vm._v("Approved: ")
+                              ]),
+                              _vm._v(" "),
+                              item.isApproved
+                                ? _c("i", {
+                                    staticClass:
+                                      "fa fa-check text-success fs-16"
+                                  })
+                                : _c("i", {
+                                    staticClass: "fa fa-times text-danger fs-16"
+                                  })
+                            ]),
+                            _vm._v(" "),
+                            item.updatedAt && item.updatedBy
+                              ? _c("div", [
+                                  _c("p", { staticClass: "text-uppercase" }, [
+                                    _vm._v("Latest Update")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    { staticClass: "text-black fs-16 m-b-0" },
+                                    [
+                                      _vm._v(
+                                        "\n                                    Updated at " +
+                                          _vm._s(item.updatedAt) +
+                                          " by " +
+                                          _vm._s(item.updatedBy) +
+                                          "\n                                "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-1 p-t-10" })
+                        ]
+                      )
+                    ])
+                  })
+                ],
+                2
+              )
+            ]
+          )
         })
       ),
       _vm._v(" "),
@@ -4478,7 +4494,18 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-1 m-t-20" }, [
+      _c("button", { staticClass: "btn btn-outline-primary m-t-10 m-r-20" }, [
+        _vm._v("Details")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

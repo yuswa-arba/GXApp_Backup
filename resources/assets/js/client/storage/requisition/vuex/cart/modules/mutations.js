@@ -153,8 +153,6 @@ export default{
             .then((res) => {
                 if (!res.data.isFailed) {
 
-                    state.isSubmittingRequisition = false
-
                      $('.page-container').pgNotification({
                           style: 'flip',
                           message: res.data.message,
@@ -164,11 +162,13 @@ export default{
                       }).show();
 
                      setTimeout(()=>{
-
                          //move to track & history page8
                          window.location.href='/storage/requisition/history'
 
-                     },2000)
+                     },500)
+
+                    // no need because it is being redirected to history page
+                    // state.isSubmittingRequisition = false
 
                 } else {
 

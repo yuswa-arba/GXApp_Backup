@@ -55,7 +55,7 @@ class HistoryTrackController extends Controller
 
         if ($employee && $employee->hasResigned != 1) {
 
-           $requisitions = StorageRequisition::where('requesterEmployeeId',$employee->id)->paginate(30);
+           $requisitions = StorageRequisition::where('requesterEmployeeId',$employee->id)->paginate(10);
 
            if($requisitions){
 

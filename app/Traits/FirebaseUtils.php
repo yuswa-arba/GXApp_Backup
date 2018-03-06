@@ -10,6 +10,7 @@ namespace App\Traits;
 
 
 use App\Account\Models\UserPushToken;
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use Illuminate\Support\Facades\Log;
 
 
@@ -40,7 +41,8 @@ trait FirebaseUtils
             $mPushNotification = $push;
 
             try { // wrap with try and catch to prevent error crash
-                $devicetoken = UserPushToken::where('userId', $userID)->where('type', $type)->orderBy('id', 'desc')->first()['token'];
+                //TODO: currenlty only suppor android push
+                $devicetoken = UserPushToken::where('userId', $userID)->where('type', ConfigCodes::$TOKEN_TYPE['ANDROID'])->orderBy('id', 'desc')->first()['token'];
                 $this->send(array($devicetoken), $mPushNotification); //required as an array
 
             } catch (\Exception $exception) {

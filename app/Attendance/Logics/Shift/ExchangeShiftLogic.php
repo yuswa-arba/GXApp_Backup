@@ -22,7 +22,6 @@ use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Traits\FirebaseUtils;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
-use App\Traits\GlobalConfig;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -374,8 +373,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                             'userID' => $ownerShiftUserId,
                             'title' => 'Exchange Shift',
                             'message' => 'Someone has requested to change shift with you!',
-                            'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
-                            'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                            'intentType' => ConfigCodes::$FCM_INTENT_TYPE['HOME'],
+                            'viaType' => ConfigCodes::$NOTIFY_TYPE['NOTIFICATION'],
                             'sender' => $user
                         ]);
 
@@ -434,7 +433,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
 
             if ($exchangeReq->employeeId2 == $employee->id) { //Check if this user is authorized to answer request
 
-                if ($request->answerType == GlobalConfig::$EXCHANGE_ANSWER_TYPE['ACCEPT']) {
+                if ($request->answerType == ConfigCodes::$EXCHANGE_ANSWER_TYPE['ACCEPT']) {
 
                     $requesterSlotId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'slotSchedule', 'slotId') ?: 1;
                     $ownerSlotId = $this->getResultWithNullChecker1Connection($exchangeReq->ownerEmployee, 'slotSchedule', 'slotId') ?: 1;
@@ -471,8 +470,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                         'userID' => $requesterUserId,
                                         'title' => 'Exchange Day Off Accepted',
                                         'message' => 'Your exchange day off request has been accepted!',
-                                        'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
-                                        'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                                        'intentType' => ConfigCodes::$FCM_INTENT_TYPE['HOME'],
+                                        'viaType' => ConfigCodes::$NOTIFY_TYPE['NOTIFICATION'],
                                         'sender' => $user
                                     ]);
 
@@ -534,8 +533,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                         'userID' => $requesterUserId,
                                         'title' => 'Exchange Public Holiday Accepted',
                                         'message' => 'Your exchange day off request has been accepted!',
-                                        'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
-                                        'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                                        'intentType' => ConfigCodes::$FCM_INTENT_TYPE['HOME'],
+                                        'viaType' => ConfigCodes::$NOTIFY_TYPE['NOTIFICATION'],
                                         'sender' => $user
                                     ]);
 
@@ -624,8 +623,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                                         'userID' => $requesterUserId,
                                         'title' => 'Exchange Shift Accepted',
                                         'message' => 'Your exchange shift request has been accepted!',
-                                        'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
-                                        'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                                        'intentType' => ConfigCodes::$FCM_INTENT_TYPE['HOME'],
+                                        'viaType' => ConfigCodes::$NOTIFY_TYPE['NOTIFICATION'],
                                         'sender' => $user
                                     ]);
 
@@ -687,7 +686,7 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                     }
 
 
-                } elseif ($request->answerType == GlobalConfig::$EXCHANGE_ANSWER_TYPE['DECLINE']) { // DECLINE REQUEST
+                } elseif ($request->answerType == ConfigCodes::$EXCHANGE_ANSWER_TYPE['DECLINE']) { // DECLINE REQUEST
 
                     // Notify requester that owner is declining the request
                     $requesterUserId = $this->getResultWithNullChecker1Connection($exchangeReq->requesterEmployee, 'user', 'id');
@@ -697,8 +696,8 @@ class ExchangeShiftLogic extends ExchangeShiftUseCase
                         'userID' => $requesterUserId,
                         'title' => 'Exchange Shift Declined',
                         'message' => $this->getResultWithNullChecker1Connection($exchangeReq, 'requesterEmployee', 'givenName') . ' has declined your exchange shift request.',
-                        'intentType' => GlobalConfig::$FCM_INTENT_TYPE['HOME'],
-                        'viaType' => GlobalConfig::$NOTIFY_TYPE['NOTIFICATION'],
+                        'intentType' => ConfigCodes::$FCM_INTENT_TYPE['HOME'],
+                        'viaType' => ConfigCodes::$NOTIFY_TYPE['NOTIFICATION'],
                         'sender' => $user
                     ]);
 

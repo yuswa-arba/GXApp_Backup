@@ -436,6 +436,10 @@
   border-bottom: 1px solid #eaecee !important;
 }
 
+.border-solid-grey {
+  border: 1px solid #ddd !important;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   /* display: none; <- Crashes Chrome on hover */

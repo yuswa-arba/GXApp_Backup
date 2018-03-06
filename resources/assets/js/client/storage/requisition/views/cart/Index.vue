@@ -41,7 +41,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="cursor" @click="viewImage('/images/storage/items/'+item.itemPhoto)">
-                                            <img :src="'/images/storage/items/'+item.itemPhoto" height="60px" alt="">
+                                            <img :src="'/images/storage/items/'+item.itemPhoto" height="60px" alt="No Image Found">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

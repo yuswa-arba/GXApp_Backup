@@ -40,7 +40,7 @@ class PushNotificationService
                         'message' => $data['message'],
                         'intentType' => $data['intentType'],
                         'viaType' => $data['viaType'],
-                        'groupTypeId'=>$data['groupTypeId'],
+                        'groupTypeId'=>array_key_exists('groupTypeId',$data)?$data['groupTypeId']:1,
                         'url'=>$data['url'],
                         'sendBy' => $this->getResultWithNullChecker1Connection($data['sender'], 'employee', 'givenName'),
                         'sendDate' => Carbon::now()->format('d/m/Y'),
@@ -50,7 +50,7 @@ class PushNotificationService
                     if($notification){
 
                         //EVENT BROADCAST ECHO (FOR WEB)
-                        $user = User::find($data['userId']);
+                        $user = User::find($data['userID']);
                         $employee = $user->employee;
                         if($employee){
                             broadcast(new UserNotified($employee->id,$notification->id))->toOthers();

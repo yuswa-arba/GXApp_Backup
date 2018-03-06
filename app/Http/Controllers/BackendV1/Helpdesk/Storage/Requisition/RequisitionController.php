@@ -2,36 +2,17 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Requisition;
 
-use App\Components\Models\UnitOfMeasurements;
-use App\Components\Transformers\UnitOfMeasurementTransformer;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
-use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Controllers\Controller;
-use App\Storage\Logics\Item\CreateItemLogic;
-use App\Storage\Logics\Item\GetItemListLogic;
-use App\Storage\Logics\Requisition\GetShopItemDetailLogic;
-use App\Storage\Logics\Requisition\GetShopItemListLogic;
-use App\Storage\Models\StorageItems;
-use App\Storage\Models\StorageItemsCategory;
-use App\Storage\Models\StorageItemTypes;
+use App\Storage\Jobs\NotifyAdminsNewRequisition;
 use App\Storage\Models\StorageRequestCart;
 use App\Storage\Models\StorageRequisition;
 use App\Storage\Models\StorageRequisitionItems;
-use App\Storage\Models\StorageShipments;
-use App\Storage\Models\StorageSuppliers;
-use App\Storage\Models\StorageWarehouses;
-use App\Storage\Transformers\BasicCodeNameTransformer;
-use App\Storage\Transformers\ShipmentTransformer;
-use App\Storage\Transformers\StorageItemBriefDetailTransformer;
-use App\Storage\Transformers\StorageItemDetailTransformer;
 use App\Storage\Transformers\StorageItemInsideCartDetailTransformer;
-use App\Storage\Transformers\SupplierTransformer;
-use App\Storage\Transformers\WarehouseTransformer;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class RequisitionController extends Controller
@@ -164,14 +145,12 @@ class RequisitionController extends Controller
                         if($insertToRequisitionItems){
                             $itemInCart->delete();
                         }
-
                     }
-
                 }
 
-                //TODO: Trigger event to notify someone has requested some items
-
-
+                //Dispatch job to notify someone has requested some items
+                //Send email to admins
+                NotifyAdminsNewRequisition::dispatch($createRequisition->id,$user)->onConnection('database')->onQueue('broadcaster');
 
                 // Return success response
                 $response['isFailed'] = false;
