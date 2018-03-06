@@ -55,23 +55,23 @@ class HistoryTrackController extends Controller
 
         if ($employee && $employee->hasResigned != 1) {
 
-           $requisitions = StorageRequisition::where('requesterEmployeeId',$employee->id)->paginate(10);
+            $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)->paginate(10);
 
-           if($requisitions){
+            if ($requisitions) {
 
-               $response['isFailed'] = false;
-               $response['message'] = 'Success';
-               $response['requisitions'] = fractal($requisitions, new StorageRequisitionListTransformer())
-                                            ->includeRequisitionItems()
-                                            ->includeDeliveryWarehouse();
+                $response['isFailed'] = false;
+                $response['message'] = 'Success';
+                $response['requisitions'] = fractal($requisitions, new StorageRequisitionListTransformer())
+                    ->includeRequisitionItems()
+                    ->includeDeliveryWarehouse();
 
-               return response()->json($response,200);
+                return response()->json($response, 200);
 
-           } else {
-               $response['isFailed'] = true;
-               $response['message'] = 'Unable to find requisition';
-               return response()->json($response,200);
-           }
+            } else {
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to find requisition';
+                return response()->json($response, 200);
+            }
 
 
         } else {
@@ -87,9 +87,40 @@ class HistoryTrackController extends Controller
     {
         $response = array();
 
-        $validator =  Validator::make($request->all(),[
-            'search'=>'required'
-        ]);
-    }
+        $user = Auth::user(); //user data
+        $employee = $user->employee; // user's employee data
 
+        if ($employee && $employee->hasResigned != 1) {
+
+            $search = $request->v;
+
+            if ($search != '') {
+
+                $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)
+                    ->where(function($query)use($search){
+                        $query->where('requisitionNumber','like','%'.$search.'%');
+                    })
+                    ->paginate(10);
+
+            } else {
+                $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)->paginate(10);
+            }
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            $response['requisitions'] = fractal($requisitions, new StorageRequisitionListTransformer())
+                ->includeRequisitionItems()
+                ->includeDeliveryWarehouse();
+
+            return response()->json($response, 200);
+
+        } else {
+
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Permission denied';
+            return response()->json($response, 200);
+
+        }
+    }
 }

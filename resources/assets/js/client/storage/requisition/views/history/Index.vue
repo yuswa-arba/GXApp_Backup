@@ -1,7 +1,28 @@
 <template>
     <div class="row">
-
         <div class="col-lg-12" style="margin-top: 50px">
+            <div class="row">
+                <div class="col-lg-8">
+
+                    <h4 class="text-master" v-if="isSearchingRequisition">Searching Requisition.. Please Wait..</h4>
+
+                    <h4 class="text-master" v-if="requisitions.length>0">.</h4>
+                    <h4 class="text-master" v-else="">No Requisition Found</h4>
+
+                </div>
+                <div class="col-lg-4">
+
+                    <div class="input-group m-b-20">
+                        <input type="text" style="height: 40px;" class="form-control" id="search-requisition-box"
+                               placeholder="Search Requisition Number"
+                               v-model="searchText"
+                        >
+                        <span class="input-group-addon primary" @click="searchRequisition()"><i
+                                class="fa fa-search cursor"></i></span>
+                    </div>
+
+                </div>
+            </div>
             <div class="card card-default card-bordered border-solid-grey"
                  v-for="requisition in requisitions">
                 <div class="card-block no-padding">
@@ -17,7 +38,7 @@
                                 <p v-else="">-</p>
 
                             </div>
-                            <div class="col-lg-2 m-t-20">
+                            <div class="col-lg-2 m-t-20">r
                                 <p class="text-uppercase m-t-10 m-b-0">Requested At</p>
                                 <p class="text-black fs-16 m-b-10">{{requisition.requestedAt}}</p>
 
@@ -104,14 +125,17 @@
             InfiniteLoading,
         },
         data(){
-            return {}
+            return {
+                searchText:''
+            }
         },
         created(){
 
         },
         computed: {
             ...mapState('history', {
-                requisitions: 'requisitions'
+                requisitions: 'requisitions',
+                isSearchingRequisition:'isSearchingRequisition'
             })
         },
         methods: {
@@ -179,6 +203,15 @@
             viewImage(url){
                 window.open(url, '_blank')
             },
+            searchRequisition(){
+
+                let self = this
+                this.$store.commit({
+                    type:'history/searchRequisition',
+                    searchText:self.searchText
+                })
+
+            }
         }
     }
 </script>

@@ -17,7 +17,8 @@ export default {
             current_page: '',
             total_pages: '',
             links: []
-        }
+        },
+        isSearchingRequisition:false
     },
     getters,
     mutations,

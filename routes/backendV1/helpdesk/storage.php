@@ -109,6 +109,7 @@ Route::prefix('v1/h')->group(function () {
        */
 
         Route::get('requisition/history','Requisition\HistoryTrackController@requisitionHistory');
+        Route::get('requisition/history/search','Requisition\HistoryTrackController@searchRequisitionHistory');
 
     });
 });
