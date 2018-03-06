@@ -36,7 +36,7 @@
                     <span class="icon-thumbnail">a</span>
                     <ul class="sub-menu">
                         <li>
-                            <a href="javascript:;">Requisition Approval</a>
+                            <a href="{{route('storage.admin.approval')}}">Requisition Approval</a>
                             <span class="icon-thumbnail">ra</span>
                         </li>
                         <li>

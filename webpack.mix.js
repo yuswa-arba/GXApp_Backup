@@ -199,6 +199,7 @@ mix.js('resources/assets/js/client/storage/misc/units','public/js/client/storage
 mix.js('resources/assets/js/client/storage/requisition/shop','public/js/client/storage/requisition');
 mix.js('resources/assets/js/client/storage/requisition/cart','public/js/client/storage/requisition');
 mix.js('resources/assets/js/client/storage/requisition/history','public/js/client/storage/requisition');
+mix.js('resources/assets/js/client/storage/admin/approval','public/js/client/storage/admin');
 
 
 /*

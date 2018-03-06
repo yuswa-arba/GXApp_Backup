@@ -92,4 +92,9 @@ class ViewController extends Controller
     {
         return view('pages.storage.requisition.history');
     }
+
+    public function approval()
+    {
+        return view('pages.storage.admin.approval');
+    }
 }

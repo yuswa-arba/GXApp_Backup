@@ -24,7 +24,7 @@
                 </div>
             </div>
             <div class="card card-default card-bordered border-solid-grey"
-                 v-for="requisition in requisitions">
+                 v-for="(requisition,index) in requisitions">
                 <div class="card-block no-padding">
                     <div class="col-lg-12 border-bottom-grey" style="background:#fafafa;">
                         <div class="row">
@@ -47,26 +47,49 @@
 
                             </div>
                             <div class="col-lg-3 m-t-20 m-b-20">
+
+                                <p class="text-uppercase m-t-10 m-b-0">Requested By</p>
+                                <p class="text-black fs-16 m-b-10">{{requisition.requestedBy}}</p>
+
                                 <p class="text-uppercase m-t-10 m-b-0">Description</p>
                                 <p class="text-black fs-14 m-b-10">{{requisition.description}}</p>
                             </div>
-                            <div class="col-lg-3 m-t-20 m-b-20">
+                            <div class="col-lg-2 m-t-20 m-b-20">
                                 <p class="text-uppercase m-t-10 m-b-0">Approval Status</p>
                                 <p class="text-black fs-14 m-b-10">{{requisition.approvalName}}</p>
                             </div>
-                            <div class="col-lg-1 m-t-20 m-b-20">
-                                <button class="btn btn-outline-primary m-t-10 m-r-20">Details</button>
+                            <div class="col-lg-2" style="margin-top: 30px">
+                                <div class="dropdown dropdown-default m-l-20" v-if="requisition.approvalId==3 && !requisition.editing">
+                                    <button class="btn btn-outline-primary dropdown-toggle text-center" type="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Action
+                                    </button>
+
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item pointer" @click="approveRequisition(requisition.id,index)">
+                                            Approve</a>
+                                        <a class="dropdown-item pointer" @click="editAndApprove(requisition.id,index)">
+                                            Edit & Approve</a>
+                                        <a class="dropdown-item pointer" @click="declineRequisition(requisition.id,index)">
+                                            Decline
+                                        </a>
+                                    </div>
+                                </div>
+                                <button class="btn btn-complete" v-if="requisition.approvalId==3 && requisition.editing">Save Approval</button>
+
                             </div>
                         </div>
                     </div>
                     <div class="p-t-10"></div>
-                    <div class="col-lg-12" v-for="item in requisition.requisitionItems.data">
+                    <div class="col-lg-12" v-for="(item,index) in requisition.requisitionItems.data">
                         <div class="row border-bottom-grey p-t-10 p-b-10">
                             <div class="col-lg-3 p-t-10">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div class="cursor" @click="viewImage('/images/storage/items/'+item.itemPhoto)" style="margin-top:-10px">
-                                            <img :src="'/images/storage/items/'+item.itemPhoto" height="60px" alt="No Image Found">
+                                        <div class="cursor" @click="viewImage('/images/storage/items/'+item.itemPhoto)"
+                                             style="margin-top:-10px">
+                                            <img :src="'/images/storage/items/'+item.itemPhoto" height="60px"
+                                                 alt="No Image Found">
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -85,11 +108,22 @@
                                 <p v-else="">-</p>
                             </div>
                             <div class="col-lg-3 p-t-10">
-                                <p>
-                                    <span class="text-uppercase">Approved: </span>
-                                    <i class="fa fa-check text-success fs-16" v-if="item.isApproved"></i>
-                                    <i class="fa fa-times text-danger fs-16" v-else=""></i>
-                                </p>
+                                <div>
+                                    <p class="text-uppercase">Approved:
+                                        <span v-if="!requisition.editing">
+                                            <i class="fa fa-check text-success fs-16" v-if="item.isApproved"></i>
+                                            <i class="fa fa-times text-danger fs-16" v-else=""></i>
+                                         </span>
+                                    </p>
+
+                                    <div v-if="requisition.editing">
+                                        <select :id="'item-select-approve-'+index" v-model="item.isApproved">
+                                            <option value="1">Yes</option>
+                                            <option value="0">No</option>
+                                        </select>
+                                    </div>
+
+                                </div>
                                 <div v-if="item.updatedAt&&item.updatedBy">
                                     <p class="text-uppercase m-b-0">Latest Update</p>
                                     <p class="text-black fs-16 m-b-10">
@@ -126,16 +160,16 @@
         },
         data(){
             return {
-                searchText:''
+                searchText: ''
             }
         },
         created(){
 
         },
         computed: {
-            ...mapState('history', {
+            ...mapState('approval', {
                 requisitions: 'requisitions',
-                isSearchingRequisition:'isSearchingRequisition'
+                isSearchingRequisition: 'isSearchingRequisition'
             })
         },
         methods: {
@@ -143,18 +177,18 @@
 
                 let self = this
 
-                let historyVuexState = this.$store.state.history
+                let approvalVuexState = this.$store.state.approval
 
-                if (historyVuexState.paginationMeta.current_page >= historyVuexState.paginationMeta.total_pages && historyVuexState.paginationMeta.current_page != '') {
+                if (approvalVuexState.paginationMeta.current_page >= approvalVuexState.paginationMeta.total_pages && approvalVuexState.paginationMeta.current_page != '') {
 
                     $state.complete()
 
                 } else {
 
-                    let nextPage = historyVuexState.paginationMeta.current_page + 1
+                    let nextPage = approvalVuexState.paginationMeta.current_page + 1
 
                     //get next page
-                    get(api_path + 'storage/requisition/history?page=' + nextPage)
+                    get(api_path + 'storage/admin/approval?page=' + nextPage)
                         .then((res) => {
                             if (!res.data.isFailed) {
                                 if (res.data.requisitions.data) {
@@ -162,15 +196,15 @@
                                     //insert requisitions
                                     let requisitionsData = res.data.requisitions.data
                                     if (requisitionsData) {
-                                        historyVuexState.requisitions = historyVuexState.requisitions.concat(requisitionsData)
+                                        approvalVuexState.requisitions = approvalVuexState.requisitions.concat(requisitionsData)
                                     }
 
                                     //insert pagination
-                                    historyVuexState.paginationMeta = res.data.requisitions.meta.pagination
+                                    approvalVuexState.paginationMeta = res.data.requisitions.meta.pagination
 
                                     $state.loaded();
 
-                                    if (historyVuexState.requisitions.length === historyVuexState.paginationMeta.total) {
+                                    if (approvalVuexState.requisitions.length === approvalVuexState.paginationMeta.total) {
                                         $state.complete()
                                     }
 
@@ -200,6 +234,35 @@
                         })
                 }
             },
+            editAndApprove(requisitionId, index){
+                let approvalVuexState = this.$store.state.approval
+                approvalVuexState.requisitions[index].editing = true
+            },
+            saveApprovalAfterEdit(requisitionId,index){
+                this.$store.commit({
+                    type:'approval/saveApprovalAfterEdit',
+                    requisitionId:requisitionId,
+                    index:index
+                })
+            },
+            declineRequisition(requisitionId,index){
+
+                if(confirm('Are you sure decline this requisition?')){
+                    this.$store.commit({
+                        type:'approval/declineRequisition',
+                        requisitionId:requisitionId,
+                        index:index
+                    })
+                }
+
+            },
+            approveRequisition(requisitionId,index){
+                this.$store.commit({
+                    type:'approval/approveRequisition',
+                    requisitionId:requisitionId,
+                    index:index
+                })
+            },
             viewImage(url){
                 window.open(url, '_blank')
             },
@@ -207,8 +270,8 @@
 
                 let self = this
                 this.$store.commit({
-                    type:'history/searchRequisition',
-                    searchText:self.searchText
+                    type: 'approval/searchRequisition',
+                    searchText: self.searchText
                 })
 
             }

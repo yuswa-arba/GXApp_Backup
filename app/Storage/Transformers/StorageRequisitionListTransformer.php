@@ -26,12 +26,12 @@ class StorageRequisitionListTransformer extends TransformerAbstract
             'approvalNumber' => $storageRequisition->approvalNumber,
             'requestedAt' => $storageRequisition->requestedAt,
             'requestedBy' => $storageRequisition->requestedBy,
-            'requesterEmployeeName' => $this->getResultWithNullChecker1Connection($storageRequisition,'requesterEmployee','givenName'),
             'divisionName'=>$this->getResultWithNullChecker1Connection($storageRequisition,'division','name'),
             'dateNeededBy'=>$storageRequisition->dateNeededBy,
             'description' => $storageRequisition->description,
             'approvalId'=>$storageRequisition->approvalId,
-            'approvalName'=>$this->getResultWithNullChecker1Connection($storageRequisition,'approval','name')
+            'approvalName'=>$this->getResultWithNullChecker1Connection($storageRequisition,'approval','name'),
+            'editing'=>false
         ];
     }
 

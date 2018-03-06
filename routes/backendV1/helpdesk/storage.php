@@ -29,7 +29,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('supplier/list', 'Misc\ListController@supplierList');
         Route::get('warehouse/list', 'Misc\ListController@warehouseList');
         Route::get('unit/list', 'Misc\ListController@unitList');
-        Route::get('status/list','Misc\ListController@statusList');
+        Route::get('status/list', 'Misc\ListController@statusList');
 
         Route::post('create/itemCategory', 'Misc\CreateController@createItemCategory');
         Route::post('create/itemType', 'Misc\CreateController@createItemType');
@@ -79,28 +79,28 @@ Route::prefix('v1/h')->group(function () {
         */
         Route::get('requisition/shop/item/list', 'Shop\ShopController@itemList');
         Route::get('requisition/shop/item/detail', 'Shop\ShopController@itemDetail');
-        Route::get('requisition/shop/item/search','Shop\ShopController@searchItem');
+        Route::get('requisition/shop/item/search', 'Shop\ShopController@searchItem');
 
         /*
         |--------------------------------------------------------------------------
         | Requisition Shop Cart
         |--------------------------------------------------------------------------
         */
-        Route::get('requisition/shop/cart/totalItemInCart','Cart\CartController@getTotalItemInCart');
-        Route::post('requisition/shop/cart/add','Cart\CartController@addToCart');
-        Route::post('requisition/shop/cart/remove','Cart\CartController@removeFromCart');
-        Route::post('requisition/shop/cart/removeAll','Cart\CartController@removeAllFromCart');
-        Route::get('requisition/shop/cart/list','Cart\CartController@itemInsideCartList');
-        Route::post('requisition/shop/cart/updateItemAmountInCart','Cart\CartController@updateItemAmountInCart');
-        Route::post('requisition/shop/cart/updateItemNotesInCart','Cart\CartController@updateItemNotesInCart');
+        Route::get('requisition/shop/cart/totalItemInCart', 'Cart\CartController@getTotalItemInCart');
+        Route::post('requisition/shop/cart/add', 'Cart\CartController@addToCart');
+        Route::post('requisition/shop/cart/remove', 'Cart\CartController@removeFromCart');
+        Route::post('requisition/shop/cart/removeAll', 'Cart\CartController@removeAllFromCart');
+        Route::get('requisition/shop/cart/list', 'Cart\CartController@itemInsideCartList');
+        Route::post('requisition/shop/cart/updateItemAmountInCart', 'Cart\CartController@updateItemAmountInCart');
+        Route::post('requisition/shop/cart/updateItemNotesInCart', 'Cart\CartController@updateItemNotesInCart');
 
         /*
         |--------------------------------------------------------------------------
         | Requisition
         |--------------------------------------------------------------------------
         */
-        Route::post('requisition/itemBeingRequested/list','Requisition\RequisitionController@itemsBeingRequestedList');
-        Route::post('requisition/create','Requisition\RequisitionController@createRequisition');
+        Route::post('requisition/itemBeingRequested/list', 'Requisition\RequisitionController@itemsBeingRequestedList');
+        Route::post('requisition/create', 'Requisition\RequisitionController@createRequisition');
 
         /*
        |--------------------------------------------------------------------------
@@ -108,8 +108,20 @@ Route::prefix('v1/h')->group(function () {
        |--------------------------------------------------------------------------
        */
 
-        Route::get('requisition/history','Requisition\HistoryTrackController@requisitionHistory');
-        Route::get('requisition/history/search','Requisition\HistoryTrackController@searchRequisitionHistory');
+        Route::get('requisition/history', 'Requisition\HistoryTrackController@requisitionHistory');
+        Route::get('requisition/history/search', 'Requisition\HistoryTrackController@searchRequisitionHistory');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Requisition Admin Approval
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('admin/approval','Admin\ApprovalController@requisitionList');
+        Route::get('admin/approval/search', 'Admin\ApprovalController@searchRequisitionList');
+        Route::post('admin/approval/requisition/approve','Admin\ApprovalController@approveRequisition');
+        Route::post('admin/approval/requisition/decline','Admin\ApprovalController@declineRequisition');
+        Route::post('admin/approval/requisition/editAndApprove','Admin\ApprovalController@editAndApproveRequisition');
 
     });
 });

@@ -60,7 +60,8 @@ class ConfigCodes
         'APPROVAL'=>1,
         'DECLINED'=>2,
         'WAITING'=>3,
-        'IN_PROCESS'=>4
+        'IN_PROCESS'=>4,
+        'FINISH'=>5
     ];
 
 }

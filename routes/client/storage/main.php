@@ -28,4 +28,9 @@ Route::prefix('storage')->namespace('Client\Storage')->group(function () {
     Route::get('requisition/shop','ViewController@requisitionShop')->name('storage.requisition.shop');
     Route::get('requisition/cart','ViewController@requisitionCart')->name('storage.requisition.cart');
     Route::get('requisition/history','ViewController@requisitionHistory')->name('storage.requisition.history');
+
+    Route::middleware('auth.admin')->group(function(){
+        Route::get('admin/approval','ViewController@approval')->name('storage.admin.approval');
+    });
+
 });
