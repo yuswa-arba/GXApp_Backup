@@ -2,7 +2,15 @@
     <div class="row">
         <div class="col-lg-12" style="margin-top: 50px">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
+                    <select class="btn btn-outline-primary h-35 pull-left"
+                            style="width: 180px"
+                            @change="sortRequisition()"
+                            v-model="sortApproval">
+                        <option :value="approval.id" v-for="approval in approvalStatuses">{{approval.name}}</option>
+                    </select>
+                </div>
+                <div class="col-lg-4">
 
                     <h4 class="text-master" v-if="isSearchingRequisition">Searching Requisition.. Please Wait..</h4>
 
@@ -160,15 +168,20 @@
         },
         data(){
             return {
-                searchText: ''
+                searchText: '',
+                sortApproval:3
             }
         },
         created(){
-
+            // get necessary data on create for this page
+            this.$store.dispatch({
+                type:'approval/getDataOnCreate'
+            })
         },
         computed: {
             ...mapState('approval', {
                 requisitions: 'requisitions',
+                approvalStatuses:'approvalStatuses',
                 isSearchingRequisition: 'isSearchingRequisition'
             })
         },
@@ -233,6 +246,13 @@
                             $state.complete()
                         })
                 }
+            },
+            sortRequisition(){
+                let self = this
+                this.$store.commit({
+                    type:'approval/getRequisitionApproval',
+                    sortApproval:self.sortApproval
+                })
             },
             editAndApprove(requisitionId, index){
                 let approvalVuexState = this.$store.state.approval

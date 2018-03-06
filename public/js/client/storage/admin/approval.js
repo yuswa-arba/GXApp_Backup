@@ -2657,6 +2657,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2668,13 +2676,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     data: function data() {
         return {
-            searchText: ''
+            searchText: '',
+            sortApproval: 3
         };
     },
-    created: function created() {},
+    created: function created() {
+        // get necessary data on create for this page
+        this.$store.dispatch({
+            type: 'approval/getDataOnCreate'
+        });
+    },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('approval', {
         requisitions: 'requisitions',
+        approvalStatuses: 'approvalStatuses',
         isSearchingRequisition: 'isSearchingRequisition'
     })),
     methods: {
@@ -2735,6 +2750,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     $state.complete();
                 });
             }
+        },
+        sortRequisition: function sortRequisition() {
+            var self = this;
+            this.$store.commit({
+                type: 'approval/getRequisitionApproval',
+                sortApproval: self.sortApproval
+            });
         },
         editAndApprove: function editAndApprove(requisitionId, index) {
             var approvalVuexState = this.$store.state.approval;
@@ -4391,7 +4413,50 @@ var render = function() {
         { staticClass: "col-lg-12", staticStyle: { "margin-top": "50px" } },
         [
           _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-8" }, [
+            _c("div", { staticClass: "col-lg-4" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.sortApproval,
+                      expression: "sortApproval"
+                    }
+                  ],
+                  staticClass: "btn btn-outline-primary h-35 pull-left",
+                  staticStyle: { width: "180px" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.sortApproval = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        _vm.sortRequisition()
+                      }
+                    ]
+                  }
+                },
+                _vm._l(_vm.approvalStatuses, function(approval) {
+                  return _c("option", { domProps: { value: approval.id } }, [
+                    _vm._v(_vm._s(approval.name))
+                  ])
+                })
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-4" }, [
               _vm.isSearchingRequisition
                 ? _c("h4", { staticClass: "text-master" }, [
                     _vm._v("Searching Requisition.. Please Wait..")
@@ -19520,7 +19585,14 @@ module.exports = Component.exports
 
 
 
-/* harmony default export */ __webpack_exports__["a"] = ({});
+/* harmony default export */ __webpack_exports__["a"] = ({
+    getDataOnCreate: function getDataOnCreate(_ref, payload) {
+        var commit = _ref.commit,
+            state = _ref.state;
+
+        commit('getApprovalStatusList');
+    }
+});
 
 /***/ }),
 
@@ -19562,7 +19634,8 @@ module.exports = Component.exports
             total_pages: '',
             links: []
         },
-        isSearchingRequisition: false
+        isSearchingRequisition: false,
+        approvalStatuses: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -19586,6 +19659,53 @@ module.exports = Component.exports
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
+    getApprovalStatusList: function getApprovalStatusList(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/approvalStatus/list').then(function (res) {
+            if (!res.data.isFailed) {
+                state.approvalStatuses = res.data.approvalStatuses.data;
+            }
+        });
+    },
+    getRequisitionApproval: function getRequisitionApproval(state, payload) {
+
+        var sortApproval = '';
+        if (payload.sortApproval) {
+            sortApproval = payload.sortApproval;
+        }
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval?sortApproval=' + sortApproval).then(function (res) {
+
+            state.isSearchingRequisition = true;
+
+            if (!res.data.isFailed) {
+                if (res.data.requisitions.data) {
+
+                    state.requisitions = [];
+
+                    //insert requisitions
+                    var requisitionData = res.data.requisitions.data;
+                    if (requisitionData) {
+                        state.requisitions = state.requisitions.concat(requisitionData);
+                    }
+
+                    //insert pagination
+                    state.paginationMeta = res.data.requisitions.meta.pagination;
+                }
+
+                state.isSearchingRequisition = false;
+            } else {
+                state.isSearchingRequisition = false;
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
     searchRequisition: function searchRequisition(state, payload) {
 
         var search = '';

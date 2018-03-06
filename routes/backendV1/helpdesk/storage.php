@@ -30,6 +30,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('warehouse/list', 'Misc\ListController@warehouseList');
         Route::get('unit/list', 'Misc\ListController@unitList');
         Route::get('status/list', 'Misc\ListController@statusList');
+        Route::get('approvalStatus/list','Misc\ListController@approvaStatuslList');
 
         Route::post('create/itemCategory', 'Misc\CreateController@createItemCategory');
         Route::post('create/itemType', 'Misc\CreateController@createItemType');
