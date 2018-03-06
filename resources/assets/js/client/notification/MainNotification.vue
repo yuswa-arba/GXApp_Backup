@@ -47,62 +47,61 @@
                         </div>
                         <!-- END View Header !-->
                         <!-- BEGIN Alert List !-->
-                        <div data-init-list-view="ioslist" class="list-view boreded no-top-border" >
+                        <div data-init-list-view="ioslist" class="list-view boreded no-top-border">
                             <div class="scrollable" v-if="unreadExists">
                                 <div style="height: 1600px!important;">
-                                    <div class="list-view-group-container" v-for="(notification,indexList) in notificationList">
-                                        <div v-if="notification.notifData">
-                                            <!-- BEGIN List Group Header!-->
-                                            <div class="list-view-group-header text-uppercase" style="z-index: 0">
-                                                {{notification.groupTypeName}}
-                                            </div>
-                                            <!-- END List Group Header!-->
-                                            <ul>
-                                                <!-- BEGIN List Group Item!-->
-                                                <li class="alert-list" v-for="(notif,indexItem) in notification.notifData">
-                                                    <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
-                                                    <a href="#" class="p-t-10 p-b-10 align-items-center"
-                                                       data-navigate="view"
-                                                       data-view-port="#chat" data-view-animation="push-parrallax"
-                                                       @click="openUrl(notif.url,notif.id,indexList,indexItem)"
-                                                       :class="{'cursor':notif.url}"
-                                                       style="height: 60px!important;"
-                                                    >
-                                                        <p class="">
+                                    <div class="list-view-group-container"
+                                         v-if="notification.notifData"
+                                         v-for="(notification,indexList) in notificationList">
+
+                                        <!-- BEGIN List Group Header!-->
+                                        <div class="list-view-group-header text-uppercase" style="z-index: 0">
+                                            {{notification.groupTypeName}}
+                                        </div>
+                                        <!-- END List Group Header!-->
+                                        <ul>
+                                            <!-- BEGIN List Group Item!-->
+                                            <li class="alert-list" v-for="(notif,indexItem) in notification.notifData">
+                                                <!-- BEGIN Alert Item Set Animation using data-view-animation !-->
+                                                <a href="#" class="p-t-10 p-b-10 align-items-center"
+                                                   data-navigate="view"
+                                                   data-view-port="#chat" data-view-animation="push-parrallax"
+                                                   @click="openUrl(notif.url,notif.id,indexList,indexItem)"
+                                                   :class="{'cursor':notif.url}"
+                                                   style="height: 60px!important;"
+                                                >
+                                                    <p class="">
                                                     <span v-if="notif.hasSeen==0" class="text-danger fs-10"><i
                                                             class="fa fa-circle"></i></span>
-                                                            <span v-else="" class="text-master-light fs-10"><i
-                                                                    class="fa fa-circle"></i></span>
-                                                        </p>
-                                                        <p class="col overflow-ellipsis fs-12 p-l-10 p-r-20"
-                                                           style="line-height:18px!important;width:255px!important">
+                                                        <span v-else="" class="text-master-light fs-10"><i
+                                                                class="fa fa-circle"></i></span>
+                                                    </p>
+                                                    <p class="col overflow-ellipsis fs-12 p-l-10 p-r-20"
+                                                       style="line-height:18px!important;width:255px!important">
                                                         <span class="text-black fs-14 "
                                                               :class="{'bold':notif.hasSeen==0}">{{notif.title}}<br></span>
-                                                            <span class="text-master fs-14">{{notif.message}}<br></span>
-                                                            <span class="text-master link fs-12">{{notif.sendAt}}<br></span>
+                                                        <span class="text-master fs-14">{{notif.message}}<br></span>
+                                                        <span class="text-master link fs-12">{{notif.sendAt}}<br></span>
 
-                                                        </p>
-                                                        <p class="pull-right">
+                                                    </p>
+                                                    <p class="pull-right">
                                                     <span v-if="notif.url" class="text-primary cursor"
                                                           style="padding-right: 15px">
                                                     <i class="fa fa-chevron-right fs-14"></i>
                                                 </span>
-                                                        </p>
-                                                    </a>
-                                                    <!-- END Alert Item!-->
-                                                </li>
-                                                <!-- END List Group Item!-->
-                                            </ul>
-                                            <div class="text-right text-black fs-14 bg-danger-lighter"
-                                                 style="opacity: 0.7;padding: 2px 10px" v-if="notification.totalNew>5">
-                                                <span class="text-right"> <b>{{notification.totalNew}}</b> Unread Notifications</span>
-                                            </div>
-                                            <div class="text-right text-black fs-12"
-                                                 style="opacity: 0.7;padding: 2px 10px" v-else="">
-                                                <span class="text-right text-primary cursor"> Show All </span>
-                                            </div>
-
-
+                                                    </p>
+                                                </a>
+                                                <!-- END Alert Item!-->
+                                            </li>
+                                            <!-- END List Group Item!-->
+                                        </ul>
+                                        <div class="text-right text-black fs-14 bg-danger-lighter"
+                                             style="opacity: 0.7;padding: 2px 10px" v-if="notification.totalNew>5">
+                                            <span class="text-right"> <b>{{notification.totalNew}}</b> Unread Notifications</span>
+                                        </div>
+                                        <div class="text-right text-black fs-12"
+                                             style="opacity: 0.7;padding: 2px 10px" v-else="">
+                                            <span class="text-right text-primary cursor"> Show All </span>
                                         </div>
 
                                     </div>
@@ -138,28 +137,28 @@
         computed: {
             ...mapState('notification', {
                 notificationList: 'notificationList',
-                unreadExists:'unreadExists'
+                unreadExists: 'unreadExists'
             })
         },
         methods: {
             closeQuickview(){
                 closeNotificationList()
             },
-            openUrl(url,notificationId,indexList,indexItem){
+            openUrl(url, notificationId, indexList, indexItem){
                 if (isWebUri(url)) {
                     window.open(url, '_blank')
                 }
 
                 this.$store.commit({
-                    type:'notification/seenNotification',
-                    notificationId:notificationId,
-                    indexList:indexList,
-                    indexItem:indexItem
+                    type: 'notification/seenNotification',
+                    notificationId: notificationId,
+                    indexList: indexList,
+                    indexItem: indexItem
                 })
 
             },
             markAllAsRead(){
-                this.$store.commit({type:'notification/seenNotificationList'})
+                this.$store.commit({type: 'notification/seenNotificationList'})
             },
             goToAllNotifications(){
                 window.open('/profile/notifications')
