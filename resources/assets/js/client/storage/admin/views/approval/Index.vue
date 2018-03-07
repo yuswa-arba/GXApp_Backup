@@ -23,8 +23,7 @@
                     <div class="input-group m-b-20">
                         <input type="text" style="height: 40px;" class="form-control" id="search-requisition-box"
                                placeholder="Search Requisition Number"
-                               v-model="searchText"
-                        >
+                               v-model="searchText">
                         <span class="input-group-addon primary" @click="searchRequisition()"><i
                                 class="fa fa-search cursor"></i></span>
                     </div>
@@ -83,7 +82,9 @@
                                         </a>
                                     </div>
                                 </div>
-                                <button class="btn btn-complete" v-if="requisition.approvalId==3 && requisition.editing">Save Approval</button>
+                                <button class="btn btn-complete"
+                                        @click="saveApprovalAfterEdit(requisition.id,index)"
+                                        v-if="requisition.approvalId==3 && requisition.editing">Save Approval</button>
 
                             </div>
                         </div>
@@ -100,7 +101,7 @@
                                                  alt="No Image Found">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-6 m-l-5">
                                         <p class="text-black fs-16 m-b-0">{{item.itemName}}</p>
                                         <p class="no-padding fs-14">{{item.itemCode}}</p>
                                     </div>

@@ -15,7 +15,7 @@ export default{
     },
     getRequisitionApproval(state, payload){
 
-        let sortApproval= ''
+        let sortApproval = ''
         if (payload.sortApproval) {
             sortApproval = payload.sortApproval
         }
@@ -95,6 +95,57 @@ export default{
     },
     saveApprovalAfterEdit(state, payload){
 
+        let requisition = state.requisitions[payload.index]
+        let requisitionItems = requisition.requisitionItems.data
+
+        //get only id and isApproved property in array to be send in request
+        let requisitionItemsUpdated = _.map(requisitionItems, item => _.pick(item, 'id', 'isApproved'))
+
+        post(api_path + 'storage/admin/approval/requisition/editAndApprove', {
+            requisitionId: payload.requisitionId,
+            requisitionItemsUpdated: requisitionItemsUpdated
+        })
+            .then((res) => {
+
+                if (!res.data.isFailed) {
+
+                    requisition.approvalNumber = requisition.requisitionNumber + 'A'
+                    requisition.approvalId = 1 // approval id approve
+                    requisition.approvalName = 'Approve'
+                    requisition.editing = false
+
+                     $('.page-container').pgNotification({ /* Show success response */
+                          style: 'flip',
+                          message: res.data.message,
+                          position: 'top-right',
+                          timeout: 3500,
+                          type: 'info'
+                      }).show();
+
+                } else {
+
+                    $('.page-container').pgNotification({ /* Show error response */
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+
+                }
+
+            })
+            .catch((err) => { /* Show error response */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+
+
     },
     declineRequisition(state, payload){
 
@@ -114,6 +165,14 @@ export default{
                     _.forEach(requisitionItems, function (value, key) {
                         requisitionItems[key].isApproved = 0
                     })
+
+                    $('.page-container').pgNotification({ /* Show success response */
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
 
                 } else { /* Show error response */
                     $('.page-container').pgNotification({
@@ -154,6 +213,14 @@ export default{
                     _.forEach(requisitionItems, function (value, key) {
                         requisitionItems[key].isApproved = 1
                     })
+
+                    $('.page-container').pgNotification({ /* Show success response */
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
 
                 } else { /* Show error response */
                     $('.page-container').pgNotification({

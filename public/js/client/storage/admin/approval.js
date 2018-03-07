@@ -2665,6 +2665,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -4739,7 +4740,17 @@ var render = function() {
                               requisition.approvalId == 3 && requisition.editing
                                 ? _c(
                                     "button",
-                                    { staticClass: "btn btn-complete" },
+                                    {
+                                      staticClass: "btn btn-complete",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.saveApprovalAfterEdit(
+                                            requisition.id,
+                                            index
+                                          )
+                                        }
+                                      }
+                                    },
                                     [_vm._v("Save Approval")]
                                   )
                                 : _vm._e()
@@ -4793,7 +4804,7 @@ var render = function() {
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-6" }, [
+                                _c("div", { staticClass: "col-lg-6 m-l-5" }, [
                                   _c(
                                     "p",
                                     { staticClass: "text-black fs-16 m-b-0" },
@@ -19738,7 +19749,56 @@ module.exports = Component.exports
             }
         });
     },
-    saveApprovalAfterEdit: function saveApprovalAfterEdit(state, payload) {},
+    saveApprovalAfterEdit: function saveApprovalAfterEdit(state, payload) {
+
+        var requisition = state.requisitions[payload.index];
+        var requisitionItems = requisition.requisitionItems.data;
+
+        //get only id and isApproved property in array to be send in request
+        var requisitionItemsUpdated = _.map(requisitionItems, function (item) {
+            return _.pick(item, 'id', 'isApproved');
+        });
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval/requisition/editAndApprove', {
+            requisitionId: payload.requisitionId,
+            requisitionItemsUpdated: requisitionItemsUpdated
+        }).then(function (res) {
+
+            if (!res.data.isFailed) {
+
+                requisition.approvalNumber = requisition.requisitionNumber + 'A';
+                requisition.approvalId = 1; // approval id approve
+                requisition.approvalName = 'Approve';
+                requisition.editing = false;
+
+                $('.page-container').pgNotification({ /* Show success response */
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            } else {
+
+                $('.page-container').pgNotification({ /* Show error response */
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            /* Show error response */
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
     declineRequisition: function declineRequisition(state, payload) {
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval/requisition/decline', { requisitionId: payload.requisitionId }).then(function (res) {
@@ -19756,6 +19816,14 @@ module.exports = Component.exports
                 _.forEach(requisitionItems, function (value, key) {
                     requisitionItems[key].isApproved = 0;
                 });
+
+                $('.page-container').pgNotification({ /* Show success response */
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
             } else {
                 /* Show error response */
                 $('.page-container').pgNotification({
@@ -19793,6 +19861,14 @@ module.exports = Component.exports
                 _.forEach(requisitionItems, function (value, key) {
                     requisitionItems[key].isApproved = 1;
                 });
+
+                $('.page-container').pgNotification({ /* Show success response */
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
             } else {
                 /* Show error response */
                 $('.page-container').pgNotification({

@@ -144,7 +144,63 @@ class ApprovalController extends Controller
      * */
     public function editAndApproveRequisition(Request $request)
     {
+        $response = array();
 
+        $validator = Validator::make($request->all(), [
+            'requisitionId' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Misisng required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $user = Auth::user(); //user data
+        $employee = $user->employee; // user's employee data
+
+        if ($employee && $employee->hasResigned != 1) {
+
+            $requisition = StorageRequisition::find($request->requisitionId);
+
+            if ($requisition) {
+                $requisition->approvalNumber = $requisition->requisitionNumber.'A'; // add approval number
+                $requisition->approvalId = ConfigCodes::$REQUISITION_APPROVAL_STATUS['APPROVAL'];
+
+                if ($requisition->save()) {
+
+                    $requisitionItemsUpdated= $request->requisitionItemsUpdated;
+
+                    //Update requisition items thats being updated
+                    foreach ($requisitionItemsUpdated as $item){
+                        StorageRequisitionItems::where('id', $item['id'])->update(['isApproved' => $item['isApproved'],'updatedBy'=>$employee->givenName,'updatedAt'=>Carbon::now()->format('d/m/Y')]);
+                    }
+
+                    //TODO: Notify user that their requisition has been declined
+
+                    $response['isFailed'] = false;
+                    $response['message'] = 'Requisition has been approved successfully';
+                    return response()->json($response,200);
+
+
+                } else {
+                    $response['isFailed'] = true;
+                    $response['message'] = 'Unable to save requisition';
+                    return response()->json($response, 200);
+                }
+
+            } else {
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to find requisition data';
+                return response()->json($response, 200);
+            }
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Permission Denied';
+            return response()->json($response,200);
+        }
     }
 
     /*
