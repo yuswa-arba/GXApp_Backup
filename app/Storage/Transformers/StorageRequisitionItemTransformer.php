@@ -16,7 +16,8 @@ class StorageRequisitionItemTransformer extends TransformerAbstract
     {
         return [
             'id' => $storageRequisitionItems->id,
-            'requisitionNumber' => $storageRequisitionItems->requisitionNumber,
+            'requisitionId'=>$storageRequisitionItems->requisitionId,
+            'requisitionNumber' =>$this->getResultWithNullChecker1Connection($storageRequisitionItems,'requisition','requisitionNumber'),
             'employeeName' => $this->getResultWithNullChecker1Connection($storageRequisitionItems,'employee','givenName'),
             'itemName' => $this->getResultWithNullChecker1Connection($storageRequisitionItems,'item','name'),
             'itemCode' => $this->getResultWithNullChecker1Connection($storageRequisitionItems,'item','itemCode'),

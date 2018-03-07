@@ -4804,7 +4804,7 @@ var render = function() {
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-6 m-l-5" }, [
+                                _c("div", { staticClass: "col-lg-6" }, [
                                   _c(
                                     "p",
                                     { staticClass: "text-black fs-16 m-b-0" },

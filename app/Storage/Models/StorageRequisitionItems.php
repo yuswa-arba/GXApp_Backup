@@ -24,7 +24,7 @@ class StorageRequisitionItems extends Model
 
     public function requisition()
     {
-        return $this->belongsTo(StorageRequisition::class,'requisitionNumber','requisitionNumber');
+        return $this->belongsTo(StorageRequisition::class,'requisitionId');
     }
     
 }

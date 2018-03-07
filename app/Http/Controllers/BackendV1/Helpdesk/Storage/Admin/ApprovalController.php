@@ -235,7 +235,7 @@ class ApprovalController extends Controller
 
                 if ($requisition->save()) {
 
-                    $updateRequisitionItems = StorageRequisitionItems::where('requisitionNumber', $requisition->requisitionNumber)
+                    $updateRequisitionItems = StorageRequisitionItems::where('requisitionId', $requisition->id)
                         ->update(['isApproved' => 1,'updatedBy'=>$employee->givenName,'updatedAt'=>Carbon::now()->format('d/m/Y')]);
 
                     if($updateRequisitionItems){
@@ -306,7 +306,7 @@ class ApprovalController extends Controller
 
                 if ($requisition->save()) {
 
-                    $updateRequisitionItems = StorageRequisitionItems::where('requisitionNumber', $requisition->requisitionNumber)
+                    $updateRequisitionItems = StorageRequisitionItems::where('requisitionId', $requisition->id)
                         ->update(['isApproved' => 0,'updatedBy'=>$employee->givenName,'updatedAt'=>Carbon::now()->format('d/m/Y')]);
 
                     if($updateRequisitionItems){

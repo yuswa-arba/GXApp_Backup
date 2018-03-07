@@ -101,7 +101,7 @@
                                                  alt="No Image Found">
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 m-l-5">
+                                    <div class="col-lg-6">
                                         <p class="text-black fs-16 m-b-0">{{item.itemName}}</p>
                                         <p class="no-padding fs-14">{{item.itemCode}}</p>
                                     </div>

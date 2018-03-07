@@ -16,10 +16,10 @@ class CreateStoragePurchaseOrdersTable extends Migration
         Schema::create('storagePurchaseOrders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('purchaseOrderNumber')->unique();
-            $table->string('approvalNumber');
+            $table->tinyInteger('withRequisition');
+            $table->integer('requisitionId')->nullable();
             $table->string('date');
             $table->integer('supplierId');
-            $table->integer('shipmentId');
             $table->tinyInteger('withTaxInvoice')->default(0);
             $table->string('npwpNumber')->nullable();
             $table->string('notes')->nullable();

@@ -29,7 +29,7 @@ class StorageRequisition extends Model
 
     public function requisitionItems()
     {
-        return $this->hasMany(StorageRequisitionItems::class,'requisitionNumber','requisitionNumber');
+        return $this->hasMany(StorageRequisitionItems::class,'requisitionId');
     }
 
     public function storageWarehouse()

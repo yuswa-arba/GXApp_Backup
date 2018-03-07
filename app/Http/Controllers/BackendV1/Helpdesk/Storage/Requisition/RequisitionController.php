@@ -131,7 +131,7 @@ class RequisitionController extends Controller
 
                         //insert to requisition item
                         $insertToRequisitionItems = StorageRequisitionItems::create([
-                            'requisitionNumber'=>$createRequisition->requisitionNumber,
+                            'requisitionId'=>$createRequisition->id,
                             'employeeId'=>$itemInCart->employeeId,
                             'itemId'=>$itemInCart->itemId,
                             'amount'=>$itemInCart->amount,

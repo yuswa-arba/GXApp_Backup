@@ -16,8 +16,8 @@ class CreateStoragePurchaseOrderItemsTable extends Migration
         Schema::create('storagePurchaseOrderItems', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('purchaseOrderId');
-            $table->string('approvalNumber');
-            $table->integer('requisitionItemId');
+            $table->tinyInteger('withRequisitionItem');
+            $table->integer('requisitionItemId')->nullable();
             $table->string('amountPurchased');
             $table->integer('unitIdPurchased');
             $table->string('pricePurchased');

@@ -1,6 +1,6 @@
 NEW REQUISITION
 
-No : {{$requisition->requisitionNumber}}
+No : {{$requisition->requisition?$requisition->requisition->requisitionNumber:''}}
 Requested At : {{$requisition->requestedAt}}
 Requested By : {{$requisition->requestedBy}}
 Date Needed By : {{$requisition->dateNeededBy}}

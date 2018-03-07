@@ -15,7 +15,7 @@ class CreateStorageRequisitionItemsTable extends Migration
     {
         Schema::create('storageRequisitionItems', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('requisitionNumber');
+            $table->integer('requisitionId');
             $table->string('employeeId');
             $table->integer('itemId');
             $table->string('amount');
