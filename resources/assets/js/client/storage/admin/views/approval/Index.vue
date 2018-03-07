@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-lg-12" style="margin-top: 50px">
+        <div class="col-lg-12">
             <div class="row">
                 <div class="col-lg-4">
                     <select class="btn btn-outline-primary h-35 pull-left"
@@ -149,7 +149,9 @@
         </div>
 
 
-        <infinite-loading @infinite="infiniteHandler" spinner="waveDots"
+        <infinite-loading @infinite="infiniteHandler"
+                          class="margin-center"
+                          spinner="waveDots"
                           ref="infiniteLoading">
                                         <span slot="no-more">
                                           <!--There is no more Items-->

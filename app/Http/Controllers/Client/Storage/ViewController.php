@@ -97,4 +97,9 @@ class ViewController extends Controller
     {
         return view('pages.storage.admin.approval');
     }
+
+    public function purchaseOrder()
+    {
+        return view('pages.storage.admin.purchaseOrder');
+    }
 }

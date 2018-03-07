@@ -10,7 +10,7 @@
 
 @push('child-page-controller')
 @include('layouts.partials.snippets._zoom_out80')
-<script src="{{mix('js/client/storage/admin/approval.js')}}"></script>
+<script src="{{mix('js/client/storage/admin/purchaseOrder.js')}}"></script>
 @endpush
 
 @section('content')
@@ -24,7 +24,7 @@
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Storage</a></li>
                                 <li class="breadcrumb-item"><a href="#">Admin</a></li>
-                                <li class="breadcrumb-item active">Approval</li>
+                                <li class="breadcrumb-item active">Purchase Order</li>
                             </ol>
                             <!-- END BREADCRUMB -->
                         </div>
@@ -34,7 +34,7 @@
 
 
                 <div class="filter-container">
-                    <div id="vc-storage-admin-approval"></div>
+                    <div id="vc-storage-admin-purchase-order"></div>
                 </div>
 
             </div>

@@ -458,6 +458,10 @@ body {
   border: 1px solid #ddd!important;
 }
 
+.margin-center{
+  margin: 0 auto!important;
+}
+
 
 //hide input number arrows
 input::-webkit-outer-spin-button,
@@ -468,4 +472,10 @@ input::-webkit-inner-spin-button {
 }
 input[type='number'] {
   -moz-appearance:textfield;
+}
+
+
+.select-hover-warning:hover{
+  cursor: pointer;
+  background-color: #fff7e2!important;
 }

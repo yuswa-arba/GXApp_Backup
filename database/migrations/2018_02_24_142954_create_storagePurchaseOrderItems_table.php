@@ -18,11 +18,11 @@ class CreateStoragePurchaseOrderItemsTable extends Migration
             $table->integer('purchaseOrderId');
             $table->tinyInteger('withRequisitionItem');
             $table->integer('requisitionItemId')->nullable();
+            $table->integer('itemId');
             $table->string('amountPurchased');
             $table->integer('unitIdPurchased');
             $table->string('pricePurchased');
             $table->string('currencyFormat');
-            $table->integer('validationStatusId');
             $table->timestamps();
         });
     }

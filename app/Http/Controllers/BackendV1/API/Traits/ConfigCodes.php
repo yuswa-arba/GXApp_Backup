@@ -52,16 +52,23 @@ class ConfigCodes
     ];
 
     public static $EXCHANGE_ANSWER_TYPE = [
-        'DECLINE'=>'decline',
-        'ACCEPT'=>'accept'
+        'DECLINE' => 'decline',
+        'ACCEPT' => 'accept'
     ];
 
     public static $REQUISITION_APPROVAL_STATUS = [
-        'APPROVAL'=>1,
-        'DECLINED'=>2,
-        'WAITING'=>3,
-        'IN_PROCESS'=>4,
-        'FINISH'=>5
+        'APPROVED' => 1,
+        'DECLINED' => 2,
+        'WAITING' => 3,
+        'IN_PROCESS' => 4,
+        'FINISH' => 5
+    ];
+
+    public static $PURCHASE_ORDER_STATUS = [
+        'OPEN' => 1,
+        'CLOSED' => 2,
+        'PENDING' => 3,
+        'CANCELED' => 4
     ];
 
 }

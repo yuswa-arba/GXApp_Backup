@@ -124,5 +124,14 @@ Route::prefix('v1/h')->group(function () {
         Route::post('admin/approval/requisition/decline','Admin\ApprovalController@declineRequisition');
         Route::post('admin/approval/requisition/editAndApprove','Admin\ApprovalController@editAndApproveRequisition');
 
+        /*
+        |--------------------------------------------------------------------------
+        | Requisition Purchase Order
+        |--------------------------------------------------------------------------
+        */
+        Route::get('admin/purchaseOrder/requisition','Admin\PurchaseOrderController@availableRequisition');
+        Route::get('admin/purchaseOrder/requisition/search','Admin\PurchaseOrderController@searchAvailableRequisition');
+
+
     });
 });

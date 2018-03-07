@@ -117,7 +117,7 @@
         </div>
 
 
-        <infinite-loading @infinite="infiniteHandler" spinner="waveDots"
+        <infinite-loading @infinite="infiniteHandler" class="margin-center" spinner="waveDots"
                           ref="infiniteLoading">
                                         <span slot="no-more">
                                           <!--There is no more Items-->

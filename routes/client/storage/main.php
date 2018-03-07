@@ -31,6 +31,7 @@ Route::prefix('storage')->namespace('Client\Storage')->group(function () {
 
     Route::middleware('auth.admin')->group(function(){
         Route::get('admin/approval','ViewController@approval')->name('storage.admin.approval');
+        Route::get('admin/purchaseOrder','ViewController@purchaseOrder')->name('storage.admin.purchaseOrder');
     });
 
 });

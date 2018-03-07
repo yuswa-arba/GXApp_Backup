@@ -4674,6 +4674,7 @@ var render = function() {
         "infinite-loading",
         {
           ref: "infiniteLoading",
+          staticClass: "margin-center",
           attrs: { spinner: "waveDots" },
           on: { infinite: _vm.infiniteHandler }
         },

@@ -14,6 +14,7 @@ use App\Attendance\Transformers\ShiftListTransformer;
 use App\Attendance\Transformers\SlotListTransformer;
 use App\Attendance\Transformers\SlotMakerListTransformer;
 use App\Components\Models\BranchOffice;
+use App\Components\Models\CompanyNPWP;
 use App\Components\Models\Countries;
 use App\Components\Models\Division;
 use App\Components\Models\JobPosition;
@@ -24,6 +25,7 @@ use App\Components\Transformers\BasicComponentTrasnformer;
 use App\Components\Transformers\BasicSettingTrasnformer;
 use App\Components\Transformers\DivisionListTransfomer;
 
+use App\Components\Transformers\NPWPTransformer;
 use App\Notification\Models\NotificationGroupType;
 use App\Salary\Models\PayrollSetting;
 use App\Traits\GlobalUtils;
@@ -209,6 +211,11 @@ class GetListController extends Controller
     public function countries()
     {
        return fractal(Countries::all(),new BasicComponentTrasnformer())->respond(200);
+    }
+
+    public function npwpInformation($id)
+    {
+        return fractal(CompanyNPWP::find($id),new NPWPTransformer())->respond(200);
     }
 
 }

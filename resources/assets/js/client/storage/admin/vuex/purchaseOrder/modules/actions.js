@@ -5,9 +5,14 @@ import waterfall from 'async/waterfall';
 import series from 'async/series';
 
 export default{
-
     getDataOnCreate({commit,state},payload){
-        commit('getApprovalStatusList')
+
     },
+    showRequisitionListModal({commit,state},payload){
+
+        commit('getRequisitionList')
+
+        $('#modal-select-requisition').modal('show')
+    }
 
 }

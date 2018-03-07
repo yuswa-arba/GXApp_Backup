@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 37);
+/******/ 	return __webpack_require__(__webpack_require__.s = 38);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2458,7 +2458,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/MainApproval.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/MainPurchaseOrder.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2494,7 +2494,120 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/views/approval/Index.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectRequisitionModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_infinite_loading__ = __webpack_require__("./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_infinite_loading__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        InfiniteLoading: __WEBPACK_IMPORTED_MODULE_1_vue_infinite_loading___default.a
+    },
+    data: function data() {
+        return {
+            searchRequisitionText: ''
+        };
+    },
+    created: function created() {},
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
+        requisitions: 'requisitions'
+    })),
+    mounted: function mounted() {},
+
+
+    methods: {
+        closeModal: function closeModal() {
+            $('#modal-select-requisition').modal("toggle"); // close modal
+        },
+        searchRequisition: function searchRequisition() {
+            var self = this;
+            self.$store.commit({
+                type: 'purchaseOrder/searchRequisition',
+                searchRequisitionText: self.searchRequisitionText
+            });
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2504,6 +2617,74 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__ = __webpack_require__("./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__);
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        InfiniteLoading: __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default.a
+    },
+    data: function data() {
+        return {};
+    },
+    created: function created() {
+
+        // get necessary data on create for this page
+        this.$store.dispatch({
+            type: 'purchaseOrder/getDataOnCreate'
+        });
+    },
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('purchaseOrder', {})),
+    methods: {
+        infiniteHandler: function infiniteHandler($state) {//getting item list data from server using vue-infinit-scroll
+
+        },
+        goToPurchaseOrderForm: function goToPurchaseOrderForm() {
+            this.$router.push({ name: 'createNewPO' });
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/PurhcaseOrderForm.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__ = __webpack_require__("./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_SelectRequisitionModal_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectRequisitionModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_SelectRequisitionModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_SelectRequisitionModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2617,57 +2798,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
@@ -2675,129 +2806,47 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        InfiniteLoading: __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default.a
+        InfiniteLoading: __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default.a,
+        'select-requisition-modal': __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_SelectRequisitionModal_vue___default.a
     },
     data: function data() {
         return {
-            searchText: '',
-            sortApproval: 3
+            fillingPreForm: true,
+            searchRequisitionText: '',
+            searchSupplierText: '',
+            preFormObject: {
+                supplierId: '',
+                requisitionId: '',
+                approvalNumber: '',
+                withRequisition: 1,
+                withTaxInvoice: 0,
+                npwpNo: '', // GlobalXtreme NPWP //TODO: consider to insert this in DB instead
+                npwpPhoto: '',
+                notes: ''
+            }
+
         };
     },
     created: function created() {
-        // get necessary data on create for this page
-        this.$store.dispatch({
-            type: 'approval/getDataOnCreate'
+        var self = this;
+        //get NPWP Information
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/npwpInformation/1').then(function (res) {
+            self.preFormObject.npwpNo = res.data.data.npwpNo;
+            self.preFormObject.npwpPhoto = res.data.data.npwpPhoto;
         });
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('approval', {
-        requisitions: 'requisitions',
-        approvalStatuses: 'approvalStatuses',
-        isSearchingRequisition: 'isSearchingRequisition'
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('purchaseOrder', {
+        selectedRequisition: 'selectedRequisition'
     })),
     methods: {
-        infiniteHandler: function infiniteHandler($state) {
-            //getting item list data from server using vue-infinit-scroll
-
-            var self = this;
-
-            var approvalVuexState = this.$store.state.approval;
-
-            if (approvalVuexState.paginationMeta.current_page >= approvalVuexState.paginationMeta.total_pages && approvalVuexState.paginationMeta.current_page != '') {
-
-                $state.complete();
-            } else {
-
-                var nextPage = approvalVuexState.paginationMeta.current_page + 1;
-
-                //get next page
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval?page=' + nextPage + '&sortApproval=' + self.sortApproval).then(function (res) {
-                    if (!res.data.isFailed) {
-                        if (res.data.requisitions.data) {
-
-                            //insert requisitions
-                            var requisitionsData = res.data.requisitions.data;
-                            if (requisitionsData) {
-                                approvalVuexState.requisitions = approvalVuexState.requisitions.concat(requisitionsData);
-                            }
-
-                            //insert pagination
-                            approvalVuexState.paginationMeta = res.data.requisitions.meta.pagination;
-
-                            $state.loaded();
-
-                            if (approvalVuexState.requisitions.length === approvalVuexState.paginationMeta.total) {
-                                $state.complete();
-                            }
-                        } else {
-                            $state.complete();
-                        }
-                    } else {
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                        $state.complete();
-                    }
-                }).catch(function (err) {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                    $state.complete();
-                });
-            }
-        },
-        sortRequisition: function sortRequisition() {
-            var self = this;
-            this.$store.commit({
-                type: 'approval/getRequisitionApproval',
-                sortApproval: self.sortApproval
-            });
-        },
-        editAndApprove: function editAndApprove(requisitionId, index) {
-            var approvalVuexState = this.$store.state.approval;
-            approvalVuexState.requisitions[index].editing = true;
-        },
-        saveApprovalAfterEdit: function saveApprovalAfterEdit(requisitionId, index) {
-            this.$store.commit({
-                type: 'approval/saveApprovalAfterEdit',
-                requisitionId: requisitionId,
-                index: index
-            });
-        },
-        declineRequisition: function declineRequisition(requisitionId, index) {
-
-            if (confirm('Are you sure decline this requisition?')) {
-                this.$store.commit({
-                    type: 'approval/declineRequisition',
-                    requisitionId: requisitionId,
-                    index: index
-                });
-            }
-        },
-        approveRequisition: function approveRequisition(requisitionId, index) {
-            this.$store.commit({
-                type: 'approval/approveRequisition',
-                requisitionId: requisitionId,
-                index: index
-            });
-        },
         viewImage: function viewImage(url) {
             window.open(url, '_blank');
         },
-        searchRequisition: function searchRequisition() {
-
+        attemptSelectRequisition: function attemptSelectRequisition() {
             var self = this;
-            this.$store.commit({
-                type: 'approval/searchRequisition',
-                searchText: self.searchText
+            self.$store.dispatch({
+                type: 'purchaseOrder/showRequisitionListModal'
             });
         }
     }
@@ -4354,7 +4403,556 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3d2caddc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/MainApproval.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0a63f75e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/PurhcaseOrderForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c(
+        "div",
+        { staticClass: "col-lg-12 m-b-10 m-t-10" },
+        [_vm._t("go-back-menu")],
+        2
+      ),
+      _vm._v(" "),
+      _vm.fillingPreForm
+        ? _c("div", { staticClass: "col-lg-12" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-3" }, [
+                _c("div", { staticClass: "card card-default" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "card card-default no-border" },
+                        [
+                          _c("div", { staticClass: "card-block" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-lg-12" }, [
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass:
+                                      "text-black text-uppercase fs-11"
+                                  },
+                                  [_vm._v("1. Select Supplier")]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "input-group" }, [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.searchSupplierText,
+                                        expression: "searchSupplierText"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    staticStyle: { height: "40px" },
+                                    attrs: {
+                                      type: "text",
+                                      id: "search-supplier-box",
+                                      placeholder: "Search Supplier Name"
+                                    },
+                                    domProps: { value: _vm.searchSupplierText },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.searchSupplierText =
+                                          $event.target.value
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "input-group-addon primary",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.searchSupplier()
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-search cursor"
+                                      })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(0),
+                                _vm._v(" "),
+                                _vm._m(1)
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass:
+                                      "text-black text-uppercase fs-11"
+                                  },
+                                  [_vm._v("2. Select Requisition")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "checkbox check-success " },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.preFormObject.withRequisition,
+                                          expression:
+                                            "preFormObject.withRequisition"
+                                        }
+                                      ],
+                                      attrs: {
+                                        id: "withRequisitionCb",
+                                        type: "checkbox"
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.preFormObject.withRequisition
+                                        )
+                                          ? _vm._i(
+                                              _vm.preFormObject.withRequisition,
+                                              null
+                                            ) > -1
+                                          : _vm.preFormObject.withRequisition
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a =
+                                              _vm.preFormObject.withRequisition,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                (_vm.preFormObject.withRequisition = $$a.concat(
+                                                  [$$v]
+                                                ))
+                                            } else {
+                                              $$i > -1 &&
+                                                (_vm.preFormObject.withRequisition = $$a
+                                                  .slice(0, $$i)
+                                                  .concat($$a.slice($$i + 1)))
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.preFormObject,
+                                              "withRequisition",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      { attrs: { for: "withRequisitionCb" } },
+                                      [_vm._v("With Requisition")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm.preFormObject.withRequisition
+                                  ? _c("div", { staticClass: "input-group" }, [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value:
+                                              _vm.selectedRequisition
+                                                .approvalNumber,
+                                            expression:
+                                              "selectedRequisition.approvalNumber"
+                                          }
+                                        ],
+                                        staticClass: "form-control text-black",
+                                        staticStyle: { height: "40px" },
+                                        attrs: {
+                                          type: "text",
+                                          readonly: "",
+                                          placeholder:
+                                            "Search Requisition Approval Number"
+                                        },
+                                        domProps: {
+                                          value:
+                                            _vm.selectedRequisition
+                                              .approvalNumber
+                                        },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.attemptSelectRequisition()
+                                          },
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              _vm.selectedRequisition,
+                                              "approvalNumber",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "input-group-addon primary",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.attemptSelectRequisition()
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass:
+                                              "fa fa-mouse-pointer cursor"
+                                          })
+                                        ]
+                                      )
+                                    ])
+                                  : _vm._e()
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass:
+                                      "text-black text-uppercase fs-11"
+                                  },
+                                  [_vm._v("3. Tax Invoice")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "checkbox check-success " },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.preFormObject.withTaxInvoice,
+                                          expression:
+                                            "preFormObject.withTaxInvoice"
+                                        }
+                                      ],
+                                      attrs: {
+                                        id: "withTaxInvoice",
+                                        type: "checkbox"
+                                      },
+                                      domProps: {
+                                        checked: Array.isArray(
+                                          _vm.preFormObject.withTaxInvoice
+                                        )
+                                          ? _vm._i(
+                                              _vm.preFormObject.withTaxInvoice,
+                                              null
+                                            ) > -1
+                                          : _vm.preFormObject.withTaxInvoice
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          var $$a =
+                                              _vm.preFormObject.withTaxInvoice,
+                                            $$el = $event.target,
+                                            $$c = $$el.checked ? true : false
+                                          if (Array.isArray($$a)) {
+                                            var $$v = null,
+                                              $$i = _vm._i($$a, $$v)
+                                            if ($$el.checked) {
+                                              $$i < 0 &&
+                                                (_vm.preFormObject.withTaxInvoice = $$a.concat(
+                                                  [$$v]
+                                                ))
+                                            } else {
+                                              $$i > -1 &&
+                                                (_vm.preFormObject.withTaxInvoice = $$a
+                                                  .slice(0, $$i)
+                                                  .concat($$a.slice($$i + 1)))
+                                            }
+                                          } else {
+                                            _vm.$set(
+                                              _vm.preFormObject,
+                                              "withTaxInvoice",
+                                              $$c
+                                            )
+                                          }
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      { attrs: { for: "withTaxInvoice" } },
+                                      [_vm._v("With Tax Invoice")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _vm.preFormObject.withTaxInvoice
+                                  ? _c("div", [
+                                      _c("div", { staticClass: "form-group" }, [
+                                        _c("label", [_vm._v(" NPWP No.")]),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.preFormObject.npwpNo,
+                                              expression: "preFormObject.npwpNo"
+                                            }
+                                          ],
+                                          staticClass:
+                                            "form-control text-black",
+                                          attrs: { type: "text", readonly: "" },
+                                          domProps: {
+                                            value: _vm.preFormObject.npwpNo
+                                          },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
+                                              }
+                                              _vm.$set(
+                                                _vm.preFormObject,
+                                                "npwpNo",
+                                                $event.target.value
+                                              )
+                                            }
+                                          }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "form-group" }, [
+                                        _c("label", [
+                                          _vm._v(" NPWP Attachment")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass: "cursor",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.viewImage(
+                                                  "/images/company/npwp/" +
+                                                    _vm.preFormObject.npwpPhoto
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("img", {
+                                              attrs: {
+                                                src:
+                                                  "/images/company/npwp/" +
+                                                  _vm.preFormObject.npwpPhoto,
+                                                height: "70px",
+                                                alt: ""
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      ])
+                                    ])
+                                  : _vm._e()
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass:
+                                      "text-black text-uppercase fs-11"
+                                  },
+                                  [_vm._v("4. Notes ")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group m-t-10" },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.preFormObject.notes,
+                                          expression: "preFormObject.notes"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: { type: "text" },
+                                      domProps: {
+                                        value: _vm.preFormObject.notes
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.preFormObject,
+                                            "notes",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(2)
+                            ])
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("select-requisition-modal")
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group m-t-10" }, [
+      _c("label", [_vm._v("Contact Person")]),
+      _vm._v(" "),
+      _c("input", { staticClass: "form-control", attrs: { type: "text" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Contact Number")]),
+      _vm._v(" "),
+      _c("input", { staticClass: "form-control", attrs: { type: "number" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+      _c("button", { staticClass: "btn btn-primary pull-right fs-16" }, [
+        _vm._v("Start Adding Items "),
+        _c("i", { staticClass: "fa fa-plus" })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0a63f75e", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1f057c69\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/Index.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+        _c("div", { staticClass: "pull-left m-r-15 m-b-10" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info text-uppercase",
+              on: {
+                click: function($event) {
+                  _vm.goToPurchaseOrderForm()
+                }
+              }
+            },
+            [
+              _vm._v("\n                Create New PO "),
+              _c("i", { staticClass: "fa fa-pencil" })
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "infinite-loading",
+        {
+          ref: "infiniteLoading",
+          staticClass: "margin-center",
+          attrs: { spinner: "waveDots" },
+          on: { infinite: _vm.infiniteHandler }
+        },
+        [_c("span", { attrs: { slot: "no-more" }, slot: "no-more" })]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1f057c69", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-56c01f8e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/MainPurchaseOrder.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4394,13 +4992,13 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3d2caddc", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-56c01f8e", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7fda3406\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/views/approval/Index.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7c12ee22\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectRequisitionModal.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4409,582 +5007,149 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "row" },
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "modal-select-requisition",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
     [
-      _c(
-        "div",
-        { staticClass: "col-lg-12" },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-4" }, [
-              _c(
-                "select",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.sortApproval,
-                      expression: "sortApproval"
-                    }
-                  ],
-                  staticClass: "btn btn-outline-primary h-35 pull-left",
-                  staticStyle: { width: "180px" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.sortApproval = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      function($event) {
-                        _vm.sortRequisition()
-                      }
-                    ]
-                  }
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-hidden": "true"
                 },
-                _vm._l(_vm.approvalStatuses, function(approval) {
-                  return _c("option", { domProps: { value: approval.id } }, [
-                    _vm._v(_vm._s(approval.name))
-                  ])
-                })
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4" }, [
-              _vm.isSearchingRequisition
-                ? _c("h4", { staticClass: "text-master" }, [
-                    _vm._v("Searching Requisition.. Please Wait..")
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.requisitions.length > 0
-                ? _c("h4", { staticClass: "text-master" }, [_vm._v(".")])
-                : _c("h4", { staticClass: "text-master" }, [
-                    _vm._v("No Requisition Found")
-                  ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4" }, [
-              _c("div", { staticClass: "input-group m-b-20" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.searchText,
-                      expression: "searchText"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: { height: "40px" },
-                  attrs: {
-                    type: "text",
-                    id: "search-requisition-box",
-                    placeholder: "Search Requisition Number"
-                  },
-                  domProps: { value: _vm.searchText },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.searchText = $event.target.value
-                    }
+                on: {
+                  click: function($event) {
+                    _vm.closeModal()
                   }
-                }),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "input-group-addon primary",
-                    on: {
-                      click: function($event) {
-                        _vm.searchRequisition()
-                      }
-                    }
-                  },
-                  [_c("i", { staticClass: "fa fa-search cursor" })]
-                )
-              ])
+                }
+              },
+              [_c("i", { staticClass: "pg-close" })]
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-left p-b-5 fs-16 text-uppercase" }, [
+              _vm._v("Requisitions")
             ])
           ]),
           _vm._v(" "),
-          _vm._l(_vm.requisitions, function(requisition, index) {
-            return _c(
-              "div",
-              {
-                staticClass: "card card-default card-bordered border-solid-grey"
-              },
-              [
-                _c(
-                  "div",
-                  { staticClass: "card-block no-padding" },
-                  [
-                    _c(
-                      "div",
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass: "col-lg-12 border-bottom-grey",
-                        staticStyle: { background: "#fafafa" }
-                      },
-                      [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchRequisitionText,
+                        expression: "searchRequisitionText"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { height: "40px" },
+                    attrs: {
+                      type: "text",
+                      id: "search-requisition-box",
+                      placeholder: "Search Requisition"
+                    },
+                    domProps: { value: _vm.searchRequisitionText },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.searchRequisitionText = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "input-group-addon primary",
+                      on: {
+                        click: function($event) {
+                          _vm.searchRequisition()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-search cursor" })]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "card no-border" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "card card-default" }, [
+                      _c("div", { staticClass: "card-block no-padding" }, [
+                        _c("div", { staticClass: "scrollable" }, [
+                          _c("div", { staticStyle: { height: "500px" } }, [
                             _c(
-                              "p",
-                              { staticClass: "text-uppercase m-t-10 m-b-0" },
-                              [_vm._v("Requisition No.")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              { staticClass: "text-black fs-18 m-b-10" },
-                              [_vm._v(_vm._s(requisition.requisitionNumber))]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-uppercase m-b-0" }, [
-                              _vm._v("Approval No.")
-                            ]),
-                            _vm._v(" "),
-                            requisition.approvalNumber
-                              ? _c(
-                                  "p",
-                                  { staticClass: "text-black fs-16 m-b-10" },
+                              "div",
+                              { staticClass: "row" },
+                              _vm._l(_vm.requisitions, function(
+                                requisition,
+                                index
+                              ) {
+                                return _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "col-lg-12 border-bottom-grey padding-10 select-hover-warning"
+                                  },
                                   [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(requisition.approvalNumber)
-                                    )
-                                  ]
-                                )
-                              : _c("p", [_vm._v("-")])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                            _c(
-                              "p",
-                              { staticClass: "text-uppercase m-t-10 m-b-0" },
-                              [_vm._v("Requested At")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              { staticClass: "text-black fs-16 m-b-10" },
-                              [_vm._v(_vm._s(requisition.requestedAt))]
-                            ),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "text-uppercase m-b-0" }, [
-                              _vm._v("Date Needed By")
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              { staticClass: "text-black fs-16 m-b-10" },
-                              [_vm._v(_vm._s(requisition.dateNeededBy))]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
-                            _c(
-                              "p",
-                              { staticClass: "text-uppercase m-t-10 m-b-0" },
-                              [_vm._v("Requested By")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              { staticClass: "text-black fs-16 m-b-10" },
-                              [_vm._v(_vm._s(requisition.requestedBy))]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              { staticClass: "text-uppercase m-t-10 m-b-0" },
-                              [_vm._v("Description")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              { staticClass: "text-black fs-14 m-b-10" },
-                              [_vm._v(_vm._s(requisition.description))]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                            _c(
-                              "p",
-                              { staticClass: "text-uppercase m-t-10 m-b-0" },
-                              [_vm._v("Approval Status")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "p",
-                              { staticClass: "text-black fs-14 m-b-10" },
-                              [_vm._v(_vm._s(requisition.approvalName))]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "col-lg-2",
-                              staticStyle: { "margin-top": "30px" }
-                            },
-                            [
-                              requisition.approvalId == 3 &&
-                              !requisition.editing
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "dropdown dropdown-default m-l-20"
-                                    },
-                                    [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass:
-                                            "btn btn-outline-primary dropdown-toggle text-center",
-                                          attrs: {
-                                            type: "button",
-                                            "data-toggle": "dropdown",
-                                            "aria-haspopup": "true",
-                                            "aria-expanded": "false"
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                    Action\n                                "
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "dropdown-menu" },
-                                        [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "dropdown-item pointer",
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.approveRequisition(
-                                                    requisition.id,
-                                                    index
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                        Approve"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "dropdown-item pointer",
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.editAndApprove(
-                                                    requisition.id,
-                                                    index
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                        Edit & Approve"
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "dropdown-item pointer",
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.declineRequisition(
-                                                    requisition.id,
-                                                    index
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                        Decline\n                                    "
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              requisition.approvalId == 3 && requisition.editing
-                                ? _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-complete",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.saveApprovalAfterEdit(
-                                            requisition.id,
-                                            index
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("Save Approval")]
-                                  )
-                                : _vm._e()
-                            ]
-                          )
-                        ])
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "p-t-10" }),
-                    _vm._v(" "),
-                    _vm._l(requisition.requisitionItems.data, function(
-                      item,
-                      index
-                    ) {
-                      return _c("div", { staticClass: "col-lg-12" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "row border-bottom-grey p-t-10 p-b-10"
-                          },
-                          [
-                            _c("div", { staticClass: "col-lg-3 p-t-10" }, [
-                              _c("div", { staticClass: "row" }, [
-                                _c("div", { staticClass: "col-lg-6" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "cursor",
-                                      staticStyle: { "margin-top": "-10px" },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.viewImage(
-                                            "/images/storage/items/" +
-                                              item.itemPhoto
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("img", {
-                                        attrs: {
-                                          src:
-                                            "/images/storage/items/" +
-                                            item.itemPhoto,
-                                          height: "60px",
-                                          alt: "No Image Found"
-                                        }
-                                      })
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-6" }, [
-                                  _c(
-                                    "p",
-                                    { staticClass: "text-black fs-16 m-b-0" },
-                                    [_vm._v(_vm._s(item.itemName))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("p", { staticClass: "no-padding fs-14" }, [
-                                    _vm._v(_vm._s(item.itemCode))
-                                  ])
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-lg-2 p-t-10" }, [
-                              _c("p", { staticClass: "fs-16 m-b-0" }, [
-                                _vm._v("Amount: "),
-                                _c("span", { staticClass: "text-black" }, [
-                                  _vm._v(_vm._s(item.amount))
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("p", { staticClass: " fs-16 m-b-0" }, [
-                                _vm._v("Unit: "),
-                                _c("span", { staticClass: "text-black" }, [
-                                  _vm._v(_vm._s(item.itemUnit))
-                                ])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-lg-3 p-t-10" }, [
-                              _c("p", { staticClass: "text-uppercase m-b-0" }, [
-                                _vm._v("Notes")
-                              ]),
-                              _vm._v(" "),
-                              item.notes
-                                ? _c(
-                                    "p",
-                                    { staticClass: "text-black fs-16 m-b-10" },
-                                    [_vm._v(_vm._s(item.notes))]
-                                  )
-                                : _c("p", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-lg-3 p-t-10" }, [
-                              _c("div", [
-                                _c("p", { staticClass: "text-uppercase" }, [
-                                  _vm._v(
-                                    "Approved:\n                                    "
-                                  ),
-                                  !requisition.editing
-                                    ? _c("span", [
-                                        item.isApproved
-                                          ? _c("i", {
-                                              staticClass:
-                                                "fa fa-check text-success fs-16"
-                                            })
-                                          : _c("i", {
-                                              staticClass:
-                                                "fa fa-times text-danger fs-16"
-                                            })
+                                    _c("div", { staticClass: "pull-right" }, [
+                                      _c("p", [
+                                        _vm._v(
+                                          "by " +
+                                            _vm._s(requisition.requestedBy) +
+                                            "\n                                                                @" +
+                                            _vm._s(requisition.requestedAt)
+                                        )
                                       ])
-                                    : _vm._e()
-                                ]),
-                                _vm._v(" "),
-                                requisition.editing
-                                  ? _c("div", [
-                                      _c(
-                                        "select",
-                                        {
-                                          directives: [
-                                            {
-                                              name: "model",
-                                              rawName: "v-model",
-                                              value: item.isApproved,
-                                              expression: "item.isApproved"
-                                            }
-                                          ],
-                                          attrs: {
-                                            id: "item-select-approve-" + index
-                                          },
-                                          on: {
-                                            change: function($event) {
-                                              var $$selectedVal = Array.prototype.filter
-                                                .call(
-                                                  $event.target.options,
-                                                  function(o) {
-                                                    return o.selected
-                                                  }
-                                                )
-                                                .map(function(o) {
-                                                  var val =
-                                                    "_value" in o
-                                                      ? o._value
-                                                      : o.value
-                                                  return val
-                                                })
-                                              _vm.$set(
-                                                item,
-                                                "isApproved",
-                                                $event.target.multiple
-                                                  ? $$selectedVal
-                                                  : $$selectedVal[0]
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "option",
-                                            { attrs: { value: "1" } },
-                                            [_vm._v("Yes")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "option",
-                                            { attrs: { value: "0" } },
-                                            [_vm._v("No")]
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              item.updatedAt && item.updatedBy
-                                ? _c("div", [
-                                    _c(
-                                      "p",
-                                      { staticClass: "text-uppercase m-b-0" },
-                                      [_vm._v("Latest Update")]
-                                    ),
+                                    ]),
                                     _vm._v(" "),
                                     _c(
                                       "p",
-                                      {
-                                        staticClass: "text-black fs-16 m-b-10"
-                                      },
+                                      { staticClass: "text-black bold m-b-0" },
                                       [
                                         _vm._v(
-                                          "\n                                    Updated at " +
-                                            _vm._s(item.updatedAt) +
-                                            " by " +
-                                            _vm._s(item.updatedBy) +
-                                            "\n                                "
+                                          _vm._s(requisition.approvalNumber)
                                         )
                                       ]
-                                    )
-                                  ])
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-lg-1 p-t-10" })
-                          ]
-                        )
+                                    ),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(_vm._s(requisition.description))
+                                    ])
+                                  ]
+                                )
+                              })
+                            )
+                          ])
+                        ])
                       ])
-                    })
-                  ],
-                  2
-                )
-              ]
-            )
-          })
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "infinite-loading",
-        {
-          ref: "infiniteLoading",
-          staticClass: "margin-center",
-          attrs: { spinner: "waveDots" },
-          on: { infinite: _vm.infiniteHandler }
-        },
-        [_c("span", { attrs: { slot: "no-more" }, slot: "no-more" })]
-      )
-    ],
-    1
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
   )
 }
 var staticRenderFns = []
@@ -4993,7 +5158,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-7fda3406", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-7c12ee22", module.exports)
   }
 }
 
@@ -19427,15 +19592,15 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/storage/admin/MainApproval.vue":
+/***/ "./resources/assets/js/client/storage/admin/MainPurchaseOrder.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/MainApproval.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/MainPurchaseOrder.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3d2caddc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/MainApproval.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-56c01f8e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/MainPurchaseOrder.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -19452,7 +19617,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/storage/admin/MainApproval.vue"
+Component.options.__file = "resources/assets/js/client/storage/admin/MainPurchaseOrder.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -19462,9 +19627,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3d2caddc", Component.options)
+    hotAPI.createRecord("data-v-56c01f8e", Component.options)
   } else {
-    hotAPI.reload("data-v-3d2caddc", Component.options)
+    hotAPI.reload("data-v-56c01f8e", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -19476,17 +19641,66 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/storage/admin/approval.js":
+/***/ "./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectRequisitionModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectRequisitionModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7c12ee22\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectRequisitionModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/storage/admin/components/purchaseOrder/SelectRequisitionModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7c12ee22", Component.options)
+  } else {
+    hotAPI.reload("data-v-7c12ee22", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/storage/admin/purchaseOrder.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_approval__ = __webpack_require__("./resources/assets/js/client/storage/admin/router/approval.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainApproval_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/MainApproval.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainApproval_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainApproval_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_approval_store__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/approval/store.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_purchaseOrder__ = __webpack_require__("./resources/assets/js/client/storage/admin/router/purchaseOrder.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainPurchaseOrder_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/MainPurchaseOrder.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainPurchaseOrder_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainPurchaseOrder_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_purchaseOrder_store__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/purchaseOrder/store.js");
 /**
  * Created by kevinpurwono on 6/12/17.
  */
@@ -19497,29 +19711,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#vc-storage-admin-approval',
-    template: '<main-approval></main-approval>',
-    components: { MainApproval: __WEBPACK_IMPORTED_MODULE_2__MainApproval_vue___default.a },
-    router: __WEBPACK_IMPORTED_MODULE_1__router_approval__["a" /* default */],
-    store: __WEBPACK_IMPORTED_MODULE_3__vuex_approval_store__["a" /* store */]
+    el: '#vc-storage-admin-purchase-order',
+    template: '<main-purchase-order></main-purchase-order>',
+    components: { MainPurchaseOrder: __WEBPACK_IMPORTED_MODULE_2__MainPurchaseOrder_vue___default.a },
+    router: __WEBPACK_IMPORTED_MODULE_1__router_purchaseOrder__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_3__vuex_purchaseOrder_store__["a" /* store */]
 });
 
 $(document).ready(function () {});
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/storage/admin/router/approval.js":
+/***/ "./resources/assets/js/client/storage/admin/router/purchaseOrder.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_approval_Index_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/views/approval/Index.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_approval_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_approval_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_purchaseOrder_Index_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/views/purchaseOrder/Index.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_purchaseOrder_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_purchaseOrder_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_purchaseOrder_PurhcaseOrderForm_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/views/purchaseOrder/PurhcaseOrderForm.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_purchaseOrder_PurhcaseOrderForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_purchaseOrder_PurhcaseOrderForm_vue__);
 /**
  * Created by kevinpurwono on 23/11/17.
  */
+
 
 
 
@@ -19529,22 +19746,22 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_approval_Index_vue___default.a }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_purchaseOrder_Index_vue___default.a }, { path: '/create/new', component: __WEBPACK_IMPORTED_MODULE_3__views_purchaseOrder_PurhcaseOrderForm_vue___default.a, name: 'createNewPO' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/storage/admin/views/approval/Index.vue":
+/***/ "./resources/assets/js/client/storage/admin/views/purchaseOrder/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/views/approval/Index.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/Index.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-7fda3406\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/views/approval/Index.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1f057c69\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/Index.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -19561,7 +19778,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/storage/admin/views/approval/Index.vue"
+Component.options.__file = "resources/assets/js/client/storage/admin/views/purchaseOrder/Index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -19571,9 +19788,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-7fda3406", Component.options)
+    hotAPI.createRecord("data-v-1f057c69", Component.options)
   } else {
-    hotAPI.reload("data-v-7fda3406", Component.options)
+    hotAPI.reload("data-v-1f057c69", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -19585,7 +19802,56 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/storage/admin/vuex/approval/modules/actions.js":
+/***/ "./resources/assets/js/client/storage/admin/views/purchaseOrder/PurhcaseOrderForm.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/PurhcaseOrderForm.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0a63f75e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/PurhcaseOrderForm.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/storage/admin/views/purchaseOrder/PurhcaseOrderForm.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0a63f75e", Component.options)
+  } else {
+    hotAPI.reload("data-v-0a63f75e", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/storage/admin/vuex/purchaseOrder/modules/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19603,14 +19869,21 @@ module.exports = Component.exports
     getDataOnCreate: function getDataOnCreate(_ref, payload) {
         var commit = _ref.commit,
             state = _ref.state;
+    },
+    showRequisitionListModal: function showRequisitionListModal(_ref2, payload) {
+        var commit = _ref2.commit,
+            state = _ref2.state;
 
-        commit('getApprovalStatusList');
+
+        commit('getRequisitionList');
+
+        $('#modal-select-requisition').modal('show');
     }
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/storage/admin/vuex/approval/modules/getters.js":
+/***/ "./resources/assets/js/client/storage/admin/vuex/purchaseOrder/modules/getters.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19621,13 +19894,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/storage/admin/vuex/approval/modules/main.js":
+/***/ "./resources/assets/js/client/storage/admin/vuex/purchaseOrder/modules/main.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/approval/modules/getters.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/approval/modules/mutations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/approval/modules/actions.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/purchaseOrder/modules/getters.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/purchaseOrder/modules/mutations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/purchaseOrder/modules/actions.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -19640,16 +19913,7 @@ module.exports = Component.exports
     namespaced: true,
     state: {
         requisitions: [],
-        paginationMeta: {
-            total: '',
-            count: '',
-            per_page: '',
-            current_page: '',
-            total_pages: '',
-            links: []
-        },
-        isSearchingRequisition: false,
-        approvalStatuses: []
+        selectedRequisition: ''
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -19658,7 +19922,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/storage/admin/vuex/approval/modules/mutations.js":
+/***/ "./resources/assets/js/client/storage/admin/vuex/purchaseOrder/modules/mutations.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19673,24 +19937,8 @@ module.exports = Component.exports
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    getApprovalStatusList: function getApprovalStatusList(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/approvalStatus/list').then(function (res) {
-            if (!res.data.isFailed) {
-                state.approvalStatuses = res.data.approvalStatuses.data;
-            }
-        });
-    },
-    getRequisitionApproval: function getRequisitionApproval(state, payload) {
-
-        var sortApproval = '';
-        if (payload.sortApproval) {
-            sortApproval = payload.sortApproval;
-        }
-
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval?sortApproval=' + sortApproval).then(function (res) {
-
-            state.isSearchingRequisition = true;
-
+    getRequisitionList: function getRequisitionList(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/requisition').then(function (res) {
             if (!res.data.isFailed) {
                 if (res.data.requisitions.data) {
 
@@ -19701,36 +19949,12 @@ module.exports = Component.exports
                     if (requisitionData) {
                         state.requisitions = state.requisitions.concat(requisitionData);
                     }
-
-                    //insert pagination
-                    state.paginationMeta = res.data.requisitions.meta.pagination;
                 }
-
-                state.isSearchingRequisition = false;
-            } else {
-                state.isSearchingRequisition = false;
             }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
         });
     },
-    searchRequisition: function searchRequisition(state, payload) {
-
-        var search = '';
-        if (payload.searchText) {
-            search = payload.searchText;
-        }
-
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval/search?v=' + search).then(function (res) {
-
-            state.isSearchingRequisition = true;
-
+    searchRequisitionText: function searchRequisitionText(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/requisition/search?v=' + payload.searchRequisitionText).then(function (res) {
             if (!res.data.isFailed) {
                 if (res.data.requisitions.data) {
 
@@ -19741,163 +19965,15 @@ module.exports = Component.exports
                     if (requisitionData) {
                         state.requisitions = state.requisitions.concat(requisitionData);
                     }
-
-                    //insert pagination
-                    state.paginationMeta = res.data.requisitions.meta.pagination;
                 }
-
-                state.isSearchingRequisition = false;
-            } else {
-                state.isSearchingRequisition = false;
             }
-        });
-    },
-    saveApprovalAfterEdit: function saveApprovalAfterEdit(state, payload) {
-
-        var requisition = state.requisitions[payload.index];
-        var requisitionItems = requisition.requisitionItems.data;
-
-        //get only id and isApproved property in array to be send in request
-        var requisitionItemsUpdated = _.map(requisitionItems, function (item) {
-            return _.pick(item, 'id', 'isApproved');
-        });
-
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval/requisition/editAndApprove', {
-            requisitionId: payload.requisitionId,
-            requisitionItemsUpdated: requisitionItemsUpdated
-        }).then(function (res) {
-
-            if (!res.data.isFailed) {
-
-                requisition.approvalNumber = requisition.requisitionNumber + 'A';
-                requisition.approvalId = 1; // approval id approve
-                requisition.approvalName = 'Approve';
-                requisition.editing = false;
-
-                $('.page-container').pgNotification({ /* Show success response */
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-            } else {
-
-                $('.page-container').pgNotification({ /* Show error response */
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            /* Show error response */
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    declineRequisition: function declineRequisition(state, payload) {
-
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval/requisition/decline', { requisitionId: payload.requisitionId }).then(function (res) {
-
-            if (!res.data.isFailed) {
-
-                // Update requisition array
-                var requisition = state.requisitions[payload.index];
-                requisition.approvalNumber = requisition.requisitionNumber + 'D';
-                requisition.approvalId = 2; // approval id declined
-                requisition.approvalName = 'Declined';
-
-                // Update requisition items array
-                var requisitionItems = requisition.requisitionItems.data;
-                _.forEach(requisitionItems, function (value, key) {
-                    requisitionItems[key].isApproved = 0;
-                });
-
-                $('.page-container').pgNotification({ /* Show success response */
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-            } else {
-                /* Show error response */
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            /* Show error response */
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    approveRequisition: function approveRequisition(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval/requisition/approve', { requisitionId: payload.requisitionId }).then(function (res) {
-
-            if (!res.data.isFailed) {
-
-                // Update requisition array
-                var requisition = state.requisitions[payload.index];
-                requisition.approvalNumber = requisition.requisitionNumber + 'A';
-                requisition.approvalId = 1; // approval id approve
-                requisition.approvalName = 'Approve';
-
-                // Update requisition items array
-                var requisitionItems = requisition.requisitionItems.data;
-                _.forEach(requisitionItems, function (value, key) {
-                    requisitionItems[key].isApproved = 1;
-                });
-
-                $('.page-container').pgNotification({ /* Show success response */
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-            } else {
-                /* Show error response */
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            /* Show error response */
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
         });
     }
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/storage/admin/vuex/approval/store.js":
+/***/ "./resources/assets/js/client/storage/admin/vuex/purchaseOrder/store.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19905,7 +19981,7 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/approval/modules/main.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/storage/admin/vuex/purchaseOrder/modules/main.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -19918,7 +19994,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
-        approval: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
+        purchaseOrder: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
     }
 });
 
@@ -19951,10 +20027,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 /***/ }),
 
-/***/ 37:
+/***/ 38:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/storage/admin/approval.js");
+module.exports = __webpack_require__("./resources/assets/js/client/storage/admin/purchaseOrder.js");
 
 
 /***/ })

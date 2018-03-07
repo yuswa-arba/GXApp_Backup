@@ -1,0 +1,169 @@
+<template>
+    <div class="row">
+
+        <div class="col-lg-12 m-b-10 m-t-10">
+            <slot name="go-back-menu"></slot>
+        </div>
+
+        <div class="col-lg-12" v-if="fillingPreForm">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="card card-default">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card card-default no-border">
+                                    <div class="card-block">
+                                        <div class="row">
+
+                                            <div class="col-lg-12">
+                                                <p class="text-black text-uppercase fs-11">1. Select Supplier</p>
+
+                                                <div class="input-group">
+                                                    <input type="text" style="height: 40px;" class="form-control"
+                                                           id="search-supplier-box"
+                                                           placeholder="Search Supplier Name"
+                                                           v-model="searchSupplierText"
+                                                    >
+                                                    <span class="input-group-addon primary" @click="searchSupplier()"><i
+                                                            class="fa fa-search cursor"></i></span>
+                                                </div>
+                                                <div class="form-group m-t-10">
+                                                    <label>Contact Person</label>
+                                                    <input type="text" class="form-control">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Contact Number</label>
+                                                    <input type="number" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 m-t-10">
+                                                <p class="text-black text-uppercase fs-11">2. Select Requisition</p>
+                                                <div class="checkbox check-success ">
+                                                    <input id="withRequisitionCb" type="checkbox"
+                                                           v-model="preFormObject.withRequisition">
+                                                    <label for="withRequisitionCb">With Requisition</label>
+                                                </div>
+
+                                                <div class="input-group" v-if="preFormObject.withRequisition">
+                                                    <input type="text" style="height: 40px;"
+                                                           class="form-control text-black"
+                                                           readonly
+                                                           placeholder="Search Requisition Approval Number"
+                                                           @click="attemptSelectRequisition()"
+                                                           v-model="selectedRequisition.approvalNumber"
+                                                    >
+                                                    <span class="input-group-addon primary"
+                                                          @click="attemptSelectRequisition()"><i
+                                                            class="fa fa-mouse-pointer cursor"></i></span>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 m-t-10">
+                                                <p class="text-black text-uppercase fs-11">3. Tax Invoice</p>
+                                                <div class="checkbox check-success ">
+                                                    <input id="withTaxInvoice" type="checkbox"
+                                                           v-model="preFormObject.withTaxInvoice">
+                                                    <label for="withTaxInvoice">With Tax Invoice</label>
+                                                </div>
+
+                                                <div v-if="preFormObject.withTaxInvoice">
+                                                    <div class="form-group">
+                                                        <label> NPWP No.</label>
+                                                        <input type="text" class="form-control text-black"
+                                                               v-model="preFormObject.npwpNo" readonly>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label> NPWP Attachment</label>
+                                                        <div class="cursor"
+                                                             @click="viewImage('/images/company/npwp/'+preFormObject.npwpPhoto)">
+                                                            <img :src="'/images/company/npwp/'+preFormObject.npwpPhoto"
+                                                                 height="70px" alt="">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 m-t-10">
+                                                <p class="text-black text-uppercase fs-11">4. Notes </p>
+                                                <div class="form-group m-t-10">
+                                                    <input type="text" class="form-control"
+                                                           v-model="preFormObject.notes">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-12 m-t-10">
+                                                <button class="btn btn-primary pull-right fs-16">Start Adding Items <i
+                                                        class="fa fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <select-requisition-modal></select-requisition-modal>
+
+    </div>
+</template>
+
+<script type="text/javascript">
+    import {get} from '../../../../helpers/api'
+    import {api_path} from '../../../../helpers/const'
+    import {mapGetters, mapState} from 'vuex'
+    import InfiniteLoading from 'vue-infinite-loading';
+    import SelectRequisitionModal from '../../components/purchaseOrder/SelectRequisitionModal.vue'
+    export default{
+        components: {
+            InfiniteLoading,
+            'select-requisition-modal':SelectRequisitionModal
+        },
+        data(){
+            return {
+                fillingPreForm: true,
+                searchRequisitionText: '',
+                searchSupplierText: '',
+                preFormObject: {
+                    supplierId: '',
+                    requisitionId: '',
+                    approvalNumber: '',
+                    withRequisition: 1,
+                    withTaxInvoice: 0,
+                    npwpNo: '', // GlobalXtreme NPWP //TODO: consider to insert this in DB instead
+                    npwpPhoto: '',
+                    notes: ''
+                },
+
+            }
+        },
+        created(){
+            let self = this
+            //get NPWP Information
+            get(api_path + 'component/npwpInformation/1')
+                .then((res) => {
+                    self.preFormObject.npwpNo = res.data.data.npwpNo
+                    self.preFormObject.npwpPhoto = res.data.data.npwpPhoto
+                })
+
+
+        },
+        computed: {
+            ...mapState('purchaseOrder',{
+                selectedRequisition:'selectedRequisition'
+            })
+        },
+        methods: {
+            viewImage(url){
+                window.open(url, '_blank')
+            },
+            attemptSelectRequisition(){
+                let self = this
+                self.$store.dispatch({
+                    type:'purchaseOrder/showRequisitionListModal'
+                })
+            }
+        }
+    }
+</script>

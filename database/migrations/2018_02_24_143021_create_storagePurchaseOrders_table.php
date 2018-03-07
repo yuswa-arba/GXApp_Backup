@@ -20,10 +20,15 @@ class CreateStoragePurchaseOrdersTable extends Migration
             $table->integer('requisitionId')->nullable();
             $table->string('date');
             $table->integer('supplierId');
+            $table->string('contactPerson')->nullable();
+            $table->string('contactNumber')->nullable();
             $table->tinyInteger('withTaxInvoice')->default(0);
             $table->string('npwpNumber')->nullable();
             $table->string('notes')->nullable();
             $table->string('file')->nullable();
+            $table->integer('statusId')->defaut(1);
+            $table->string('insertedAt');
+            $table->string('insertedBy');
             $table->timestamps();
         });
     }

@@ -40,7 +40,7 @@
                             <span class="icon-thumbnail">ra</span>
                         </li>
                         <li>
-                            <a href="javascript:;">Purchase Orders</a>
+                            <a href="{{route('storage.admin.purchaseOrder')}}">Purchase Orders</a>
                             <span class="icon-thumbnail">po</span>
                         </li>
                         <li>
