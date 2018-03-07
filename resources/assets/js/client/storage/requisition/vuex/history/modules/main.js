@@ -18,7 +18,8 @@ export default {
             total_pages: '',
             links: []
         },
-        isSearchingRequisition:false
+        isSearchingRequisition:false,
+        approvalStatuses:[]
     },
     getters,
     mutations,

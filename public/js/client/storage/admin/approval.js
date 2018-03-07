@@ -2709,7 +2709,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 var nextPage = approvalVuexState.paginationMeta.current_page + 1;
 
                 //get next page
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval?page=' + nextPage).then(function (res) {
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/approval?page=' + nextPage + '&sortApproval=' + self.sortApproval).then(function (res) {
                     if (!res.data.isFailed) {
                         if (res.data.requisitions.data) {
 

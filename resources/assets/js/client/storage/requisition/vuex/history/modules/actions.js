@@ -6,7 +6,7 @@ import series from 'async/series';
 
 export default{
     getDataOnCreate({commit,state},payload){
-
+        commit('getApprovalStatusList')
     }
 
 }

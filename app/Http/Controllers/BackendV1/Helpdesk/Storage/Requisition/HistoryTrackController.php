@@ -53,9 +53,25 @@ class HistoryTrackController extends Controller
         $user = Auth::user(); //user data
         $employee = $user->employee; // user's employee data
 
+        $approvalId = ''; //default approval id empty = get all
+
+        if ($request->sortApproval != null && $request->sortApproval != '') {
+            $approvalId = $request->sortApproval;
+        }
+
+
         if ($employee && $employee->hasResigned != 1) {
 
+            //get all
             $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)->paginate(10);
+
+            //get based on approval id status
+            if($approvalId!=''){
+
+                $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)
+                                                    ->where('approvalId', $approvalId)
+                                                    ->paginate(10);
+            }
 
             if ($requisitions) {
 

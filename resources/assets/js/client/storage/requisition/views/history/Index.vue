@@ -2,7 +2,18 @@
     <div class="row">
         <div class="col-lg-12" style="margin-top: 50px">
             <div class="row">
-                <div class="col-lg-8">
+                <div class="col-lg-4">
+                    <div class="col-lg-4">
+                        <select class="btn btn-outline-primary h-35 pull-left"
+                                style="width: 180px"
+                                @change="sortRequisition()"
+                                v-model="sortApproval">
+                            <option value="">All</option>
+                            <option :value="approval.id" v-for="approval in approvalStatuses">{{approval.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-lg-4">
 
                     <h4 class="text-master" v-if="isSearchingRequisition">Searching Requisition.. Please Wait..</h4>
 
@@ -126,15 +137,20 @@
         },
         data(){
             return {
-                searchText:''
+                searchText:'',
+                sortApproval:''
             }
         },
         created(){
-
+            // get necessary data on create for this page
+            this.$store.dispatch({
+                type:'history/getDataOnCreate'
+            })
         },
         computed: {
             ...mapState('history', {
                 requisitions: 'requisitions',
+                approvalStatuses:'approvalStatuses',
                 isSearchingRequisition:'isSearchingRequisition'
             })
         },
@@ -154,7 +170,7 @@
                     let nextPage = historyVuexState.paginationMeta.current_page + 1
 
                     //get next page
-                    get(api_path + 'storage/requisition/history?page=' + nextPage)
+                    get(api_path + 'storage/requisition/history?page=' + nextPage + '&sortApproval='+ self.sortApproval)
                         .then((res) => {
                             if (!res.data.isFailed) {
                                 if (res.data.requisitions.data) {
@@ -211,7 +227,14 @@
                     searchText:self.searchText
                 })
 
-            }
+            },
+            sortRequisition(){
+                let self = this
+                this.$store.commit({
+                    type:'history/getRequisitionHistory',
+                    sortApproval:self.sortApproval
+                })
+            },
         }
     }
 </script>

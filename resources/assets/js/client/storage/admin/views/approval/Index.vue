@@ -202,7 +202,7 @@
                     let nextPage = approvalVuexState.paginationMeta.current_page + 1
 
                     //get next page
-                    get(api_path + 'storage/admin/approval?page=' + nextPage)
+                    get(api_path + 'storage/admin/approval?page=' + nextPage + '&sortApproval='+self.sortApproval)
                         .then((res) => {
                             if (!res.data.isFailed) {
                                 if (res.data.requisitions.data) {
