@@ -12,7 +12,18 @@ export default {
         requisitions:[],
         selectedRequisition:{},
         suppliers:[],
-        selectedSupplier:{}
+        selectedSupplier:{},
+        preFormObject: {
+            supplierId: '',
+            requisitionId: '',
+            approvalNumber: '',
+            withRequisition: 1,
+            withTaxInvoice: 0,
+            npwpNo: '',
+            npwpPhoto: '',
+            notes: ''
+        },
+        preFormIsFinishAndValid: false
     },
     getters,
     mutations,

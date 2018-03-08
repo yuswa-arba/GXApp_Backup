@@ -5,6 +5,13 @@ import {get, post} from '../../../../../helpers/api'
 import {api_path} from '../../../../../helpers/const'
 import series from 'async/series';
 export default{
+    getNPWPInformation(state,payload){
+        get(api_path + 'component/npwpInformation/1')
+            .then((res) => {
+                state.preFormObject.npwpNo = res.data.data.npwpNo
+                state.preFormObject.npwpPhoto = res.data.data.npwpPhoto
+            })
+    },
     getRequisitionList(state, payload){
         get(api_path + 'storage/admin/purchaseOrder/requisition')
             .then((res) => {
@@ -43,13 +50,13 @@ export default{
         get(api_path + 'storage/admin/purchaseOrder/supplier')
             .then((res) => {
                 if (!res.data.isFailed) {
-                    if (res.data.suppliers.data){
+                    if (res.data.suppliers.data) {
 
                         state.suppliers = []
 
                         //insert suppliers
                         let suppliersData = res.data.suppliers.data
-                        if(suppliersData){
+                        if (suppliersData) {
                             state.suppliers = state.suppliers.concat(suppliersData)
                         }
 
@@ -61,13 +68,13 @@ export default{
         get(api_path + 'storage/admin/purchaseOrder/supplier/search?v=' + payload.searchSupplierText)
             .then((res) => {
                 if (!res.data.isFailed) {
-                    if (res.data.suppliers.data){
+                    if (res.data.suppliers.data) {
 
                         state.suppliers = []
 
                         //insert suppliers
                         let suppliersData = res.data.suppliers.data
-                        if(suppliersData){
+                        if (suppliersData) {
                             state.suppliers = state.suppliers.concat(suppliersData)
                         }
 

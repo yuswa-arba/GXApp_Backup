@@ -6,6 +6,7 @@ import series from 'async/series';
 
 export default{
     getDataOnCreate({commit, state}, payload){
+        commit('getNPWPInformation')
     },
     showRequisitionListModal({commit, state}, payload){
 
@@ -29,7 +30,7 @@ export default{
                     if (state.selectedSupplier.id != null) {
 
                         // Insert to preFormObject
-                        payload.preFormObject.supplierId = state.selectedSupplier.id
+                        state.preFormObject.supplierId = state.selectedSupplier.id
 
                         // Callback success
                         cb(null, '')
@@ -42,12 +43,12 @@ export default{
                 function (cb) {
 
                     // check if with requisition
-                    if (payload.preFormObject.withRequisition) {
+                    if (state.preFormObject.withRequisition) {
                         if (state.selectedRequisition.id != null) {
 
                             // Insert to preFormObject
-                            payload.preFormObject.requisitionId = state.selectedRequisition.id
-                            payload.preFormObject.approvalNumber = state.selectedRequisition.approvalNumber
+                            state.preFormObject.requisitionId = state.selectedRequisition.id
+                            state.preFormObject.approvalNumber = state.selectedRequisition.approvalNumber
 
                             // Callback success
                             cb(null, '')
@@ -67,7 +68,9 @@ export default{
 
                 if (err == null) { //Success
 
-                    console.log(JSON.stringify(payload.preFormObject))
+                    state.preFormIsFinishAndValid = true
+
+                    console.log(JSON.stringify(state.preFormObject))
 
                 } else {
 
@@ -82,7 +85,6 @@ export default{
                 }
 
             })
-
 
 
     }
