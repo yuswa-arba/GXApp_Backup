@@ -1,5 +1,5 @@
 <template>
-    <div class="modal fade" id="modal-select-requisition" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade" id="modal-select-supplier" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -7,7 +7,7 @@
                         <i class="pg-close"></i>
                     </button>
                     <!--<div id="mh-role"></div>-->
-                    <p class="text-left p-b-5 fs-16">Select Requisition</p>
+                    <p class="text-left p-b-5 fs-16">Select Supplier</p>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -15,12 +15,12 @@
                             <div class="input-group">
                                 <input type="text" style="height: 40px;"
                                        class="form-control"
-                                       id="search-requisition-box"
-                                       @keyup.enter="searchRequisition()"
-                                       placeholder="Search Requisition"
-                                       v-model="searchRequisitionText"
+                                       id="search-supplier-box"
+                                       @keyup.enter="searchSupplier()"
+                                       placeholder="Search Supplier"
+                                       v-model="searchSupplierText"
                                 >
-                                <span class="input-group-addon primary" @click="searchRequisition()"><i
+                                <span class="input-group-addon primary" @click="searchSupplier()"><i
                                         class="fa fa-search cursor"></i></span>
                             </div>
 
@@ -33,16 +33,25 @@
                                             <div class="scrollable">
                                                 <div style="height: 500px">
                                                     <div class="row">
-                                                        <div class="col-lg-12 border-bottom-grey padding-10 select-hover-warning"
-                                                             @click="selectRequisition(requisition)"
-                                                             v-for="(requisition,index) in requisitions">
-                                                            <div class="pull-right">
-                                                                <p>by {{requisition.requestedBy}}
-                                                                    @{{requisition.requestedAt}}</p>
+                                                        <div class="col-lg-12 border-bottom-grey select-hover-warning"
+                                                             style="padding: 10px 5px"
+                                                             @click="selectSupplier(supplier)"
+                                                             v-for="(supplier,index) in suppliers">
+
+                                                            <div class="row">
+                                                                <div class="col-lg-3">
+                                                                    <img :src="'/images/suppliers/logo/'+supplier.logo"
+                                                                         height="50px" alt="No Image">
+                                                                </div>
+                                                                <div class="col-lg-5">
+                                                                    <p class="text-black bold m-b-0 fs-16">
+                                                                        {{supplier.name}}</p>
+                                                                    <p>{{supplier.contactPerson1}}</p>
+                                                                </div>
+                                                                <div class="col-lg-4">
+                                                                    <p>{{supplier.country}},{{supplier.city}}</p>
+                                                                </div>
                                                             </div>
-                                                            <p class="text-black bold m-b-0 fs-16">
-                                                                {{requisition.approvalNumber}}</p>
-                                                            <p>{{requisition.description}}</p>
 
                                                         </div>
                                                     </div>
@@ -73,14 +82,14 @@
     export default{
         data(){
             return {
-                searchRequisitionText: ''
+                searchSupplierText: ''
             }
         },
         created(){
         },
         computed: {
             ...mapState('purchaseOrder', {
-                requisitions: 'requisitions'
+                suppliers: 'suppliers'
             })
         },
         mounted(){
@@ -89,21 +98,21 @@
 
         methods: {
             closeModal(){
-                $('#modal-select-requisition').modal("toggle"); // close modal
+                $('#modal-select-supplier').modal("toggle"); // close modal
             },
-            searchRequisition(){
+            searchSupplier(){
                 let self = this
                 self.$store.commit({
-                    type: 'purchaseOrder/searchRequisition',
-                    searchRequisitionText: self.searchRequisitionText
+                    type: 'purchaseOrder/searchSupplier',
+                    searchSupplierText: self.searchSupplierText
                 })
             },
-            selectRequisition(requisition){
+            selectSupplier(supplier){
 
                 let self  = this
 
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
-                purchaseOrderVuexState.selectedRequisition = requisition
+                purchaseOrderVuexState.selectedSupplier = supplier
 
                 self.closeModal()
 

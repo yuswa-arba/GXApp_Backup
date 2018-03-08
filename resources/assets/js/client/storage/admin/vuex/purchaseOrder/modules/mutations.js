@@ -22,7 +22,7 @@ export default{
                 }
             })
     },
-    searchRequisitionText(state, payload){
+    searchRequisition(state, payload){
         get(api_path + 'storage/admin/purchaseOrder/requisition/search?v=' + payload.searchRequisitionText)
             .then((res) => {
                 if (!res.data.isFailed) {
@@ -38,6 +38,42 @@ export default{
                     }
                 }
             })
-    }
+    },
+    getSupplierList(state, payload){
+        get(api_path + 'storage/admin/purchaseOrder/supplier')
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    if (res.data.suppliers.data){
+
+                        state.suppliers = []
+
+                        //insert suppliers
+                        let suppliersData = res.data.suppliers.data
+                        if(suppliersData){
+                            state.suppliers = state.suppliers.concat(suppliersData)
+                        }
+
+                    }
+                }
+            })
+    },
+    searchSupplier(state, payload){
+        get(api_path + 'storage/admin/purchaseOrder/supplier/search?v=' + payload.searchSupplierText)
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    if (res.data.suppliers.data){
+
+                        state.suppliers = []
+
+                        //insert suppliers
+                        let suppliersData = res.data.suppliers.data
+                        if(suppliersData){
+                            state.suppliers = state.suppliers.concat(suppliersData)
+                        }
+
+                    }
+                }
+            })
+    },
 
 }

@@ -22,6 +22,7 @@ use App\Storage\Models\StorageSuppliers;
 use App\Storage\Models\StorageWarehouses;
 use App\Storage\Transformers\BasicCodeNameTransformer;
 use App\Storage\Transformers\BriefStorageRequisitionListTransformer;
+use App\Storage\Transformers\BriefSupplierTransformer;
 use App\Storage\Transformers\ShipmentTransformer;
 use App\Storage\Transformers\StorageItemBriefDetailTransformer;
 use App\Storage\Transformers\StorageItemDetailTransformer;
@@ -136,6 +137,43 @@ class PurchaseOrderController extends Controller
             $response['message'] = 'Permission denied';
             return response()->json($response, 200);
         }
+    }
+
+    public function supplierList()
+    {
+        $response = array();
+
+        $suppliers = StorageSuppliers::orderBy('name', 'asc')->get();
+
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['suppliers'] = fractal($suppliers, new SupplierTransformer());
+
+        return response()->json($response, 200);
+    }
+
+    public function searchSupplier(Request $request)
+    {
+        $response = array();
+
+        $search = '';
+        if ($request->get('v') != '' && $request->get('v') != null) {
+            $search = $request->get('v');
+        }
+
+        $suppliers = StorageSuppliers::where('isDeleted', 0)
+            ->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('contactPerson1', 'like', '%' . $search . '%');
+            })
+            ->orderBy('name', 'asc')
+            ->get();
+
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['suppliers'] = fractal($suppliers, new BriefSupplierTransformer());
+
+        return response()->json($response, 200);
     }
 
 }

@@ -14,9 +14,11 @@ use App\Storage\Models\StorageShipments;
 use App\Storage\Models\StorageSuppliers;
 use App\Storage\Models\StorageWarehouses;
 use App\Storage\Transformers\BasicCodeNameTransformer;
+use App\Storage\Transformers\BriefSupplierTransformer;
 use App\Storage\Transformers\ShipmentTransformer;
 use App\Storage\Transformers\SupplierTransformer;
 use App\Storage\Transformers\WarehouseTransformer;
+use DeepCopy\f001\B;
 use Illuminate\Http\Request;
 
 class ListController extends Controller
@@ -120,9 +122,9 @@ class ListController extends Controller
 
         $response['isFailed'] = false;
         $response['message'] = 'Success';
-        $response['units'] = fractal($units,new UnitOfMeasurementTransformer());
+        $response['units'] = fractal($units, new UnitOfMeasurementTransformer());
 
-        return response()->json($response,200);
+        return response()->json($response, 200);
 
     }
 
@@ -133,9 +135,9 @@ class ListController extends Controller
         $approvalStatuses = StorageRequisitionApproval::all();
         $response['isFailed'] = false;
         $response['message'] = 'Success';
-        $response['approvalStatuses'] = fractal($approvalStatuses,new BasicComponentTrasnformer());
+        $response['approvalStatuses'] = fractal($approvalStatuses, new BasicComponentTrasnformer());
 
-        return response()->json($response,200);
+        return response()->json($response, 200);
 
     }
 

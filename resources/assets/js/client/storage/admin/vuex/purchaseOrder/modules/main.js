@@ -10,7 +10,9 @@ export default {
     namespaced: true,
     state: {
         requisitions:[],
-        selectedRequisition:''
+        selectedRequisition:{},
+        suppliers:[],
+        selectedSupplier:{}
     },
     getters,
     mutations,

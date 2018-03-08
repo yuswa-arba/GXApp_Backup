@@ -19,27 +19,39 @@
                                                 <p class="text-black text-uppercase fs-11">1. Select Supplier</p>
 
                                                 <div class="input-group">
-                                                    <input type="text" style="height: 40px;" class="form-control"
-                                                           id="search-supplier-box"
-                                                           placeholder="Search Supplier Name"
-                                                           v-model="searchSupplierText"
-                                                    >
-                                                    <span class="input-group-addon primary" @click="searchSupplier()"><i
-                                                            class="fa fa-search cursor"></i></span>
+                                                    <input type="text" style="height: 40px;"
+                                                           class="form-control text-black"
+                                                           v-model="selectedSupplier.name"
+                                                           readonly
+                                                           @click="attemptSelectSupplier()"
+                                                           placeholder="Search Supplier Name">
+
+                                                    <span class="input-group-addon primary"
+                                                          @click="attemptSelectSupplier()"><i
+                                                            class="fa fa-mouse-pointer cursor"></i></span>
                                                 </div>
                                                 <div class="form-group m-t-10">
                                                     <label>Contact Person</label>
-                                                    <input type="text" class="form-control">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="extra-contact-person"
+                                                           v-model="selectedSupplier.contactPerson1">
                                                 </div>
                                                 <div class="form-group">
                                                     <label>Contact Number</label>
-                                                    <input type="number" class="form-control">
+                                                    <input type="number"
+                                                           class="form-control"
+                                                           id="extra-contact-number"
+                                                           v-model="selectedSupplier.mobileNumber1">
                                                 </div>
                                             </div>
                                             <div class="col-lg-12 m-t-10">
                                                 <p class="text-black text-uppercase fs-11">2. Select Requisition</p>
                                                 <div class="checkbox check-success ">
-                                                    <input id="withRequisitionCb" type="checkbox"
+                                                    <input id="withRequisitionCb"
+                                                           type="checkbox"
+                                                           value="1"
+                                                           @change="withRequisitionCbOnChange()"
                                                            v-model="preFormObject.withRequisition">
                                                     <label for="withRequisitionCb">With Requisition</label>
                                                 </div>
@@ -61,6 +73,7 @@
                                                 <p class="text-black text-uppercase fs-11">3. Tax Invoice</p>
                                                 <div class="checkbox check-success ">
                                                     <input id="withTaxInvoice" type="checkbox"
+                                                           value="1"
                                                            v-model="preFormObject.withTaxInvoice">
                                                     <label for="withTaxInvoice">With Tax Invoice</label>
                                                 </div>
@@ -91,8 +104,9 @@
                                             </div>
 
                                             <div class="col-lg-12 m-t-10">
-                                                <button class="btn btn-primary pull-right fs-16">Start Adding Items <i
-                                                        class="fa fa-plus"></i></button>
+                                                <button class="btn btn-primary pull-right fs-16" @click="startAddingItems()">
+                                                    Start Adding Items <i class="fa fa-plus"></i>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -105,6 +119,7 @@
         </div>
 
         <select-requisition-modal></select-requisition-modal>
+        <select-supplier-modal></select-supplier-modal>
 
     </div>
 </template>
@@ -115,23 +130,23 @@
     import {mapGetters, mapState} from 'vuex'
     import InfiniteLoading from 'vue-infinite-loading';
     import SelectRequisitionModal from '../../components/purchaseOrder/SelectRequisitionModal.vue'
+    import SelectSupplierModal from '../../components/purchaseOrder/SelectSupplierModal.vue'
     export default{
         components: {
             InfiniteLoading,
-            'select-requisition-modal':SelectRequisitionModal
+            'select-requisition-modal' : SelectRequisitionModal,
+            'select-supplier-modal' : SelectSupplierModal
         },
         data(){
             return {
                 fillingPreForm: true,
-                searchRequisitionText: '',
-                searchSupplierText: '',
                 preFormObject: {
                     supplierId: '',
                     requisitionId: '',
                     approvalNumber: '',
                     withRequisition: 1,
                     withTaxInvoice: 0,
-                    npwpNo: '', // GlobalXtreme NPWP //TODO: consider to insert this in DB instead
+                    npwpNo: '',
                     npwpPhoto: '',
                     notes: ''
                 },
@@ -150,8 +165,9 @@
 
         },
         computed: {
-            ...mapState('purchaseOrder',{
-                selectedRequisition:'selectedRequisition'
+            ...mapState('purchaseOrder', {
+                selectedSupplier:'selectedSupplier',
+                selectedRequisition: 'selectedRequisition'
             })
         },
         methods: {
@@ -161,8 +177,36 @@
             attemptSelectRequisition(){
                 let self = this
                 self.$store.dispatch({
-                    type:'purchaseOrder/showRequisitionListModal'
+                    type: 'purchaseOrder/showRequisitionListModal'
                 })
+            },
+            attemptSelectSupplier(){
+                let self = this
+                self.$store.dispatch({
+                    type: 'purchaseOrder/showSupplierListModal'
+                })
+            },
+            withRequisitionCbOnChange(){
+
+                let purchaseOrderVuexState = this.$store.state.purchaseOrder
+                let withRequisitionCb = $('#withRequisitionCb')
+
+                if (withRequisitionCb.prop('checked')) {
+                } else {
+                    //reset value on un checked
+
+                    purchaseOrderVuexState.selectedRequisition = {}
+                }
+            },
+            startAddingItems(){
+
+                let self = this
+
+                this.$store.dispatch({
+                    type:'purchaseOrder/startAddingItems',
+                    preFormObject:self.preFormObject
+                })
+
             }
         }
     }

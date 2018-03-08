@@ -2500,8 +2500,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_infinite_loading__ = __webpack_require__("./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_infinite_loading__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2571,13 +2569,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        InfiniteLoading: __WEBPACK_IMPORTED_MODULE_1_vue_infinite_loading___default.a
-    },
     data: function data() {
         return {
             searchRequisitionText: ''
@@ -2601,6 +2598,143 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 type: 'purchaseOrder/searchRequisition',
                 searchRequisitionText: self.searchRequisitionText
             });
+        },
+        selectRequisition: function selectRequisition(requisition) {
+
+            var self = this;
+
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+            purchaseOrderVuexState.selectedRequisition = requisition;
+
+            self.closeModal();
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectSupplierModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            searchSupplierText: ''
+        };
+    },
+    created: function created() {},
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
+        suppliers: 'suppliers'
+    })),
+    mounted: function mounted() {},
+
+
+    methods: {
+        closeModal: function closeModal() {
+            $('#modal-select-supplier').modal("toggle"); // close modal
+        },
+        searchSupplier: function searchSupplier() {
+            var self = this;
+            self.$store.commit({
+                type: 'purchaseOrder/searchSupplier',
+                searchSupplierText: self.searchSupplierText
+            });
+        },
+        selectSupplier: function selectSupplier(supplier) {
+
+            var self = this;
+
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+            purchaseOrderVuexState.selectedSupplier = supplier;
+
+            self.closeModal();
         }
     }
 });
@@ -2685,6 +2819,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_SelectRequisitionModal_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectRequisitionModal.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_SelectRequisitionModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_SelectRequisitionModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_purchaseOrder_SelectSupplierModal_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectSupplierModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_purchaseOrder_SelectSupplierModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_purchaseOrder_SelectSupplierModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2798,6 +2934,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2807,20 +2959,19 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
         InfiniteLoading: __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default.a,
-        'select-requisition-modal': __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_SelectRequisitionModal_vue___default.a
+        'select-requisition-modal': __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_SelectRequisitionModal_vue___default.a,
+        'select-supplier-modal': __WEBPACK_IMPORTED_MODULE_5__components_purchaseOrder_SelectSupplierModal_vue___default.a
     },
     data: function data() {
         return {
             fillingPreForm: true,
-            searchRequisitionText: '',
-            searchSupplierText: '',
             preFormObject: {
                 supplierId: '',
                 requisitionId: '',
                 approvalNumber: '',
                 withRequisition: 1,
                 withTaxInvoice: 0,
-                npwpNo: '', // GlobalXtreme NPWP //TODO: consider to insert this in DB instead
+                npwpNo: '',
                 npwpPhoto: '',
                 notes: ''
             }
@@ -2837,6 +2988,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('purchaseOrder', {
+        selectedSupplier: 'selectedSupplier',
         selectedRequisition: 'selectedRequisition'
     })),
     methods: {
@@ -2847,6 +2999,32 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var self = this;
             self.$store.dispatch({
                 type: 'purchaseOrder/showRequisitionListModal'
+            });
+        },
+        attemptSelectSupplier: function attemptSelectSupplier() {
+            var self = this;
+            self.$store.dispatch({
+                type: 'purchaseOrder/showSupplierListModal'
+            });
+        },
+        withRequisitionCbOnChange: function withRequisitionCbOnChange() {
+
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+            var withRequisitionCb = $('#withRequisitionCb');
+
+            if (withRequisitionCb.prop('checked')) {} else {
+                //reset value on un checked
+
+                purchaseOrderVuexState.selectedRequisition = {};
+            }
+        },
+        startAddingItems: function startAddingItems() {
+
+            var self = this;
+
+            this.$store.dispatch({
+                type: 'purchaseOrder/startAddingItems',
+                preFormObject: self.preFormObject
             });
         }
     }
@@ -4450,25 +4628,33 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.searchSupplierText,
-                                        expression: "searchSupplierText"
+                                        value: _vm.selectedSupplier.name,
+                                        expression: "selectedSupplier.name"
                                       }
                                     ],
-                                    staticClass: "form-control",
+                                    staticClass: "form-control text-black",
                                     staticStyle: { height: "40px" },
                                     attrs: {
                                       type: "text",
-                                      id: "search-supplier-box",
+                                      readonly: "",
                                       placeholder: "Search Supplier Name"
                                     },
-                                    domProps: { value: _vm.searchSupplierText },
+                                    domProps: {
+                                      value: _vm.selectedSupplier.name
+                                    },
                                     on: {
+                                      click: function($event) {
+                                        _vm.attemptSelectSupplier()
+                                      },
                                       input: function($event) {
                                         if ($event.target.composing) {
                                           return
                                         }
-                                        _vm.searchSupplierText =
+                                        _vm.$set(
+                                          _vm.selectedSupplier,
+                                          "name",
                                           $event.target.value
+                                        )
                                       }
                                     }
                                   }),
@@ -4479,21 +4665,97 @@ var render = function() {
                                       staticClass: "input-group-addon primary",
                                       on: {
                                         click: function($event) {
-                                          _vm.searchSupplier()
+                                          _vm.attemptSelectSupplier()
                                         }
                                       }
                                     },
                                     [
                                       _c("i", {
-                                        staticClass: "fa fa-search cursor"
+                                        staticClass:
+                                          "fa fa-mouse-pointer cursor"
                                       })
                                     ]
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(0),
+                                _c(
+                                  "div",
+                                  { staticClass: "form-group m-t-10" },
+                                  [
+                                    _c("label", [_vm._v("Contact Person")]),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.selectedSupplier.contactPerson1,
+                                          expression:
+                                            "selectedSupplier.contactPerson1"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      attrs: {
+                                        type: "text",
+                                        id: "extra-contact-person"
+                                      },
+                                      domProps: {
+                                        value:
+                                          _vm.selectedSupplier.contactPerson1
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.selectedSupplier,
+                                            "contactPerson1",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]
+                                ),
                                 _vm._v(" "),
-                                _vm._m(1)
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [_vm._v("Contact Number")]),
+                                  _vm._v(" "),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value:
+                                          _vm.selectedSupplier.mobileNumber1,
+                                        expression:
+                                          "selectedSupplier.mobileNumber1"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      type: "number",
+                                      id: "extra-contact-number"
+                                    },
+                                    domProps: {
+                                      value: _vm.selectedSupplier.mobileNumber1
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.selectedSupplier,
+                                          "mobileNumber1",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ])
                               ]),
                               _vm._v(" "),
                               _c("div", { staticClass: "col-lg-12 m-t-10" }, [
@@ -4523,7 +4785,8 @@ var render = function() {
                                       ],
                                       attrs: {
                                         id: "withRequisitionCb",
-                                        type: "checkbox"
+                                        type: "checkbox",
+                                        value: "1"
                                       },
                                       domProps: {
                                         checked: Array.isArray(
@@ -4531,38 +4794,44 @@ var render = function() {
                                         )
                                           ? _vm._i(
                                               _vm.preFormObject.withRequisition,
-                                              null
+                                              "1"
                                             ) > -1
                                           : _vm.preFormObject.withRequisition
                                       },
                                       on: {
-                                        change: function($event) {
-                                          var $$a =
-                                              _vm.preFormObject.withRequisition,
-                                            $$el = $event.target,
-                                            $$c = $$el.checked ? true : false
-                                          if (Array.isArray($$a)) {
-                                            var $$v = null,
-                                              $$i = _vm._i($$a, $$v)
-                                            if ($$el.checked) {
-                                              $$i < 0 &&
-                                                (_vm.preFormObject.withRequisition = $$a.concat(
-                                                  [$$v]
-                                                ))
+                                        change: [
+                                          function($event) {
+                                            var $$a =
+                                                _vm.preFormObject
+                                                  .withRequisition,
+                                              $$el = $event.target,
+                                              $$c = $$el.checked ? true : false
+                                            if (Array.isArray($$a)) {
+                                              var $$v = "1",
+                                                $$i = _vm._i($$a, $$v)
+                                              if ($$el.checked) {
+                                                $$i < 0 &&
+                                                  (_vm.preFormObject.withRequisition = $$a.concat(
+                                                    [$$v]
+                                                  ))
+                                              } else {
+                                                $$i > -1 &&
+                                                  (_vm.preFormObject.withRequisition = $$a
+                                                    .slice(0, $$i)
+                                                    .concat($$a.slice($$i + 1)))
+                                              }
                                             } else {
-                                              $$i > -1 &&
-                                                (_vm.preFormObject.withRequisition = $$a
-                                                  .slice(0, $$i)
-                                                  .concat($$a.slice($$i + 1)))
+                                              _vm.$set(
+                                                _vm.preFormObject,
+                                                "withRequisition",
+                                                $$c
+                                              )
                                             }
-                                          } else {
-                                            _vm.$set(
-                                              _vm.preFormObject,
-                                              "withRequisition",
-                                              $$c
-                                            )
+                                          },
+                                          function($event) {
+                                            _vm.withRequisitionCbOnChange()
                                           }
-                                        }
+                                        ]
                                       }
                                     }),
                                     _vm._v(" "),
@@ -4667,7 +4936,8 @@ var render = function() {
                                       ],
                                       attrs: {
                                         id: "withTaxInvoice",
-                                        type: "checkbox"
+                                        type: "checkbox",
+                                        value: "1"
                                       },
                                       domProps: {
                                         checked: Array.isArray(
@@ -4675,7 +4945,7 @@ var render = function() {
                                         )
                                           ? _vm._i(
                                               _vm.preFormObject.withTaxInvoice,
-                                              null
+                                              "1"
                                             ) > -1
                                           : _vm.preFormObject.withTaxInvoice
                                       },
@@ -4686,7 +4956,7 @@ var render = function() {
                                             $$el = $event.target,
                                             $$c = $$el.checked ? true : false
                                           if (Array.isArray($$a)) {
-                                            var $$v = null,
+                                            var $$v = "1",
                                               $$i = _vm._i($$a, $$v)
                                             if ($$el.checked) {
                                               $$i < 0 &&
@@ -4833,7 +5103,26 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
-                              _vm._m(2)
+                              _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-primary pull-right fs-16",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.startAddingItems()
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                                Start Adding Items "
+                                    ),
+                                    _c("i", { staticClass: "fa fa-plus" })
+                                  ]
+                                )
+                              ])
                             ])
                           ])
                         ]
@@ -4846,44 +5135,14 @@ var render = function() {
           ])
         : _vm._e(),
       _vm._v(" "),
-      _c("select-requisition-modal")
+      _c("select-requisition-modal"),
+      _vm._v(" "),
+      _c("select-supplier-modal")
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group m-t-10" }, [
-      _c("label", [_vm._v("Contact Person")]),
-      _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Contact Number")]),
-      _vm._v(" "),
-      _c("input", { staticClass: "form-control", attrs: { type: "number" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12 m-t-10" }, [
-      _c("button", { staticClass: "btn btn-primary pull-right fs-16" }, [
-        _vm._v("Start Adding Items "),
-        _c("i", { staticClass: "fa fa-plus" })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -5038,8 +5297,8 @@ var render = function() {
               [_c("i", { staticClass: "pg-close" })]
             ),
             _vm._v(" "),
-            _c("p", { staticClass: "text-left p-b-5 fs-16 text-uppercase" }, [
-              _vm._v("Requisitions")
+            _c("p", { staticClass: "text-left p-b-5 fs-16" }, [
+              _vm._v("Select Requisition")
             ])
           ]),
           _vm._v(" "),
@@ -5065,6 +5324,15 @@ var render = function() {
                     },
                     domProps: { value: _vm.searchRequisitionText },
                     on: {
+                      keyup: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k($event.keyCode, "enter", 13, $event.key)
+                        ) {
+                          return null
+                        }
+                        _vm.searchRequisition()
+                      },
                       input: function($event) {
                         if ($event.target.composing) {
                           return
@@ -5107,7 +5375,12 @@ var render = function() {
                                   "div",
                                   {
                                     staticClass:
-                                      "col-lg-12 border-bottom-grey padding-10 select-hover-warning"
+                                      "col-lg-12 border-bottom-grey padding-10 select-hover-warning",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.selectRequisition(requisition)
+                                      }
+                                    }
                                   },
                                   [
                                     _c("div", { staticClass: "pull-right" }, [
@@ -5123,10 +5396,14 @@ var render = function() {
                                     _vm._v(" "),
                                     _c(
                                       "p",
-                                      { staticClass: "text-black bold m-b-0" },
+                                      {
+                                        staticClass:
+                                          "text-black bold m-b-0 fs-16"
+                                      },
                                       [
                                         _vm._v(
-                                          _vm._s(requisition.approvalNumber)
+                                          "\n                                                            " +
+                                            _vm._s(requisition.approvalNumber)
                                         )
                                       ]
                                     ),
@@ -5159,6 +5436,205 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-7c12ee22", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-f9966f40\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectSupplierModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "modal-select-supplier",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-hidden": "true"
+                },
+                on: {
+                  click: function($event) {
+                    _vm.closeModal()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "pg-close" })]
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-left p-b-5 fs-16" }, [
+              _vm._v("Select Supplier")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchSupplierText,
+                        expression: "searchSupplierText"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { height: "40px" },
+                    attrs: {
+                      type: "text",
+                      id: "search-supplier-box",
+                      placeholder: "Search Supplier"
+                    },
+                    domProps: { value: _vm.searchSupplierText },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k($event.keyCode, "enter", 13, $event.key)
+                        ) {
+                          return null
+                        }
+                        _vm.searchSupplier()
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.searchSupplierText = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "input-group-addon primary",
+                      on: {
+                        click: function($event) {
+                          _vm.searchSupplier()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-search cursor" })]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "card no-border" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "card card-default" }, [
+                      _c("div", { staticClass: "card-block no-padding" }, [
+                        _c("div", { staticClass: "scrollable" }, [
+                          _c("div", { staticStyle: { height: "500px" } }, [
+                            _c(
+                              "div",
+                              { staticClass: "row" },
+                              _vm._l(_vm.suppliers, function(supplier, index) {
+                                return _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "col-lg-12 border-bottom-grey select-hover-warning",
+                                    staticStyle: { padding: "10px 5px" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.selectSupplier(supplier)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-lg-3" }, [
+                                        _c("img", {
+                                          attrs: {
+                                            src:
+                                              "/images/suppliers/logo/" +
+                                              supplier.logo,
+                                            height: "50px",
+                                            alt: "No Image"
+                                          }
+                                        })
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-lg-5" }, [
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass:
+                                              "text-black bold m-b-0 fs-16"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                    " +
+                                                _vm._s(supplier.name)
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("p", [
+                                          _vm._v(
+                                            _vm._s(supplier.contactPerson1)
+                                          )
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-lg-4" }, [
+                                        _c("p", [
+                                          _vm._v(
+                                            _vm._s(supplier.country) +
+                                              "," +
+                                              _vm._s(supplier.city)
+                                          )
+                                        ])
+                                      ])
+                                    ])
+                                  ]
+                                )
+                              })
+                            )
+                          ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-f9966f40", module.exports)
   }
 }
 
@@ -19690,6 +20166,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectSupplierModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectSupplierModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-f9966f40\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectSupplierModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/storage/admin/components/purchaseOrder/SelectSupplierModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f9966f40", Component.options)
+  } else {
+    hotAPI.reload("data-v-f9966f40", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/storage/admin/purchaseOrder.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -19876,8 +20401,76 @@ module.exports = Component.exports
 
 
         commit('getRequisitionList');
-
         $('#modal-select-requisition').modal('show');
+    },
+    showSupplierListModal: function showSupplierListModal(_ref3, payload) {
+        var commit = _ref3.commit,
+            state = _ref3.state;
+
+
+        commit('getSupplierList');
+        $('#modal-select-supplier').modal('show');
+    },
+    startAddingItems: function startAddingItems(_ref4, payload) {
+        var commit = _ref4.commit,
+            state = _ref4.state;
+
+
+        //validate and check pre form object
+
+        __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
+            // check if with supplier
+            if (state.selectedSupplier.id != null) {
+
+                // Insert to preFormObject
+                payload.preFormObject.supplierId = state.selectedSupplier.id;
+
+                // Callback success
+                cb(null, '');
+            } else {
+                // Callback error
+                cb('Supplier not found', '');
+            }
+        }, function (cb) {
+
+            // check if with requisition
+            if (payload.preFormObject.withRequisition) {
+                if (state.selectedRequisition.id != null) {
+
+                    // Insert to preFormObject
+                    payload.preFormObject.requisitionId = state.selectedRequisition.id;
+                    payload.preFormObject.approvalNumber = state.selectedRequisition.approvalNumber;
+
+                    // Callback success
+                    cb(null, '');
+                } else {
+                    // Callback error
+                    cb('Requisition not found', '');
+                }
+            } else {
+
+                // Callback success
+                cb(null, '');
+            }
+        }], function (err, result) {
+            // Callback
+
+            if (err == null) {
+                //Success
+
+                console.log(JSON.stringify(payload.preFormObject));
+            } else {
+
+                /* Show error response */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        });
     }
 });
 
@@ -19913,7 +20506,9 @@ module.exports = Component.exports
     namespaced: true,
     state: {
         requisitions: [],
-        selectedRequisition: ''
+        selectedRequisition: {},
+        suppliers: [],
+        selectedSupplier: {}
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -19953,7 +20548,7 @@ module.exports = Component.exports
             }
         });
     },
-    searchRequisitionText: function searchRequisitionText(state, payload) {
+    searchRequisition: function searchRequisition(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/requisition/search?v=' + payload.searchRequisitionText).then(function (res) {
             if (!res.data.isFailed) {
                 if (res.data.requisitions.data) {
@@ -19964,6 +20559,38 @@ module.exports = Component.exports
                     var requisitionData = res.data.requisitions.data;
                     if (requisitionData) {
                         state.requisitions = state.requisitions.concat(requisitionData);
+                    }
+                }
+            }
+        });
+    },
+    getSupplierList: function getSupplierList(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/supplier').then(function (res) {
+            if (!res.data.isFailed) {
+                if (res.data.suppliers.data) {
+
+                    state.suppliers = [];
+
+                    //insert suppliers
+                    var suppliersData = res.data.suppliers.data;
+                    if (suppliersData) {
+                        state.suppliers = state.suppliers.concat(suppliersData);
+                    }
+                }
+            }
+        });
+    },
+    searchSupplier: function searchSupplier(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/supplier/search?v=' + payload.searchSupplierText).then(function (res) {
+            if (!res.data.isFailed) {
+                if (res.data.suppliers.data) {
+
+                    state.suppliers = [];
+
+                    //insert suppliers
+                    var suppliersData = res.data.suppliers.data;
+                    if (suppliersData) {
+                        state.suppliers = state.suppliers.concat(suppliersData);
                     }
                 }
             }
