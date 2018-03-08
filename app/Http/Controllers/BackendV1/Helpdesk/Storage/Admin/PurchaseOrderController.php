@@ -109,8 +109,8 @@ class PurchaseOrderController extends Controller
 
             $requisitions = StorageRequisition::where('approvalId', $approvalId)
                 ->whereNotNull('approvalNumber')
-                ->where(function($query)use($search){
-                    $query->where('approvalNumber','like','%'.$search.'%');
+                ->where(function ($query) use ($search) {
+                    $query->where('approvalNumber', 'like', '%' . $search . '%');
                 })
                 ->orderBy('id', 'desc')
                 ->limit(50)//get 50 rows
@@ -174,6 +174,44 @@ class PurchaseOrderController extends Controller
         $response['suppliers'] = fractal($suppliers, new BriefSupplierTransformer());
 
         return response()->json($response, 200);
+    }
+
+    public function searchItem(Request $request)
+    {
+        $search = $request->v;
+
+        if ($search != '') {
+
+            $items = StorageItems::where('isDeleted', 0)// where its not deleted
+            ->where(function ($query) use ($search) {
+                $query->where('itemCode', 'like', '%' . $search . '%')// where matches item code
+                ->orWhere('name', 'like', '%' . $search . '%'); // or matches item name
+            })
+                ->get();
+        } else {
+
+            $items = StorageItems::where('isDeleted', 0)// where its not deleted
+            ->get();
+        }
+
+        if ($items) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            $response['items'] = fractal($items, new StorageItemBriefDetailTransformer());
+
+            return response()->json($response, 200);
+
+        } else {
+
+            $response['isFailed'] = true;
+            $response['message'] = 'Items not found';
+
+            return response()->json($response, 200);
+
+        }
+
+
     }
 
 }

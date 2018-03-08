@@ -9,11 +9,23 @@ import actions from './actions'
 export default {
     namespaced: true,
     state: {
-        requisitions:[],
-        selectedRequisition:{},
-        suppliers:[],
-        selectedSupplier:{},
-        preFormObject: {
+        requisitions: [],
+        selectedRequisition: {},
+        suppliers: [],
+        currencies:[],
+        unitOfMeasurements:[],
+        selectedSupplier: {},
+        items: [],
+        itemToBeInserted: {
+            itemDetail: {},
+            amount:'',
+            hasCustomUnit:0,
+            customUnit:'',
+            unitId:'',
+            price:'',
+            currencyFormat:'IDR'
+        },
+        POFormObject: {
             supplierId: '',
             requisitionId: '',
             approvalNumber: '',
@@ -21,9 +33,13 @@ export default {
             withTaxInvoice: 0,
             npwpNo: '',
             npwpPhoto: '',
+            taxFee: '',
+            shippingFee: '',
+            total: '',
             notes: ''
         },
-        preFormIsFinishAndValid: false
+        POItems: [],
+        POFormIsFinishAndValid: false
     },
     getters,
     mutations,

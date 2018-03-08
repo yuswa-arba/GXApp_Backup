@@ -1,16 +1,19 @@
 <template>
 
-    <div class="col-lg-7">
-        <div class="card card-default">
+    <div class="col-lg-8">
+        <div class="card card-default" >
+
+        <!--<div class="card card-default" v-if="POFormIsFinishAndValid">-->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card card-default no-border">
                         <div class="card-block">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <button class="btn btn-info pull-right">Add Item <i class="fa fa-plus"></i></button>
+                                    <button class="btn btn-info pull-right" @click="attemptAddItemModal()">Add Item <i class="fa fa-plus"></i></button>
                                 </div>
-                                <div class="col-lg-12 p-t-10 border-bottom-grey select-hover-warning" v-for="index in 5">
+                                <div class="col-lg-12 p-t-10 border-bottom-grey select-hover-warning"
+                                     v-for="index in 5">
                                     <div class="row">
                                         <div class="col-lg-2 m-t-5">
                                             <p class="m-b-0 fs-16"> Amount : <span class="text-black">2</span></p>
@@ -34,24 +37,56 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12 border-bottom-grey" style="padding-top: 20px; padding-bottom: 20px">
+                                <div class="col-lg-12 border-bottom-grey"
+                                     style="padding-top: 20px; padding-bottom: 20px">
                                     <div class="row">
 
-                                        <div class="col-lg-8 m-t-5">
-                                            <button class="btn btn-default">Add Shipping Fee <i class="fa fa-plus"></i></button>
+                                        <div class="col-lg-6 m-t-5">
+                                            <button class="btn btn-default border-solid-grey">Add Shipping Fee <i
+                                                    class="fa fa-plus"></i></button>
+                                            <br>
+                                            <button class="btn btn-default border-solid-grey m-t-10">Add Tax Fee <i
+                                                    class="fa fa-plus"></i></button>
                                         </div>
-                                        <div class="col-lg-3 m-t-5">
-                                            <p class="m-b-0 fs-16">Total</p>
-                                            <p class="fs-18 text-primary bold text-left">
-                                                IDR 55.000.000
-                                            </p>
+                                        <div class="col-lg-6 m-t-5">
+                                            <div class="row">
+                                                <div class="col-lg-12 border-bottom-grey p-t-10">
+                                                    <div class="row">
+                                                        <div class="col-lg-6"><p class="fs-16">Shipping Fee</p></div>
+                                                        <div class="col-lg-6"><span
+                                                                class="fs-16 text-black bold text-left pull-right">IDR 300.000</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12 border-bottom-grey p-t-10">
+                                                    <div class="row">
+                                                        <div class="col-lg-6"><p class="fs-16">Tax Fee</p></div>
+                                                        <div class="col-lg-6"><span
+                                                                class="fs-16 text-black bold text-left pull-right">IDR 2.000.000</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12 border-bottom-grey p-t-10">
+                                                    <div class="row">
+                                                        <div class="col-lg-6"><p class="fs-16">Total</p></div>
+                                                        <div class="col-lg-6"><span
+                                                                class="fs-18 text-primary bold text-left pull-right">IDR 55.000.000</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
                                         </div>
-                                        <div class="col-lg-1"></div> <!--empty space for UI -->
+
 
                                     </div>
                                 </div>
                                 <div class="col-lg-12" style="margin-top: 20px">
-                                    <button class="btn btn-primary fs-16 pull-right">Create PO <i class="fa fa-file"></i></button>
+                                    <button class="btn btn-primary fs-16 pull-right">Create PO <i
+                                            class="fa fa-file"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -59,6 +94,9 @@
                 </div>
             </div>
         </div>
+
+        <add-item-modal></add-item-modal>
+
     </div>
 
 
@@ -66,7 +104,11 @@
 
 <script>
     import {mapGetters, mapState} from 'vuex'
+    import AddItemModal from '../../components/purchaseOrder/AddItemModal.vue'
     export default{
+        components: {
+            'add-item-modal': AddItemModal
+        },
         data(){
             return {}
         },
@@ -76,12 +118,21 @@
 
         },
         computed: {
-            ...mapState('purchaseOrder', {})
+            ...mapState('purchaseOrder', {
+                POFormIsFinishAndValid: 'POFormIsFinishAndValid'
+            })
         },
         mounted(){
 
         },
 
-        methods: {},
+        methods: {
+            attemptAddItemModal(){
+                let self = this
+                self.$store.dispatch({
+                    type:'purchaseOrder/attemptAddItemModal'
+                })
+            }
+        },
     }
 </script>

@@ -56,6 +56,8 @@ Route::prefix('v1/h')->group(function () {
 
         Route::get('list/countries','GetListController@countries')->name('v1.component.countries');
 
+        Route::get('list/currencies','GetListController@currencies')->name('v1.component.currencies');
+
         Route::get('npwpInformation/{id}','GetListController@npwpInformation')->name('v1.component.npwpInformation');
 
     });

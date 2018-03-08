@@ -7,6 +7,8 @@ import series from 'async/series';
 export default{
     getDataOnCreate({commit, state}, payload){
         commit('getNPWPInformation')
+        commit('getCurrencies')
+        commit('getUnitOfMeasurements')
     },
     showRequisitionListModal({commit, state}, payload){
 
@@ -29,8 +31,8 @@ export default{
                     // check if with supplier
                     if (state.selectedSupplier.id != null) {
 
-                        // Insert to preFormObject
-                        state.preFormObject.supplierId = state.selectedSupplier.id
+                        // Insert to POFormObject
+                        state.POFormObject.supplierId = state.selectedSupplier.id
 
                         // Callback success
                         cb(null, '')
@@ -43,12 +45,12 @@ export default{
                 function (cb) {
 
                     // check if with requisition
-                    if (state.preFormObject.withRequisition) {
+                    if (state.POFormObject.withRequisition) {
                         if (state.selectedRequisition.id != null) {
 
-                            // Insert to preFormObject
-                            state.preFormObject.requisitionId = state.selectedRequisition.id
-                            state.preFormObject.approvalNumber = state.selectedRequisition.approvalNumber
+                            // Insert to POFormObject
+                            state.POFormObject.requisitionId = state.selectedRequisition.id
+                            state.POFormObject.approvalNumber = state.selectedRequisition.approvalNumber
 
                             // Callback success
                             cb(null, '')
@@ -68,9 +70,9 @@ export default{
 
                 if (err == null) { //Success
 
-                    state.preFormIsFinishAndValid = true
+                    state.POFormIsFinishAndValid = true
 
-                    console.log(JSON.stringify(state.preFormObject))
+                    console.log(JSON.stringify(state.POFormObject))
 
                 } else {
 
@@ -85,7 +87,13 @@ export default{
                 }
 
             })
+    },
+    attemptAddItemModal({commit,state},payload){
 
+        //get data necessary for adding item
+
+        //show modal
+        $('#modal-add-item').modal('show')
 
     }
 

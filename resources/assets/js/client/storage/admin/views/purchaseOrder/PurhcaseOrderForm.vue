@@ -9,7 +9,7 @@
             <div class="row">
 
                 <!--forms-->
-                <pre-form></pre-form>
+                <po-form></po-form>
                 <insert-items-form></insert-items-form>
 
             </div>
@@ -26,11 +26,11 @@
     import {mapGetters, mapState} from 'vuex'
     import SelectRequisitionModal from '../../components/purchaseOrder/SelectRequisitionModal.vue'
     import SelectSupplierModal from '../../components/purchaseOrder/SelectSupplierModal.vue'
-    import PreForm from '../../components/purchaseOrder/PreForm.vue'
+    import POFrom from '../../components/purchaseOrder/POForm.vue'
     import InsertItemsForm from '../../components/purchaseOrder/InsertItemsForm.vue'
     export default{
         components: {
-            'pre-form': PreForm,
+            'po-form': POFrom,
             'insert-items-form': InsertItemsForm,
             'select-requisition-modal': SelectRequisitionModal,
             'select-supplier-modal': SelectSupplierModal

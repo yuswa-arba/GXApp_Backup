@@ -45,11 +45,11 @@
                                                type="checkbox"
                                                value="1"
                                                @change="withRequisitionCbOnChange()"
-                                               v-model="preFormObject.withRequisition">
+                                               v-model="POFormObject.withRequisition">
                                         <label for="withRequisitionCb">With Requisition</label>
                                     </div>
 
-                                    <div class="input-group" v-if="preFormObject.withRequisition">
+                                    <div class="input-group" v-if="POFormObject.withRequisition">
                                         <input type="text" style="height: 40px;"
                                                class="form-control text-black"
                                                readonly
@@ -67,21 +67,21 @@
                                     <div class="checkbox check-success ">
                                         <input id="withTaxInvoice" type="checkbox"
                                                value="1"
-                                               v-model="preFormObject.withTaxInvoice">
+                                               v-model="POFormObject.withTaxInvoice">
                                         <label for="withTaxInvoice">With Tax Invoice</label>
                                     </div>
 
-                                    <div v-if="preFormObject.withTaxInvoice">
+                                    <div v-if="POFormObject.withTaxInvoice">
                                         <div class="form-group">
                                             <label> NPWP No.</label>
                                             <input type="text" class="form-control text-black"
-                                                   v-model="preFormObject.npwpNo" readonly>
+                                                   v-model="POFormObject.npwpNo" readonly>
                                         </div>
                                         <div class="form-group">
                                             <label> NPWP Attachment</label>
                                             <div class="cursor"
-                                                 @click="viewImage('/images/company/npwp/'+preFormObject.npwpPhoto)">
-                                                <img :src="'/images/company/npwp/'+preFormObject.npwpPhoto"
+                                                 @click="viewImage('/images/company/npwp/'+POFormObject.npwpPhoto)">
+                                                <img :src="'/images/company/npwp/'+POFormObject.npwpPhoto"
                                                      height="70px" alt="">
 
                                             </div>
@@ -92,7 +92,7 @@
                                     <p class="text-black text-uppercase fs-11">4. Notes </p>
                                     <div class="form-group m-t-10">
                                         <input type="text" class="form-control"
-                                               v-model="preFormObject.notes">
+                                               v-model="POFormObject.notes">
                                     </div>
                                 </div>
 
@@ -129,7 +129,7 @@
         },
         computed: {
             ...mapState('purchaseOrder', {
-                preFormObject: 'preFormObject',
+                POFormObject: 'POFormObject',
                 selectedSupplier: 'selectedSupplier',
                 selectedRequisition: 'selectedRequisition'
             })
