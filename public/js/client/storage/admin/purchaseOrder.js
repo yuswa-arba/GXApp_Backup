@@ -2866,6 +2866,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2879,6 +2880,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     })),
 
     methods: {
+        onTaxSelectChange: function onTaxSelectChange() {
+
+            var self = this;
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+
+            var price = 0;
+
+            if (purchaseOrderVuexState.POItems.length > 0) {
+                _.map(purchaseOrderVuexState.POItems, function (item) {
+                    price = price + item.amount * item.price;
+                });
+            }
+
+            if (parseInt(purchaseOrderVuexState.POFormObject.taxFeeAdded) == 1) {
+                // insert tax fee
+                purchaseOrderVuexState.POFormObject.taxFee = price * 10 / 100;
+            } else {
+                purchaseOrderVuexState.POFormObject.taxFee = 0;
+            }
+        },
         finishEditing: function finishEditing() {
             var self = this;
 
@@ -3085,8 +3106,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             if (parseInt(purchaseOrderVuexState.POFormObject.taxFeeAdded) == 1) {
                 // prevent  "1" string, required 1 int/boolean
 
-                var price = self.priceTotal();
-                var tax = price * 10 / 100;
+                var tax = purchaseOrderVuexState.POFormObject.taxFee;
 
                 return accounting.formatNumber(tax, ',', '.', '');
             } else {
@@ -3110,7 +3130,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             //TAX
             var tax = 0;
             if (purchaseOrderVuexState.POFormObject.taxFeeAdded) {
-                tax = price * 10 / 100;
+                tax = purchaseOrderVuexState.POFormObject.taxFee;
             }
 
             //Convert everyhing to integer
@@ -3142,9 +3162,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             var price = 0;
 
-            if (purchaseOrderVuexState.POItems.length > 0) _.map(purchaseOrderVuexState.POItems, function (item) {
-                price = price + item.amount * item.price;
-            });
+            if (purchaseOrderVuexState.POItems.length > 0) {
+                _.map(purchaseOrderVuexState.POItems, function (item) {
+                    price = price + item.amount * item.price;
+                });
+            }
 
             return price;
         },
@@ -5347,7 +5369,7 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "modal-dialog modal-lg" }, [
+      _c("div", { staticClass: "modal-dialog" }, [
         _c("div", { staticClass: "modal-content" }, [
           _c("div", { staticClass: "modal-header" }, [
             _c(
@@ -5580,7 +5602,7 @@ var render = function() {
       }
     },
     [
-      _c("div", { staticClass: "modal-dialog modal-lg" }, [
+      _c("div", { staticClass: "modal-dialog" }, [
         _c("div", { staticClass: "modal-content" }, [
           _c("div", { staticClass: "modal-header" }, [
             _c(
@@ -5628,23 +5650,29 @@ var render = function() {
                             ],
                             staticClass: "form-control",
                             on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.POFormObject,
-                                  "taxFeeAdded",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
+                              change: [
+                                function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.POFormObject,
+                                    "taxFeeAdded",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                },
+                                function($event) {
+                                  _vm.onTaxSelectChange()
+                                }
+                              ]
                             }
                           },
                           [

@@ -182,8 +182,7 @@
 
                 if (parseInt(purchaseOrderVuexState.POFormObject.taxFeeAdded)==1) { // prevent  "1" string, required 1 int/boolean
 
-                    let price = self.priceTotal()
-                    let tax = (price * 10 / 100)
+                    let tax = purchaseOrderVuexState.POFormObject.taxFee
 
                     return accounting.formatNumber(tax, ',', '.', '')
 
@@ -210,7 +209,7 @@
                 //TAX
                 let tax = 0
                 if (purchaseOrderVuexState.POFormObject.taxFeeAdded) {
-                    tax = (price * 10 / 100)
+                    tax = purchaseOrderVuexState.POFormObject.taxFee
 
                 }
 
@@ -244,10 +243,12 @@
 
                 let price = 0
 
-                if (purchaseOrderVuexState.POItems.length > 0)
+                if (purchaseOrderVuexState.POItems.length > 0){
                     _.map(purchaseOrderVuexState.POItems, item => {
                         price = price + (item.amount * item.price)
                     })
+                }
+
 
                 return price
             },
