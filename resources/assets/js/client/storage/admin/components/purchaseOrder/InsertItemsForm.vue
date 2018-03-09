@@ -38,7 +38,8 @@
                                                 {{formatPrice(item.price*item.amount)}}</p>
                                         </div>
                                         <div class="col-lg-1 m-t-5">
-                                            <p><i class="fa fa-trash text-hover-danger fs-16 cursor m-t-10"></i></p>
+                                            <p><i class="fa fa-trash text-hover-danger fs-16 cursor m-t-10"
+                                                  @click="removeItemFromPO(item.id,index)"></i></p>
 
                                         </div>
                                     </div>
@@ -57,7 +58,7 @@
                                             <br>
                                             <button class="btn btn-default border-solid-grey m-t-10"
                                                     @click="attemptAddTaxFeeModal()">
-                                                <span  v-if="!POFormObject.taxFeeAdded">Add</span>
+                                                <span v-if="!POFormObject.taxFeeAdded">Add</span>
                                                 <span v-else="">Edit</span>
                                                 Tax Fee <i class="fa fa-plus"></i>
                                             </button>
@@ -164,7 +165,7 @@
                 let self = this
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
 
-                if (parseInt(purchaseOrderVuexState.POFormObject.shippingFeeAdded)==1) { // prevent  "1" string, required 1 int/boolean
+                if (parseInt(purchaseOrderVuexState.POFormObject.shippingFeeAdded) == 1) { // prevent  "1" string, required 1 int/boolean
 
                     let shippingFee = purchaseOrderVuexState.POFormObject.shippingFee
 
@@ -180,7 +181,7 @@
                 let self = this
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
 
-                if (parseInt(purchaseOrderVuexState.POFormObject.taxFeeAdded)==1) { // prevent  "1" string, required 1 int/boolean
+                if (parseInt(purchaseOrderVuexState.POFormObject.taxFeeAdded) == 1) { // prevent  "1" string, required 1 int/boolean
 
                     let tax = purchaseOrderVuexState.POFormObject.taxFee
 
@@ -243,7 +244,7 @@
 
                 let price = 0
 
-                if (purchaseOrderVuexState.POItems.length > 0){
+                if (purchaseOrderVuexState.POItems.length > 0) {
                     _.map(purchaseOrderVuexState.POItems, item => {
                         price = price + (item.amount * item.price)
                     })
@@ -262,6 +263,16 @@
             {
                 let self = this
                 $('#modal-add-shipping-fee').modal('show')
+            },
+            removeItemFromPO(itemId, index){
+                let self = this
+                let purchaseOrderVuexState = this.$store.state.purchaseOrder
+
+                if(confirm("Are you sure to remove this item from PO")){
+                    purchaseOrderVuexState.POItems.splice(index,1)
+                }
+
+
             }
         },
     }

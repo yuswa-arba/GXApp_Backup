@@ -7,7 +7,7 @@
                         <i class="pg-close"></i>
                     </button>
                     <!--<div id="mh-role"></div>-->
-                    <h5 class="text-left dark-title p-b-5">Tax Fee</h5>
+                    <h5 class="text-left dark-title p-b-5">Tax</h5>
                 </div>
                 <div class="modal-body">
                     <div class="row">
@@ -16,7 +16,7 @@
                                 <div class="card-block">
                                     <div class="row">
                                         <div class="col-lg-12 m-t-10">
-                                            <label> Include 10% Tax Fee </label>
+                                            <label> Include 10% Tax </label>
                                             <select class="form-control"
                                                     @change="onTaxSelectChange()"
                                                     v-model="POFormObject.taxFeeAdded">

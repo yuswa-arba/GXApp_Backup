@@ -169,7 +169,7 @@
                     customUnit: '',
                     unitId: '',
                     price: '',
-                    currencyFormat: ''
+                    currencyFormat: 'IDR'
                 }
 
                 $('#modal-add-item').modal("toggle"); // close modal

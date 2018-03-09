@@ -2670,7 +2670,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 customUnit: '',
                 unitId: '',
                 price: '',
-                currencyFormat: ''
+                currencyFormat: 'IDR'
             };
 
             $('#modal-add-item').modal("toggle"); // close modal
@@ -3060,6 +3060,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -3177,6 +3178,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         attemptAddShippingFeeModal: function attemptAddShippingFeeModal() {
             var self = this;
             $('#modal-add-shipping-fee').modal('show');
+        },
+        removeItemFromPO: function removeItemFromPO(itemId, index) {
+            var self = this;
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+
+            if (confirm("Are you sure to remove this item from PO")) {
+                purchaseOrderVuexState.POItems.splice(index, 1);
+            }
         }
     }
 });
@@ -5624,7 +5633,7 @@ var render = function() {
             ),
             _vm._v(" "),
             _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-              _vm._v("Tax Fee")
+              _vm._v("Tax")
             ])
           ]),
           _vm._v(" "),
@@ -5635,7 +5644,7 @@ var render = function() {
                   _c("div", { staticClass: "card-block" }, [
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-lg-12 m-t-10" }, [
-                        _c("label", [_vm._v(" Include 10% Tax Fee ")]),
+                        _c("label", [_vm._v(" Include 10% Tax ")]),
                         _vm._v(" "),
                         _c(
                           "select",
@@ -6454,7 +6463,19 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _vm._m(0, true)
+                            _c("div", { staticClass: "col-lg-1 m-t-5" }, [
+                              _c("p", [
+                                _c("i", {
+                                  staticClass:
+                                    "fa fa-trash text-hover-danger fs-16 cursor m-t-10",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.removeItemFromPO(item.id, index)
+                                    }
+                                  }
+                                })
+                              ])
+                            ])
                           ])
                         ]
                       )
@@ -6529,7 +6550,7 @@ var render = function() {
                                 },
                                 [
                                   _c("div", { staticClass: "row" }, [
-                                    _vm._m(1),
+                                    _vm._m(0),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-lg-6" }, [
                                       parseInt(
@@ -6579,7 +6600,7 @@ var render = function() {
                                 },
                                 [
                                   _c("div", { staticClass: "row" }, [
-                                    _vm._m(2),
+                                    _vm._m(1),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-lg-6" }, [
                                       parseInt(_vm.POFormObject.taxFeeAdded)
@@ -6627,7 +6648,7 @@ var render = function() {
                                 },
                                 [
                                   _c("div", { staticClass: "row" }, [
-                                    _vm._m(3),
+                                    _vm._m(2),
                                     _vm._v(" "),
                                     _c("div", { staticClass: "col-lg-6" }, [
                                       _vm.priceTotal() != 0
@@ -6670,7 +6691,7 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _vm._m(4)
+                    _vm._m(3)
                   ],
                   2
                 )
@@ -6690,18 +6711,6 @@ var render = function() {
   )
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-1 m-t-5" }, [
-      _c("p", [
-        _c("i", {
-          staticClass: "fa fa-trash text-hover-danger fs-16 cursor m-t-10"
-        })
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
