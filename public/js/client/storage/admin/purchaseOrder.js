@@ -2621,15 +2621,22 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            searchItemText: ''
+            searchItemText: '',
+            finishSelectItemToBeInserted: false
         };
     },
-    created: function created() {},
+    created: function created() {
+        this.setCurrencyBasedOnPOForm();
+    },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
         items: 'items',
@@ -2641,6 +2648,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
     methods: {
+        setCurrencyBasedOnPOForm: function setCurrencyBasedOnPOForm() {
+
+            var self = this;
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+
+            purchaseOrderVuexState.itemToBeInserted.currencyFormat = purchaseOrderVuexState.POFormObject.currencyFormat;
+        },
         closeModal: function closeModal() {
             var self = this;
             var purchaseOrderVuexState = this.$store.state.purchaseOrder;
@@ -2661,9 +2675,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             $('#modal-add-item').modal("toggle"); // close modal
         },
+        onSearchFocus: function onSearchFocus() {
+            var self = this;
+            //finish selecting item
+            self.finishSelectItemToBeInserted = false;
+        },
         searchItems: function searchItems() {
 
             var self = this;
+
+            //unfinish selecting item
+            self.finishSelectItemToBeInserted = false;
 
             self.$store.commit({
                 type: 'purchaseOrder/searchItems',
@@ -2671,8 +2693,196 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             });
         },
         selectItemsToBeInserted: function selectItemsToBeInserted(item) {
+
+            console.log($('select[name="unitFormat"] option:selected').text());
+
+            var self = this;
+
+            //insert to vuex
             var purchaseOrderVuexState = this.$store.state.purchaseOrder;
             purchaseOrderVuexState.itemToBeInserted.itemDetail = item;
+            purchaseOrderVuexState.itemToBeInserted.unitId = item.unitId;
+            purchaseOrderVuexState.itemToBeInserted.unitFormat = _.find(purchaseOrderVuexState.unitOfMeasurements, { id: item.unitId }).format;
+
+            //finish selecting item
+            self.finishSelectItemToBeInserted = true;
+        },
+        insertItemToPO: function insertItemToPO() {
+
+            var self = this;
+
+            self.searchItemText = ''; //reset search value
+
+            self.$store.dispatch({
+                type: 'purchaseOrder/insertItemToPO'
+            });
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/AddShippingFeeModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+    mounted: function mounted() {},
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
+        POFormObject: 'POFormObject'
+    })),
+    methods: {
+        finishEditing: function finishEditing() {
+            var self = this;
+
+            $('#modal-add-shipping-fee').modal("toggle"); // close modal
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/AddTaxFeeModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {};
+    },
+    mounted: function mounted() {},
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
+        POFormObject: 'POFormObject'
+    })),
+
+    methods: {
+        finishEditing: function finishEditing() {
+            var self = this;
+
+            $('#modal-add-tax-fee').modal("toggle"); // close modal
         }
     }
 });
@@ -2687,6 +2897,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_purchaseOrder_AddItemModal_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/AddItemModal.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_purchaseOrder_AddItemModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_purchaseOrder_AddItemModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_purchaseOrder_AddTaxFeeModal_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/AddTaxFeeModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_purchaseOrder_AddTaxFeeModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_purchaseOrder_AddTaxFeeModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_AddShippingFeeModal_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/AddShippingFeeModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_AddShippingFeeModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_AddShippingFeeModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2793,12 +3007,48 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        'add-item-modal': __WEBPACK_IMPORTED_MODULE_1__components_purchaseOrder_AddItemModal_vue___default.a
+        'add-item-modal': __WEBPACK_IMPORTED_MODULE_1__components_purchaseOrder_AddItemModal_vue___default.a,
+        'add-tax-fee-modal': __WEBPACK_IMPORTED_MODULE_2__components_purchaseOrder_AddTaxFeeModal_vue___default.a,
+        'add-shipping-fee-modal': __WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_AddShippingFeeModal_vue___default.a
     },
     data: function data() {
         return {};
@@ -2808,8 +3058,71 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
-        POFormIsFinishAndValid: 'POFormIsFinishAndValid'
-    })),
+        POFormIsFinishAndValid: 'POFormIsFinishAndValid',
+        POItems: 'POItems',
+        POFormObject: 'POFormObject'
+    }), {
+        shippingTotal: function shippingTotal() {
+
+            var self = this;
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+
+            if (parseInt(purchaseOrderVuexState.POFormObject.shippingFeeAdded) == 1) {
+                // prevent  "1" string, required 1 int/boolean
+
+                var shippingFee = purchaseOrderVuexState.POFormObject.shippingFee;
+
+                return accounting.formatNumber(shippingFee, ',', '.', '');
+            } else {
+                return 0;
+            }
+        },
+        taxTotal: function taxTotal() {
+
+            var self = this;
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+
+            if (parseInt(purchaseOrderVuexState.POFormObject.taxFeeAdded) == 1) {
+                // prevent  "1" string, required 1 int/boolean
+
+                var price = self.priceTotal();
+                var tax = price * 10 / 100;
+
+                return accounting.formatNumber(tax, ',', '.', '');
+            } else {
+                return 0;
+            }
+        },
+        priceTotalAfterTaxAndShipping: function priceTotalAfterTaxAndShipping() {
+
+            var self = this;
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+
+            //ITEMS
+            var price = self.priceTotal();
+
+            //PRICE
+            var shippingFee = 0;
+            if (purchaseOrderVuexState.POFormObject.shippingFeeAdded) {
+                shippingFee = purchaseOrderVuexState.POFormObject.shippingFee;
+            }
+
+            //TAX
+            var tax = 0;
+            if (purchaseOrderVuexState.POFormObject.taxFeeAdded) {
+                tax = price * 10 / 100;
+            }
+
+            //Convert everyhing to integer
+            shippingFee = parseInt(shippingFee);
+            tax = parseInt(tax);
+            price = parseInt(price);
+
+            var total = tax + price + shippingFee;
+
+            return accounting.formatNumber(total, ',', '.', '');
+        }
+    }),
     mounted: function mounted() {},
 
 
@@ -2819,6 +3132,29 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             self.$store.dispatch({
                 type: 'purchaseOrder/attemptAddItemModal'
             });
+        },
+        formatPrice: function formatPrice(amount) {
+            return accounting.formatNumber(amount, ',', '.', '');
+        },
+        priceTotal: function priceTotal() {
+            var self = this;
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+
+            var price = 0;
+
+            if (purchaseOrderVuexState.POItems.length > 0) _.map(purchaseOrderVuexState.POItems, function (item) {
+                price = price + item.amount * item.price;
+            });
+
+            return price;
+        },
+        attemptAddTaxFeeModal: function attemptAddTaxFeeModal() {
+            var self = this;
+            $('#modal-add-tax-fee').modal('show');
+        },
+        attemptAddShippingFeeModal: function attemptAddShippingFeeModal() {
+            var self = this;
+            $('#modal-add-shipping-fee').modal('show');
         }
     }
 });
@@ -2833,6 +3169,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2965,7 +3312,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
         POFormObject: 'POFormObject',
         selectedSupplier: 'selectedSupplier',
-        selectedRequisition: 'selectedRequisition'
+        selectedRequisition: 'selectedRequisition',
+        currencies: 'currencies'
     })),
     mounted: function mounted() {},
 
@@ -4980,6 +5328,182 @@ if (false) {
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0e2e9491\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/AddShippingFeeModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal  fade stick-up",
+      attrs: {
+        id: "modal-add-shipping-fee",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog modal-lg" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-hidden": "true"
+                },
+                on: {
+                  click: function($event) {
+                    _vm.closeModal()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "pg-close" })]
+            ),
+            _vm._v(" "),
+            _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+              _vm._v("Shipping Fee")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "card no-border" }, [
+                  _c("div", { staticClass: "card-block" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v(" Include Shipping Fee ")]),
+                          _vm._v(" "),
+                          _c(
+                            "select",
+                            {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.POFormObject.shippingFeeAdded,
+                                  expression: "POFormObject.shippingFeeAdded"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              on: {
+                                change: function($event) {
+                                  var $$selectedVal = Array.prototype.filter
+                                    .call($event.target.options, function(o) {
+                                      return o.selected
+                                    })
+                                    .map(function(o) {
+                                      var val =
+                                        "_value" in o ? o._value : o.value
+                                      return val
+                                    })
+                                  _vm.$set(
+                                    _vm.POFormObject,
+                                    "shippingFeeAdded",
+                                    $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("option", { attrs: { value: "0" } }, [
+                                _vm._v("No")
+                              ]),
+                              _vm._v(" "),
+                              _c("option", { attrs: { value: "1" } }, [
+                                _vm._v("Yes")
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        parseInt(_vm.POFormObject.shippingFeeAdded)
+                          ? _c("div", { staticClass: "form-group" }, [
+                              _c("label", [_vm._v(" Price ")]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.POFormObject.shippingFee,
+                                    expression: "POFormObject.shippingFee"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "number" },
+                                domProps: {
+                                  value: _vm.POFormObject.shippingFee
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.POFormObject,
+                                      "shippingFee",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary pull-right",
+                            on: {
+                              click: function($event) {
+                                _vm.finishEditing()
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "Finish\n                                        "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0e2e9491", module.exports)
+  }
+}
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1f057c69\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5032,6 +5556,145 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-1f057c69", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3423c8c6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/AddTaxFeeModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal  fade stick-up",
+      attrs: {
+        id: "modal-add-tax-fee",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog modal-lg" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-hidden": "true"
+                },
+                on: {
+                  click: function($event) {
+                    _vm.closeModal()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "pg-close" })]
+            ),
+            _vm._v(" "),
+            _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+              _vm._v("Tax Fee")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "card no-border" }, [
+                  _c("div", { staticClass: "card-block" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                        _c("label", [_vm._v(" Include 10% Tax Fee ")]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.POFormObject.taxFeeAdded,
+                                expression: "POFormObject.taxFeeAdded"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.POFormObject,
+                                  "taxFeeAdded",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "0" } }, [
+                              _vm._v("No")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v("Yes")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary pull-right",
+                            on: {
+                              click: function($event) {
+                                _vm.finishEditing()
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "Close\n                                        "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3423c8c6", module.exports)
   }
 }
 
@@ -5104,6 +5767,9 @@ var render = function() {
                     },
                     domProps: { value: _vm.searchItemText },
                     on: {
+                      focus: function($event) {
+                        _vm.onSearchFocus()
+                      },
                       keyup: function($event) {
                         if (
                           !("button" in $event) &&
@@ -5137,78 +5803,92 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-lg-12" }, [
-                _c("div", { staticClass: "card no-border" }, [
-                  _c("div", { staticClass: "card-body" }, [
-                    _c("div", { staticClass: "card card-default" }, [
-                      _c("div", { staticClass: "card-block no-padding" }, [
-                        _c("div", { staticClass: "scrollable" }, [
-                          _c(
-                            "div",
-                            { class: { "h-150": _vm.items.length > 2 } },
-                            [
+              !_vm.finishSelectItemToBeInserted
+                ? _c("div", { staticClass: "col-lg-12" }, [
+                    _c("div", { staticClass: "card no-border" }, [
+                      _c("div", { staticClass: "card-body" }, [
+                        _c("div", { staticClass: "card card-default" }, [
+                          _c("div", { staticClass: "card-block no-padding" }, [
+                            _c("div", { staticClass: "scrollable" }, [
                               _c(
                                 "div",
-                                { staticClass: "row" },
-                                _vm._l(_vm.items, function(item, index) {
-                                  return _c(
+                                { class: { "h-150": _vm.items.length > 2 } },
+                                [
+                                  _c(
                                     "div",
-                                    {
-                                      staticClass:
-                                        "col-lg-12 border-bottom-grey padding-10 select-hover-warning",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.selectItemsToBeInserted(item)
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("div", { staticClass: "pull-right" }, [
-                                        _c(
-                                          "p",
-                                          { staticClass: "m-b-0 fs-14" },
-                                          [
-                                            _vm._v(
-                                              "Status: " +
-                                                _vm._s(item.statusName)
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("p", { staticClass: "fs-14" }, [
-                                          _vm._v(
-                                            "Unit: " + _vm._s(item.unitFormat)
-                                          )
-                                        ])
-                                      ]),
-                                      _vm._v(" "),
-                                      _c(
-                                        "p",
+                                    { staticClass: "row" },
+                                    _vm._l(_vm.items, function(item, index) {
+                                      return _c(
+                                        "div",
                                         {
-                                          staticClass: "text-black m-b-0 fs-16"
+                                          staticClass:
+                                            "col-lg-12 border-bottom-grey padding-10 select-hover-warning",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.selectItemsToBeInserted(item)
+                                            }
+                                          }
                                         },
-                                        [_vm._v(_vm._s(item.name))]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("p", [_vm._v(_vm._s(item.itemCode))])
-                                    ]
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "pull-right" },
+                                            [
+                                              _c(
+                                                "p",
+                                                { staticClass: "m-b-0 fs-14" },
+                                                [
+                                                  _vm._v(
+                                                    "Status: " +
+                                                      _vm._s(item.statusName)
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "p",
+                                                { staticClass: "fs-14" },
+                                                [
+                                                  _vm._v(
+                                                    "Unit: " +
+                                                      _vm._s(item.unitFormat)
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "p",
+                                            {
+                                              staticClass:
+                                                "text-black m-b-0 fs-16"
+                                            },
+                                            [_vm._v(_vm._s(item.name))]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("p", [
+                                            _vm._v(_vm._s(item.itemCode))
+                                          ])
+                                        ]
+                                      )
+                                    })
                                   )
-                                })
+                                ]
                               )
-                            ]
-                          )
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm.items.length > 2
+                            ? _c("p", { staticClass: "text-right m-r-10" }, [
+                                _vm._v("Scroll for more")
+                              ])
+                            : _vm._e()
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _vm.items.length > 2
-                        ? _c("p", { staticClass: "text-right m-r-10" }, [
-                            _vm._v("Scroll for more")
-                          ])
-                        : _vm._e()
+                      ])
                     ])
                   ])
-                ])
-              ]),
+                : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-12" }, [
                 _vm.itemToBeInserted.itemDetail.id != null
@@ -5315,21 +5995,48 @@ var render = function() {
                               ? _c(
                                   "div",
                                   {
-                                    staticClass: "form-group form-group-default"
+                                    staticClass:
+                                      "form-group form-group-default required"
                                   },
                                   [
                                     _c("label", [_vm._v("Custom Unit")]),
                                     _vm._v(" "),
                                     _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value:
+                                            _vm.itemToBeInserted.customUnit,
+                                          expression:
+                                            "itemToBeInserted.customUnit"
+                                        }
+                                      ],
                                       staticClass: "form-control",
-                                      attrs: { type: "text" }
+                                      attrs: { type: "text" },
+                                      domProps: {
+                                        value: _vm.itemToBeInserted.customUnit
+                                      },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.itemToBeInserted,
+                                            "customUnit",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
                                     })
                                   ]
                                 )
                               : _c(
                                   "div",
                                   {
-                                    staticClass: "form-group form-group-default"
+                                    staticClass:
+                                      "form-group form-group-default required"
                                   },
                                   [
                                     _c("label", [_vm._v("Unit")]),
@@ -5347,7 +6054,7 @@ var render = function() {
                                           }
                                         ],
                                         staticClass: "form-control",
-                                        attrs: { name: "" },
+                                        attrs: { name: "unitFormat" },
                                         on: {
                                           change: function($event) {
                                             var $$selectedVal = Array.prototype.filter
@@ -5382,9 +6089,11 @@ var render = function() {
                                           { domProps: { value: unit.id } },
                                           [
                                             _vm._v(
-                                              _vm._s(unit.description) +
+                                              "\n                                                    " +
+                                                _vm._s(unit.description) +
                                                 " / " +
-                                                _vm._s(unit.format)
+                                                _vm._s(unit.format) +
+                                                "\n                                                "
                                             )
                                           ]
                                         )
@@ -5397,7 +6106,10 @@ var render = function() {
                           _c("div", { staticClass: "col-lg-6" }, [
                             _c(
                               "div",
-                              { staticClass: "form-group form-group-default" },
+                              {
+                                staticClass:
+                                  "form-group form-group-default required"
+                              },
                               [
                                 _c("label", [_vm._v(" Amount ")]),
                                 _vm._v(" "),
@@ -5433,7 +6145,10 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "div",
-                              { staticClass: "form-group form-group-default" },
+                              {
+                                staticClass:
+                                  "form-group form-group-default required"
+                              },
                               [
                                 _c("label", [_vm._v("Price")]),
                                 _vm._v(" "),
@@ -5469,67 +6184,59 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "div",
-                              { staticClass: "form-group form-group-default" },
+                              {
+                                staticClass:
+                                  "form-group form-group-default required"
+                              },
                               [
                                 _c("label", [_vm._v("Currency")]),
                                 _vm._v(" "),
-                                _c(
-                                  "select",
-                                  {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value:
-                                          _vm.itemToBeInserted.currencyFormat,
-                                        expression:
-                                          "itemToBeInserted.currencyFormat"
-                                      }
-                                    ],
-                                    staticClass: "form-control",
-                                    attrs: { name: "", id: "" },
-                                    on: {
-                                      change: function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          _vm.itemToBeInserted,
-                                          "currencyFormat",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      }
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value:
+                                        _vm.itemToBeInserted.currencyFormat,
+                                      expression:
+                                        "itemToBeInserted.currencyFormat"
                                     }
+                                  ],
+                                  attrs: { type: "text", readonly: "" },
+                                  domProps: {
+                                    value: _vm.itemToBeInserted.currencyFormat
                                   },
-                                  _vm._l(_vm.currencies, function(currency) {
-                                    return _c(
-                                      "option",
-                                      { domProps: { value: currency.format } },
-                                      [
-                                        _vm._v(
-                                          _vm._s(currency.value) +
-                                            " - " +
-                                            _vm._s(currency.format)
-                                        )
-                                      ]
-                                    )
-                                  })
-                                )
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.$set(
+                                        _vm.itemToBeInserted,
+                                        "currencyFormat",
+                                        $event.target.value
+                                      )
+                                    }
+                                  }
+                                })
                               ]
                             )
                           ]),
                           _vm._v(" "),
-                          _vm._m(0)
+                          _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary pull-right",
+                                on: {
+                                  click: function($event) {
+                                    _vm.insertItemToPO()
+                                  }
+                                }
+                              },
+                              [_vm._v("Insert")]
+                            )
+                          ])
                         ])
                       ])
                     ])
@@ -5542,18 +6249,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-12 m-t-10" }, [
-      _c("button", { staticClass: "btn btn-primary pull-right" }, [
-        _vm._v("Insert")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -5649,20 +6345,304 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._l(5, function(index) {
+                    _vm._l(_vm.POItems, function(item, index) {
                       return _c(
                         "div",
                         {
                           staticClass:
                             "col-lg-12 p-t-10 border-bottom-grey select-hover-warning"
                         },
-                        [_vm._m(0, true)]
+                        [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-lg-2 m-t-5" }, [
+                              _c("p", { staticClass: "m-b-0 fs-16" }, [
+                                _vm._v(" Amount : "),
+                                _c("span", { staticClass: "text-black" }, [
+                                  _vm._v(_vm._s(item.amount))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              item.hasCustomUnit
+                                ? _c("p", { staticClass: "m-b-0 fs-16" }, [
+                                    _vm._v(
+                                      " Unit :\n                                            " +
+                                        _vm._s(item.customUnit)
+                                    )
+                                  ])
+                                : _c("p", { staticClass: "m-b-0 fs-16" }, [
+                                    _vm._v("Unit : " + _vm._s(item.unitFormat))
+                                  ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-3 m-t-5" }, [
+                              _c(
+                                "p",
+                                { staticClass: "text-black fs-16 m-b-0 bold" },
+                                [_vm._v(_vm._s(item.itemDetail.name))]
+                              ),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "m-b-10" }, [
+                                _vm._v(_vm._s(item.itemDetail.itemCode))
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-3 m-t-5" }, [
+                              _c("p", { staticClass: "m-b-0" }, [
+                                _vm._v("per item")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "p",
+                                { staticClass: "text-black m-b-10 fs-16" },
+                                [
+                                  _vm._v(
+                                    _vm._s(item.currencyFormat) +
+                                      "\n                                            " +
+                                      _vm._s(_vm.formatPrice(item.price))
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-3 m-t-5" }, [
+                              _c("p", { staticClass: "m-b-0" }, [
+                                _vm._v("sub total")
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "p",
+                                { staticClass: "text-black m-b-10 fs-16 bold" },
+                                [
+                                  _vm._v(
+                                    _vm._s(item.currencyFormat) +
+                                      "\n                                            " +
+                                      _vm._s(
+                                        _vm.formatPrice(
+                                          item.price * item.amount
+                                        )
+                                      )
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(0, true)
+                          ])
+                        ]
                       )
                     }),
                     _vm._v(" "),
-                    _vm._m(1),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-lg-12 border-bottom-grey",
+                        staticStyle: {
+                          "padding-top": "20px",
+                          "padding-bottom": "20px"
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-lg-6 m-t-5" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-default border-solid-grey",
+                                on: {
+                                  click: function($event) {
+                                    _vm.attemptAddShippingFeeModal()
+                                  }
+                                }
+                              },
+                              [
+                                !_vm.POFormObject.shippingFeeAdded
+                                  ? _c("span", [_vm._v("Add")])
+                                  : _c("span", [_vm._v("Edit")]),
+                                _vm._v(
+                                  "\n                                            Shipping Fee "
+                                ),
+                                _c("i", { staticClass: "fa fa-plus" })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-default border-solid-grey m-t-10",
+                                on: {
+                                  click: function($event) {
+                                    _vm.attemptAddTaxFeeModal()
+                                  }
+                                }
+                              },
+                              [
+                                !_vm.POFormObject.taxFeeAdded
+                                  ? _c("span", [_vm._v("Add")])
+                                  : _c("span", [_vm._v("Edit")]),
+                                _vm._v(
+                                  "\n                                            Tax Fee "
+                                ),
+                                _c("i", { staticClass: "fa fa-plus" })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-6 m-t-5" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-lg-12 border-bottom-grey p-t-10"
+                                },
+                                [
+                                  _c("div", { staticClass: "row" }, [
+                                    _vm._m(1),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-lg-6" }, [
+                                      parseInt(
+                                        _vm.POFormObject.shippingFeeAdded
+                                      )
+                                        ? _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "fs-16 text-black bold text-left pull-right"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                          " +
+                                                  _vm._s(
+                                                    _vm.POFormObject
+                                                      .currencyFormat
+                                                  ) +
+                                                  " " +
+                                                  _vm._s(_vm.shippingTotal) +
+                                                  "\n                                                        "
+                                              )
+                                            ]
+                                          )
+                                        : _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "fs-16 text-black bold text-left pull-right"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                            -\n                                                        "
+                                              )
+                                            ]
+                                          )
+                                    ])
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-lg-12 border-bottom-grey p-t-10"
+                                },
+                                [
+                                  _c("div", { staticClass: "row" }, [
+                                    _vm._m(2),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-lg-6" }, [
+                                      parseInt(_vm.POFormObject.taxFeeAdded)
+                                        ? _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "fs-16 text-black bold text-left pull-right"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                            " +
+                                                  _vm._s(
+                                                    _vm.POFormObject
+                                                      .currencyFormat
+                                                  ) +
+                                                  " " +
+                                                  _vm._s(_vm.taxTotal) +
+                                                  "\n                                                        "
+                                              )
+                                            ]
+                                          )
+                                        : _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "fs-16 text-black bold text-left pull-right"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                            -\n                                                        "
+                                              )
+                                            ]
+                                          )
+                                    ])
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-lg-12 border-bottom-grey p-t-10"
+                                },
+                                [
+                                  _c("div", { staticClass: "row" }, [
+                                    _vm._m(3),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "col-lg-6" }, [
+                                      _vm.priceTotal() != 0
+                                        ? _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "fs-18 text-primary bold text-left pull-right"
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                                            " +
+                                                  _vm._s(
+                                                    _vm.POFormObject
+                                                      .currencyFormat
+                                                  ) +
+                                                  " " +
+                                                  _vm._s(
+                                                    _vm.priceTotalAfterTaxAndShipping
+                                                  ) +
+                                                  "\n                                                        "
+                                              )
+                                            ]
+                                          )
+                                        : _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "fs-18 text-primary bold text-left pull-right"
+                                            },
+                                            [_vm._v("-")]
+                                          )
+                                    ])
+                                  ])
+                                ]
+                              )
+                            ])
+                          ])
+                        ])
+                      ]
+                    ),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _vm._m(4)
                   ],
                   2
                 )
@@ -5672,7 +6652,11 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("add-item-modal")
+      _c("add-item-modal"),
+      _vm._v(" "),
+      _c("add-tax-fee-modal"),
+      _vm._v(" "),
+      _c("add-shipping-fee-modal")
     ],
     1
   )
@@ -5682,46 +6666,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-2 m-t-5" }, [
-        _c("p", { staticClass: "m-b-0 fs-16" }, [
-          _vm._v(" Amount : "),
-          _c("span", { staticClass: "text-black" }, [_vm._v("2")])
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "m-b-0 fs-16" }, [_vm._v(" Unit : ea")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 m-t-5" }, [
-        _c("p", { staticClass: "text-black fs-16 m-b-0 bold" }, [
-          _vm._v(" Xiaomi Mi 4")
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "m-b-10" }, [_vm._v(" CE-00224-003")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 m-t-5" }, [
-        _c("p", { staticClass: "m-b-0" }, [_vm._v("per item")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-black m-b-10 fs-16" }, [
-          _vm._v("IDR 5.500.000")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 m-t-5" }, [
-        _c("p", { staticClass: "m-b-0" }, [_vm._v("sub total")]),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-black m-b-10 fs-16 bold" }, [
-          _vm._v("IDR 11.000.000")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-1 m-t-5" }, [
-        _c("p", [
-          _c("i", {
-            staticClass: "fa fa-trash text-hover-danger fs-16 cursor m-t-10"
-          })
-        ])
+    return _c("div", { staticClass: "col-lg-1 m-t-5" }, [
+      _c("p", [
+        _c("i", {
+          staticClass: "fa fa-trash text-hover-danger fs-16 cursor m-t-10"
+        })
       ])
     ])
   },
@@ -5729,106 +6678,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "col-lg-12 border-bottom-grey",
-        staticStyle: { "padding-top": "20px", "padding-bottom": "20px" }
-      },
-      [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-lg-6 m-t-5" }, [
-            _c("button", { staticClass: "btn btn-default border-solid-grey" }, [
-              _vm._v("Add Shipping Fee "),
-              _c("i", { staticClass: "fa fa-plus" })
-            ]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c(
-              "button",
-              { staticClass: "btn btn-default border-solid-grey m-t-10" },
-              [_vm._v("Add Tax Fee "), _c("i", { staticClass: "fa fa-plus" })]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 m-t-5" }, [
-            _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-lg-12 border-bottom-grey p-t-10" },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c("p", { staticClass: "fs-16" }, [
-                        _vm._v("Shipping Fee")
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "fs-16 text-black bold text-left pull-right"
-                        },
-                        [_vm._v("IDR 300.000")]
-                      )
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-lg-12 border-bottom-grey p-t-10" },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c("p", { staticClass: "fs-16" }, [_vm._v("Tax Fee")])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "fs-16 text-black bold text-left pull-right"
-                        },
-                        [_vm._v("IDR 2.000.000")]
-                      )
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-lg-12 border-bottom-grey p-t-10" },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c("p", { staticClass: "fs-16" }, [_vm._v("Total")])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-6" }, [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "fs-18 text-primary bold text-left pull-right"
-                        },
-                        [_vm._v("IDR 55.000.000")]
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ])
-          ])
-        ])
-      ]
-    )
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("p", { staticClass: "fs-16" }, [_vm._v("Shipping Fee")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("p", { staticClass: "fs-16" }, [_vm._v("Tax Fee")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("p", { staticClass: "fs-16" }, [_vm._v("Total")])
+    ])
   },
   function() {
     var _vm = this
@@ -6257,6 +7125,64 @@ var render = function() {
                         }
                       }
                     })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                  _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
+                    _vm._v("5. Currency ")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group m-t-10" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.POFormObject.currencyFormat,
+                            expression: "POFormObject.currencyFormat"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { name: "", id: "" },
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.POFormObject,
+                              "currencyFormat",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.currencies, function(currency) {
+                        return _c(
+                          "option",
+                          { domProps: { value: currency.format } },
+                          [
+                            _vm._v(
+                              "\n                                            " +
+                                _vm._s(currency.value) +
+                                " - " +
+                                _vm._s(currency.format) +
+                                "\n                                        "
+                            )
+                          ]
+                        )
+                      })
+                    )
                   ])
                 ]),
                 _vm._v(" "),
@@ -21208,6 +22134,104 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/storage/admin/components/purchaseOrder/AddShippingFeeModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/AddShippingFeeModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-0e2e9491\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/AddShippingFeeModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/storage/admin/components/purchaseOrder/AddShippingFeeModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0e2e9491", Component.options)
+  } else {
+    hotAPI.reload("data-v-0e2e9491", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/storage/admin/components/purchaseOrder/AddTaxFeeModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/AddTaxFeeModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3423c8c6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/AddTaxFeeModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/storage/admin/components/purchaseOrder/AddTaxFeeModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3423c8c6", Component.options)
+  } else {
+    hotAPI.reload("data-v-3423c8c6", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/storage/admin/components/purchaseOrder/InsertItemsForm.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -21652,8 +22676,6 @@ module.exports = Component.exports
                 //Success
 
                 state.POFormIsFinishAndValid = true;
-
-                console.log(JSON.stringify(state.POFormObject));
             } else {
 
                 /* Show error response */
@@ -21671,11 +22693,102 @@ module.exports = Component.exports
         var commit = _ref5.commit,
             state = _ref5.state;
 
-
-        //get data necessary for adding item
-
         //show modal
         $('#modal-add-item').modal('show');
+    },
+    insertItemToPO: function insertItemToPO(_ref6, payload) {
+        var commit = _ref6.commit,
+            state = _ref6.state;
+
+
+        //validate and check object before insert into PO Items
+        __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
+            if (state.itemToBeInserted.itemDetail.id != null) {
+
+                //Callback Success
+                cb(null, '');
+            } else {
+                //Callback Error
+                cb('Item to be inserted ID undefined', '');
+            }
+        }, function (cb) {
+
+            if (state.itemToBeInserted.hasCustomUnit) {
+
+                if (state.itemToBeInserted.customUnit != '') {
+                    cb(null, ''); // Callback success
+                } else {
+                    cb('Custom Unit cannot be empty', ''); // Callback error
+                }
+            } else {
+                if (state.itemToBeInserted.unitId != '') {
+                    cb(null, ''); // Callback success
+                } else {
+                    cb('Unit type cannot be empty', ''); // Callback error
+                }
+            }
+        }, function (cb) {
+
+            if (state.itemToBeInserted.amount != '' && state.itemToBeInserted.price != '' && state.itemToBeInserted.currencyFormat != '') {
+                cb(null, ''); // Callback Success
+            } else {
+                cb('Form is not complete', ''); // Callback error
+            }
+        }], function (err, result) {
+
+            if (err == null) {
+                //Success
+
+                __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
+
+                    // Insert to PO item array
+                    state.POItems.push(state.itemToBeInserted);
+                    cb(null, '');
+                }, function (cb) {
+
+                    // Close Modal  & Reset forms
+                    state.items = []; //resset items lsit
+                    state.itemToBeInserted = { //reset item to be inserted data
+                        itemDetail: {},
+                        amount: '',
+                        hasCustomUnit: 0,
+                        customUnit: '',
+                        unitId: '',
+                        price: '',
+                        currencyFormat: 'IDR'
+                    };
+
+                    $('#modal-add-item').modal("toggle"); // close modal
+                    cb(null, '');
+                }]);
+            } else {
+
+                /* Show error response */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        });
+    },
+    saveShippingFeeForm: function saveShippingFeeForm(_ref7, payload) {
+        var commit = _ref7.commit,
+            state = _ref7.state;
+
+        state.POFormObject.shippingFeeAdded = payload.shippingFeeAdded;
+        state.POFormObject.shippingFee = payload.shippingFee;
+        console.log(payload.shippingFeeAdded);
+        console.log(payload.shippingFee);
+    },
+    saveTaxFeeForm: function saveTaxFeeForm(_ref8, payload) {
+        var commit = _ref8.commit,
+            state = _ref8.state;
+
+        state.POFormObject.taxFeeAdded = payload.taxFeeAdded;
+        console.log(payload.taxFeeAdded);
     }
 });
 
@@ -21723,6 +22836,7 @@ module.exports = Component.exports
             hasCustomUnit: 0,
             customUnit: '',
             unitId: '',
+            unitFormat: '',
             price: '',
             currencyFormat: 'IDR'
         },
@@ -21734,10 +22848,13 @@ module.exports = Component.exports
             withTaxInvoice: 0,
             npwpNo: '',
             npwpPhoto: '',
-            taxFee: '',
-            shippingFee: '',
+            taxFee: 0,
+            taxFeeAdded: 0, //false
+            shippingFee: 0,
+            shippingFeeAdded: 0, //false
             total: '',
-            notes: ''
+            notes: '',
+            currencyFormat: 'IDR'
         },
         POItems: [],
         POFormIsFinishAndValid: false

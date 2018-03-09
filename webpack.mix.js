@@ -19,7 +19,7 @@ mix.copy([
     'resources/assets/plugins/bootstrap-datepicker/css/datepicker3.css',
     'resources/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css',
 
-], 'public/plugins/css/')
+    ], 'public/plugins/css/')
     .copy([
         'resources/assets/plugins/pace/pace.min.js',
         'resources/assets/plugins/jquery/jquery-1.11.1.min.js',
@@ -49,6 +49,7 @@ mix.copy([
         'resources/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js',
         'resources/assets/plugins/jquery.sieve.min.js',
         'resources/assets/plugins/google-palette/palette.js',
+        'resources/assets/plugins/accounting.min.js',
     ], 'public/plugins/js/');
 
 

@@ -16,15 +16,16 @@
                                 <input type="text" style="height: 40px;"
                                        class="form-control"
                                        id="search-item-box"
+                                       @focus="onSearchFocus()"
                                        @keyup.enter="searchItems()"
                                        placeholder="Search Item"
                                        v-model="searchItemText"
                                 >
-                                <span class="input-group-addon primary" @click="searchItems()"><i
+                                <span class="input-group-addon primary" @click="searchItems()" ><i
                                         class="fa fa-search cursor"></i></span>
                             </div>
                         </div>
-                        <div class="col-lg-12">
+                        <div class="col-lg-12" v-if="!finishSelectItemToBeInserted">
                             <div class="card no-border">
                                 <div class="card-body">
                                     <div class="card card-default">
@@ -68,36 +69,39 @@
                                                        v-model="itemToBeInserted.hasCustomUnit">
                                                 <label for="hasCustomUnit">Has Custom Unit</label>
                                             </div>
-                                            <div class="form-group form-group-default" v-if="itemToBeInserted.hasCustomUnit">
+                                            <div class="form-group form-group-default required"
+                                                 v-if="itemToBeInserted.hasCustomUnit">
                                                 <label>Custom Unit</label>
-                                                <input type="text" class="form-control">
+                                                <input type="text" class="form-control" v-model="itemToBeInserted.customUnit">
                                             </div>
-                                            <div class="form-group form-group-default" v-else="">
+                                            <div class="form-group form-group-default required" v-else="">
                                                 <label>Unit</label>
-                                                <select name="" class="form-control" v-model="itemToBeInserted.unitId">
-                                                    <option :value="unit.id" v-for="unit in unitOfMeasurements">{{unit.description}} / {{unit.format}}</option>
+                                                <select name="unitFormat" class="form-control" v-model="itemToBeInserted.unitId">
+                                                    <option :value="unit.id" v-for="unit in unitOfMeasurements">
+                                                        {{unit.description}} / {{unit.format}}
+                                                    </option>
                                                 </select>
                                             </div>
 
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="form-group form-group-default">
+                                            <div class="form-group form-group-default required">
                                                 <label> Amount </label>
-                                                <input type="number" class="form-control" v-model="itemToBeInserted.amount">
+                                                <input type="number" class="form-control"
+                                                       v-model="itemToBeInserted.amount">
                                             </div>
-                                            <div class="form-group form-group-default">
+                                            <div class="form-group form-group-default required">
                                                 <label>Price</label>
-                                                <input type="text" class="form-control" v-model="itemToBeInserted.price">
+                                                <input type="text" class="form-control"
+                                                       v-model="itemToBeInserted.price">
                                             </div>
-                                            <div class="form-group form-group-default">
+                                            <div class="form-group form-group-default required">
                                                 <label>Currency</label>
-                                                <select name="" id="" class="form-control" v-model="itemToBeInserted.currencyFormat">
-                                                    <option :value="currency.format" v-for="currency in currencies">{{currency.value}} - {{currency.format}}</option>
-                                                </select>
+                                                <input type="text" readonly v-model="itemToBeInserted.currencyFormat">
                                             </div>
                                         </div>
                                         <div class="col-lg-12 m-t-10">
-                                            <button class="btn btn-primary pull-right">Insert</button>
+                                            <button class="btn btn-primary pull-right" @click="insertItemToPO()">Insert</button>
                                         </div>
                                     </div>
 
@@ -122,16 +126,18 @@
     export default{
         data(){
             return {
-                searchItemText: ''
+                searchItemText: '',
+                finishSelectItemToBeInserted: false
             }
         },
         created(){
+            this.setCurrencyBasedOnPOForm()
         },
         computed: {
             ...mapState('purchaseOrder', {
                 items: 'items',
-                unitOfMeasurements:'unitOfMeasurements',
-                currencies:'currencies',
+                unitOfMeasurements: 'unitOfMeasurements',
+                currencies: 'currencies',
                 itemToBeInserted: 'itemToBeInserted'
             })
         },
@@ -140,6 +146,14 @@
         },
 
         methods: {
+            setCurrencyBasedOnPOForm(){
+
+                let self = this
+                let purchaseOrderVuexState = this.$store.state.purchaseOrder
+
+                purchaseOrderVuexState.itemToBeInserted.currencyFormat = purchaseOrderVuexState.POFormObject.currencyFormat
+
+            },
             closeModal(){
                 let self = this
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
@@ -161,9 +175,17 @@
                 $('#modal-add-item').modal("toggle"); // close modal
 
             },
+            onSearchFocus(){
+                let self = this
+                //finish selecting item
+                self.finishSelectItemToBeInserted = false
+            },
             searchItems(){
 
                 let self = this
+
+                //unfinish selecting item
+                self.finishSelectItemToBeInserted = false
 
                 self.$store.commit({
                     type: 'purchaseOrder/searchItems',
@@ -172,8 +194,32 @@
 
             },
             selectItemsToBeInserted(item){
+
+                console.log( $('select[name="unitFormat"] option:selected').text())
+
+                let self = this
+
+                //insert to vuex
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
                 purchaseOrderVuexState.itemToBeInserted.itemDetail = item
+                purchaseOrderVuexState.itemToBeInserted.unitId = item.unitId
+                purchaseOrderVuexState.itemToBeInserted.unitFormat = _.find(purchaseOrderVuexState.unitOfMeasurements,{id:item.unitId}).format
+
+                //finish selecting item
+                self.finishSelectItemToBeInserted = true
+
+            },
+            insertItemToPO(){
+
+                let self = this
+
+                self.searchItemText = '' //reset search value
+
+                self.$store.dispatch({
+                    type:'purchaseOrder/insertItemToPO'
+                })
+
+
             }
         },
     }

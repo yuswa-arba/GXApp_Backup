@@ -17,6 +17,7 @@ class StorageItemBriefDetailTransformer extends TransformerAbstract
             'id' => $storageItems->id,
             'itemCode' => $storageItems->itemCode,
             'name' => $storageItems->name,
+            'unitId'=>$storageItems->unitId,
             'unitFormat' => $this->getResultWithNullChecker1Connection($storageItems, 'unitOfMeasurement', 'format'),
             'statusName'=>$this->getResultWithNullChecker1Connection($storageItems,'itemStatus','name'),
             'photo' => $storageItems->photo,

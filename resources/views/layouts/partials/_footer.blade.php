@@ -20,6 +20,7 @@
 <script src="{{mix('plugins/js/moment.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/bootstrap-datepicker.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/bootstrap-timepicker.min.js')}}" type="text/javascript"></script>
+<script src="{{mix('plugins/js/accounting.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('core/js/core-theme.js')}}" type="text/javascript"></script> <!-- core theme -->
 <script src="{{asset('plugins/socketioclient/dist/socket.io.js')}}"></script>
 

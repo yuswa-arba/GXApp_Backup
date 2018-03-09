@@ -72,8 +72,6 @@ export default{
 
                     state.POFormIsFinishAndValid = true
 
-                    console.log(JSON.stringify(state.POFormObject))
-
                 } else {
 
                     /* Show error response */
@@ -88,13 +86,111 @@ export default{
 
             })
     },
-    attemptAddItemModal({commit,state},payload){
-
-        //get data necessary for adding item
-
+    attemptAddItemModal({commit, state}, payload){
         //show modal
         $('#modal-add-item').modal('show')
+    },
+    insertItemToPO({commit, state}, payload){
 
+        //validate and check object before insert into PO Items
+        series([
+            function (cb) {
+                if (state.itemToBeInserted.itemDetail.id != null) {
+
+                    //Callback Success
+                    cb(null, '')
+
+                } else {
+                    //Callback Error
+                    cb('Item to be inserted ID undefined', '')
+                }
+            },
+            function (cb) {
+
+                if (state.itemToBeInserted.hasCustomUnit) {
+
+                    if (state.itemToBeInserted.customUnit != '') {
+                        cb(null, '')// Callback success
+                    } else {
+                        cb('Custom Unit cannot be empty', '') // Callback error
+                    }
+
+                } else {
+                    if (state.itemToBeInserted.unitId != '') {
+                        cb(null, '') // Callback success
+                    } else {
+                        cb('Unit type cannot be empty', '') // Callback error
+                    }
+                }
+
+            },
+            function (cb) {
+
+                if (state.itemToBeInserted.amount != ''
+                    && state.itemToBeInserted.price != ''
+                    && state.itemToBeInserted.currencyFormat != ''
+                ) {
+                    cb(null, '')// Callback Success
+                } else {
+                    cb('Form is not complete', '') // Callback error
+                }
+
+            }
+
+
+        ], function (err, result) {
+
+            if (err == null) { //Success
+
+                series([
+                    function (cb) {
+
+                        // Insert to PO item array
+                        state.POItems.push(state.itemToBeInserted)
+                        cb(null, '')
+                    },
+                    function (cb) {
+
+                        // Close Modal  & Reset forms
+                        state.items = []//resset items lsit
+                        state.itemToBeInserted = { //reset item to be inserted data
+                            itemDetail: {},
+                            amount: '',
+                            hasCustomUnit: 0,
+                            customUnit: '',
+                            unitId: '',
+                            price: '',
+                            currencyFormat: 'IDR'
+                        }
+
+                        $('#modal-add-item').modal("toggle"); // close modal
+                        cb(null, '')
+                    }
+                ])
+
+            } else {
+
+                /* Show error response */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        })
+
+    },
+    saveShippingFeeForm({commit,state},payload){
+        state.POFormObject.shippingFeeAdded = payload.shippingFeeAdded
+        state.POFormObject.shippingFee = payload.shippingFee
+        console.log(payload.shippingFeeAdded)
+        console.log(payload.shippingFee)
+    },
+    saveTaxFeeForm({commit,state},payload){
+        state.POFormObject.taxFeeAdded = payload.taxFeeAdded
+        console.log(payload.taxFeeAdded)
     }
 
 }

@@ -22,6 +22,7 @@ export default {
             hasCustomUnit:0,
             customUnit:'',
             unitId:'',
+            unitFormat:'',
             price:'',
             currencyFormat:'IDR'
         },
@@ -33,10 +34,13 @@ export default {
             withTaxInvoice: 0,
             npwpNo: '',
             npwpPhoto: '',
-            taxFee: '',
-            shippingFee: '',
+            taxFee: 0,
+            taxFeeAdded:0,//false
+            shippingFee: 0,
+            shippingFeeAdded:0,//false
             total: '',
-            notes: ''
+            notes: '',
+            currencyFormat:'IDR'
         },
         POItems: [],
         POFormIsFinishAndValid: false

@@ -95,6 +95,17 @@
                                                v-model="POFormObject.notes">
                                     </div>
                                 </div>
+                                <div class="col-lg-12 m-t-10">
+                                    <p class="text-black text-uppercase fs-11">5. Currency </p>
+                                    <div class="form-group m-t-10">
+                                        <select name="" id="" class="form-control"
+                                                v-model="POFormObject.currencyFormat">
+                                            <option :value="currency.format" v-for="currency in currencies">
+                                                {{currency.value}} - {{currency.format}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
 
                                 <div class="col-lg-12 m-t-10">
                                     <button class="btn btn-primary pull-right fs-16" @click="startAddingItems()">
@@ -131,7 +142,8 @@
             ...mapState('purchaseOrder', {
                 POFormObject: 'POFormObject',
                 selectedSupplier: 'selectedSupplier',
-                selectedRequisition: 'selectedRequisition'
+                selectedRequisition: 'selectedRequisition',
+                currencies: 'currencies',
             })
         },
         mounted(){
