@@ -149,6 +149,25 @@ export default{
                         state.POItems.push(state.itemToBeInserted)
                         cb(null, '')
                     },
+                    function(cb){
+
+                        //update tax value
+                        if(parseInt(state.POFormObject.taxFeeAdded)==1){
+                            let price = 0
+                            if (state.POItems.length > 0){
+                                _.map(state.POItems, item => {
+                                    price = price + (item.amount * item.price)
+                                })
+                            }
+
+                            // insert tax fee
+                            state.POFormObject.taxFee = (price * 10 / 100)
+                        } else {
+                            state.POFormObject.taxFee = 0
+                        }
+
+                        cb(null,'')
+                    },
                     function (cb) {
 
                         // Close Modal  & Reset forms
@@ -182,15 +201,5 @@ export default{
         })
 
     },
-    saveShippingFeeForm({commit,state},payload){
-        state.POFormObject.shippingFeeAdded = payload.shippingFeeAdded
-        state.POFormObject.shippingFee = payload.shippingFee
-        console.log(payload.shippingFeeAdded)
-        console.log(payload.shippingFee)
-    },
-    saveTaxFeeForm({commit,state},payload){
-        state.POFormObject.taxFeeAdded = payload.taxFeeAdded
-        console.log(payload.taxFeeAdded)
-    }
 
 }

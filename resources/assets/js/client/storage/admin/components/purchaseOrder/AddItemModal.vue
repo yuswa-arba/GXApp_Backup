@@ -205,6 +205,7 @@
                 purchaseOrderVuexState.itemToBeInserted.unitId = item.unitId
                 purchaseOrderVuexState.itemToBeInserted.unitFormat = _.find(purchaseOrderVuexState.unitOfMeasurements,{id:item.unitId}).format
 
+
                 //finish selecting item
                 self.finishSelectItemToBeInserted = true
 

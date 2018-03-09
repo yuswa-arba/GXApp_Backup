@@ -2885,15 +2885,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var self = this;
             var purchaseOrderVuexState = this.$store.state.purchaseOrder;
 
-            var price = 0;
-
-            if (purchaseOrderVuexState.POItems.length > 0) {
-                _.map(purchaseOrderVuexState.POItems, function (item) {
-                    price = price + item.amount * item.price;
-                });
-            }
-
             if (parseInt(purchaseOrderVuexState.POFormObject.taxFeeAdded) == 1) {
+                var price = 0;
+
+                if (purchaseOrderVuexState.POItems.length > 0) {
+                    _.map(purchaseOrderVuexState.POItems, function (item) {
+                        price = price + item.amount * item.price;
+                    });
+                }
+
                 // insert tax fee
                 purchaseOrderVuexState.POFormObject.taxFee = price * 10 / 100;
             } else {
@@ -3184,7 +3184,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var purchaseOrderVuexState = this.$store.state.purchaseOrder;
 
             if (confirm("Are you sure to remove this item from PO")) {
+
+                // remove item from array
                 purchaseOrderVuexState.POItems.splice(index, 1);
+
+                // Update tax value
+                if (parseInt(purchaseOrderVuexState.POFormObject.taxFeeAdded) == 1) {
+                    var price = 0;
+
+                    if (purchaseOrderVuexState.POItems.length > 0) {
+                        _.map(purchaseOrderVuexState.POItems, function (item) {
+                            price = price + item.amount * item.price;
+                        });
+                    }
+
+                    // insert tax fee
+                    purchaseOrderVuexState.POFormObject.taxFee = price * 10 / 100;
+                } else {
+                    purchaseOrderVuexState.POFormObject.taxFee = 0;
+                }
             }
         }
     }
@@ -22783,6 +22801,24 @@ module.exports = Component.exports
                     cb(null, '');
                 }, function (cb) {
 
+                    //update tax value
+                    if (parseInt(state.POFormObject.taxFeeAdded) == 1) {
+                        var price = 0;
+                        if (state.POItems.length > 0) {
+                            _.map(state.POItems, function (item) {
+                                price = price + item.amount * item.price;
+                            });
+                        }
+
+                        // insert tax fee
+                        state.POFormObject.taxFee = price * 10 / 100;
+                    } else {
+                        state.POFormObject.taxFee = 0;
+                    }
+
+                    cb(null, '');
+                }, function (cb) {
+
                     // Close Modal  & Reset forms
                     state.items = []; //resset items lsit
                     state.itemToBeInserted = { //reset item to be inserted data
@@ -22810,22 +22846,6 @@ module.exports = Component.exports
                 }).show();
             }
         });
-    },
-    saveShippingFeeForm: function saveShippingFeeForm(_ref7, payload) {
-        var commit = _ref7.commit,
-            state = _ref7.state;
-
-        state.POFormObject.shippingFeeAdded = payload.shippingFeeAdded;
-        state.POFormObject.shippingFee = payload.shippingFee;
-        console.log(payload.shippingFeeAdded);
-        console.log(payload.shippingFee);
-    },
-    saveTaxFeeForm: function saveTaxFeeForm(_ref8, payload) {
-        var commit = _ref8.commit,
-            state = _ref8.state;
-
-        state.POFormObject.taxFeeAdded = payload.taxFeeAdded;
-        console.log(payload.taxFeeAdded);
     }
 });
 

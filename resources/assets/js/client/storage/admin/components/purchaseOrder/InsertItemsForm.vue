@@ -269,7 +269,26 @@
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
 
                 if(confirm("Are you sure to remove this item from PO")){
+
+                    // remove item from array
                     purchaseOrderVuexState.POItems.splice(index,1)
+
+                    // Update tax value
+                    if(parseInt(purchaseOrderVuexState.POFormObject.taxFeeAdded)==1){
+                        let price = 0
+
+                        if (purchaseOrderVuexState.POItems.length > 0){
+                            _.map(purchaseOrderVuexState.POItems, item => {
+                                price = price + (item.amount * item.price)
+                            })
+                        }
+
+                        // insert tax fee
+                        purchaseOrderVuexState.POFormObject.taxFee = (price * 10 / 100)
+                    } else {
+                        purchaseOrderVuexState.POFormObject.taxFee = 0
+                    }
+
                 }
 
 

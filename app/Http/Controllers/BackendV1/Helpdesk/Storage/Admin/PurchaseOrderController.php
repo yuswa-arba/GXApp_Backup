@@ -9,6 +9,7 @@ use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Controllers\Controller;
 use App\Storage\Logics\Item\CreateItemLogic;
 use App\Storage\Logics\Item\GetItemListLogic;
+use App\Storage\Logics\PurchaseOrder\CreatePurchaseOrderLogic;
 use App\Storage\Logics\Requisition\GetShopItemDetailLogic;
 use App\Storage\Logics\Requisition\GetShopItemListLogic;
 use App\Storage\Models\StorageItems;
@@ -46,6 +47,41 @@ class PurchaseOrderController extends Controller
     {
         $this->middleware('auth');
         $this->middleware('auth.admin');
+    }
+
+    public function createPurchaseOrder(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(),[
+            'POForm'=>'required',
+            'POItems'=>'required'
+        ]);
+
+        if($validator->fails()){
+
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+
+        }
+
+        // is valid
+        $user = Auth::user(); //user data
+        $employee = $user->employee; // user's employee data
+
+
+        if ($employee && $employee->hasResigned != 1) {
+
+            return CreatePurchaseOrderLogic::create($request);
+
+        } else {
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Permission denied';
+            return response()->json($response, 200);
+        }
+
     }
 
     public function availableRequisition(Request $request)
