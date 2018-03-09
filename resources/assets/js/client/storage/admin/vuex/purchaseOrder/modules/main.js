@@ -47,7 +47,8 @@ export default {
             currencyFormat:'IDR'
         },
         POItems: [],
-        POFormIsFinishAndValid: false
+        POFormIsFinishAndValid: false,
+        isCreatingPurchaseOrder:false
     },
     getters,
     mutations,

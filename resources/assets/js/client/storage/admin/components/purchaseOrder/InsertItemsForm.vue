@@ -114,8 +114,14 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12" style="margin-top: 20px">
-                                    <button class="btn btn-primary fs-16 pull-right" @click="createPO()">Create PO <i
-                                            class="fa fa-file"></i></button>
+                                    <button class="btn btn-primary fs-16 pull-right"
+                                            v-if="!isCreatingPurchaseOrder"
+                                            @click="createPO()">
+                                        Create PO <i class="fa fa-file"></i>
+                                    </button>
+                                    <button class="btn btn-disabled fs-18 pull-right" v-else="" disabled>
+                                        Creating PO.. Please wait..
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -156,7 +162,8 @@
             ...mapState('purchaseOrder', {
                 POFormIsFinishAndValid: 'POFormIsFinishAndValid',
                 POItems: 'POItems',
-                POFormObject: 'POFormObject'
+                POFormObject: 'POFormObject',
+                isCreatingPurchaseOrder:'isCreatingPurchaseOrder'
             }),
             shippingTotal(){
 
@@ -292,6 +299,10 @@
             createPO(){
 
                 if(confirm('Are you sure to create Purchase Order?')){
+
+                    let self = this
+                    let purchaseOrderVuexState = this.$store.state.purchaseOrder
+                    purchaseOrderVuexState.isCreatingPurchaseOrder = true // set to true to update UI
 
                     this.$store.commit({
                         type:'purchaseOrder/createPO'

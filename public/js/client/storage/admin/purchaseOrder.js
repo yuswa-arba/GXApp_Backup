@@ -3060,6 +3060,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3081,7 +3087,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
         POFormIsFinishAndValid: 'POFormIsFinishAndValid',
         POItems: 'POItems',
-        POFormObject: 'POFormObject'
+        POFormObject: 'POFormObject',
+        isCreatingPurchaseOrder: 'isCreatingPurchaseOrder'
     }), {
         shippingTotal: function shippingTotal() {
 
@@ -3207,6 +3214,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         createPO: function createPO() {
 
             if (confirm('Are you sure to create Purchase Order?')) {
+
+                var self = this;
+                var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+                purchaseOrderVuexState.isCreatingPurchaseOrder = true; // set to true to update UI
 
                 this.$store.commit({
                     type: 'purchaseOrder/createPO'
@@ -6739,21 +6750,38 @@ var render = function() {
                             staticStyle: { "margin-top": "20px" }
                           },
                           [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-primary fs-16 pull-right",
-                                on: {
-                                  click: function($event) {
-                                    _vm.createPO()
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v("Create PO "),
-                                _c("i", { staticClass: "fa fa-file" })
-                              ]
-                            )
+                            !_vm.isCreatingPurchaseOrder
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-primary fs-16 pull-right",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.createPO()
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Create PO "
+                                    ),
+                                    _c("i", { staticClass: "fa fa-file" })
+                                  ]
+                                )
+                              : _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-disabled fs-18 pull-right",
+                                    attrs: { disabled: "" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                    Creating PO.. Please wait..\n                                "
+                                    )
+                                  ]
+                                )
                           ]
                         )
                       ],
@@ -22953,7 +22981,8 @@ module.exports = Component.exports
             currencyFormat: 'IDR'
         },
         POItems: [],
-        POFormIsFinishAndValid: false
+        POFormIsFinishAndValid: false,
+        isCreatingPurchaseOrder: false
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -23082,9 +23111,67 @@ module.exports = Component.exports
             POForm: state.POFormObject,
             POItems: state.POItems
         }).then(function (res) {
-            console.log(JSON.stringify(res.data));
+
+            if (!res.data.isFailed) {
+
+                __WEBPACK_IMPORTED_MODULE_2_async_series___default()([function (cb) {
+                    setTimeout(function () {
+                        //success notification
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
+                    }, 1000);
+                    cb(null, '');
+                }, function (cb) {
+                    // redirecting notification
+                    setTimeout(function () {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: 'Redirecting to PO list..',
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'success'
+                        }).show();
+
+                        state.isCreatingPurchaseOrder = false;
+                    }, 1500);
+                    cb(null, '');
+                }, function (cb) {
+                    //redirecting
+                    setTimeout(function () {
+                        //redirected to purchase order list
+                        window.location.href = '/storage/admin/purchaseOrder';
+                    }, 3000);
+                    cb(null, '');
+                }]);
+            } else {
+
+                state.isCreatingPurchaseOrder = false;
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
         }).catch(function (err) {
-            console.log('err: ' + JSON.stringify(err.message));
+
+            state.isCreatingPurchaseOrder = false;
+
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
         });
     }
 });

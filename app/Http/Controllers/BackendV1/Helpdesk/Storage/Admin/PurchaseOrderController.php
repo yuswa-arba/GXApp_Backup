@@ -84,6 +84,17 @@ class PurchaseOrderController extends Controller
 
     }
 
+    public function purchaseOrderList(Request $request)
+    {
+        $response = array();
+
+    }
+
+    public function searchPurchaseOrder(Request $request)
+    {
+        $response = array();
+    }
+
     public function availableRequisition(Request $request)
     {
         $response = array();

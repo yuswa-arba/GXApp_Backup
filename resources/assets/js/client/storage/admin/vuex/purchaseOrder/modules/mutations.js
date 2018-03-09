@@ -121,10 +121,74 @@ export default{
             POItems: state.POItems
         })
             .then((res) => {
-                console.log(JSON.stringify(res.data))
+
+                if (!res.data.isFailed) {
+
+                    series([
+                        function (cb) {
+                            setTimeout(() => { //success notification
+
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: res.data.message,
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'info'
+                                }).show();
+
+
+                            }, 1000)
+                            cb(null, '')
+                        },
+                        function (cb) { // redirecting notification
+                            setTimeout(() => {
+                                $('.page-container').pgNotification({
+                                    style: 'flip',
+                                    message: 'Redirecting to PO list..',
+                                    position: 'top-right',
+                                    timeout: 3500,
+                                    type: 'success'
+                                }).show();
+
+                                state.isCreatingPurchaseOrder = false
+                            }, 1500)
+                            cb(null, '')
+                        },
+                        function (cb) { //redirecting
+                            setTimeout(() => {
+                                //redirected to purchase order list
+                                window.location.href = '/storage/admin/purchaseOrder'
+                            }, 3000)
+                            cb(null, '')
+                        }
+                    ])
+
+                } else {
+
+                    state.isCreatingPurchaseOrder = false
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+
+
             })
             .catch((err) => {
-                console.log('err: ' + JSON.stringify(err.message))
+
+                state.isCreatingPurchaseOrder = false
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
             })
     }
 
