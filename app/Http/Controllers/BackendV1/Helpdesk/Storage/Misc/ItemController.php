@@ -44,7 +44,7 @@ class ItemController extends Controller
         $response = array();
 
         $validator = Validator::make($request->all(), [
-//            'itemCode'=>'required|unique:storageItems', //unique
+            //'itemCode'=>'required|unique:storageItems', //unique
             'name' => 'required',
             'unitId' => 'required',
             'itemTypeCode' => 'required',
@@ -114,13 +114,16 @@ class ItemController extends Controller
 
             $response['isFailed'] = false;
             $response['message'] = 'Success';
+
             return response()->json($response, 200);
 
         } else {
             $response['isFailed'] = true;
             $response['message'] = 'Unable to update item';
+
             return response()->json($response, 200);
         }
+
     }
 
 

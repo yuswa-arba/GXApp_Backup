@@ -16,7 +16,9 @@ export default {
         unitOfMeasurements:[],
         selectedSupplier: {},
         items: [],
-        itemToBeInserted: {
+        itemToBeInserted: { // Make sure when change this, any reference to this object has to be updated as well
+            withRequisitionItem:0,
+            requisitionItemId:'',
             itemDetail: {},
             amount:'',
             hasCustomUnit:0,
@@ -28,6 +30,8 @@ export default {
         },
         POFormObject: {
             supplierId: '',
+            contactPerson:'',
+            contactNumber:'',
             requisitionId: '',
             approvalNumber: '',
             withRequisition: 1,

@@ -28,14 +28,14 @@
                                         <input type="text"
                                                class="form-control"
                                                id="extra-contact-person"
-                                               v-model="selectedSupplier.contactPerson1">
+                                               v-model="POFormObject.contactPerson">
                                     </div>
                                     <div class="form-group">
                                         <label>Contact Number</label>
                                         <input type="number"
                                                class="form-control"
                                                id="extra-contact-number"
-                                               v-model="selectedSupplier.mobileNumber1">
+                                               v-model="POFormObject.contactNumber">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-t-10">

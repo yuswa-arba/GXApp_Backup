@@ -16,7 +16,7 @@ class CreateStoragePurchaseOrdersTable extends Migration
         Schema::create('storagePurchaseOrders', function (Blueprint $table) {
             $table->increments('id');
             $table->string('purchaseOrderNumber')->unique();
-            $table->tinyInteger('withRequisition');
+            $table->tinyInteger('withRequisition')->default(0);
             $table->integer('requisitionId')->nullable();
             $table->string('date');
             $table->integer('supplierId');
@@ -24,11 +24,12 @@ class CreateStoragePurchaseOrdersTable extends Migration
             $table->string('contactNumber')->nullable();
             $table->tinyInteger('withTaxInvoice')->default(0);
             $table->string('npwpNumber')->nullable();
+            $table->tinyInteger('taxFeeAdded')->default(0);
             $table->string('taxFee')->nullable();
+            $table->tinyInteger('shippingFeeAdded')->default(0);
             $table->string('shippingFee')->nullable();
             $table->string('total');
             $table->string('notes')->nullable();
-            $table->string('file')->nullable();
             $table->integer('statusId')->defaut(1);
             $table->string('insertedAt');
             $table->string('insertedBy');

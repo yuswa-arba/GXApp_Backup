@@ -114,6 +114,18 @@ export default{
                     }
                 }
             })
+    },
+    createPO(state, payload){
+        post(api_path + 'storage/admin/purchaseOrder/create', {
+            POForm: state.POFormObject,
+            POItems: state.POItems
+        })
+            .then((res) => {
+                console.log(JSON.stringify(res.data))
+            })
+            .catch((err) => {
+                console.log('err: ' + JSON.stringify(err.message))
+            })
     }
 
 }

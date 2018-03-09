@@ -1,9 +1,7 @@
 <template>
 
     <div class="col-lg-8">
-        <div class="card card-default">
-
-            <!--<div class="card card-default" v-if="POFormIsFinishAndValid">-->
+            <div class="card card-default" v-if="POFormIsFinishAndValid">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card card-default no-border">
@@ -116,7 +114,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12" style="margin-top: 20px">
-                                    <button class="btn btn-primary fs-16 pull-right">Create PO <i
+                                    <button class="btn btn-primary fs-16 pull-right" @click="createPO()">Create PO <i
                                             class="fa fa-file"></i></button>
                                 </div>
                             </div>
@@ -290,7 +288,16 @@
                     }
 
                 }
+            },
+            createPO(){
 
+                if(confirm('Are you sure to create Purchase Order?')){
+
+                    this.$store.commit({
+                        type:'purchaseOrder/createPO'
+                    })
+
+                }
 
             }
         },

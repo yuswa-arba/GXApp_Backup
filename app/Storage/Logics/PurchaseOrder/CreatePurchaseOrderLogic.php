@@ -2,12 +2,18 @@
 
 namespace App\Storage\Logics\PurchaseOrder;
 
+use App\Components\Models\CompanyNPWP;
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeListTransfomer;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Storage\Models\StorageItems;
+use App\Storage\Models\StoragePurchaseOrderItems;
+use App\Storage\Models\StoragePurchaseOrders;
 use App\Storage\Transformers\StorageItemDetailTransformer;
 use App\Traits\GlobalUtils;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CreatePurchaseOrderLogic extends CreateUseCase
 {
@@ -18,5 +24,165 @@ class CreatePurchaseOrderLogic extends CreateUseCase
     public function handleCreate($request)
     {
 
+        $response = array();
+
+        // params
+        $POForm = $request->POForm;
+        $POItems = $request->POItems;
+
+        //validate forms
+
+        if ($this->POformIsValid($POForm)) {
+
+
+            // Calculate total item price
+            $totalItemPrice = $this->calculateTotalItemPrice($POItems);
+
+            // Calculate tax
+            $totalTax = 0;
+            if ($POForm['taxFeeAdded']) {
+                $totalTax = $this->calculateTotalTax($totalItemPrice);
+            }
+
+            // Calculate shipping fee
+            $totalShippingFee = 0;
+            if ($POForm['shippingFeeAdded']) {
+                $totalShippingFee = $POForm['shippingFee'];
+            }
+
+            // Sum total price
+            $finalPrice = (int)$totalItemPrice + (int)$totalTax + (int)$totalShippingFee;
+
+            // Generate PO Number
+            $latestRequisition = StoragePurchaseOrders::orderBy('id', 'desc')->first();
+            $incrementNumber = $latestRequisition ? ($latestRequisition->id + 1) : 1;//get latest id and add by 1
+            $PONumber = Carbon::now()->format('Ymd') . $this->zeroPrefix($incrementNumber, 3); //  yyyymmdd001 format
+
+            // Insert it to DB
+            $create = StoragePurchaseOrders::create([
+                'purchaseOrderNumber' => $PONumber,
+                'withRequisition' => $POForm['withRequisition'],
+                'requisitionId' => $POForm['requisitionId'],
+                'date' => Carbon::now()->format('d/m/Y'),
+                'supplierId' => $POForm['supplierId'],
+                'contactPerson' => $POForm['contactPerson'],
+                'contactNumber' => $POForm['contactNumber'],
+                'withTaxInvoice' => $POForm['withTaxInvoice'],
+                'npwpNumber' => CompanyNPWP::find(1)->npwpNo, //PT IMAM NPWP
+                'taxFeeAdded' => $POForm['taxFeeAdded'],
+                'taxFee' => $totalTax,
+                'shippingFeeAdded' => $totalShippingFee,
+                'shippingFee' => $POForm['shippingFee'],
+                'total' => $finalPrice,
+                'notes' => $POForm['notes'],
+                'insertedAt' => Carbon::now()->format('d/m/Y H:i'),
+                'insertedBy' => $this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
+            ]);
+
+            if($create){
+
+                $insertItemError = false;
+
+                // Insert items
+                foreach ($POItems as $item){
+
+                    Log::info($item);
+
+                    $insert = StoragePurchaseOrderItems::create([
+                        'purchaseOrderId'=>$create->id, //PO id
+                        'withRequisitionItem'=>$item['withRequisitionItem'],
+                        'requisitionItemId'=>$item['requisitionItemId'],
+                        'itemId'=>$item['itemDetail']['id'],
+                        'amountPurchased'=>$item['amount'],
+                        'unitIdPurchased'=>$item['unitId'],
+                        'hasCustomUnit'=>$item['hasCustomUnit'],
+                        'customUnit'=>$item['customUnit'],
+                        'pricePurchased'=>$item['price'],
+                        'currencyFormat'=>$item['currencyFormat'],
+                    ]);
+
+                    if($insert){
+                     //do nothing
+                    } else{
+                        // set an error occurred to true
+                        $insertItemError = true;
+                    }
+                }
+
+                // If any error occurred delete inserted items and PO as we;;
+                if($insertItemError){ // Error response
+
+                    // delete inserted items
+                    StoragePurchaseOrderItems::where('purchaseOrderId',$create->id)->delete();
+
+                    // delete PO
+                    $create->delete();
+
+                    $response['isFailed'] = true;
+                    $response['message'] = 'An error occurred during inserting item';
+                    return response()->json($response,200);
+
+                } else { // Success response
+
+                    //TODO update requisition and notify requested that their request is being processed
+
+                    $response['isFailed'] = false;
+                    $response['message'] = 'Purchase Order has been created successfully';
+                    return response()->json($response,200);
+
+                }
+
+            } else {
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to create purchase order';
+                return response()->json($response,200);
+            }
+
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Form is invalid. Unable to process';
+            return response()->json($response, 200);
+        }
+
+
+    }
+
+    private function POformIsValid($POForm)
+    {
+        $isValid = true;
+
+        // Check requisition and its ID
+        if ($POForm['withRequisition']) {
+            if ($POForm['requisitionId'] == '' || $POForm['requisitionId'] == null) {
+                //Invalid
+                $isValid = false;
+            }
+        }
+
+        // Check supplier
+        if ($POForm['supplierId'] == '' || $POForm['supplierId'] == null) {
+            //Invalid
+            $isValid = false;
+        }
+
+        return $isValid;
+    }
+
+    private function calculateTotalItemPrice($POItems)
+    {
+        $total = 0;
+
+        // Loop thru items
+        foreach ($POItems as $item) {
+            $total = (int)$total + ((int)$item['amount'] * (int)$item['price']);
+        }
+
+        return $total;
+    }
+
+    private function calculateTotalTax($totalItemPrice)
+    {
+        return (int)$totalItemPrice * 10 / 100; //10%
     }
 }

@@ -114,6 +114,12 @@
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
                 purchaseOrderVuexState.selectedSupplier = supplier
 
+                // Insert to PO Form
+                purchaseOrderVuexState.POFormObject.supplierId = supplier.id
+                purchaseOrderVuexState.POFormObject.contactPerson = supplier.contactPerson1
+                purchaseOrderVuexState.POFormObject.contactNumber = supplier.mobileNumber1
+
+
                 self.closeModal()
 
 

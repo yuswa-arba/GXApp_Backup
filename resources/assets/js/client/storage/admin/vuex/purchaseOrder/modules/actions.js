@@ -173,13 +173,16 @@ export default{
                         // Close Modal  & Reset forms
                         state.items = []//resset items lsit
                         state.itemToBeInserted = { //reset item to be inserted data
+                            withRequisitionItem:0,
+                            requisitionItemId:'',
                             itemDetail: {},
-                            amount: '',
-                            hasCustomUnit: 0,
-                            customUnit: '',
-                            unitId: '',
-                            price: '',
-                            currencyFormat: 'IDR'
+                            amount:'',
+                            hasCustomUnit:0,
+                            customUnit:'',
+                            unitId:'',
+                            unitFormat:'',
+                            price:'',
+                            currencyFormat:'IDR'
                         }
 
                         $('#modal-add-item').modal("toggle"); // close modal
