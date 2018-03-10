@@ -139,5 +139,6 @@ Route::prefix('v1/h')->group(function () {
         Route::post('admin/purchaseOrder/create','Admin\PurchaseOrderController@createPurchaseOrder');
         Route::get('admin/purchaseOrder/list','Admin\PurchaseOrderController@purchaseOrderList');
         Route::get('admin/purchaseOrder/detail','Admin\PurchaseOrderController@purchaseOrderDetail');
+        Route::get('admin/purchaseOrder/generate/pdf','Admin\PurchaseOrderController@generatePDF');
     });
 });

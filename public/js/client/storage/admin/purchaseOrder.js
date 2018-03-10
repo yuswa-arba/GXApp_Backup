@@ -3774,6 +3774,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -3873,6 +3874,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         showPurchaseOrderDetail: function showPurchaseOrderDetail(purchaseOrderId) {
             this.$router.push({ name: 'PODetail', params: { id: purchaseOrderId } });
+        },
+        downloadPDF: function downloadPDF(purchaseOrderId) {
+            window.open(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/generate/pdf?id=' + purchaseOrderId, '_blank');
         },
         goToPurchaseOrderForm: function goToPurchaseOrderForm() {
             this.$router.push({ name: 'createNewPO' });
@@ -6131,6 +6135,20 @@ var render = function() {
                               }
                             },
                             [_vm._v("Details")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-outline-primary m-t-10 m-r-20",
+                              on: {
+                                click: function($event) {
+                                  _vm.downloadPDF(purchaseOrder.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Download PDF")]
                           )
                         ])
                       ])

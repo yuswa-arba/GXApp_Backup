@@ -61,6 +61,7 @@
                             </div>
                             <div class="col-lg-1 m-t-20 m-b-20">
                                 <button class="btn btn-outline-primary m-t-10 m-r-20" @click="showPurchaseOrderDetail(purchaseOrder.id)">Details</button>
+                                <button class="btn btn-outline-primary m-t-10 m-r-20" @click="downloadPDF(purchaseOrder.id)">Download PDF</button>
                             </div>
                         </div>
                     </div>
@@ -189,6 +190,9 @@
             },
             showPurchaseOrderDetail(purchaseOrderId){
                 this.$router.push({name: 'PODetail', params: {id: purchaseOrderId}})
+            },
+            downloadPDF(purchaseOrderId){
+              window.open(api_path+'storage/admin/purchaseOrder/generate/pdf?id='+purchaseOrderId,'_blank')
             },
             goToPurchaseOrderForm(){
                 this.$router.push({name: 'createNewPO'})

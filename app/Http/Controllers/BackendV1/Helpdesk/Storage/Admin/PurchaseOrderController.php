@@ -2,43 +2,24 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Admin;
 
-use App\Components\Models\UnitOfMeasurements;
-use App\Components\Transformers\UnitOfMeasurementTransformer;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
-use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Controllers\Controller;
-use App\Storage\Logics\Item\CreateItemLogic;
-use App\Storage\Logics\Item\GetItemListLogic;
 use App\Storage\Logics\PurchaseOrder\CreatePurchaseOrderLogic;
-use App\Storage\Logics\Requisition\GetShopItemDetailLogic;
-use App\Storage\Logics\Requisition\GetShopItemListLogic;
 use App\Storage\Models\StorageItems;
-use App\Storage\Models\StorageItemsCategory;
-use App\Storage\Models\StorageItemTypes;
+use App\Storage\Models\StoragePurchaseOrderItems;
 use App\Storage\Models\StoragePurchaseOrders;
-use App\Storage\Models\StorageRequestCart;
 use App\Storage\Models\StorageRequisition;
-use App\Storage\Models\StorageRequisitionItems;
-use App\Storage\Models\StorageShipments;
 use App\Storage\Models\StorageSuppliers;
-use App\Storage\Models\StorageWarehouses;
-use App\Storage\Transformers\BasicCodeNameTransformer;
 use App\Storage\Transformers\BriefStorageRequisitionListTransformer;
 use App\Storage\Transformers\BriefSupplierTransformer;
-use App\Storage\Transformers\ShipmentTransformer;
 use App\Storage\Transformers\StorageItemBriefDetailTransformer;
-use App\Storage\Transformers\StorageItemDetailTransformer;
-use App\Storage\Transformers\StorageItemInsideCartDetailTransformer;
 use App\Storage\Transformers\StoragePurchaseOrderTransformer;
-use App\Storage\Transformers\StorageRequisitionListTransformer;
 use App\Storage\Transformers\SupplierTransformer;
-use App\Storage\Transformers\WarehouseTransformer;
 use App\Traits\GlobalUtils;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class PurchaseOrderController extends Controller
 {
@@ -109,15 +90,15 @@ class PurchaseOrderController extends Controller
 
             $statusId = '';
 
-            if($request->sortStatus!='' && $request->sortStatus!=null){
+            if ($request->sortStatus != '' && $request->sortStatus != null) {
                 $statusId = $request->sortStatus;
             }
 
             $purchaseOrders = StoragePurchaseOrders::orderBy('id', 'desc')->paginate(30); // default get all
 
-            if($statusId!=''){ // sort by status
+            if ($statusId != '') { // sort by status
 
-                $purchaseOrders = StoragePurchaseOrders::where('statusId',$statusId)->orderBy('id', 'desc')->paginate(30);
+                $purchaseOrders = StoragePurchaseOrders::where('statusId', $statusId)->orderBy('id', 'desc')->paginate(30);
             }
 
             if ($purchaseOrders) {
@@ -149,16 +130,16 @@ class PurchaseOrderController extends Controller
     {
         $response = array();
 
-        $validator = Validator::make($request->all(),[
-            'id'=>'required'
+        $validator = Validator::make($request->all(), [
+            'id' => 'required'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
 
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
 
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         //is valid
@@ -201,7 +182,60 @@ class PurchaseOrderController extends Controller
         $response = array();
     }
 
-    public function availableRequisition(Request $request)
+    public function generatePDF(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+
+            return response()->json($response, 200);
+        }
+
+        //is valid
+        // is valid
+        $user = Auth::user(); //user data
+        $employee = $user->employee; // user's employee data
+
+
+        if ($employee && $employee->hasResigned != 1) {
+
+            $purchaseOrder = StoragePurchaseOrders::find($request->id);
+            $purchaseOrderItems = StoragePurchaseOrderItems::orderBy('id','desc')
+                                                            ->where('purchaseOrderId',$purchaseOrder->id)
+                                                            ->get();
+
+            if($purchaseOrder){
+
+                $pdf = PDF::loadView('layouts.pdf.purchase_order', compact('purchaseOrder','purchaseOrderItems'))
+                    ->setPaper('a4')->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
+                return $pdf->stream($purchaseOrder->purchaseOrderNumber . '.pdf');
+
+            } else {
+
+                /* Return error response */
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to find purchase order';
+                return response()->json($response,200);
+            }
+
+        } else {
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Permission denied';
+            return response()->json($response, 200);
+        }
+
+    }
+
+    public
+    function availableRequisition(Request $request)
     {
         $response = array();
         // is valid
@@ -292,7 +326,8 @@ class PurchaseOrderController extends Controller
         }
     }
 
-    public function supplierList()
+    public
+    function supplierList()
     {
         $response = array();
 
@@ -305,7 +340,8 @@ class PurchaseOrderController extends Controller
         return response()->json($response, 200);
     }
 
-    public function searchSupplier(Request $request)
+    public
+    function searchSupplier(Request $request)
     {
         $response = array();
 
@@ -329,7 +365,8 @@ class PurchaseOrderController extends Controller
         return response()->json($response, 200);
     }
 
-    public function searchItem(Request $request)
+    public
+    function searchItem(Request $request)
     {
         $search = $request->v;
 
