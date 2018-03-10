@@ -2633,7 +2633,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
 
 
 
@@ -4309,55 +4308,51 @@ var render = function() {
         [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-lg-4" }, [
-              _c("div", { staticClass: "col-lg-4" }, [
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.sortApproval,
-                        expression: "sortApproval"
-                      }
-                    ],
-                    staticClass: "btn btn-outline-primary h-35 pull-left",
-                    staticStyle: { width: "180px" },
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.sortApproval = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                        function($event) {
-                          _vm.sortRequisition()
-                        }
-                      ]
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.sortApproval,
+                      expression: "sortApproval"
                     }
-                  },
-                  [
-                    _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
-                    _vm._v(" "),
-                    _vm._l(_vm.approvalStatuses, function(approval) {
-                      return _c(
-                        "option",
-                        { domProps: { value: approval.id } },
-                        [_vm._v(_vm._s(approval.name))]
-                      )
-                    })
                   ],
-                  2
-                )
-              ])
+                  staticClass: "btn btn-outline-primary h-35 pull-left",
+                  staticStyle: { width: "180px" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.sortApproval = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        _vm.sortRequisition()
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.approvalStatuses, function(approval) {
+                    return _c("option", { domProps: { value: approval.id } }, [
+                      _vm._v(_vm._s(approval.name))
+                    ])
+                  })
+                ],
+                2
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4" }, [
@@ -4368,10 +4363,12 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _vm.requisitions.length > 0
-                ? _c("h4", { staticClass: "text-master" }, [_vm._v(".")])
-                : _c("h4", { staticClass: "text-master" }, [
-                    _vm._v("No Requisition Found")
-                  ])
+                ? _c("h4", { staticClass: "text-master" })
+                : _vm.isSearchingRequisition
+                  ? _c("h4", { staticClass: "text-master" })
+                  : _c("h4", { staticClass: "text-master" }, [
+                      _vm._v("No Requisition Found")
+                    ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-4" }, [

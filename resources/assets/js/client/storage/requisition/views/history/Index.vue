@@ -3,21 +3,20 @@
         <div class="col-lg-12" style="margin-top: 50px">
             <div class="row">
                 <div class="col-lg-4">
-                    <div class="col-lg-4">
-                        <select class="btn btn-outline-primary h-35 pull-left"
-                                style="width: 180px"
-                                @change="sortRequisition()"
-                                v-model="sortApproval">
-                            <option value="">All</option>
-                            <option :value="approval.id" v-for="approval in approvalStatuses">{{approval.name}}</option>
-                        </select>
-                    </div>
+                    <select class="btn btn-outline-primary h-35 pull-left"
+                            style="width: 180px"
+                            @change="sortRequisition()"
+                            v-model="sortApproval">
+                        <option value="">All</option>
+                        <option :value="approval.id" v-for="approval in approvalStatuses">{{approval.name}}</option>
+                    </select>
                 </div>
                 <div class="col-lg-4">
 
                     <h4 class="text-master" v-if="isSearchingRequisition">Searching Requisition.. Please Wait..</h4>
 
-                    <h4 class="text-master" v-if="requisitions.length>0">.</h4>
+                    <h4 class="text-master" v-if="requisitions.length>0"></h4>
+                    <h4 class="text-master" v-else-if="isSearchingRequisition"></h4>
                     <h4 class="text-master" v-else="">No Requisition Found</h4>
 
                 </div>

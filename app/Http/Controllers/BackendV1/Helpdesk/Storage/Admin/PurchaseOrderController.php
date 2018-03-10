@@ -15,6 +15,7 @@ use App\Storage\Logics\Requisition\GetShopItemListLogic;
 use App\Storage\Models\StorageItems;
 use App\Storage\Models\StorageItemsCategory;
 use App\Storage\Models\StorageItemTypes;
+use App\Storage\Models\StoragePurchaseOrders;
 use App\Storage\Models\StorageRequestCart;
 use App\Storage\Models\StorageRequisition;
 use App\Storage\Models\StorageRequisitionItems;
@@ -28,6 +29,7 @@ use App\Storage\Transformers\ShipmentTransformer;
 use App\Storage\Transformers\StorageItemBriefDetailTransformer;
 use App\Storage\Transformers\StorageItemDetailTransformer;
 use App\Storage\Transformers\StorageItemInsideCartDetailTransformer;
+use App\Storage\Transformers\StoragePurchaseOrderTransformer;
 use App\Storage\Transformers\StorageRequisitionListTransformer;
 use App\Storage\Transformers\SupplierTransformer;
 use App\Storage\Transformers\WarehouseTransformer;
@@ -53,16 +55,16 @@ class PurchaseOrderController extends Controller
     {
         $response = array();
 
-        $validator = Validator::make($request->all(),[
-            'POForm'=>'required',
-            'POItems'=>'required'
+        $validator = Validator::make($request->all(), [
+            'POForm' => 'required',
+            'POItems' => 'required'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
 
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
+            return response()->json($response, 200);
 
         }
 
@@ -87,6 +89,110 @@ class PurchaseOrderController extends Controller
     public function purchaseOrderList(Request $request)
     {
         $response = array();
+
+        $validator = Validator::make($request->all(), [
+
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        // is valid
+        $user = Auth::user(); //user data
+        $employee = $user->employee; // user's employee data
+
+
+        if ($employee && $employee->hasResigned != 1) {
+
+            $statusId = '';
+
+            if($request->sortStatus!='' && $request->sortStatus!=null){
+                $statusId = $request->sortStatus;
+            }
+
+            $purchaseOrders = StoragePurchaseOrders::orderBy('id', 'desc')->paginate(30); // default get all
+
+            if($statusId!=''){ // sort by status
+
+                $purchaseOrders = StoragePurchaseOrders::where('statusId',$statusId)->orderBy('id', 'desc')->paginate(30);
+            }
+
+            if ($purchaseOrders) {
+
+                $response['isFailed'] = false;
+                $response['message'] = 'Success';
+                $response['purchaseOrders'] = fractal($purchaseOrders, new StoragePurchaseOrderTransformer());
+
+                return response()->json($response, 200);
+
+            } else {
+
+                $response['isFailed'] = true;
+                $response['message'] = 'No purchase order found';
+                return response()->json($response, 200);
+
+            }
+
+        } else {
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Permission denied';
+            return response()->json($response, 200);
+        }
+
+    }
+
+    public function purchaseOrderDetail(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(),[
+            'id'=>'required'
+        ]);
+
+        if($validator->fails()){
+
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+
+            return response()->json($response,200);
+        }
+
+        //is valid
+        // is valid
+        $user = Auth::user(); //user data
+        $employee = $user->employee; // user's employee data
+
+
+        if ($employee && $employee->hasResigned != 1) {
+
+            $purchaseOrder = StoragePurchaseOrders::find($request->id);
+
+            if ($purchaseOrder) {
+
+                $response['isFailed'] = false;
+                $response['message'] = 'Success';
+                $response['purchaseOrder'] = fractal($purchaseOrder, new StoragePurchaseOrderTransformer())->includePurchaseOrderItems();
+
+                return response()->json($response, 200);
+
+            } else {
+
+                $response['isFailed'] = true;
+                $response['message'] = 'No purchase order found';
+                return response()->json($response, 200);
+
+            }
+
+        } else {
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Permission denied';
+            return response()->json($response, 200);
+        }
 
     }
 

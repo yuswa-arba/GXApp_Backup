@@ -31,6 +31,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('unit/list', 'Misc\ListController@unitList');
         Route::get('status/list', 'Misc\ListController@statusList');
         Route::get('approvalStatus/list','Misc\ListController@approvaStatuslList');
+        Route::get('purchaseOrderStatus/list','Misc\ListController@purchaseOrderStatusList');
 
         Route::post('create/itemCategory', 'Misc\CreateController@createItemCategory');
         Route::post('create/itemType', 'Misc\CreateController@createItemType');
@@ -136,7 +137,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('admin/purchaseOrder/supplier/search','Admin\PurchaseOrderController@searchSupplier');
         Route::get('admin/purchaseOrder/item/search','Admin\PurchaseOrderController@searchItem');
         Route::post('admin/purchaseOrder/create','Admin\PurchaseOrderController@createPurchaseOrder');
-
-
+        Route::get('admin/purchaseOrder/list','Admin\PurchaseOrderController@purchaseOrderList');
+        Route::get('admin/purchaseOrder/detail','Admin\PurchaseOrderController@purchaseOrderDetail');
     });
 });

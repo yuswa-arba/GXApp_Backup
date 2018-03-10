@@ -56,7 +56,7 @@ class CreatePurchaseOrderLogic extends CreateUseCase
             // Generate PO Number
             $latestRequisition = StoragePurchaseOrders::orderBy('id', 'desc')->first();
             $incrementNumber = $latestRequisition ? ($latestRequisition->id + 1) : 1;//get latest id and add by 1
-            $PONumber = Carbon::now()->format('Ymd') . $this->zeroPrefix($incrementNumber, 3); //  yyyymmdd001 format
+            $PONumber = 'PO'.Carbon::now()->format('ymd') . $this->zeroPrefix($incrementNumber, 3); //  yyyymmdd001 format
 
             // Insert it to DB
             $create = StoragePurchaseOrders::create([
@@ -71,9 +71,10 @@ class CreatePurchaseOrderLogic extends CreateUseCase
                 'npwpNumber' => CompanyNPWP::find(1)->npwpNo, //PT IMAM NPWP
                 'taxFeeAdded' => $POForm['taxFeeAdded'],
                 'taxFee' => $totalTax,
-                'shippingFeeAdded' => $totalShippingFee,
-                'shippingFee' => $POForm['shippingFee'],
+                'shippingFeeAdded' => $POForm['shippingFeeAdded'],
+                'shippingFee' => $totalShippingFee,
                 'total' => $finalPrice,
+                'currencyFormat'=>$POForm['currencyFormat'],
                 'notes' => $POForm['notes'],
                 'insertedAt' => Carbon::now()->format('d/m/Y H:i'),
                 'insertedBy' => $this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
@@ -85,8 +86,6 @@ class CreatePurchaseOrderLogic extends CreateUseCase
 
                 // Insert items
                 foreach ($POItems as $item){
-
-                    Log::info($item);
 
                     $insert = StoragePurchaseOrderItems::create([
                         'purchaseOrderId'=>$create->id, //PO id

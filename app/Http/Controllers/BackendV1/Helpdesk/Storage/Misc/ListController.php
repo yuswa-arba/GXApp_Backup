@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Storage\Models\StorageItemsCategory;
 use App\Storage\Models\StorageItemStatus;
 use App\Storage\Models\StorageItemTypes;
+use App\Storage\Models\StoragePurchaseOrderStatus;
 use App\Storage\Models\StorageRequisitionApproval;
 use App\Storage\Models\StorageShipments;
 use App\Storage\Models\StorageSuppliers;
@@ -136,6 +137,19 @@ class ListController extends Controller
         $response['isFailed'] = false;
         $response['message'] = 'Success';
         $response['approvalStatuses'] = fractal($approvalStatuses, new BasicComponentTrasnformer());
+
+        return response()->json($response, 200);
+
+    }
+
+    public function purchaseOrderStatusList()
+    {
+        $response = array();
+
+        $purchaseOrderStatus = StoragePurchaseOrderStatus::all();
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['purchaseOrderStatuses'] = fractal($purchaseOrderStatus, new BasicComponentTrasnformer());
 
         return response()->json($response, 200);
 

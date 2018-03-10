@@ -17,6 +17,16 @@ class StoragePurchaseOrderItems extends Model
         return $this->belongsTo(StoragePurchaseOrders::class,'purchaseOrderId');
     }
 
+    public function unitPurchased()
+    {
+        return $this->belongsTo(UnitOfMeasurements::class,'unitIdPurchased');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(StorageItems::class,'itemId');
+    }
+
     public function itemTrack()
     {
         return $this->hasOne(StoragePurchaseOrderItemTrack::class,'purchaseOrderItemId');

@@ -26,18 +26,26 @@ export default{
                 }
             })
     },
+    getPurchaseOrderStatuses(state, payload){
+        get(api_path + 'storage/purchaseOrderStatus/list')
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    state.purchaseOrderStatuses = res.data.purchaseOrderStatuses.data
+                }
+            })
+    },
     getRequisitionList(state, payload){
         get(api_path + 'storage/admin/purchaseOrder/requisition')
             .then((res) => {
                 if (!res.data.isFailed) {
-                    if (res.data.requisitions.data) {
+                    if (res.data.purchaseOrders.data) {
 
-                        state.requisitions = []
+                        state.purchaseOrders = []
 
-                        //insert requisitions
-                        let requisitionData = res.data.requisitions.data
-                        if (requisitionData) {
-                            state.requisitions = state.requisitions.concat(requisitionData)
+                        //insert purchaseOrders
+                        let purchaseOrderData = res.data.purchaseOrders.data
+                        if (purchaseOrderData) {
+                            state.purchaseOrders = state.purchaseOrders.concat(purchaseOrderData)
                         }
                     }
                 }
@@ -47,14 +55,14 @@ export default{
         get(api_path + 'storage/admin/purchaseOrder/requisition/search?v=' + payload.searchRequisitionText)
             .then((res) => {
                 if (!res.data.isFailed) {
-                    if (res.data.requisitions.data) {
+                    if (res.data.purchaseOrders.data) {
 
-                        state.requisitions = []
+                        state.purchaseOrders = []
 
-                        //insert requisitions
-                        let requisitionData = res.data.requisitions.data
-                        if (requisitionData) {
-                            state.requisitions = state.requisitions.concat(requisitionData)
+                        //insert purchaseOrders
+                        let purchaseOrderData = res.data.purchaseOrders.data
+                        if (purchaseOrderData) {
+                            state.purchaseOrders = state.purchaseOrders.concat(purchaseOrderData)
                         }
                     }
                 }
@@ -182,6 +190,50 @@ export default{
 
                 state.isCreatingPurchaseOrder = false
 
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    getPurchaseOrderList(state,payload){
+
+        let sortStatus = ''
+        if (payload.sortStatus) {
+            sortStatus = payload.sortStatus
+        }
+
+        get(api_path + 'storage/admin/purchaseOrder/list?sortStatus=' + sortStatus)
+            .then((res) => {
+
+                state.isSearchingPO = true
+
+                if (!res.data.isFailed) {
+                    if (res.data.purchaseOrders.data) {
+
+                        state.purchaseOrders = []
+
+                        //insert purchaseOrders
+                        let purchaseOrderData = res.data.purchaseOrders.data
+                        if (purchaseOrderData) {
+                            state.purchaseOrders = state.purchaseOrders.concat(purchaseOrderData)
+                        }
+
+                        //insert pagination
+                        state.paginationMeta = res.data.purchaseOrders.meta.pagination
+                    }
+
+                    state.isSearchingPO = false
+
+                } else {
+                    state.isSearchingPO = false
+                }
+            })
+            .catch((err)=>{
+                state.isSearchingPO = true
                 $('.page-container').pgNotification({
                     style: 'flip',
                     message: err.message,

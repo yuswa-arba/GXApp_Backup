@@ -29,6 +29,7 @@ class CreateStoragePurchaseOrdersTable extends Migration
             $table->tinyInteger('shippingFeeAdded')->default(0);
             $table->string('shippingFee')->nullable();
             $table->string('total');
+            $table->string('currencyFormat')->nullable();
             $table->string('notes')->nullable();
             $table->integer('statusId')->defaut(1);
             $table->string('insertedAt');

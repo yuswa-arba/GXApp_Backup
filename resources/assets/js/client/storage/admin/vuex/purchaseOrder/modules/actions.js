@@ -9,6 +9,7 @@ export default{
         commit('getNPWPInformation')
         commit('getCurrencies')
         commit('getUnitOfMeasurements')
+        commit('getPurchaseOrderStatuses')
     },
     showRequisitionListModal({commit, state}, payload){
 

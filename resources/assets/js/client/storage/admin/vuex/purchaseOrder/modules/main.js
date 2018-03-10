@@ -13,8 +13,19 @@ export default {
         selectedRequisition: {},
         suppliers: [],
         currencies:[],
+        purchaseOrderStatuses:[],
         unitOfMeasurements:[],
         selectedSupplier: {},
+        purchaseOrders:[],
+        isSearchingPO:false,
+        paginationMeta:{
+            total: '',
+            count: '',
+            per_page: '',
+            current_page: '',
+            total_pages: '',
+            links: []
+        },
         items: [],
         itemToBeInserted: { // Make sure when change this, any reference to this object has to be updated as well
             withRequisitionItem:0,
