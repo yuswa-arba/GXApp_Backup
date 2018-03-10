@@ -22,6 +22,9 @@ class CreateStoragePurchaseOrdersTable extends Migration
             $table->integer('supplierId');
             $table->string('contactPerson')->nullable();
             $table->string('contactNumber')->nullable();
+            $table->integer('warehouseId');
+            $table->string('recipientName')->nullable();
+            $table->string('recipientNumber')->nullable();
             $table->tinyInteger('withTaxInvoice')->default(0);
             $table->string('npwpNumber')->nullable();
             $table->tinyInteger('taxFeeAdded')->default(0);

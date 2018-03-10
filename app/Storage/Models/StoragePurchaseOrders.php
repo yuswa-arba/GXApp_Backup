@@ -23,6 +23,12 @@ class StoragePurchaseOrders extends Model
         return $this->belongsTo(StorageSuppliers::class,'supplierId');
     }
 
+
+    public function warehouse()
+    {
+        return $this->belongsTo(StorageWarehouses::class,'warehouseId');
+    }
+
     public function requisition()
     {
         return $this->belongsTo(StorageRequisition::class,'requisitionId');

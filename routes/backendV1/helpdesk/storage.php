@@ -135,6 +135,8 @@ Route::prefix('v1/h')->group(function () {
         Route::get('admin/purchaseOrder/requisition/search','Admin\PurchaseOrderController@searchAvailableRequisition');
         Route::get('admin/purchaseOrder/supplier','Admin\PurchaseOrderController@supplierList');
         Route::get('admin/purchaseOrder/supplier/search','Admin\PurchaseOrderController@searchSupplier');
+        Route::get('admin/purchaseOrder/warehouse','Admin\PurchaseOrderController@warehouseList');
+        Route::get('admin/purchaseOrder/warehouse/search','Admin\PurchaseOrderController@searchWarehouse');
         Route::get('admin/purchaseOrder/item/search','Admin\PurchaseOrderController@searchItem');
         Route::post('admin/purchaseOrder/create','Admin\PurchaseOrderController@createPurchaseOrder');
         Route::get('admin/purchaseOrder/list','Admin\PurchaseOrderController@purchaseOrderList');

@@ -10,11 +10,14 @@ use App\Storage\Models\StoragePurchaseOrderItems;
 use App\Storage\Models\StoragePurchaseOrders;
 use App\Storage\Models\StorageRequisition;
 use App\Storage\Models\StorageSuppliers;
+use App\Storage\Models\StorageWarehouses;
 use App\Storage\Transformers\BriefStorageRequisitionListTransformer;
 use App\Storage\Transformers\BriefSupplierTransformer;
 use App\Storage\Transformers\StorageItemBriefDetailTransformer;
 use App\Storage\Transformers\StoragePurchaseOrderTransformer;
 use App\Storage\Transformers\SupplierTransformer;
+use App\Storage\Transformers\WarehouseTransformer;
+use App\Traits\GlobalConfig;
 use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -213,7 +216,14 @@ class PurchaseOrderController extends Controller
 
             if($purchaseOrder){
 
-                $pdf = PDF::loadView('layouts.pdf.purchase_order', compact('purchaseOrder','purchaseOrderItems'))
+                //INFORMATION
+
+                $signatureName = GlobalConfig::$PURCHASE_ORDER_INFO['SIGNATURE_NAME'];
+                $signatureImg = GlobalConfig::$PURCHASE_ORDER_INFO['SIGNATURE_IMG'];
+                $signaturePosition = GlobalConfig::$PURCHASE_ORDER_INFO['POSITION'];
+
+
+                $pdf = PDF::loadView('layouts.pdf.purchase_order', compact('purchaseOrder','purchaseOrderItems','signatureName','signatureImg','signaturePosition'))
                     ->setPaper('a4')->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
                 return $pdf->stream($purchaseOrder->purchaseOrderNumber . '.pdf');
 
@@ -326,8 +336,7 @@ class PurchaseOrderController extends Controller
         }
     }
 
-    public
-    function supplierList()
+    public function supplierList()
     {
         $response = array();
 
@@ -364,6 +373,44 @@ class PurchaseOrderController extends Controller
 
         return response()->json($response, 200);
     }
+
+    public function warehouseList()
+    {
+        $response = array();
+
+        $suppliers = StorageWarehouses::orderBy('name', 'asc')->get();
+
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['warehouses'] = fractal($suppliers, new WarehouseTransformer());
+
+        return response()->json($response, 200);
+    }
+
+    public
+    function searchWarehouse(Request $request)
+    {
+        $response = array();
+
+        $search = '';
+        if ($request->get('v') != '' && $request->get('v') != null) {
+            $search = $request->get('v');
+        }
+
+        $suppliers = StorageWarehouses::where('isDeleted', 0)
+            ->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orderBy('name', 'asc')
+            ->get();
+
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['warehouses'] = fractal($suppliers, new WarehouseTransformer());
+
+        return response()->json($response, 200);
+    }
+
 
     public
     function searchItem(Request $request)

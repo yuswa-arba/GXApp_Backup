@@ -23,6 +23,10 @@ export default{
         $('#modal-select-supplier').modal('show')
 
     },
+    showWarehouseListModal({commit,state},payload){
+        commit('getWarehouseList')
+        $('#modal-select-warehouse').modal('show')
+    },
     startAddingItems({commit, state}, payload){
 
         //validate and check pre form object
@@ -41,6 +45,26 @@ export default{
                     } else {
                         // Callback error
                         cb('Supplier not found', '')
+                    }
+                },
+                function (cb) {
+                    // check if with warehouse
+                    if (state.selectedWarehouse.id != null) {
+
+                        // Insert to POFormObject
+                        state.POFormObject.warehouseId = state.selectedWarehouse.id
+
+                        if(state.POFormObject.recipientName!=''){
+                            // Callback success
+                            cb(null, '')
+                        } else {
+                            // Callback error
+                            cb('Recipient cannot be empty', '')
+                        }
+
+                    } else {
+                        // Callback error
+                        cb('Warehouse not found', '')
                     }
                 },
                 function (cb) {

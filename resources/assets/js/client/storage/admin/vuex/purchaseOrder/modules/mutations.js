@@ -104,6 +104,42 @@ export default{
                 }
             })
     },
+    getWarehouseList(state, payload){
+        get(api_path + 'storage/admin/purchaseOrder/warehouse')
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    if (res.data.warehouses.data) {
+
+                        state.warehouses = []
+
+                        //insert suppliers
+                        let warehouseData = res.data.warehouses.data
+                        if (warehouseData) {
+                            state.warehouses = state.warehouses.concat(warehouseData)
+                        }
+
+                    }
+                }
+            })
+    },
+    searchWarehouse(state, payload){
+        get(api_path + 'storage/admin/purchaseOrder/warehouse/search?v=' + payload.searchWarehouseText)
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    if (res.data.warehouses.data) {
+
+                        state.warehouses = []
+
+                        //insert suppliers
+                        let warehouseData = res.data.warehouses.data
+                        if (warehouseData) {
+                            state.warehouses = state.warehouses.concat(warehouseData)
+                        }
+
+                    }
+                }
+            })
+    },
     searchItems(state, payload){
         get(api_path + 'storage/admin/purchaseOrder/item/search?v=' + payload.searchItemText)
             .then((res) => {

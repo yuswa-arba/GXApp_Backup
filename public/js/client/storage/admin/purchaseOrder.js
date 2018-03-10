@@ -3363,6 +3363,36 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3380,6 +3410,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
         POFormObject: 'POFormObject',
         selectedSupplier: 'selectedSupplier',
+        selectedWarehouse: 'selectedWarehouse',
         selectedRequisition: 'selectedRequisition',
         currencies: 'currencies'
     })),
@@ -3400,6 +3431,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var self = this;
             self.$store.dispatch({
                 type: 'purchaseOrder/showSupplierListModal'
+            });
+        },
+        attemptSelectWarehouse: function attemptSelectWarehouse() {
+            var self = this;
+            self.$store.dispatch({
+                type: 'purchaseOrder/showWarehouseListModal'
             });
         },
         withRequisitionCbOnChange: function withRequisitionCbOnChange() {
@@ -3670,6 +3707,133 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             purchaseOrderVuexState.POFormObject.supplierId = supplier.id;
             purchaseOrderVuexState.POFormObject.contactPerson = supplier.contactPerson1;
             purchaseOrderVuexState.POFormObject.contactNumber = supplier.mobileNumber1;
+
+            self.closeModal();
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectWarehouseModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            searchWarehouseText: ''
+        };
+    },
+    created: function created() {},
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
+        warehouses: 'warehouses'
+    })),
+    mounted: function mounted() {},
+
+
+    methods: {
+        closeModal: function closeModal() {
+            $('#modal-select-warehouse').modal("toggle"); // close modal
+        },
+        searchWarehouse: function searchWarehouse() {
+            var self = this;
+            self.$store.commit({
+                type: 'purchaseOrder/searchWarehouse',
+                searchWarehouseText: self.searchWarehouseText
+            });
+        },
+        selectWarehouse: function selectWarehouse(warehouse) {
+
+            var self = this;
+
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+            purchaseOrderVuexState.selectedWarehouse = warehouse;
+
+            // Insert to PO Form
+            purchaseOrderVuexState.POFormObject.warehouseId = warehouse.id;
 
             self.closeModal();
         }
@@ -4092,10 +4256,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_purchaseOrder_SelectRequisitionModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_purchaseOrder_SelectRequisitionModal_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_purchaseOrder_SelectSupplierModal_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectSupplierModal.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_purchaseOrder_SelectSupplierModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_purchaseOrder_SelectSupplierModal_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_POForm_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/POForm.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_POForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_POForm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_InsertItemsForm_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/InsertItemsForm.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_InsertItemsForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_InsertItemsForm_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_SelectWarehouseModal_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectWarehouseModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_SelectWarehouseModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_SelectWarehouseModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_POForm_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/POForm.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_POForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_POForm_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_purchaseOrder_InsertItemsForm_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/components/purchaseOrder/InsertItemsForm.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_purchaseOrder_InsertItemsForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_purchaseOrder_InsertItemsForm_vue__);
 //
 //
 //
@@ -4120,6 +4286,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
+
 
 
 
@@ -4128,10 +4297,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: {
-        'po-form': __WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_POForm_vue___default.a,
-        'insert-items-form': __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_InsertItemsForm_vue___default.a,
+        'po-form': __WEBPACK_IMPORTED_MODULE_4__components_purchaseOrder_POForm_vue___default.a,
+        'insert-items-form': __WEBPACK_IMPORTED_MODULE_5__components_purchaseOrder_InsertItemsForm_vue___default.a,
         'select-requisition-modal': __WEBPACK_IMPORTED_MODULE_1__components_purchaseOrder_SelectRequisitionModal_vue___default.a,
-        'select-supplier-modal': __WEBPACK_IMPORTED_MODULE_2__components_purchaseOrder_SelectSupplierModal_vue___default.a
+        'select-supplier-modal': __WEBPACK_IMPORTED_MODULE_2__components_purchaseOrder_SelectSupplierModal_vue___default.a,
+        'select-warehouse-modal': __WEBPACK_IMPORTED_MODULE_3__components_purchaseOrder_SelectWarehouseModal_vue___default.a
     },
     data: function data() {
         return {};
@@ -5722,7 +5892,9 @@ var render = function() {
       _vm._v(" "),
       _c("select-requisition-modal"),
       _vm._v(" "),
-      _c("select-supplier-modal")
+      _c("select-supplier-modal"),
+      _vm._v(" "),
+      _c("select-warehouse-modal")
     ],
     1
   )
@@ -6183,6 +6355,194 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-1f057c69", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b345bca\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectWarehouseModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: {
+        id: "modal-select-warehouse",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _c("div", { staticClass: "modal-header" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close",
+                attrs: {
+                  type: "button",
+                  "data-dismiss": "modal",
+                  "aria-hidden": "true"
+                },
+                on: {
+                  click: function($event) {
+                    _vm.closeModal()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "pg-close" })]
+            ),
+            _vm._v(" "),
+            _c("p", { staticClass: "text-left p-b-5 fs-16" }, [
+              _vm._v("Select Warehouse")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "input-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchWarehouseText,
+                        expression: "searchWarehouseText"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { height: "40px" },
+                    attrs: {
+                      type: "text",
+                      id: "search-warehouse-box",
+                      placeholder: "Search Warehouse"
+                    },
+                    domProps: { value: _vm.searchWarehouseText },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k($event.keyCode, "enter", 13, $event.key)
+                        ) {
+                          return null
+                        }
+                        _vm.searchWarehouse()
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.searchWarehouseText = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "input-group-addon primary",
+                      on: {
+                        click: function($event) {
+                          _vm.searchWarehouse()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-search cursor" })]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "card no-border" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "card card-default" }, [
+                      _c("div", { staticClass: "card-block no-padding" }, [
+                        _c("div", { staticClass: "scrollable" }, [
+                          _c("div", { staticStyle: { height: "500px" } }, [
+                            _c(
+                              "div",
+                              { staticClass: "row" },
+                              _vm._l(_vm.warehouses, function(
+                                warehouse,
+                                index
+                              ) {
+                                return _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "col-lg-12 border-bottom-grey select-hover-warning",
+                                    staticStyle: { padding: "10px 5px" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.selectWarehouse(warehouse)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("div", { staticClass: "row" }, [
+                                      _c("div", { staticClass: "col-lg-5" }, [
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass:
+                                              "text-black bold m-b-0 fs-16"
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                                                                    " +
+                                                _vm._s(warehouse.name)
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("p", [
+                                          _vm._v(_vm._s(warehouse.address))
+                                        ])
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("div", { staticClass: "col-lg-4" }, [
+                                        _c("p", [
+                                          _vm._v(
+                                            _vm._s(warehouse.country) +
+                                              "," +
+                                              _vm._s(warehouse.city)
+                                          )
+                                        ])
+                                      ])
+                                    ])
+                                  ]
+                                )
+                              })
+                            )
+                          ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-2b345bca", module.exports)
   }
 }
 
@@ -7523,9 +7883,124 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
+                _c("div", { staticClass: "col-lg-12" }, [
+                  _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
+                    _vm._v("2. Select Warehouse")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "input-group" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.selectedWarehouse.name,
+                          expression: "selectedWarehouse.name"
+                        }
+                      ],
+                      staticClass: "form-control text-black",
+                      staticStyle: { height: "40px" },
+                      attrs: {
+                        type: "text",
+                        readonly: "",
+                        placeholder: "Search Warehouse "
+                      },
+                      domProps: { value: _vm.selectedWarehouse.name },
+                      on: {
+                        click: function($event) {
+                          _vm.attemptSelectWarehouse()
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.selectedWarehouse,
+                            "name",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        staticClass: "input-group-addon primary",
+                        on: {
+                          click: function($event) {
+                            _vm.attemptSelectWarehouse()
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fa fa-mouse-pointer cursor" })]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group m-t-10" }, [
+                    _c("label", [_vm._v("Recipient Name")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.POFormObject.recipientName,
+                          expression: "POFormObject.recipientName"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "text", id: "extra-recipient-person" },
+                      domProps: { value: _vm.POFormObject.recipientName },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.POFormObject,
+                            "recipientName",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v("Recipient Number")]),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.POFormObject.recipientNumber,
+                          expression: "POFormObject.recipientNumber"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: { type: "number", id: "extra-recipient-number" },
+                      domProps: { value: _vm.POFormObject.recipientNumber },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.POFormObject,
+                            "recipientNumber",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
+                  ])
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "col-lg-12 m-t-10" }, [
                   _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
-                    _vm._v("2. Select Requisition")
+                    _vm._v("3. Select Requisition")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "checkbox check-success " }, [
@@ -7644,7 +8119,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-lg-12 m-t-10" }, [
                   _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
-                    _vm._v("3. Tax Invoice")
+                    _vm._v("4. Tax Invoice")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "checkbox check-success " }, [
@@ -7765,7 +8240,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-lg-12 m-t-10" }, [
                   _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
-                    _vm._v("4. Notes ")
+                    _vm._v("5. Notes ")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group m-t-10" }, [
@@ -7799,7 +8274,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "col-lg-12 m-t-10" }, [
                   _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
-                    _vm._v("5. Currency ")
+                    _vm._v("6. Currency ")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group m-t-10" }, [
@@ -23504,6 +23979,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectWarehouseModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectWarehouseModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b345bca\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/components/purchaseOrder/SelectWarehouseModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/storage/admin/components/purchaseOrder/SelectWarehouseModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2b345bca", Component.options)
+  } else {
+    hotAPI.reload("data-v-2b345bca", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/storage/admin/purchaseOrder.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -23757,9 +24281,16 @@ module.exports = Component.exports
         commit('getSupplierList');
         $('#modal-select-supplier').modal('show');
     },
-    startAddingItems: function startAddingItems(_ref4, payload) {
+    showWarehouseListModal: function showWarehouseListModal(_ref4, payload) {
         var commit = _ref4.commit,
             state = _ref4.state;
+
+        commit('getWarehouseList');
+        $('#modal-select-warehouse').modal('show');
+    },
+    startAddingItems: function startAddingItems(_ref5, payload) {
+        var commit = _ref5.commit,
+            state = _ref5.state;
 
 
         //validate and check pre form object
@@ -23776,6 +24307,24 @@ module.exports = Component.exports
             } else {
                 // Callback error
                 cb('Supplier not found', '');
+            }
+        }, function (cb) {
+            // check if with warehouse
+            if (state.selectedWarehouse.id != null) {
+
+                // Insert to POFormObject
+                state.POFormObject.warehouseId = state.selectedWarehouse.id;
+
+                if (state.POFormObject.recipientName != '') {
+                    // Callback success
+                    cb(null, '');
+                } else {
+                    // Callback error
+                    cb('Recipient cannot be empty', '');
+                }
+            } else {
+                // Callback error
+                cb('Warehouse not found', '');
             }
         }, function (cb) {
 
@@ -23818,16 +24367,16 @@ module.exports = Component.exports
             }
         });
     },
-    attemptAddItemModal: function attemptAddItemModal(_ref5, payload) {
-        var commit = _ref5.commit,
-            state = _ref5.state;
+    attemptAddItemModal: function attemptAddItemModal(_ref6, payload) {
+        var commit = _ref6.commit,
+            state = _ref6.state;
 
         //show modal
         $('#modal-add-item').modal('show');
     },
-    insertItemToPO: function insertItemToPO(_ref6, payload) {
-        var commit = _ref6.commit,
-            state = _ref6.state;
+    insertItemToPO: function insertItemToPO(_ref7, payload) {
+        var commit = _ref7.commit,
+            state = _ref7.state;
 
 
         //validate and check object before insert into PO Items
@@ -23960,10 +24509,12 @@ module.exports = Component.exports
         requisitions: [],
         selectedRequisition: {},
         suppliers: [],
+        warehouses: [],
         currencies: [],
         purchaseOrderStatuses: [],
         unitOfMeasurements: [],
         selectedSupplier: {},
+        selectedWarehouse: {},
         purchaseOrders: [],
         isSearchingPO: false,
         paginationMeta: {
@@ -23991,6 +24542,9 @@ module.exports = Component.exports
             supplierId: '',
             contactPerson: '',
             contactNumber: '',
+            warehouseId: '',
+            recipientName: '',
+            recipientNumber: '',
             requisitionId: '',
             approvalNumber: '',
             withRequisition: 1,
@@ -24115,6 +24669,38 @@ module.exports = Component.exports
                     var suppliersData = res.data.suppliers.data;
                     if (suppliersData) {
                         state.suppliers = state.suppliers.concat(suppliersData);
+                    }
+                }
+            }
+        });
+    },
+    getWarehouseList: function getWarehouseList(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/warehouse').then(function (res) {
+            if (!res.data.isFailed) {
+                if (res.data.warehouses.data) {
+
+                    state.warehouses = [];
+
+                    //insert suppliers
+                    var warehouseData = res.data.warehouses.data;
+                    if (warehouseData) {
+                        state.warehouses = state.warehouses.concat(warehouseData);
+                    }
+                }
+            }
+        });
+    },
+    searchWarehouse: function searchWarehouse(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/warehouse/search?v=' + payload.searchWarehouseText).then(function (res) {
+            if (!res.data.isFailed) {
+                if (res.data.warehouses.data) {
+
+                    state.warehouses = [];
+
+                    //insert suppliers
+                    var warehouseData = res.data.warehouses.data;
+                    if (warehouseData) {
+                        state.warehouses = state.warehouses.concat(warehouseData);
                     }
                 }
             }

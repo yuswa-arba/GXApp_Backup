@@ -2928,8 +2928,8 @@ hr.dotted {
 ------------------------------------
  */
 .normal {
-   font-weight: normal;
- }
+  font-weight: normal;
+}
 .semi-bold {
   font-weight: 400 !important;
 }

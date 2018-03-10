@@ -38,8 +38,38 @@
                                                v-model="POFormObject.contactNumber">
                                     </div>
                                 </div>
+                                <div class="col-lg-12">
+                                    <p class="text-black text-uppercase fs-11">2. Select Warehouse</p>
+
+                                    <div class="input-group">
+                                        <input type="text" style="height: 40px;"
+                                               class="form-control text-black"
+                                               v-model="selectedWarehouse.name"
+                                               readonly
+                                               @click="attemptSelectWarehouse()"
+                                               placeholder="Search Warehouse ">
+
+                                        <span class="input-group-addon primary"
+                                              @click="attemptSelectWarehouse()"><i
+                                                class="fa fa-mouse-pointer cursor"></i></span>
+                                    </div>
+                                    <div class="form-group m-t-10">
+                                        <label>Recipient Name</label>
+                                        <input type="text"
+                                               class="form-control"
+                                               id="extra-recipient-person"
+                                               v-model="POFormObject.recipientName">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Recipient Number</label>
+                                        <input type="number"
+                                               class="form-control"
+                                               id="extra-recipient-number"
+                                               v-model="POFormObject.recipientNumber">
+                                    </div>
+                                </div>
                                 <div class="col-lg-12 m-t-10">
-                                    <p class="text-black text-uppercase fs-11">2. Select Requisition</p>
+                                    <p class="text-black text-uppercase fs-11">3. Select Requisition</p>
                                     <div class="checkbox check-success ">
                                         <input id="withRequisitionCb"
                                                type="checkbox"
@@ -63,7 +93,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-t-10">
-                                    <p class="text-black text-uppercase fs-11">3. Tax Invoice</p>
+                                    <p class="text-black text-uppercase fs-11">4. Tax Invoice</p>
                                     <div class="checkbox check-success ">
                                         <input id="withTaxInvoice" type="checkbox"
                                                value="1"
@@ -89,14 +119,14 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-t-10">
-                                    <p class="text-black text-uppercase fs-11">4. Notes </p>
+                                    <p class="text-black text-uppercase fs-11">5. Notes </p>
                                     <div class="form-group m-t-10">
                                         <input type="text" class="form-control"
                                                v-model="POFormObject.notes">
                                     </div>
                                 </div>
                                 <div class="col-lg-12 m-t-10">
-                                    <p class="text-black text-uppercase fs-11">5. Currency </p>
+                                    <p class="text-black text-uppercase fs-11">6. Currency </p>
                                     <div class="form-group m-t-10">
                                         <select name="" id="" class="form-control"
                                                 v-model="POFormObject.currencyFormat">
@@ -142,6 +172,7 @@
             ...mapState('purchaseOrder', {
                 POFormObject: 'POFormObject',
                 selectedSupplier: 'selectedSupplier',
+                selectedWarehouse:'selectedWarehouse',
                 selectedRequisition: 'selectedRequisition',
                 currencies: 'currencies',
             })
@@ -164,6 +195,12 @@
                 let self = this
                 self.$store.dispatch({
                     type: 'purchaseOrder/showSupplierListModal'
+                })
+            },
+            attemptSelectWarehouse(){
+                let self = this
+                self.$store.dispatch({
+                    type: 'purchaseOrder/showWarehouseListModal'
                 })
             },
             withRequisitionCbOnChange(){

@@ -18,6 +18,7 @@
         <!--modals-->
         <select-requisition-modal></select-requisition-modal>
         <select-supplier-modal></select-supplier-modal>
+        <select-warehouse-modal></select-warehouse-modal>
 
     </div>
 </template>
@@ -26,6 +27,8 @@
     import {mapGetters, mapState} from 'vuex'
     import SelectRequisitionModal from '../../components/purchaseOrder/SelectRequisitionModal.vue'
     import SelectSupplierModal from '../../components/purchaseOrder/SelectSupplierModal.vue'
+    import SelectWarehouseModal from '../../components/purchaseOrder/SelectWarehouseModal.vue'
+
     import POFrom from '../../components/purchaseOrder/POForm.vue'
     import InsertItemsForm from '../../components/purchaseOrder/InsertItemsForm.vue'
     export default{
@@ -33,7 +36,8 @@
             'po-form': POFrom,
             'insert-items-form': InsertItemsForm,
             'select-requisition-modal': SelectRequisitionModal,
-            'select-supplier-modal': SelectSupplierModal
+            'select-supplier-modal': SelectSupplierModal,
+            'select-warehouse-modal': SelectWarehouseModal
         },
         data(){
             return {}

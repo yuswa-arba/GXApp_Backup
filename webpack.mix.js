@@ -143,6 +143,7 @@ mix.copy('resources/assets/core/css/pages-icons.css', 'public/core/css/theme-ico
  */
 
 mix.copyDirectory('resources/assets/core/img', 'public/core/img');
+mix.copyDirectory('resources/assets/images/company', 'public/images/company');
 mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
 
 

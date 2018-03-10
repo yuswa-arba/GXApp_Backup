@@ -67,6 +67,9 @@ class CreatePurchaseOrderLogic extends CreateUseCase
                 'supplierId' => $POForm['supplierId'],
                 'contactPerson' => $POForm['contactPerson'],
                 'contactNumber' => $POForm['contactNumber'],
+                'warehouseId' => $POForm['warehouseId'],
+                'recipientName' => $POForm['recipientName'],
+                'recipientNumber' => $POForm['recipientNumber'],
                 'withTaxInvoice' => $POForm['withTaxInvoice'],
                 'npwpNumber' => CompanyNPWP::find(1)->npwpNo, //PT IMAM NPWP
                 'taxFeeAdded' => $POForm['taxFeeAdded'],

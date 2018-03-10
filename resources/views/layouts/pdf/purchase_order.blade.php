@@ -1042,28 +1042,42 @@
 
 <div class="header">
     <div class="pull-left">
-        <div style="width: 500px">
-            <p class="pull-left">Logo Here</p>
-            <div class="m-l-0 pull-right" style="font-size: 20px">
-                <p class="no-padding no-margin">Jl. Raya Kerobokan 388X</p>
-                <p class="no-padding no-margin">Kuta Utara, Bali 80361</p>
-                <p class="no-padding no-margin">Indonesia</p>
-                <p class="no-padding no-margin">Phone: (0361) 736811</p>
-                <p class="no-padding no-margin text-primary">www.globalxtreme.net</p>
-            </div>
+        <div style="width: 500px;margin-top: -10px">
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <img src="{{public_path('images/company/logo/gx-logo-vertical.png')}}"
+                             height="180px"
+                             alt="">
+                    </td>
+                    <td>
+                        <div class="pull-right no-padding"
+                             style="font-size: 20px;margin-top: 30px;margin-left: 30px">
+                            <p class="no-padding no-margin">Jl. Raya Kerobokan 388X</p>
+                            <p class="no-padding no-margin">Kuta Utara, Bali 80361</p>
+                            <p class="no-padding no-margin">Indonesia</p>
+                            <p class="no-padding no-margin">Phone: (0361) 736811</p>
+                            <p class="no-padding no-margin text-primary">www.globalxtreme.net</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
 
     </div>
-    <div class="pull-right">
+    <div class="pull-right m-t-10">
         <h2 class="text-uppercase bold no-margin" style="font-size: 26px">PURCHASE ORDER</h2>
         <div class=" m-t-5" style="padding: 2px; ">
             <p class="text-true-black no-margin no-padding" style="padding-right: 20px; font-size:22px">
-                DATE: Friday, 03/03/2018
+                DATE: {{\Carbon\Carbon::now()->format('l, d/m/Y')}}
             </p>
         </div>
         <div class="m-t-5" style="padding: 2px; ">
             <p class="text-true-black no-margin no-padding" style="padding-right: 20px; font-size:22px">
-                PO #: PO12312001
+                PO #: {{$purchaseOrder->purchaseOrderNumber}}
             </p>
         </div>
 
@@ -1080,27 +1094,33 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="text-uppercase bold" style="font-size: 20px">PT RESTIA ABADI</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">(CP) Yessa Santoso / 081234124</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">Pinangsia Timur No 2C</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">Jakarta, DKI Jakarta, 11180</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">Indonesia</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">021 60123412</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">yessa@totolink.com</td>
-            </tr>
+            @if($purchaseOrder->supplier)
+                <tr>
+                    <td class="text-uppercase bold" style="font-size: 20px">
+                        {{$purchaseOrder->supplier->name}}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">(CP) {{$purchaseOrder->contactPerson}}
+                        / {{$purchaseOrder->contactNumber}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">{{$purchaseOrder->supplier->address}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">{{$purchaseOrder->supplier->city}}
+                        , {{$purchaseOrder->supplier->postalCode}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">{{$purchaseOrder->supplier->country}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">{{$purchaseOrder->supplier->telephoneNumber}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">{{$purchaseOrder->supplier->mobileNumber1}}</td>
+                </tr>
+            @endif
             </tbody>
 
         </table>
@@ -1160,15 +1180,17 @@
         </thead>
         <tbody>
         <tr>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10">abc</td>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10">abc</td>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10">abc</td>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10">abc</td>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10">abc</td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
         </tr>
         </tbody>
     </table>
 </div>
+
+{{--ITEMS--}}
 
 <div class="content" style="padding-top: 30px">
     <table width="100%">
@@ -1192,20 +1214,26 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td style="border: 1px solid;font-size: 19px;width: 30px" class="p-l-10">abc</td>
-            <td style="border: 1px solid;font-size: 19px;width: 200px" class="p-l-10">abc</td>
-            <td style="border: 1px solid;font-size: 19px;width: 30px" class="p-l-10">abc</td>
-            <td style="border: 1px solid;font-size: 19px;width: 80px" class="p-r-10 text-right">500000</td>
-            <td style="border: 1px solid;font-size: 19px;width: 80px;background: #ebebeb" class="p-r-10 text-right">
-                500000
-            </td>
-        </tr>
+        <?php $i = 0?>
+        @foreach($purchaseOrderItems as $purchaseOrderItem)
+            {{$i++}}
+            <tr>
+                <td style="border: 1px solid;font-size: 19px;width: 30px" class="p-l-10 text-center">{{$i}}</td>
+                <td style="border: 1px solid;font-size: 19px;width: 200px"
+                    class="p-l-10">{{!is_null($purchaseOrderItem->item)?$purchaseOrderItem->item->name:''}}</td>
+                <td style="border: 1px solid;font-size: 19px;width: 30px"
+                    class="p-l-10 text-center">{{$purchaseOrderItem->amountPurchased}}</td>
+                <td style="border: 1px solid;font-size: 19px;width: 80px"
+                    class="p-r-10 text-right">{{number_format($purchaseOrderItem->pricePurchased,2,',','.')}}</td>
+                <td style="border: 1px solid;font-size: 19px;width: 80px;background: #ebebeb"
+                    class="p-r-10 text-right">{{number_format((int)$purchaseOrderItem->amountPurchased*(int)$purchaseOrderItem->pricePurchased,2,',','.')}}</td>
+            </tr>
+        @endforeach
 
         </tbody>
     </table>
 </div>
-<div class="content" style="padding-top: 5px">
+<div class="content" style="padding-top: 15px">
     <table width="100%">
         <tbody>
         <tr>
@@ -1213,28 +1241,35 @@
             <td style="font-size: 19px;width: 200px" class="p-l-10 text-white">.</td>
             <td style="font-size: 19px;width: 30px" class="p-l-10 text-white">.</td>
             <td style="font-size: 19px;width:80px;" class="p-r-10">Subtotal</td>
-            <td style="font-size: 19px;width: 80px;background: #ebebeb" class="p-r-10 text-right">500000</td>
+            <td style="font-size: 19px;width: 80px;background: #ebebeb" class="p-r-10 text-right">
+                {{number_format((int)$purchaseOrder->total-(int)$purchaseOrder->shippingFee-(int)$purchaseOrder->taxFee,2,',','.')}}
+            </td>
         </tr>
         <tr>
             <td style="font-size: 19px;width: 30px" class="p-l-10 text-white">.</td>
             <td style="font-size: 19px;width: 200px" class="p-l-10 text-white">.</td>
             <td style="font-size: 19px;width: 30px" class="p-l-10 text-white">.</td>
             <td style="font-size: 19px;width:80px;" class="p-r-10">Tax</td>
-            <td style="font-size: 19px;width: 80px;border: 1px solid #ebebeb" class="p-r-10 text-right">-</td>
+            <td style="font-size: 19px;width: 80px;border: 1px solid #ebebeb" class="p-r-10 text-right">
+                @if($purchaseOrder->taxFee>0&&$purchaseOrder->taxFee!='')
+                    {{number_format($purchaseOrder->taxFee,2,',','.')}}
+                @else
+                    -
+                @endif
+            </td>
         </tr>
         <tr>
             <td style="font-size: 19px;width: 30px" class="p-l-10 text-white">.</td>
             <td style="font-size: 19px;width: 200px" class="p-l-10 text-white">.</td>
             <td style="font-size: 19px;width: 30px" class="p-l-10 text-white">.</td>
             <td style="font-size: 19px;width:80px;" class="p-r-10">Shipping</td>
-            <td style="font-size: 19px;width: 80px;border: 1px solid #ebebeb" class="p-r-10 text-right">-</td>
-        </tr>
-        <tr>
-            <td style="font-size: 19px;width: 30px" class="p-l-10 text-white">.</td>
-            <td style="font-size: 19px;width: 200px" class="p-l-10 text-white">.</td>
-            <td style="font-size: 19px;width: 30px" class="p-l-10 text-white">.</td>
-            <td style="font-size: 19px;width:80px;" class="p-r-10">Other</td>
-            <td style="font-size: 19px;width: 80px;border: 1px solid #ebebeb" class="p-r-10 text-right">-</td>
+            <td style="font-size: 19px;width: 80px;border: 1px solid #ebebeb" class="p-r-10 text-right">
+                @if($purchaseOrder->shippingFee>0&&$purchaseOrder->shippingFee!='')
+                    {{number_format($purchaseOrder->shippingFee,2,',','.')}}
+                @else
+                    -
+                @endif
+            </td>
         </tr>
         <tr>
             <td style="font-size: 19px;width: 30px" class="p-l-10 text-white">.</td>
@@ -1242,13 +1277,18 @@
             <td style="font-size: 19px;width: 30px" class="p-l-10 text-white">.</td>
             <td style="font-size: 19px;width:80px;border-top: 1px solid black" class="p-r-10 bold">Total</td>
             <td style="font-size: 19px;width: 80px;border-top: 1px solid black;background: #ebebeb"
-                class="p-r-10 text-right bold">-
+                class="p-r-10 text-right bold">
+                @if($purchaseOrder->total>0&&$purchaseOrder->total!='')
+                    {{$purchaseOrder->currencyFormat}} {{number_format($purchaseOrder->total,2,',','.')}}
+                @else
+                    -
+                @endif
             </td>
         </tr>
         </tbody>
     </table>
 </div>
-<div class="content" style="padding-top: 20px">
+<div class="content" style="padding-top: 40px">
 
     <div class="pull-left" style="margin-top: -150px">
         <table width="500px">
@@ -1257,12 +1297,20 @@
                 <th class="p-l-25 p-b-5" style="font-size: 18px">Comments or Special Instructions</th>
             </tr>
             <tr>
-                <th class="p-l-25 p-b-5" style="font-size: 18px">Prices include 10% VAT</th>
+                <th class="p-l-25 p-b-5" style="font-size: 18px">
+
+                    @if($purchaseOrder->taxFeeAdded&&$purchaseOrder->taxFee!='')
+                        Prices include 10% VAT
+                    @endif
+
+                </th>
             </tr>
             </thead>
         </table>
         <div class="p-t-20">
-            <img src="{{public_path('images/company/npwp/PT-IMAM-NPWP.jpeg')}}" height="300px" alt="">
+            @if($purchaseOrder->withTaxInvoice)
+                <img src="{{public_path('images/company/npwp/PT-IMAM-NPWP.jpeg')}}" height="250px" alt="">
+            @endif
         </div>
     </div>
 
@@ -1278,16 +1326,16 @@
             </tr>
             <tr>
                 <td class="text-center">
-                    <img src="{{public_path('images/company/npwp/PT-IMAM-NPWP.jpeg')}}"
+                    <img src="{{public_path($signatureImg)}}"
                          style="text-align: center"
                          height="100px" alt="">
                 </td>
             </tr>
             <tr>
-                <td class="text-center fs-18">Cinide Marceclla</td>
+                <td class="text-center fs-18">{{$signatureName}}</td>
             </tr>
             <tr>
-                <td class="text-center fs-18 text-uppercase">CHIEF FINANCE OFFICER</td>
+                <td class="text-center fs-18 text-uppercase">{{$signaturePosition}}</td>
             </tr>
             </tbody>
         </table>
