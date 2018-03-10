@@ -17,7 +17,7 @@
                                     {{purchaseOrder.approvalNumber}}</p>
                                 <p v-else="">-</p>
                             </div>
-                            <div class="col-lg-3 m-t-20 m-b-20">
+                            <div class="col-lg-2 m-t-20 m-b-20">
                                 <p class="text-uppercase m-t-10 m-b-0">Date</p>
                                 <p class="text-black fs-16 m-b-10">{{purchaseOrder.date}}</p>
 
@@ -32,7 +32,15 @@
                                 <p class="text-black fs-14 m-b-0"><i class="fa fa-mobile"></i>
                                     {{purchaseOrder.contactNumber}}</p>
                             </div>
-                            <div class="col-lg-3 m-t-20 m-b-20">
+                            <div class="col-lg-2 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Ship To</p>
+                                <p class="text-black fs-14 m-b-0">{{purchaseOrder.warehouseName}}</p>
+                                <p class="text-black fs-14 m-b-0"><i class="fa fa-user"></i>
+                                    {{purchaseOrder.recipientName}}</p>
+                                <p class="text-black fs-14 m-b-0"><i class="fa fa-mobile"></i>
+                                    {{purchaseOrder.recipientPerson}}</p>
+                            </div>
+                            <div class="col-lg-2 m-t-20 m-b-20">
                                 <p class="text-uppercase m-t-10 m-b-0">Notes</p>
                                 <p class="text-black fs-14 m-b-10">{{purchaseOrder.notes}}</p>
                             </div>
@@ -48,7 +56,7 @@
                                     {{item.customUnit}}</p>
                                 <p class="m-b-0 fs-16" v-else="">Unit : {{item.unitFormatPurchased}}</p>
                             </div>
-                            <div class="col-lg-3 m-t-5">
+                            <div class="col-lg-2 m-t-5">
                                 <p class="text-black fs-16 m-b-0 bold">{{item.itemName}}</p>
                                 <p class="m-b-10">{{item.itemCode}}</p>
                             </div>

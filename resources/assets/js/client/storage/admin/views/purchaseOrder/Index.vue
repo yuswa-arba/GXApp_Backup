@@ -47,7 +47,7 @@
                                 <p class="text-uppercase m-t-10 m-b-0">Status</p>
                                 <p class="text-black fs-14 m-b-10">{{purchaseOrder.status}}</p>
                             </div>
-                            <div class="col-lg-3 m-t-20 m-b-20">
+                            <div class="col-lg-2 m-t-20 m-b-20">
                                 <p class="text-uppercase m-t-10 m-b-0">Supplier Details</p>
                                 <p class="text-black fs-14 m-b-0">{{purchaseOrder.supplierName}}</p>
                                 <p class="text-black fs-14 m-b-0"><i class="fa fa-user"></i>
@@ -55,13 +55,21 @@
                                 <p class="text-black fs-14 m-b-0"><i class="fa fa-mobile"></i>
                                     {{purchaseOrder.contactNumber}}</p>
                             </div>
-                            <div class="col-lg-3 m-t-20 m-b-20">
+                            <div class="col-lg-2 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Ship To</p>
+                                <p class="text-black fs-14 m-b-0">{{purchaseOrder.warehouseName}}</p>
+                                <p class="text-black fs-14 m-b-0"><i class="fa fa-user"></i>
+                                    {{purchaseOrder.recipientName}}</p>
+                                <p class="text-black fs-14 m-b-0"><i class="fa fa-mobile"></i>
+                                    {{purchaseOrder.recipientPerson}}</p>
+                            </div>
+                            <div class="col-lg-2 m-t-20 m-b-20">
                                 <p class="text-uppercase m-t-10 m-b-0">Notes</p>
                                 <p class="text-black fs-14 m-b-10">{{purchaseOrder.notes}}</p>
                             </div>
-                            <div class="col-lg-1 m-t-20 m-b-20">
-                                <button class="btn btn-outline-primary m-t-10 m-r-20" @click="showPurchaseOrderDetail(purchaseOrder.id)">Details</button>
-                                <button class="btn btn-outline-primary m-t-10 m-r-20" @click="downloadPDF(purchaseOrder.id)">Download PDF</button>
+                            <div class="col-lg-2 m-t-20 m-b-20">
+                                <button class="btn btn-primary m-t-10 m-r-20" @click="showPurchaseOrderDetail(purchaseOrder.id)">Details</button>
+                                <button class="btn btn-info m-t-10 m-r-20" @click="downloadPDF(purchaseOrder.id)"><i class="fa fa-download"></i> PDF</button>
                             </div>
                         </div>
                     </div>

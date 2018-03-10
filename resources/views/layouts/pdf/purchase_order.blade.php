@@ -1115,10 +1115,7 @@
                     <td style="font-size: 20px">{{$purchaseOrder->supplier->country}}</td>
                 </tr>
                 <tr>
-                    <td style="font-size: 20px">{{$purchaseOrder->supplier->telephoneNumber}}</td>
-                </tr>
-                <tr>
-                    <td style="font-size: 20px">{{$purchaseOrder->supplier->mobileNumber1}}</td>
+                    <td style="font-size: 20px">P. {{$purchaseOrder->supplier->telephoneNumber}}</td>
                 </tr>
             @endif
             </tbody>
@@ -1135,21 +1132,27 @@
             </tr>
             </thead>
             <tbody>
-            <tr>
-                <td class="text-uppercase bold" style="font-size: 20px">GLOBALXTREME BALI</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">Purwoko Sudarto</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">Jl Raya Kerobokan 388X</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">Kuta Utara, Bali 80361</td>
-            </tr>
-            <tr>
-                <td style="font-size: 20px">Indonesia</td>
-            </tr>
+            @if($purchaseOrder->warehouse)
+                <tr>
+                    <td class="text-uppercase bold" style="font-size: 20px">{{$purchaseOrder->warehouse->name}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">(CP){{$purchaseOrder->recipientName}}
+                        / {{$purchaseOrder->recipientNumber}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">{{$purchaseOrder->warehouse->address}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">{{$purchaseOrder->warehouse->city}} {{$purchaseOrder->warehouse->postalCode}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">{{$purchaseOrder->warehouse->country}}</td>
+                </tr>
+                <tr>
+                    <td style="font-size: 20px">P. {{$purchaseOrder->warehouse->phoneNumber}}</td>
+                </tr>
+            @endif
             </tbody>
 
         </table>
