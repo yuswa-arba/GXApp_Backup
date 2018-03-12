@@ -4239,6 +4239,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -8926,6 +8954,67 @@ var render = function() {
                       _vm._v(" "),
                       _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
                         _vm._v(_vm._s(_vm.purchaseOrder.notes))
+                      ])
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-lg-12 border-bottom-grey",
+                  staticStyle: { background: "#fafafa" }
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                        _vm._v("Requisitioner")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
+                        _vm._v(_vm._s(_vm.purchaseOrder.requisitioner))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                        _vm._v("Shipping Via")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                        _vm._v(_vm._s(_vm.purchaseOrder.shippingVia))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                        _vm._v("Term of Payments")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                        _vm._v(_vm._s(_vm.purchaseOrder.paymentTerm))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                        _vm._v("Term of Delivery")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                        _vm._v(_vm._s(_vm.purchaseOrder.deliveryTerm))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                        _vm._v("Shipping Mark")
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                        _vm._v(_vm._s(_vm.purchaseOrder.shippingMark))
                       ])
                     ])
                   ])

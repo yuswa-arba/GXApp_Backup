@@ -46,6 +46,34 @@
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-12 border-bottom-grey" style="background:#fafafa;">
+                        <div class="row">
+                            <div class="col-lg-3 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Requisitioner</p>
+                                <p class="text-black fs-18 m-b-10">{{purchaseOrder.requisitioner}}</p>
+
+                            </div>
+                            <div class="col-lg-2 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Shipping Via</p>
+                                <p class="text-black fs-16 m-b-10">{{purchaseOrder.shippingVia}}</p>
+
+                            </div>
+                            <div class="col-lg-2 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Term of Payments</p>
+                                <p class="text-black fs-14 m-b-0">{{purchaseOrder.paymentTerm}}</p>
+
+                            </div>
+                            <div class="col-lg-2 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Term of Delivery</p>
+                                <p class="text-black fs-14 m-b-0">{{purchaseOrder.deliveryTerm}}</p>
+                            </div>
+                            <div class="col-lg-2 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Shipping Mark</p>
+                                <p class="text-black fs-14 m-b-10">{{purchaseOrder.shippingMark}}</p>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="col-lg-12 p-t-10 border-bottom-grey"
                          v-for="(item,index) in purchaseOrder.purchaseOrderItems.data">
                         <div class="row">

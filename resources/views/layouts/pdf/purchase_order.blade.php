@@ -1161,33 +1161,26 @@
 
 </div>
 
-<div class="content" style="padding-top: 440px">
+<div class="content" style="padding-top: 440px;max-width: 1024pxpx">
     <table width="100%">
         <thead>
         <tr class="bg-black">
-            <th width="80px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">
-                Requisitioner
-            </th>
-            <th width="100px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">Ship Via
-            </th>
-            <th width="100px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">Term Of
-                Payment
-            </th>
-            <th width="80px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">Term Of
-                Delivery
-            </th>
-            <th width="50px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">Shipping
-                Mark
-            </th>
+            <th width="50px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">Requisitioner</th>
+            <th width="50px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">Ship Via</th>
+            <th width="50px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">Term Of Payment</th>
+            <th width="70px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">Term Of Delivery</th>
+            <th width="20px" class="text-white fs-18 text-center text-uppercase" style="font-weight: normal">Shipping Mark</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
-            <td style="border: 1px solid;font-size: 18px" class="p-l-10"></td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10">
+                {{ !is_null($purchaseOrder->requisition)?$purchaseOrder->requisition->requestedBy:'' }}
+            </td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10">{{$purchaseOrder->shippingVia}}</td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10">{{!is_null($purchaseOrder->paymentTerm)?$purchaseOrder->paymentTerm->name:''}}</td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10">{{!is_null($purchaseOrder->deliveryTerm)?$purchaseOrder->deliveryTerm->name:''}}</td>
+            <td style="border: 1px solid;font-size: 18px" class="p-l-10">{{$purchaseOrder->shippingMark}}</td>
         </tr>
         </tbody>
     </table>
@@ -1195,7 +1188,7 @@
 
 {{--ITEMS--}}
 
-<div class="content" style="padding-top: 10px">
+<div class="content" style="padding-top: 10px;">
     <table width="100%">
         <thead>
         <tr class="bg-black">
