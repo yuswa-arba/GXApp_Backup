@@ -10,6 +10,7 @@ use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
+use App\Storage\Jobs\NotifyRequestIsInProcess;
 use App\Traits\FirebaseUtils;
 use App\Mail\LoginAccountDetails;
 use App\Salary\Models\GeneralBonusesCuts;
@@ -18,6 +19,7 @@ use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Carbon\CarbonInterval;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -441,10 +443,8 @@ class TestUploadController extends Controller
 
     public function td()
     {
-//        $user = User::find("9143ca32-d63f-376f-8173-9c8d1d7f92db");
-//        $message = (new LoginAccountDetails($user, "888456"))->onConnection('database')->onQueue('emails');
-//        Mail::to($user->email)->queue($message);
-Log::info('asdfasdfasf');
+        NotifyRequestIsInProcess::dispatch(1,Auth::user())->onConnection('database')->onQueue('broadcaster');
+
     }
 
 

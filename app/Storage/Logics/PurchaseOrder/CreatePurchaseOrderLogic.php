@@ -5,10 +5,13 @@ namespace App\Storage\Logics\PurchaseOrder;
 use App\Components\Models\CompanyNPWP;
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeListTransfomer;
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
+use App\Storage\Jobs\NotifyRequestIsInProcess;
 use App\Storage\Models\StorageItems;
 use App\Storage\Models\StoragePurchaseOrderItems;
 use App\Storage\Models\StoragePurchaseOrders;
+use App\Storage\Models\StorageRequisition;
 use App\Storage\Transformers\StorageItemDetailTransformer;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
@@ -54,9 +57,9 @@ class CreatePurchaseOrderLogic extends CreateUseCase
             $finalPrice = (int)$totalItemPrice + (int)$totalTax + (int)$totalShippingFee;
 
             // Generate PO Number
-            $latestRequisition = StoragePurchaseOrders::orderBy('id', 'desc')->first();
-            $incrementNumber = $latestRequisition ? ($latestRequisition->id + 1) : 1;//get latest id and add by 1
-            $PONumber = 'PO'.Carbon::now()->format('ymd') . $this->zeroPrefix($incrementNumber, 3); //  yyyymmdd001 format
+            $latestPurchaseOrder = StoragePurchaseOrders::select('id')->orderBy('id', 'desc')->first();
+            $incrementNumber = $latestPurchaseOrder ? ($latestPurchaseOrder->id + 1) : 1;//get latest id and add by 1
+            $PONumber = 'PO' . Carbon::now()->format('ymd') . $this->zeroPrefix($incrementNumber, 3); //  yyyymmdd001 format
 
             // Insert it to DB
             $create = StoragePurchaseOrders::create([
@@ -67,13 +70,13 @@ class CreatePurchaseOrderLogic extends CreateUseCase
                 'supplierId' => $POForm['supplierId'],
                 'contactPerson' => $POForm['contactPerson'],
                 'contactNumber' => $POForm['contactNumber'],
-                'paymentTermId'=>$POForm['paymentTermId'],
+                'paymentTermId' => $POForm['paymentTermId'],
                 'warehouseId' => $POForm['warehouseId'],
                 'recipientName' => $POForm['recipientName'],
                 'recipientNumber' => $POForm['recipientNumber'],
-                'deliveryTermId'=>$POForm['deliveryTermId'],
-                'shippingVia'=>$POForm['shippingVia'],
-                'shippingMark'=>$POForm['shippingMark'],
+                'deliveryTermId' => $POForm['deliveryTermId'],
+                'shippingVia' => $POForm['shippingVia'],
+                'shippingMark' => $POForm['shippingMark'],
                 'withTaxInvoice' => $POForm['withTaxInvoice'],
                 'npwpNumber' => CompanyNPWP::find(1)->npwpNo, //PT IMAM NPWP
                 'taxFeeAdded' => $POForm['taxFeeAdded'],
@@ -81,67 +84,78 @@ class CreatePurchaseOrderLogic extends CreateUseCase
                 'shippingFeeAdded' => $POForm['shippingFeeAdded'],
                 'shippingFee' => $totalShippingFee,
                 'total' => $finalPrice,
-                'currencyFormat'=>$POForm['currencyFormat'],
+                'currencyFormat' => $POForm['currencyFormat'],
                 'notes' => $POForm['notes'],
                 'insertedAt' => Carbon::now()->format('d/m/Y H:i'),
-                'insertedBy' => $this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
+                'insertedBy' => $this->getResultWithNullChecker1Connection(Auth::user(), 'employee', 'givenName'),
             ]);
 
-            if($create){
+            if ($create) {
 
                 $insertItemError = false;
 
                 // Insert items
-                foreach ($POItems as $item){
+                foreach ($POItems as $item) {
 
                     $insert = StoragePurchaseOrderItems::create([
-                        'purchaseOrderId'=>$create->id, //PO id
-                        'withRequisitionItem'=>$item['withRequisitionItem'],
-                        'requisitionItemId'=>$item['requisitionItemId'],
-                        'itemId'=>$item['itemDetail']['id'],
-                        'amountPurchased'=>$item['amount'],
-                        'unitIdPurchased'=>$item['unitId'],
-                        'hasCustomUnit'=>$item['hasCustomUnit'],
-                        'customUnit'=>$item['customUnit'],
-                        'pricePurchased'=>$item['price'],
-                        'currencyFormat'=>$item['currencyFormat'],
+                        'purchaseOrderId' => $create->id, //PO id
+                        'withRequisitionItem' => $item['withRequisitionItem'],
+                        'requisitionItemId' => $item['requisitionItemId'],
+                        'itemId' => $item['itemDetail']['id'],
+                        'amountPurchased' => $item['amount'],
+                        'unitIdPurchased' => $item['unitId'],
+                        'hasCustomUnit' => $item['hasCustomUnit'],
+                        'customUnit' => $item['customUnit'],
+                        'pricePurchased' => $item['price'],
+                        'currencyFormat' => $item['currencyFormat'],
                     ]);
 
-                    if($insert){
-                     //do nothing
-                    } else{
+                    if ($insert) {
+                        //do nothing
+                    } else {
                         // set an error occurred to true
                         $insertItemError = true;
                     }
                 }
 
                 // If any error occurred delete inserted items and PO as we;;
-                if($insertItemError){ // Error response
+                if ($insertItemError) { // Error response
 
                     // delete inserted items
-                    StoragePurchaseOrderItems::where('purchaseOrderId',$create->id)->delete();
+                    StoragePurchaseOrderItems::where('purchaseOrderId', $create->id)->delete();
 
                     // delete PO
                     $create->delete();
 
                     $response['isFailed'] = true;
                     $response['message'] = 'An error occurred during inserting item';
-                    return response()->json($response,200);
+                    return response()->json($response, 200);
 
                 } else { // Success response
 
-                    //TODO update requisition and notify requested that their request is being processed
+                    if ($create->withRequisition) { // Notify user
+
+                        $requisition = StorageRequisition::find($create->requisitionId);
+                        $requisition->approvalId = ConfigCodes::$REQUISITION_APPROVAL_STATUS['IN_PROCESS'];
+
+                        if ($requisition->save()) {
+
+                            //Dispatch job to notify requester their request is in process
+                            NotifyRequestIsInProcess::dispatch($requisition->id,Auth::user())->onConnection('database')->onQueue('broadcaster');
+
+                        }
+                    }
 
                     $response['isFailed'] = false;
                     $response['message'] = 'Purchase Order has been created successfully';
-                    return response()->json($response,200);
+                    return response()->json($response, 200);
 
                 }
 
             } else {
                 $response['isFailed'] = true;
                 $response['message'] = 'Unable to create purchase order';
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
 
 

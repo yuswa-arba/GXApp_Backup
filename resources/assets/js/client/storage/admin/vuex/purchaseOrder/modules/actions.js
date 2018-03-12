@@ -103,6 +103,12 @@ export default{
                             state.POFormObject.requisitionId = state.selectedRequisition.id
                             state.POFormObject.approvalNumber = state.selectedRequisition.approvalNumber
 
+                            //Get items from this requisition
+                            commit({
+                                type:'getItemInRequisition',
+                                requisitionId:state.selectedRequisition.id
+                            })
+
                             // Callback success
                             cb(null, '')
 

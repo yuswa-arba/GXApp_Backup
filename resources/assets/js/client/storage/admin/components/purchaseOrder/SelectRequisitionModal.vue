@@ -105,6 +105,9 @@
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
                 purchaseOrderVuexState.selectedRequisition = requisition
 
+
+
+
                 self.closeModal()
 
 

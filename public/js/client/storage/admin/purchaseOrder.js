@@ -2703,7 +2703,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             var purchaseOrderVuexState = this.$store.state.purchaseOrder;
             purchaseOrderVuexState.itemToBeInserted.itemDetail = item;
             purchaseOrderVuexState.itemToBeInserted.unitId = item.unitId;
-            purchaseOrderVuexState.itemToBeInserted.unitFormat = _.find(purchaseOrderVuexState.unitOfMeasurements, { id: item.unitId }).format;
+            purchaseOrderVuexState.itemToBeInserted.unitFormat = item.unitFormat;
+            //                purchaseOrderVuexState.itemToBeInserted.unitFormat = _.find(purchaseOrderVuexState.unitOfMeasurements,{id:item.unitId}).format
+
 
             //finish selecting item
             self.finishSelectItemToBeInserted = true;
@@ -4267,6 +4269,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -4312,6 +4315,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         formatPrice: function formatPrice(amount) {
             return accounting.formatNumber(amount, ',', '.', '');
+        },
+        downloadPDF: function downloadPDF(purchaseOrderId) {
+            window.open(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/generate/pdf?id=' + purchaseOrderId, '_blank');
         }
     }
 });
@@ -8833,11 +8839,26 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("go-back-menu")],
+      [
+        _vm._t("go-back-menu"),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-info pull-right",
+            on: {
+              click: function($event) {
+                _vm.downloadPDF(_vm.purchaseOrder.id)
+              }
+            }
+          },
+          [_c("i", { staticClass: "fa fa-download" }), _vm._v(" PDF")]
+        )
+      ],
       2
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+    _c("div", { staticClass: "col-lg-12 m-b-10" }, [
       _c(
         "div",
         { staticClass: "card card-default card-bordered border-solid-grey" },
@@ -24714,6 +24735,12 @@ module.exports = Component.exports
                     state.POFormObject.requisitionId = state.selectedRequisition.id;
                     state.POFormObject.approvalNumber = state.selectedRequisition.approvalNumber;
 
+                    //Get items from this requisition
+                    commit({
+                        type: 'getItemInRequisition',
+                        requisitionId: state.selectedRequisition.id
+                    });
+
                     // Callback success
                     cb(null, '');
                 } else {
@@ -25118,6 +25145,7 @@ module.exports = Component.exports
             }
         });
     },
+    getItemInRequisition: function getItemInRequisition(state, payload) {},
     createPO: function createPO(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/create', {
             POForm: state.POFormObject,

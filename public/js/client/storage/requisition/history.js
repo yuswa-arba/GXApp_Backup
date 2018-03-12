@@ -2723,7 +2723,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             window.open(url, '_blank');
         },
         searchRequisition: function searchRequisition() {
-
             var self = this;
             this.$store.commit({
                 type: 'history/searchRequisition',

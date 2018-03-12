@@ -77,9 +77,7 @@ class HistoryTrackController extends Controller
 
                 $response['isFailed'] = false;
                 $response['message'] = 'Success';
-                $response['requisitions'] = fractal($requisitions, new StorageRequisitionListTransformer())
-                    ->includeRequisitionItems()
-                    ->includeDeliveryWarehouse();
+                $response['requisitions'] = fractal($requisitions, new StorageRequisitionListTransformer())->includeRequisitionItems()->includeDeliveryWarehouse();
 
                 return response()->json($response, 200);
 

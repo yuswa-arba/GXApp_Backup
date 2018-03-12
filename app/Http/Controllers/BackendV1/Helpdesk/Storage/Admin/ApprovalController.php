@@ -231,7 +231,7 @@ class ApprovalController extends Controller
 
             if ($requisition) {
                 $requisition->approvalNumber = $requisition->requisitionNumber.'A'; // add approval number
-                $requisition->approvalId = ConfigCodes::$REQUISITION_APPROVAL_STATUS['APPROVAL'];
+                $requisition->approvalId = ConfigCodes::$REQUISITION_APPROVAL_STATUS['APPROVED'];
 
                 if ($requisition->save()) {
 

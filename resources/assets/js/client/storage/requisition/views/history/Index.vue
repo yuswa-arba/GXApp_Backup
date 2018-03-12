@@ -219,13 +219,11 @@
                 window.open(url, '_blank')
             },
             searchRequisition(){
-
                 let self = this
                 this.$store.commit({
                     type:'history/searchRequisition',
                     searchText:self.searchText
                 })
-
             },
             sortRequisition(){
                 let self = this
@@ -233,7 +231,7 @@
                     type:'history/getRequisitionHistory',
                     sortApproval:self.sortApproval
                 })
-            },
+            }
         }
     }
 </script>

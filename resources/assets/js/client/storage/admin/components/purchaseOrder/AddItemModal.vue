@@ -204,7 +204,8 @@
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
                 purchaseOrderVuexState.itemToBeInserted.itemDetail = item
                 purchaseOrderVuexState.itemToBeInserted.unitId = item.unitId
-                purchaseOrderVuexState.itemToBeInserted.unitFormat = _.find(purchaseOrderVuexState.unitOfMeasurements,{id:item.unitId}).format
+                purchaseOrderVuexState.itemToBeInserted.unitFormat = item.unitFormat
+//                purchaseOrderVuexState.itemToBeInserted.unitFormat = _.find(purchaseOrderVuexState.unitOfMeasurements,{id:item.unitId}).format
 
 
                 //finish selecting item

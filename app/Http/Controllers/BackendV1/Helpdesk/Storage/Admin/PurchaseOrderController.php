@@ -9,12 +9,14 @@ use App\Storage\Models\StorageItems;
 use App\Storage\Models\StoragePurchaseOrderItems;
 use App\Storage\Models\StoragePurchaseOrders;
 use App\Storage\Models\StorageRequisition;
+use App\Storage\Models\StorageRequisitionItems;
 use App\Storage\Models\StorageSuppliers;
 use App\Storage\Models\StorageWarehouses;
 use App\Storage\Transformers\BriefStorageRequisitionListTransformer;
 use App\Storage\Transformers\BriefSupplierTransformer;
 use App\Storage\Transformers\StorageItemBriefDetailTransformer;
 use App\Storage\Transformers\StoragePurchaseOrderTransformer;
+use App\Storage\Transformers\StorageRequisitionItemTransformer;
 use App\Storage\Transformers\SupplierTransformer;
 use App\Storage\Transformers\WarehouseTransformer;
 use App\Traits\GlobalConfig;
@@ -244,8 +246,7 @@ class PurchaseOrderController extends Controller
 
     }
 
-    public
-    function availableRequisition(Request $request)
+    public function availableRequisition(Request $request)
     {
         $response = array();
         // is valid
@@ -349,8 +350,7 @@ class PurchaseOrderController extends Controller
         return response()->json($response, 200);
     }
 
-    public
-    function searchSupplier(Request $request)
+    public function searchSupplier(Request $request)
     {
         $response = array();
 
@@ -387,8 +387,7 @@ class PurchaseOrderController extends Controller
         return response()->json($response, 200);
     }
 
-    public
-    function searchWarehouse(Request $request)
+    public function searchWarehouse(Request $request)
     {
         $response = array();
 
@@ -412,8 +411,7 @@ class PurchaseOrderController extends Controller
     }
 
 
-    public
-    function searchItem(Request $request)
+    public function searchItem(Request $request)
     {
         $search = $request->v;
 

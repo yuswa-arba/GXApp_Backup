@@ -171,6 +171,10 @@ export default{
                 }
             })
     },
+    getItemInRequisition(state, payload){
+
+    },
+
     createPO(state, payload){
         post(api_path + 'storage/admin/purchaseOrder/create', {
             POForm: state.POFormObject,

@@ -8,7 +8,7 @@ use App\Storage\Models\StorageWarehouses;
 use App\Traits\GlobalUtils;
 use League\Fractal\TransformerAbstract;
 
-class StorageRequisitionItemTransformer extends TransformerAbstract
+class     StorageRequisitionItemTransformer extends TransformerAbstract
 {
     use GlobalUtils;
 

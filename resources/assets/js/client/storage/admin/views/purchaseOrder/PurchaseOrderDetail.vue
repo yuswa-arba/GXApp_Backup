@@ -2,8 +2,9 @@
     <div class="row">
         <div class="col-lg-12 m-b-10 m-t-10">
             <slot name="go-back-menu"></slot>
+            <button class="btn btn-info pull-right" @click="downloadPDF(purchaseOrder.id)"><i class="fa fa-download"></i> PDF</button>
         </div>
-        <div class="col-lg-12 m-b-10 m-t-10">
+        <div class="col-lg-12 m-b-10">
             <div class="card card-default card-bordered border-solid-grey">
                 <div class="card-block no-padding">
                     <div class="col-lg-12 border-bottom-grey" style="background:#fafafa;">
@@ -218,6 +219,10 @@
             formatPrice(amount){
                 return accounting.formatNumber(amount, ',', '.', '')
             },
+            downloadPDF(purchaseOrderId){
+                window.open(api_path+'storage/admin/purchaseOrder/generate/pdf?id='+purchaseOrderId,'_blank')
+
+            }
         }
     }
 </script>
