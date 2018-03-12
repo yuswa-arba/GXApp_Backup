@@ -18,6 +18,18 @@ export default{
                 state.currencies = res.data.data
             })
     },
+    getPaymentTerms(state, payload){
+        get(api_path + 'component/list/paymentTerms')
+            .then((res) => {
+                state.paymentTerms = res.data.data
+            })
+    },
+    getDeliveryTerms(state, payload){
+        get(api_path + 'component/list/deliveryTerms')
+            .then((res) => {
+                state.deliveryTerms = res.data.data
+            })
+    },
     getUnitOfMeasurements(state, payload){
         get(api_path + 'storage/unit/list')
             .then((res) => {
@@ -38,14 +50,14 @@ export default{
         get(api_path + 'storage/admin/purchaseOrder/requisition')
             .then((res) => {
                 if (!res.data.isFailed) {
-                    if (res.data.purchaseOrders.data) {
+                    if (res.data.requisitions.data) {
 
-                        state.purchaseOrders = []
+                        state.requisitions = []
 
                         //insert purchaseOrders
-                        let purchaseOrderData = res.data.purchaseOrders.data
-                        if (purchaseOrderData) {
-                            state.purchaseOrders = state.purchaseOrders.concat(purchaseOrderData)
+                        let requisitionData = res.data.requisitions.data
+                        if (requisitionData) {
+                            state.requisitions = state.requisitions.concat(requisitionData)
                         }
                     }
                 }
@@ -235,7 +247,7 @@ export default{
                 }).show();
             })
     },
-    getPurchaseOrderList(state,payload){
+    getPurchaseOrderList(state, payload){
 
         let sortStatus = ''
         if (payload.sortStatus) {
@@ -268,7 +280,7 @@ export default{
                     state.isSearchingPO = false
                 }
             })
-            .catch((err)=>{
+            .catch((err) => {
                 state.isSearchingPO = true
                 $('.page-container').pgNotification({
                     style: 'flip',

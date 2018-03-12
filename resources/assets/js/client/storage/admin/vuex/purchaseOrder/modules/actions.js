@@ -8,6 +8,8 @@ export default{
     getDataOnCreate({commit, state}, payload){
         commit('getNPWPInformation')
         commit('getCurrencies')
+        commit('getPaymentTerms')
+        commit('getDeliveryTerms')
         commit('getUnitOfMeasurements')
         commit('getPurchaseOrderStatuses')
     },
@@ -48,6 +50,18 @@ export default{
                     }
                 },
                 function (cb) {
+                    // check payment terms
+                    if (state.POFormObject.paymentTermId != null && state.POFormObject.paymentTermId != '') {
+
+                        // Callback success
+                        cb(null, '')
+
+                    } else {
+                        // Callback error
+                        cb('Payment term cannot be empty', '')
+                    }
+                },
+                function (cb) {
                     // check if with warehouse
                     if (state.selectedWarehouse.id != null) {
 
@@ -65,6 +79,18 @@ export default{
                     } else {
                         // Callback error
                         cb('Warehouse not found', '')
+                    }
+                },
+                function (cb) {
+                    // check payment terms
+                    if (state.POFormObject.deliveryTermId != null && state.POFormObject.deliveryTermId != '') {
+
+                        // Callback success
+                        cb(null, '')
+
+                    } else {
+                        // Callback error
+                        cb('Delivery term cannot be empty', '')
                     }
                 },
                 function (cb) {

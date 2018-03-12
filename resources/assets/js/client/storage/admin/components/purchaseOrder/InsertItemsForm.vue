@@ -1,6 +1,6 @@
 <template>
 
-    <div class="col-lg-8">
+    <div class="col-lg-12">
             <div class="card card-default" v-if="POFormIsFinishAndValid">
             <div class="row">
                 <div class="col-lg-12">

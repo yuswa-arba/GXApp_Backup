@@ -19,6 +19,10 @@ class CreateStoragePurchaseOrdersTable extends Migration
             $table->tinyInteger('withRequisition')->default(0);
             $table->integer('requisitionId')->nullable();
             $table->string('date');
+            $table->integer('paymentTermId')->nullable();
+            $table->integer('deliveryTermId')->nullable();
+            $table->string('shippingVia')->nullable();
+            $table->string('shippingMark')->nullable();
             $table->integer('supplierId');
             $table->string('contactPerson')->nullable();
             $table->string('contactNumber')->nullable();

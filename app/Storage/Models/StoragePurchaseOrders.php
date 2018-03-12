@@ -2,7 +2,9 @@
 
 namespace App\Storage\Models;
 
+use App\Components\Models\DeliveryTerms;
 use App\Components\Models\Division;
+use App\Components\Models\PaymentTerms;
 use App\Components\Models\UnitOfMeasurements;
 use App\Employee\Models\MasterEmployee;
 use Illuminate\Database\Eloquent\Model;
@@ -37,6 +39,16 @@ class StoragePurchaseOrders extends Model
     public function status()
     {
      return $this->belongsTo(StoragePurchaseOrderStatus::class,'statusId');
+    }
+
+    public function deliveryTerm()
+    {
+        return $this->belongsTo(DeliveryTerms::class,'deliveryTermId');
+    }
+
+    public function paymentTerm()
+    {
+        return $this->belongsTo(PaymentTerms::class,'paymentTermId');
     }
 
 }

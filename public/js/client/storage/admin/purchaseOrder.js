@@ -3393,6 +3393,32 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3412,7 +3438,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         selectedSupplier: 'selectedSupplier',
         selectedWarehouse: 'selectedWarehouse',
         selectedRequisition: 'selectedRequisition',
-        currencies: 'currencies'
+        currencies: 'currencies',
+        paymentTerms: 'paymentTerms',
+        deliveryTerms: 'deliveryTerms'
     })),
     mounted: function mounted() {},
 
@@ -7354,7 +7382,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "col-lg-8" },
+    { staticClass: "col-lg-12" },
     [
       _vm.POFormIsFinishAndValid
         ? _c("div", { staticClass: "card card-default" }, [
@@ -7806,14 +7834,14 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-lg-3" }, [
+  return _c("div", { staticClass: "col-lg-12" }, [
     _c("div", { staticClass: "card card-default" }, [
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-lg-12" }, [
           _c("div", { staticClass: "card card-default no-border" }, [
             _c("div", { staticClass: "card-block" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "col-lg-3" }, [
                   _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
                     _vm._v("1. Select Supplier")
                   ]),
@@ -7925,12 +7953,69 @@ var render = function() {
                         }
                       }
                     })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    { staticClass: "text-black text-uppercase fs-11 p-t-10" },
+                    [_vm._v("2. Select Payment Terms")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group m-t-10" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.POFormObject.paymentTermId,
+                            expression: "POFormObject.paymentTermId"
+                          }
+                        ],
+                        staticClass: "form-control h-25",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.POFormObject,
+                              "paymentTermId",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.paymentTerms, function(paymentTerm) {
+                        return _c(
+                          "option",
+                          { domProps: { value: paymentTerm.id } },
+                          [
+                            _vm._v(
+                              "\n                                            " +
+                                _vm._s(paymentTerm.name) +
+                                " (" +
+                                _vm._s(paymentTerm.description) +
+                                ")\n                                        "
+                            )
+                          ]
+                        )
+                      })
+                    )
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "col-lg-3" }, [
                   _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
-                    _vm._v("2. Select Warehouse")
+                    _vm._v("3. Select Warehouse")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "input-group" }, [
@@ -8040,12 +8125,121 @@ var render = function() {
                         }
                       }
                     })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    { staticClass: "text-black text-uppercase fs-11 p-t-10" },
+                    [_vm._v("4. Select Delivery Terms")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group m-t-10" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.POFormObject.deliveryTermId,
+                            expression: "POFormObject.deliveryTermId"
+                          }
+                        ],
+                        staticClass: "form-control h-25",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.POFormObject,
+                              "deliveryTermId",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.deliveryTerms, function(deliveryTerm) {
+                        return _c(
+                          "option",
+                          { domProps: { value: deliveryTerm.id } },
+                          [
+                            _vm._v(
+                              "\n                                            " +
+                                _vm._s(deliveryTerm.name) +
+                                " (" +
+                                _vm._s(deliveryTerm.description) +
+                                ")\n                                        "
+                            )
+                          ]
+                        )
+                      })
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.POFormObject.shippingVia,
+                          expression: "POFormObject.shippingVia"
+                        }
+                      ],
+                      staticClass: "form-control m-t-5",
+                      attrs: { type: "text", placeholder: "Shipping Via" },
+                      domProps: { value: _vm.POFormObject.shippingVia },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.POFormObject,
+                            "shippingVia",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.POFormObject.shippingMark,
+                          expression: "POFormObject.shippingMark"
+                        }
+                      ],
+                      staticClass: "form-control m-t-5",
+                      attrs: { type: "text", placeholder: "Shipping Mark" },
+                      domProps: { value: _vm.POFormObject.shippingMark },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.POFormObject,
+                            "shippingMark",
+                            $event.target.value
+                          )
+                        }
+                      }
+                    })
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                _c("div", { staticClass: "col-lg-3 " }, [
                   _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
-                    _vm._v("3. Select Requisition")
+                    _vm._v("5. Select Requisition")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "checkbox check-success " }, [
@@ -8159,13 +8353,13 @@ var render = function() {
                           ]
                         )
                       ])
-                    : _vm._e()
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-12 m-t-10" }, [
-                  _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
-                    _vm._v("4. Tax Invoice")
-                  ]),
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "p",
+                    { staticClass: "text-black text-uppercase fs-11 p-t-10" },
+                    [_vm._v("6. Tax Invoice")]
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "checkbox check-success " }, [
                     _c("input", {
@@ -8283,9 +8477,9 @@ var render = function() {
                     : _vm._e()
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                _c("div", { staticClass: "col-lg-3 " }, [
                   _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
-                    _vm._v("5. Notes ")
+                    _vm._v("7. Notes ")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group m-t-10" }, [
@@ -8314,12 +8508,10 @@ var render = function() {
                         }
                       }
                     })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-12 m-t-10" }, [
+                  ]),
+                  _vm._v(" "),
                   _c("p", { staticClass: "text-black text-uppercase fs-11" }, [
-                    _vm._v("6. Currency ")
+                    _vm._v("8. Currency ")
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "form-group m-t-10" }, [
@@ -8334,7 +8526,7 @@ var render = function() {
                             expression: "POFormObject.currencyFormat"
                           }
                         ],
-                        staticClass: "form-control",
+                        staticClass: "form-control h-25",
                         attrs: { name: "", id: "" },
                         on: {
                           change: function($event) {
@@ -8374,6 +8566,10 @@ var render = function() {
                     )
                   ])
                 ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-3 " }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-3 " }),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-lg-12 m-t-10" }, [
                   _c(
@@ -24333,6 +24529,8 @@ module.exports = Component.exports
 
         commit('getNPWPInformation');
         commit('getCurrencies');
+        commit('getPaymentTerms');
+        commit('getDeliveryTerms');
         commit('getUnitOfMeasurements');
         commit('getPurchaseOrderStatuses');
     },
@@ -24380,6 +24578,16 @@ module.exports = Component.exports
                 cb('Supplier not found', '');
             }
         }, function (cb) {
+            // check payment terms
+            if (state.POFormObject.paymentTermId != null && state.POFormObject.paymentTermId != '') {
+
+                // Callback success
+                cb(null, '');
+            } else {
+                // Callback error
+                cb('Payment term cannot be empty', '');
+            }
+        }, function (cb) {
             // check if with warehouse
             if (state.selectedWarehouse.id != null) {
 
@@ -24396,6 +24604,16 @@ module.exports = Component.exports
             } else {
                 // Callback error
                 cb('Warehouse not found', '');
+            }
+        }, function (cb) {
+            // check payment terms
+            if (state.POFormObject.deliveryTermId != null && state.POFormObject.deliveryTermId != '') {
+
+                // Callback success
+                cb(null, '');
+            } else {
+                // Callback error
+                cb('Delivery term cannot be empty', '');
             }
         }, function (cb) {
 
@@ -24582,6 +24800,8 @@ module.exports = Component.exports
         suppliers: [],
         warehouses: [],
         currencies: [],
+        paymentTerms: [],
+        deliveryTerms: [],
         purchaseOrderStatuses: [],
         unitOfMeasurements: [],
         selectedSupplier: {},
@@ -24613,9 +24833,13 @@ module.exports = Component.exports
             supplierId: '',
             contactPerson: '',
             contactNumber: '',
+            paymentTermId: '',
             warehouseId: '',
             recipientName: '',
             recipientNumber: '',
+            deliveryTermId: '',
+            shippingVia: '',
+            shippingMark: '',
             requisitionId: '',
             approvalNumber: '',
             withRequisition: 1,
@@ -24667,6 +24891,16 @@ module.exports = Component.exports
             state.currencies = res.data.data;
         });
     },
+    getPaymentTerms: function getPaymentTerms(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/paymentTerms').then(function (res) {
+            state.paymentTerms = res.data.data;
+        });
+    },
+    getDeliveryTerms: function getDeliveryTerms(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/deliveryTerms').then(function (res) {
+            state.deliveryTerms = res.data.data;
+        });
+    },
     getUnitOfMeasurements: function getUnitOfMeasurements(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/unit/list').then(function (res) {
             if (!res.data.isFailed) {
@@ -24684,14 +24918,14 @@ module.exports = Component.exports
     getRequisitionList: function getRequisitionList(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/requisition').then(function (res) {
             if (!res.data.isFailed) {
-                if (res.data.purchaseOrders.data) {
+                if (res.data.requisitions.data) {
 
-                    state.purchaseOrders = [];
+                    state.requisitions = [];
 
                     //insert purchaseOrders
-                    var purchaseOrderData = res.data.purchaseOrders.data;
-                    if (purchaseOrderData) {
-                        state.purchaseOrders = state.purchaseOrders.concat(purchaseOrderData);
+                    var requisitionData = res.data.requisitions.data;
+                    if (requisitionData) {
+                        state.requisitions = state.requisitions.concat(requisitionData);
                     }
                 }
             }

@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Purchase Order</title>
+    <title>Purchase Order {{$purchaseOrder->purchaseOrderNumber}}</title>
     <style type="text/css">
         .tg {
             border-collapse: collapse;
@@ -1137,7 +1137,7 @@
                     <td class="text-uppercase bold" style="font-size: 20px">{{$purchaseOrder->warehouse->name}}</td>
                 </tr>
                 <tr>
-                    <td style="font-size: 20px">(CP){{$purchaseOrder->recipientName}}
+                    <td style="font-size: 20px">(CP) {{$purchaseOrder->recipientName}}
                         / {{$purchaseOrder->recipientNumber}}</td>
                 </tr>
                 <tr>
@@ -1161,7 +1161,7 @@
 
 </div>
 
-<div class="content" style="padding-top: 480px">
+<div class="content" style="padding-top: 440px">
     <table width="100%">
         <thead>
         <tr class="bg-black">
@@ -1195,7 +1195,7 @@
 
 {{--ITEMS--}}
 
-<div class="content" style="padding-top: 30px">
+<div class="content" style="padding-top: 10px">
     <table width="100%">
         <thead>
         <tr class="bg-black">

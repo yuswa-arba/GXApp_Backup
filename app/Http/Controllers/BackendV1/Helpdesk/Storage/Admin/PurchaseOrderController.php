@@ -406,7 +406,7 @@ class PurchaseOrderController extends Controller
 
         $response['isFailed'] = false;
         $response['message'] = 'Success';
-        $response['warehouses'] = fractal($suppliers, new WarehouseTransformer());
+        $response['suppliers'] = fractal($suppliers, new BriefSupplierTransformer());
 
         return response()->json($response, 200);
     }

@@ -58,6 +58,10 @@ Route::prefix('v1/h')->group(function () {
 
         Route::get('list/currencies','GetListController@currencies')->name('v1.component.currencies');
 
+        Route::get('list/paymentTerms','GetListController@paymentTerms')->name('v1.component.paymentTerms');
+
+        Route::get('list/deliveryTerms','GetListController@deliveryTerm')->name('v1.component.deliveryTerms');
+
         Route::get('npwpInformation/{id}','GetListController@npwpInformation')->name('v1.component.npwpInformation');
 
     });
