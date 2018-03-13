@@ -2,7 +2,7 @@
 
     <div class="col-lg-12">
             <div class="card card-default" v-if="POFormIsFinishAndValid">
-            <div class="row">
+            <div class="row" id="insertItemContainer">
                 <div class="col-lg-12">
                     <div class="card card-default no-border">
                         <div class="card-block">
@@ -113,7 +113,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-12" style="margin-top: 20px">
+                                <div class="col-lg-12" style="margin-top: 20px" id="createPOBtnContainer">
                                     <button class="btn btn-primary fs-16 pull-right"
                                             v-if="!isCreatingPurchaseOrder"
                                             @click="createPO()">

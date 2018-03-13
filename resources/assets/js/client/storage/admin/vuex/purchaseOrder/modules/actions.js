@@ -127,7 +127,10 @@ export default{
 
                 if (err == null) { //Success
 
-                    state.POFormIsFinishAndValid = true
+                    state.POFormIsFinishAndValid = true //set to true to show item form component
+                    setTimeout(()=>{ // delay 0.25s to make sure component is ready then scroll to container
+                        $("html, body").animate({ scrollTop: $("#createPOBtnContainer").offset().top }, 1000);
+                    },250)
 
                 } else {
 
