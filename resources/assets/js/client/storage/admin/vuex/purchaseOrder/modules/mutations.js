@@ -171,9 +171,6 @@ export default{
                 }
             })
     },
-    getItemInRequisition(state, payload){
-
-    },
 
     createPO(state, payload){
         post(api_path + 'storage/admin/purchaseOrder/create', {
@@ -294,6 +291,56 @@ export default{
                     type: 'danger'
                 }).show();
             })
+    },
+    updateStatus(state, payload){
+
+        if (payload.purchaseOrderId != '' && payload.statusId != '') {
+
+            post(api_path + 'storage/admin/purchaseOrder/update/status', {
+                purchaseOrderId: payload.purchaseOrderId,
+                statusId: payload.statusId
+            })
+                .then((res) => {
+
+                    if (!res.data.isFailed) {
+
+                         $('.page-container').pgNotification({
+                              style: 'flip',
+                              message: res.data.message,
+                              position: 'top-right',
+                              timeout: 3500,
+                              type: 'info'
+                          }).show();
+
+                        //update status in array
+                        state.purchaseOrders[payload.index].statusId = payload.statusId
+                        state.purchaseOrders[payload.index].status = payload.status
+
+                    } else {
+
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                    }
+
+                })
+                .catch((err) => {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                })
+
+
+        }
+
     }
 
 }

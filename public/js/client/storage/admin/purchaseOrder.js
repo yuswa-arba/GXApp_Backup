@@ -3977,6 +3977,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4077,6 +4091,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         showPurchaseOrderDetail: function showPurchaseOrderDetail(purchaseOrderId) {
             this.$router.push({ name: 'PODetail', params: { id: purchaseOrderId } });
         },
+        updateStatus: function updateStatus(purchaseOrderId, statusId, status, index) {
+            this.$store.commit({
+                type: 'purchaseOrder/updateStatus',
+                purchaseOrderId: purchaseOrderId,
+                statusId: statusId,
+                status: status,
+                index: index
+            });
+        },
         downloadPDF: function downloadPDF(purchaseOrderId) {
             window.open(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/generate/pdf?id=' + purchaseOrderId, '_blank');
         },
@@ -4098,6 +4121,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__ = __webpack_require__("./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__);
+//
+//
 //
 //
 //
@@ -4318,7 +4343,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         downloadPDF: function downloadPDF(purchaseOrderId) {
             window.open(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/generate/pdf?id=' + purchaseOrderId, '_blank');
-        }
+        },
+        editPurchaseOrder: function editPurchaseOrder(purchaseOrderId) {}
     }
 });
 
@@ -6264,7 +6290,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._l(_vm.purchaseOrders, function(purchaseOrder) {
+          _vm._l(_vm.purchaseOrders, function(purchaseOrder, index) {
             return _c(
               "div",
               {
@@ -6400,36 +6426,86 @@ var render = function() {
                           ])
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary m-t-10 m-r-20",
-                              on: {
-                                click: function($event) {
-                                  _vm.showPurchaseOrderDetail(purchaseOrder.id)
+                        _c(
+                          "div",
+                          { staticClass: "col-lg-2 m-t-20 m-b-20 no-padding" },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-primary m-t-10 m-r-5",
+                                on: {
+                                  click: function($event) {
+                                    _vm.showPurchaseOrderDetail(
+                                      purchaseOrder.id
+                                    )
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("Details")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-info m-t-10 m-r-20",
-                              on: {
-                                click: function($event) {
-                                  _vm.downloadPDF(purchaseOrder.id)
+                              },
+                              [_c("i", { staticClass: "fa fa-search" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-info m-t-10 m-r-5",
+                                on: {
+                                  click: function($event) {
+                                    _vm.downloadPDF(purchaseOrder.id)
+                                  }
                                 }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fa fa-download" }),
-                              _vm._v(" PDF")
-                            ]
-                          )
-                        ])
+                              },
+                              [_c("i", { staticClass: "fa fa-download" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "dropdown dropdown-default " },
+                              [
+                                _vm._m(0, true),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "dropdown-menu" },
+                                  _vm._l(_vm.purchaseOrderStatuses, function(
+                                    status
+                                  ) {
+                                    return _c(
+                                      "a",
+                                      {
+                                        staticClass: "dropdown-item pointer",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.updateStatus(
+                                              purchaseOrder.id,
+                                              status.id,
+                                              status.name,
+                                              index
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(status.name) +
+                                            "\n                                        "
+                                        ),
+                                        status.id == purchaseOrder.statusId
+                                          ? _c("span", [
+                                              _c("i", {
+                                                staticClass:
+                                                  "fa fa-check fs-16 text-primary"
+                                              })
+                                            ])
+                                          : _vm._e()
+                                      ]
+                                    )
+                                  })
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       ])
                     ]
                   )
@@ -6455,7 +6531,27 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass:
+          "btn btn-outline-primary m-t-10 m-r-5 dropdown-toggle text-center",
+        attrs: {
+          type: "button",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [_c("i", { staticClass: "fa fa-pencil" })]
+    )
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -8863,438 +8959,438 @@ var render = function() {
         "div",
         { staticClass: "card card-default card-bordered border-solid-grey" },
         [
-          _c(
-            "div",
-            { staticClass: "card-block no-padding" },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "col-lg-12 border-bottom-grey",
-                  staticStyle: { background: "#fafafa" }
-                },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Purchase Order No.")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.purchaseOrderNumber))
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-uppercase m-b-0" }, [
-                        _vm._v("Approval No.")
-                      ]),
-                      _vm._v(" "),
-                      _vm.purchaseOrder.withRequisition
-                        ? _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
-                            _vm._v(
-                              "\n                                " +
-                                _vm._s(_vm.purchaseOrder.approvalNumber)
-                            )
-                          ])
-                        : _c("p", [_vm._v("-")])
+          _c("div", { staticClass: "card-block no-padding" }, [
+            _c(
+              "div",
+              {
+                staticClass: "col-lg-12 border-bottom-grey",
+                staticStyle: { background: "#fafafa" }
+              },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Purchase Order No.")
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Date")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.date))
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Status")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.status))
-                      ])
+                    _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.purchaseOrderNumber))
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Supplier Details")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.supplierName))
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
-                        _c("i", { staticClass: "fa fa-user" }),
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.purchaseOrder.contactPerson)
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
-                        _c("i", { staticClass: "fa fa-mobile" }),
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.purchaseOrder.contactNumber)
-                        )
-                      ])
+                    _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                      _vm._v("Approval No.")
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Ship To")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.warehouseName))
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
-                        _c("i", { staticClass: "fa fa-user" }),
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.purchaseOrder.recipientName)
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
-                        _c("i", { staticClass: "fa fa-mobile" }),
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.purchaseOrder.recipientPerson)
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Notes")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.notes))
-                      ])
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-lg-12 border-bottom-grey",
-                  staticStyle: { background: "#fafafa" }
-                },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Requisitioner")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.requisitioner))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Shipping Via")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.shippingVia))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Term of Payments")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.paymentTerm))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Term of Delivery")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.deliveryTerm))
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
-                      _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
-                        _vm._v("Shipping Mark")
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
-                        _vm._v(_vm._s(_vm.purchaseOrder.shippingMark))
-                      ])
-                    ])
-                  ])
-                ]
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.purchaseOrder.purchaseOrderItems.data, function(
-                item,
-                index
-              ) {
-                return _c(
-                  "div",
-                  { staticClass: "col-lg-12 p-t-10 border-bottom-grey" },
-                  [
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-lg-3 m-t-5" }, [
-                        _c("p", { staticClass: "m-b-0 fs-16" }, [
-                          _vm._v(" Amount : "),
-                          _c("span", { staticClass: "text-black" }, [
-                            _vm._v(_vm._s(item.amountPurchased))
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        item.hasCustomUnit
-                          ? _c("p", { staticClass: "m-b-0 fs-16" }, [
-                              _vm._v(
-                                " Unit :\n                                " +
-                                  _vm._s(item.customUnit)
-                              )
-                            ])
-                          : _c("p", { staticClass: "m-b-0 fs-16" }, [
-                              _vm._v(
-                                "Unit : " + _vm._s(item.unitFormatPurchased)
-                              )
-                            ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-2 m-t-5" }, [
-                        _c(
-                          "p",
-                          { staticClass: "text-black fs-16 m-b-0 bold" },
-                          [_vm._v(_vm._s(item.itemName))]
-                        ),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "m-b-10" }, [
-                          _vm._v(_vm._s(item.itemCode))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-2 m-t-5" }, [
-                        _c("p", { staticClass: "m-b-0" }, [_vm._v("per item")]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "text-black m-b-10 fs-16" }, [
+                    _vm.purchaseOrder.withRequisition
+                      ? _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
                           _vm._v(
-                            _vm._s(item.currencyFormat) +
-                              "\n                                " +
-                              _vm._s(_vm.formatPrice(item.pricePurchased))
+                            "\n                                " +
+                              _vm._s(_vm.purchaseOrder.approvalNumber)
                           )
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-3 m-t-5" }, [
-                        _c("p", { staticClass: "m-b-0" }, [
-                          _vm._v("sub total")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "p",
-                          { staticClass: "text-black m-b-10 fs-16 bold" },
-                          [
-                            _vm._v(
-                              _vm._s(item.currencyFormat) +
-                                "\n                                " +
-                                _vm._s(
-                                  _vm.formatPrice(
-                                    parseInt(item.pricePurchased) *
-                                      parseInt(item.amountPurchased)
+                      : _c("p", [_vm._v("-")])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Date")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.date))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Status")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.status))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Supplier Details")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.supplierName))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                      _c("i", { staticClass: "fa fa-user" }),
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.purchaseOrder.contactPerson)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                      _c("i", { staticClass: "fa fa-mobile" }),
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.purchaseOrder.contactNumber)
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Ship To")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.warehouseName))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                      _c("i", { staticClass: "fa fa-user" }),
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.purchaseOrder.recipientName)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                      _c("i", { staticClass: "fa fa-mobile" }),
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.purchaseOrder.recipientPerson)
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Notes")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.notes))
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "col-lg-12 border-bottom-grey",
+                staticStyle: { background: "#fafafa" }
+              },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Requisitioner")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.requisitioner))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Shipping Via")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.shippingVia))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Term of Payments")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.paymentTerm))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Term of Delivery")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.deliveryTerm))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                    _c("p", { staticClass: "text-uppercase m-t-10 m-b-0" }, [
+                      _vm._v("Shipping Mark")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                      _vm._v(_vm._s(_vm.purchaseOrder.shippingMark))
+                    ])
+                  ])
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm.purchaseOrder.purchaseOrderItems
+              ? _c(
+                  "div",
+                  _vm._l(_vm.purchaseOrder.purchaseOrderItems.data, function(
+                    item,
+                    index
+                  ) {
+                    return _c(
+                      "div",
+                      { staticClass: "col-lg-12 p-t-10 border-bottom-grey" },
+                      [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-lg-3 m-t-5" }, [
+                            _c("p", { staticClass: "m-b-0 fs-16" }, [
+                              _vm._v(" Amount : "),
+                              _c("span", { staticClass: "text-black" }, [
+                                _vm._v(_vm._s(item.amountPurchased))
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            item.hasCustomUnit
+                              ? _c("p", { staticClass: "m-b-0 fs-16" }, [
+                                  _vm._v(
+                                    " Unit :\n                                    " +
+                                      _vm._s(item.customUnit)
                                   )
+                                ])
+                              : _c("p", { staticClass: "m-b-0 fs-16" }, [
+                                  _vm._v(
+                                    "Unit : " + _vm._s(item.unitFormatPurchased)
+                                  )
+                                ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-2 m-t-5" }, [
+                            _c(
+                              "p",
+                              { staticClass: "text-black fs-16 m-b-0 bold" },
+                              [_vm._v(_vm._s(item.itemName))]
+                            ),
+                            _vm._v(" "),
+                            _c("p", { staticClass: "m-b-10" }, [
+                              _vm._v(_vm._s(item.itemCode))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-2 m-t-5" }, [
+                            _c("p", { staticClass: "m-b-0" }, [
+                              _vm._v("per item")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-black m-b-10 fs-16" },
+                              [
+                                _vm._v(
+                                  _vm._s(item.currencyFormat) +
+                                    "\n                                    " +
+                                    _vm._s(_vm.formatPrice(item.pricePurchased))
                                 )
+                              ]
                             )
-                          ]
-                        )
-                      ]),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-3 m-t-5" }, [
+                            _c("p", { staticClass: "m-b-0" }, [
+                              _vm._v("sub total")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "p",
+                              { staticClass: "text-black m-b-10 fs-16 bold" },
+                              [
+                                _vm._v(
+                                  _vm._s(item.currencyFormat) +
+                                    "\n                                    " +
+                                    _vm._s(
+                                      _vm.formatPrice(
+                                        parseInt(item.pricePurchased) *
+                                          parseInt(item.amountPurchased)
+                                      )
+                                    )
+                                )
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-1 m-t-5" })
+                        ])
+                      ]
+                    )
+                  })
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-t-50" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12 p-t-10" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-5" }),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-lg-5",
+                    staticStyle: { background: "#fafafa" }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-lg-12 border-bottom-grey p-t-10" },
+                        [
+                          _c("div", { staticClass: "row" }, [
+                            _vm._m(0),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-6" }, [
+                              parseInt(_vm.purchaseOrder.shippingFeeAdded)
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "fs-18 text-black bold text-left pull-right"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                                          " +
+                                          _vm._s(
+                                            _vm.purchaseOrder.currencyFormat
+                                          ) +
+                                          " " +
+                                          _vm._s(
+                                            _vm.formatPrice(
+                                              _vm.purchaseOrder.shippingFee
+                                            )
+                                          ) +
+                                          "\n                                                        "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "fs-16 text-black bold text-left pull-right"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                                            -\n                                                        "
+                                      )
+                                    ]
+                                  )
+                            ])
+                          ])
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-lg-1 m-t-5" })
+                      _c(
+                        "div",
+                        { staticClass: "col-lg-12 border-bottom-grey p-t-10" },
+                        [
+                          _c("div", { staticClass: "row" }, [
+                            _vm._m(1),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-6" }, [
+                              parseInt(_vm.purchaseOrder.taxFeeAdded)
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "fs-18 text-black bold text-left pull-right"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                                            " +
+                                          _vm._s(
+                                            _vm.purchaseOrder.currencyFormat
+                                          ) +
+                                          " " +
+                                          _vm._s(
+                                            _vm.formatPrice(
+                                              _vm.purchaseOrder.taxFee
+                                            )
+                                          ) +
+                                          "\n                                                        "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "fs-16 text-black bold text-left pull-right"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                                            -\n                                                        "
+                                      )
+                                    ]
+                                  )
+                            ])
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-lg-12 border-bottom-grey p-t-10" },
+                        [
+                          _c("div", { staticClass: "row" }, [
+                            _vm._m(2),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-6" }, [
+                              _vm.purchaseOrder.total != 0
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "fs-21 text-primary bold text-left pull-right"
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                                            " +
+                                          _vm._s(
+                                            _vm.purchaseOrder.currencyFormat
+                                          ) +
+                                          " " +
+                                          _vm._s(
+                                            _vm.formatPrice(
+                                              _vm.purchaseOrder.total
+                                            )
+                                          ) +
+                                          "\n                                                        "
+                                      )
+                                    ]
+                                  )
+                                : _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "fs-18 text-primary bold text-left pull-right"
+                                    },
+                                    [_vm._v("-")]
+                                  )
+                            ])
+                          ])
+                        ]
+                      )
                     ])
                   ]
                 )
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-t-50" }),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-12 p-t-10" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-lg-5" }),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "col-lg-5",
-                      staticStyle: { background: "#fafafa" }
-                    },
-                    [
-                      _c("div", { staticClass: "row" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "col-lg-12 border-bottom-grey p-t-10"
-                          },
-                          [
-                            _c("div", { staticClass: "row" }, [
-                              _vm._m(0),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-6" }, [
-                                parseInt(_vm.purchaseOrder.shippingFeeAdded)
-                                  ? _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "fs-18 text-black bold text-left pull-right"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                                          " +
-                                            _vm._s(
-                                              _vm.purchaseOrder.currencyFormat
-                                            ) +
-                                            " " +
-                                            _vm._s(
-                                              _vm.formatPrice(
-                                                _vm.purchaseOrder.shippingFee
-                                              )
-                                            ) +
-                                            "\n                                                        "
-                                        )
-                                      ]
-                                    )
-                                  : _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "fs-16 text-black bold text-left pull-right"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                                            -\n                                                        "
-                                        )
-                                      ]
-                                    )
-                              ])
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "col-lg-12 border-bottom-grey p-t-10"
-                          },
-                          [
-                            _c("div", { staticClass: "row" }, [
-                              _vm._m(1),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-6" }, [
-                                parseInt(_vm.purchaseOrder.taxFeeAdded)
-                                  ? _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "fs-18 text-black bold text-left pull-right"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                                            " +
-                                            _vm._s(
-                                              _vm.purchaseOrder.currencyFormat
-                                            ) +
-                                            " " +
-                                            _vm._s(
-                                              _vm.formatPrice(
-                                                _vm.purchaseOrder.taxFee
-                                              )
-                                            ) +
-                                            "\n                                                        "
-                                        )
-                                      ]
-                                    )
-                                  : _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "fs-16 text-black bold text-left pull-right"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                                            -\n                                                        "
-                                        )
-                                      ]
-                                    )
-                              ])
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "col-lg-12 border-bottom-grey p-t-10"
-                          },
-                          [
-                            _c("div", { staticClass: "row" }, [
-                              _vm._m(2),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-lg-6" }, [
-                                _vm.purchaseOrder.total != 0
-                                  ? _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "fs-21 text-primary bold text-left pull-right"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                                            " +
-                                            _vm._s(
-                                              _vm.purchaseOrder.currencyFormat
-                                            ) +
-                                            " " +
-                                            _vm._s(
-                                              _vm.formatPrice(
-                                                _vm.purchaseOrder.total
-                                              )
-                                            ) +
-                                            "\n                                                        "
-                                        )
-                                      ]
-                                    )
-                                  : _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "fs-18 text-primary bold text-left pull-right"
-                                      },
-                                      [_vm._v("-")]
-                                    )
-                              ])
-                            ])
-                          ]
-                        )
-                      ])
-                    ]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "p-t-50" })
-            ],
-            2
-          )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "p-t-50" })
+          ])
         ]
       )
     ])
@@ -25145,7 +25241,6 @@ module.exports = Component.exports
             }
         });
     },
-    getItemInRequisition: function getItemInRequisition(state, payload) {},
     createPO: function createPO(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/create', {
             POForm: state.POFormObject,
@@ -25254,6 +25349,49 @@ module.exports = Component.exports
                 type: 'danger'
             }).show();
         });
+    },
+    updateStatus: function updateStatus(state, payload) {
+
+        if (payload.purchaseOrderId != '' && payload.statusId != '') {
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/update/status', {
+                purchaseOrderId: payload.purchaseOrderId,
+                statusId: payload.statusId
+            }).then(function (res) {
+
+                if (!res.data.isFailed) {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    //update status in array
+                    state.purchaseOrders[payload.index].statusId = payload.statusId;
+                    state.purchaseOrders[payload.index].status = payload.status;
+                } else {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        }
     }
 });
 

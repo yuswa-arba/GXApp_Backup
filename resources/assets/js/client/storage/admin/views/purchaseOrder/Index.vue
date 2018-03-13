@@ -26,7 +26,7 @@
             </div>
 
             <div class="card card-default card-bordered border-solid-grey m-t-20"
-                 v-for="purchaseOrder in purchaseOrders">
+                 v-for="(purchaseOrder,index) in purchaseOrders">
 
                 <div class="card-block no-padding">
                     <div class="col-lg-12 border-bottom-grey" style="background:#fafafa;">
@@ -67,9 +67,23 @@
                                 <p class="text-uppercase m-t-10 m-b-0">Notes</p>
                                 <p class="text-black fs-14 m-b-10">{{purchaseOrder.notes}}</p>
                             </div>
-                            <div class="col-lg-2 m-t-20 m-b-20">
-                                <button class="btn btn-primary m-t-10 m-r-20" @click="showPurchaseOrderDetail(purchaseOrder.id)">Details</button>
-                                <button class="btn btn-info m-t-10 m-r-20" @click="downloadPDF(purchaseOrder.id)"><i class="fa fa-download"></i> PDF</button>
+                            <div class="col-lg-2 m-t-20 m-b-20 no-padding">
+                                <button class="btn btn-primary m-t-10 m-r-5" @click="showPurchaseOrderDetail(purchaseOrder.id)"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-info m-t-10 m-r-5" @click="downloadPDF(purchaseOrder.id)"><i class="fa fa-download"></i> </button>
+                                <div class="dropdown dropdown-default ">
+                                    <button class="btn btn-outline-primary m-t-10 m-r-5 dropdown-toggle text-center" type="button"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-pencil"></i>
+                                    </button>
+
+                                    <div class="dropdown-menu">
+
+                                        <a class="dropdown-item pointer" v-for="status in purchaseOrderStatuses" @click="updateStatus(purchaseOrder.id,status.id,status.name,index)">{{status.name}}
+                                            <span v-if="status.id==purchaseOrder.statusId"><i class="fa fa-check fs-16 text-primary"></i></span>
+                                        </a>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -198,6 +212,15 @@
             },
             showPurchaseOrderDetail(purchaseOrderId){
                 this.$router.push({name: 'PODetail', params: {id: purchaseOrderId}})
+            },
+            updateStatus(purchaseOrderId,statusId,status,index){
+                this.$store.commit({
+                    type:'purchaseOrder/updateStatus',
+                    purchaseOrderId:purchaseOrderId,
+                    statusId:statusId,
+                    status:status,
+                    index:index
+                })
             },
             downloadPDF(purchaseOrderId){
               window.open(api_path+'storage/admin/purchaseOrder/generate/pdf?id='+purchaseOrderId,'_blank')

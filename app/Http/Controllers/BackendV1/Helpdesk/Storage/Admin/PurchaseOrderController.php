@@ -187,6 +187,52 @@ class PurchaseOrderController extends Controller
         $response = array();
     }
 
+    public function updatePurchaseOrder(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), [
+            'purchaseOrderId' => 'required',
+            'statusId' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $purchaseOrder = StoragePurchaseOrders::find($request->purchaseOrderId);
+
+        if($purchaseOrder){
+
+            $purchaseOrder->statusId = $request->statusId;
+
+            if ($purchaseOrder->save()) { /* Success response */
+
+                $response['isFailed'] = false;
+                $response['message'] = 'Status has been updated successfully';
+                return response()->json($response, 200);
+
+            } else { /* Error response */
+
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to save purchase order status';
+                return response()->json($response, 200);
+
+            }
+        } else { /* Error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find purchase order data';
+            return response()->json($response,200);
+        }
+
+
+
+    }
+
     public function generatePDF(Request $request)
     {
         $response = array();
@@ -212,11 +258,11 @@ class PurchaseOrderController extends Controller
         if ($employee && $employee->hasResigned != 1) {
 
             $purchaseOrder = StoragePurchaseOrders::find($request->id);
-            $purchaseOrderItems = StoragePurchaseOrderItems::orderBy('id','desc')
-                                                            ->where('purchaseOrderId',$purchaseOrder->id)
-                                                            ->get();
+            $purchaseOrderItems = StoragePurchaseOrderItems::orderBy('id', 'desc')
+                ->where('purchaseOrderId', $purchaseOrder->id)
+                ->get();
 
-            if($purchaseOrder){
+            if ($purchaseOrder) {
 
                 //INFORMATION
 
@@ -225,7 +271,7 @@ class PurchaseOrderController extends Controller
                 $signaturePosition = GlobalConfig::$PURCHASE_ORDER_INFO['POSITION'];
 
 
-                $pdf = PDF::loadView('layouts.pdf.purchase_order', compact('purchaseOrder','purchaseOrderItems','signatureName','signatureImg','signaturePosition'))
+                $pdf = PDF::loadView('layouts.pdf.purchase_order', compact('purchaseOrder', 'purchaseOrderItems', 'signatureName', 'signatureImg', 'signaturePosition'))
                     ->setPaper('a4')->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
                 return $pdf->stream($purchaseOrder->purchaseOrderNumber . '.pdf');
 
@@ -234,7 +280,7 @@ class PurchaseOrderController extends Controller
                 /* Return error response */
                 $response['isFailed'] = true;
                 $response['message'] = 'Unable to find purchase order';
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
 
         } else {

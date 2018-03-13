@@ -51,6 +51,7 @@ class StoragePurchaseOrderTransformer extends TransformerAbstract
             'total' => $purchaseOrders->total,
             'currencyFormat' => $purchaseOrders->currencyFormat,
             'notes' => $purchaseOrders->notes,
+            'statusId'=>$purchaseOrders->statusId,
             'status' => $this->getResultWithNullChecker1Connection($purchaseOrders, 'status', 'name'),
             'insertedAt' => $purchaseOrders->insertedAt,
             'insertedBy' => $purchaseOrders->insertedBy,

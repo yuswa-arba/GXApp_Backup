@@ -75,33 +75,35 @@
                         </div>
                     </div>
 
-                    <div class="col-lg-12 p-t-10 border-bottom-grey"
-                         v-for="(item,index) in purchaseOrder.purchaseOrderItems.data">
-                        <div class="row">
-                            <div class="col-lg-3 m-t-5">
-                                <p class="m-b-0 fs-16"> Amount : <span
-                                        class="text-black">{{item.amountPurchased}}</span></p>
-                                <p class="m-b-0 fs-16" v-if="item.hasCustomUnit"> Unit :
-                                    {{item.customUnit}}</p>
-                                <p class="m-b-0 fs-16" v-else="">Unit : {{item.unitFormatPurchased}}</p>
-                            </div>
-                            <div class="col-lg-2 m-t-5">
-                                <p class="text-black fs-16 m-b-0 bold">{{item.itemName}}</p>
-                                <p class="m-b-10">{{item.itemCode}}</p>
-                            </div>
-                            <div class="col-lg-2 m-t-5">
-                                <p class="m-b-0">per item</p>
-                                <p class="text-black m-b-10 fs-16">{{item.currencyFormat}}
-                                    {{formatPrice(item.pricePurchased)}}</p>
-                            </div>
-                            <div class="col-lg-3 m-t-5">
-                                <p class="m-b-0">sub total</p>
-                                <p class="text-black m-b-10 fs-16 bold">{{item.currencyFormat}}
-                                    {{formatPrice(parseInt(item.pricePurchased)*parseInt(item.amountPurchased))}}</p>
-                            </div>
-                            <div class="col-lg-1 m-t-5">
+                    <div v-if="purchaseOrder.purchaseOrderItems">
+                        <div class="col-lg-12 p-t-10 border-bottom-grey" v-for="(item,index) in purchaseOrder.purchaseOrderItems.data">
+                            <div class="row">
+                                <div class="col-lg-3 m-t-5">
+                                    <p class="m-b-0 fs-16"> Amount : <span
+                                            class="text-black">{{item.amountPurchased}}</span></p>
+                                    <p class="m-b-0 fs-16" v-if="item.hasCustomUnit"> Unit :
+                                        {{item.customUnit}}</p>
+                                    <p class="m-b-0 fs-16" v-else="">Unit : {{item.unitFormatPurchased}}</p>
+                                </div>
+                                <div class="col-lg-2 m-t-5">
+                                    <p class="text-black fs-16 m-b-0 bold">{{item.itemName}}</p>
+                                    <p class="m-b-10">{{item.itemCode}}</p>
+                                </div>
+                                <div class="col-lg-2 m-t-5">
+                                    <p class="m-b-0">per item</p>
+                                    <p class="text-black m-b-10 fs-16">{{item.currencyFormat}}
+                                        {{formatPrice(item.pricePurchased)}}</p>
+                                </div>
+                                <div class="col-lg-3 m-t-5">
+                                    <p class="m-b-0">sub total</p>
+                                    <p class="text-black m-b-10 fs-16 bold">{{item.currencyFormat}}
+                                        {{formatPrice(parseInt(item.pricePurchased)*parseInt(item.amountPurchased))}}</p>
+                                </div>
+                                <div class="col-lg-1 m-t-5">
+                                </div>
                             </div>
                         </div>
+
                     </div>
                     <div class="p-t-50"></div>
                     <div class="col-lg-12 p-t-10">
@@ -221,6 +223,8 @@
             },
             downloadPDF(purchaseOrderId){
                 window.open(api_path+'storage/admin/purchaseOrder/generate/pdf?id='+purchaseOrderId,'_blank')
+            },
+            editPurchaseOrder(purchaseOrderId){
 
             }
         }
