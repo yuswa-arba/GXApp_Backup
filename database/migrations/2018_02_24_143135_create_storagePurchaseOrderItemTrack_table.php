@@ -18,9 +18,6 @@ class CreateStoragePurchaseOrderItemTrackTable extends Migration
             $table->integer('purchaseOrderItemId');
             $table->string('estimatedDateArrival');
             $table->string('estimatedTimeArrival');
-            $table->integer('deliveryWarehouseId');
-            $table->integer('shippingTypeId');
-            $table->integer('actionTypeId');
             $table->string('notes')->nullable();
             $table->timestamps();
         });

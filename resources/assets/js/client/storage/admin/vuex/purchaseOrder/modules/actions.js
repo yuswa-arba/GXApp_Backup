@@ -150,6 +150,15 @@ export default{
         //show modal
         $('#modal-add-item').modal('show')
     },
+    attemptAddItemTrack({commit,state},payload){
+
+        if(payload.itemId){
+            state.itemToAddTrack.id = payload.itemId
+            //show modal
+            $('#modal-add-item-track').modal('show')
+        }
+
+    },
     insertItemToPO({commit, state}, payload){
 
         //validate and check object before insert into PO Items

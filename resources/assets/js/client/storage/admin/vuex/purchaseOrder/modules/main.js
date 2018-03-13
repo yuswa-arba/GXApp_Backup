@@ -70,7 +70,13 @@ export default {
         },
         POItems: [],
         POFormIsFinishAndValid: false,
-        isCreatingPurchaseOrder:false
+        isCreatingPurchaseOrder:false,
+        itemToAddTrack:{
+            id:'',
+            estimatedDateArrival:'',
+            estimatedTimeArrival:'',
+            notes:''
+        }
     },
     getters,
     mutations,

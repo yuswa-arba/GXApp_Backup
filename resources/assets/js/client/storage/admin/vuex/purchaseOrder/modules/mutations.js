@@ -348,13 +348,13 @@ export default{
 
                     if (!res.data.isFailed) {
 
-                         $('.page-container').pgNotification({
-                              style: 'flip',
-                              message: res.data.message,
-                              position: 'top-right',
-                              timeout: 3500,
-                              type: 'info'
-                          }).show();
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'info'
+                        }).show();
 
                         //update status in array
                         state.purchaseOrders[payload.index].statusId = payload.statusId
@@ -381,10 +381,52 @@ export default{
                         type: 'danger'
                     }).show();
                 })
-
-
         }
 
+    },
+    addItemTrack(state, payload){
+        post(api_path + 'storage/admin/purchaseOrder/item/track/add', state.itemToAddTrack)
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                    //close modal
+                    $('#modal-add-item-track').modal('toggle')
+
+                    //reset form
+                    state.itemToAddTrack = {
+                        id: '',
+                        estimatedDateArrival: '',
+                        estimatedTimeArrival: '',
+                        notes: ''
+                    }
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
     }
 
 }

@@ -8,6 +8,7 @@ use App\Storage\Jobs\NotifyRequestTracking;
 use App\Storage\Logics\PurchaseOrder\CreatePurchaseOrderLogic;
 use App\Storage\Models\StorageItems;
 use App\Storage\Models\StoragePurchaseOrderItems;
+use App\Storage\Models\StoragePurchaseOrderItemTrack;
 use App\Storage\Models\StoragePurchaseOrders;
 use App\Storage\Models\StorageRequisition;
 use App\Storage\Models\StorageRequisitionItems;
@@ -327,6 +328,10 @@ class PurchaseOrderController extends Controller
                             $response['message'] = 'PO Status update. (err:Unable to find requisition)';
                             return response()->json($response, 200);
                         }
+                    } else {
+                        $response['isFailed'] = false;
+                        $response['message'] = 'Status has been updated successfully';
+                        return response()->json($response, 200);
                     }
 
                 } else { /* Success response */
@@ -349,7 +354,42 @@ class PurchaseOrderController extends Controller
             return response()->json($response, 200);
         }
 
+    }
 
+    public function addItemTrack(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(),[
+            'id'=>'required',
+            'estimatedDateArrival'=>'required',
+            'estimatedTimeArrival'=>'required'
+        ]);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $insert = StoragePurchaseOrderItemTrack::create([
+            'purchaseOrderItemId'=>$request->id,
+            'estimatedDateArrival'=>$request->estimatedDateArrival,
+            'estimatedTimeArrival'=>$request->estimatedTimeArrival,
+            'notes'=>$request->notes
+        ]);
+
+        if($insert){
+            $response['isFailed'] =false;
+            $response['message'] = 'Item track has been created successfully';
+            return response()->json($response,200);
+        } else{
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to create item track';
+            return response()->json($response,200);
+        }
     }
 
     public function generatePDF(Request $request)

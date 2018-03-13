@@ -2,7 +2,9 @@
     <div class="row">
         <div class="col-lg-12 m-b-10 m-t-10">
             <slot name="go-back-menu"></slot>
-            <button class="btn btn-info pull-right" @click="downloadPDF(purchaseOrder.id)"><i class="fa fa-download"></i> PDF</button>
+            <button class="btn btn-info pull-right" @click="downloadPDF(purchaseOrder.id)"><i
+                    class="fa fa-download"></i> PDF
+            </button>
         </div>
         <div class="col-lg-12 m-b-10">
             <div class="card card-default card-bordered border-solid-grey">
@@ -76,7 +78,8 @@
                     </div>
 
                     <div v-if="purchaseOrder.purchaseOrderItems">
-                        <div class="col-lg-12 p-t-10 border-bottom-grey" v-for="(item,index) in purchaseOrder.purchaseOrderItems.data">
+                        <div class="col-lg-12 p-t-10 border-bottom-grey"
+                             v-for="(item,index) in purchaseOrder.purchaseOrderItems.data">
                             <div class="row">
                                 <div class="col-lg-3 m-t-5">
                                     <p class="m-b-0 fs-16"> Amount : <span
@@ -94,12 +97,15 @@
                                     <p class="text-black m-b-10 fs-16">{{item.currencyFormat}}
                                         {{formatPrice(item.pricePurchased)}}</p>
                                 </div>
-                                <div class="col-lg-3 m-t-5">
+                                <div class="col-lg-2 m-t-5">
                                     <p class="m-b-0">sub total</p>
                                     <p class="text-black m-b-10 fs-16 bold">{{item.currencyFormat}}
                                         {{formatPrice(parseInt(item.pricePurchased)*parseInt(item.amountPurchased))}}</p>
                                 </div>
-                                <div class="col-lg-1 m-t-5">
+                                <div class="col-lg-2 m-t-5">
+                                    <button class="btn btn-outline-primary" @click="attemptAddItemTrack(item.id)"><i
+                                            class="fa fa-plus"></i> Track
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +174,7 @@
             </div>
 
         </div>
-
+        <add-item-track-modal></add-item-track-modal>
     </div>
 </template>
 
@@ -177,11 +183,15 @@
     import {api_path} from '../../../../helpers/const'
     import {mapGetters, mapState} from 'vuex'
     import InfiniteLoading from 'vue-infinite-loading';
+    import AddItemTrackModal from '../../components/purchaseOrder/AddItemTrackModal.vue'
     export default{
         data(){
             return {
                 purchaseOrder: {}
             }
+        },
+        components: {
+            'add-item-track-modal': AddItemTrackModal
         },
         created(){
 
@@ -222,10 +232,13 @@
                 return accounting.formatNumber(amount, ',', '.', '')
             },
             downloadPDF(purchaseOrderId){
-                window.open(api_path+'storage/admin/purchaseOrder/generate/pdf?id='+purchaseOrderId,'_blank')
+                window.open(api_path + 'storage/admin/purchaseOrder/generate/pdf?id=' + purchaseOrderId, '_blank')
             },
-            editPurchaseOrder(purchaseOrderId){
-
+            attemptAddItemTrack(itemId){
+                this.$store.dispatch({
+                    type: 'purchaseOrder/attemptAddItemTrack',
+                    itemId: itemId
+                })
             }
         }
     }
