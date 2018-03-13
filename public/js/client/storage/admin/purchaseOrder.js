@@ -4154,6 +4154,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -4165,7 +4166,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     data: function data() {
         return {
-            sortStatus: '', searchText: ''
+            sortStatus: '',
+            searchText: ''
         };
     },
     created: function created() {
@@ -4250,6 +4252,13 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 type: 'purchaseOrder/getPurchaseOrderList',
                 sortStatus: self.sortStatus
             });
+        },
+        emptySearchPO: function emptySearchPO() {
+            // if empty get all data again
+            var self = this;
+            if (self.searchText == '') {
+                self.sortPurchaseOrders();
+            }
         },
         searchPurchaseOrder: function searchPurchaseOrder() {
             var self = this;
@@ -6482,19 +6491,25 @@ var render = function() {
                     staticStyle: { height: "40px" },
                     attrs: {
                       type: "text",
-                      placeholder: "Search PO / Date / Supplier / Warehouse "
+                      placeholder:
+                        "Search PO / Approval / Supplier / Warehouse "
                     },
                     domProps: { value: _vm.searchText },
                     on: {
-                      keyup: function($event) {
-                        if (
-                          !("button" in $event) &&
-                          _vm._k($event.keyCode, "enter", 13, $event.key)
-                        ) {
-                          return null
+                      keyup: [
+                        function($event) {
+                          _vm.emptySearchPO()
+                        },
+                        function($event) {
+                          if (
+                            !("button" in $event) &&
+                            _vm._k($event.keyCode, "enter", 13, $event.key)
+                          ) {
+                            return null
+                          }
+                          _vm.searchPurchaseOrder()
                         }
-                        _vm.searchPurchaseOrder()
-                      },
+                      ],
                       input: function($event) {
                         if ($event.target.composing) {
                           return
@@ -6650,7 +6665,7 @@ var render = function() {
                             _c("i", { staticClass: "fa fa-mobile" }),
                             _vm._v(
                               "\n                                " +
-                                _vm._s(purchaseOrder.recipientPerson)
+                                _vm._s(purchaseOrder.recipientNumber)
                             )
                           ])
                         ]),

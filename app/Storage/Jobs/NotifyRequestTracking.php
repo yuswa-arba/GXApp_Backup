@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Mail;
  * Date: 18/12/17
  * Time: 6:37 PM
  */
-class NotifyRequestIsInProcess implements ShouldQueue
+class NotifyRequestTracking implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,11 +32,15 @@ class NotifyRequestIsInProcess implements ShouldQueue
 
     public $requisitionId;
     public $user;
+    public $message;
+    public $url;
 
-    public function __construct($requisitionId,$user)
+    public function __construct($requisitionId,$user,$message,$url='')
     {
         $this->requisitionId = $requisitionId;
         $this->user = $user;
+        $this->message = $message;
+        $this->url=$url;
     }
 
     /**
@@ -54,8 +58,8 @@ class NotifyRequestIsInProcess implements ShouldQueue
         app()->make('PushNotificationService')->singleNotify([
             'userID' => $recipientsUser->id,
             'title' => 'Requisition Tracking ',
-            'message' => 'Your requisition is being processed #' . $requisition->requisitionNumber,
-            'url' => '',
+            'message' => $this->message,
+            'url' => $this->url,
             'intentType' => ConfigCodes::$FCM_INTENT_TYPE['HOME'],
             'viaType' => ConfigCodes::$NOTIFY_TYPE['NOTIFICATION'],
             'groupTypeId'=>4,// New requisition group type Id

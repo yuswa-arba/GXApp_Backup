@@ -8,11 +8,9 @@ use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Controllers\Controller;
 use App\Storage\Models\StorageItemsCategory;
 use App\Storage\Models\StorageItemTypes;
-use App\Storage\Models\StorageShipments;
 use App\Storage\Models\StorageSuppliers;
 use App\Storage\Models\StorageWarehouses;
 use App\Storage\Transformers\BasicCodeNameTransformer;
-use App\Storage\Transformers\ShipmentTransformer;
 use App\Storage\Transformers\SupplierTransformer;
 use App\Storage\Transformers\WarehouseTransformer;
 use App\Traits\GlobalUtils;
@@ -91,40 +89,6 @@ class CreateController extends Controller
             return response()->json($response, 200);
         }
 
-    }
-
-    public function createShipment(Request $request)
-    {
-        $response = array();
-
-        $validator = Validator::make($request->all(), ['name' => 'required']);
-
-        if ($validator->fails()) {
-            $response['isFailed'] = true;
-            $response['message'] = 'Missing required parameters';
-            return response()->json($response, 200);
-        }
-
-        //is valid
-
-        $create = StorageShipments::create([
-            'name' => $request->name,
-            'website' => $request->website,
-            'callCenter' => $request->callCenter,
-            'isDeleted'=>0
-        ]);
-
-        if ($create) {
-            $response['isFailed'] = false;
-            $response['message'] = 'Success';
-            $response['shipment'] = fractal($create, new ShipmentTransformer());
-            return response()->json($response, 200);
-
-        } else {
-            $response['isFailed'] = true;
-            $response['message'] = 'Unable to create item category';
-            return response()->json($response, 200);
-        }
     }
 
     public function createSupplier(Request $request)

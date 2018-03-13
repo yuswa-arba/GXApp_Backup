@@ -7,7 +7,7 @@ use App\Employee\Models\MasterEmployee;
 use App\Employee\Transformers\EmployeeListTransfomer;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
-use App\Storage\Jobs\NotifyRequestIsInProcess;
+use App\Storage\Jobs\NotifyRequestTracking;
 use App\Storage\Models\StorageItems;
 use App\Storage\Models\StoragePurchaseOrderItems;
 use App\Storage\Models\StoragePurchaseOrders;
@@ -141,7 +141,14 @@ class CreatePurchaseOrderLogic extends CreateUseCase
                         if ($requisition->save()) {
 
                             //Dispatch job to notify requester their request is in process
-                            NotifyRequestIsInProcess::dispatch($requisition->id,Auth::user())->onConnection('database')->onQueue('broadcaster');
+                            NotifyRequestTracking::dispatch(
+                                $requisition->id, //requisition ID
+                                Auth::user(), //user sender
+                                'Your request is being processed #'.$requisition->requisitionNumber, //message
+                                url('storage/requisition/history') //url to click
+                                )
+                                                ->onConnection('database')
+                                                ->onQueue('broadcaster');
 
                         }
                     }

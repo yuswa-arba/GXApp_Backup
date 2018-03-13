@@ -25,7 +25,6 @@ Route::prefix('v1/h')->group(function () {
         */
         Route::get('itemCategory/list', 'Misc\ListController@itemCategoryList');
         Route::get('itemType/list', 'Misc\ListController@itemTypeList');
-        Route::get('shipment/list', 'Misc\ListController@shipmentList');
         Route::get('supplier/list', 'Misc\ListController@supplierList');
         Route::get('warehouse/list', 'Misc\ListController@warehouseList');
         Route::get('unit/list', 'Misc\ListController@unitList');
@@ -35,7 +34,6 @@ Route::prefix('v1/h')->group(function () {
 
         Route::post('create/itemCategory', 'Misc\CreateController@createItemCategory');
         Route::post('create/itemType', 'Misc\CreateController@createItemType');
-        Route::post('create/shipment', 'Misc\CreateController@createShipment');
         Route::post('create/supplier', 'Misc\CreateController@createSupplier');
         Route::post('create/warehouse', 'Misc\CreateController@createWarehouse');
         Route::post('create/unit', 'Misc\CreateController@createUnit');
@@ -47,10 +45,6 @@ Route::prefix('v1/h')->group(function () {
         Route::post('update/itemType', 'Misc\UpdateDeleteController@updateItemType');
         Route::post('delete/itemType', 'Misc\UpdateDeleteController@deleteItemType');
         Route::post('undoDelete/itemType', 'Misc\UpdateDeleteController@undoDeleteItemType');
-
-        Route::post('update/shipment', 'Misc\UpdateDeleteController@updateShipment');
-        Route::post('delete/shipment', 'Misc\UpdateDeleteController@deleteShipment');
-        Route::post('undoDelete/shipment', 'Misc\UpdateDeleteController@undoDeleteShipment');
 
         Route::post('update/warehouse', 'Misc\UpdateDeleteController@updateWarehouse');
         Route::post('delete/warehouse', 'Misc\UpdateDeleteController@deleteWarehouse');

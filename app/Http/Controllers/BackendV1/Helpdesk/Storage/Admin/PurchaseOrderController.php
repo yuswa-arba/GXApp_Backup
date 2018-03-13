@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Admin;
 
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\Controller;
+use App\Storage\Jobs\NotifyRequestTracking;
 use App\Storage\Logics\PurchaseOrder\CreatePurchaseOrderLogic;
 use App\Storage\Models\StorageItems;
 use App\Storage\Models\StoragePurchaseOrderItems;
@@ -211,6 +212,9 @@ class PurchaseOrderController extends Controller
 
                 $purchaseOrders = StoragePurchaseOrders::where(function ($query) use ($search) {
                     $query->where('purchaseOrderNumber', 'like', '%' . $search . '%')
+                        ->orWhereHas('requisition',function($query)use($search){//approval no
+                            $query->where('approvalNumber', 'like', '%' . $search . '%');
+                        })
                         ->orWhereHas('supplier', function ($query) use ($search) { //supplier
                             $query->where('name', 'like', '%' . $search . '%');
                         })->orWhereHas('warehouse', function ($query) use ($search) { //warehouse
@@ -271,9 +275,66 @@ class PurchaseOrderController extends Controller
 
             if ($purchaseOrder->save()) { /* Success response */
 
-                $response['isFailed'] = false;
-                $response['message'] = 'Status has been updated successfully';
-                return response()->json($response, 200);
+                // Update approval/requisition status as well
+                if ($purchaseOrder->withRequisition && $purchaseOrder->requisitionId != null) {
+
+                    $requisitionApprovalStatus = '';
+
+                    switch ($request->statusId) {
+                        case ConfigCodes::$PURCHASE_ORDER_STATUS['OPEN']:
+                            $requisitionApprovalStatus = ConfigCodes::$REQUISITION_APPROVAL_STATUS['IN_PROCESS'];
+                            break;
+                        case ConfigCodes::$PURCHASE_ORDER_STATUS['CLOSED']:
+                            $requisitionApprovalStatus = ConfigCodes::$REQUISITION_APPROVAL_STATUS['FINISH'];
+                            break;
+                        case ConfigCodes::$PURCHASE_ORDER_STATUS['PENDING']:
+                            $requisitionApprovalStatus = ConfigCodes::$REQUISITION_APPROVAL_STATUS['WAITING'];
+                            break;
+                        case ConfigCodes::$PURCHASE_ORDER_STATUS['CANCELED']:
+                            $requisitionApprovalStatus = ConfigCodes::$REQUISITION_APPROVAL_STATUS['FINISH'];
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if ($requisitionApprovalStatus != '') {
+                        $requisition = StorageRequisition::find($purchaseOrder->requisitionId);
+                        if ($requisition) {
+                            $requisition->approvalId = $requisitionApprovalStatus;
+
+                            if ($requisition->save()) { /* Success response */
+
+                                //Dispatch job to notify requester their request is in process
+                                NotifyRequestTracking::dispatch(
+                                    $requisition->id, //requisition ID
+                                    Auth::user(),//user sender
+                                    'New update on your requisition #'.$requisition->requisitionNumber, //message
+                                    url('storage/requisition/history') //url to click
+                                    )
+                                    ->onConnection('database')->onQueue('broadcaster');
+
+                                $response['isFailed'] = false;
+                                $response['message'] = 'Status has been updated successfully';
+                                return response()->json($response, 200);
+
+                            } else { /* Success with  Error response */
+                                $response['isFailed'] = false;
+                                $response['message'] = 'PO Status update. (err:Unable to update requisition status)';
+                                return response()->json($response, 200);
+                            }
+                        } else {/* Success with Error response */
+                            $response['isFailed'] = false;
+                            $response['message'] = 'PO Status update. (err:Unable to find requisition)';
+                            return response()->json($response, 200);
+                        }
+                    }
+
+                } else { /* Success response */
+                    $response['isFailed'] = false;
+                    $response['message'] = 'Status has been updated successfully';
+                    return response()->json($response, 200);
+                }
+
 
             } else { /* Error response */
 
@@ -557,7 +618,7 @@ class PurchaseOrderController extends Controller
     {
         $response = array();
 
-        $validator = Validator::make($request->all(),['no'=>'required']);
+        $validator = Validator::make($request->all(), ['no' => 'required']);
 
 
         if ($validator->fails()) {
@@ -570,7 +631,7 @@ class PurchaseOrderController extends Controller
 
         //is valid
 
-        $requisition=  StorageRequisition::where('approvalNumber',$request->no)->first();
+        $requisition = StorageRequisition::where('approvalNumber', $request->no)->first();
 
         if ($requisition) {
 

@@ -144,10 +144,13 @@
             }
         },
         created(){
+
+            let self =this
             // get necessary data on create for this page
             this.$store.dispatch({
                 type:'history/getDataOnCreate'
             })
+
         },
         computed: {
             ...mapState('history', {

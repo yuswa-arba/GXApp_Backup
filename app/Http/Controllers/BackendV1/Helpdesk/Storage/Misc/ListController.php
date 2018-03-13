@@ -11,16 +11,11 @@ use App\Storage\Models\StorageItemStatus;
 use App\Storage\Models\StorageItemTypes;
 use App\Storage\Models\StoragePurchaseOrderStatus;
 use App\Storage\Models\StorageRequisitionApproval;
-use App\Storage\Models\StorageShipments;
 use App\Storage\Models\StorageSuppliers;
 use App\Storage\Models\StorageWarehouses;
 use App\Storage\Transformers\BasicCodeNameTransformer;
-use App\Storage\Transformers\BriefSupplierTransformer;
-use App\Storage\Transformers\ShipmentTransformer;
 use App\Storage\Transformers\SupplierTransformer;
 use App\Storage\Transformers\WarehouseTransformer;
-use DeepCopy\f001\B;
-use Illuminate\Http\Request;
 
 class ListController extends Controller
 {
@@ -58,19 +53,6 @@ class ListController extends Controller
         $response['isFailed'] = false;
         $response['message'] = 'Success';
         $response['types'] = fractal($itemTypes, new BasicCodeNameTransformer());
-
-        return response()->json($response, 200);
-    }
-
-    public function shipmentList()
-    {
-        $response = array();
-
-        $shipments = StorageShipments::orderBy('name', 'asc')->get();
-
-        $response['isFailed'] = false;
-        $response['message'] = 'Success';
-        $response['shipments'] = fractal($shipments, new ShipmentTransformer());
 
         return response()->json($response, 200);
     }

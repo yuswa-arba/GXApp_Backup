@@ -26,8 +26,9 @@
                         <input type="text" style="height: 40px;"
                                class="form-control text-black"
                                v-model="searchText"
+                               @keyup="emptySearchPO()"
                                @keyup.enter="searchPurchaseOrder()"
-                               placeholder="Search PO / Date / Supplier / Warehouse ">
+                               placeholder="Search PO / Approval / Supplier / Warehouse ">
 
                         <span class="input-group-addon primary cursor"
                               @click="searchPurchaseOrder()"><i
@@ -75,7 +76,7 @@
                                 <p class="text-black fs-14 m-b-0"><i class="fa fa-user"></i>
                                     {{purchaseOrder.recipientName}}</p>
                                 <p class="text-black fs-14 m-b-0"><i class="fa fa-mobile"></i>
-                                    {{purchaseOrder.recipientPerson}}</p>
+                                    {{purchaseOrder.recipientNumber}}</p>
                             </div>
                             <div class="col-lg-2 m-t-20 m-b-20">
                                 <p class="text-uppercase m-t-10 m-b-0">Notes</p>
@@ -136,7 +137,8 @@
         },
         data(){
             return {
-                sortStatus: '',searchText:''
+                sortStatus: '',
+                searchText:''
             }
         },
         created(){
@@ -229,6 +231,12 @@
                     sortStatus: self.sortStatus
                 })
 
+            },
+            emptySearchPO(){ // if empty get all data again
+                let self = this
+                if(self.searchText==''){
+                    self.sortPurchaseOrders()
+                }
             },
             searchPurchaseOrder(){
                 let self = this

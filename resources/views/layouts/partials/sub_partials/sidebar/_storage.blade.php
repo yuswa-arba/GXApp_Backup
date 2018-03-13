@@ -67,10 +67,6 @@
                             <span class="icon-thumbnail">it</span>
                         </li>
                         <li>
-                            <a href="{{route('storage.misc.shipments')}}">Shipments</a>
-                            <span class="icon-thumbnail">s</span>
-                        </li>
-                        <li>
                             <a href="{{route('storage.misc.suppliers')}}">Suppliers</a>
                             <span class="icon-thumbnail">s</span>
                         </li>

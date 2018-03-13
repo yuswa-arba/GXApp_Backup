@@ -474,3 +474,7 @@ input[type='number'] {
   cursor: pointer;
 }
 
+.infinite-status-prompt {
+  display: none;
+}
+

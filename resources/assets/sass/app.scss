@@ -492,3 +492,7 @@ input[type='number'] {
   color: #ea2c54!important;
   cursor: pointer;
 }
+
+.infinite-status-prompt{ //hide status in vue-infinite-loading
+  display: none;
+}

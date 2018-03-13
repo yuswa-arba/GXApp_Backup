@@ -10,7 +10,7 @@ use App\Attendance\Models\Shifts;
 use App\Attendance\Models\Slots;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
-use App\Storage\Jobs\NotifyRequestIsInProcess;
+use App\Storage\Jobs\NotifyRequestTracking;
 use App\Traits\FirebaseUtils;
 use App\Mail\LoginAccountDetails;
 use App\Salary\Models\GeneralBonusesCuts;
@@ -443,7 +443,7 @@ class TestUploadController extends Controller
 
     public function td()
     {
-        NotifyRequestIsInProcess::dispatch(1,Auth::user())->onConnection('database')->onQueue('broadcaster');
+        NotifyRequestTracking::dispatch(1,Auth::user())->onConnection('database')->onQueue('broadcaster');
 
     }
 
