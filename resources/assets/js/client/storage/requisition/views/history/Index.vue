@@ -65,7 +65,10 @@
                                 <p class="text-black fs-14 m-b-10">{{requisition.approvalName}}</p>
                             </div>
                             <div class="col-lg-1 m-t-20 m-b-20">
-                                <button class="btn btn-outline-primary m-t-10 m-r-20">Details</button>
+                                <button class="btn btn-outline-primary m-t-10 m-r-20"
+                                        v-if="requisition.approvalId==4||requisition.approvalId==5">
+                                    Details
+                                </button>
                             </div>
                         </div>
                     </div>

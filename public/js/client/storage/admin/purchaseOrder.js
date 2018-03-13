@@ -3872,6 +3872,149 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/ApprovalDetail.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            requisition: {}
+        };
+    },
+    created: function created() {
+        var self = this;
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/approvalDetail?no=' + this.$route.params.approvalNo).then(function (res) {
+            if (!res.data.isFailed) {
+
+                //insert to array
+                self.requisition = res.data.requisition.data;
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+
+    computed: {},
+    methods: {
+        viewImage: function viewImage(url) {
+            window.open(url, '_blank');
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3884,6 +4027,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+//
 //
 //
 //
@@ -4132,6 +4276,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         },
         goToPurchaseOrderForm: function goToPurchaseOrderForm() {
             this.$router.push({ name: 'createNewPO' });
+        },
+        goToApprovalDetail: function goToApprovalDetail(approvalNo) {
+            this.$router.push({ name: 'approvalDetail', params: { approvalNo: approvalNo } });
         }
     }
 });
@@ -6409,7 +6556,17 @@ var render = function() {
                           purchaseOrder.withRequisition
                             ? _c(
                                 "p",
-                                { staticClass: "text-black fs-16 m-b-10" },
+                                {
+                                  staticClass:
+                                    "text-primary fs-16 m-b-10 cursor",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.goToApprovalDetail(
+                                        purchaseOrder.approvalNumber
+                                      )
+                                    }
+                                  }
+                                },
                                 [
                                   _vm._v(
                                     "\n                                " +
@@ -8070,6 +8227,272 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-6f13a026", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-79b839ed\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/ApprovalDetail.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12" },
+      [
+        _vm._t("go-back-menu"),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card card-default card-bordered border-solid-grey" },
+          [
+            _c(
+              "div",
+              { staticClass: "card-block no-padding" },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-lg-12 border-bottom-grey",
+                    staticStyle: { background: "#fafafa" }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Requisition No.")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.requisition.requisitionNumber))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                          _vm._v("Approval No.")
+                        ]),
+                        _vm._v(" "),
+                        _vm.requisition.approvalNumber
+                          ? _c(
+                              "p",
+                              { staticClass: "text-black fs-16 m-b-10" },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.requisition.approvalNumber)
+                                )
+                              ]
+                            )
+                          : _c("p", [_vm._v("-")])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Requested At")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.requisition.requestedAt))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                          _vm._v("Date Needed By")
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.requisition.dateNeededBy))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Description")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.requisition.description))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Approval Status")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.requisition.approvalName))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-1 m-t-20 m-b-20" })
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-t-10" }),
+                _vm._v(" "),
+                _vm._l(_vm.requisition.requisitionItems.data, function(item) {
+                  return _vm.requisition.requisitionItems
+                    ? _c("div", { staticClass: "col-lg-12" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "row border-bottom-grey p-t-10 p-b-10"
+                          },
+                          [
+                            _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-lg-6" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "cursor",
+                                      staticStyle: { "margin-top": "-10px" },
+                                      on: {
+                                        click: function($event) {
+                                          _vm.viewImage(
+                                            "/images/storage/items/" +
+                                              item.itemPhoto
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("img", {
+                                        attrs: {
+                                          src:
+                                            "/images/storage/items/" +
+                                            item.itemPhoto,
+                                          height: "60px",
+                                          alt: "No Image Found"
+                                        }
+                                      })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-6" }, [
+                                  _c(
+                                    "p",
+                                    { staticClass: "text-black fs-16 m-b-0" },
+                                    [_vm._v(_vm._s(item.itemName))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("p", { staticClass: "no-padding fs-14" }, [
+                                    _vm._v(_vm._s(item.itemCode))
+                                  ])
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-2 p-t-10" }, [
+                              _c("p", { staticClass: "fs-16 m-b-0" }, [
+                                _vm._v("Amount: "),
+                                _c("span", { staticClass: "text-black" }, [
+                                  _vm._v(_vm._s(item.amount))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("p", { staticClass: " fs-16 m-b-0" }, [
+                                _vm._v("Unit: "),
+                                _c("span", { staticClass: "text-black" }, [
+                                  _vm._v(_vm._s(item.itemUnit))
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                              _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                                _vm._v("Notes")
+                              ]),
+                              _vm._v(" "),
+                              item.notes
+                                ? _c(
+                                    "p",
+                                    { staticClass: "text-black fs-16 m-b-10" },
+                                    [_vm._v(_vm._s(item.notes))]
+                                  )
+                                : _c("p", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                              _c("p", [
+                                _c("span", { staticClass: "text-uppercase" }, [
+                                  _vm._v("Approved: ")
+                                ]),
+                                _vm._v(" "),
+                                item.isApproved
+                                  ? _c("i", {
+                                      staticClass:
+                                        "fa fa-check text-success fs-16"
+                                    })
+                                  : _c("i", {
+                                      staticClass:
+                                        "fa fa-times text-danger fs-16"
+                                    })
+                              ]),
+                              _vm._v(" "),
+                              item.updatedAt && item.updatedBy
+                                ? _c("div", [
+                                    _c(
+                                      "p",
+                                      { staticClass: "text-uppercase m-b-0" },
+                                      [_vm._v("Latest Update")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "text-black fs-16 m-b-10"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    Updated at " +
+                                            _vm._s(item.updatedAt) +
+                                            " by " +
+                                            _vm._s(item.updatedBy) +
+                                            "\n                                "
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-lg-1 p-t-10" })
+                          ]
+                        )
+                      ])
+                    : _vm._e()
+                })
+              ],
+              2
+            )
+          ]
+        )
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-79b839ed", module.exports)
   }
 }
 
@@ -24664,9 +25087,12 @@ $(document).ready(function () {});
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_purchaseOrder_PurhcaseOrderForm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_purchaseOrder_PurhcaseOrderForm_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_purchaseOrder_PurchaseOrderDetail_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/views/purchaseOrder/PurchaseOrderDetail.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_purchaseOrder_PurchaseOrderDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_purchaseOrder_PurchaseOrderDetail_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_purchaseOrder_ApprovalDetail_vue__ = __webpack_require__("./resources/assets/js/client/storage/admin/views/purchaseOrder/ApprovalDetail.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__views_purchaseOrder_ApprovalDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__views_purchaseOrder_ApprovalDetail_vue__);
 /**
  * Created by kevinpurwono on 23/11/17.
  */
+
 
 
 
@@ -24678,10 +25104,59 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_purchaseOrder_Index_vue___default.a }, { path: '/create/new', component: __WEBPACK_IMPORTED_MODULE_3__views_purchaseOrder_PurhcaseOrderForm_vue___default.a, name: 'createNewPO' }, { path: '/detail/:id', component: __WEBPACK_IMPORTED_MODULE_4__views_purchaseOrder_PurchaseOrderDetail_vue___default.a, name: 'PODetail' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_purchaseOrder_Index_vue___default.a }, { path: '/create/new', component: __WEBPACK_IMPORTED_MODULE_3__views_purchaseOrder_PurhcaseOrderForm_vue___default.a, name: 'createNewPO' }, { path: '/detail/:id', component: __WEBPACK_IMPORTED_MODULE_4__views_purchaseOrder_PurchaseOrderDetail_vue___default.a, name: 'PODetail' }, { path: '/approval/detail/:approvalNo', component: __WEBPACK_IMPORTED_MODULE_5__views_purchaseOrder_ApprovalDetail_vue___default.a, name: 'approvalDetail' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/storage/admin/views/purchaseOrder/ApprovalDetail.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/ApprovalDetail.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-79b839ed\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/admin/views/purchaseOrder/ApprovalDetail.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/storage/admin/views/purchaseOrder/ApprovalDetail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-79b839ed", Component.options)
+  } else {
+    hotAPI.reload("data-v-79b839ed", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
 
 /***/ }),
 

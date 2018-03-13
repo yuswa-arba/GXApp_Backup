@@ -49,7 +49,8 @@
                                 <p class="text-black fs-18 m-b-10">{{purchaseOrder.purchaseOrderNumber}}</p>
 
                                 <p class="text-uppercase m-b-0">Approval No.</p>
-                                <p class="text-black fs-16 m-b-10" v-if="purchaseOrder.withRequisition">
+                                <p class="text-primary fs-16 m-b-10 cursor" v-if="purchaseOrder.withRequisition"
+                                   @click="goToApprovalDetail(purchaseOrder.approvalNumber)">
                                     {{purchaseOrder.approvalNumber}}</p>
                                 <p v-else="">-</p>
                             </div>
@@ -255,6 +256,9 @@
             },
             goToPurchaseOrderForm(){
                 this.$router.push({name: 'createNewPO'})
+            },
+            goToApprovalDetail(approvalNo){
+                this.$router.push({name:'approvalDetail',params:{approvalNo:approvalNo}})
             }
 
         }

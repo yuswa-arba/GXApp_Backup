@@ -2633,6 +2633,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4517,7 +4520,23 @@ var render = function() {
                             )
                           ]),
                           _vm._v(" "),
-                          _vm._m(0, true)
+                          _c("div", { staticClass: "col-lg-1 m-t-20 m-b-20" }, [
+                            requisition.approvalId == 4 ||
+                            requisition.approvalId == 5
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-outline-primary m-t-10 m-r-20"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                Details\n                            "
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
                         ])
                       ]
                     ),
@@ -4680,18 +4699,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-1 m-t-20 m-b-20" }, [
-      _c("button", { staticClass: "btn btn-outline-primary m-t-10 m-r-20" }, [
-        _vm._v("Details")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

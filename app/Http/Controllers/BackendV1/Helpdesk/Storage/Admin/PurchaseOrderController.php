@@ -17,6 +17,7 @@ use App\Storage\Transformers\BriefSupplierTransformer;
 use App\Storage\Transformers\StorageItemBriefDetailTransformer;
 use App\Storage\Transformers\StoragePurchaseOrderTransformer;
 use App\Storage\Transformers\StorageRequisitionItemTransformer;
+use App\Storage\Transformers\StorageRequisitionListTransformer;
 use App\Storage\Transformers\SupplierTransformer;
 use App\Storage\Transformers\WarehouseTransformer;
 use App\Traits\GlobalConfig;
@@ -549,6 +550,41 @@ class PurchaseOrderController extends Controller
 
         }
 
+
+    }
+
+    public function getApprovalDetail(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(),['no'=>'required']);
+
+
+        if ($validator->fails()) {
+
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $requisition=  StorageRequisition::where('approvalNumber',$request->no)->first();
+
+        if ($requisition) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            $response['requisition'] = fractal($requisition, new StorageRequisitionListTransformer())->includeRequisitionItems()->includeDeliveryWarehouse();
+
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find requisition';
+            return response()->json($response, 200);
+        }
 
     }
 

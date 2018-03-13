@@ -144,5 +144,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('admin/purchaseOrder/detail','Admin\PurchaseOrderController@purchaseOrderDetail');
         Route::post('admin/purchaseOrder/update/status','Admin\PurchaseOrderController@updatePurchaseOrder');
         Route::get('admin/purchaseOrder/generate/pdf','Admin\PurchaseOrderController@generatePDF');
+        Route::get('admin/purchaseOrder/approvalDetail','Admin\PurchaseOrderController@getApprovalDetail');
+
     });
 });
