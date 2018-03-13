@@ -16,26 +16,32 @@
                                 <div class="card-block">
                                     <div class="row">
                                         <div class="col-lg-12 m-t-10">
+
                                             <div class="form-group">
                                                 <label> Estimated Date Arrival </label>
                                                 <input type="text"
                                                        class="form-control"
-                                                       id="estimated-date-arrival"
-                                                       v-model="itemToAddTrack.estimatedDateArrival">
+                                                       placeholder="e.g 12/01/2018"
+                                                       id="estimated-date-arrival">
                                             </div>
                                             <div class="form-group">
                                                 <label> Estimated Time Arrival </label>
-                                                <input type="text"
-                                                       class="form-control"
-                                                       id="estimated-time-arrival"
-                                                       v-model="itemToAddTrack.estimatedTimeArrival">
+
+                                                <div class="input-group bootstrap-timepicker">
+                                                    <input type="text"
+                                                           class="form-control"
+                                                           id="estimated-time-arrival"
+                                                           placeholder="e.g 08:00 ">
+                                                    <span class="input-group-addon"><i class="pg-clock"></i></span>
+                                                </div>
                                             </div>
                                             <div class="form-group">
                                                 <label> Notes </label>
-                                                <input type="number"
+                                                <input type="text"
                                                        v-model="itemToAddTrack.notes"
                                                        class="form-control">
                                             </div>
+
 
                                         </div>
 
@@ -64,12 +70,18 @@
 
 <script>
     import {mapGetters, mapState} from 'vuex'
+    import series from 'async/series';
     export default{
         data(){
             return {}
         },
         mounted(){
-
+            $('#estimated-time-arrival').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
+                let widget = $('.bootstrap-timepicker-widget');
+                widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
+                widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
+            });
+            $('#estimated-date-arrival').datepicker({format: 'dd/mm/yyyy', autoclose: true, todayHighlight: true});
         },
         computed: {
             ...mapState('purchaseOrder', {
@@ -86,21 +98,32 @@
             addItemTrack(){
 
                 let purchaseOrderVuexState = this.$store.state.purchaseOrder
+                let self = this
+                series([
+                    function (cb) {
+                        purchaseOrderVuexState.itemToAddTrack.estimatedDateArrival = $('#estimated-date-arrival').val()
+                        purchaseOrderVuexState.itemToAddTrack.estimatedTimeArrival = $('#estimated-time-arrival').val()
+                        cb(null, '')
+                    },
+                    function (cb) {
+                        if (purchaseOrderVuexState.itemToAddTrack.estimatedDateArrival != ''
+                            && purchaseOrderVuexState.itemToAddTrack.estimatedTimeArrival) {
+                            self.$store.commit({
+                                type: 'purchaseOrder/addItemTrack',
+                            })
+                        } else {
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: 'Estimated date and time cannot be empty',
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'danger'
+                            }).show();
+                        }
+                        cb(null, '')
+                    }
+                ])
 
-                if (purchaseOrderVuexState.estimatedDateArrival != ''
-                    && purchaseOrderVuexState.estimatedTimeArrival) {
-                    this.$store.commit({
-                        type: 'purchaseOrder/addItemTrack',
-                    })
-                } else {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message:'Estimated date and time cannot be empty',
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
 
             }
 

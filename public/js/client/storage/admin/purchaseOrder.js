@@ -2731,6 +2731,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series__ = __webpack_require__("./node_modules/async/series.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_series__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2797,13 +2799,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {};
     },
-    mounted: function mounted() {},
+    mounted: function mounted() {
+        $('#estimated-time-arrival').timepicker({ showMeridian: false }).on('show.timepicker', function (e) {
+            var widget = $('.bootstrap-timepicker-widget');
+            widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
+            widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
+        });
+        $('#estimated-date-arrival').datepicker({ format: 'dd/mm/yyyy', autoclose: true, todayHighlight: true });
+    },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
         itemToAddTrack: 'itemToAddTrack'
@@ -2817,20 +2833,27 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         addItemTrack: function addItemTrack() {
 
             var purchaseOrderVuexState = this.$store.state.purchaseOrder;
-
-            if (purchaseOrderVuexState.estimatedDateArrival != '' && purchaseOrderVuexState.estimatedTimeArrival) {
-                this.$store.commit({
-                    type: 'purchaseOrder/addItemTrack'
-                });
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: 'Estimated date and time cannot be empty',
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
+            var self = this;
+            __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
+                purchaseOrderVuexState.itemToAddTrack.estimatedDateArrival = $('#estimated-date-arrival').val();
+                purchaseOrderVuexState.itemToAddTrack.estimatedTimeArrival = $('#estimated-time-arrival').val();
+                cb(null, '');
+            }, function (cb) {
+                if (purchaseOrderVuexState.itemToAddTrack.estimatedDateArrival != '' && purchaseOrderVuexState.itemToAddTrack.estimatedTimeArrival) {
+                    self.$store.commit({
+                        type: 'purchaseOrder/addItemTrack'
+                    });
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Estimated date and time cannot be empty',
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+                cb(null, '');
+            }]);
         }
     }
 });
@@ -6556,77 +6579,9 @@ var render = function() {
                   _c("div", { staticClass: "card-block" }, [
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-lg-12 m-t-10" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", [_vm._v(" Estimated Date Arrival ")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.itemToAddTrack.estimatedDateArrival,
-                                expression:
-                                  "itemToAddTrack.estimatedDateArrival"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              id: "estimated-date-arrival"
-                            },
-                            domProps: {
-                              value: _vm.itemToAddTrack.estimatedDateArrival
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.itemToAddTrack,
-                                  "estimatedDateArrival",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
+                        _vm._m(0),
                         _vm._v(" "),
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", [_vm._v(" Estimated Time Arrival ")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.itemToAddTrack.estimatedTimeArrival,
-                                expression:
-                                  "itemToAddTrack.estimatedTimeArrival"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              id: "estimated-time-arrival"
-                            },
-                            domProps: {
-                              value: _vm.itemToAddTrack.estimatedTimeArrival
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.itemToAddTrack,
-                                  "estimatedTimeArrival",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
-                        ]),
+                        _vm._m(1),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", [_vm._v(" Notes ")]),
@@ -6641,7 +6596,7 @@ var render = function() {
                               }
                             ],
                             staticClass: "form-control",
-                            attrs: { type: "number" },
+                            attrs: { type: "text" },
                             domProps: { value: _vm.itemToAddTrack.notes },
                             on: {
                               input: function($event) {
@@ -6688,7 +6643,48 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v(" Estimated Date Arrival ")]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control",
+        attrs: {
+          type: "text",
+          placeholder: "e.g 12/01/2018",
+          id: "estimated-date-arrival"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v(" Estimated Time Arrival ")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "estimated-time-arrival",
+            placeholder: "e.g 08:00 "
+          }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "input-group-addon" }, [
+          _c("i", { staticClass: "pg-clock" })
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -25497,14 +25493,7 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     store: __WEBPACK_IMPORTED_MODULE_3__vuex_purchaseOrder_store__["a" /* store */]
 });
 
-$(document).ready(function () {
-    $('#estimated-time-arrival').timepicker({ showMeridian: false }).on('show.timepicker', function (e) {
-        var widget = $('.bootstrap-timepicker-widget');
-        widget.find('.glyphicon-chevron-up').removeClass().addClass('pg-arrow_maximize');
-        widget.find('.glyphicon-chevron-down').removeClass().addClass('pg-arrow_minimize');
-    });
-    $('#estimated-date-arrival').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
-});
+$(document).ready(function () {});
 
 /***/ }),
 
