@@ -3991,6 +3991,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4002,7 +4021,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
     data: function data() {
         return {
-            sortStatus: ''
+            sortStatus: '', searchText: ''
         };
     },
     created: function created() {
@@ -4086,6 +4105,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.commit({
                 type: 'purchaseOrder/getPurchaseOrderList',
                 sortStatus: self.sortStatus
+            });
+        },
+        searchPurchaseOrder: function searchPurchaseOrder() {
+            var self = this;
+
+            this.$store.commit({
+                type: 'purchaseOrder/searchPurchaseOrder',
+                searchText: self.searchText
             });
         },
         showPurchaseOrderDetail: function showPurchaseOrderDetail(purchaseOrderId) {
@@ -6225,7 +6252,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4" }, [
+            _c("div", { staticClass: "col-lg-3" }, [
               _vm.isSearchingPO
                 ? _c("h4", { staticClass: "text-master" }, [
                     _vm._v("Searching Purchase Order.. Please Wait..")
@@ -6241,7 +6268,7 @@ var render = function() {
                     ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4" }, [
+            _c("div", { staticClass: "col-lg-5" }, [
               _c(
                 "select",
                 {
@@ -6253,7 +6280,7 @@ var render = function() {
                       expression: "sortStatus"
                     }
                   ],
-                  staticClass: "btn btn-outline-primary h-35 pull-right",
+                  staticClass: "btn btn-outline-primary m-l-10 h-35 pull-right",
                   staticStyle: { width: "180px" },
                   on: {
                     change: [
@@ -6286,6 +6313,63 @@ var render = function() {
                   })
                 ],
                 2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "input-group m-l-10 pull-right",
+                  staticStyle: { width: "300px" }
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.searchText,
+                        expression: "searchText"
+                      }
+                    ],
+                    staticClass: "form-control text-black",
+                    staticStyle: { height: "40px" },
+                    attrs: {
+                      type: "text",
+                      placeholder: "Search PO / Date / Supplier / Warehouse "
+                    },
+                    domProps: { value: _vm.searchText },
+                    on: {
+                      keyup: function($event) {
+                        if (
+                          !("button" in $event) &&
+                          _vm._k($event.keyCode, "enter", 13, $event.key)
+                        ) {
+                          return null
+                        }
+                        _vm.searchPurchaseOrder()
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.searchText = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "input-group-addon primary cursor",
+                      on: {
+                        click: function($event) {
+                          _vm.searchPurchaseOrder()
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fa fa-mouse-pointer cursor" })]
+                  )
+                ]
               )
             ])
           ]),
@@ -25355,6 +25439,47 @@ module.exports = Component.exports
         }
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/list?sortStatus=' + sortStatus).then(function (res) {
+
+            state.isSearchingPO = true;
+
+            if (!res.data.isFailed) {
+                if (res.data.purchaseOrders.data) {
+
+                    state.purchaseOrders = [];
+
+                    //insert purchaseOrders
+                    var purchaseOrderData = res.data.purchaseOrders.data;
+                    if (purchaseOrderData) {
+                        state.purchaseOrders = state.purchaseOrders.concat(purchaseOrderData);
+                    }
+
+                    //insert pagination
+                    state.paginationMeta = res.data.purchaseOrders.meta.pagination;
+                }
+
+                state.isSearchingPO = false;
+            } else {
+                state.isSearchingPO = false;
+            }
+        }).catch(function (err) {
+            state.isSearchingPO = true;
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    searchPurchaseOrder: function searchPurchaseOrder(state, payload) {
+
+        var search = '';
+        if (payload.searchText) {
+            search = payload.searchText;
+        }
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/search?v=' + search).then(function (res) {
 
             state.isSearchingPO = true;
 

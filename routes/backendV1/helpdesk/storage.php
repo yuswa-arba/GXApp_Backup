@@ -140,6 +140,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('admin/purchaseOrder/item/search','Admin\PurchaseOrderController@searchItem');
         Route::post('admin/purchaseOrder/create','Admin\PurchaseOrderController@createPurchaseOrder');
         Route::get('admin/purchaseOrder/list','Admin\PurchaseOrderController@purchaseOrderList');
+        Route::get('admin/purchaseOrder/search','Admin\PurchaseOrderController@searchPurchaseOrder');
         Route::get('admin/purchaseOrder/detail','Admin\PurchaseOrderController@purchaseOrderDetail');
         Route::post('admin/purchaseOrder/update/status','Admin\PurchaseOrderController@updatePurchaseOrder');
         Route::get('admin/purchaseOrder/generate/pdf','Admin\PurchaseOrderController@generatePDF');

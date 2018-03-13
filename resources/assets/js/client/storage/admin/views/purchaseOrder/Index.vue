@@ -7,21 +7,34 @@
                         Create New PO <i class="fa fa-pencil"></i>
                     </button>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-3">
                     <h4 class="text-master" v-if="isSearchingPO">Searching Purchase Order.. Please Wait..</h4>
 
                     <h4 class="text-master" v-if="purchaseOrders.length>0"></h4>
                     <h4 class="text-master" v-else-if="isSearchingPO"></h4>
                     <h4 class="text-master" v-else="">No Purchase Order Found</h4>
                 </div>
-                <div class="col-lg-4">
-                    <select class="btn btn-outline-primary h-35 pull-right"
+                <div class="col-lg-5">
+                    <select class="btn btn-outline-primary m-l-10 h-35 pull-right"
                             style="width: 180px"
                             @change="sortPurchaseOrders()"
                             v-model="sortStatus">
                         <option value="">All</option>
                         <option :value="status.id" v-for="status in purchaseOrderStatuses">{{status.name}}</option>
                     </select>
+                    <div class="input-group m-l-10 pull-right" style="width:300px">
+                        <input type="text" style="height: 40px;"
+                               class="form-control text-black"
+                               v-model="searchText"
+                               @keyup.enter="searchPurchaseOrder()"
+                               placeholder="Search PO / Date / Supplier / Warehouse ">
+
+                        <span class="input-group-addon primary cursor"
+                              @click="searchPurchaseOrder()"><i
+                                class="fa fa-mouse-pointer cursor"></i></span>
+                    </div>
+
+
                 </div>
             </div>
 
@@ -68,18 +81,24 @@
                                 <p class="text-black fs-14 m-b-10">{{purchaseOrder.notes}}</p>
                             </div>
                             <div class="col-lg-2 m-t-20 m-b-20 no-padding">
-                                <button class="btn btn-primary m-t-10 m-r-5" @click="showPurchaseOrderDetail(purchaseOrder.id)"><i class="fa fa-search"></i></button>
-                                <button class="btn btn-info m-t-10 m-r-5" @click="downloadPDF(purchaseOrder.id)"><i class="fa fa-download"></i> </button>
+                                <button class="btn btn-primary m-t-10 m-r-5"
+                                        @click="showPurchaseOrderDetail(purchaseOrder.id)"><i class="fa fa-search"></i>
+                                </button>
+                                <button class="btn btn-info m-t-10 m-r-5" @click="downloadPDF(purchaseOrder.id)"><i
+                                        class="fa fa-download"></i></button>
                                 <div class="dropdown dropdown-default ">
-                                    <button class="btn btn-outline-primary m-t-10 m-r-5 dropdown-toggle text-center" type="button"
+                                    <button class="btn btn-outline-primary m-t-10 m-r-5 dropdown-toggle text-center"
+                                            type="button"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         <i class="fa fa-pencil"></i>
                                     </button>
 
                                     <div class="dropdown-menu">
 
-                                        <a class="dropdown-item pointer" v-for="status in purchaseOrderStatuses" @click="updateStatus(purchaseOrder.id,status.id,status.name,index)">{{status.name}}
-                                            <span v-if="status.id==purchaseOrder.statusId"><i class="fa fa-check fs-16 text-primary"></i></span>
+                                        <a class="dropdown-item pointer" v-for="status in purchaseOrderStatuses"
+                                           @click="updateStatus(purchaseOrder.id,status.id,status.name,index)">{{status.name}}
+                                            <span v-if="status.id==purchaseOrder.statusId"><i
+                                                    class="fa fa-check fs-16 text-primary"></i></span>
                                         </a>
                                     </div>
 
@@ -116,7 +135,7 @@
         },
         data(){
             return {
-                sortStatus: ''
+                sortStatus: '',searchText:''
             }
         },
         created(){
@@ -210,20 +229,29 @@
                 })
 
             },
+            searchPurchaseOrder(){
+                let self = this
+
+                this.$store.commit({
+                    type: 'purchaseOrder/searchPurchaseOrder',
+                    searchText: self.searchText
+                })
+
+            },
             showPurchaseOrderDetail(purchaseOrderId){
                 this.$router.push({name: 'PODetail', params: {id: purchaseOrderId}})
             },
-            updateStatus(purchaseOrderId,statusId,status,index){
+            updateStatus(purchaseOrderId, statusId, status, index){
                 this.$store.commit({
-                    type:'purchaseOrder/updateStatus',
-                    purchaseOrderId:purchaseOrderId,
-                    statusId:statusId,
-                    status:status,
-                    index:index
+                    type: 'purchaseOrder/updateStatus',
+                    purchaseOrderId: purchaseOrderId,
+                    statusId: statusId,
+                    status: status,
+                    index: index
                 })
             },
             downloadPDF(purchaseOrderId){
-              window.open(api_path+'storage/admin/purchaseOrder/generate/pdf?id='+purchaseOrderId,'_blank')
+                window.open(api_path + 'storage/admin/purchaseOrder/generate/pdf?id=' + purchaseOrderId, '_blank')
             },
             goToPurchaseOrderForm(){
                 this.$router.push({name: 'createNewPO'})

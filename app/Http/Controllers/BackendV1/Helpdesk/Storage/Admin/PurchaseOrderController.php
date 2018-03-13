@@ -185,6 +185,64 @@ class PurchaseOrderController extends Controller
     public function searchPurchaseOrder(Request $request)
     {
         $response = array();
+
+        $validator = Validator::make($request->all(), []);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        // is valid
+        $user = Auth::user(); //user data
+        $employee = $user->employee; // user's employee data
+
+
+        if ($employee && $employee->hasResigned != 1) {
+
+
+            $purchaseOrders = StoragePurchaseOrders::orderBy('id', 'desc')->paginate(30); // default get all
+
+            if ($request->v != '' && $request->v != null) {
+
+                $search = $request->v;
+
+                $purchaseOrders = StoragePurchaseOrders::where(function ($query) use ($search) {
+                    $query->where('purchaseOrderNumber', 'like', '%' . $search . '%')
+                        ->orWhereHas('supplier', function ($query) use ($search) { //supplier
+                            $query->where('name', 'like', '%' . $search . '%');
+                        })->orWhereHas('warehouse', function ($query) use ($search) { //warehouse
+                            $query->where('name', 'like', '%' . $search . '%');
+                        })->orWhere('date', 'like', '%' . $search . '%');//date
+
+                })->orderBy('id', 'desc')->paginate(30); // default get all
+            }
+
+
+            if ($purchaseOrders) {
+
+                $response['isFailed'] = false;
+                $response['message'] = 'Success';
+                $response['purchaseOrders'] = fractal($purchaseOrders, new StoragePurchaseOrderTransformer());
+
+                return response()->json($response, 200);
+
+            } else {
+
+                $response['isFailed'] = true;
+                $response['message'] = 'No purchase order found';
+                return response()->json($response, 200);
+
+            }
+
+        } else {
+            /* Return error response */
+            $response['isFailed'] = true;
+            $response['message'] = 'Permission denied';
+            return response()->json($response, 200);
+        }
+
     }
 
     public function updatePurchaseOrder(Request $request)
@@ -206,7 +264,7 @@ class PurchaseOrderController extends Controller
 
         $purchaseOrder = StoragePurchaseOrders::find($request->purchaseOrderId);
 
-        if($purchaseOrder){
+        if ($purchaseOrder) {
 
             $purchaseOrder->statusId = $request->statusId;
 
@@ -226,9 +284,8 @@ class PurchaseOrderController extends Controller
         } else { /* Error response */
             $response['isFailed'] = true;
             $response['message'] = 'Unable to find purchase order data';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
-
 
 
     }
