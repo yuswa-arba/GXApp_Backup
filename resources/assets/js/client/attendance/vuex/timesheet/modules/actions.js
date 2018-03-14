@@ -23,6 +23,7 @@ export default{
             type: 'getTimesheetData',
             sortDate: payload.sortDate,
             divisionId: payload.divisionId,
+            branchOfficeId:payload.branchOfficeId,
             shiftId: payload.shiftId,
             attdApprovalId: payload.attdApprovalId
         })

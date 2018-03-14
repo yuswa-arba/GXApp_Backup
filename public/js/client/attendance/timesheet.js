@@ -3146,6 +3146,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             this.$store.dispatch({
                 type: 'timesheet/getSortedData',
                 divisionId: self.sortDivisionId,
+                branchOfficeId: self.sortBranchOfficeId,
                 shiftId: self.sortShiftId,
                 sortDate: sortDate,
                 attdApprovalId: self.sortAttdApprovalId
@@ -21580,6 +21581,7 @@ module.exports = Component.exports
             type: 'getTimesheetData',
             sortDate: payload.sortDate,
             divisionId: payload.divisionId,
+            branchOfficeId: payload.branchOfficeId,
             shiftId: payload.shiftId,
             attdApprovalId: payload.attdApprovalId
         });
@@ -21826,6 +21828,7 @@ module.exports = Component.exports
     getTimesheetData: function getTimesheetData(state, payload) {
         var divisionId = '';
         var shiftId = '';
+        var branchOfficeId = '';
         var sortDate = '';
         var attdApprovalId = '';
 
@@ -21833,11 +21836,13 @@ module.exports = Component.exports
 
         if (payload.shiftId) shiftId = payload.shiftId;
 
+        if (payload.branchOfficeId) branchOfficeId = payload.branchOfficeId;
+
         if (payload.sortDate) sortDate = payload.sortDate;
 
         if (payload.attdApprovalId) attdApprovalId = payload.attdApprovalId;
 
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId + '&attdApprovalId=' + attdApprovalId).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId + '&branchOfficeId=' + branchOfficeId + '&attdApprovalId=' + attdApprovalId).then(function (res) {
             if (res.data.data) state.timesheetsData = res.data.data;
         }).catch(function (err) {
             $('.page-container').pgNotification({

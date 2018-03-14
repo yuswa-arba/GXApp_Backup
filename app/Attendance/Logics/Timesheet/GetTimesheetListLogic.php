@@ -11,19 +11,28 @@ namespace App\Attendance\Logics\Timesheet;
 
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Transformers\TimesheetListTransformer;
-use App\Employee\Models\Employment;
+
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 
 class GetTimesheetListLogic extends GetTimesheetDataUseCase
 {
     use GlobalUtils;
 
-    public function handleGetAllTimesheet($request)
+
+    public function handleGetList($request)
     {
-        $request->validate(['sortDate' => 'date_format:d/m/Y']);
+        $validator = Validator::make($request->all(), ['sortDate' => 'date_format:d/m/Y']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Invalid date format';
+            return response()->json($response, 200);
+        }
+
+        //is valid
 
         $sortDate = Carbon::now()->format('d/m/Y'); // Default Sort Date
         if ($request->sortDate != "") {
@@ -32,133 +41,124 @@ class GetTimesheetListLogic extends GetTimesheetDataUseCase
 
         //TODO : get data based on users permission
 
-        /* Get timesheet */
-        if ($request->attdApprovalId != '') {
-            $timesheet = AttendanceTimesheet::where('attendanceApproveId', $request->attdApprovalId)->where(function ($query) use ($sortDate) {
-                $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->orderBy('id','desc')->get();
-        } else {
-            $timesheet = AttendanceTimesheet::where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate)->orderBy('id','desc')->get();
-        }
-
-        //Logging
-        app()->make('LogService')->logging([
-            'causer'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
-            'via'=>'web client',
-            'subject'=>'Read Timesheet',
-            'action'=>'read',
-            'level'=>3,
-            'description'=>'Get all timesheet data, sort date: ' . $sortDate,
-            'causerIPAddress'=> \Request::ip()
-        ]);
-
-        return fractal($timesheet, new TimesheetListTransformer())->respond(200);
-    }
-
-    public function handleTimesheetByDivsionAndShiftId($request)
-    {
-        $request->validate(['sortDate' => 'date_format:d/m/Y']);
-
-        $sortDate = Carbon::now()->format('d/m/Y'); // Default Sort Date
-        if ($request->sortDate != "") {
-            $sortDate = $request->sortDate;
-        }
-
-        $employeeIds =Employment::where('divisionId', $request->divisionId)->get()->pluck('employeeId');
+        $query = '';
 
         /* Get timesheet */
-        if ($request->attdApprovalId != '') {
-            $timesheet = AttendanceTimesheet::whereIn('employeeId', $employeeIds)->where('shiftId', $request->shiftId)->where('attendanceApproveId', $request->attdApprovalId)->where(function ($query) use ($sortDate) {
-                $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->orderBy('id','desc')->get();
+
+        if ($request->attdApprovalId != '') { //by approval
+            if ($query != '') { // add 'and' if its the first query for SQL Query syntax purposes
+                $query .= ' and ';
+            }
+
+            $rawQuery = ' attendanceApproveId = "' . $request->attdApprovalId . '"';
+
+            $query .= $rawQuery;
+        }
+
+        if ($request->shiftId != '') { // by shift
+            if ($query != '') { // add 'and' if its the first query for SQL Query syntax purposes
+                $query .= ' and ';
+            }
+
+            $rawQuery = ' shiftId = "' . $request->shiftId . '"';
+
+            $query .= $rawQuery;
+        }
+
+        if ($request->divisionId != '') { // by division
+            if ($query != '') { // add 'and' if its the first query for SQL Query syntax purposes
+                $query .= ' and ';
+            }
+
+            $rawQuery = ' divisionId = "' . $request->divisionId . '"';
+
+            $query .= $rawQuery;
+        }
+
+
+        if ($query != '') {
+
+            if ($request->branchOfficeId != '' || $request->divisionId != '') {
+
+                $innerQuery = '';
+
+                if ($request->branchOfficeId != '') { //by branch
+                    if ($innerQuery != '') { // add 'and' if its the first query for SQL Query syntax purposes
+                        $innerQuery .= ' and ';
+                    }
+
+                    $rawInnerQuery = ' employment.branchOfficeId = "' . $request->branchOfficeId . '"';
+
+                    $innerQuery .= $rawInnerQuery;
+                }
+
+                if ($request->divisionId != '') { //by division as well
+                    if ($innerQuery != '') { // add 'and' if its the first query for SQL Query syntax purposes
+                        $innerQuery .= ' and ';
+                    }
+
+                    $rawInnerQuery = ' employment.divisionId = "' . $request->divisionId . '"';
+
+                    $innerQuery .= $rawInnerQuery;
+                }
+
+
+                $timesheet = AttendanceTimesheet::whereRaw($query)->where(function ($query) use ($sortDate) {
+                    $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
+                })->join('employment', function ($join) use ($innerQuery) {
+                    $join->on('attendanceTimesheet.employeeId', '=', 'employment.employeeId')->whereRaw($innerQuery);
+                })->orderBy('attendanceTimesheet.id', 'desc')->get();
+
+            } else {
+                $timesheet = AttendanceTimesheet::whereRaw($query)->where(function ($query) use ($sortDate) {
+                    $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
+                })->orderBy('id', 'desc')->get();
+            }
+
+
         } else {
-            $timesheet = AttendanceTimesheet::whereIn('employeeId', $employeeIds)->where('shiftId', $request->shiftId)->where(function ($query) use ($sortDate) {
-                $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->orderBy('id','desc')->get();
+
+            if ($request->branchOfficeId != '' || $request->divisionId != '') {
+
+
+                $innerQuery = '';
+
+
+                if ($request->branchOfficeId != '') { //by branch
+                    if ($innerQuery != '') { // add 'and' if its the first query for SQL Query syntax purposes
+                        $innerQuery .= ' and ';
+                    }
+
+                    $rawInnerQuery = ' employment.branchOfficeId = "' . $request->branchOfficeId . '"';
+
+                    $innerQuery .= $rawInnerQuery;
+                }
+
+                if ($request->divisionId != '') { //by division
+                    if ($innerQuery != '') { // add 'and' if its the first query for SQL Query syntax purposes
+                        $innerQuery .= ' and ';
+                    }
+
+                    $rawInnerQuery = ' employment.divisionId = "' . $request->divisionId . '"';
+
+                    $innerQuery .= $rawInnerQuery;
+                }
+
+
+                $timesheet = AttendanceTimesheet::where(function ($query) use ($sortDate) {
+                    $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
+                })->join('employment', function ($join) use ($innerQuery) {
+                    $join->on('attendanceTimesheet.employeeId', '=', 'employment.employeeId')->whereRaw($innerQuery);
+                })->orderBy('attendanceTimesheet.id', 'desc')->get();
+
+            } else {
+                $timesheet = AttendanceTimesheet::where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate)->orderBy('id', 'desc')->get();
+
+            }
         }
-
-        //Logging
-        app()->make('LogService')->logging([
-            'causer'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
-            'via'=>'web client',
-            'subject'=>'Read Timesheet',
-            'action'=>'read',
-            'level'=>3,
-            'description'=>'Get timesheet data by division: '. $request->divisionId .' & shift: '.$request->shiftId.', sort date: ' . $sortDate,
-            'causerIPAddress'=> \Request::ip()
-        ]);
-
-        return fractal($timesheet, new TimesheetListTransformer())->respond(200);
-
-    }
-
-    public function handleTimesheetWithSpecificDivision($request)
-    {
-        //TODO : get data based on users is division manager of what
-
-        $request->validate(['sortDate' => 'date_format:d/m/Y']);
-
-        $sortDate = Carbon::now()->format('d/m/Y'); // Default Sort Date
-        if ($request->sortDate != "") {
-            $sortDate = $request->sortDate;
-        }
-
-        $employeeIds =Employment::where('divisionId', $request->divisionId)->get()->pluck('employeeId');
-
-        /* Get timesheet */
-        if ($request->attdApprovalId != '') {
-            $timesheet = AttendanceTimesheet::whereIn('employeeId', $employeeIds)
-                ->where('attendanceApproveId', $request->attdApprovalId)
-                ->where(function ($query) use ($sortDate) {
-                $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->orderBy('id','desc')->get();
-        } else {
-            $timesheet = AttendanceTimesheet::whereIn('employeeId', $employeeIds)->where(function ($query) use ($sortDate) {
-                $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-            })->orderBy('id','desc')->get();
-        }
-
-        //Logging
-        app()->make('LogService')->logging([
-            'causer'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
-            'via'=>'web client',
-            'subject'=>'Read Timesheet',
-            'action'=>'read',
-            'level'=>3,
-            'description'=>'Get timesheet data by division: '. $request->divisionId .', sort date: ' . $sortDate,
-            'causerIPAddress'=> \Request::ip()
-        ]);
 
         return fractal($timesheet, new TimesheetListTransformer())->respond(200);
     }
 
-    public function handleTimesheetWithSpecificShift($request)
-    {
-        //TODO : get data based on users permission
 
-        $request->validate(['sortDate' => 'date_format:d/m/Y']);
-
-        $sortDate = Carbon::now()->format('d/m/Y'); // Default Sort Date
-        if ($request->sortDate != "") {
-            $sortDate = $request->sortDate;
-        }
-
-        $timesheet = AttendanceTimesheet::where('shiftId', $request->shiftId)->where(function ($query) use ($sortDate) {
-            $query->where('clockInDate', $sortDate)->orWhere('clockOutDate', $sortDate);
-        })->orderBy('id','desc')->get();
-
-
-        //Logging
-        app()->make('LogService')->logging([
-            'causer'=>$this->getResultWithNullChecker1Connection(Auth::user(),'employee','givenName'),
-            'via'=>'web client',
-            'subject'=>'Read Timesheet',
-            'action'=>'read',
-            'level'=>3,
-            'description'=>'Get timesheet data by shift: '. $request->shiftId .', sort date: ' . $sortDate,
-            'causerIPAddress'=> \Request::ip()
-        ]);
-
-        return fractal($timesheet, new TimesheetListTransformer())->respond(200);
-    }
 }

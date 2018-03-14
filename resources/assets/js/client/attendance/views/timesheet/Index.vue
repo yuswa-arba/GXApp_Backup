@@ -262,6 +262,7 @@
                 this.$store.dispatch({
                     type: 'timesheet/getSortedData',
                     divisionId: self.sortDivisionId,
+                    branchOfficeId:self.sortBranchOfficeId,
                     shiftId: self.sortShiftId,
                     sortDate: sortDate,
                     attdApprovalId: self.sortAttdApprovalId

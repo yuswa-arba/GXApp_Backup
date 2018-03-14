@@ -55,6 +55,7 @@ export default{
     getTimesheetData(state, payload){
         let divisionId = ''
         let shiftId = ''
+        let branchOfficeId =''
         let sortDate = ''
         let attdApprovalId = ''
 
@@ -64,13 +65,23 @@ export default{
         if (payload.shiftId)
             shiftId = payload.shiftId
 
+        if(payload.branchOfficeId)
+            branchOfficeId = payload.branchOfficeId
+
         if (payload.sortDate)
             sortDate = payload.sortDate
 
         if (payload.attdApprovalId)
             attdApprovalId = payload.attdApprovalId
 
-        get(api_path + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId + '&attdApprovalId=' + attdApprovalId)
+
+
+        get(api_path + 'attendance/timesheet/list?sortDate=' + sortDate
+            + '&divisionId=' + divisionId
+            + '&shiftId=' + shiftId
+            + '&branchOfficeId=' + branchOfficeId
+            + '&attdApprovalId=' + attdApprovalId
+        )
             .then((res) => {
                 if (res.data.data)
                     state.timesheetsData = res.data.data
