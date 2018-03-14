@@ -105,7 +105,11 @@ class TimesheetController extends Controller
 
         if(Auth::user()->hasPermissionTo('generate attendance')){
 
-            $validator = Validator::make($request->all(), ['fromDate' => 'required', 'toDate' => 'required']);
+            $validator = Validator::make($request->all(), [
+                'fromDate' => 'required',
+                'toDate' => 'required',
+                'branchOfficeId'=>'required'
+            ]);
 
             if ($validator->fails()) {
                 $response['isFailed'] = true;
@@ -127,7 +131,12 @@ class TimesheetController extends Controller
 
     public function update(Request $request)
     {
-        $validator = Validator::make($request->all(), ['timesheetId' => 'required','date'=>'required','clockInTime'=>'required', 'clockOutTime'=>'required']);
+        $validator = Validator::make($request->all(), [
+            'timesheetId' => 'required',
+            'date'=>'required',
+            'clockInTime'=>'required',
+            'clockOutTime'=>'required'
+        ]);
 
         if ($validator->fails()) {
             $response['isFailed'] = true;

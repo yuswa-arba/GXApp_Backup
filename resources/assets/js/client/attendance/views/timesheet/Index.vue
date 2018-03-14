@@ -42,6 +42,17 @@
                     </select>
                 </div>
             </div>
+            <div class="pull-right m-r-15">
+                <div class="form-group">
+                    <select class="btn btn-outline-primary h-35 w-150"
+                            v-model="sortBranchOfficeId"
+                            @change="sortTimesheet()">
+                        <option value="">All Branch Offices</option>
+                        <option :value="branchOffice.id" v-for="branchOffice in branchOffices">{{branchOffice.name}}
+                        </option>
+                    </select>
+                </div>
+            </div>
 
             <div class="pull-right m-r-15">
                 <div class="form-group">
@@ -216,6 +227,7 @@
             return {
                 sortDivisionId: '',
                 sortShiftId: '',
+                sortBranchOfficeId:'',
                 showcInPhoto: true,
                 showcOutPhoto: true,
                 sortAttdApprovalId: ''
@@ -224,6 +236,7 @@
         computed: {
             ...mapGetters('timesheet', {
                 divisions: 'divisions',
+                branchOffices:'branchOffices',
                 shifts: 'shifts',
                 attdApprovals: 'attdApprovals',
                 timesheetDatas: 'timesheetDatas'

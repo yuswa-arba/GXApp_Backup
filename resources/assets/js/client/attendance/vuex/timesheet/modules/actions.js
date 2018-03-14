@@ -8,6 +8,7 @@ export default{
     getDataOnCreate({commit, state}){
         commit({type: 'getDivisions', divisionId: ''})
         commit({type: 'getShifts', shiftId: ''})
+        commit('getBranchOffices')
         commit({type: 'getAttdApprovals', attdAprovalId: ''})
 
         let currentDate = moment().format('DD/MM/YYYY');
@@ -46,11 +47,13 @@ export default{
 
         state.generateFromDate = payload.fromDate
         state.generateToDate = payload.toDate
+        state.generateBranchOfficeId = payload.branchOfficeId
 
         commit({
             type: 'getTimesheetSummaryDataAll',
             fromDate: payload.fromDate,
-            toDate: payload.toDate
+            toDate: payload.toDate,
+            branchOfficeId:payload.branchOfficeId
         })
 
     },

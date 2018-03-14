@@ -46,6 +46,12 @@ export default{
                 })
         }
     },
+    getBranchOffices(state,payload){
+      get(api_path+'component/list/branchOffices')
+          .then((res)=>{
+          state.branchOffices =res.data.data
+          })
+    },
     getTimesheetData(state, payload){
         let divisionId = ''
         let shiftId = ''
@@ -146,7 +152,7 @@ export default{
             })
     },
     getTimesheetSummaryDataAll(state, payload){
-        get(api_path + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate)
+        get(api_path + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate+'&branchOfficeId='+payload.branchOfficeId)
             .then((res) => {
 
                 if (!res.data.isFailed) {

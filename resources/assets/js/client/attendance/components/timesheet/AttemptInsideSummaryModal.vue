@@ -21,6 +21,13 @@
                                         <input type="text" class="input-sm form-control" name="end" id="generateToDate"/>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label> Select Branch Office</label>
+                                    <select class="form-control" id="select-branch-office">
+                                        <option value="" disabled selected hidden>Select</option>
+                                        <option :value="branchOffice.id" v-for="branchOffice in branchOffices">{{branchOffice.name}}</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -58,15 +65,23 @@
         mounted: function () {
             $('#summary-datepicker-range').datepicker({format: 'dd/mm/yyyy',autoclose:true})
         },
+        computed:{
+            ...mapState('timesheet',{
+                branchOffices:'branchOffices'
+            })
+        },
         methods: {
             generateSummary(){
                 let self = this
+                let branchOfficeId = $('#select-branch-office').val()
                 let fromDate = $('#generateFromDate').val()
                 let toDate = $('#generateToDate').val()
 
-                if(fromDate&&toDate){
+
+                if(fromDate&&toDate&&branchOfficeId){
                     this.$store.dispatch({
                         type:'timesheet/startGenerateSummary',
+                        branchOfficeId:branchOfficeId,
                         fromDate:fromDate,
                         toDate: toDate
                     })
@@ -74,7 +89,6 @@
                     this.$router.push({name:'summaryTimesheet'})
 
                 }
-
             }
         }
 

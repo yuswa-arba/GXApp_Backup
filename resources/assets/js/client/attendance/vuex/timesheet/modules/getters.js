@@ -8,6 +8,9 @@ export default{
     shifts(state){
         return state.shifts
     },
+    branchOffices(state){
+      return state.branchOffices
+    },
     attdApprovals(state){
         return state.attdApprovals
     },

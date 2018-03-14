@@ -11,10 +11,12 @@ export default {
     state: {
         divisions:[],
         shifts:[],
+        branchOffices:[],
         attdApprovals:[],
         sortedDate:'',
         generateFromDate:'',
         generateToDate:'',
+        generateBranchOfficeId:'',
         timesheetsData:[],
         timesheetSummaryData:[]
     },

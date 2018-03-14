@@ -2501,6 +2501,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2560,15 +2569,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         $('#summary-datepicker-range').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
     },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('timesheet', {
+        branchOffices: 'branchOffices'
+    })),
     methods: {
         generateSummary: function generateSummary() {
             var self = this;
+            var branchOfficeId = $('#select-branch-office').val();
             var fromDate = $('#generateFromDate').val();
             var toDate = $('#generateToDate').val();
 
-            if (fromDate && toDate) {
+            if (fromDate && toDate && branchOfficeId) {
                 this.$store.dispatch({
                     type: 'timesheet/startGenerateSummary',
+                    branchOfficeId: branchOfficeId,
                     fromDate: fromDate,
                     toDate: toDate
                 });
@@ -2588,6 +2602,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2647,15 +2670,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         $('#summary-datepicker-range').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
     },
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('timesheet', {
+        branchOffices: 'branchOffices'
+    })),
     methods: {
         generateSummary: function generateSummary() {
             var self = this;
+            var branchOfficeId = $('#select-branch-office').val();
             var fromDate = $('#generateFromDate').val();
             var toDate = $('#generateToDate').val();
 
-            if (fromDate && toDate) {
+            if (fromDate && toDate && branchOfficeId) {
                 this.$store.dispatch({
                     type: 'timesheet/startGenerateSummary',
+                    branchOfficeId: branchOfficeId,
                     fromDate: fromDate,
                     toDate: toDate
                 });
@@ -3061,6 +3089,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3074,6 +3113,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         return {
             sortDivisionId: '',
             sortShiftId: '',
+            sortBranchOfficeId: '',
             showcInPhoto: true,
             showcOutPhoto: true,
             sortAttdApprovalId: ''
@@ -3082,6 +3122,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('timesheet', {
         divisions: 'divisions',
+        branchOffices: 'branchOffices',
         shifts: 'shifts',
         attdApprovals: 'attdApprovals',
         timesheetDatas: 'timesheetDatas'
@@ -5809,7 +5850,48 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
-            _vm._m(1),
+            _c("form", { attrs: { role: "form" } }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v(" Select Branch Office")]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        staticClass: "form-control",
+                        attrs: { id: "select-branch-office" }
+                      },
+                      [
+                        _c(
+                          "option",
+                          {
+                            attrs: {
+                              value: "",
+                              disabled: "",
+                              selected: "",
+                              hidden: ""
+                            }
+                          },
+                          [_vm._v("Select")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.branchOffices, function(branchOffice) {
+                          return _c(
+                            "option",
+                            { domProps: { value: branchOffice.id } },
+                            [_vm._v(_vm._s(branchOffice.name))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-8" }),
@@ -5868,35 +5950,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("form", { attrs: { role: "form" } }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Date Start - Date End ")]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "input-daterange input-group",
-                attrs: { id: "summary-datepicker-range" }
-              },
-              [
-                _c("input", {
-                  staticClass: "input-sm form-control",
-                  attrs: { type: "text", name: "start", id: "generateFromDate" }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group-addon" }, [_vm._v("to")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "input-sm form-control",
-                  attrs: { type: "text", name: "end", id: "generateToDate" }
-                })
-              ]
-            )
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Date Start - Date End ")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "input-daterange input-group",
+          attrs: { id: "summary-datepicker-range" }
+        },
+        [
+          _c("input", {
+            staticClass: "input-sm form-control",
+            attrs: { type: "text", name: "start", id: "generateFromDate" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-addon" }, [_vm._v("to")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "input-sm form-control",
+            attrs: { type: "text", name: "end", id: "generateToDate" }
+          })
+        ]
+      )
     ])
   }
 ]
@@ -5981,7 +6057,48 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "modal-body" }, [
-            _vm._m(1),
+            _c("form", { attrs: { role: "form" } }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c("label", [_vm._v(" Select Branch Office")]),
+                    _vm._v(" "),
+                    _c(
+                      "select",
+                      {
+                        staticClass: "form-control",
+                        attrs: { id: "select-branch-office" }
+                      },
+                      [
+                        _c(
+                          "option",
+                          {
+                            attrs: {
+                              value: "",
+                              disabled: "",
+                              selected: "",
+                              hidden: ""
+                            }
+                          },
+                          [_vm._v("Select")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.branchOffices, function(branchOffice) {
+                          return _c(
+                            "option",
+                            { domProps: { value: branchOffice.id } },
+                            [_vm._v(_vm._s(branchOffice.name))]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-md-8" }),
@@ -6040,35 +6157,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("form", { attrs: { role: "form" } }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c("label", [_vm._v("Date Start - Date End ")]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "input-daterange input-group",
-                attrs: { id: "summary-datepicker-range" }
-              },
-              [
-                _c("input", {
-                  staticClass: "input-sm form-control",
-                  attrs: { type: "text", name: "start", id: "generateFromDate" }
-                }),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group-addon" }, [_vm._v("to")]),
-                _vm._v(" "),
-                _c("input", {
-                  staticClass: "input-sm form-control",
-                  attrs: { type: "text", name: "end", id: "generateToDate" }
-                })
-              ]
-            )
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "form-group" }, [
+      _c("label", [_vm._v("Date Start - Date End ")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "input-daterange input-group",
+          attrs: { id: "summary-datepicker-range" }
+        },
+        [
+          _c("input", {
+            staticClass: "input-sm form-control",
+            attrs: { type: "text", name: "start", id: "generateFromDate" }
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group-addon" }, [_vm._v("to")]),
+          _vm._v(" "),
+          _c("input", {
+            staticClass: "input-sm form-control",
+            attrs: { type: "text", name: "end", id: "generateToDate" }
+          })
+        ]
+      )
     ])
   }
 ]
@@ -6259,6 +6370,63 @@ var render = function() {
                   return _c("option", { domProps: { value: division.id } }, [
                     _vm._v(_vm._s(division.name) + "\n                    ")
                   ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pull-right m-r-15" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sortBranchOfficeId,
+                    expression: "sortBranchOfficeId"
+                  }
+                ],
+                staticClass: "btn btn-outline-primary h-35 w-150",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.sortBranchOfficeId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function($event) {
+                      _vm.sortTimesheet()
+                    }
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("All Branch Offices")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.branchOffices, function(branchOffice) {
+                  return _c(
+                    "option",
+                    { domProps: { value: branchOffice.id } },
+                    [
+                      _vm._v(
+                        _vm._s(branchOffice.name) + "\n                    "
+                      )
+                    ]
+                  )
                 })
               ],
               2
@@ -21394,6 +21562,7 @@ module.exports = Component.exports
 
         commit({ type: 'getDivisions', divisionId: '' });
         commit({ type: 'getShifts', shiftId: '' });
+        commit('getBranchOffices');
         commit({ type: 'getAttdApprovals', attdAprovalId: '' });
 
         var currentDate = moment().format('DD/MM/YYYY');
@@ -21444,11 +21613,13 @@ module.exports = Component.exports
 
         state.generateFromDate = payload.fromDate;
         state.generateToDate = payload.toDate;
+        state.generateBranchOfficeId = payload.branchOfficeId;
 
         commit({
             type: 'getTimesheetSummaryDataAll',
             fromDate: payload.fromDate,
-            toDate: payload.toDate
+            toDate: payload.toDate,
+            branchOfficeId: payload.branchOfficeId
         });
     },
     editTimesheet: function editTimesheet(_ref6, payload) {
@@ -21546,6 +21717,9 @@ module.exports = Component.exports
     shifts: function shifts(state) {
         return state.shifts;
     },
+    branchOffices: function branchOffices(state) {
+        return state.branchOffices;
+    },
     attdApprovals: function attdApprovals(state) {
         return state.attdApprovals;
     },
@@ -21579,10 +21753,12 @@ module.exports = Component.exports
     state: {
         divisions: [],
         shifts: [],
+        branchOffices: [],
         attdApprovals: [],
         sortedDate: '',
         generateFromDate: '',
         generateToDate: '',
+        generateBranchOfficeId: '',
         timesheetsData: [],
         timesheetSummaryData: []
     },
@@ -21641,6 +21817,11 @@ module.exports = Component.exports
                 state.attdApprovals = res.data.data;
             });
         }
+    },
+    getBranchOffices: function getBranchOffices(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/branchOffices').then(function (res) {
+            state.branchOffices = res.data.data;
+        });
     },
     getTimesheetData: function getTimesheetData(state, payload) {
         var divisionId = '';
@@ -21729,7 +21910,7 @@ module.exports = Component.exports
         });
     },
     getTimesheetSummaryDataAll: function getTimesheetSummaryDataAll(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate + '&branchOfficeId=' + payload.branchOfficeId).then(function (res) {
 
             if (!res.data.isFailed) {
                 state.timesheetSummaryData = res.data.summary;
