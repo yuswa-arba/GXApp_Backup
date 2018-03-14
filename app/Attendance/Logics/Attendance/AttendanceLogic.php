@@ -38,6 +38,7 @@ class AttendanceLogic extends AttendanceUseCase
             $response['isFailed'] = true;
             $response['code'] = ResponseCodes::$ATTD_ERR_CODES['ALREADY_CLOCKED_IN'];
             $response['message'] = 'You have clocked in before at ' . $existingTimeSheet->clockInTime;
+
             return response()->json($response, 200);
 
         } else {

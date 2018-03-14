@@ -9,6 +9,7 @@ use App\Attendance\Models\Slots;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
+use App\Traits\GlobalConst;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use League\Fractal\TransformerAbstract;
@@ -17,6 +18,7 @@ class ExchangeShiftEmployeeTransformer extends TransformerAbstract
 {
 
     use GlobalUtils;
+    use GlobalConst;
 
     public function transform(ExchangeShiftEmployee $exchangeShiftEmployee)
     {
@@ -43,6 +45,7 @@ class ExchangeShiftEmployeeTransformer extends TransformerAbstract
             'confirmedAt' => $exchangeShiftEmployee->confirmedDate . " " . $exchangeShiftEmployee->confirmedTime,
             'isDayOff' =>$exchangeShiftEmployee->isDayOff,
             'isPublicHoliday' =>$exchangeShiftEmployee->isPublicHoliday,
+
         ];
     }
 
@@ -65,6 +68,7 @@ class ExchangeShiftEmployeeTransformer extends TransformerAbstract
                 return "Undefined";
                 break;
         }
+
     }
 
 }

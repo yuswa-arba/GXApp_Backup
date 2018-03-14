@@ -37,4 +37,9 @@ class StorageRequisition extends Model
         return $this->belongsTo(StorageWarehouses::class,'deliveryWarehouseId');
     }
 
+    public function purchaseOrder()
+    {
+        return $this->hasOne(StoragePurchaseOrders::class,'requisitionId');
+    }
+
 }

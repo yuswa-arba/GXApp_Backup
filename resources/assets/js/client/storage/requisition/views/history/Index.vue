@@ -66,6 +66,7 @@
                             </div>
                             <div class="col-lg-1 m-t-20 m-b-20">
                                 <button class="btn btn-outline-primary m-t-10 m-r-20"
+                                        @click="showTrackDetail(requisition.id)"
                                         v-if="requisition.approvalId==4||requisition.approvalId==5">
                                     Details
                                 </button>
@@ -237,6 +238,9 @@
                     type:'history/getRequisitionHistory',
                     sortApproval:self.sortApproval
                 })
+            },
+            showTrackDetail(requisitionId){
+                this.$router.push({name:'requisitionTrackDetail',params:{id:requisitionId}})
             }
         }
     }

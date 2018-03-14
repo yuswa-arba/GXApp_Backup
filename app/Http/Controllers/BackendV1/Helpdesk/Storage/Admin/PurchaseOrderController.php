@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Admin;
 
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
+use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\Controller;
 use App\Storage\Jobs\NotifyRequestTracking;
 use App\Storage\Logics\PurchaseOrder\CreatePurchaseOrderLogic;
@@ -213,7 +214,7 @@ class PurchaseOrderController extends Controller
 
                 $purchaseOrders = StoragePurchaseOrders::where(function ($query) use ($search) {
                     $query->where('purchaseOrderNumber', 'like', '%' . $search . '%')
-                        ->orWhereHas('requisition',function($query)use($search){//approval no
+                        ->orWhereHas('requisition', function ($query) use ($search) {//approval no
                             $query->where('approvalNumber', 'like', '%' . $search . '%');
                         })
                         ->orWhereHas('supplier', function ($query) use ($search) { //supplier
@@ -309,9 +310,9 @@ class PurchaseOrderController extends Controller
                                 NotifyRequestTracking::dispatch(
                                     $requisition->id, //requisition ID
                                     Auth::user(),//user sender
-                                    'New update on your requisition #'.$requisition->requisitionNumber, //message
+                                    'New update on your requisition #' . $requisition->requisitionNumber, //message
                                     url('storage/requisition/history') //url to click
-                                    )
+                                )
                                     ->onConnection('database')->onQueue('broadcaster');
 
                                 $response['isFailed'] = false;
@@ -360,35 +361,39 @@ class PurchaseOrderController extends Controller
     {
         $response = array();
 
-        $validator = Validator::make($request->all(),[
-            'id'=>'required',
-            'estimatedDateArrival'=>'required',
-            'estimatedTimeArrival'=>'required'
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'estimatedDateArrival' => 'required',
+            'estimatedTimeArrival' => 'required'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             $response['isFailed'] = true;
             $response['message'] = 'Missing required parameters';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
 
         //is valid
 
-        $insert = StoragePurchaseOrderItemTrack::create([
-            'purchaseOrderItemId'=>$request->id,
-            'estimatedDateArrival'=>$request->estimatedDateArrival,
-            'estimatedTimeArrival'=>$request->estimatedTimeArrival,
-            'notes'=>$request->notes
-        ]);
+        $insert = StoragePurchaseOrderItemTrack::updateOrCreate(
+            [
+                'purchaseOrderItemId' => $request->id
+            ],
+            [
+                'estimatedDateArrival' => $request->estimatedDateArrival,
+                'estimatedTimeArrival' => $request->estimatedTimeArrival,
+                'notes' => $request->notes
+            ]
+        );
 
-        if($insert){
-            $response['isFailed'] =false;
+        if ($insert) {
+            $response['isFailed'] = false;
             $response['message'] = 'Item track has been created successfully';
-            return response()->json($response,200);
-        } else{
+            return response()->json($response, 200);
+        } else {
             $response['isFailed'] = true;
             $response['message'] = 'Unable to create item track';
-            return response()->json($response,200);
+            return response()->json($response, 200);
         }
     }
 

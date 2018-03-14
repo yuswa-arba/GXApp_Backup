@@ -60,6 +60,7 @@ return [
 //                'add_extra_option' => '--optionname=optionvalue',
             ]
         ],
+
         'fingerspot' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),

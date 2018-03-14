@@ -1,6 +1,6 @@
 {
     "/js/client/attendance/setting.js": "/js/client/attendance/setting.js?id=0d01978aee78ca312595",
-    "/js/client/storage/admin/purchaseOrder.js": "/js/client/storage/admin/purchaseOrder.js?id=76588f6666c092d82f0b",
+    "/js/client/storage/admin/purchaseOrder.js": "/js/client/storage/admin/purchaseOrder.js?id=3ef407d7adee46ecaa28",
     "/js/client/attendance/slot.js": "/js/client/attendance/slot.js?id=162921b63f6332a2f57b",
     "/js/client/salary/payroll.js": "/js/client/salary/payroll.js?id=262acb0d9b2c2889f920",
     "/js/client/attendance/timesheet.js": "/js/client/attendance/timesheet.js?id=05df4ef745eda9515597",
@@ -11,7 +11,7 @@
     "/js/client/salary/queue.js": "/js/client/salary/queue.js?id=a457cb879f515c0ef0c7",
     "/js/client/attendance/dashboard.js": "/js/client/attendance/dashboard.js?id=8f40b1fc920ac1175326",
     "/js/client/storage/requisition/cart.js": "/js/client/storage/requisition/cart.js?id=6c333dba97ab7119955f",
-    "/js/client/storage/requisition/history.js": "/js/client/storage/requisition/history.js?id=9297fe9650963c51b139",
+    "/js/client/storage/requisition/history.js": "/js/client/storage/requisition/history.js?id=8baa442ed86b7ee7d159",
     "/js/client/storage/admin/approval.js": "/js/client/storage/admin/approval.js?id=258a9264460ae36b6c97",
     "/js/client/setting/notification.js": "/js/client/setting/notification.js?id=7b6c93cc91ee66e11481",
     "/js/client/notification/main.js": "/js/client/notification/main.js?id=5b90a961de10102df2ff",

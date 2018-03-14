@@ -21,6 +21,7 @@
                                                 <label> Estimated Date Arrival </label>
                                                 <input type="text"
                                                        class="form-control"
+                                                       :value="itemToAddTrack.estimatedDateArrival"
                                                        placeholder="e.g 12/01/2018"
                                                        id="estimated-date-arrival">
                                             </div>
@@ -30,6 +31,7 @@
                                                 <div class="input-group bootstrap-timepicker">
                                                     <input type="text"
                                                            class="form-control"
+                                                           :value="itemToAddTrack.estimatedTimeArrival"
                                                            id="estimated-time-arrival"
                                                            placeholder="e.g 08:00 ">
                                                     <span class="input-group-addon"><i class="pg-clock"></i></span>
@@ -38,7 +40,8 @@
                                             <div class="form-group">
                                                 <label> Notes </label>
                                                 <input type="text"
-                                                       v-model="itemToAddTrack.notes"
+                                                       id="item-track-notes"
+                                                       :value="itemToAddTrack.notes"
                                                        class="form-control">
                                             </div>
 
@@ -73,7 +76,8 @@
     import series from 'async/series';
     export default{
         data(){
-            return {}
+            return {
+            }
         },
         mounted(){
             $('#estimated-time-arrival').timepicker({showMeridian: false}).on('show.timepicker', function (e) {
@@ -83,12 +87,17 @@
             });
             $('#estimated-date-arrival').datepicker({format: 'dd/mm/yyyy', autoclose: true, todayHighlight: true});
         },
+        created(){
+        },
         computed: {
             ...mapState('purchaseOrder', {
                 itemToAddTrack: 'itemToAddTrack'
             })
         },
         methods: {
+            closeModal(){
+                $('#modal-add-item-track').modal('toggle')
+            },
             finishEditing(){
                 let self = this
 
@@ -103,6 +112,8 @@
                     function (cb) {
                         purchaseOrderVuexState.itemToAddTrack.estimatedDateArrival = $('#estimated-date-arrival').val()
                         purchaseOrderVuexState.itemToAddTrack.estimatedTimeArrival = $('#estimated-time-arrival').val()
+                        purchaseOrderVuexState.itemToAddTrack.notes = $('#item-track-notes').val()
+
                         cb(null, '')
                     },
                     function (cb) {

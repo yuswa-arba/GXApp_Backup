@@ -1,12 +1,93 @@
 <template>
     <div class="row">
-        <div class="col-lg-12 m-b-10 m-t-10">
+        <div class="col-lg-12 m-b-10 m-t-30">
             <slot name="go-back-menu"></slot>
-            <button class="btn btn-info pull-right" @click="downloadPDF(purchaseOrder.id)"><i
-                    class="fa fa-download"></i> PDF
-            </button>
         </div>
-        <div class="col-lg-12 m-b-10">
+        <div class="col-lg-12">
+            <div class="card card-default card-bordered border-solid-grey" v-if="requisition.id!=''&&requisition.id!=null">
+                <div class="card-block no-padding">
+                    <div class="col-lg-12 border-bottom-grey" style="background:#fafafa;">
+                        <div class="row">
+                            <div class="col-lg-3 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Requisition No.</p>
+                                <p class="text-black fs-18 m-b-10">{{requisition.requisitionNumber}}</p>
+
+                                <p class="text-uppercase m-b-0">Approval No.</p>
+                                <p class="text-black fs-16 m-b-10" v-if="requisition.approvalNumber">
+                                    {{requisition.approvalNumber}}</p>
+                                <p v-else="">-</p>
+
+                            </div>
+                            <div class="col-lg-2 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Requested At</p>
+                                <p class="text-black fs-16 m-b-10">{{requisition.requestedAt}}</p>
+
+                                <p class="text-uppercase m-b-0">Date Needed By</p>
+                                <p class="text-black fs-16 m-b-10">{{requisition.dateNeededBy}}</p>
+
+                            </div>
+                            <div class="col-lg-3 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Description</p>
+                                <p class="text-black fs-14 m-b-10">{{requisition.description}}</p>
+                            </div>
+                            <div class="col-lg-3 m-t-20 m-b-20">
+                                <p class="text-uppercase m-t-10 m-b-0">Approval Status</p>
+                                <p class="text-black fs-14 m-b-10">{{requisition.approvalName}}</p>
+                            </div>
+                            <div class="col-lg-1 m-t-20 m-b-20">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-t-10"></div>
+                    <div class="col-lg-12" v-for="item in requisition.requisitionItems.data">
+                        <div class="row border-bottom-grey p-t-10 p-b-10">
+                            <div class="col-lg-3 p-t-10">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="cursor" @click="viewImage('/images/storage/items/'+item.itemPhoto)"
+                                             style="margin-top:-10px">
+                                            <img :src="'/images/storage/items/'+item.itemPhoto" height="60px"
+                                                 alt="No Image Found">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <p class="text-black fs-16 m-b-0">{{item.itemName}}</p>
+                                        <p class="no-padding fs-14">{{item.itemCode}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 p-t-10">
+                                <p class="fs-16 m-b-0">Amount: <span class="text-black">{{item.amount}}</span></p>
+                                <p class=" fs-16 m-b-0">Unit: <span class="text-black">{{item.itemUnit}}</span></p>
+                            </div>
+                            <div class="col-lg-3 p-t-10">
+                                <p class="text-uppercase m-b-0">Notes</p>
+                                <p class="text-black fs-16 m-b-10" v-if="item.notes">{{item.notes}}</p>
+                                <p v-else="">-</p>
+                            </div>
+                            <div class="col-lg-3 p-t-10">
+                                <p>
+                                    <span class="text-uppercase">Approved: </span>
+                                    <i class="fa fa-check text-success fs-16" v-if="item.isApproved"></i>
+                                    <i class="fa fa-times text-danger fs-16" v-else=""></i>
+                                </p>
+                                <div v-if="item.updatedAt&&item.updatedBy">
+                                    <p class="text-uppercase m-b-0">Latest Update</p>
+                                    <p class="text-black fs-16 m-b-10">
+                                        Updated at {{item.updatedAt}} by {{item.updatedBy}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 p-t-10"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-lg-12 m-b-10" v-if="purchaseOrder.id!=''&&purchaseOrder.id!=null">
             <div class="card card-default card-bordered border-solid-grey">
                 <div class="card-block no-padding">
                     <div class="col-lg-12 border-bottom-grey" style="background:#fafafa;">
@@ -103,9 +184,6 @@
                                         {{formatPrice(parseInt(item.pricePurchased)*parseInt(item.amountPurchased))}}</p>
                                 </div>
                                 <div class="col-lg-2 m-t-5">
-                                    <button class="btn btn-outline-primary" @click="attemptAddItemTrack(item.id,index)"><i
-                                            class="fa fa-plus"></i> Track
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -170,11 +248,8 @@
                     </div>
                     <div class="p-t-50"></div>
                 </div>
-
             </div>
-
         </div>
-        <add-item-track-modal></add-item-track-modal>
     </div>
 </template>
 
@@ -182,42 +257,30 @@
     import {get} from '../../../../helpers/api'
     import {api_path} from '../../../../helpers/const'
     import {mapGetters, mapState} from 'vuex'
-    import InfiniteLoading from 'vue-infinite-loading';
-    import AddItemTrackModal from '../../components/purchaseOrder/AddItemTrackModal.vue'
     export default{
         data(){
             return {
-                purchaseOrder: {}
+                requisition: {},
+                purchaseOrder:{},
             }
-        },
-        components: {
-            'add-item-track-modal': AddItemTrackModal
         },
         created(){
 
             let self = this
 
             //get PO detail
-            this.getPODetail()
+            this.getRequisitionTrackDetail()
 
         },
         methods: {
-            formatPrice(amount){
-                return accounting.formatNumber(amount, ',', '.', '')
-            },
-            downloadPDF(purchaseOrderId){
-                window.open(api_path + 'storage/admin/purchaseOrder/generate/pdf?id=' + purchaseOrderId, '_blank')
-            },
-            getPODetail(){
+
+            getRequisitionTrackDetail(){
                 let self = this
-                get(api_path + 'storage/admin/purchaseOrder/detail?id=' + this.$route.params.id)
+                get(api_path + 'storage/requisition/history/track/detail?id=' + this.$route.params.id)
                     .then((res) => {
                         if (!res.data.isFailed) {
-
-                            if (res.data.purchaseOrder.data) {
-                                self.purchaseOrder = res.data.purchaseOrder.data
-                            }
-
+                            self.requisition = res.data.requisition.data
+                            self.purchaseOrder = res.data.purchaseOrder.data
                         } else {
                             $('.page-container').pgNotification({
                                 style: 'flip',
@@ -238,31 +301,9 @@
                         }).show();
                     })
             },
-            attemptAddItemTrack(itemId,index){
-
-                let self = this
-                let purchaseOrderVuexState = this.$store.state.purchaseOrder
-
-                //reset form
-                purchaseOrderVuexState.itemToAddTrack = {
-                    id: '',
-                    estimatedDateArrival: '',
-                    estimatedTimeArrival: '',
-                    notes: ''
-                }
-
-                //re fetch data
-                self.getPODetail()
-
-                setTimeout(()=>{
-                    this.$store.dispatch({
-                        type: 'purchaseOrder/attemptAddItemTrack',
-                        itemId: itemId,
-                        itemIndex:index,
-                        purchaseOrder: self.purchaseOrder
-                    })
-                },300) //give delay for 0.3 second to refetch the data first
-            }
+            formatPrice(amount){
+                return accounting.formatNumber(amount, ',', '.', '')
+            },
         }
     }
 </script>

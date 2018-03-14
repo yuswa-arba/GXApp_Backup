@@ -32,6 +32,7 @@ class StoragePurchaseOrderItemTransformer extends TransformerAbstract
             'customUnit'=>$purchaseOrderItems->customUnit,
             'pricePurchased'=>$purchaseOrderItems->pricePurchased,
             'currencyFormat'=>$purchaseOrderItems->currencyFormat,
+            'itemTrack'=>$purchaseOrderItems->itemTrack
         ];
     }
 }

@@ -5,10 +5,12 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Requisition;
 use App\Http\Controllers\Controller;
 use App\Storage\Logics\Requisition\GetShopItemDetailLogic;
 use App\Storage\Models\StorageRequisition;
+use App\Storage\Transformers\StoragePurchaseOrderTransformer;
 use App\Storage\Transformers\StorageRequisitionListTransformer;
 use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class HistoryTrackController extends Controller
 {
@@ -34,41 +36,31 @@ class HistoryTrackController extends Controller
             $approvalId = $request->sortApproval;
         }
 
+        //get all
+        $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)->paginate(10);
 
-        if ($employee && $employee->hasResigned != 1) {
+        //get based on approval id status
+        if($approvalId!=''){
 
-            //get all
-            $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)->paginate(10);
+            $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)
+                ->where('approvalId', $approvalId)
+                ->paginate(10);
+        }
 
-            //get based on approval id status
-            if($approvalId!=''){
+        if ($requisitions) {
 
-                $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)
-                                                    ->where('approvalId', $approvalId)
-                                                    ->paginate(10);
-            }
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+            $response['requisitions'] = fractal($requisitions, new StorageRequisitionListTransformer())->includeRequisitionItems()->includeDeliveryWarehouse();
 
-            if ($requisitions) {
-
-                $response['isFailed'] = false;
-                $response['message'] = 'Success';
-                $response['requisitions'] = fractal($requisitions, new StorageRequisitionListTransformer())->includeRequisitionItems()->includeDeliveryWarehouse();
-
-                return response()->json($response, 200);
-
-            } else {
-                $response['isFailed'] = true;
-                $response['message'] = 'Unable to find requisition';
-                return response()->json($response, 200);
-            }
-
+            return response()->json($response, 200);
 
         } else {
-            /* Return error response */
             $response['isFailed'] = true;
-            $response['message'] = 'Permission denied';
+            $response['message'] = 'Unable to find requisition';
             return response()->json($response, 200);
         }
+
 
     }
 
@@ -79,37 +71,65 @@ class HistoryTrackController extends Controller
         $user = Auth::user(); //user data
         $employee = $user->employee; // user's employee data
 
-        if ($employee && $employee->hasResigned != 1) {
 
-            $search = $request->v;
+        $search = $request->v;
 
-            if ($search != '') {
+        if ($search != '') {
 
-                $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)
-                    ->where(function($query)use($search){
-                        $query->where('requisitionNumber','like','%'.$search.'%');
-                    })
-                    ->paginate(10);
+            $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)
+                ->where(function($query)use($search){
+                    $query->where('requisitionNumber','like','%'.$search.'%');
+                })
+                ->paginate(10);
 
-            } else {
-                $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)->paginate(10);
-            }
+        } else {
+            $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)->paginate(10);
+        }
+
+        $response['isFailed'] = false;
+        $response['message'] = 'Success';
+        $response['requisitions'] = fractal($requisitions, new StorageRequisitionListTransformer())
+            ->includeRequisitionItems()
+            ->includeDeliveryWarehouse();
+
+        return response()->json($response, 200);
+    }
+
+    public function requisitionTrackDetail(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(),[
+            'id'=>'required'
+        ]);
+
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
+
+        //is valid
+
+        $requisition =  StorageRequisition::find($request->id);
+
+        if($requisition){
 
             $response['isFailed'] = false;
             $response['message'] = 'Success';
-            $response['requisitions'] = fractal($requisitions, new StorageRequisitionListTransformer())
-                ->includeRequisitionItems()
-                ->includeDeliveryWarehouse();
+            $response['requisition'] =  fractal($requisition, new StorageRequisitionListTransformer())->includeRequisitionItems()->includeDeliveryWarehouse();
+            $response['purchaseOrder'] = fractal($requisition->purchaseOrder,new StoragePurchaseOrderTransformer())->includePurchaseOrderItems();
 
-            return response()->json($response, 200);
+            return response()->json($response,200);
 
-        } else {
-
-            /* Return error response */
+        } else { /* Error repsonse */
             $response['isFailed'] = true;
-            $response['message'] = 'Permission denied';
-            return response()->json($response, 200);
-
+            $response['message'] = 'Unable to find requisition';
+            return response()->json($response,200);
         }
+
+
+
+
     }
 }

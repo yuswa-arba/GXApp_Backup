@@ -25,7 +25,7 @@ export default{
         $('#modal-select-supplier').modal('show')
 
     },
-    showWarehouseListModal({commit,state},payload){
+    showWarehouseListModal({commit, state}, payload){
         commit('getWarehouseList')
         $('#modal-select-warehouse').modal('show')
     },
@@ -68,7 +68,7 @@ export default{
                         // Insert to POFormObject
                         state.POFormObject.warehouseId = state.selectedWarehouse.id
 
-                        if(state.POFormObject.recipientName!=''){
+                        if (state.POFormObject.recipientName != '') {
                             // Callback success
                             cb(null, '')
                         } else {
@@ -105,8 +105,8 @@ export default{
 
                             //Get items from this requisition
                             commit({
-                                type:'getItemInRequisition',
-                                requisitionId:state.selectedRequisition.id
+                                type: 'getItemInRequisition',
+                                requisitionId: state.selectedRequisition.id
                             })
 
                             // Callback success
@@ -128,9 +128,9 @@ export default{
                 if (err == null) { //Success
 
                     state.POFormIsFinishAndValid = true //set to true to show item form component
-                    setTimeout(()=>{ // delay 0.25s to make sure component is ready then scroll to container
-                        $("html, body").animate({ scrollTop: $("#createPOBtnContainer").offset().top }, 1000);
-                    },250)
+                    setTimeout(() => { // delay 0.25s to make sure component is ready then scroll to container
+                        $("html, body").animate({scrollTop: $("#createPOBtnContainer").offset().top}, 1000);
+                    }, 250)
 
                 } else {
 
@@ -147,13 +147,31 @@ export default{
             })
     },
     attemptAddItemModal({commit, state}, payload){
+
         //show modal
         $('#modal-add-item').modal('show')
     },
-    attemptAddItemTrack({commit,state},payload){
+    attemptAddItemTrack({commit, state}, payload){
+        if (payload.itemId) {
 
-        if(payload.itemId){
-            state.itemToAddTrack.id = payload.itemId
+            series([
+                function (cb) {
+                    state.itemToAddTrack.id = payload.itemId
+                    cb(null, '')
+                },
+                function (cb) {
+
+                    if (payload.purchaseOrder.purchaseOrderItems.data[payload.itemIndex].itemTrack != null) {
+                        state.itemToAddTrack.estimatedDateArrival = payload.purchaseOrder.purchaseOrderItems.data[payload.itemIndex].itemTrack.estimatedDateArrival
+                        state.itemToAddTrack.estimatedTimeArrival = payload.purchaseOrder.purchaseOrderItems.data[payload.itemIndex].itemTrack.estimatedTimeArrival
+                        state.itemToAddTrack.notes = payload.purchaseOrder.purchaseOrderItems.data[payload.itemIndex].itemTrack.notes
+                    }
+
+                    cb(null, '')
+                }
+            ])
+
+
             //show modal
             $('#modal-add-item-track').modal('show')
         }
@@ -218,12 +236,12 @@ export default{
                         state.POItems.push(state.itemToBeInserted)
                         cb(null, '')
                     },
-                    function(cb){
+                    function (cb) {
 
                         //update tax value
-                        if(parseInt(state.POFormObject.taxFeeAdded)==1){
+                        if (parseInt(state.POFormObject.taxFeeAdded) == 1) {
                             let price = 0
-                            if (state.POItems.length > 0){
+                            if (state.POItems.length > 0) {
                                 _.map(state.POItems, item => {
                                     price = price + (item.amount * item.price)
                                 })
@@ -235,23 +253,23 @@ export default{
                             state.POFormObject.taxFee = 0
                         }
 
-                        cb(null,'')
+                        cb(null, '')
                     },
                     function (cb) {
 
                         // Close Modal  & Reset forms
                         state.items = []//resset items lsit
                         state.itemToBeInserted = { //reset item to be inserted data
-                            withRequisitionItem:0,
-                            requisitionItemId:'',
+                            withRequisitionItem: 0,
+                            requisitionItemId: '',
                             itemDetail: {},
-                            amount:'',
-                            hasCustomUnit:0,
-                            customUnit:'',
-                            unitId:'',
-                            unitFormat:'',
-                            price:'',
-                            currencyFormat:'IDR'
+                            amount: '',
+                            hasCustomUnit: 0,
+                            customUnit: '',
+                            unitId: '',
+                            unitFormat: '',
+                            price: '',
+                            currencyFormat: 'IDR'
                         }
 
                         $('#modal-add-item').modal("toggle"); // close modal

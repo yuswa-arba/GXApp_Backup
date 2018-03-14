@@ -2636,6 +2636,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -2740,6 +2741,325 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 type: 'history/getRequisitionHistory',
                 sortApproval: self.sortApproval
             });
+        },
+        showTrackDetail: function showTrackDetail(requisitionId) {
+            this.$router.push({ name: 'requisitionTrackDetail', params: { id: requisitionId } });
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/requisition/views/history/RequisitionTrackDetail.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            requisition: {},
+            purchaseOrder: {}
+        };
+    },
+    created: function created() {
+
+        var self = this;
+
+        //get PO detail
+        this.getRequisitionTrackDetail();
+    },
+
+    methods: {
+        getRequisitionTrackDetail: function getRequisitionTrackDetail() {
+            var self = this;
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/requisition/history/track/detail?id=' + this.$route.params.id).then(function (res) {
+                if (!res.data.isFailed) {
+                    self.requisition = res.data.requisition.data;
+                    self.purchaseOrder = res.data.purchaseOrder.data;
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        },
+        formatPrice: function formatPrice(amount) {
+            return accounting.formatNumber(amount, ',', '.', '');
         }
     }
 });
@@ -4529,7 +4849,12 @@ var render = function() {
                                   "button",
                                   {
                                     staticClass:
-                                      "btn btn-outline-primary m-t-10 m-r-20"
+                                      "btn btn-outline-primary m-t-10 m-r-20",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.showTrackDetail(requisition.id)
+                                      }
+                                    }
                                   },
                                   [
                                     _vm._v(
@@ -4754,6 +5079,781 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-59472b3c", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a0a9ccb6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/requisition/views/history/RequisitionTrackDetail.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 m-t-30" },
+      [_vm._t("go-back-menu")],
+      2
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12" }, [
+      _vm.requisition.id != "" && _vm.requisition.id != null
+        ? _c(
+            "div",
+            {
+              staticClass: "card card-default card-bordered border-solid-grey"
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "card-block no-padding" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-lg-12 border-bottom-grey",
+                      staticStyle: { background: "#fafafa" }
+                    },
+                    [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                          _c(
+                            "p",
+                            { staticClass: "text-uppercase m-t-10 m-b-0" },
+                            [_vm._v("Requisition No.")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
+                            _vm._v(_vm._s(_vm.requisition.requisitionNumber))
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                            _vm._v("Approval No.")
+                          ]),
+                          _vm._v(" "),
+                          _vm.requisition.approvalNumber
+                            ? _c(
+                                "p",
+                                { staticClass: "text-black fs-16 m-b-10" },
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(_vm.requisition.approvalNumber)
+                                  )
+                                ]
+                              )
+                            : _c("p", [_vm._v("-")])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                          _c(
+                            "p",
+                            { staticClass: "text-uppercase m-t-10 m-b-0" },
+                            [_vm._v("Requested At")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                            _vm._v(_vm._s(_vm.requisition.requestedAt))
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                            _vm._v("Date Needed By")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                            _vm._v(_vm._s(_vm.requisition.dateNeededBy))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                          _c(
+                            "p",
+                            { staticClass: "text-uppercase m-t-10 m-b-0" },
+                            [_vm._v("Description")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                            _vm._v(_vm._s(_vm.requisition.description))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                          _c(
+                            "p",
+                            { staticClass: "text-uppercase m-t-10 m-b-0" },
+                            [_vm._v("Approval Status")]
+                          ),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                            _vm._v(_vm._s(_vm.requisition.approvalName))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-lg-1 m-t-20 m-b-20" })
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "p-t-10" }),
+                  _vm._v(" "),
+                  _vm._l(_vm.requisition.requisitionItems.data, function(item) {
+                    return _c("div", { staticClass: "col-lg-12" }, [
+                      _c(
+                        "div",
+                        { staticClass: "row border-bottom-grey p-t-10 p-b-10" },
+                        [
+                          _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                            _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-lg-6" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "cursor",
+                                    staticStyle: { "margin-top": "-10px" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.viewImage(
+                                          "/images/storage/items/" +
+                                            item.itemPhoto
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src:
+                                          "/images/storage/items/" +
+                                          item.itemPhoto,
+                                        height: "60px",
+                                        alt: "No Image Found"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-lg-6" }, [
+                                _c(
+                                  "p",
+                                  { staticClass: "text-black fs-16 m-b-0" },
+                                  [_vm._v(_vm._s(item.itemName))]
+                                ),
+                                _vm._v(" "),
+                                _c("p", { staticClass: "no-padding fs-14" }, [
+                                  _vm._v(_vm._s(item.itemCode))
+                                ])
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-2 p-t-10" }, [
+                            _c("p", { staticClass: "fs-16 m-b-0" }, [
+                              _vm._v("Amount: "),
+                              _c("span", { staticClass: "text-black" }, [
+                                _vm._v(_vm._s(item.amount))
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("p", { staticClass: " fs-16 m-b-0" }, [
+                              _vm._v("Unit: "),
+                              _c("span", { staticClass: "text-black" }, [
+                                _vm._v(_vm._s(item.itemUnit))
+                              ])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                            _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                              _vm._v("Notes")
+                            ]),
+                            _vm._v(" "),
+                            item.notes
+                              ? _c(
+                                  "p",
+                                  { staticClass: "text-black fs-16 m-b-10" },
+                                  [_vm._v(_vm._s(item.notes))]
+                                )
+                              : _c("p", [_vm._v("-")])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-3 p-t-10" }, [
+                            _c("p", [
+                              _c("span", { staticClass: "text-uppercase" }, [
+                                _vm._v("Approved: ")
+                              ]),
+                              _vm._v(" "),
+                              item.isApproved
+                                ? _c("i", {
+                                    staticClass:
+                                      "fa fa-check text-success fs-16"
+                                  })
+                                : _c("i", {
+                                    staticClass: "fa fa-times text-danger fs-16"
+                                  })
+                            ]),
+                            _vm._v(" "),
+                            item.updatedAt && item.updatedBy
+                              ? _c("div", [
+                                  _c(
+                                    "p",
+                                    { staticClass: "text-uppercase m-b-0" },
+                                    [_vm._v("Latest Update")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    { staticClass: "text-black fs-16 m-b-10" },
+                                    [
+                                      _vm._v(
+                                        "\n                                    Updated at " +
+                                          _vm._s(item.updatedAt) +
+                                          " by " +
+                                          _vm._s(item.updatedBy) +
+                                          "\n                                "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-lg-1 p-t-10" })
+                        ]
+                      )
+                    ])
+                  })
+                ],
+                2
+              )
+            ]
+          )
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _vm.purchaseOrder.id != "" && _vm.purchaseOrder.id != null
+      ? _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+          _c(
+            "div",
+            {
+              staticClass: "card card-default card-bordered border-solid-grey"
+            },
+            [
+              _c("div", { staticClass: "card-block no-padding" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-lg-12 border-bottom-grey",
+                    staticStyle: { background: "#fafafa" }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Purchase Order No.")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.purchaseOrderNumber))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-uppercase m-b-0" }, [
+                          _vm._v("Approval No.")
+                        ]),
+                        _vm._v(" "),
+                        _vm.purchaseOrder.withRequisition
+                          ? _c(
+                              "p",
+                              { staticClass: "text-black fs-16 m-b-10" },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.purchaseOrder.approvalNumber)
+                                )
+                              ]
+                            )
+                          : _c("p", [_vm._v("-")])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Date")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.date))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Status")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.status))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Supplier Details")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.supplierName))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                          _c("i", { staticClass: "fa fa-user" }),
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.purchaseOrder.contactPerson)
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                          _c("i", { staticClass: "fa fa-mobile" }),
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.purchaseOrder.contactNumber)
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Ship To")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.warehouseName))
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                          _c("i", { staticClass: "fa fa-user" }),
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.purchaseOrder.recipientName)
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                          _c("i", { staticClass: "fa fa-mobile" }),
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.purchaseOrder.recipientPerson)
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Notes")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.notes))
+                        ])
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-lg-12 border-bottom-grey",
+                    staticStyle: { background: "#fafafa" }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-3 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Requisitioner")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-18 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.requisitioner))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Shipping Via")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-16 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.shippingVia))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Term of Payments")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.paymentTerm))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Term of Delivery")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-0" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.deliveryTerm))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-lg-2 m-t-20 m-b-20" }, [
+                        _c(
+                          "p",
+                          { staticClass: "text-uppercase m-t-10 m-b-0" },
+                          [_vm._v("Shipping Mark")]
+                        ),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "text-black fs-14 m-b-10" }, [
+                          _vm._v(_vm._s(_vm.purchaseOrder.shippingMark))
+                        ])
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.purchaseOrder.purchaseOrderItems
+                  ? _c(
+                      "div",
+                      _vm._l(
+                        _vm.purchaseOrder.purchaseOrderItems.data,
+                        function(item, index) {
+                          return _c(
+                            "div",
+                            {
+                              staticClass: "col-lg-12 p-t-10 border-bottom-grey"
+                            },
+                            [
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-lg-3 m-t-5" }, [
+                                  _c("p", { staticClass: "m-b-0 fs-16" }, [
+                                    _vm._v(" Amount : "),
+                                    _c("span", { staticClass: "text-black" }, [
+                                      _vm._v(_vm._s(item.amountPurchased))
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  item.hasCustomUnit
+                                    ? _c("p", { staticClass: "m-b-0 fs-16" }, [
+                                        _vm._v(
+                                          " Unit :\n                                    " +
+                                            _vm._s(item.customUnit)
+                                        )
+                                      ])
+                                    : _c("p", { staticClass: "m-b-0 fs-16" }, [
+                                        _vm._v(
+                                          "Unit : " +
+                                            _vm._s(item.unitFormatPurchased)
+                                        )
+                                      ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-2 m-t-5" }, [
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass: "text-black fs-16 m-b-0 bold"
+                                    },
+                                    [_vm._v(_vm._s(item.itemName))]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("p", { staticClass: "m-b-10" }, [
+                                    _vm._v(_vm._s(item.itemCode))
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-2 m-t-5" }, [
+                                  _c("p", { staticClass: "m-b-0" }, [
+                                    _vm._v("per item")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    { staticClass: "text-black m-b-10 fs-16" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(item.currencyFormat) +
+                                          "\n                                    " +
+                                          _vm._s(
+                                            _vm.formatPrice(item.pricePurchased)
+                                          )
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-2 m-t-5" }, [
+                                  _c("p", { staticClass: "m-b-0" }, [
+                                    _vm._v("sub total")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "p",
+                                    {
+                                      staticClass:
+                                        "text-black m-b-10 fs-16 bold"
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(item.currencyFormat) +
+                                          "\n                                    " +
+                                          _vm._s(
+                                            _vm.formatPrice(
+                                              parseInt(item.pricePurchased) *
+                                                parseInt(item.amountPurchased)
+                                            )
+                                          )
+                                      )
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-2 m-t-5" })
+                              ])
+                            ]
+                          )
+                        }
+                      )
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-t-50" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-12 p-t-10" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-lg-5" }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-lg-5",
+                        staticStyle: { background: "#fafafa" }
+                      },
+                      [
+                        _c("div", { staticClass: "row" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass: "col-lg-12 border-bottom-grey p-t-10"
+                            },
+                            [
+                              _c("div", { staticClass: "row" }, [
+                                _vm._m(0),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-6" }, [
+                                  parseInt(_vm.purchaseOrder.shippingFeeAdded)
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "fs-18 text-black bold text-left pull-right"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                          " +
+                                              _vm._s(
+                                                _vm.purchaseOrder.currencyFormat
+                                              ) +
+                                              " " +
+                                              _vm._s(
+                                                _vm.formatPrice(
+                                                  _vm.purchaseOrder.shippingFee
+                                                )
+                                              ) +
+                                              "\n                                                        "
+                                          )
+                                        ]
+                                      )
+                                    : _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "fs-16 text-black bold text-left pull-right"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                            -\n                                                        "
+                                          )
+                                        ]
+                                      )
+                                ])
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "col-lg-12 border-bottom-grey p-t-10"
+                            },
+                            [
+                              _c("div", { staticClass: "row" }, [
+                                _vm._m(1),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-6" }, [
+                                  parseInt(_vm.purchaseOrder.taxFeeAdded)
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "fs-18 text-black bold text-left pull-right"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                            " +
+                                              _vm._s(
+                                                _vm.purchaseOrder.currencyFormat
+                                              ) +
+                                              " " +
+                                              _vm._s(
+                                                _vm.formatPrice(
+                                                  _vm.purchaseOrder.taxFee
+                                                )
+                                              ) +
+                                              "\n                                                        "
+                                          )
+                                        ]
+                                      )
+                                    : _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "fs-16 text-black bold text-left pull-right"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                            -\n                                                        "
+                                          )
+                                        ]
+                                      )
+                                ])
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass: "col-lg-12 border-bottom-grey p-t-10"
+                            },
+                            [
+                              _c("div", { staticClass: "row" }, [
+                                _vm._m(2),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-lg-6" }, [
+                                  _vm.purchaseOrder.total != 0
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "fs-21 text-primary bold text-left pull-right"
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                            " +
+                                              _vm._s(
+                                                _vm.purchaseOrder.currencyFormat
+                                              ) +
+                                              " " +
+                                              _vm._s(
+                                                _vm.formatPrice(
+                                                  _vm.purchaseOrder.total
+                                                )
+                                              ) +
+                                              "\n                                                        "
+                                          )
+                                        ]
+                                      )
+                                    : _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "fs-18 text-primary bold text-left pull-right"
+                                        },
+                                        [_vm._v("-")]
+                                      )
+                                ])
+                              ])
+                            ]
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "p-t-50" })
+              ])
+            ]
+          )
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("p", { staticClass: "fs-16" }, [_vm._v("Shipping Fee")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("p", { staticClass: "fs-16" }, [_vm._v("Tax Fee")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-6" }, [
+      _c("p", { staticClass: "fs-16" }, [_vm._v("Total")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-a0a9ccb6", module.exports)
   }
 }
 
@@ -19276,9 +20376,12 @@ $(document).ready(function () {});
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_history_Index_vue__ = __webpack_require__("./resources/assets/js/client/storage/requisition/views/history/Index.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_history_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_history_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_history_RequisitionTrackDetail_vue__ = __webpack_require__("./resources/assets/js/client/storage/requisition/views/history/RequisitionTrackDetail.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_history_RequisitionTrackDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_history_RequisitionTrackDetail_vue__);
 /**
  * Created by kevinpurwono on 23/11/17.
  */
+
 
 
 
@@ -19288,7 +20391,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_history_Index_vue___default.a }, { path: '/:search', component: __WEBPACK_IMPORTED_MODULE_2__views_history_Index_vue___default.a }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_history_Index_vue___default.a }, { path: '/:search', component: __WEBPACK_IMPORTED_MODULE_2__views_history_Index_vue___default.a }, { path: '/track/detail/:id', component: __WEBPACK_IMPORTED_MODULE_3__views_history_RequisitionTrackDetail_vue___default.a, name: 'requisitionTrackDetail' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
@@ -19333,6 +20436,55 @@ if (false) {(function () {
     hotAPI.createRecord("data-v-5204a2fd", Component.options)
   } else {
     hotAPI.reload("data-v-5204a2fd", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/storage/requisition/views/history/RequisitionTrackDetail.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/requisition/views/history/RequisitionTrackDetail.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a0a9ccb6\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/requisition/views/history/RequisitionTrackDetail.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/storage/requisition/views/history/RequisitionTrackDetail.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a0a9ccb6", Component.options)
+  } else {
+    hotAPI.reload("data-v-a0a9ccb6", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true

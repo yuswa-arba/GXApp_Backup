@@ -2805,6 +2805,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2820,11 +2823,15 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         });
         $('#estimated-date-arrival').datepicker({ format: 'dd/mm/yyyy', autoclose: true, todayHighlight: true });
     },
+    created: function created() {},
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('purchaseOrder', {
         itemToAddTrack: 'itemToAddTrack'
     })),
     methods: {
+        closeModal: function closeModal() {
+            $('#modal-add-item-track').modal('toggle');
+        },
         finishEditing: function finishEditing() {
             var self = this;
 
@@ -2837,6 +2844,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
                 purchaseOrderVuexState.itemToAddTrack.estimatedDateArrival = $('#estimated-date-arrival').val();
                 purchaseOrderVuexState.itemToAddTrack.estimatedTimeArrival = $('#estimated-time-arrival').val();
+                purchaseOrderVuexState.itemToAddTrack.notes = $('#item-track-notes').val();
+
                 cb(null, '');
             }, function (cb) {
                 if (purchaseOrderVuexState.itemToAddTrack.estimatedDateArrival != '' && purchaseOrderVuexState.itemToAddTrack.estimatedTimeArrival) {
@@ -4642,30 +4651,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var self = this;
 
         //get PO detail
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/detail?id=' + this.$route.params.id).then(function (res) {
-            if (!res.data.isFailed) {
-
-                if (res.data.purchaseOrder.data) {
-                    self.purchaseOrder = res.data.purchaseOrder.data;
-                }
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
+        this.getPODetail();
     },
 
     methods: {
@@ -4675,11 +4661,57 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         downloadPDF: function downloadPDF(purchaseOrderId) {
             window.open(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/generate/pdf?id=' + purchaseOrderId, '_blank');
         },
-        attemptAddItemTrack: function attemptAddItemTrack(itemId) {
-            this.$store.dispatch({
-                type: 'purchaseOrder/attemptAddItemTrack',
-                itemId: itemId
+        getPODetail: function getPODetail() {
+            var self = this;
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/admin/purchaseOrder/detail?id=' + this.$route.params.id).then(function (res) {
+                if (!res.data.isFailed) {
+
+                    if (res.data.purchaseOrder.data) {
+                        self.purchaseOrder = res.data.purchaseOrder.data;
+                    }
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
             });
+        },
+        attemptAddItemTrack: function attemptAddItemTrack(itemId, index) {
+            var _this = this;
+
+            var self = this;
+            var purchaseOrderVuexState = this.$store.state.purchaseOrder;
+
+            //reset form
+            purchaseOrderVuexState.itemToAddTrack = {
+                id: '',
+                estimatedDateArrival: '',
+                estimatedTimeArrival: '',
+                notes: ''
+
+                //re fetch data
+            };self.getPODetail();
+
+            setTimeout(function () {
+                _this.$store.dispatch({
+                    type: 'purchaseOrder/attemptAddItemTrack',
+                    itemId: itemId,
+                    itemIndex: index,
+                    purchaseOrder: self.purchaseOrder
+                });
+            }, 300); //give delay for 0.3 second to refetch the data first
         }
     }
 });
@@ -6579,37 +6611,53 @@ var render = function() {
                   _c("div", { staticClass: "card-block" }, [
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-lg-12 m-t-10" }, [
-                        _vm._m(0),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v(" Estimated Date Arrival ")]),
+                          _vm._v(" "),
+                          _c("input", {
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              placeholder: "e.g 12/01/2018",
+                              id: "estimated-date-arrival"
+                            },
+                            domProps: {
+                              value: _vm.itemToAddTrack.estimatedDateArrival
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
-                        _vm._m(1),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", [_vm._v(" Estimated Time Arrival ")]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "input-group bootstrap-timepicker" },
+                            [
+                              _c("input", {
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: "estimated-time-arrival",
+                                  placeholder: "e.g 08:00 "
+                                },
+                                domProps: {
+                                  value: _vm.itemToAddTrack.estimatedTimeArrival
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm._m(0)
+                            ]
+                          )
+                        ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", [_vm._v(" Notes ")]),
                           _vm._v(" "),
                           _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.itemToAddTrack.notes,
-                                expression: "itemToAddTrack.notes"
-                              }
-                            ],
                             staticClass: "form-control",
-                            attrs: { type: "text" },
-                            domProps: { value: _vm.itemToAddTrack.notes },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.itemToAddTrack,
-                                  "notes",
-                                  $event.target.value
-                                )
-                              }
-                            }
+                            attrs: { type: "text", id: "item-track-notes" },
+                            domProps: { value: _vm.itemToAddTrack.notes }
                           })
                         ])
                       ]),
@@ -6648,40 +6696,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v(" Estimated Date Arrival ")]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: {
-          type: "text",
-          placeholder: "e.g 12/01/2018",
-          id: "estimated-date-arrival"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v(" Estimated Time Arrival ")]),
-      _vm._v(" "),
-      _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "estimated-time-arrival",
-            placeholder: "e.g 08:00 "
-          }
-        }),
-        _vm._v(" "),
-        _c("span", { staticClass: "input-group-addon" }, [
-          _c("i", { staticClass: "pg-clock" })
-        ])
-      ])
+    return _c("span", { staticClass: "input-group-addon" }, [
+      _c("i", { staticClass: "pg-clock" })
     ])
   }
 ]
@@ -10116,7 +10132,7 @@ var render = function() {
                                   staticClass: "btn btn-outline-primary",
                                   on: {
                                     click: function($event) {
-                                      _vm.attemptAddItemTrack(item.id)
+                                      _vm.attemptAddItemTrack(item.id, index)
                                     }
                                   }
                                 },
@@ -25892,6 +25908,7 @@ module.exports = Component.exports
         var commit = _ref6.commit,
             state = _ref6.state;
 
+
         //show modal
         $('#modal-add-item').modal('show');
     },
@@ -25899,9 +25916,22 @@ module.exports = Component.exports
         var commit = _ref7.commit,
             state = _ref7.state;
 
-
         if (payload.itemId) {
-            state.itemToAddTrack.id = payload.itemId;
+
+            __WEBPACK_IMPORTED_MODULE_1_async_series___default()([function (cb) {
+                state.itemToAddTrack.id = payload.itemId;
+                cb(null, '');
+            }, function (cb) {
+
+                if (payload.purchaseOrder.purchaseOrderItems.data[payload.itemIndex].itemTrack != null) {
+                    state.itemToAddTrack.estimatedDateArrival = payload.purchaseOrder.purchaseOrderItems.data[payload.itemIndex].itemTrack.estimatedDateArrival;
+                    state.itemToAddTrack.estimatedTimeArrival = payload.purchaseOrder.purchaseOrderItems.data[payload.itemIndex].itemTrack.estimatedTimeArrival;
+                    state.itemToAddTrack.notes = payload.purchaseOrder.purchaseOrderItems.data[payload.itemIndex].itemTrack.notes;
+                }
+
+                cb(null, '');
+            }]);
+
             //show modal
             $('#modal-add-item-track').modal('show');
         }
