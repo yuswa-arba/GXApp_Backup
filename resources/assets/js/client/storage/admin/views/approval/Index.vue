@@ -66,7 +66,7 @@
                                 <p class="text-black fs-14 m-b-10">{{requisition.approvalName}}</p>
                             </div>
                             <div class="col-lg-2" style="margin-top: 30px">
-                                <div class="dropdown dropdown-default m-l-20" v-if="requisition.approvalId==3 && !requisition.editing">
+                                <div class="dropdown dropdown-default m-l-20" v-if="!requisition.editing">
                                     <button class="btn btn-outline-primary dropdown-toggle text-center" type="button"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Action

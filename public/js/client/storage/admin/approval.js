@@ -4639,7 +4639,6 @@ var render = function() {
                               staticStyle: { "margin-top": "30px" }
                             },
                             [
-                              requisition.approvalId == 3 &&
                               !requisition.editing
                                 ? _c(
                                     "div",

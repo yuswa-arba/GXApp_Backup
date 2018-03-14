@@ -38,13 +38,14 @@ class HistoryTrackController extends Controller
         }
 
         //get all
-        $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)->paginate(10);
+        $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)->orderBy('id','desc')->paginate(10);
 
         //get based on approval id status
         if($approvalId!=''){
 
             $requisitions = StorageRequisition::where('requesterEmployeeId', $employee->id)
                 ->where('approvalId', $approvalId)
+                ->orderBy('id','desc')
                 ->paginate(10);
         }
 
