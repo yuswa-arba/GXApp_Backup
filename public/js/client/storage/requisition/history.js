@@ -2955,64 +2955,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -5594,51 +5536,59 @@ var render = function() {
                                   ])
                                 ]),
                                 _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-2 m-t-5" }, [
-                                  _c("p", { staticClass: "m-b-0" }, [
-                                    _vm._v("per item")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "p",
-                                    { staticClass: "text-black m-b-10 fs-16" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(item.currencyFormat) +
-                                          "\n                                    " +
-                                          _vm._s(
-                                            _vm.formatPrice(item.pricePurchased)
-                                          )
-                                      )
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-2 m-t-5" }, [
-                                  _c("p", { staticClass: "m-b-0" }, [
-                                    _vm._v("sub total")
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "p",
-                                    {
-                                      staticClass:
-                                        "text-black m-b-10 fs-16 bold"
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(item.currencyFormat) +
-                                          "\n                                    " +
-                                          _vm._s(
-                                            _vm.formatPrice(
-                                              parseInt(item.pricePurchased) *
-                                                parseInt(item.amountPurchased)
+                                item.itemTrack != null
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "col-lg-2 m-t-5" },
+                                      [
+                                        _c("p", { staticClass: "m-b-0" }, [
+                                          _vm._v("Estimated Arrival")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass:
+                                              "text-black m-b-10 fs-16"
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                item.itemTrack
+                                                  .estimatedDateArrival
+                                              ) +
+                                                "\n                                    @" +
+                                                _vm._s(
+                                                  item.itemTrack
+                                                    .estimatedTimeArrival
+                                                )
                                             )
-                                          )
-                                      )
-                                    ]
-                                  )
-                                ]),
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.itemTrack != null
+                                  ? _c(
+                                      "div",
+                                      { staticClass: "col-lg-2 m-t-5" },
+                                      [
+                                        _c("p", { staticClass: "m-b-0" }, [
+                                          _vm._v("Notes")
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "p",
+                                          {
+                                            staticClass:
+                                              "text-black m-b-10 fs-16"
+                                          },
+                                          [_vm._v(_vm._s(item.itemTrack.notes))]
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e(),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "col-lg-2 m-t-5" })
                               ])
@@ -5647,174 +5597,7 @@ var render = function() {
                         }
                       )
                     )
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("div", { staticClass: "p-t-50" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-12 p-t-10" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-lg-5" }),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "col-lg-5",
-                        staticStyle: { background: "#fafafa" }
-                      },
-                      [
-                        _c("div", { staticClass: "row" }, [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "col-lg-12 border-bottom-grey p-t-10"
-                            },
-                            [
-                              _c("div", { staticClass: "row" }, [
-                                _vm._m(0),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-6" }, [
-                                  parseInt(_vm.purchaseOrder.shippingFeeAdded)
-                                    ? _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "fs-18 text-black bold text-left pull-right"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                          " +
-                                              _vm._s(
-                                                _vm.purchaseOrder.currencyFormat
-                                              ) +
-                                              " " +
-                                              _vm._s(
-                                                _vm.formatPrice(
-                                                  _vm.purchaseOrder.shippingFee
-                                                )
-                                              ) +
-                                              "\n                                                        "
-                                          )
-                                        ]
-                                      )
-                                    : _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "fs-16 text-black bold text-left pull-right"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                            -\n                                                        "
-                                          )
-                                        ]
-                                      )
-                                ])
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "col-lg-12 border-bottom-grey p-t-10"
-                            },
-                            [
-                              _c("div", { staticClass: "row" }, [
-                                _vm._m(1),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-6" }, [
-                                  parseInt(_vm.purchaseOrder.taxFeeAdded)
-                                    ? _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "fs-18 text-black bold text-left pull-right"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(
-                                                _vm.purchaseOrder.currencyFormat
-                                              ) +
-                                              " " +
-                                              _vm._s(
-                                                _vm.formatPrice(
-                                                  _vm.purchaseOrder.taxFee
-                                                )
-                                              ) +
-                                              "\n                                                        "
-                                          )
-                                        ]
-                                      )
-                                    : _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "fs-16 text-black bold text-left pull-right"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                            -\n                                                        "
-                                          )
-                                        ]
-                                      )
-                                ])
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "col-lg-12 border-bottom-grey p-t-10"
-                            },
-                            [
-                              _c("div", { staticClass: "row" }, [
-                                _vm._m(2),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "col-lg-6" }, [
-                                  _vm.purchaseOrder.total != 0
-                                    ? _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "fs-21 text-primary bold text-left pull-right"
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                            " +
-                                              _vm._s(
-                                                _vm.purchaseOrder.currencyFormat
-                                              ) +
-                                              " " +
-                                              _vm._s(
-                                                _vm.formatPrice(
-                                                  _vm.purchaseOrder.total
-                                                )
-                                              ) +
-                                              "\n                                                        "
-                                          )
-                                        ]
-                                      )
-                                    : _c(
-                                        "span",
-                                        {
-                                          staticClass:
-                                            "fs-18 text-primary bold text-left pull-right"
-                                        },
-                                        [_vm._v("-")]
-                                      )
-                                ])
-                              ])
-                            ]
-                          )
-                        ])
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "p-t-50" })
+                  : _vm._e()
               ])
             ]
           )
@@ -5822,32 +5605,7 @@ var render = function() {
       : _vm._e()
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6" }, [
-      _c("p", { staticClass: "fs-16" }, [_vm._v("Shipping Fee")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6" }, [
-      _c("p", { staticClass: "fs-16" }, [_vm._v("Tax Fee")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-6" }, [
-      _c("p", { staticClass: "fs-16" }, [_vm._v("Total")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

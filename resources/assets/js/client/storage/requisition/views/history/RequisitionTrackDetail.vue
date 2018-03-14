@@ -173,15 +173,14 @@
                                     <p class="text-black fs-16 m-b-0 bold">{{item.itemName}}</p>
                                     <p class="m-b-10">{{item.itemCode}}</p>
                                 </div>
-                                <div class="col-lg-2 m-t-5">
-                                    <p class="m-b-0">per item</p>
-                                    <p class="text-black m-b-10 fs-16">{{item.currencyFormat}}
-                                        {{formatPrice(item.pricePurchased)}}</p>
+                                <div class="col-lg-2 m-t-5" v-if="item.itemTrack!=null">
+                                    <p class="m-b-0">Estimated Arrival</p>
+                                    <p class="text-black m-b-10 fs-16">{{item.itemTrack.estimatedDateArrival}}
+                                        @{{item.itemTrack.estimatedTimeArrival}}</p>
                                 </div>
-                                <div class="col-lg-2 m-t-5">
-                                    <p class="m-b-0">sub total</p>
-                                    <p class="text-black m-b-10 fs-16 bold">{{item.currencyFormat}}
-                                        {{formatPrice(parseInt(item.pricePurchased)*parseInt(item.amountPurchased))}}</p>
+                                <div class="col-lg-2 m-t-5" v-if="item.itemTrack!=null">
+                                    <p class="m-b-0">Notes</p>
+                                    <p class="text-black m-b-10 fs-16">{{item.itemTrack.notes}}</p>
                                 </div>
                                 <div class="col-lg-2 m-t-5">
                                 </div>
@@ -189,64 +188,7 @@
                         </div>
 
                     </div>
-                    <div class="p-t-50"></div>
-                    <div class="col-lg-12 p-t-10">
-                        <div class="row">
-                            <div class="col-lg-5"></div>
-                            <div class="col-lg-5" style="background:#fafafa">
-                                <div class="row">
-                                    <div class="col-lg-12 border-bottom-grey p-t-10">
-                                        <div class="row">
-                                            <div class="col-lg-6"><p class="fs-16">Shipping Fee</p></div>
-                                            <div class="col-lg-6">
-                                                            <span class="fs-18 text-black bold text-left pull-right"
-                                                                  v-if="parseInt(purchaseOrder.shippingFeeAdded)">
-                                                              {{purchaseOrder.currencyFormat}} {{formatPrice(purchaseOrder.shippingFee)}}
-                                                            </span>
-                                                <span class="fs-16 text-black bold text-left pull-right"
-                                                      v-else="">
-                                                                -
-                                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-lg-12 border-bottom-grey p-t-10">
-                                        <div class="row">
-                                            <div class="col-lg-6"><p class="fs-16">Tax Fee</p></div>
-                                            <div class="col-lg-6">
-                                                            <span class="fs-18 text-black bold text-left pull-right"
-                                                                  v-if="parseInt(purchaseOrder.taxFeeAdded)">
-                                                                {{purchaseOrder.currencyFormat}} {{formatPrice(purchaseOrder.taxFee)}}
-                                                            </span>
-                                                <span class="fs-16 text-black bold text-left pull-right"
-                                                      v-else="">
-                                                                -
-                                                            </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-12 border-bottom-grey p-t-10">
-                                        <div class="row">
-                                            <div class="col-lg-6"><p class="fs-16">Total</p></div>
-                                            <div class="col-lg-6">
-                                                            <span class="fs-21 text-primary bold text-left pull-right"
-                                                                  v-if="purchaseOrder.total!=0">
-                                                                {{purchaseOrder.currencyFormat}} {{formatPrice(purchaseOrder.total)}}
-                                                            </span>
-                                                <span class="fs-18 text-primary bold text-left pull-right"
-                                                      v-else="">-</span>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-t-50"></div>
                 </div>
             </div>
         </div>

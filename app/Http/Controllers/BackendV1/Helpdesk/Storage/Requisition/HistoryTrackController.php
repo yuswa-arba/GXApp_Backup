@@ -5,6 +5,7 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Requisition;
 use App\Http\Controllers\Controller;
 use App\Storage\Logics\Requisition\GetShopItemDetailLogic;
 use App\Storage\Models\StorageRequisition;
+use App\Storage\Transformers\StoragePurchaseOrderExcludePriceTransformer;
 use App\Storage\Transformers\StoragePurchaseOrderTransformer;
 use App\Storage\Transformers\StorageRequisitionListTransformer;
 use App\Traits\GlobalUtils;
@@ -118,7 +119,7 @@ class HistoryTrackController extends Controller
             $response['isFailed'] = false;
             $response['message'] = 'Success';
             $response['requisition'] =  fractal($requisition, new StorageRequisitionListTransformer())->includeRequisitionItems()->includeDeliveryWarehouse();
-            $response['purchaseOrder'] = fractal($requisition->purchaseOrder,new StoragePurchaseOrderTransformer())->includePurchaseOrderItems();
+            $response['purchaseOrder'] = fractal($requisition->purchaseOrder,new StoragePurchaseOrderExcludePriceTransformer())->includePurchaseOrderItems();
 
             return response()->json($response,200);
 
