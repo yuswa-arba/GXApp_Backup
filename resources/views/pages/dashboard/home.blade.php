@@ -12,7 +12,7 @@
 @push('child-page-controller')
 
 <script>
-    $('#notify').click(function(e){
+    $('#notify').click(function (e) {
         e.preventDefault()
         $.get('/testing/broadcast')
     })
@@ -42,7 +42,6 @@
         <!-- END JUMBOTRON -->
         <!-- START CONTAINER FLUID -->
         <div class="container-fluid container-fixed-lg">
-
             {{--<button id="notify">Notify</button>--}}
             <div class="center-margin text-center p-t-200">
                 <h2><b>Coming Soon!</b></h2>

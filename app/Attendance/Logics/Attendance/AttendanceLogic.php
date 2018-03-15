@@ -15,6 +15,7 @@ use App\Attendance\Models\AttendanceSetting;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
+use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Employee\Models\MasterEmployee;
@@ -205,6 +206,16 @@ class AttendanceLogic extends AttendanceUseCase
                 return $response;
             }
 
+            $publicHolidaySchedule = PublicHolidaySchedule::where('fromSlotId', $slotId)->where('applyDate',Carbon::now()->format('d/m/Y'))->first();
+
+            if($publicHolidaySchedule!=null){
+                // return error response
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['IS_PUBLIC_HOLIDAY'];
+                $response['message'] = 'Error clocking. Public Holiday: ' . $publicHolidaySchedule->name;
+                $response['isAllowed'] = false;
+                return $response;
+            }
 
             /* Check Attendance schedule first */
             $this->checkAttendanceSchedule($shiftId);

@@ -10,7 +10,10 @@
 
 @push('child-page-controller')
 @include('layouts.partials.snippets._notification_to_zoom_out')
+
 <script src="{{mix('js/client/attendance/dashboard.js')}}"></script>
+
+
 @endpush
 
 @section('content')
@@ -31,7 +34,10 @@
         </div>
         <!-- END JUMBOTRON -->
 
+
+
         <div class="filter-container">
+
             <div id="vc-attendance-dashboard"></div>
         </div>
 

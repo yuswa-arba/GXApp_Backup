@@ -5,6 +5,7 @@ namespace App\Http\Controllers\BackendV1\API\Attendance;
 use App\Account\Models\User;
 use App\Attendance\Logics\Shift\ExchangeShiftLogic;
 use App\Attendance\Models\DayOffSchedule;
+use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\ExchangeShiftEmployee;
 use App\Attendance\Models\Kiosks;
 use App\Attendance\Models\PublicHolidaySchedule;
@@ -501,6 +502,110 @@ class ShiftController extends Controller
     }
 
 
+    /*
+     * @desc display display user's today and tomorrow shift
+     * */
+    public function getTodayAndTomorrowShift()
+    {
+        $response = array();
+
+        if ($this->checkUserEmployee()) {
+
+            $user = Auth::guard('api')->user(); //user
+            $employee = $user->employee; // employee
+
+            if ($employee) {
+
+                $slotId = 1;//default slotId
+                $todayShiftId = 1;//default shiftId
+                $tomorrowShiftId = 1;//default shiftId
+                $todayIsDayOff = false; //default
+                $todayIsPublicHoliday = false; //default
+                $tomorrowIsDayOff = false; //default tomorrow
+                $tomorrowIsPublicHoliday = false; //default tomorrow
+
+                $employeeSlotSchedule = EmployeeSlotSchedule::where('employeeId', $employee->id)->first();
+
+                if ($employeeSlotSchedule != null) {
+
+                    $slot = $employeeSlotSchedule->slot;
+                    $slotId = $slot->id;
+
+                    /* Get shift ID if exist*/
+                    $todaySlotShiftSchedule = SlotShiftSchedule::where('slotId', $slot->id)->where('date', Carbon::now()->format('d/m/Y'))->first(['shiftId']);
+                    $tomorrowSlotShiftSchedule = SlotShiftSchedule::where('slotId', $slot->id)->where('date', Carbon::now()->addDay()->format('d/m/Y'))->first(['shiftId']);
+
+                    /* Set shift id if slot is assigned to specific shif*/
+                    if ($todaySlotShiftSchedule != null) {
+                        $todayShiftId = $todaySlotShiftSchedule->shiftId;
+                    }
+
+                    if ($tomorrowSlotShiftSchedule != null) {
+                        $tomorrowShiftId = $tomorrowSlotShiftSchedule->shiftId;
+                    }
+
+                    /* If slot is not using Mapping or is Deleted set to default shift */
+                    if (!$slot->isUsingMapping || $slot->isDeleted) {
+                        $todayShiftId = 1; // use default shift ID
+                        $tomorrowShiftId = 1;// use default shift ID
+                    }
+
+                }
+
+                /* Check public holidays and day off for this slot */
+                $todayDayOffSchedule = DayOffSchedule::where('slotId', $slotId)->where('date', Carbon::now()->format('d/m/Y'))->first();
+                $tomorrowDayOffSchedule = DayOffSchedule::where('slotId', $slotId)->where('date', Carbon::now()->addDay()->format('d/m/Y'))->first();
+
+                if ($todayDayOffSchedule != null) {
+                    $todayIsDayOff  = true;
+                }
+
+                if ($tomorrowDayOffSchedule != null) {
+                    $tomorrowIsDayOff  = true;
+                }
+
+                $todayPublicHolidaySchedule = PublicHolidaySchedule::where('fromSlotId', $slotId)->where('applyDate',Carbon::now()->format('d/m/Y'))->first();
+                $tomorrowPublicHolidaySchedule = PublicHolidaySchedule::where('fromSlotId', $slotId)->where('applyDate',Carbon::now()->addDay()->format('d/m/Y'))->first();
+
+                if($todayPublicHolidaySchedule!=null){
+                    $todayIsPublicHoliday = true;
+                }
+
+                if($tomorrowPublicHolidaySchedule!=null){
+                    $tomorrowIsPublicHoliday = true;
+                }
+
+                $response['isFailed'] = false;
+                $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                $response['message'] = 'Success';
+                $response['todayIsDafOff'] = $todayIsDayOff;
+                $response['tomorrowIsDayOff'] = $tomorrowIsDayOff;
+                $response['todayIsPublicHoliday']  =$todayIsPublicHoliday;
+                $response['tomorrowIsPublicHoliday'] = $tomorrowIsPublicHoliday;
+                $response['todayShiftResponse'] = fractal(Shifts::find($todayShiftId),new ShiftListTransformer());
+                $response['tomorrowShiftResponse'] = fractal(Shifts::find($tomorrowShiftId),new ShiftListTransformer());
+
+                return response()->json($response,200);
+
+            } else {
+                /* Error Response */
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_NOT_FOUND'];
+                $response['message'] = 'Employee data not found';
+                return response()->json($response, 200);
+            }
+
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$USER_ERR_CODE['USER_ACCESS_NOT_GRANTED'];
+            $response['message'] = 'User\'s access not granted';
+
+            return response()->json($response, 200);
+        }
+    }
+
+
+    //UTILS
     private function checkIfFromDateIsDayOff($requesterSlotId, $fromDate)
     {
         $checkDayOff = DayOffSchedule::where('slotId', $requesterSlotId)->where('date', $fromDate)->count();

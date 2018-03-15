@@ -52,6 +52,7 @@ Route::prefix('v1/a')->group(function () {
             Route::post('shift/exchange/answer','ShiftController@answerExchange');
             Route::get('shift/exchange/list/outgoing','ShiftController@outgoingExchangeList');
             Route::get('shift/exchange/list/incoming','ShiftController@incomingExchangeList');
+            Route::get('shift/preview','ShiftController@getTodayAndTomorrowShift');
 
             Route::get('history/record','HistoryController@getRecord');
 
