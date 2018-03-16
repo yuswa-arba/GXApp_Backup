@@ -56,6 +56,9 @@ Route::prefix('v1/a')->group(function () {
 
             Route::get('history/record','HistoryController@getRecord');
 
+            Route::get('paidLeave/list','PaidLeaveController@list');
+            Route::post('paidLeave/insert','PaidLeaveController@insert');
+
         });
     });
 

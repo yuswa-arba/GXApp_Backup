@@ -17,6 +17,7 @@ use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Transformers\EmployeeSummaryTransformer;
 use App\Attendance\Transformers\TimesheetSummaryTransformer;
 use App\Employee\Models\MasterEmployee;
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
@@ -143,7 +144,32 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
 
     private function employeeLeaveSchedule($employeeId, $date)
     {
-        return EmployeeLeaveSchedule::where('employeeId', $employeeId)->where('fromDate', $date)->count() > 0;
+        $isPaidLeaveExist = false;
+        $paidLeaveSchedules = EmployeeLeaveSchedule::where('employeeId', $employeeId)
+            ->where('month', Carbon::createFromFormat('d/m/Y',$date)->month)
+            ->where('year', Carbon::createFromFormat('d/m/Y',$date)->year)
+            ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])
+            ->get();
+
+        foreach ($paidLeaveSchedules as $paidLeaveSchedule) {
+
+            $parsedFromDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->fromDate);
+            $parsedToDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->toDate);
+
+            if ($paidLeaveSchedule->isStreakPaidLeave || $paidLeaveSchedule->totalDays>0) {
+                $today = Carbon::now();
+                if ($today->gte($parsedFromDate) && $today->lte($parsedToDate)) {
+                    $isPaidLeaveExist = true;
+                }
+            } else {
+                if($paidLeaveSchedule->fromDate==Carbon::now()->format('d/m/Y')){
+                    $isPaidLeaveExist = true;
+                }
+            }
+
+        }
+
+        return $isPaidLeaveExist;
     }
 
 

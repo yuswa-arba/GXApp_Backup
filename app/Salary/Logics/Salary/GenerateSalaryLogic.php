@@ -11,11 +11,13 @@ namespace App\Salary\Logics\Salary;
 
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
+use App\Attendance\Models\EmployeeLeaveSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Models\Shifts;
 use App\Components\Models\BranchOffice;
 use App\Employee\Models\MasterEmployee;
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Salary\Models\GeneralBonusesCuts;
 use App\Salary\Models\GenerateSalaryReportLogs;
@@ -710,34 +712,48 @@ class GenerateSalaryLogic extends GenerateUseCase
     private function isDayOffForThisSlot($slotId, $date)
     {
 
-        $checkDayOffSchedule = DayOffSchedule::where('slotId', $slotId)->where('date', $date)->count();
+       return DayOffSchedule::where('slotId', $slotId)->where('date', $date)->count() > 0;
 
-        // if day off schedule found return TRUE
-        if ($checkDayOffSchedule > 0) {
-            return true;
-        }
-
-        // else return FALSE
-        return false;
     }
 
     private function isPublicHolidayForThisEmployee($employeeId, $slotId, $date)
     {
-        $checkPublicHoliday = PublicHolidaySchedule::where('fromSlotId', $slotId)
+        return PublicHolidaySchedule::where('fromSlotId', $slotId)
                                                     ->where('applyDate', $date)
                                                     ->where('employeeId', $employeeId)
-                                                    ->count();
-        if ($checkPublicHoliday > 0) {
-            return true;
-        } else {
-            return false;
-        }
+                                                    ->count() > 0;
+
     }
 
     private function employeeLeaveSchedule($employeeId, $date)
     {
-        //TODO: CHECK IF THIS SPECIFIC DATE IS EMPLOYEE LEAVE SCHEDULE
-        return false;
+        $isPaidLeaveExist = false;
+
+        $paidLeaveSchedules = EmployeeLeaveSchedule::where('employeeId', $employeeId)
+            ->where('month', Carbon::createFromFormat('d/m/Y',$date)->month)
+            ->where('year', Carbon::createFromFormat('d/m/Y',$date)->year)
+            ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])
+            ->get();
+
+        foreach ($paidLeaveSchedules as $paidLeaveSchedule) {
+
+            $parsedFromDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->fromDate);
+            $parsedToDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->toDate);
+
+            if ($paidLeaveSchedule->isStreakPaidLeave || $paidLeaveSchedule->totalDays>0) {
+                $today = Carbon::now();
+                if ($today->gte($parsedFromDate) && $today->lte($parsedToDate)) {
+                    $isPaidLeaveExist = true;
+                }
+            } else {
+                if($paidLeaveSchedule->fromDate==Carbon::now()->format('d/m/Y')){
+                    $isPaidLeaveExist = true;
+                }
+            }
+
+        }
+
+        return $isPaidLeaveExist;
     }
 
     private function countMinutesCheckInLate($timesheetId)
@@ -760,7 +776,6 @@ class GenerateSalaryLogic extends GenerateUseCase
             }
 
         }
-
 
         return 0;
     }
