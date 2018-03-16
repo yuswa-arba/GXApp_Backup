@@ -91,6 +91,5 @@ class GetLeaveScheduleListLogic extends GetLeaveScheduleUseCase
 
         return fractal($leaveSchedule, new EmployeeLeaveScheduleListTransformer());
 
-
     }
 }

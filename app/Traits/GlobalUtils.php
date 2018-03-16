@@ -108,6 +108,16 @@ trait GlobalUtils
         return $fromDate->diffInDays($toDate->addDay());
     }
 
+
+    function isDateGreater($fromDate, $toDate)
+    {
+        $fromDate = Carbon::createFromFormat('d/m/Y', $fromDate);
+        $toDate = Carbon::createFromFormat('d/m/Y', $toDate);
+
+        return $toDate->gt($fromDate);
+    }
+
+
     public function randomNumber($length)
     {
         $result = '';

@@ -15,12 +15,12 @@ use Illuminate\Support\Facades\Validator;
 
 abstract class InsertELSUseCase
 {
-    public static function insert(Request $request)
+    public static function insert(Request $request,$employee)
     {
 
-        return (new static)->handle($request);
+        return (new static)->handle($request,$employee);
     }
 
-    abstract public function handle($request);
+    abstract public function handle($request,$employee);
 
 }

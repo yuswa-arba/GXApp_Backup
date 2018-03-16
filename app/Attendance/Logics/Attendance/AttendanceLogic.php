@@ -14,11 +14,13 @@ use App\Attendance\Models\AttendanceSchedule;
 use App\Attendance\Models\AttendanceSetting;
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
+use App\Attendance\Models\EmployeeLeaveSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Employee\Models\MasterEmployee;
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use Carbon\Carbon;
 
@@ -194,7 +196,7 @@ class AttendanceLogic extends AttendanceUseCase
 
             }
 
-            /* Check public holidays and day off for this slot */
+            /* Check day off for this slot */
             $dayOffSchedule = DayOffSchedule::where('slotId', $slotId)->where('date', Carbon::now()->format('d/m/Y'))->first();
 
             if ($dayOffSchedule != null) {
@@ -206,9 +208,10 @@ class AttendanceLogic extends AttendanceUseCase
                 return $response;
             }
 
-            $publicHolidaySchedule = PublicHolidaySchedule::where('fromSlotId', $slotId)->where('applyDate',Carbon::now()->format('d/m/Y'))->first();
+            /* Check public holidays for this slot */
+            $publicHolidaySchedule = PublicHolidaySchedule::where('fromSlotId', $slotId)->where('applyDate', Carbon::now()->format('d/m/Y'))->first();
 
-            if($publicHolidaySchedule!=null){
+            if ($publicHolidaySchedule != null) {
                 // return error response
                 $response['isFailed'] = true;
                 $response['code'] = ResponseCodes::$ATTD_ERR_CODES['IS_PUBLIC_HOLIDAY'];
@@ -216,6 +219,42 @@ class AttendanceLogic extends AttendanceUseCase
                 $response['isAllowed'] = false;
                 return $response;
             }
+
+            /* Check paid leave */
+            $isPaidLeaveExist = false;
+            $paidLeaveSchedules = EmployeeLeaveSchedule::where('employeeId', $employee->id)
+                ->where('month', Carbon::now()->month)
+                ->where('year', Carbon::now()->year)
+                ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])
+                ->get();
+
+            foreach ($paidLeaveSchedules as $paidLeaveSchedule) {
+
+                $parsedFromDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->fromDate);
+                $parsedToDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->toDate);
+
+                if ($paidLeaveSchedule->isStreakPaidLeave || $paidLeaveSchedule->totalDays>0) {
+                    $today = Carbon::now();
+                    if ($today->gte($parsedFromDate) && $today->lte($parsedToDate)) {
+                        $isPaidLeaveExist = true;
+                    }
+                } else {
+                    if($paidLeaveSchedule->fromDate==Carbon::now()->format('d/m/Y')){
+                        $isPaidLeaveExist = true;
+                    }
+                }
+
+            }
+
+            if($isPaidLeaveExist){
+                // return error response
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['IS_YOUR_PAID_LEAVE'];
+                $response['message'] = 'Error clocking. Today is your paid leave';
+                $response['isAllowed'] = false;
+                return $response;
+            }
+
 
             /* Check Attendance schedule first */
             $this->checkAttendanceSchedule($shiftId);
@@ -251,9 +290,9 @@ class AttendanceLogic extends AttendanceUseCase
 
                 // Check if attendance setting allow clock out early
 
-                $allowEarlyClockOut = AttendanceSetting::where('name','allow-early-clock-out')->first()->value;
+                $allowEarlyClockOut = AttendanceSetting::where('name', 'allow-early-clock-out')->first()->value;
 
-                if($allowEarlyClockOut==1){ //yes its allowed
+                if ($allowEarlyClockOut == 1) { //yes its allowed
 
                     $response['isFailed'] = false;
                     $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
@@ -262,7 +301,7 @@ class AttendanceLogic extends AttendanceUseCase
                     $response['shiftId'] = $shiftId;
                     return $response;
 
-                } else{ // not allowed, check attendance schedule
+                } else { // not allowed, check attendance schedule
 
                     if ($attdSchedule->allowedToCheckOut == 1) {
 

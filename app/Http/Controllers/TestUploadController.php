@@ -443,7 +443,12 @@ class TestUploadController extends Controller
 
     public function td()
     {
-        NotifyRequestTracking::dispatch(1,Auth::user())->onConnection('database')->onQueue('broadcaster');
+
+        if ($this->isDateGreater('14/01/2018', '13/01/2018')){
+            echo 'yes';
+        } else {
+            echo 'no';
+        }
 
     }
 

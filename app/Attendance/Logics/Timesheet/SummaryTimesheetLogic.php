@@ -11,6 +11,7 @@ namespace App\Attendance\Logics\Timesheet;
 
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
+use App\Attendance\Models\EmployeeLeaveSchedule;
 use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Transformers\EmployeeSummaryTransformer;
@@ -30,7 +31,7 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
         $branchOfficeId = $request->branchOfficeId;
 
         $employees = MasterEmployee::whereHas('employment', function ($query) use ($branchOfficeId) { //get only employee with selected branch office
-            $query->where('branchOfficeId',$branchOfficeId);
+            $query->where('branchOfficeId', $branchOfficeId);
         })->get();
 
         $fromDate = Carbon::createFromFormat('d/m/Y H:i', $request->fromDate . '00:00')->toDateTimeString();
@@ -126,36 +127,23 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
     private function isDayOffForThisSlot($slotId, $date)
     {
 
-        $checkDayOffSchedule = DayOffSchedule::where('slotId', $slotId)->where('date', $date)->count();
-
-        // if day off schedule found return TRUE
-        if ($checkDayOffSchedule > 0) {
-            return true;
-        }
-
-        // else return FALSE
-        return false;
+        return DayOffSchedule::where('slotId', $slotId)->where('date', $date)->count() > 0;
 
     }
 
     private function isPublicHolidayForThisEmployee($employeeId, $slotId, $date)
     {
-        $checkPublicHoliday = PublicHolidaySchedule::where('fromSlotId', $slotId)
-            ->where('applyDate', $date)
-            ->where('employeeId', $employeeId)
-            ->count();
-        if ($checkPublicHoliday > 0) {
-            return true;
-        } else {
-            return false;
-        }
+
+        return PublicHolidaySchedule::where('fromSlotId', $slotId)
+                ->where('applyDate', $date)
+                ->where('employeeId', $employeeId)
+                ->count() > 0;
     }
 
 
-    private function employeeLeaveSchedule($employeeIds, $date)
+    private function employeeLeaveSchedule($employeeId, $date)
     {
-        //TODO: CHECK IF THIS SPECIFIC DATE IS EMPLOYEE LEAVE SCHEDULE
-        return false;
+        return EmployeeLeaveSchedule::where('employeeId', $employeeId)->where('fromDate', $date)->count() > 0;
     }
 
 

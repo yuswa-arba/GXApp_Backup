@@ -15,16 +15,18 @@ class CreateEmployeeLeaveScheduleTable extends Migration
     {
         Schema::create('employeeLeaveSchedule', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('employeeId');
+            $table->string('employeeId');
             $table->tinyInteger('leaveTypeId');
             $table->tinyInteger('leaveApprovalId');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->string('fromDate');
             $table->string('toDate');
             $table->integer('totalDays');
+            $table->integer('month');
             $table->integer('year');
-            $table->string('answer');
+            $table->string('answer')->nullable();
             $table->string('answeredBy');
+            $table->tinyInteger('isStreakPaidLeave')->default(0);
             $table->timestamps();
         });
     }

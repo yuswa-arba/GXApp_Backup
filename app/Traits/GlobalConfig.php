@@ -10,4 +10,8 @@ class GlobalConfig
         'POSITION' => 'CHIEF FINANCE OFFICER',
         'SIGNATURE_IMG' => 'images/company/signature/cindie-marcella-signature.png',
     ];
+
+    public static $MAX_PAID_LEAVE = [
+      'DAYS'=>12
+    ];
 }

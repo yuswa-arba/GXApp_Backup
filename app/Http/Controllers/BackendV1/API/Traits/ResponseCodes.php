@@ -56,6 +56,10 @@ class ResponseCodes
         'PUBLIC_HOLIDAY_SCHEDULE_UNDEFINED' => 500018,
         'UNDEFINED_SHIFT_ID' => 500019,
         'IS_PUBLIC_HOLIDAY' => 500020,
+        'REACHED_MAXIMUM_PAID_LEAVE'=>500021,
+        'HAS_USED_CHANCE_TO_STREAK_PAID_LEAVE' =>500022,
+        'ALREADY_HAS_PAID_LEAVE_IN_CURRENT_MONTH'=>500023,
+        'IS_YOUR_PAID_LEAVE' => 5000024,
     ];
 
     public static $SALARY_ERR_CODES = [
@@ -68,6 +72,9 @@ class ResponseCodes
         'OLD_PASSWORD_INCORRECT' => 700002
     ];
 
+    public static $APK_ERR_CODE = [
+        'APK_NOT_FOUND'=>800001
+    ];
 
     public static $HTTP_CODES = [
         'SUCCESS' => 200,

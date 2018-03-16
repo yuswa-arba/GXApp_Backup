@@ -71,4 +71,13 @@ class ConfigCodes
         'CANCELED' => 4
     ];
 
+    public static $LEAVE_APPROVAL = [
+        'APPROVED' => 1,
+        'DISAPPROVED' => 2,
+        'WAITING_FOR_APPROVAL' => 3,
+        'CHANGE_DATE' => 4,
+        'POSTPONED' => 5
+    ];
+
+
 }
