@@ -87,7 +87,7 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
                         'description' => $request->description,
                         'month' => $parsedFromDate->month,
                         'year' => $parsedToDate->year,
-                        'totalDays' => $this->diffDay($request->fromDate, $request->toDate),
+                        'totalDays' => $isStreakPaidLeave?$this->totalDays($request->fromDate, $request->toDate):1,
                         'isStreakPaidLeave' => $isStreakPaidLeave ? 1 : 0
                     ]);
 

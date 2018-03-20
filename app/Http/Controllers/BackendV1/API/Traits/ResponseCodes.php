@@ -63,7 +63,8 @@ class ResponseCodes
         'IS_YOUR_PAID_LEAVE' => 5000024,
         'NOT_ELIGIBLE_FOR_PAID_LEAVE'=>5000025,
         'STREAK_PAID_LEAVE_MORE_THAN_7'=>5000026,
-        'INVALID_DATE'=>5000027
+        'INVALID_DATE'=>5000027,
+        'NO_PAID_LEAVE_DATA'=>5000028
     ];
 
     public static $SALARY_ERR_CODES = [
