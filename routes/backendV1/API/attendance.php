@@ -57,7 +57,11 @@ Route::prefix('v1/a')->group(function () {
             Route::get('history/record','HistoryController@getRecord');
 
             Route::get('paidLeave/list','PaidLeaveController@list');
+            Route::get('paidLeave/availability','PaidLeaveController@getAvailability');
+            Route::get('paidLeave/check/eligible','PaidLeaveController@checkEligible');
             Route::post('paidLeave/insert','PaidLeaveController@insert');
+
+            Route::get('paidLeave/component/types','PaidLeaveController@paidLeaveType');
 
         });
     });

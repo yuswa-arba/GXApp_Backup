@@ -32,7 +32,8 @@ class ResponseCodes
     public static $USER_ERR_CODE = [
         'USER_NOT_FOUND' => 400001,
         'USER_ACCESS_NOT_GRANTED' => 400002,
-        'USER_EMPLOYEE_DATA_NOT_FOUND' => 400003
+        'USER_EMPLOYEE_DATA_NOT_FOUND' => 400003,
+        'EMPLOYMENT_NOT_FOUND'=>400004
     ];
 
     public static $ATTD_ERR_CODES = [
@@ -60,6 +61,9 @@ class ResponseCodes
         'HAS_USED_CHANCE_TO_STREAK_PAID_LEAVE' =>500022,
         'ALREADY_HAS_PAID_LEAVE_IN_CURRENT_MONTH'=>500023,
         'IS_YOUR_PAID_LEAVE' => 5000024,
+        'NOT_ELIGIBLE_FOR_PAID_LEAVE'=>5000025,
+        'STREAK_PAID_LEAVE_MORE_THAN_7'=>5000026,
+        'INVALID_DATE'=>5000027
     ];
 
     public static $SALARY_ERR_CODES = [
