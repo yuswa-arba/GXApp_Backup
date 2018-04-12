@@ -9,11 +9,7 @@
                                 <h4>Generate Salary</h4>
                                 <div class="form-group">
                                     <label>Date Start - Date End </label>
-                                    <div class="input-daterange input-group" id="summary-datepicker-range">
-                                        <input type="text" class="input-sm form-control" name="generateFromDate" :value="defaultFromDate"/>
-                                        <div class="input-group-addon">to</div>
-                                        <input type="text" class="input-sm form-control" name="generateToDate" :value="defaultToDate"/>
-                                    </div>
+                                    <sort-date-picker></sort-date-picker>
                                 </div>
                                 <div class="form-group">
                                     <label>Branch Office</label>
@@ -138,7 +134,11 @@
 </template>
 <script type="text/javascript">
     import {mapGetters, mapState} from 'vuex'
+    import SortDatePicker from '../../components/report/SortDatePicker.vue'
     export default{
+        components:{
+            'sort-date-picker': SortDatePicker
+        },
         data() {
             return{
                 selectedBranchOfficeId:'',
@@ -150,17 +150,10 @@
                 branchOffices: 'branchOffices',
                 generatedSalaryLogs: 'generatedSalaryLogs',
                 salaryLogDetails: 'salaryLogDetails',
-            }),
-            ...mapGetters('report',{
-                defaultFromDate:'defaultFromDate',
-                defaultToDate:'defaultToDate'
             })
         },
         created(){
             this.$store.dispatch('report/getDataOnCreate')
-        },
-        mounted: function () {
-            $('#summary-datepicker-range').datepicker({format: 'dd/mm/yyyy', autoclose: true})
         },
         methods:{
             attemptGenerate(){

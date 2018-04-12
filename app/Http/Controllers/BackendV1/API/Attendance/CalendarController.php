@@ -4,12 +4,14 @@ namespace App\Http\Controllers\BackendV1\API\Attendance;
 
 use App\Account\Models\User;
 use App\Attendance\Models\DayOffSchedule;
+use App\Attendance\Models\EmployeeLeaveSchedule;
 use App\Attendance\Models\Kiosks;
 use App\Attendance\Models\PublicHolidaySchedule;
 use App\Attendance\Models\Shifts;
 use App\Attendance\Models\SlotShiftSchedule;
 use App\Attendance\Transformers\DayOffSingleCalendarAPITransformer;
 use App\Attendance\Transformers\DayOffSingleCalendarTransformer;
+use App\Attendance\Transformers\EmployeeLeaveScheduleSingleCalendarAPITransformer;
 use App\Attendance\Transformers\KioskTransformer;
 use App\Attendance\Transformers\PublicHolidayScheduleSingleCalendarAPITransformer;
 use App\Attendance\Transformers\ShiftListTransformer;
@@ -17,6 +19,7 @@ use App\Attendance\Transformers\ShiftScheduleSingleCalendarAPITransformer;
 use App\Employee\Models\FacePerson;
 use App\Employee\Transformers\EmployeeLastActivityTransfomer;
 use App\Http\Controllers\BackendV1\API\Traits\ApiUtils;
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Http\Controllers\Controller;
 use App\Traits\GlobalUtils;
@@ -68,12 +71,17 @@ class CalendarController extends Controller
 //                    $query->where('date', 'like', '%' . $this->currentYear()); //get only current year
                 })->get();
 
+                $paidLeaveSchedule = EmployeeLeaveSchedule::where('employeeId',$employee->id)->where(function ($query){
+                    $query->where('year', $this->currentYear())->orWhere('year',$this->lastYear());
+                })->where('leaveApprovalId',ConfigCodes::$LEAVE_APPROVAL['APPROVED'])->get();
+
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                 $response['message'] = 'Success';
                 $response['dayOffResponse'] = fractal($dayOffSchedule, new DayOffSingleCalendarAPITransformer());
                 $response['shiftScheduleResponse'] = fractal($shiftSchedule, new ShiftScheduleSingleCalendarAPITransformer());
                 $response['publicHolidayResponse'] = fractal($publicHolidaySchedule, new PublicHolidayScheduleSingleCalendarAPITransformer());
+                $response['paidLeaveResponse'] = fractal($paidLeaveSchedule,new EmployeeLeaveScheduleSingleCalendarAPITransformer());
 
                 $existingShift = Shifts::whereIn('id',$this->getShiftSummary($shiftSchedule->pluck('shiftId')))->get();
                 $response['shiftSummaryResponse'] = fractal($existingShift, new ShiftListTransformer());
