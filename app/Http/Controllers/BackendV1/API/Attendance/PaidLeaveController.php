@@ -39,22 +39,21 @@ class PaidLeaveController extends Controller
 
             $paidLeaveSchedules = EmployeeLeaveSchedule::where('employeeId', $employee->id)->where('year', $year)->get();
 
-            if($paidLeaveSchedules){
+            if ($paidLeaveSchedules) {
 
                 $response['isFailed'] = false;
                 $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
                 $response['message'] = 'Success';
-                $response['paidLeaveResponse'] = fractal($paidLeaveSchedules,new EmployeeLeaveBriefTransformer());
+                $response['paidLeaveResponse'] = fractal($paidLeaveSchedules, new EmployeeLeaveBriefTransformer());
 
-                return response()->json($response,200);
+                return response()->json($response, 200);
             } else {
                 $response['isFailed'] = true;
                 $response['code'] = ResponseCodes::$ATTD_ERR_CODES['NO_PAID_LEAVE_DATA'];
                 $response['message'] = 'Unable to find paid leave data';
 
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
-
 
 
         } else {
@@ -208,6 +207,79 @@ class PaidLeaveController extends Controller
                 ->where('year', $year)
                 ->where('isStreakPaidLeave', 1)
                 ->count() > 0;
+
+    }
+
+    public function removePaidLeave(Request $request)
+    {
+        $response = array();
+
+        $validator = Validator::make($request->all(), [
+            'elsId' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$ERR_CODE['MISSING_PARAM'];
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+        $user = Auth::guard('api')->user(); //user
+        $employee = $user->employee; // employee
+
+        $leaveSchedule = EmployeeLeaveSchedule::where('id', $request->elsId)->where('employeeId', $employee->id)->first();
+
+        if ($leaveSchedule) {
+
+            //remove if valid
+
+            $parsedFromDate = Carbon::createFromFormat('d/m/Y', $leaveSchedule->fromDate);
+
+            if ($parsedFromDate->gt(Carbon::now())) {
+
+                //logging
+                app()->make('LogService')->logging([
+                    'causer' => $employee->givenName,
+                    'via' => 'web client| api client',
+                    'subject' => 'Paid Leave',
+                    'action' => 'delete',
+                    'level' => 3,
+                    'description' => 'Attempt to remove paid leave request. Id: ' . $leaveSchedule->id,
+                    'causerIPAddress' => \Request::ip()
+                ]);
+
+                if ($leaveSchedule->delete()) {
+
+                    $response['isFailed'] = false;
+                    $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                    $response['message'] = 'Success';
+
+                    return response()->json($response,200);
+
+                } else {
+                    $response['isFailed'] = true;
+                    $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                    $response['message'] = 'Unable to delete data';
+                    return response()->json($response, 200);
+                }
+
+            } else {
+                $response['isFailed'] = true;
+                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['UNABLE_TO_REMOVE_REQUEST'];
+                $response['message'] = 'Unable to remove paid leave';
+                return response()->json($response, 200);
+            }
+
+
+        } else {
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['NO_PAID_LEAVE_DATA'];
+            $response['message'] = 'Unable to find leave schedule data';
+
+            return response()->json($response, 200);
+        }
 
     }
 }

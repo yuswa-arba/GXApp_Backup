@@ -64,7 +64,8 @@ class ResponseCodes
         'NOT_ELIGIBLE_FOR_PAID_LEAVE'=>5000025,
         'STREAK_PAID_LEAVE_MORE_THAN_7'=>5000026,
         'INVALID_DATE'=>5000027,
-        'NO_PAID_LEAVE_DATA'=>5000028
+        'NO_PAID_LEAVE_DATA'=>5000028,
+        'UNABLE_TO_REMOVE_REQUEST'=>5000029
     ];
 
     public static $SALARY_ERR_CODES = [

@@ -41,74 +41,85 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
 
                 if ($this->isDateGreater($request->fromDate, $request->toDate)||($request->fromDate==$request->toDate)) {
 
-                    if ($this->diffDay($request->fromDate, $request->toDate) > 1) { // check if its more than 1 date
-                        $isStreakPaidLeave = true; // if yes set streak paid leave to true
-                    }
-
-                    if ($isStreakPaidLeave) { //if its streak paid leave check if he has already used the chance
-
-                        if ($this->hasUsedStreakPaidLeaveChance($employee,$parsedFromDate->year)) { //check if he has already used the chance
-                            $response['isFailed'] = true;
-                            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['HAS_USED_CHANCE_TO_STREAK_PAID_LEAVE'];
-                            $response['message'] = 'You have used the chance to streak paid leave this year';
-                            return response()->json($response, 200);
+                    if($this->isDateGreater(Carbon::now()->format('d/m/Y'),$request->fromDate) //greater than today
+                    ) {
+                        if ($this->diffDay($request->fromDate, $request->toDate) > 1) { // check if its more than 1 date
+                            $isStreakPaidLeave = true; // if yes set streak paid leave to true
                         }
 
-                        if ($this->diffDay($request->fromDate, $request->toDate) > GlobalConfig::$MAX_STREAK_PAID_LEAVE['DAYS']) { // check max streak days
-                            $response['isFailed'] = true;
-                            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['STREAK_PAID_LEAVE_MORE_THAN_7'];
-                            $response['message'] = 'Streak paid leave cannot be more than '.GlobalConfig::$MAX_STREAK_PAID_LEAVE['DAYS'].' days ';
-                            return response()->json($response, 200);
+                        if ($isStreakPaidLeave) { //if its streak paid leave check if he has already used the chance
+
+                            if ($this->hasUsedStreakPaidLeaveChance($employee,$parsedFromDate->year)) { //check if he has already used the chance
+                                $response['isFailed'] = true;
+                                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['HAS_USED_CHANCE_TO_STREAK_PAID_LEAVE'];
+                                $response['message'] = 'You have used the chance to streak paid leave this year';
+                                return response()->json($response, 200);
+                            }
+
+                            if ($this->diffDay($request->fromDate, $request->toDate) > GlobalConfig::$MAX_STREAK_PAID_LEAVE['DAYS']) { // check max streak days
+                                $response['isFailed'] = true;
+                                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['STREAK_PAID_LEAVE_MORE_THAN_7'];
+                                $response['message'] = 'Streak paid leave cannot be more than '.GlobalConfig::$MAX_STREAK_PAID_LEAVE['DAYS'].' days ';
+                                return response()->json($response, 200);
+                            }
+
                         }
 
-                    }
+                        if ($this->checkIfCurrentMonthPaidLeaveExist($employee, $parsedFromDate->month,$parsedFromDate->year)) {
+                            if (!$isStreakPaidLeave) { // if its not streak paid leave and this month already exist
 
-                    if ($this->checkIfCurrentMonthPaidLeaveExist($employee, $parsedFromDate->month,$parsedFromDate->year)) {
-                        if (!$isStreakPaidLeave) { // if its not streak paid leave and this month already exist
+                                $response['isFailed'] = true;
+                                $response['code'] = ResponseCodes::$ATTD_ERR_CODES['ALREADY_HAS_PAID_LEAVE_IN_CURRENT_MONTH'];
+                                $response['message'] = 'You already have paid leave in this month';
+                                return response()->json($response, 200);
+
+                            }
+                        }
+
+                        // TODO : check in the same division / slot if exist on the same date
+
+                        // so far valid..
+
+                        $insert = EmployeeLeaveSchedule::create([
+                            'employeeId' => $employee->id,
+                            'fromDate' => $parsedFromDate->format('d/m/Y'),
+                            'toDate' => $parsedToDate->format('d/m/Y'),
+                            'leaveApprovalId' => ConfigCodes::$LEAVE_APPROVAL['WAITING_FOR_APPROVAL'],
+                            'leaveTypeId' => $request->leaveTypeId,
+                            'description' => $request->description,
+                            'month' => $parsedFromDate->month,
+                            'year' => $parsedToDate->year,
+                            'totalDays' => $isStreakPaidLeave?$this->totalDays($request->fromDate, $request->toDate):1,
+                            'isStreakPaidLeave' => $isStreakPaidLeave ? 1 : 0
+                        ]);
+
+                        if ($insert) {
+
+                            // TODO : notify admin and managers
+
+                            $response['isFailed'] = false;
+                            $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+                            $response['message'] = 'Success';
+
+                            return response()->json($response, 200);
+
+                        } else {
 
                             $response['isFailed'] = true;
-                            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['ALREADY_HAS_PAID_LEAVE_IN_CURRENT_MONTH'];
-                            $response['message'] = 'You already have paid leave in this month';
+                            $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
+                            $response['message'] = 'An error occurred. Unable to save paid leave';
                             return response()->json($response, 200);
 
                         }
-                    }
-
-                    // TODO : check in the same division / slot if exist on the same date
-
-                    // so far valid..
-
-                    $insert = EmployeeLeaveSchedule::create([
-                        'employeeId' => $employee->id,
-                        'fromDate' => $parsedFromDate->format('d/m/Y'),
-                        'toDate' => $parsedToDate->format('d/m/Y'),
-                        'leaveApprovalId' => ConfigCodes::$LEAVE_APPROVAL['WAITING_FOR_APPROVAL'],
-                        'leaveTypeId' => $request->leaveTypeId,
-                        'description' => $request->description,
-                        'month' => $parsedFromDate->month,
-                        'year' => $parsedToDate->year,
-                        'totalDays' => $isStreakPaidLeave?$this->totalDays($request->fromDate, $request->toDate):1,
-                        'isStreakPaidLeave' => $isStreakPaidLeave ? 1 : 0
-                    ]);
-
-                    if ($insert) {
-
-                        // TODO : notify admin and managers
-
-                        $response['isFailed'] = false;
-                        $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
-                        $response['message'] = 'Success';
-
-                        return response()->json($response, 200);
-
                     } else {
-
                         $response['isFailed'] = true;
-                        $response['code'] = ResponseCodes::$ERR_CODE['ELOQUENT_ERR'];
-                        $response['message'] = 'An error occurred. Unable to save paid leave';
-                        return response()->json($response, 200);
+                        $response['code'] = ResponseCodes::$ATTD_ERR_CODES['INVALID_DATE'];
+                        $response['message'] = 'Invalid date';
 
+                        return response()->json($response,200);
                     }
+
+
 
                 } else {
                     $response['isFailed'] = true;

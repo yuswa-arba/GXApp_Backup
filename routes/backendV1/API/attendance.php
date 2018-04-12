@@ -60,6 +60,7 @@ Route::prefix('v1/a')->group(function () {
             Route::get('paidLeave/availability','PaidLeaveController@getAvailability');
             Route::get('paidLeave/check/eligible','PaidLeaveController@checkEligible');
             Route::post('paidLeave/insert','PaidLeaveController@insert');
+            Route::post('paidLeave/remove','PaidLeaveController@removePaidLeave');
 
             Route::get('paidLeave/component/types','PaidLeaveController@paidLeaveType');
 
