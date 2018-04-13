@@ -20,12 +20,13 @@ class EmployeeLeaveScheduleListTransformer extends TransformerAbstract
         return [
             'id' => $els->id,
             'employeeId'=>$els->employeeId,
-            'employeeName'=>$this->getResultWithNullChecker1Connection($els,'employee','giveName'), // same with $els->employee->givenName
+            'employeeName'=>$this->getResultWithNullChecker1Connection($els,'employee','givenName'), // same with $els->employee->givenName
             'employeeDivisionId'=>$this->getResultWithNullChecker3Connection($els,'employee','employment','division','id'), // same with $els->employee->employment->division->name
             'employeeDivisionName'=>$this->getResultWithNullChecker3Connection($els,'employee','employment','division','name'), // same with $els->employee->employment->division->name
             'fromDate'=>$els->fromDate,
             'toDate'=>$els->toDate,
             'totalDays'=>$els->totalDays,
+            'isStreakPaidLeave'=>$els->isStreakPaidLeave,
             'year'=>$els->year,
             'leaveApprovalId'=>$els->leaveApprovalId,
             'leaveApprovalName'=>$this->getResultWithNullChecker1Connection($els,'leaveApproval','name'),

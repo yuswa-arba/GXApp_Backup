@@ -5,12 +5,13 @@
 import Vue from 'vue'
 import router from './router/leave'
 import MainLeave from './MainLeave.vue'
-
+import {store} from './vuex/leave/store'
 const app =  new Vue({
     el:'#vc-attendance-leave',
     template:`<main-leave></main-leave>`,
     components:{MainLeave},
-    router
+    router,
+    store
 })
 
 

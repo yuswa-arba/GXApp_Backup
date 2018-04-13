@@ -37,6 +37,15 @@
                     </select>
                 </div>
             </div>
+            <div class="pull-right m-r-15">
+                <div class="form-group">
+                    <select class="btn btn-outline-primary h-35 w-150"
+                            v-model="sortYear"
+                            @change="sortLeaveSchedule()">
+                        <option :value="2017+index" v-for="index in 20">{{2017+index}}</option>
+                    </select>
+                </div>
+            </div>
 
         </div>
         <div class="col-lg-12 m-b-10">
@@ -46,10 +55,10 @@
                         <table class="table table-hover leaveDT">
                             <thead class="bg-master-lighter">
                             <tr>
-                                <th class="text-black">ID</th>
+                                <th class="text-black" style="width: 50px">ID</th>
                                 <th class="text-black">Employee</th>
                                 <th class="text-black">Date</th>
-                                <th class="text-black">Total Day(s)</th>
+                                <th class="text-black" style="width: 100px">Total Day(s)</th>
                                 <th class="text-black">Desc.</th>
                                 <th class="text-black">Type</th>
                                 <th class="text-black">Apprv</th>
@@ -59,9 +68,12 @@
                             <tbody>
                             <tr v-for="leave in leaveSchedules">
                                 <td>{{leave.id}}</td>
-                                <td>{{leave.employeeName}} ({{leave.employeeDivisionName}})</td>
-                                <td>{{leave.fromDate}} - {{leave.toDate}}</td>
-                                <td>{{leave.totalDays}}</td>
+                                <td><b>{{leave.employeeName}}</b> ({{leave.employeeDivisionName}})</td>
+
+                                <td v-if="leave.fromDate==leave.toDate">{{leave.fromDate}}</td>
+                                <td v-else="">{{leave.fromDate}} - {{leave.toDate}}</td>
+
+                                <td>{{leave.totalDays}}  <label v-if="leave.isStreakPaidLeave==1" class="label label-success">Streak</label></td>
                                 <td>{{leave.description}}</td>
                                 <td>{{leave.leaveTypeName}}</td>
                                 <td>{{leave.leaveApprovalName}}</td>
@@ -77,54 +89,46 @@
 </template>
 
 <script>
+    import {mapGetters,mapState} from 'vuex'
     import {get, post} from'../../../helpers/api'
     import {api_path} from '../../../helpers/const'
     export default{
 
         data(){
             return {
-                leaveSchedules: [],
-                divisions: [],
-                leaveApprovals: [],
-                leaveTypes: [],
+                sortYear: '',
                 sortDivisionId: '',
                 sortLeaveTypeId: '',
                 sortLeaveApprovalId: ''
             }
         },
-        computed: {},
+        mounted(){
+            console.log('my:' + moment().year())
+            this.sortYear = moment().year()
+        },
+        computed: {
+            ...mapState('leave',{
+                leaveSchedules:'leaveSchedules',
+                divisions:'divisions',
+                leaveApprovals:'leaveApprovals',
+                leaveTypes:'leaveTypes'
+            })
+        },
         created(){
             let self = this
-
-            // get Divisions
-            get(api_path + 'component/list/divisions')
-                .then((res) => {
-                    self.divisions = res.data.data
-                })
-
-            // get Leave Approvals
-            get(api_path + 'component/list/leaveApprovals')
-                .then((res) => {
-                    self.leaveApprovals = res.data.data
-                })
-
-            // get Leave Types
-            get(api_path + 'component/list/leaveTypes')
-                .then((res) => {
-                    self.leaveTypes = res.data.data
-                })
-
-            // get employee leave schedules
-            get(api_path + 'attendance/leave/list')
-                .then((res) => {
-                    self.leaveSchedules = res.data.data
-                })
-
-
+            this.$store.dispatch('leave/getDataOnCreate')
         },
         methods: {
             sortLeaveSchedule(){
                 let self = this
+
+                this.$store.dispatch({
+                    type:'leave/sorLeaveSchedule',
+                    sortYear: self.sortYear,
+                    sortDivisionId: self.sortDivisionId,
+                    sortLeaveTypeId: self.sortLeaveTypeId,
+                    sortLeaveApprovalId: self.sortLeaveApprovalId
+                })
             }
 
         },

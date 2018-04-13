@@ -24,28 +24,44 @@ class GetLeaveScheduleListLogic extends GetLeaveScheduleUseCase
     public function handleAllELS($request)
     {
 
-        $leaveSchedule = EmployeeLeaveSchedule::where('created_at', $this->currentYear())->get();
+        $query = '';
 
+        $year = $this->currentYear();
 
-        if($request->leaveApprovalId && $request->leaveTypeId){
-            $leaveSchedule = EmployeeLeaveSchedule::where('created_at', $this->currentYear())
-                ->where('leaveApprovalId', $request->leaveApprovalId)
-                ->where('leaveTypeId', $request->leaveTypeId)
-                ->get();
+        if ($request->sortYear != '' && $request->sortYear != null) {
+            $year = $request->sortYear;
         }
 
-        if($request->leaveApprovalId && !$request->leaveTypeId){
-            $leaveSchedule = EmployeeLeaveSchedule::where('created_at', $this->currentYear())
-                ->where('leaveApprovalId', $request->leaveApprovalId)
-                ->get();
+
+        if($request->leaveApprovalId!=null && $request->leaveApprovalId!=''){
+
+            if($query!=''){
+                $query .= ' and ';
+            }
+
+            $rawQueryLeaveApproval = ' leaveApprovalId = "' . $request->leaveApprovalId .'"';
+
+            $query .= $rawQueryLeaveApproval;
+
         }
 
-        if(!$request->leaveApprovalId && $request->leaveTypeId){
-            $leaveSchedule = EmployeeLeaveSchedule::where('created_at', $this->currentYear())
-                ->where('leaveTypeId', $request->leaveTypeId)
-                ->get();
+        if($request->leaveTypeId!=null && $request->leaveTypeId!=''){
+
+            if($query!=''){
+                $query .= ' and ';
+            }
+
+            $rawQueryLeaveType = ' leaveTypeId = "' . $request->leaveTypeId .'"';
+
+            $query .= $rawQueryLeaveType;
+
         }
 
+        if($query!=''){
+            $leaveSchedule = EmployeeLeaveSchedule::whereRaw($query)->where('year',$year)->get();
+        } else {
+            $leaveSchedule = EmployeeLeaveSchedule::where('year',$year)->get();
+        }
 
         return fractal($leaveSchedule, new EmployeeLeaveScheduleListTransformer());
 
@@ -63,31 +79,49 @@ class GetLeaveScheduleListLogic extends GetLeaveScheduleUseCase
             array_push($employeeIds, $employment->employeeId);
         }
 
-        $leaveSchedule = EmployeeLeaveSchedule::where('created_at', $this->currentYear())->get();
+        $query = '';
 
+        $year = $this->currentYear();
 
-        if($request->leaveApprovalId && $request->leaveTypeId){
-            $leaveSchedule = EmployeeLeaveSchedule::where('created_at', $this->currentYear())
-                ->where('leaveApprovalId', $request->leaveApprovalId)
-                ->where('leaveTypeId', $request->leaveTypeId)
-                ->whereIn('employeeId',$employeeIds)
-                ->get();
+        if ($request->sortYear != '' && $request->sortYear != null) {
+            $year = $request->sortYear;
         }
 
-        if($request->leaveApprovalId && !$request->leaveTypeId){
-            $leaveSchedule = EmployeeLeaveSchedule::where('created_at', $this->currentYear())
-                ->where('leaveApprovalId', $request->leaveApprovalId)
-                ->whereIn('employeeId',$employeeIds)
-                ->get();
+
+        if($request->leaveApprovalId!=null && $request->leaveApprovalId!=''){
+
+            if($query!=''){
+                $query .= ' and ';
+            }
+
+            $rawQueryLeaveApproval = ' leaveApprovalId = "' . $request->leaveApprovalId .'"';
+
+            $query .= $rawQueryLeaveApproval;
+
         }
 
-        if(!$request->leaveApprovalId && $request->leaveTypeId){
-            $leaveSchedule = EmployeeLeaveSchedule::where('created_at', $this->currentYear())
-                ->where('leaveTypeId', $request->leaveTypeId)
-                ->whereIn('employeeId',$employeeIds)
-                ->get();
+        if($request->leaveTypeId!=null && $request->leaveTypeId!=''){
+
+            if($query!=''){
+                $query .= ' and ';
+            }
+
+            $rawQueryLeaveType = ' leaveTypeId = "' . $request->leaveTypeId .'"';
+
+            $query .= $rawQueryLeaveType;
+
         }
 
+        if($query!=''){
+            $leaveSchedule = EmployeeLeaveSchedule::whereRaw($query)
+                ->where('year',$year)
+                ->whereIn('employeeId', $employeeIds)
+                ->get();
+        } else {
+            $leaveSchedule = EmployeeLeaveSchedule::where('year',$year)
+                ->whereIn('employeeId', $employeeIds)
+                ->get();
+        }
 
         return fractal($leaveSchedule, new EmployeeLeaveScheduleListTransformer());
 
