@@ -13,6 +13,7 @@ export default {
         divisions: [],
         leaveApprovals: [],
         leaveTypes: [],
+        selectedLeaveRequestIds:[]
     },
     getters,
     mutations,

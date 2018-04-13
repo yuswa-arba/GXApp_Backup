@@ -10,22 +10,38 @@ export default{
         commit('getLeaveApprovals')
         commit('getLeaveTypes')
         commit({
-            type:'getLeaveSchedules',
-            sortYear:'',
-            leaveApprovalId:'',
-            leaveTypeId:'',
-            divisionId:''
+            type: 'getLeaveSchedules',
+            sortYear: '',
+            leaveApprovalId: '',
+            leaveTypeId: '',
+            divisionId: ''
         })
     },
-    sorLeaveSchedule({commit,state},payload){
+    sortLeaveSchedule({commit, state}, payload){
 
         commit({
-            type:'getLeaveSchedules',
-            sortYear:payload.sortYear,
-            leaveApprovalId:payload.sortLeaveApprovalId,
-            leaveTypeId:payload.sortLeaveTypeId,
-            divisionId:payload.sortDivisionId
+            type: 'getLeaveSchedules',
+            sortYear: payload.sortYear,
+            leaveApprovalId: payload.sortLeaveApprovalId,
+            leaveTypeId: payload.sortLeaveTypeId,
+            divisionId: payload.sortDivisionId
         })
+    },
+    answerLeaveSchedule({commit, state}, payload){
+        if (state.selectedLeaveRequestIds.length > 0 && payload.leaveApprovalId != null) {
+            commit({
+                type: 'answerLeaveSchedules',
+                leaveApprovalId: payload.leaveApprovalId
+            })
+        } else {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: 'Leave cannot be empty',
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        }
     }
 
 }

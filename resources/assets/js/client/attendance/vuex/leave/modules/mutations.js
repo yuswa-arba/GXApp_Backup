@@ -31,6 +31,42 @@ export default{
             .then((res) => {
                 state.leaveSchedules = res.data.data
             })
+    },
+    answerLeaveSchedules(state, payload){
+        post(api_path + 'attendance/leave/answer', {
+            elsIds: state.selectedLeaveRequestIds,
+            leaveApprovalId: payload.leaveApprovalId
+        })
+            .then((res) => {
+                if (!res.data.isFailed) {
+
+                     $('.page-container').pgNotification({
+                          style: 'flip',
+                          message: res.data.message,
+                          position: 'top-right',
+                          timeout: 3500,
+                          type: 'info'
+                      }).show();
+
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
     }
 
 }

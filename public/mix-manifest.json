@@ -16,7 +16,7 @@
     "/js/client/setting/notification.js": "/js/client/setting/notification.js?id=7b6c93cc91ee66e11481",
     "/js/client/notification/main.js": "/js/client/notification/main.js?id=5b90a961de10102df2ff",
     "/js/client/misc/notification.js": "/js/client/misc/notification.js?id=d616a0106588237f77f8",
-    "/js/client/attendance/leave.js": "/js/client/attendance/leave.js?id=2f2f64ceef76a762d8eb",
+    "/js/client/attendance/leave.js": "/js/client/attendance/leave.js?id=74c9bd818a02c02eab8e",
     "/js/client/employee/list.js": "/js/client/employee/list.js?id=170707e1655870b0bbae",
     "/js/client/employee/resignation.js": "/js/client/employee/resignation.js?id=55a8b2d073bfdc0e4b1d",
     "/js/client/permission/main.js": "/js/client/permission/main.js?id=989942bc23fec794a191",
@@ -76,6 +76,6 @@
     "/plugins/js/jquery.sieve.min.js": "/plugins/js/jquery.sieve.min.js?id=b41d7126dd6a8b5d851d",
     "/plugins/js/palette.js": "/plugins/js/palette.js?id=cd7be5e269d637ded1c7",
     "/plugins/js/accounting.min.js": "/plugins/js/accounting.min.js?id=b34ee54abcdda3f94566",
-    "/core/css/core-theme.css": "/core/css/core-theme.css?id=95e5dec1960a2267a7e8",
+    "/core/css/core-theme.css": "/core/css/core-theme.css?id=28900b37727b00a0479f",
     "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537"
 }

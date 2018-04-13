@@ -56,6 +56,7 @@ Route::prefix('v1/h')->group(function () {
         Route::get('timesheet/summary/{sumType}','TimesheetController@summary')->name('v1.timesheet.summary');
 
         Route::get('leave/list','LeaveScheduleController@list')->name('v1.leave.list');
+        Route::post('leave/answer','LeaveScheduleController@answer')->name('v1.leave.answer');
 
         Route::get('dashboard/livefeed','DashboardController@livefeed')->name('v1.timesheet.livefeed');
 
