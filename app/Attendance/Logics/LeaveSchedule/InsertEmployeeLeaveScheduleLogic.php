@@ -82,11 +82,11 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
                             }
                         }
 
-                        $checkSameJobPosition = $this->checkIfSameJobPositionHasPaidLeave($employee, $request->fromDate, $request->toDate, $isStreakPaidLeave);
+                        $checkSameJobPosition = $this->checkIfSameDivisionHasPaidLeave($employee, $request->fromDate, $request->toDate, $isStreakPaidLeave);
 
                         if ($checkSameJobPosition['error']) {
                             $response['isFailed'] = true;
-                            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_WITH_SAME_JOB_POSITION_PAID_LEAVE'];
+                            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_WITH_SAME_DIVISION_PAID_LEAVE'];
                             $response['message'] = 'Invalid date found: ' . $checkSameJobPosition['date'] . '. It has been taken by your colleague';
                             return response()->json($response, 200);
                         }
@@ -183,23 +183,23 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
                 ->count() > 0;
     }
 
-    private function checkIfSameJobPositionHasPaidLeave($employee, $fromDate, $toDate, $isStreakPaidLeave)
+    private function checkIfSameDivisionHasPaidLeave($employee, $fromDate, $toDate, $isStreakPaidLeave)
     {
 
-        $employeeJobPositionId = $this->getResultWithNullChecker1Connection($employee, 'employment', 'jobPositionId');
+        $employeeDivisionId = $this->getResultWithNullChecker1Connection($employee, 'employment', 'divisionId');
 
-        if ($employeeJobPositionId != null) {
+        if ($employeeDivisionId != null) {
 
             $getEmployeeIds = MasterEmployee::select('MasterEmployee.id')->where('hasResigned', 0)
-                ->join('employment', function ($join) use ($employeeJobPositionId) {
+                ->join('employment', function ($join) use ($employeeDivisionId) {
                     $join->on('MasterEmployee.id', '=', 'employment.employeeId')
-                        ->where('employment.jobPositionId', '=', $employeeJobPositionId);
+                        ->where('employment.divisionId', '=', $employeeDivisionId);
                 })->get()->toArray();
 
 
-            $employeeIdsWithSameJobPosition = array_column($getEmployeeIds, 'id');
+            $employeeIdsWithSameDivision = array_column($getEmployeeIds, 'id');
 
-            if ($employeeIdsWithSameJobPosition) {
+            if ($employeeIdsWithSameDivision) {
 
                 if ($isStreakPaidLeave) {
 
@@ -212,12 +212,12 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
 
                         foreach ($generatedDates as $date) { //loop through generated dates
 
-                            $schedule = EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameJobPosition)
+                            $schedule = EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameDivision)
                                     ->where('fromDate', $date)
                                     ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])
                                     ->count() > 0;
 
-                            Log::info(EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameJobPosition)
+                            Log::info(EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameDivision)
                                 ->where('fromDate', $date)
                                 ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])->get());
 
@@ -238,7 +238,7 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
                     $invalidDate = '';
                     $error = false;
 
-                    $schedule = EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameJobPosition)
+                    $schedule = EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameDivision)
                             ->where('fromDate', $fromDate)
                             ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])
                             ->count() > 0;
