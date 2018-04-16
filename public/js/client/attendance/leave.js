@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 11);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2491,6 +2491,60 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/leave/AnswerLeaveHelpModal.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    methods: {
+        closeModal: function closeModal() {
+            $('#modal-answer-leave-help').modal('toggle');
+        }
+    }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/leave/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2501,6 +2555,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_async_series__ = __webpack_require__("./node_modules/async/series.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_async_series__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_leave_AnswerLeaveHelpModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/leave/AnswerLeaveHelpModal.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_leave_AnswerLeaveHelpModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_leave_AnswerLeaveHelpModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2630,12 +2686,20 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+
+
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        'answer-leave-help-modal': __WEBPACK_IMPORTED_MODULE_4__components_leave_AnswerLeaveHelpModal_vue___default.a
+    },
     data: function data() {
         return {
             sortYear: moment().year(),
@@ -2786,6 +2850,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     type: 'danger'
                 }).show();
             }
+        },
+        answerLeaveHelp: function answerLeaveHelp() {
+            $('#modal-answer-leave-help').modal('show');
         }
     }
 
@@ -4342,418 +4409,456 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
-      _c("div", { staticClass: "pull-right m-r-15" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.sortDivisionId,
-                  expression: "sortDivisionId"
-                }
-              ],
-              staticClass: "btn btn-outline-primary h-35 w-150",
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.sortDivisionId = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  function($event) {
-                    _vm.sortLeaveSchedule()
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
+        _c("div", { staticClass: "pull-right m-r-15" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sortDivisionId,
+                    expression: "sortDivisionId"
                   }
-                ]
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("All Division")]),
-              _vm._v(" "),
-              _vm._l(_vm.divisions, function(division) {
-                return _c("option", { domProps: { value: division.id } }, [
-                  _vm._v(_vm._s(division.name) + "\n                    ")
-                ])
-              })
-            ],
-            2
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "pull-right m-r-15" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.sortLeaveApprovalId,
-                  expression: "sortLeaveApprovalId"
-                }
-              ],
-              staticClass: "btn btn-outline-primary h-35 w-150",
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.sortLeaveApprovalId = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  function($event) {
-                    _vm.sortLeaveSchedule()
-                  }
-                ]
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("All Approvals")]),
-              _vm._v(" "),
-              _vm._l(_vm.leaveApprovals, function(approval) {
-                return _c("option", { domProps: { value: approval.id } }, [
-                  _vm._v(_vm._s(approval.name) + "\n                    ")
-                ])
-              })
-            ],
-            2
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "pull-right m-r-15" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.sortLeaveTypeId,
-                  expression: "sortLeaveTypeId"
-                }
-              ],
-              staticClass: "btn btn-outline-primary h-35 w-150",
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.sortLeaveTypeId = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  function($event) {
-                    _vm.sortLeaveSchedule()
-                  }
-                ]
-              }
-            },
-            [
-              _c("option", { attrs: { value: "" } }, [_vm._v("All Types")]),
-              _vm._v(" "),
-              _vm._l(_vm.leaveTypes, function(type) {
-                return _c("option", { domProps: { value: type.id } }, [
-                  _vm._v(_vm._s(type.name) + "\n                    ")
-                ])
-              })
-            ],
-            2
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "pull-right m-r-15" }, [
-        _c("div", { staticClass: "form-group" }, [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.sortYear,
-                  expression: "sortYear"
-                }
-              ],
-              staticClass: "btn btn-outline-primary h-35 w-150",
-              on: {
-                change: [
-                  function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.sortYear = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  },
-                  function($event) {
-                    _vm.sortLeaveSchedule()
-                  }
-                ]
-              }
-            },
-            _vm._l(20, function(index) {
-              return _c("option", { domProps: { value: 2017 + index } }, [
-                _vm._v(_vm._s(2017 + index))
-              ])
-            })
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _vm._m(0)
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-12 m-b-10" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-        },
-        [
-          _c("div", { staticClass: "card-block" }, [
-            _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table table-hover leaveDT" }, [
-                _c("thead", { staticClass: "bg-master-lighter" }, [
-                  _c("tr", [
-                    _c("th", { staticStyle: { width: "30px" } }, [
-                      _c("div", { staticClass: "checkbox check-success " }, [
-                        _c("input", {
-                          attrs: { type: "checkbox", id: "all-leave-cb" },
-                          on: {
-                            change: function($event) {
-                              _vm.checkAllLeaves()
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("label", {
-                          staticClass: "fs-16",
-                          attrs: { for: "all-leave-cb" }
+                ],
+                staticClass: "btn btn-outline-primary h-35 w-150",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
                         })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "text-black",
-                        staticStyle: { width: "50px" }
-                      },
-                      [_vm._v("ID")]
-                    ),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "text-black" }, [
-                      _vm._v("Employee")
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "text-black" }, [_vm._v("Date")]),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      {
-                        staticClass: "text-black",
-                        staticStyle: { width: "150px!important" }
-                      },
-                      [_vm._v("Total Day(s)")]
-                    ),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "text-black" }, [_vm._v("Desc.")]),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "text-black" }, [_vm._v("Type")]),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "text-black" }, [_vm._v("Apprv")]),
-                    _vm._v(" "),
-                    _c("th", [
-                      _vm.selectedLeaveRequestIds.length > 0
-                        ? _c(
-                            "div",
-                            {
-                              staticClass: "form-group m-t-10",
-                              class: {
-                                hide: _vm.selectedLeaveRequestIds.length == 0
-                              }
-                            },
-                            [
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.answerLeaveApprovalId,
-                                      expression: "answerLeaveApprovalId"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "btn btn-info h-35 w-150 text-center",
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.answerLeaveApprovalId = $event
-                                          .target.multiple
-                                          ? $$selectedVal
-                                          : $$selectedVal[0]
-                                      },
-                                      function($event) {
-                                        _vm.answerLeaves()
-                                      }
-                                    ]
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "option",
-                                    {
-                                      attrs: {
-                                        value: "",
-                                        selected: "",
-                                        hidden: "",
-                                        disabled: ""
-                                      }
-                                    },
-                                    [_vm._v("Answer")]
-                                  ),
-                                  _vm._v(" "),
-                                  _vm._l(_vm.leaveApprovals, function(
-                                    approval
-                                  ) {
-                                    return _c(
-                                      "option",
-                                      { domProps: { value: approval.id } },
-                                      [
-                                        _vm._v(
-                                          "\n                                            " +
-                                            _vm._s(approval.name) +
-                                            "\n                                        "
-                                        )
-                                      ]
-                                    )
-                                  })
-                                ],
-                                2
-                              )
-                            ]
-                          )
-                        : _vm._e()
-                    ])
-                  ])
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.sortDivisionId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function($event) {
+                      _vm.sortLeaveSchedule()
+                    }
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("All Division")
                 ]),
                 _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.leaveSchedules, function(leave, index) {
-                    return _c("tr", { staticClass: "filter-employee" }, [
-                      _c("td", [
+                _vm._l(_vm.divisions, function(division) {
+                  return _c("option", { domProps: { value: division.id } }, [
+                    _vm._v(_vm._s(division.name) + "\n                    ")
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pull-right m-r-15" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sortLeaveApprovalId,
+                    expression: "sortLeaveApprovalId"
+                  }
+                ],
+                staticClass: "btn btn-outline-primary h-35 w-150",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.sortLeaveApprovalId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function($event) {
+                      _vm.sortLeaveSchedule()
+                    }
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("All Approvals")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.leaveApprovals, function(approval) {
+                  return _c("option", { domProps: { value: approval.id } }, [
+                    _vm._v(_vm._s(approval.name) + "\n                    ")
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pull-right m-r-15" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sortLeaveTypeId,
+                    expression: "sortLeaveTypeId"
+                  }
+                ],
+                staticClass: "btn btn-outline-primary h-35 w-150",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.sortLeaveTypeId = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function($event) {
+                      _vm.sortLeaveSchedule()
+                    }
+                  ]
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [_vm._v("All Types")]),
+                _vm._v(" "),
+                _vm._l(_vm.leaveTypes, function(type) {
+                  return _c("option", { domProps: { value: type.id } }, [
+                    _vm._v(_vm._s(type.name) + "\n                    ")
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pull-right m-r-15 " }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sortYear,
+                    expression: "sortYear"
+                  }
+                ],
+                staticClass: "btn btn-outline-primary h-35 w-150",
+                on: {
+                  change: [
+                    function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.sortYear = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    },
+                    function($event) {
+                      _vm.sortLeaveSchedule()
+                    }
+                  ]
+                }
+              },
+              _vm._l(20, function(index) {
+                return _c("option", { domProps: { value: 2017 + index } }, [
+                  _vm._v(_vm._s(2017 + index))
+                ])
+              })
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "pull-right m-r-15 m-t-10" }, [
+          _c("i", {
+            staticClass: "fa fa-question-circle fs-18 cursor",
+            staticStyle: { opacity: "0.7" },
+            on: {
+              click: function($event) {
+                _vm.answerLeaveHelp()
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+        _c(
+          "div",
+          {
+            staticClass:
+              "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+          },
+          [
+            _c("div", { staticClass: "card-block" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table table-hover leaveDT" }, [
+                  _c("thead", { staticClass: "bg-master-lighter" }, [
+                    _c("tr", [
+                      _c("th", { staticStyle: { width: "30px" } }, [
                         _c("div", { staticClass: "checkbox check-success " }, [
                           _c("input", {
-                            attrs: {
-                              type: "checkbox",
-                              id: "leave-cb-" + index
-                            },
+                            attrs: { type: "checkbox", id: "all-leave-cb" },
                             on: {
                               change: function($event) {
-                                _vm.toggleLeaveCb(index, leave.id)
+                                _vm.checkAllLeaves()
                               }
                             }
                           }),
                           _vm._v(" "),
-                          _c("label", { attrs: { for: "leave-cb-" + index } })
+                          _c("label", {
+                            staticClass: "fs-16",
+                            attrs: { for: "all-leave-cb" }
+                          })
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(leave.id))]),
+                      _c(
+                        "th",
+                        {
+                          staticClass: "text-black",
+                          staticStyle: { width: "50px" }
+                        },
+                        [_vm._v("ID")]
+                      ),
                       _vm._v(" "),
-                      _c("td", [
-                        _c("b", [_vm._v(_vm._s(leave.employeeName))]),
-                        _vm._v(" (" + _vm._s(leave.employeeDivisionName) + ")")
+                      _c("th", { staticClass: "text-black" }, [
+                        _vm._v("Employee")
                       ]),
                       _vm._v(" "),
-                      leave.fromDate == leave.toDate
-                        ? _c("td", [_vm._v(_vm._s(leave.fromDate))])
-                        : _c("td", [
-                            _vm._v(
-                              _vm._s(leave.fromDate) +
-                                " - " +
-                                _vm._s(leave.toDate)
-                            )
-                          ]),
+                      _c("th", { staticClass: "text-black" }, [_vm._v("Date")]),
                       _vm._v(" "),
-                      _c("td", [
-                        _vm._v(_vm._s(leave.totalDays) + " "),
-                        leave.isStreakPaidLeave == 1
+                      _c(
+                        "th",
+                        {
+                          staticClass: "text-black",
+                          staticStyle: { width: "150px!important" }
+                        },
+                        [_vm._v("Total Day(s)")]
+                      ),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-black" }, [
+                        _vm._v("Desc.")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-black" }, [_vm._v("Type")]),
+                      _vm._v(" "),
+                      _c("th", { staticClass: "text-black" }, [
+                        _vm._v("Apprv")
+                      ]),
+                      _vm._v(" "),
+                      _c("th", [
+                        _vm.selectedLeaveRequestIds.length > 0
                           ? _c(
-                              "label",
-                              { staticClass: "label label-success" },
-                              [_vm._v("Streak")]
+                              "div",
+                              {
+                                staticClass: "form-group m-t-10",
+                                class: {
+                                  hide: _vm.selectedLeaveRequestIds.length == 0
+                                }
+                              },
+                              [
+                                _c(
+                                  "select",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.answerLeaveApprovalId,
+                                        expression: "answerLeaveApprovalId"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "btn btn-info h-35 w-150 text-center",
+                                    on: {
+                                      change: [
+                                        function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.answerLeaveApprovalId = $event
+                                            .target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        },
+                                        function($event) {
+                                          _vm.answerLeaves()
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "option",
+                                      {
+                                        attrs: {
+                                          value: "",
+                                          selected: "",
+                                          hidden: "",
+                                          disabled: ""
+                                        }
+                                      },
+                                      [_vm._v("Answer")]
+                                    ),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.leaveApprovals, function(
+                                      approval
+                                    ) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: approval.id } },
+                                        [
+                                          _vm._v(
+                                            "\n                                            " +
+                                              _vm._s(approval.name) +
+                                              "\n                                        "
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
+                                )
+                              ]
                             )
                           : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(leave.description))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(leave.leaveTypeName))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(leave.leaveApprovalName))]),
-                      _vm._v(" "),
-                      _c("td")
+                      ])
                     ])
-                  })
-                )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.leaveSchedules, function(leave, index) {
+                      return _c("tr", { staticClass: "filter-employee" }, [
+                        _c("td", [
+                          _c(
+                            "div",
+                            { staticClass: "checkbox check-success " },
+                            [
+                              _c("input", {
+                                attrs: {
+                                  type: "checkbox",
+                                  id: "leave-cb-" + index
+                                },
+                                on: {
+                                  change: function($event) {
+                                    _vm.toggleLeaveCb(index, leave.id)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("label", {
+                                attrs: { for: "leave-cb-" + index }
+                              })
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(leave.id))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c("b", [_vm._v(_vm._s(leave.employeeName))]),
+                          _vm._v(
+                            " (" + _vm._s(leave.employeeDivisionName) + ")"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        leave.fromDate == leave.toDate
+                          ? _c("td", [_vm._v(_vm._s(leave.fromDate))])
+                          : _c("td", [
+                              _vm._v(
+                                _vm._s(leave.fromDate) +
+                                  " - " +
+                                  _vm._s(leave.toDate)
+                              )
+                            ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(_vm._s(leave.totalDays) + " "),
+                          leave.isStreakPaidLeave == 1
+                            ? _c(
+                                "label",
+                                { staticClass: "label label-success" },
+                                [_vm._v("Streak")]
+                              )
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(leave.description))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(leave.leaveTypeName))]),
+                        _vm._v(" "),
+                        _c("td", [_vm._v(_vm._s(leave.leaveApprovalName))]),
+                        _vm._v(" "),
+                        _c("td")
+                      ])
+                    })
+                  )
+                ])
               ])
             ])
-          ])
-        ]
-      )
-    ])
-  ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("answer-leave-help-modal")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -4781,6 +4886,111 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-20f2f295", module.exports)
+  }
+}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-42cb5740\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/leave/AnswerLeaveHelpModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade stick-up",
+      attrs: {
+        id: "modal-answer-leave-help",
+        tabindex: "-1",
+        role: "dialog",
+        "aria-hidden": "true"
+      }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog" }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-footer" }, [
+            _c(
+              "button",
+              {
+                staticClass:
+                  "p-t-5 p-b-5 btn text-primary bold all-caps btn-block",
+                on: {
+                  click: function($event) {
+                    _vm.closeModal()
+                  }
+                }
+              },
+              [_vm._v("\n                    Close\n                ")]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-hidden": "true"
+          }
+        },
+        [_c("i", { staticClass: "pg-close" })]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
+        _vm._v("Answering Leave Help")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-body" }, [
+      _c("p", [
+        _vm._v(
+          "\n                    When selecting multiple leave requests, the system will review leave requests until the maximum limit of leave dates has been reached.\n                "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _vm._v(
+          "\n                    If you need to answer to specific leave request it is best to do it one by one to make sure that\n                    is reviewed by the system. This is to make sure the admin does not approve the leave request more than the\n                    max limit of each employee.\n                "
+        )
+      ]),
+      _vm._v(" "),
+      _c("p", { staticClass: "bold" }, [
+        _vm._v(
+          '\n                    Note that the max limit only count from the "approved" leave request.\n                '
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-42cb5740", module.exports)
   }
 }
 
@@ -19140,6 +19350,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/attendance/components/leave/AnswerLeaveHelpModal.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/leave/AnswerLeaveHelpModal.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-42cb5740\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/leave/AnswerLeaveHelpModal.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/attendance/components/leave/AnswerLeaveHelpModal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-42cb5740", Component.options)
+  } else {
+    hotAPI.reload("data-v-42cb5740", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/attendance/leave.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -19682,7 +19941,7 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ 10:
+/***/ 11:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/assets/js/client/attendance/leave.js");

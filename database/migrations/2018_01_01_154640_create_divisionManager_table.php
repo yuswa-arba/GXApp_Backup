@@ -17,6 +17,9 @@ class CreateDivisionManagerTable extends Migration
             $table->increments('id');
             $table->uuid('employeeId');
             $table->integer('divisionId');
+            $table->tinyInteger('isActive')->default(0);
+            $table->string('startDate');
+            $table->string('endDate');
             $table->timestamps();
         });
     }

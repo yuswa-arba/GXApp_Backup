@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackendV1\API\Attendance;
 
 use App\Attendance\Logics\LeaveSchedule\InsertEmployeeLeaveScheduleLogic;
+use App\Attendance\Models\AttendanceSetting;
 use App\Attendance\Models\EmployeeLeaveSchedule;
 use App\Attendance\Models\LeaveType;
 use App\Attendance\Transformers\EmployeeLeaveBriefTransformer;
@@ -178,7 +179,7 @@ class PaidLeaveController extends Controller
             $response['isFailed'] = false;
             $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
             $response['message'] = 'Success';
-            $response['maxPaidLeaveDays'] = GlobalConfig::$MAX_PAID_LEAVE['DAYS'];
+            $response['maxPaidLeaveDays'] =  AttendanceSetting::where('name','max-leave-days')->first()['value'];
             $response['totalRequest'] = $totalRequest;
             $response['maxStreakPaidLeaveChance'] = 1;
             $response['countStreakPaidLeave'] = $countStreakPaidLeave;

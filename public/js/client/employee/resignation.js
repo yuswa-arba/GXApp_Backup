@@ -2370,6 +2370,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -4073,6 +4074,15 @@ var render = function() {
                   },
                   domProps: { value: _vm.searchText },
                   on: {
+                    keyup: function($event) {
+                      if (
+                        !("button" in $event) &&
+                        _vm._k($event.keyCode, "enter", 13, $event.key)
+                      ) {
+                        return null
+                      }
+                      _vm.searchEmployee()
+                    },
                     input: function($event) {
                       if ($event.target.composing) {
                         return

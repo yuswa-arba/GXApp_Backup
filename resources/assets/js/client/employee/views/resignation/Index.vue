@@ -19,6 +19,7 @@
                         <div class="col-lg-12">
                             <div class="input-group">
                                 <input type="text" style="height: 40px;" class="form-control" id="search-employee-box"
+                                       @keyup.enter="searchEmployee()"
                                        placeholder="Search Employee Number / Name / Surname / Nickname"
                                        v-model="searchText"
                                 >

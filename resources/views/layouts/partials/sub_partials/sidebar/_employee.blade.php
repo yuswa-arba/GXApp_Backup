@@ -19,6 +19,10 @@
                 <span class="icon-thumbnail">l</span>
             </li>
             <li class="">
+                <a href="{{route('employee.managers')}}">Managers</a>
+                <span class="icon-thumbnail">m</span>
+            </li>
+            <li class="">
                 <a href="{{route('employee.recruitment')}}">Recruitment</a>
                 <span class="icon-thumbnail">r</span>
             </li>

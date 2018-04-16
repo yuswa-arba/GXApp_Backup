@@ -29,6 +29,11 @@ class ViewController extends Controller
         return view('pages.employee.list');
     }
 
+    public function managers()
+    {
+        return view('pages.employee.managers');
+    }
+
     public function recruitment()
     {
         $educationLevels = EducationLevel::all();

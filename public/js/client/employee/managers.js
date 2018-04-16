@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 19);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2458,13 +2458,11 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainSetting.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/MainManagers.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 //
 //
 //
@@ -2479,7 +2477,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2488,20 +2485,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         goBack: function goBack() {
             $('#errors-container').addClass('hide');
-            this.$router.go(-1);
+            this.$router.push('/');
         }
     }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/managers/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 //
 //
 //
@@ -2619,864 +2619,171 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            divisions: [],
-            bonuscuts: [],
-            bonusCutForm: {
-                name: '',
-                addOrSub: 'add',
-                isRelatedToDivision: 0,
+            searchText: '',
+            selectedEmployee: {
+                employeeId: '', employeeNo: '', givenName: '', surname: ''
+            },
+            formObject: {
+                employeeId: '',
                 divisionId: ''
-            },
-            formIsValid: false
+            }
         };
     },
     created: function created() {
         var self = this;
-
-        // get division data
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/divisions').then(function (res) {
-            self.divisions = res.data.data;
-        });
-
-        // get bonus cut tab data
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/list').then(function (res) {
-            self.bonuscuts = res.data.bonuscut.data;
-        });
+        this.$store.dispatch('managers/getDataOnCreate');
+        this.$store.state.managers.employeeCandidates = []; //reset the first time
     },
 
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('managers', {
+        divisions: 'divisions',
+        managers: 'managers',
+        employeeCandidates: 'employeeCandidates'
+    })),
     methods: {
-        saveBonusCutForm: function saveBonusCutForm() {
+        assignDivisionManager: function assignDivisionManager() {
+            var _this = this;
 
             var self = this;
 
-            if (self.formIsValid) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/create', self.bonusCutForm).then(function (res) {
-                    self.formIsValid = false;
+            if (self.formObject.employeeId != '' && self.formObject.divisionId != '') {
 
-                    if (!res.data.isFailed) {
-
-                        /* Success notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        self.bonuscuts.push(res.data.bonuscut.data);
-
-                        //reset form
-                        self.bonusCutForm = {
-                            name: '',
-                            addOrSub: 'add',
-                            isRelatedToDivision: false,
-                            divisionId: ''
-                        };
-                    } else {
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    }
-                }).catch(function (err) {
-
-                    self.formIsValid = false;
-
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
+                //assign
+                this.$store.commit({
+                    type: 'managers/assignManager',
+                    employeeId: self.formObject.employeeId,
+                    divisionId: self.formObject.divisionId
                 });
+
+                //reset
+                this.removeSelectedEmployee();
+                self.formObject = {
+                    employeeId: '',
+                    divisionId: ''
+
+                    //refresh
+                };setTimeout(function () {
+                    _this.$store.commit({ type: 'managers/getManagers' });
+                }, 1200);
             } else {
-                if (self.bonusCutForm.name && self.bonusCutForm.addOrSub) {
-                    if (self.bonusCutForm.isRelatedToDivision) {
-                        if (self.bonusCutForm.divisionId) {
-
-                            self.formIsValid = true;
-                            self.saveBonusCutForm();
-                        } else {
-
-                            self.formIsValid = false;
-
-                            $('.page-container').pgNotification({
-                                style: 'flip',
-                                message: 'Division cannot be empty',
-                                position: 'top-right',
-                                timeout: 3500,
-                                type: 'danger'
-                            }).show();
-                        }
-                    } else {
-
-                        self.formIsValid = true;
-                        self.saveBonusCutForm();
-                    }
-                } else {
-
-                    self.formIsValid = false;
-
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: 'Name and add/sub cannot be empty',
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
-            }
-        },
-        deleteBonusCutType: function deleteBonusCutType(bonusCutTypeId, bonusCutTypeIndex) {
-            var self = this;
-            if (confirm('Are you sure to delete this? It will remove all general and employee bonus/cut that use this')) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/delete', { bonusCutTypeId: bonusCutTypeId }).then(function (res) {
-                    if (!res.data.isFailed) {
-
-                        /* Success notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        /* remove from array */
-                        self.bonuscuts.splice(bonusCutTypeIndex, 1);
-                    } else {
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    }
-                }).catch(function (err) {
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                });
-            }
-        },
-        editBonusCutType: function editBonusCutType(bonusCutTypeIndex) {
-            var self = this;
-            self.bonuscuts[bonusCutTypeIndex].editing = true;
-        },
-        doneEditing: function doneEditing(bonusCutTypeId, bonusCutTypeIndex) {
-            var self = this;
-
-            var oldBonusCutName = self.bonuscuts[bonusCutTypeIndex].name;
-            var bonusCutName = $('input[name="' + 'bonusCutName_' + bonusCutTypeId + '"]').val();
-
-            if (bonusCutName != oldBonusCutName) {
-                // if its different then submit to server
-                if (bonusCutTypeId && bonusCutName) {
-
-                    Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/bonuscut/edit', {
-                        bonusCutTypeId: bonusCutTypeId,
-                        bonusCutName: bonusCutName
-                    }).then(function (res) {
-                        if (!res.data.isFailed) {
-
-                            /* Succeess notification */
-                            $('.page-container').pgNotification({
-                                style: 'flip',
-                                message: res.data.message,
-                                position: 'top-right',
-                                timeout: 3500,
-                                type: 'info'
-                            }).show();
-
-                            /*Change name*/
-                            self.bonuscuts[bonusCutTypeIndex].name = bonusCutName;
-                        } else {
-
-                            /* Error notification */
-                            $('.page-container').pgNotification({
-                                style: 'flip',
-                                message: res.data.message,
-                                position: 'top-right',
-                                timeout: 3500,
-                                type: 'danger'
-                            }).show();
-                        }
-                    }).catch(function (err) {
-
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: err.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    });
-                }
-            }
-
-            self.bonuscuts[bonusCutTypeIndex].editing = false;
-        }
-    },
-    computed: {}
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            generalBCs: [],
-            bonuscuts: [],
-            bonusCutTypeIdToUse: '',
-            editGeneralBonusCutForm: {
-                generalBonusCutId: '',
-                bonusCutTypeName: '',
-                value: '',
-                isActive: 0,
-                isUsingFormula: 0,
-                formula: ''
-            },
-            formIsValid: false
-        };
-    },
-    created: function created() {
-        var self = this;
-
-        // get bonus cut data
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/bonuscut/list').then(function (res) {
-            self.bonuscuts = res.data.bonuscut.data;
-        });
-
-        // get general bonus cut data
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/list').then(function (res) {
-            self.generalBCs = res.data.generalBC.data;
-        });
-    },
-
-    methods: {
-        createGeneralBonusCut: function createGeneralBonusCut() {
-            var self = this;
-            if (self.bonusCutTypeIdToUse) {
-
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/create', { bonusCutTypeId: self.bonusCutTypeIdToUse }).then(function (res) {
-                    if (!res.data.isFailed) {
-
-                        /* success notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        //push to array
-                        self.generalBCs.push(res.data.generalBC.data);
-
-                        //remove from array
-                        var bonusCutIndex = _.findIndex(self.bonuscuts, { id: self.bonusCutTypeIdToUse });
-                        self.bonuscuts.splice(bonusCutIndex, 1);
-
-                        //reset
-                        self.bonusCutTypeIdToUse = '';
-                    } else {
-
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    }
-                }).catch(function (err) {
-
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                });
-            } else {
-                /* Error notification */
                 $('.page-container').pgNotification({
                     style: 'flip',
-                    message: 'Bonus/cut cannot be empty',
+                    message: 'Form is invalid',
                     position: 'top-right',
                     timeout: 3500,
                     type: 'danger'
                 }).show();
             }
         },
-        attempEditGeneralBonusCut: function attempEditGeneralBonusCut(generalBonusCutId) {
+        searchEmployee: function searchEmployee() {
 
             var self = this;
-            var generalBonusCut = _.find(self.generalBCs, { id: generalBonusCutId });
 
-            // Insert to form
-            self.editGeneralBonusCutForm.generalBonusCutId = generalBonusCutId;
-            self.editGeneralBonusCutForm.bonusCutTypeName = generalBonusCut.bonusCutTypeName;
-            self.editGeneralBonusCutForm.bonusCutTypeAddOrSub = generalBonusCut.bonusCutTypeAddOrSub;
-            self.editGeneralBonusCutForm.value = generalBonusCut.value;
-            self.editGeneralBonusCutForm.isActive = generalBonusCut.isActive;
-            self.editGeneralBonusCutForm.isUsingFormula = generalBonusCut.isUsingFormula;
-            self.editGeneralBonusCutForm.formula = generalBonusCut.formula;
-
-            $('#modal-edit-general-bonus-cut').modal('show');
+            this.$store.commit({
+                type: 'managers/searchEmployee',
+                searchText: self.searchText
+            });
         },
-        doneEditingGeneralBonusCut: function doneEditingGeneralBonusCut() {
-
+        pickEmployee: function pickEmployee(candidateId, candidateNo, candidateGivenName, candidateSurname) {
             var self = this;
-            if (self.formIsValid) {
 
-                // remove from object before submit bcs its not needed
-                delete self.editGeneralBonusCutForm.bonusCutTypeName;
-                delete self.editGeneralBonusCutForm.addOrSub;
+            self.selectedEmployee.employeeId = candidateId;
+            self.selectedEmployee.employeeNo = candidateNo;
+            self.selectedEmployee.givenName = candidateGivenName;
+            self.selectedEmployee.surname = candidateSurname;
 
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/generalBC/edit', self.editGeneralBonusCutForm).then(function (res) {
-                    if (!res.data.isFailed) {
-
-                        /* success notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        /* Update general BC array*/
-                        if (res.data.generalBC.data) {
-                            var generalBonusCutIndex = _.findIndex(self.generalBCs, { id: self.editGeneralBonusCutForm.generalBonusCutId });
-                            self.generalBCs.splice(generalBonusCutIndex, 1, res.data.generalBC.data);
-                        }
-
-                        /* Reset form values */
-                        self.editGeneralBonusCutForm = {
-                            generalBonusCutId: '',
-                            bonusCutTypeName: '',
-                            value: '',
-                            isActive: 0,
-                            isUsingFormula: 0,
-                            formula: ''
-
-                            /* Close modal */
-                        };$('#modal-edit-general-bonus-cut').modal('toggle');
-                    } else {
-
-                        /* Error notification */
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    }
-
-                    self.formIsValid = false;
-                }).catch(function (err) {
-
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-
-                    self.formIsValid = false;
-                });
-            } else {
-
-                if (self.editGeneralBonusCutForm.isUsingFormula && self.editGeneralBonusCutForm.formula) {
-                    /* If using formula, formula is required*/
-
-                    self.formIsValid = true;
-                    self.doneEditingGeneralBonusCut();
-                } else if (!self.editGeneralBonusCutForm.isUsingFormula && self.editGeneralBonusCutForm.value) {
-                    /* If not using formula , value is required */
-
-                    self.formIsValid = true;
-                    self.doneEditingGeneralBonusCut();
-                } else {
-
-                    /* Error notification */
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: 'Unable to submit, form is not valid',
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
-            }
+            self.formObject.employeeId = candidateId; //insert to form object
         },
-        insertSalaryOperator: function insertSalaryOperator() {
+        removeSelectedEmployee: function removeSelectedEmployee() {
             var self = this;
-            if (self.editGeneralBonusCutForm.formula) {
-                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_salary_';
-            } else {
-                self.editGeneralBonusCutForm.formula = '_salary_';
-            }
-        },
-        insertMinLateInOperator: function insertMinLateInOperator() {
 
-            var self = this;
-            if (self.editGeneralBonusCutForm.formula) {
-                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_min_late_in_';
-            } else {
-                self.editGeneralBonusCutForm.formula = '_min_late_in_';
-            }
-        },
-        insertMinEarlyOutOperator: function insertMinEarlyOutOperator() {
+            this.$store.state.managers.employeeCandidates = []; //reset the first time
+            self.searchText = '';
 
-            var self = this;
-            if (self.editGeneralBonusCutForm.formula) {
-                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_min_early_out_';
-            } else {
-                self.editGeneralBonusCutForm.formula = '_min_early_out_';
-            }
-        },
-        insertMinLateOutOperator: function insertMinLateOutOperator() {
+            self.selectedEmployee.employeeId = '';
 
-            var self = this;
-            if (self.editGeneralBonusCutForm.formula) {
-                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_min_late_out_';
-            } else {
-                self.editGeneralBonusCutForm.formula = '_min_late_out_';
-            }
-        },
-        insertDayAbsenceOperator: function insertDayAbsenceOperator() {
+            self.selectedEmployee.employeeNo = '';
+            self.selectedEmployee.givenName = '';
+            self.selectedEmployee.surname = '';
 
-            var self = this;
-            if (self.editGeneralBonusCutForm.formula) {
-                self.editGeneralBonusCutForm.formula = self.editGeneralBonusCutForm.formula + '_day_absence_';
-            } else {
-                self.editGeneralBonusCutForm.formula = '_day_absence_';
-            }
+            self.formObject.employeeId = ''; //remove from form object
+        },
+        activateManager: function activateManager(divisionManagerId) {
+            var _this2 = this;
+
+            this.$store.commit({
+                type: 'managers/activateManager',
+                divisionManagerId: divisionManagerId
+            });
+
+            //refresh
+            setTimeout(function () {
+                _this2.$store.commit({ type: 'managers/getManagers' });
+            }, 1200);
+        },
+        deactivateManager: function deactivateManager(divisionManagerId) {
+            var _this3 = this;
+
+            this.$store.commit({
+                type: 'managers/deactivateManager',
+                divisionManagerId: divisionManagerId
+            });
+
+            //refresh
+            setTimeout(function () {
+                _this3.$store.commit({ type: 'managers/getManagers' });
+            }, 1200);
         }
-    },
-    computed: {}
+    }
 
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/PayrollTab.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            payrollSettings: []
-        };
-    },
-    created: function created() {
-        var self = this;
-
-        // get payroll setting data
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payrollSetting/list').then(function (res) {
-            self.payrollSettings = res.data.payrollSettings.data;
-        });
-    },
-
-    methods: {
-        startEditing: function startEditing(id, index) {
-
-            var self = this;
-            self.payrollSettings[index].editing = true;
-        },
-        doneEditing: function doneEditing(id, index) {
-            var self = this;
-
-            var value = $('input[name="' + 'editValue' + id + '"]').val();
-            var description = $('input[name="' + 'editDescription' + id + '"]').val();
-
-            if (value) {
-                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'salary/payrollSetting/edit', { id: id, value: value, description: description }).then(function (res) {
-
-                    if (!res.data.isFailed) {
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'info'
-                        }).show();
-
-                        //update array
-                        self.payrollSettings.splice(index, 1, res.data.payrollSetting.data);
-                    } else {
-                        $('.page-container').pgNotification({
-                            style: 'flip',
-                            message: res.data.message,
-                            position: 'top-right',
-                            timeout: 3500,
-                            type: 'danger'
-                        }).show();
-                    }
-                }).catch(function (err) {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: err.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                });
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: 'Update canceled. Value cannot be empty',
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-
-            self.payrollSettings[index].editing = false;
-        }
-    },
-    computed: {}
-
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/BonusCutTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_PayrollTab_vue__ = __webpack_require__("./resources/assets/js/client/salary/components/settings/PayrollTab.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_settings_PayrollTab_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_settings_PayrollTab_vue__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        'bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_0__components_settings_BonusCutTab_vue___default.a,
-        'general-bonus-cut-tab': __WEBPACK_IMPORTED_MODULE_1__components_settings_GeneralBonusCutTab_vue___default.a,
-        'payroll-tab': __WEBPACK_IMPORTED_MODULE_2__components_settings_PayrollTab_vue___default.a
-    },
-    mounted: function mounted() {}
 });
 
 /***/ }),
@@ -5023,7 +4330,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-16c2d3d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-58641ab9\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/managers/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -5043,842 +4350,371 @@ var render = function() {
             _c("div", { staticClass: "scrollable" }, [
               _c("div", { staticClass: " h-500" }, [
                 _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table table-hover bonusCutDT" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.generalBCs, function(generalBC, index) {
-                        return _c("tr", [
-                          _c("td", [_vm._v(_vm._s(generalBC.id))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(generalBC.bonusCutTypeName) +
-                                "\n                                        "
-                            ),
-                            generalBC.bonusCutTypeAddOrSub == "add"
-                              ? _c(
-                                  "label",
-                                  { staticClass: "label label-success fs-14" },
-                                  [
-                                    _vm._v(
-                                      _vm._s(generalBC.bonusCutTypeAddOrSub)
-                                    )
-                                  ]
-                                )
-                              : generalBC.bonusCutTypeAddOrSub == "sub"
-                                ? _c(
-                                    "label",
-                                    { staticClass: "label label-danger fs-14" },
-                                    [
-                                      _vm._v(
-                                        _vm._s(generalBC.bonusCutTypeAddOrSub)
-                                      )
-                                    ]
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped table-hover settingDT"
+                    },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.managers, function(manager) {
+                          return _c("tr", [
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(manager.employeeName) +
+                                  " (" +
+                                  _vm._s(manager.employeeNo) +
+                                  ")"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(manager.divisionName))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              !manager.isActive
+                                ? _c("i", {
+                                    staticClass: "fa fa-times text-danger"
+                                  })
+                                : _c("i", {
+                                    staticClass: "fa fa-check text-success"
+                                  })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              manager.startDate != ""
+                                ? _c("span", [
+                                    _vm._v(_vm._s(manager.startDate))
+                                  ])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              manager.endDate != ""
+                                ? _c("span", [_vm._v(_vm._s(manager.endDate))])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-primary": !manager.isActive,
+                                    "btn-disabled": manager.isActive
+                                  },
+                                  attrs: { disabled: manager.isActive == 1 },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.activateManager(manager.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "Activate\n                                        "
                                   )
-                                : _c("label")
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            generalBC.value
-                              ? _c("span", { staticClass: "fs-14" }, [
-                                  _vm._v(_vm._s(generalBC.value))
-                                ])
-                              : _c("span", [_vm._v("-")])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            generalBC.isUsingFormula && generalBC.formula
-                              ? _c("span", [
-                                  _vm._v("  " + _vm._s(generalBC.formula))
-                                ])
-                              : _c("span", [_vm._v("-")])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            generalBC.isActive
-                              ? _c("i", {
-                                  staticClass: "fa fa-check text-primary fs-16"
-                                })
-                              : _c("i", {
-                                  staticClass: "fa fa-times text-danger fs-16"
-                                })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c("i", {
-                              staticClass: "fa fa-pencil fs-16 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.attempEditGeneralBonusCut(generalBC.id)
-                                }
-                              }
-                            })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-danger": manager.isActive,
+                                    "btn-disabled": !manager.isActive
+                                  },
+                                  attrs: { disabled: manager.isActive == 0 },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.deactivateManager(manager.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "Deactivate\n                                        "
+                                  )
+                                ]
+                              )
+                            ])
                           ])
-                        ])
-                      })
-                    )
-                  ])
+                        })
+                      )
+                    ]
+                  )
                 ])
               ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "help pull-right m-t-10",
-                staticStyle: { opacity: "0.7" },
-                attrs: { for: "" }
-              },
-              [_vm._v("Scroll for more")]
-            )
+            ])
           ])
         ]
       )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-lg-4 m-b-10" }, [
-      _c("div", { staticClass: "card card-transparent" }, [
+      _c("div", { staticClass: "card no-border" }, [
         _c("div", { staticClass: "card-block" }, [
-          _c("form", { attrs: { id: "bonus-cut-form" } }, [
-            _c("h4", [_vm._v("Apply Bonus/Cut")]),
+          _c("form", { attrs: { id: "manager-form" } }, [
+            _c("h4", [_vm._v("Manager Form")]),
             _vm._v(" "),
-            _c("div", [
-              _c("div", { staticClass: "row clearfix" }, [
-                _c("div", { staticClass: "col-md-9" }, [
-                  _c("div", { staticClass: "form-group required" }, [
-                    _c(
-                      "select",
-                      {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.bonusCutTypeIdToUse,
-                            expression: "bonusCutTypeIdToUse"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { name: "", id: "" },
-                        on: {
-                          change: function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.bonusCutTypeIdToUse = $event.target.multiple
-                              ? $$selectedVal
-                              : $$selectedVal[0]
-                          }
-                        }
-                      },
-                      [
-                        _c(
-                          "option",
-                          {
-                            attrs: {
-                              value: "",
-                              disabled: "",
-                              hidden: "",
-                              selected: ""
-                            }
-                          },
-                          [_vm._v("Select Bonus/Cut")]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.bonuscuts, function(bonuscut) {
-                          return _c(
-                            "option",
-                            { domProps: { value: bonuscut.id } },
-                            [
-                              _vm._v(
-                                _vm._s(bonuscut.name) +
-                                  "\n                                            (" +
-                                  _vm._s(bonuscut.addOrSub) +
-                                  ")\n                                        "
-                              )
-                            ]
-                          )
-                        })
-                      ],
-                      2
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "" } }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary fs-16",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.createGeneralBonusCut()
-                          }
-                        }
-                      },
-                      [_vm._v("Use\n                                    ")]
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "Bonus/cut can only be use once, but you may edit it later"
-              )
-            ])
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade stick-up",
-        attrs: {
-          id: "modal-edit-general-bonus-cut",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c("div", { staticClass: "modal-dialog" }, [
-          _c("div", { staticClass: "modal-content" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c("div", { staticClass: "modal-body" }, [
-              _c("form", { attrs: { role: "form" } }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-12" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", [_vm._v(" Bonus/Cut Type Name")]),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "fs-16 bold" }, [
-                        _vm._v(
-                          "\n                                          " +
-                            _vm._s(
-                              _vm.editGeneralBonusCutForm.bonusCutTypeName
-                            ) +
-                            " "
-                        ),
-                        _c("span", { staticClass: "text-primary" }, [
-                          _vm._v(
-                            "(" +
-                              _vm._s(
-                                _vm.editGeneralBonusCutForm.bonusCutTypeAddOrSub
-                              ) +
-                              ")"
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "checkbox check-success  " }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.editGeneralBonusCutForm.isUsingFormula,
-                            expression: "editGeneralBonusCutForm.isUsingFormula"
-                          }
-                        ],
-                        attrs: { type: "checkbox", id: "using-formula-cb" },
-                        domProps: {
-                          value: 1,
-                          checked: Array.isArray(
-                            _vm.editGeneralBonusCutForm.isUsingFormula
-                          )
-                            ? _vm._i(
-                                _vm.editGeneralBonusCutForm.isUsingFormula,
-                                1
-                              ) > -1
-                            : _vm.editGeneralBonusCutForm.isUsingFormula
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$a =
-                                _vm.editGeneralBonusCutForm.isUsingFormula,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = 1,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  (_vm.editGeneralBonusCutForm.isUsingFormula = $$a.concat(
-                                    [$$v]
-                                  ))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.editGeneralBonusCutForm.isUsingFormula = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.$set(
-                                _vm.editGeneralBonusCutForm,
-                                "isUsingFormula",
-                                $$c
-                              )
-                            }
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "label",
-                        {
-                          staticClass: "fs-16",
-                          attrs: { for: "using-formula-cb" }
-                        },
-                        [_vm._v("With Formula")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _vm.editGeneralBonusCutForm.isUsingFormula
-                      ? _c("div", { staticClass: "form-group" }, [
-                          _c("label", [_vm._v("Formula")]),
-                          _vm._v(" "),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "label label-default fs-12 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.insertSalaryOperator()
-                                }
-                              }
-                            },
-                            [
-                              _vm._v(
-                                "insert\n                                        "
-                              ),
-                              _c("b", { staticClass: "text-true-black" }, [
-                                _vm._v("_salary_")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "label label-default fs-12 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.insertMinLateInOperator()
-                                }
-                              }
-                            },
-                            [
-                              _vm._v("insert "),
-                              _c("b", { staticClass: "text-true-black" }, [
-                                _vm._v("_min_late_in_")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "label label-default fs-12 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.insertMinEarlyOutOperator()
-                                }
-                              }
-                            },
-                            [
-                              _vm._v("insert "),
-                              _c("b", { staticClass: "text-true-black" }, [
-                                _vm._v("_min_early_out_")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "label label-default fs-12 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.insertMinLateOutOperator()
-                                }
-                              }
-                            },
-                            [
-                              _vm._v("insert "),
-                              _c("b", { staticClass: "text-true-black" }, [
-                                _vm._v("_min_late_out_")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "label",
-                            {
-                              staticClass: "label label-default fs-12 cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.insertDayAbsenceOperator()
-                                }
-                              }
-                            },
-                            [
-                              _vm._v("insert "),
-                              _c("b", { staticClass: "text-true-black" }, [
-                                _vm._v("_day_absence_")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm._m(2),
-                          _vm._v(" "),
+            _c("div", { staticClass: "row clearfix" }, [
+              !_vm.selectedEmployee.employeeId
+                ? _c("div", { staticClass: "col-lg-12" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+                        _c("div", { staticClass: "input-group" }, [
                           _c("input", {
                             directives: [
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.editGeneralBonusCutForm.formula,
-                                expression: "editGeneralBonusCutForm.formula"
+                                value: _vm.searchText,
+                                expression: "searchText"
                               }
                             ],
                             staticClass: "form-control",
-                            staticStyle: { height: "55px" },
+                            staticStyle: { height: "40px" },
                             attrs: {
                               type: "text",
-                              placeholder: "e.g: _salary_/25*8/60"
+                              placeholder:
+                                "Search Employee Number / Name / Surname / Nickname"
                             },
-                            domProps: {
-                              value: _vm.editGeneralBonusCutForm.formula
-                            },
+                            domProps: { value: _vm.searchText },
                             on: {
+                              keyup: function($event) {
+                                if (
+                                  !("button" in $event) &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key
+                                  )
+                                ) {
+                                  return null
+                                }
+                                _vm.searchEmployee()
+                              },
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
-                                _vm.$set(
-                                  _vm.editGeneralBonusCutForm,
-                                  "formula",
-                                  $event.target.value
-                                )
+                                _vm.searchText = $event.target.value
                               }
                             }
                           }),
                           _vm._v(" "),
-                          _c("p", { staticClass: "text-danger" }, [
-                            _vm._v(
-                              "Make sure to insert a valid format in order for the\n                                        formula to work, system is case sensitive"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-danger" }, [
-                            _vm._v(
-                              'Please note that this should returns value that will then\n                                        be "added/subtracted" to/from the salary based on the Bonus/Cut type'
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("br")
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    !_vm.editGeneralBonusCutForm.isUsingFormula
-                      ? _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "" } }, [
-                            _vm._v("Value")
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.editGeneralBonusCutForm.value,
-                                expression: "editGeneralBonusCutForm.value"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text" },
-                            domProps: {
-                              value: _vm.editGeneralBonusCutForm.value
-                            },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
+                          _c(
+                            "span",
+                            {
+                              staticClass: "input-group-addon primary",
+                              on: {
+                                click: function($event) {
+                                  _vm.searchEmployee()
                                 }
-                                _vm.$set(
-                                  _vm.editGeneralBonusCutForm,
-                                  "value",
-                                  $event.target.value
-                                )
                               }
-                            }
-                          })
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "checkbox check-success " }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.editGeneralBonusCutForm.isActive,
-                            expression: "editGeneralBonusCutForm.isActive"
-                          }
-                        ],
-                        attrs: { type: "checkbox", id: "active-cb" },
-                        domProps: {
-                          value: 1,
-                          checked: Array.isArray(
-                            _vm.editGeneralBonusCutForm.isActive
+                            },
+                            [_c("i", { staticClass: "fa fa-search cursor" })]
                           )
-                            ? _vm._i(_vm.editGeneralBonusCutForm.isActive, 1) >
-                              -1
-                            : _vm.editGeneralBonusCutForm.isActive
-                        },
-                        on: {
-                          change: function($event) {
-                            var $$a = _vm.editGeneralBonusCutForm.isActive,
-                              $$el = $event.target,
-                              $$c = $$el.checked ? true : false
-                            if (Array.isArray($$a)) {
-                              var $$v = 1,
-                                $$i = _vm._i($$a, $$v)
-                              if ($$el.checked) {
-                                $$i < 0 &&
-                                  (_vm.editGeneralBonusCutForm.isActive = $$a.concat(
-                                    [$$v]
-                                  ))
-                              } else {
-                                $$i > -1 &&
-                                  (_vm.editGeneralBonusCutForm.isActive = $$a
-                                    .slice(0, $$i)
-                                    .concat($$a.slice($$i + 1)))
-                              }
-                            } else {
-                              _vm.$set(
-                                _vm.editGeneralBonusCutForm,
-                                "isActive",
-                                $$c
-                              )
-                            }
-                          }
-                        }
-                      }),
+                        ])
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "label",
-                        { staticClass: "fs-16", attrs: { for: "active-cb" } },
-                        [_vm._v("Active")]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-8" }),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary btn-block m-t-5",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.doneEditingGeneralBonusCut()
-                          }
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    Save\n                                "
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
-      ]
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "80px" } },
-          [_vm._v("ID")]
-        ),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Bonus/Cut Type")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Value")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("With Formula")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Active")]),
-        _vm._v(" "),
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "150px" } },
-          [_vm._v("Action")]
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
-        },
-        [_c("i", { staticClass: "pg-close" })]
-      ),
-      _vm._v(" "),
-      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-        _vm._v("Edit General Bonus/Cut")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("Available operators : "),
-      _c("span", { staticClass: "bold fs-16" }, [
-        _vm._v("/ , * , + , - , ( , )")
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-16c2d3d0", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3babfafc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-        },
-        [
-          _c("div", { staticClass: "card-block" }, [
-            _c("div", { staticClass: "scrollable" }, [
-              _c("div", { staticClass: " h-500" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table table-hover bonusCutDT" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.bonuscuts, function(bonuscut, index) {
-                        return _c("tr", [
-                          _c("td", [_vm._v(_vm._s(bonuscut.id))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            !bonuscut.editing
-                              ? _c("span", { staticClass: "fs-14" }, [
-                                  _vm._v(_vm._s(bonuscut.name))
-                                ])
-                              : _c("input", {
-                                  attrs: {
-                                    type: "text",
-                                    name: "bonusCutName_" + bonuscut.id
-                                  },
-                                  domProps: { value: bonuscut.name }
-                                })
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            bonuscut.addOrSub == "add"
-                              ? _c(
-                                  "label",
-                                  { staticClass: "label label-success fs-14" },
-                                  [_vm._v(_vm._s(bonuscut.addOrSub))]
-                                )
-                              : bonuscut.addOrSub == "sub"
-                                ? _c(
-                                    "label",
-                                    { staticClass: "label label-danger fs-14" },
-                                    [_vm._v(_vm._s(bonuscut.addOrSub))]
-                                  )
-                                : _c("label")
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            bonuscut.isRelatedToDivision
-                              ? _c("span", [
-                                  _vm._v(" " + _vm._s(bonuscut.divisionName))
-                                ])
-                              : _c("span", [_vm._v("-")])
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            bonuscut.id > 17
-                              ? _c("div", [
-                                  !bonuscut.editing
-                                    ? _c("i", {
-                                        staticClass:
-                                          "fa fa-pencil fs-16 cursor",
-                                        on: {
-                                          click: function($event) {
-                                            _vm.editBonusCutType(index)
-                                          }
-                                        }
-                                      })
-                                    : _c(
-                                        "span",
+                      _vm.employeeCandidates.length > 0
+                        ? _c("div", { staticClass: "col-lg-12" }, [
+                            _c("label", { staticClass: "p-t-10" }, [
+                              _vm._v(" Choose employee")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "scrollable" }, [
+                              _c(
+                                "div",
+                                { staticStyle: { height: "300px" } },
+                                _vm._l(_vm.employeeCandidates, function(
+                                  candidate
+                                ) {
+                                  return _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "d-flex-not-important flex-column p-t-0 filter-employee"
+                                    },
+                                    [
+                                      _c(
+                                        "div",
                                         {
                                           staticClass:
-                                            "fs-12 text-primary cursor",
+                                            "card social-card share  full-width m-b-0 d-flex flex-1 full-height no-border sm-vh-75",
+                                          attrs: { "data-social": "item" },
                                           on: {
                                             click: function($event) {
-                                              _vm.doneEditing(
-                                                bonuscut.id,
-                                                index
+                                              _vm.pickEmployee(
+                                                candidate.id,
+                                                candidate.employeeNo,
+                                                candidate.givenName,
+                                                candidate.surname
                                               )
                                             }
                                           }
                                         },
-                                        [_vm._v("DONE")]
-                                      ),
-                                  _vm._v(
-                                    "\n                                              \n                                            "
-                                  ),
-                                  _c("i", {
-                                    staticClass:
-                                      "fa fa-times text-danger fs-16 cursor",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.deleteBonusCutType(
-                                          bonuscut.id,
-                                          index
-                                        )
-                                      }
-                                    }
-                                  })
-                                ])
-                              : _vm._e()
+                                        [
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "card-header clearfix"
+                                            },
+                                            [
+                                              _c(
+                                                "h5",
+                                                {
+                                                  staticStyle: {
+                                                    float: "right"
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      staticClass: "fs-14",
+                                                      staticStyle: {
+                                                        "font-weight":
+                                                          "normal!important"
+                                                      }
+                                                    },
+                                                    [
+                                                      _vm._v(
+                                                        "(" +
+                                                          _vm._s(
+                                                            candidate.employeeNo
+                                                          ) +
+                                                          ")"
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                { staticClass: "user-pic" },
+                                                [
+                                                  _c("img", {
+                                                    attrs: {
+                                                      alt: "None",
+                                                      src:
+                                                        "/images/employee/" +
+                                                        candidate.employeePhoto,
+                                                      width: "38",
+                                                      height: "38"
+                                                    }
+                                                  })
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "h5",
+                                                { staticClass: "fs-18" },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      candidate.givenName
+                                                    ) + " "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "h6",
+                                                {
+                                                  staticClass: "fs-14",
+                                                  staticStyle: { opacity: ".7" }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                            " +
+                                                      _vm._s(candidate.surname)
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "h6",
+                                                {
+                                                  staticClass: "text-primary",
+                                                  staticStyle: {
+                                                    "margin-top": "3px"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                            " +
+                                                      _vm._s(
+                                                        candidate.jobPosition
+                                                      )
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                })
+                              )
+                            ])
                           ])
-                        ])
-                      })
-                    )
+                        : _vm._e()
+                    ])
                   ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "help pull-right m-t-10",
-                staticStyle: { opacity: "0.7" },
-                attrs: { for: "" }
-              },
-              [_vm._v("Scroll for more")]
-            )
-          ])
-        ]
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-4 m-b-10" }, [
-      _c("div", { staticClass: "card card-transparent" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("form", { attrs: { id: "bonus-cut-form" } }, [
-            _c("h4", [_vm._v("Bonus/Cut Form")]),
-            _vm._v(" "),
-            _c("div", [
-              _c("div", { staticClass: "row clearfix" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group required" }, [
-                    _c("label", [_vm._v("Name")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.bonusCutForm.name,
-                          expression: "bonusCutForm.name"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { id: "name", type: "text", name: "name" },
-                      domProps: { value: _vm.bonusCutForm.name },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.bonusCutForm,
-                            "name",
-                            $event.target.value
+                : _c("div", { staticClass: "col-lg-12" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group", attrs: { readonly: "" } },
+                      [
+                        _c("label", [_vm._v(" Employee ")]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "input-group" }, [
+                          _c("input", {
+                            staticClass: "form-control text-true-black bold",
+                            attrs: { type: "text", readonly: "" },
+                            domProps: {
+                              value:
+                                _vm.selectedEmployee.givenName +
+                                " " +
+                                _vm.selectedEmployee.surname +
+                                " (" +
+                                _vm.selectedEmployee.employeeNo +
+                                ") "
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            {
+                              staticClass: "input-group-addon danger",
+                              on: {
+                                click: function($event) {
+                                  _vm.removeSelectedEmployee()
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fa fa-times cursor" })]
                           )
-                        }
-                      }
-                    })
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
+                        ])
+                      ]
+                    )
+                  ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "form-group  required" }, [
+                  _c("label", [_vm._v("Division")]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "form-group required" }, [
-                    _c("label", [_vm._v("Add / Sub")]),
-                    _vm._v(" "),
                     _c(
                       "select",
                       {
@@ -5886,12 +4722,11 @@ var render = function() {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.bonusCutForm.addOrSub,
-                            expression: "bonusCutForm.addOrSub"
+                            value: _vm.formObject.divisionId,
+                            expression: "formObject.divisionId"
                           }
                         ],
                         staticClass: "form-control",
-                        attrs: { name: "", id: "" },
                         on: {
                           change: function($event) {
                             var $$selectedVal = Array.prototype.filter
@@ -5903,8 +4738,8 @@ var render = function() {
                                 return val
                               })
                             _vm.$set(
-                              _vm.bonusCutForm,
-                              "addOrSub",
+                              _vm.formObject,
+                              "divisionId",
                               $event.target.multiple
                                 ? $$selectedVal
                                 : $$selectedVal[0]
@@ -5913,169 +4748,52 @@ var render = function() {
                         }
                       },
                       [
-                        _c("option", { attrs: { value: "add" } }, [
-                          _vm._v("Add")
-                        ]),
+                        _c(
+                          "option",
+                          { attrs: { value: "", disabled: "", hidden: "" } },
+                          [_vm._v("Select Division")]
+                        ),
                         _vm._v(" "),
-                        _c("option", { attrs: { value: "sub" } }, [
-                          _vm._v("Sub")
-                        ])
-                      ]
+                        _vm._l(_vm.divisions, function(division) {
+                          return _c(
+                            "option",
+                            { domProps: { value: division.id } },
+                            [
+                              _vm._v(
+                                "\n                                            " +
+                                  _vm._s(division.name) +
+                                  "\n                                        "
+                              )
+                            ]
+                          )
+                        })
+                      ],
+                      2
                     )
                   ])
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row clearfix" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "checkbox check-success  " }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.bonusCutForm.isRelatedToDivision,
-                          expression: "bonusCutForm.isRelatedToDivision"
-                        }
-                      ],
-                      attrs: { type: "checkbox", id: "related-to-division" },
-                      domProps: {
-                        value: 1,
-                        checked: Array.isArray(
-                          _vm.bonusCutForm.isRelatedToDivision
-                        )
-                          ? _vm._i(_vm.bonusCutForm.isRelatedToDivision, 1) > -1
-                          : _vm.bonusCutForm.isRelatedToDivision
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = _vm.bonusCutForm.isRelatedToDivision,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = 1,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 &&
-                                (_vm.bonusCutForm.isRelatedToDivision = $$a.concat(
-                                  [$$v]
-                                ))
-                            } else {
-                              $$i > -1 &&
-                                (_vm.bonusCutForm.isRelatedToDivision = $$a
-                                  .slice(0, $$i)
-                                  .concat($$a.slice($$i + 1)))
-                            }
-                          } else {
-                            _vm.$set(
-                              _vm.bonusCutForm,
-                              "isRelatedToDivision",
-                              $$c
-                            )
-                          }
-                        }
+              _c("div", { staticClass: "col-lg-12" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-complete pull-right",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.assignDivisionManager()
                       }
-                    }),
-                    _vm._v(" "),
-                    _c("label", { attrs: { for: "related-to-division" } }, [
-                      _vm._v("Related to Division")
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm.bonusCutForm.isRelatedToDivision
-                  ? _c("div", { staticClass: "col-md-12" }, [
-                      _c("div", { staticClass: "form-group required" }, [
-                        _c("label", [_vm._v("Division")]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.bonusCutForm.divisionId,
-                                expression: "bonusCutForm.divisionId"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { name: "" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.bonusCutForm,
-                                  "divisionId",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c(
-                              "option",
-                              {
-                                attrs: {
-                                  value: "",
-                                  disabled: "",
-                                  hidden: "",
-                                  selected: ""
-                                }
-                              },
-                              [_vm._v("Select Division")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.divisions, function(division) {
-                              return _c(
-                                "option",
-                                { domProps: { value: division.id } },
-                                [
-                                  _vm._v(
-                                    "\n                                            " +
-                                      _vm._s(division.name) +
-                                      "\n                                        "
-                                  )
-                                ]
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      ])
-                    ])
-                  : _vm._e()
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                                Assign\n                            "
+                    )
+                  ]
+                )
               ])
-            ]),
-            _vm._v(" "),
-            _c("p", [
-              _vm._v(
-                "If bonus/cut is related to division, it can only be given to employee within that\n                        division"
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-complete pull-right",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.saveBonusCutForm()
-                  }
-                }
-              },
-              [_vm._v("Save\n                    ")]
-            )
+            ])
           ])
         ])
       ])
@@ -6089,25 +4807,19 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "bg-master-lighter" }, [
       _c("tr", [
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "100px" } },
-          [_vm._v("ID")]
-        ),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Division")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Active")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Start Date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("End Date")]),
         _vm._v(" "),
         _c(
           "th",
-          { staticClass: "text-black", staticStyle: { width: "300px" } },
-          [_vm._v("Name")]
-        ),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Add/Sub")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Division Related")]),
-        _vm._v(" "),
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "150px" } },
+          { staticClass: "text-black", staticStyle: { width: "250px" } },
           [_vm._v("Action")]
         )
       ])
@@ -6119,123 +4831,13 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3babfafc", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-58641ab9", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-40db1a1a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-12" }, [
-      _c("div", { staticClass: "card card-borderless" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "tab-content" }, [
-          _c(
-            "div",
-            { staticClass: "tab-pane active", attrs: { id: "tabBonusCut" } },
-            [_c("bonus-cut-tab")],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "tab-pane", attrs: { id: "tabGeneralBonusCut" } },
-            [_c("general-bonus-cut-tab")],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "tab-pane", attrs: { id: "tabPayroll" } },
-            [_c("payroll-tab")],
-            1
-          )
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      {
-        staticClass: "nav nav-tabs nav-tabs-simple",
-        attrs: { role: "tablist", "data-init-reponsive-tabs": "dropdownfx" }
-      },
-      [
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              staticClass: "active",
-              attrs: {
-                href: "#",
-                "data-toggle": "tab",
-                role: "tab",
-                "data-target": "#tabBonusCut"
-              }
-            },
-            [_vm._v("Bonus/Cut")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tab",
-                role: "tab",
-                "data-target": "#tabGeneralBonusCut"
-              }
-            },
-            [_vm._v("General Bonus/Cut")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "nav-item" }, [
-          _c(
-            "a",
-            {
-              attrs: {
-                href: "#",
-                "data-toggle": "tab",
-                role: "tab",
-                "data-target": "#tabPayroll"
-              }
-            },
-            [_vm._v("Payroll")]
-          )
-        ])
-      ]
-    )
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-40db1a1a", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6aee0518\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainSetting.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d593e5e4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/MainManagers.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6275,118 +4877,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-6aee0518", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a143e3d4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/PayrollTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
-      _c("div", { staticClass: "card card-bordered" }, [
-        _c("div", { staticClass: "card-block" }, [
-          _c("h4", [_vm._v(" Payroll Setting")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "table-responsive" }, [
-            _c("table", { staticClass: "table" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c(
-                "tbody",
-                _vm._l(_vm.payrollSettings, function(setting, index) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(setting.name))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      !setting.editing
-                        ? _c("span", [_vm._v(_vm._s(setting.value))])
-                        : _c("input", {
-                            attrs: {
-                              type: "text",
-                              name: "editValue" + setting.id
-                            },
-                            domProps: { value: setting.value }
-                          })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      !setting.editing
-                        ? _c("span", [_vm._v(_vm._s(setting.description))])
-                        : _c("input", {
-                            staticStyle: { width: "380px" },
-                            attrs: {
-                              type: "text",
-                              name: "editDescription" + setting.id
-                            },
-                            domProps: { value: setting.description }
-                          })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      !setting.editing
-                        ? _c("i", {
-                            staticClass:
-                              "fa fa-pencil text-primary fs-16 cursor",
-                            on: {
-                              click: function($event) {
-                                _vm.startEditing(setting.id, index)
-                              }
-                            }
-                          })
-                        : _c(
-                            "i",
-                            {
-                              staticClass: "text-danger cursor",
-                              on: {
-                                click: function($event) {
-                                  _vm.doneEditing(setting.id, index)
-                                }
-                              }
-                            },
-                            [_vm._v("DONE")]
-                          )
-                    ])
-                  ])
-                })
-              )
-            ])
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Value")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th")
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-a143e3d4", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-d593e5e4", module.exports)
   }
 }
 
@@ -20651,6 +19142,433 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/assets/js/client/employee/MainManagers.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/MainManagers.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d593e5e4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/MainManagers.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/employee/MainManagers.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-d593e5e4", Component.options)
+  } else {
+    hotAPI.reload("data-v-d593e5e4", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/managers.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MainManagers_vue__ = __webpack_require__("./resources/assets/js/client/employee/MainManagers.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MainManagers_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MainManagers_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_managers__ = __webpack_require__("./resources/assets/js/client/employee/router/managers.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_managers_store__ = __webpack_require__("./resources/assets/js/client/employee/vuex/managers/store.js");
+/**
+ * Created by kevinpurwono on 15/11/17.
+ */
+
+
+
+
+
+
+// Create a global Event Bus
+var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+
+// Add to Vue properties by exposing a getter for $bus
+Object.defineProperties(__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype, {
+    $bus: {
+        get: function get() {
+            return EventBus;
+        }
+    }
+});
+
+var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+    el: '#vc-employee-managers',
+    template: '<main-managers></main-managers>',
+    components: { MainManagers: __WEBPACK_IMPORTED_MODULE_1__MainManagers_vue___default.a },
+    router: __WEBPACK_IMPORTED_MODULE_2__router_managers__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_3__vuex_managers_store__["a" /* store */]
+});
+
+$(document).ready(function () {});
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/router/managers.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_managers_Index_vue__ = __webpack_require__("./resources/assets/js/client/employee/views/managers/Index.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_managers_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_managers_Index_vue__);
+/**
+ * Created by kevinpurwono on 9/11/17.
+ */
+
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]);
+
+var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
+    // mode: 'history',
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_managers_Index_vue___default.a }]
+});
+
+/* harmony default export */ __webpack_exports__["a"] = (router);
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/views/managers/Index.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/employee/views/managers/Index.vue")
+/* template */
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-58641ab9\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/employee/views/managers/Index.vue")
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/client/employee/views/managers/Index.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-58641ab9", Component.options)
+  } else {
+    hotAPI.reload("data-v-58641ab9", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/vuex/managers/modules/actions.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall__ = __webpack_require__("./node_modules/async/waterfall.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_async_waterfall__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series__ = __webpack_require__("./node_modules/async/series.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_series__);
+/**
+ * Created by kevinpurwono on 8/12/17.
+ */
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    getDataOnCreate: function getDataOnCreate(_ref, payload) {
+        var commit = _ref.commit,
+            state = _ref.state;
+
+        commit('getDivisions');
+        commit('getManagers');
+    }
+});
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/vuex/managers/modules/getters.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/**
+ * Created by kevinpurwono on 8/12/17.
+ */
+/* harmony default export */ __webpack_exports__["a"] = ({});
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/vuex/managers/modules/main.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/employee/vuex/managers/modules/getters.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/employee/vuex/managers/modules/mutations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/employee/vuex/managers/modules/actions.js");
+/**
+ * Created by kevinpurwono on 8/12/17.
+ */
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    namespaced: true,
+    state: {
+        managers: [],
+        divisions: [],
+        employeeCandidates: []
+    },
+    getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
+    mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
+    actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */]
+});
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/vuex/managers/modules/mutations.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series__ = __webpack_require__("./node_modules/async/series.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_async_series__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
+/**
+ * Created by kevinpurwono on 8/12/17.
+ */
+
+
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    getDivisions: function getDivisions(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/divisions').then(function (res) {
+            state.divisions = res.data.data;
+        });
+    },
+    getManagers: function getManagers(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/managers/list').then(function (res) {
+            state.managers = res.data.managers.data;
+        });
+    },
+    assignManager: function assignManager(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/managers/assign', {
+            employeeId: payload.employeeId,
+            divisionId: payload.divisionId
+        }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                // //push
+                // state.managers.push(res.data.manager.data)
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    activateManager: function activateManager(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/managers/activate', { 'divisionManagerId': payload.divisionManagerId }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    deactivateManager: function deactivateManager(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/managers/deactivate', { 'divisionManagerId': payload.divisionManagerId }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    searchEmployee: function searchEmployee(state, payload) {
+
+        var self = this;
+        if (payload.searchText) {
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/search/' + payload.searchText).then(function (res) {
+                if (!res.data.isFailed) {
+                    if (res.data.candidates.data) {
+                        state.employeeCandidates = res.data.candidates.data;
+                    }
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            }).catch(function (err) {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            });
+        } else {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: "Search box cannot be empty",
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/employee/vuex/managers/store.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/employee/vuex/managers/modules/main.js");
+/**
+ * Created by kevinpurwono on 8/12/17.
+ */
+
+
+
+
+
+__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
+
+var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
+    modules: {
+        managers: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
+    }
+});
+
+/***/ }),
+
 /***/ "./resources/assets/js/client/helpers/api.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -20820,421 +19738,6 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/salary/MainSetting.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/MainSetting.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-6aee0518\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/MainSetting.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/MainSetting.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-6aee0518", Component.options)
-  } else {
-    hotAPI.reload("data-v-6aee0518", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/components/settings/BonusCutTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3babfafc\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/BonusCutTab.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/components/settings/BonusCutTab.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3babfafc", Component.options)
-  } else {
-    hotAPI.reload("data-v-3babfafc", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-16c2d3d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/components/settings/GeneralBonusCutTab.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-16c2d3d0", Component.options)
-  } else {
-    hotAPI.reload("data-v-16c2d3d0", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/components/settings/PayrollTab.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/components/settings/PayrollTab.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-a143e3d4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/components/settings/PayrollTab.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/components/settings/PayrollTab.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-a143e3d4", Component.options)
-  } else {
-    hotAPI.reload("data-v-a143e3d4", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/router/setting.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_settings_Index_vue__ = __webpack_require__("./resources/assets/js/client/salary/views/settings/Index.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_settings_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_settings_Index_vue__);
-/**
- * Created by kevinpurwono on 23/11/17.
- */
-
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]);
-
-var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
-    // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_settings_Index_vue___default.a }]
-});
-
-/* harmony default export */ __webpack_exports__["a"] = (router);
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/setting.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_setting__ = __webpack_require__("./resources/assets/js/client/salary/router/setting.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainSetting_vue__ = __webpack_require__("./resources/assets/js/client/salary/MainSetting.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainSetting_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainSetting_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_setting_store__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/store.js");
-/**
- * Created by kevinpurwono on 6/12/17.
- */
-
-
-
-
-
-
-var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#vc-salary-setting',
-    template: '<main-setting></main-setting>',
-    components: { MainSetting: __WEBPACK_IMPORTED_MODULE_2__MainSetting_vue___default.a },
-    router: __WEBPACK_IMPORTED_MODULE_1__router_setting__["a" /* default */],
-    store: __WEBPACK_IMPORTED_MODULE_3__vuex_setting_store__["a" /* store */]
-});
-
-$(document).ready(function () {
-
-    var bonusCutDT = $('.bonusCutDT');
-    bonusCutDT.dataTable({
-        "sDom": "t",
-        "destroy": true,
-        "paging": false,
-        "scrollCollapse": false,
-        "ordering": false
-    });
-    $('.dataTables_empty').hide();
-});
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/views/settings/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-40db1a1a\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/salary/views/settings/Index.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/salary/views/settings/Index.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-40db1a1a", Component.options)
-  } else {
-    hotAPI.reload("data-v-40db1a1a", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/vuex/setting/modules/actions.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall__ = __webpack_require__("./node_modules/async/waterfall.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_async_waterfall___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_async_waterfall__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series__ = __webpack_require__("./node_modules/async/series.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_async_series__);
-/**
- * Created by kevinpurwono on 8/12/17.
- */
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({});
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/vuex/setting/modules/getters.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/**
- * Created by kevinpurwono on 8/12/17.
- */
-/* harmony default export */ __webpack_exports__["a"] = ({});
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/vuex/setting/modules/main.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/modules/getters.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/modules/mutations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/modules/actions.js");
-/**
- * Created by kevinpurwono on 8/12/17.
- */
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    namespaced: true,
-    state: {},
-    getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
-    mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
-    actions: __WEBPACK_IMPORTED_MODULE_2__actions__["a" /* default */]
-});
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/vuex/setting/modules/mutations.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series__ = __webpack_require__("./node_modules/async/series.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_async_series__);
-/**
- * Created by kevinpurwono on 8/12/17.
- */
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({});
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/salary/vuex/setting/store.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/salary/vuex/setting/modules/main.js");
-/**
- * Created by kevinpurwono on 8/12/17.
- */
-
-
-
-
-
-__WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */]);
-
-var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
-    modules: {
-        setting: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
-    }
-});
-
-/***/ }),
-
 /***/ "./resources/assets/js/client/store/auth.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -21262,10 +19765,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 /***/ }),
 
-/***/ 19:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/salary/setting.js");
+module.exports = __webpack_require__("./resources/assets/js/client/employee/managers.js");
 
 
 /***/ })

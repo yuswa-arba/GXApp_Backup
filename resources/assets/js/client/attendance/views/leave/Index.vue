@@ -37,7 +37,7 @@
                     </select>
                 </div>
             </div>
-            <div class="pull-right m-r-15">
+            <div class="pull-right m-r-15 ">
                 <div class="form-group">
                     <select class="btn btn-outline-primary h-35 w-150"
                             v-model="sortYear"
@@ -46,7 +46,9 @@
                     </select>
                 </div>
             </div>
-
+            <div class="pull-right m-r-15 m-t-10">
+                <i class="fa fa-question-circle fs-18 cursor" style="opacity: 0.7" @click="answerLeaveHelp()"></i>
+            </div>
             <div class="pull-left">
                 <div class="form-group">
                     <input type="text"
@@ -122,6 +124,7 @@
                 </div>
             </div>
         </div>
+        <answer-leave-help-modal></answer-leave-help-modal>
     </div>
 </template>
 
@@ -130,8 +133,12 @@
     import {get, post} from'../../../helpers/api'
     import {api_path} from '../../../helpers/const'
     import series from 'async/series';
-    export default{
+    import AnswerLeaveHelpModal from '../../components/leave/AnswerLeaveHelpModal.vue'
 
+    export default{
+        components: {
+            'answer-leave-help-modal': AnswerLeaveHelpModal
+        },
         data(){
             return {
                 sortYear: moment().year(),
@@ -242,7 +249,7 @@
 
 
                     series([
-                        function(cb){
+                        function (cb) {
 
                             //send data to server
                             self.$store.dispatch({
@@ -250,9 +257,9 @@
                                 leaveApprovalId: self.answerLeaveApprovalId
                             })
 
-                            cb(null,'')
+                            cb(null, '')
                         },
-                        function(cb){
+                        function (cb) {
 
                             //uncheck all items
                             for (let i = 0; i < totalLeaveIds; i++) {
@@ -270,15 +277,15 @@
                             // self.sortDivisionId = ''
                             // self.sortLeaveTypeId = ''
                             // self.sortLeaveApprovalId = ''
-                             self.answerLeaveApprovalId = ''
-                             $('#search-employee-box').val('')
+                            self.answerLeaveApprovalId = ''
+                            $('#search-employee-box').val('')
 
-                            setTimeout(()=>{
+                            setTimeout(() => {
                                 self.sortLeaveSchedule()
-                            },1000)
+                            }, 1000)
 
 
-                            cb(null,'')
+                            cb(null, '')
                         }
                     ])
 
@@ -292,6 +299,9 @@
                     }).show();
                 }
 
+            },
+            answerLeaveHelp(){
+                $('#modal-answer-leave-help').modal('show')
             }
 
         },

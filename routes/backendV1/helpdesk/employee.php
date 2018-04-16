@@ -50,6 +50,12 @@ Route::prefix('v1/h')->group(function () {
         Route::post('edit/faceapi/personFace', 'AjaxController@saveFaceApiPersonFace');
         Route::post('edit/faceapi/savePhoto', 'AjaxController@saveFacePhoto');
         Route::delete('edit/faceapi/deletePhoto/{persistedFaceId}', 'AjaxController@deleteFacePhoto');
+
+        Route::get('managers/list','ManagersController@list');
+        Route::post('managers/assign','ManagersController@assign');
+        Route::post('managers/activate','ManagersController@activate');
+        Route::post('managers/deactivate','ManagersController@deactivate');
+
     });
 
 });

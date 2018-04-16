@@ -9,6 +9,7 @@
 
 namespace App\Attendance\Logics\LeaveSchedule;
 
+use App\Attendance\Models\AttendanceSetting;
 use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeLeaveSchedule;
 use App\Attendance\Models\Slots;
@@ -38,7 +39,7 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
 
             $totalSubmittedDate = $this->getTotalAlreadySubmittedDate($employee, $parsedFromDate->year);
 
-            if ($totalSubmittedDate < GlobalConfig::$MAX_PAID_LEAVE['DAYS']) { //make sure paid leave is still available
+            if ($totalSubmittedDate <  AttendanceSetting::where('name','max-leave-days')->first()['value']) { //make sure paid leave is still available
 
 
                 if ($this->isDateGreater($request->fromDate, $request->toDate) || ($request->fromDate == $request->toDate)) {
@@ -60,11 +61,12 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
 
                             }
 
-                            if ($this->diffDay($request->fromDate, $request->toDate) > GlobalConfig::$MAX_STREAK_PAID_LEAVE['DAYS']) { // check max streak days
+                            $maxStreakPaidLeaveDays= AttendanceSetting::where('name','max-streak-paid-leave')->first()['value'];
+                            if ($this->diffDay($request->fromDate, $request->toDate) >  $maxStreakPaidLeaveDays) { // check max streak days
 
                                 $response['isFailed'] = true;
                                 $response['code'] = ResponseCodes::$ATTD_ERR_CODES['STREAK_PAID_LEAVE_MORE_THAN_7'];
-                                $response['message'] = 'Streak paid leave cannot be more than ' . GlobalConfig::$MAX_STREAK_PAID_LEAVE['DAYS'] . ' days ';
+                                $response['message'] = 'Streak paid leave cannot be more than ' . $maxStreakPaidLeaveDays . ' days ';
                                 return response()->json($response, 200);
 
                             }
@@ -216,10 +218,6 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
                                     ->where('fromDate', $date)
                                     ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])
                                     ->count() > 0;
-
-                            Log::info(EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameDivision)
-                                ->where('fromDate', $date)
-                                ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])->get());
 
                             if ($schedule) {
                                 $invalidDate = $date;

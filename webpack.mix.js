@@ -168,6 +168,7 @@ mix.copyDirectory('resources/assets/sounds', 'public/sounds');
 mix.js('resources/assets/js/client/employee/form','public/js/client/employee');
 mix.js('resources/assets/js/client/employee/list','public/js/client/employee');
 mix.js('resources/assets/js/client/employee/resignation','public/js/client/employee');
+mix.js('resources/assets/js/client/employee/managers','public/js/client/employee');
 mix.js('resources/assets/js/client/passport/main','public/js/client/passport');
 mix.js('resources/assets/js/client/permission/main','public/js/client/permission');
 mix.js('resources/assets/js/client/attendance/setting','public/js/client/attendance');

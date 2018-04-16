@@ -4,12 +4,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import list from './modules/list/main'
+import managers from './modules/main'
 
 Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     modules:{
-        list
+        managers
     }
 })
