@@ -29,56 +29,6 @@ class LeaveScheduleController extends Controller
     }
 
     /*
-     * @for Employee
-     * @desc change dates / description / leave type
-     * */
-    public function update(Request $request)
-    {
-        $response = array();
-
-        $validator = Validator::make($request->all(), [
-            'elsId' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            $response['isFailed'] = true;
-            $response['message'] = 'Required parameter is missing';
-
-            return response()->json($response, 200);
-        }
-
-        //is valid
-
-        //TODO: update ELS logic
-
-    }
-
-    /*
-     * @for employee
-     * @desc remove leave schedule
-     * */
-    public function delete(Request $request)
-    {
-        $response = array();
-
-        $validator = Validator::make($request->all(), [
-            'elsId' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            $response['isFailed'] = true;
-            $response['message'] = 'Required parameter is missing';
-
-            return response()->json($response, 200);
-        }
-
-        //is valid
-
-        //TODO: delete ELS logic
-
-    }
-
-    /*
      * @for Manager / Admin
      * @desc same with update but its from Manager and may add notes, update approval id
      * */

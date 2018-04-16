@@ -13,11 +13,13 @@ use App\Attendance\Models\DayOffSchedule;
 use App\Attendance\Models\EmployeeLeaveSchedule;
 use App\Attendance\Models\Slots;
 use App\Attendance\Transformers\SlotListTransformer;
+use App\Employee\Models\MasterEmployee;
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\API\Traits\ResponseCodes;
 use App\Traits\GlobalConfig;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
 {
@@ -34,14 +36,14 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
             $parsedFromDate = Carbon::createFromFormat('d/m/Y', $request->fromDate);
             $parsedToDate = Carbon::createFromFormat('d/m/Y', $request->toDate);
 
-            $totalSubmittedDate = $this->getTotalAlreadySubmittedDate($employee,$parsedFromDate->year);
+            $totalSubmittedDate = $this->getTotalAlreadySubmittedDate($employee, $parsedFromDate->year);
 
             if ($totalSubmittedDate < GlobalConfig::$MAX_PAID_LEAVE['DAYS']) { //make sure paid leave is still available
 
 
-                if ($this->isDateGreater($request->fromDate, $request->toDate)||($request->fromDate==$request->toDate)) {
+                if ($this->isDateGreater($request->fromDate, $request->toDate) || ($request->fromDate == $request->toDate)) {
 
-                    if($this->isDateGreater(Carbon::now()->format('d/m/Y'),$request->fromDate) //greater than today
+                    if ($this->isDateGreater(Carbon::now()->format('d/m/Y'), $request->fromDate) //greater than today
                     ) {
                         if ($this->diffDay($request->fromDate, $request->toDate) > 1) { // check if its more than 1 date
                             $isStreakPaidLeave = true; // if yes set streak paid leave to true
@@ -49,23 +51,27 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
 
                         if ($isStreakPaidLeave) { //if its streak paid leave check if he has already used the chance
 
-                            if ($this->hasUsedStreakPaidLeaveChance($employee,$parsedFromDate->year)) { //check if he has already used the chance
+                            if ($this->hasUsedStreakPaidLeaveChance($employee, $parsedFromDate->year)) { //check if he has already used the chance
+
                                 $response['isFailed'] = true;
                                 $response['code'] = ResponseCodes::$ATTD_ERR_CODES['HAS_USED_CHANCE_TO_STREAK_PAID_LEAVE'];
                                 $response['message'] = 'You have used the chance to streak paid leave this year';
                                 return response()->json($response, 200);
+
                             }
 
                             if ($this->diffDay($request->fromDate, $request->toDate) > GlobalConfig::$MAX_STREAK_PAID_LEAVE['DAYS']) { // check max streak days
+
                                 $response['isFailed'] = true;
                                 $response['code'] = ResponseCodes::$ATTD_ERR_CODES['STREAK_PAID_LEAVE_MORE_THAN_7'];
-                                $response['message'] = 'Streak paid leave cannot be more than '.GlobalConfig::$MAX_STREAK_PAID_LEAVE['DAYS'].' days ';
+                                $response['message'] = 'Streak paid leave cannot be more than ' . GlobalConfig::$MAX_STREAK_PAID_LEAVE['DAYS'] . ' days ';
                                 return response()->json($response, 200);
+
                             }
 
                         }
 
-                        if ($this->checkIfCurrentMonthPaidLeaveExist($employee, $parsedFromDate->month,$parsedFromDate->year)) {
+                        if ($this->checkIfCurrentMonthPaidLeaveExist($employee, $parsedFromDate->month, $parsedFromDate->year)) {
                             if (!$isStreakPaidLeave) { // if its not streak paid leave and this month already exist
 
                                 $response['isFailed'] = true;
@@ -76,7 +82,14 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
                             }
                         }
 
-                        // TODO : check in the same division / slot if exist on the same date
+                        $checkSameJobPosition = $this->checkIfSameJobPositionHasPaidLeave($employee, $request->fromDate, $request->toDate, $isStreakPaidLeave);
+
+                        if ($checkSameJobPosition['error']) {
+                            $response['isFailed'] = true;
+                            $response['code'] = ResponseCodes::$ATTD_ERR_CODES['EMPLOYEE_WITH_SAME_JOB_POSITION_PAID_LEAVE'];
+                            $response['message'] = 'Invalid date found: ' . $checkSameJobPosition['date'] . '. It has been taken by your colleague';
+                            return response()->json($response, 200);
+                        }
 
                         // so far valid..
 
@@ -89,7 +102,7 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
                             'description' => $request->description,
                             'month' => $parsedFromDate->month,
                             'year' => $parsedToDate->year,
-                            'totalDays' => $isStreakPaidLeave?$this->totalDays($request->fromDate, $request->toDate):1,
+                            'totalDays' => $isStreakPaidLeave ? $this->totalDays($request->fromDate, $request->toDate) : 1,
                             'isStreakPaidLeave' => $isStreakPaidLeave ? 1 : 0
                         ]);
 
@@ -116,9 +129,8 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
                         $response['code'] = ResponseCodes::$ATTD_ERR_CODES['INVALID_DATE'];
                         $response['message'] = 'Invalid date';
 
-                        return response()->json($response,200);
+                        return response()->json($response, 200);
                     }
-
 
 
                 } else {
@@ -131,7 +143,7 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
             } else {
                 $response['isFailed'] = true;
                 $response['code'] = ResponseCodes::$ATTD_ERR_CODES['REACHED_MAXIMUM_PAID_LEAVE'];
-                $response['message'] = 'You have reached your maximum paid leave days. Total Requested: ' .$totalSubmittedDate;
+                $response['message'] = 'You have reached your maximum paid leave days. Total Requested: ' . $totalSubmittedDate;
                 return response()->json($response, 200);
             }
         } else {
@@ -146,7 +158,7 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
 
     }
 
-    private function getTotalAlreadySubmittedDate($employee,$year)
+    private function getTotalAlreadySubmittedDate($employee, $year)
     {
         return EmployeeLeaveSchedule::where('employeeId', $employee->id)
             ->where('year', $year)//current year
@@ -154,7 +166,7 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
             ->sum('totalDays');
     }
 
-    private function hasUsedStreakPaidLeaveChance($employee,$year)
+    private function hasUsedStreakPaidLeaveChance($employee, $year)
     {
         return EmployeeLeaveSchedule::where('employeeId', $employee->id)
                 ->where('year', $year)
@@ -163,12 +175,87 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
 
     }
 
-    private function checkIfCurrentMonthPaidLeaveExist($employee, $month,$year)
+    private function checkIfCurrentMonthPaidLeaveExist($employee, $month, $year)
     {
         return EmployeeLeaveSchedule::where('employeeId', $employee->id)
                 ->where('year', $year)
                 ->where('month', $month)
                 ->count() > 0;
+    }
+
+    private function checkIfSameJobPositionHasPaidLeave($employee, $fromDate, $toDate, $isStreakPaidLeave)
+    {
+
+        $employeeJobPositionId = $this->getResultWithNullChecker1Connection($employee, 'employment', 'jobPositionId');
+
+        if ($employeeJobPositionId != null) {
+
+            $getEmployeeIds = MasterEmployee::select('MasterEmployee.id')->where('hasResigned', 0)
+                ->join('employment', function ($join) use ($employeeJobPositionId) {
+                    $join->on('MasterEmployee.id', '=', 'employment.employeeId')
+                        ->where('employment.jobPositionId', '=', $employeeJobPositionId);
+                })->get()->toArray();
+
+
+            $employeeIdsWithSameJobPosition = array_column($getEmployeeIds, 'id');
+
+            if ($employeeIdsWithSameJobPosition) {
+
+                if ($isStreakPaidLeave) {
+
+                    $generatedDates = $this->generateDateRange($fromDate, $toDate, 'd/m/Y');
+
+                    if (count($generatedDates) > 0) {
+
+                        $error = false;
+                        $invalidDate = '';
+
+                        foreach ($generatedDates as $date) { //loop through generated dates
+
+                            $schedule = EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameJobPosition)
+                                    ->where('fromDate', $date)
+                                    ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])
+                                    ->count() > 0;
+
+                            Log::info(EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameJobPosition)
+                                ->where('fromDate', $date)
+                                ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])->get());
+
+                            if ($schedule) {
+                                $invalidDate = $date;
+                                $error = true; //set error to true;
+                                break;
+                            }
+                        }
+
+                        return ['error' => $error, 'date' => $invalidDate];
+
+                    } else {
+                        return ['error' => true, 'date' => ''];
+                    }
+
+                } else {
+                    $invalidDate = '';
+                    $error = false;
+
+                    $schedule = EmployeeLeaveSchedule::whereIn('employeeId', $employeeIdsWithSameJobPosition)
+                            ->where('fromDate', $fromDate)
+                            ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])
+                            ->count() > 0;
+
+                    if ($schedule) {
+                        $invalidDate = $fromDate;
+                        $error = true; //set error to true;
+                    }
+                    return ['error' => $error, 'date' => $invalidDate];
+                }
+            } else {
+                return ['error' => true, 'date' => ''];
+            }
+        } else {
+            return ['error' => true, 'date' => ''];
+        }
+
     }
 
     private function isEmployeeEligible($employee)
@@ -187,4 +274,6 @@ class InsertEmployeeLeaveScheduleLogic extends InsertELSUseCase
         }
 
     }
+
+
 }
