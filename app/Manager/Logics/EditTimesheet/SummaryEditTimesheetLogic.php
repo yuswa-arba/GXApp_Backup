@@ -7,7 +7,7 @@
  * Time: 11:12 AM
  */
 
-namespace App\Attendance\Logics\Timesheet;
+namespace App\Manager\Logics\EditTimesheet;
 
 use App\Attendance\Models\AttendanceTimesheet;
 use App\Attendance\Models\DayOffSchedule;
@@ -23,22 +23,18 @@ use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 
 
-class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
+class SummaryEditTimesheetLogic extends SummaryEditTimesheetUseCase
 {
     use GlobalUtils;
 
-    public function handleAllSummary($request)
+    public function handle($editTimesheet)
     {
-        $branchOfficeId = $request->branchOfficeId;
 
-        $employees = MasterEmployee::whereHas('employment', function ($query) use ($branchOfficeId) { //get only employee with selected branch office
-            $query->where('branchOfficeId', $branchOfficeId);
+        $employees = MasterEmployee::whereHas('employment', function ($query) use ($editTimesheet) { //get only employee with selected branch office
+            $query->where('branchOfficeId', $editTimesheet->branchOfficeId)->where('divisionId',$editTimesheet->divisionId);
         })->get();
 
-        $fromDate = Carbon::createFromFormat('d/m/Y H:i', $request->fromDate . '00:00')->toDateTimeString();
-        $toDate = Carbon::createFromFormat('d/m/Y H:i', $request->toDate . '23:59')->toDateTimeString();
-        // $dateRange = $this->generateDateRangeFromFormatToFormat($request->fromDate, $request->toDate, 'd/m/Y', 'Y-m-d');
-        $dateRange = $this->generateDateRange($request->fromDate, $request->toDate, 'd/m/Y');
+        $dateRange = $this->generateDateRange($editTimesheet->startDate, $editTimesheet->endDate, 'd/m/Y');
 
         $response = array();
         $summary = array();
@@ -57,30 +53,19 @@ class SummaryTimesheetLogic extends SummarizeTimesheetUseCase
                 $response['timesheet'][$i]['detail'] = fractal($timesheet, new TimesheetSummaryTransformer());
                 $response['timesheet'][$i]['type'] = $this->checkDayType($employee->id, $datedmy);
                 $response['timesheet'][$i]['editing'] = false;
-
+                $response['timesheet'][$i]['allowToEdit'] =  Carbon::createFromFormat('d/m/Y',$editTimesheet->dueDate)->gt(Carbon::now()); //make sure has not passed due date;
                 $i++;
             }
-
             $summary[] = $response;
         }
 
         $response = array();
         $response['isFailed'] = false;
-        $response['message'] = 'success';
+        $response['message'] = 'Success';
         $response['summary'] = $summary;
+
         return response()->json($response, 200);
     }
-
-    public function handleSummaryWithSpecificEmployee($request)
-    {
-        // TODO: Implement handleSummaryWithSpecificEmployee() method.
-    }
-
-    public function handleSummaryWithSpecificDivision($request)
-    {
-        // TODO: Implement handleSummaryWithSpecificDivision() method.
-    }
-
 
     private function checkDayType($employeeId, $datedmy)
     {

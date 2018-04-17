@@ -64,7 +64,8 @@ $(document).ready(function () {
     let d = new Date();
     $('#firstdate').datepicker({
         format: 'dd/mm/yyyy',
-        startDate: new Date(d.getFullYear(), 0, 1)
+        startDate: new Date(d.getFullYear(), 0, 1),
+        autoclose:true
     });
 
 

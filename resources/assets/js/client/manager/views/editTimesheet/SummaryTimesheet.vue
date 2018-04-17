@@ -2,28 +2,7 @@
     <div class="row row-same-height">
 
         <div class="col-lg-12 m-b-10 m-t-10">
-
             <slot name="go-back-menu"></slot>
-            <div class="pull-left m-r-15 m-b-10">
-                <div class="dropdown dropdown-default">
-                    <button class="btn btn-info dropdown-toggle text-center" type="button"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Actions
-                    </button>
-
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item pointer" @click="attemptSendToManagers()">Send to Managers</a>
-                        <a class="dropdown-item pointer">Generate PDF</a>
-                    </div>
-
-                </div>
-            </div>
-            <div class="pull-right">
-                <button class="btn btn-outline-info" @click="attemptGenerateSummary()"><span
-                        class="bold text-black">From: </span> {{generateFromDate}} <span
-                        class="bold text-black"> &nbsp; To: </span>{{generateToDate}}
-                </button>
-            </div>
         </div>
 
         <div class="col-lg-12 m-b-10 ">
@@ -58,7 +37,7 @@
                                     <th class="text-black">Shift</th>
                                     <th class="text-black">Valid</th>
                                     <th class="text-black">Apprv</th>
-                                    <th class="text-black" style="width:70px"></th>
+                                    <th class="text-black" style="width: 70px"></th>
                                     <th class="text-black"></th>
                                 </tr>
                                 </thead>
@@ -135,29 +114,29 @@
                                         <span v-else="">-</span>
                                     </td>
                                     <td :class="{'w-60':timesheet.detail.data[0] && timesheet.detail.data[0].attendanceApproveId==99}">
-                                        <div class="row"
-                                             v-if="timesheet.detail.data[0] && timesheet.detail.data[0].attendanceApproveId==99">
-                                            <div class="col-lg-6">
-                                                <i class="fa fa-check text-success cursor"
-                                                   @click="approveTimesheet(timesheet.detail.data[0].id)"></i>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <i class="fa fa-times text-danger cursor"
-                                                   @click="disapproveTimesheet(timesheet.detail.data[0].id)"></i>
-                                            </div>
-                                        </div>
+                                        <div v-if="timesheet.allowToEdit">
+                                             <span v-if="timesheet.detail.data[0] && timesheet.detail.data[0].attendanceApproveId==99">
+                                        <i class="fa fa-check text-success cursor"
+                                           @click="approveTimesheet(timesheet.detail.data[0].id)"></i> &nbsp;
+                                        <i class="fa fa-times text-danger cursor"
+                                           @click="disapproveTimesheet(timesheet.detail.data[0].id)"></i>
+                                        </span>
 
+
+                                        </div>
                                     </td>
                                     <td>
+                                        <div v-if="timesheet.allowToEdit">
                                         <i class="fa fa-pencil cursor" v-if="!timesheet.editing"
                                            @click="editTimesheet(index,summary.employee.data.employeeNo)"></i>
                                         <div v-else="timesheet.editing">
-                                            <span class="fs-12 text-danger cursor"
-                                                  v-if="timesheet.detail.data[0] && timesheet.detail.data[0].id"
-                                                  @click="doneEditTimesheet(index,summary.employee.data.id,summary.employee.data.employeeNo,timesheet.detail.data[0].id,timesheet.date)">DONE</span>
+                                             <span class="fs-12 text-danger cursor"
+                                                   v-if="timesheet.detail.data[0] && timesheet.detail.data[0].id"
+                                                   @click="doneEditTimesheet(index,summary.employee.data.id,summary.employee.data.employeeNo,timesheet.detail.data[0].id,timesheet.date)">DONE</span>
                                             <span class="fs-12 text-danger cursor"
                                                   v-else=""
                                                   @click="doneEditTimesheet(index,summary.employee.data.id,summary.employee.data.employeeNo,'',timesheet.date)">DONE</span>
+                                        </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -172,59 +151,50 @@
             </div>
 
         </div>
-        <attempt-inside-summary-modal></attempt-inside-summary-modal>
-        <attempt-send-to-managers-modal></attempt-send-to-managers-modal>
     </div>
 
 </template>
 <script type="text/javascript">
     import {mapState, mapGetters} from 'vuex'
-    import AttemptGenerateInsideSummaryModal from '../../components/timesheet/AttemptInsideSummaryModal.vue'
-    import AttemptSendToManagerModal from '../../components/timesheet/AttemptSendToManagersModal.vue'
-
     export default{
         components: {
-            'attempt-inside-summary-modal': AttemptGenerateInsideSummaryModal,
-            'attempt-send-to-managers-modal': AttemptSendToManagerModal
 
         },
         data(){
             return {}
         },
         computed: {
-            ...mapState('timesheet', {
-                generateFromDate: 'generateFromDate',
-                generateToDate: 'generateToDate',
-                timesheetSummaryData: 'timesheetSummaryData'
-            }),
-            ...mapGetters('timesheet', {
+            ...mapState('editTimesheet', {
+                timesheetSummaryData: 'timesheetSummaryData',
                 shifts: 'shifts'
             })
         },
         created(){
+
+            this.$store.commit({
+                type:'editTimesheet/getShifts'
+            })
+
+            this.$store.commit({
+                type:'editTimesheet/getTimesheetSummaryData',
+                editTimesheetId:this.$route.params.editTimesheetId
+            })
         },
         mounted() {
 
         },
         methods: {
-            attemptGenerateSummary(){
-                this.$store.dispatch('timesheet/attemptGenerateInsideSummary');
-            },
-            attemptSendToManagers(){
-                this.$store.dispatch('timesheet/attemptSendToManagers');
-
-            },
             approveTimesheet(timesheetId){
                 if (timesheetId)
-                    this.$store.commit('timesheet/approveTimesheetFromSummary', timesheetId)
+                    this.$store.commit('editTimesheet/approveTimesheetFromSummary', timesheetId)
             },
             disapproveTimesheet(timesheetId){
                 if (timesheetId)
-                    this.$store.commit('timesheet/disapproveTimesheetFromSummary', timesheetId)
+                    this.$store.commit('editTimesheet/disapproveTimesheetFromSummary', timesheetId)
             },
             editTimesheet(index, employeeNo){
                 this.$store.dispatch({
-                    type: 'timesheet/editTimesheet',
+                    type: 'editTimesheet/editTimesheet',
                     index: index,
                     employeeNo: employeeNo
                 })
@@ -256,7 +226,7 @@
                 } else {
 
                     this.$store.dispatch({
-                        type: 'timesheet/cancelEditTimesheet',
+                        type: 'editTimesheet/cancelEditTimesheet',
                         index: index,
                         employeeNo: employeeNo,
                     })
@@ -275,7 +245,7 @@
 
                     if (timesheetId) {
                         this.$store.dispatch({
-                            type: 'timesheet/saveEditTimesheet',
+                            type: 'editTimesheet/saveEditTimesheet',
                             index: index,
                             employeeNo: employeeNo,
                             clockInTime: cInTime,
@@ -286,7 +256,7 @@
                         })
                     } else {
                         this.$store.dispatch({
-                            type: 'timesheet/createNewTimesheet',
+                            type: 'editTimesheet/createNewTimesheet',
                             index: index,
                             employeeId: employeeId,
                             employeeNo: employeeNo,

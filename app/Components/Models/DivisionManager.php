@@ -21,4 +21,9 @@ class DivisionManager extends Model
         return $this->belongsTo(Division::class,'divisionId');
     }
 
+    public function branchOffice()
+    {
+        return $this->belongsTo(BranchOffice::class,'branchOfficeId');
+    }
+
 }

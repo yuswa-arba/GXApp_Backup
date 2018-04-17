@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 9);
+/******/ 	return __webpack_require__(__webpack_require__.s = 40);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2458,13 +2458,11 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/MainTimesheet.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/MainEditTimesheet.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 //
 //
 //
@@ -2479,7 +2477,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2488,488 +2485,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     methods: {
         goBack: function goBack() {
             $('#errors-container').addClass('hide');
-            this.$router.go(-1);
+            this.$router.push('/');
         }
     }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptInsideSummaryModal.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {};
-    },
-
-    mounted: function mounted() {
-        $('#summary-datepicker-range').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
-    },
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('timesheet', {
-        branchOffices: 'branchOffices'
-    })),
-    methods: {
-        generateSummary: function generateSummary() {
-            var self = this;
-            var branchOfficeId = $('#select-branch-office').val();
-            var fromDate = $('#generateFromDate').val();
-            var toDate = $('#generateToDate').val();
-
-            if (fromDate && toDate && branchOfficeId) {
-                this.$store.dispatch({
-                    type: 'timesheet/startGenerateSummary',
-                    branchOfficeId: branchOfficeId,
-                    fromDate: fromDate,
-                    toDate: toDate
-                });
-
-                this.$router.push({ name: 'summaryTimesheet' });
-            }
-        }
-    }
-
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptSendToManagersModal.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {};
-    },
-
-    mounted: function mounted() {
-        var d = new Date();
-        $('#duedate').datepicker({
-            format: 'dd/mm/yyyy',
-            autoclose: true
-        });
-    },
-    computed: {},
-    methods: {
-        sendToManagers: function sendToManagers() {
-
-            var self = this;
-            var dueDate = $('#duedate').val();
-
-            if (dueDate) {
-                this.$store.dispatch({
-                    type: 'timesheet/sendSummaryToManagers',
-                    dueDate: dueDate
-                });
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: 'Due date cannot be empty',
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }
-    }
-
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptSummaryModal.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {};
-    },
-
-    mounted: function mounted() {
-        $('#summary-datepicker-range').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
-    },
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('timesheet', {
-        branchOffices: 'branchOffices'
-    })),
-    methods: {
-        generateSummary: function generateSummary() {
-            var self = this;
-            var branchOfficeId = $('#select-branch-office').val();
-            var fromDate = $('#generateFromDate').val();
-            var toDate = $('#generateToDate').val();
-
-            if (fromDate && toDate && branchOfficeId) {
-                this.$store.dispatch({
-                    type: 'timesheet/startGenerateSummary',
-                    branchOfficeId: branchOfficeId,
-                    fromDate: fromDate,
-                    toDate: toDate
-                });
-
-                this.$router.push({ name: 'summaryTimesheet' });
-            }
-        }
-    }
-
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/TimesheetSortDatepicker.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    mounted: function mounted() {
-        $('#sortTimesheetDate').datepicker({
-            autoclose: true,
-            format: 'dd/mm/yyyy',
-            todayHighlight: true
-        });
-
-        var currentDate = moment().format('DD/MM/YYYY');
-        if (this.$store.state.timesheet.sortedDate) {
-            currentDate = this.$store.state.timesheet.sortedDate;
-        }
-        $('#sortTimesheetDate').val(currentDate);
-    }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/DetailTimesheet.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return {
-            timesheetDetail: {}
-        };
-    },
-    created: function created() {
-        var _this = this;
-
-        var self = this;
-        var timesheetId = this.$route.params.id;
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/detail/' + timesheetId).then(function (res) {
-            self.timesheetDetail = res.data.data;
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 0,
-                type: 'danger'
-            }).show();
-            _this.$router.go(-1);
-        });
-    }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/Index.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_timesheet_TimesheetSortDatepicker_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/timesheet/TimesheetSortDatepicker.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_timesheet_TimesheetSortDatepicker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_timesheet_TimesheetSortDatepicker_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_timesheet_AttemptSummaryModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/timesheet/AttemptSummaryModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_timesheet_AttemptSummaryModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_timesheet_AttemptSummaryModal_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_utils__ = __webpack_require__("./resources/assets/js/client/helpers/utils.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -3027,267 +2557,40 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        'timesheet-sort-datepicker': __WEBPACK_IMPORTED_MODULE_1__components_timesheet_TimesheetSortDatepicker_vue___default.a,
-        'attempt-summary-modal': __WEBPACK_IMPORTED_MODULE_2__components_timesheet_AttemptSummaryModal_vue___default.a
-    },
     data: function data() {
-        return {
-            sortDivisionId: '',
-            sortShiftId: '',
-            sortBranchOfficeId: '',
-            showcInPhoto: true,
-            showcOutPhoto: true,
-            sortAttdApprovalId: ''
-        };
+        return {};
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('timesheet', {
-        divisions: 'divisions',
-        branchOffices: 'branchOffices',
-        shifts: 'shifts',
-        attdApprovals: 'attdApprovals',
-        timesheetDatas: 'timesheetDatas'
+
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('editTimesheet', {
+        timesheets: 'timesheets'
     })),
     created: function created() {
-
         var self = this;
-        this.$store.dispatch('timesheet/getDataOnCreate');
+        this.$store.dispatch('editTimesheet/getDataOnCreate');
     },
+    mounted: function mounted() {},
 
     methods: {
-        sortTimesheet: function sortTimesheet() {
-
-            var self = this;
-            var sortDate = moment().format('DD/MM/YYYY');
-
-            if ($('#sortTimesheetDate').val()) {
-                sortDate = $('#sortTimesheetDate').val();
-            }
-
-            this.$store.dispatch({
-                type: 'timesheet/getSortedData',
-                divisionId: self.sortDivisionId,
-                branchOfficeId: self.sortBranchOfficeId,
-                shiftId: self.sortShiftId,
-                sortDate: sortDate,
-                attdApprovalId: self.sortAttdApprovalId
-            });
-        },
-        showHidecInPhoto: function showHidecInPhoto() {
-            var self = this;
-            if (self.showcInPhoto == true) {
-                self.showcInPhoto = false;
-            } else {
-                self.showcInPhoto = true;
-            }
-        },
-        showHidecOutPhoto: function showHidecOutPhoto() {
-            var self = this;
-            if (self.showcOutPhoto == true) {
-                self.showcOutPhoto = false;
-            } else {
-                self.showcOutPhoto = true;
-            }
-        },
-        approveTimesheet: function approveTimesheet(timesheetId) {
-            this.$store.commit('timesheet/approveTimesheet', timesheetId);
-        },
-        disapproveTimesheet: function disapproveTimesheet(timesheetId) {
-            this.$store.commit('timesheet/disapproveTimesheet', timesheetId);
-        },
-        detailTimsheet: function detailTimsheet(timesheetId) {
-            this.$router.push({ name: 'detailTimesheet', params: { id: timesheetId } });
-        },
-        attemptSummary: function attemptSummary() {
-            this.$store.dispatch('timesheet/attemptGenerateSummary');
+        goToSummary: function goToSummary(timesheetId) {
+            this.$router.push({ name: 'timesheetSummary', params: { editTimesheetId: timesheetId } });
         }
     }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/SummaryTimesheet.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_timesheet_AttemptInsideSummaryModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/timesheet/AttemptInsideSummaryModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_timesheet_AttemptInsideSummaryModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_timesheet_AttemptInsideSummaryModal_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_timesheet_AttemptSendToManagersModal_vue__ = __webpack_require__("./resources/assets/js/client/attendance/components/timesheet/AttemptSendToManagersModal.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_timesheet_AttemptSendToManagersModal_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_timesheet_AttemptSendToManagersModal_vue__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -3446,70 +2749,41 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        'attempt-inside-summary-modal': __WEBPACK_IMPORTED_MODULE_1__components_timesheet_AttemptInsideSummaryModal_vue___default.a,
-        'attempt-send-to-managers-modal': __WEBPACK_IMPORTED_MODULE_2__components_timesheet_AttemptSendToManagersModal_vue___default.a
-
-    },
+    components: {},
     data: function data() {
         return {};
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('timesheet', {
-        generateFromDate: 'generateFromDate',
-        generateToDate: 'generateToDate',
-        timesheetSummaryData: 'timesheetSummaryData'
-    }), Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["b" /* mapGetters */])('timesheet', {
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('editTimesheet', {
+        timesheetSummaryData: 'timesheetSummaryData',
         shifts: 'shifts'
     })),
-    created: function created() {},
+    created: function created() {
+
+        this.$store.commit({
+            type: 'editTimesheet/getShifts'
+        });
+
+        this.$store.commit({
+            type: 'editTimesheet/getTimesheetSummaryData',
+            editTimesheetId: this.$route.params.editTimesheetId
+        });
+    },
     mounted: function mounted() {},
 
     methods: {
-        attemptGenerateSummary: function attemptGenerateSummary() {
-            this.$store.dispatch('timesheet/attemptGenerateInsideSummary');
-        },
-        attemptSendToManagers: function attemptSendToManagers() {
-            this.$store.dispatch('timesheet/attemptSendToManagers');
-        },
         approveTimesheet: function approveTimesheet(timesheetId) {
-            if (timesheetId) this.$store.commit('timesheet/approveTimesheetFromSummary', timesheetId);
+            if (timesheetId) this.$store.commit('editTimesheet/approveTimesheetFromSummary', timesheetId);
         },
         disapproveTimesheet: function disapproveTimesheet(timesheetId) {
-            if (timesheetId) this.$store.commit('timesheet/disapproveTimesheetFromSummary', timesheetId);
+            if (timesheetId) this.$store.commit('editTimesheet/disapproveTimesheetFromSummary', timesheetId);
         },
         editTimesheet: function editTimesheet(index, employeeNo) {
             this.$store.dispatch({
-                type: 'timesheet/editTimesheet',
+                type: 'editTimesheet/editTimesheet',
                 index: index,
                 employeeNo: employeeNo
             });
@@ -3540,7 +2814,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             } else {
 
                 this.$store.dispatch({
-                    type: 'timesheet/cancelEditTimesheet',
+                    type: 'editTimesheet/cancelEditTimesheet',
                     index: index,
                     employeeNo: employeeNo
                 });
@@ -3558,7 +2832,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                 if (timesheetId) {
                     this.$store.dispatch({
-                        type: 'timesheet/saveEditTimesheet',
+                        type: 'editTimesheet/saveEditTimesheet',
                         index: index,
                         employeeNo: employeeNo,
                         clockInTime: cInTime,
@@ -3569,7 +2843,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     });
                 } else {
                     this.$store.dispatch({
-                        type: 'timesheet/createNewTimesheet',
+                        type: 'editTimesheet/createNewTimesheet',
                         index: index,
                         employeeId: employeeId,
                         employeeNo: employeeNo,
@@ -5129,7 +4403,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-03f284df\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/DetailTimesheet.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1b7648d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -5144,430 +4418,129 @@ var render = function() {
       2
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "col-lg-6" }, [
-      _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-block" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
-              _c("label", [_vm._v("Employee")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-primary" }, [
-                _vm._v(
-                  "\n                            " +
-                    _vm._s(_vm.timesheetDetail.employeeName) +
-                    "\n                        "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
-              _c("label", [_vm._v("Divison")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-black" }, [
-                _vm._v(_vm._s(_vm.timesheetDetail.divisionName))
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
-              _c("label", [_vm._v("Shift")]),
-              _vm._v(" "),
-              _c("p", { staticClass: "text-black" }, [
-                _vm._v(
-                  _vm._s(_vm.timesheetDetail.shiftName) +
-                    "(" +
-                    _vm._s(_vm.timesheetDetail.shiftWorkStartAt) +
-                    " -\n                            " +
-                    _vm._s(_vm.timesheetDetail.shiftWorkEndAt) +
-                    ")"
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
-              _c("label", [_vm._v(" Approval Stats")]),
-              _vm._v(" "),
-              _vm.timesheetDetail.attendanceApproveId != 0
-                ? _c("p", { staticClass: "text-black" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(_vm.timesheetDetail.attendanceApproveName)
-                    )
-                  ])
-                : _c("p", [_vm._v("-")]),
-              _vm._v(" "),
-              _vm.timesheetDetail.approvedBy
-                ? _c("p", [
-                    _vm._v("by: " + _vm._s(_vm.timesheetDetail.approvedBy))
-                  ])
-                : _vm._e()
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
-              _c("label", [_vm._v("Validation Stats")]),
-              _vm._v(" "),
-              _vm.timesheetDetail.attendanceValidationId != 0
-                ? _c("p", { staticClass: "text-black" }, [
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(_vm.timesheetDetail.attendanceValidationName)
-                    )
-                  ])
-                : _c("p", [_vm._v("-")])
-            ])
-          ])
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "col-lg-6" }, [
-      _c("div", { staticClass: "card card-default filter-item" }, [
-        _vm._m(1),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-block" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
-              _c("label", [_vm._v("Clock-In")]),
-              _vm._v(" "),
-              _vm.timesheetDetail.clockInTime
-                ? _c("p", { staticClass: "text-black" }, [
-                    _vm._v(
-                      "\n                            Via: " +
-                        _vm._s(_vm.timesheetDetail.clockInViaType) +
-                        "\n                            " +
-                        _vm._s(_vm.timesheetDetail.clockInDate) +
-                        " @"
-                    ),
-                    _c("span", { staticClass: "bold" }, [
-                      _vm._v(_vm._s(_vm.timesheetDetail.clockInTime))
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", { staticClass: "clearfix" }),
-              _vm._v(" "),
-              _vm.timesheetDetail.clockInPhoto
-                ? _c("img", {
-                    staticClass: "img-responsive",
-                    attrs: {
-                      height: "120px",
-                      src:
-                        "/images/attendances/" +
-                        _vm.timesheetDetail.clockInPhoto,
-                      alt: ""
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c("hr")
-            ]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
-              _c("label", [_vm._v("Clock-Out")]),
-              _vm._v(" "),
-              _vm.timesheetDetail.clockOutTime
-                ? _c("p", { staticClass: "text-black" }, [
-                    _vm._v(
-                      "\n                            Via: " +
-                        _vm._s(_vm.timesheetDetail.clockOutViaType) +
-                        "\n                            " +
-                        _vm._s(_vm.timesheetDetail.clockOutDate) +
-                        " @"
-                    ),
-                    _c("span", { staticClass: "bold" }, [
-                      _vm._v(_vm._s(_vm.timesheetDetail.clockOutTime))
-                    ])
-                  ])
-                : _vm._e(),
-              _vm._v(" "),
-              _c("div", { staticClass: "clearfix" }),
-              _vm._v(" "),
-              _vm.timesheetDetail.clockOutPhoto
-                ? _c("img", {
-                    staticClass: "img-responsive",
-                    attrs: {
-                      height: "120px",
-                      src:
-                        "/images/attendances/" +
-                        _vm.timesheetDetail.clockOutPhoto,
-                      alt: ""
-                    }
-                  })
-                : _vm._e(),
-              _vm._v(" "),
-              _c("hr")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "clearfix" }),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-12 employee-details" }, [
-              _c("label", [_vm._v("Misc.")]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v("Kiosk In: "),
-                _c("span", [_vm._v(_vm._s(_vm.timesheetDetail.clockInKiosk))])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v("Kiosk Out: "),
-                _c("span", [_vm._v(_vm._s(_vm.timesheetDetail.clockOutKiosk))])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v("IP Addr. In: "),
-                _c("span", [
-                  _vm._v(_vm._s(_vm.timesheetDetail.clockInIpAddress))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v("IP Addr. Out: "),
-                _c("span", [
-                  _vm._v(_vm._s(_vm.timesheetDetail.clockOutIpAddress))
-                ])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v("Browser In: "),
-                _c("span", [_vm._v(_vm._s(_vm.timesheetDetail.clockInBrowser))])
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v("Browser Out: "),
-                _c("span", [
-                  _vm._v(_vm._s(_vm.timesheetDetail.clockOutBrowser))
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header " }, [
-      _c("div", { staticClass: "card-title" }, [_vm._v("Timesheet Details")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header " }, [
-      _c("div", { staticClass: "card-title" }, [_vm._v("Clocking Details")])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-03f284df", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1f6d499e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/SummaryTimesheet.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row row-same-height" },
-    [
-      _c(
-        "div",
-        { staticClass: "col-lg-12 m-b-10 m-t-10" },
-        [
-          _vm._t("go-back-menu"),
-          _vm._v(" "),
-          _c("div", { staticClass: "pull-left m-r-15 m-b-10" }, [
-            _c("div", { staticClass: "dropdown dropdown-default" }, [
+    _c(
+      "div",
+      { staticClass: "col-lg-12 m-b-10 " },
+      _vm._l(_vm.timesheetSummaryData, function(summary) {
+        return _c("div", { staticClass: "m-b-20 filter-item" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+            },
+            [
               _c(
-                "button",
+                "div",
                 {
-                  staticClass: "btn btn-info dropdown-toggle text-center",
-                  attrs: {
-                    type: "button",
-                    "data-toggle": "dropdown",
-                    "aria-haspopup": "true",
-                    "aria-expanded": "false"
-                  }
+                  staticClass: "card-block bg-primary",
+                  staticStyle: { padding: "3px 15px!important" }
                 },
-                [_vm._v("\n                    Actions\n                ")]
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "dropdown-menu" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-item pointer",
-                    on: {
-                      click: function($event) {
-                        _vm.attemptSendToManagers()
-                      }
-                    }
-                  },
-                  [_vm._v("Send to Managers")]
-                ),
-                _vm._v(" "),
-                _c("a", { staticClass: "dropdown-item pointer" }, [
-                  _vm._v("Generate PDF")
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "pull-right" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-outline-info",
-                on: {
-                  click: function($event) {
-                    _vm.attemptGenerateSummary()
-                  }
-                }
-              },
-              [
-                _c("span", { staticClass: "bold text-black" }, [
-                  _vm._v("From: ")
-                ]),
-                _vm._v(" " + _vm._s(_vm.generateFromDate) + " "),
-                _c("span", { staticClass: "bold text-black" }, [
-                  _vm._v("   To: ")
-                ]),
-                _vm._v(_vm._s(_vm.generateToDate) + "\n            ")
-              ]
-            )
-          ])
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-lg-12 m-b-10 " },
-        _vm._l(_vm.timesheetSummaryData, function(summary) {
-          return _c("div", { staticClass: "m-b-20 filter-item" }, [
-            _c(
-              "div",
-              {
-                staticClass:
-                  "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "card-block bg-primary",
-                    staticStyle: { padding: "3px 15px!important" }
-                  },
-                  [
-                    _c("div", { staticClass: "pull-left" }, [
-                      _c("span", { staticClass: "text-white fs-16 bold" }, [
-                        _vm._v(_vm._s(summary.employee.data.employeeName))
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "text-white fs-16" }, [
-                        _vm._v(
-                          "(" + _vm._s(summary.employee.data.employeeNo) + ")"
-                        )
-                      ])
+                [
+                  _c("div", { staticClass: "pull-left" }, [
+                    _c("span", { staticClass: "text-white fs-16 bold" }, [
+                      _vm._v(_vm._s(summary.employee.data.employeeName))
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "pull-right" }, [
-                      _c("span", { staticClass: "text-white fs-14 bold" }, [
-                        _vm._v(_vm._s(summary.employee.data.divisionName))
-                      ]),
-                      _vm._v(" "),
-                      _c("span", { staticClass: "text-white fs-14" }, [
-                        _vm._v(
-                          "(" +
-                            _vm._s(summary.employee.data.branchOfficeName) +
-                            ")"
-                        )
-                      ])
+                    _c("span", { staticClass: "text-white fs-16" }, [
+                      _vm._v(
+                        "(" + _vm._s(summary.employee.data.employeeNo) + ")"
+                      )
                     ])
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-              },
-              [
-                _c("div", { staticClass: "card-block" }, [
-                  _c("div", { staticClass: "table-responsive" }, [
-                    _c(
-                      "table",
-                      {
-                        staticClass: "table table-hover table-text-center",
-                        attrs: { id: "summaryDT" }
-                      },
-                      [
-                        _vm._m(0, true),
-                        _vm._v(" "),
-                        _c(
-                          "tbody",
-                          _vm._l(summary.timesheet, function(timesheet, index) {
-                            return _c("tr", [
-                              _c("td", [
-                                _vm._v(
-                                  _vm._s(timesheet.date) +
-                                    " (" +
-                                    _vm._s(timesheet.day) +
-                                    ")"
-                                )
-                              ]),
-                              _vm._v(" "),
-                              timesheet.type.isHoliday
-                                ? _c("td", { staticClass: "holiday-cell" }, [
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "pull-right" }, [
+                    _c("span", { staticClass: "text-white fs-14 bold" }, [
+                      _vm._v(_vm._s(summary.employee.data.divisionName))
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "text-white fs-14" }, [
+                      _vm._v(
+                        "(" +
+                          _vm._s(summary.employee.data.branchOfficeName) +
+                          ")"
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+            },
+            [
+              _c("div", { staticClass: "card-block" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-hover table-text-center",
+                      attrs: { id: "summaryDT" }
+                    },
+                    [
+                      _vm._m(0, true),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(summary.timesheet, function(timesheet, index) {
+                          return _c("tr", [
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(timesheet.date) +
+                                  " (" +
+                                  _vm._s(timesheet.day) +
+                                  ")"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            timesheet.type.isHoliday
+                              ? _c("td", { staticClass: "holiday-cell" }, [
+                                  _vm._v(
+                                    _vm._s(timesheet.type.notes) +
+                                      "\n                                "
+                                  )
+                                ])
+                              : !timesheet.detail.data[0] &&
+                                !timesheet.type.isHoliday
+                                ? _c("td", { staticClass: "absence-cell" }, [
                                     _vm._v(
-                                      _vm._s(timesheet.type.notes) +
-                                        "\n                                "
+                                      "A\n                                "
                                     )
                                   ])
-                                : !timesheet.detail.data[0] &&
-                                  !timesheet.type.isHoliday
-                                  ? _c("td", { staticClass: "absence-cell" }, [
-                                      _vm._v(
-                                        "A\n                                "
+                                : _c("td"),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.detail.data[0] && !timesheet.editing
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        timesheet.detail.data[0].clockInTime
                                       )
-                                    ])
-                                  : _c("td"),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.detail.data[0] && !timesheet.editing
-                                  ? _c("span", [
-                                      _vm._v(
-                                        _vm._s(
+                                    )
+                                  ])
+                                : timesheet.editing &&
+                                  timesheet.detail.data[0] &&
+                                  timesheet.detail.data[0].clockInTime
+                                  ? _c("input", {
+                                      staticClass:
+                                        "form-control text-center w-80",
+                                      attrs: {
+                                        name:
+                                          "cInTime" +
+                                          summary.employee.data.employeeNo +
+                                          index
+                                      },
+                                      domProps: {
+                                        value:
                                           timesheet.detail.data[0].clockInTime
-                                        )
-                                      )
-                                    ])
-                                  : timesheet.editing &&
-                                    timesheet.detail.data[0] &&
-                                    timesheet.detail.data[0].clockInTime
+                                      }
+                                    })
+                                  : timesheet.editing
                                     ? _c("input", {
                                         staticClass:
                                           "form-control text-center w-80",
@@ -5575,40 +4548,40 @@ var render = function() {
                                           name:
                                             "cInTime" +
                                             summary.employee.data.employeeNo +
-                                            index
-                                        },
-                                        domProps: {
-                                          value:
-                                            timesheet.detail.data[0].clockInTime
+                                            index,
+                                          placeholder: "HH:mm"
                                         }
                                       })
-                                    : timesheet.editing
-                                      ? _c("input", {
-                                          staticClass:
-                                            "form-control text-center w-80",
-                                          attrs: {
-                                            name:
-                                              "cInTime" +
-                                              summary.employee.data.employeeNo +
-                                              index,
-                                            placeholder: "HH:mm"
-                                          }
-                                        })
-                                      : _c("span", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.detail.data[0] && !timesheet.editing
-                                  ? _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          timesheet.detail.data[0].clockOutTime
-                                        )
+                                    : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.detail.data[0] && !timesheet.editing
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        timesheet.detail.data[0].clockOutTime
                                       )
-                                    ])
-                                  : timesheet.editing &&
-                                    timesheet.detail.data[0] &&
-                                    timesheet.detail.data[0].clockOutTime
+                                    )
+                                  ])
+                                : timesheet.editing &&
+                                  timesheet.detail.data[0] &&
+                                  timesheet.detail.data[0].clockOutTime
+                                  ? _c("input", {
+                                      staticClass:
+                                        "form-control text-center w-80",
+                                      attrs: {
+                                        name:
+                                          "cOutTime" +
+                                          summary.employee.data.employeeNo +
+                                          index
+                                      },
+                                      domProps: {
+                                        value:
+                                          timesheet.detail.data[0].clockOutTime
+                                      }
+                                    })
+                                  : timesheet.editing
                                     ? _c("input", {
                                         staticClass:
                                           "form-control text-center w-80",
@@ -5616,89 +4589,91 @@ var render = function() {
                                           name:
                                             "cOutTime" +
                                             summary.employee.data.employeeNo +
-                                            index
-                                        },
-                                        domProps: {
-                                          value:
-                                            timesheet.detail.data[0]
-                                              .clockOutTime
+                                            index,
+                                          placeholder: "HH:mm"
                                         }
                                       })
-                                    : timesheet.editing
-                                      ? _c("input", {
-                                          staticClass:
-                                            "form-control text-center w-80",
-                                          attrs: {
-                                            name:
-                                              "cOutTime" +
-                                              summary.employee.data.employeeNo +
-                                              index,
-                                            placeholder: "HH:mm"
-                                          }
-                                        })
-                                      : _c("span", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.detail.data[0]
-                                  ? _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          timesheet.detail.data[0].workHour
+                                    : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.detail.data[0]
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(timesheet.detail.data[0].workHour)
+                                    )
+                                  ])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.detail.data[0]
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        timesheet.detail.data[0]
+                                          .minutesCheckInLate
+                                      )
+                                    )
+                                  ])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.detail.data[0]
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        timesheet.detail.data[0]
+                                          .minutesCheckOutEarly
+                                      )
+                                    )
+                                  ])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.detail.data[0]
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(
+                                        timesheet.detail.data[0]
+                                          .minutesCheckOutLate
+                                      )
+                                    )
+                                  ])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.detail.data[0] && !timesheet.editing
+                                ? _c("span", [
+                                    _vm._v(
+                                      _vm._s(timesheet.detail.data[0].shiftId)
+                                    )
+                                  ])
+                                : timesheet.editing && !timesheet.detail.data[0]
+                                  ? _c(
+                                      "select",
+                                      {
+                                        staticClass: "form-control w-70",
+                                        attrs: {
+                                          name:
+                                            "selectShift" +
+                                            summary.employee.data.employeeNo +
+                                            index
+                                        }
+                                      },
+                                      _vm._l(_vm.shifts, function(shift) {
+                                        return _c(
+                                          "option",
+                                          { domProps: { value: shift.id } },
+                                          [_vm._v(_vm._s(shift.name))]
                                         )
-                                      )
-                                    ])
-                                  : _c("span", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.detail.data[0]
-                                  ? _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          timesheet.detail.data[0]
-                                            .minutesCheckInLate
-                                        )
-                                      )
-                                    ])
-                                  : _c("span", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.detail.data[0]
-                                  ? _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          timesheet.detail.data[0]
-                                            .minutesCheckOutEarly
-                                        )
-                                      )
-                                    ])
-                                  : _c("span", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.detail.data[0]
-                                  ? _c("span", [
-                                      _vm._v(
-                                        _vm._s(
-                                          timesheet.detail.data[0]
-                                            .minutesCheckOutLate
-                                        )
-                                      )
-                                    ])
-                                  : _c("span", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.detail.data[0] && !timesheet.editing
-                                  ? _c("span", [
-                                      _vm._v(
-                                        _vm._s(timesheet.detail.data[0].shiftId)
-                                      )
-                                    ])
+                                      })
+                                    )
                                   : timesheet.editing &&
-                                    !timesheet.detail.data[0]
+                                    timesheet.detail.data[0]
                                     ? _c(
                                         "select",
                                         {
@@ -5710,216 +4685,195 @@ var render = function() {
                                               index
                                           }
                                         },
-                                        _vm._l(_vm.shifts, function(shift) {
-                                          return _c(
+                                        [
+                                          _c(
                                             "option",
-                                            { domProps: { value: shift.id } },
-                                            [_vm._v(_vm._s(shift.name))]
-                                          )
-                                        })
-                                      )
-                                    : timesheet.editing &&
-                                      timesheet.detail.data[0]
-                                      ? _c(
-                                          "select",
-                                          {
-                                            staticClass: "form-control w-70",
-                                            attrs: {
-                                              name:
-                                                "selectShift" +
-                                                summary.employee.data
-                                                  .employeeNo +
-                                                index
-                                            }
-                                          },
-                                          [
-                                            _c(
-                                              "option",
-                                              {
-                                                attrs: { readonly: "" },
-                                                domProps: {
-                                                  value:
+                                            {
+                                              attrs: { readonly: "" },
+                                              domProps: {
+                                                value:
+                                                  timesheet.detail.data[0]
+                                                    .shiftId
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                "\n                                            " +
+                                                  _vm._s(
                                                     timesheet.detail.data[0]
-                                                      .shiftId
-                                                }
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                            " +
-                                                    _vm._s(
-                                                      timesheet.detail.data[0]
-                                                        .shiftName
-                                                    ) +
-                                                    "\n                                        "
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _vm._l(_vm.shifts, function(shift) {
-                                              return _c(
-                                                "option",
-                                                {
-                                                  domProps: { value: shift.id }
-                                                },
-                                                [_vm._v(_vm._s(shift.name))]
+                                                      .shiftName
+                                                  ) +
+                                                  "\n                                        "
                                               )
-                                            })
-                                          ],
-                                          2
-                                        )
-                                      : _c("span", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.detail.data[0]
-                                  ? _c("span", { staticClass: "fs-10" }, [
-                                      _vm._v(
-                                        _vm._s(
-                                          timesheet.detail.data[0]
-                                            .attendanceValidationName
-                                        )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._l(_vm.shifts, function(shift) {
+                                            return _c(
+                                              "option",
+                                              { domProps: { value: shift.id } },
+                                              [_vm._v(_vm._s(shift.name))]
+                                            )
+                                          })
+                                        ],
+                                        2
                                       )
-                                    ])
-                                  : _c("span", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.detail.data[0]
-                                  ? _c("span", { staticClass: "fs-10" }, [
-                                      _vm._v(
-                                        _vm._s(
-                                          timesheet.detail.data[0]
-                                            .attendanceApproveName
-                                        )
+                                    : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.detail.data[0]
+                                ? _c("span", { staticClass: "fs-10" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        timesheet.detail.data[0]
+                                          .attendanceValidationName
                                       )
-                                    ])
-                                  : _c("span", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "td",
-                                {
-                                  class: {
-                                    "w-60":
+                                    )
+                                  ])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.detail.data[0]
+                                ? _c("span", { staticClass: "fs-10" }, [
+                                    _vm._v(
+                                      _vm._s(
+                                        timesheet.detail.data[0]
+                                          .attendanceApproveName
+                                      )
+                                    )
+                                  ])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "td",
+                              {
+                                class: {
+                                  "w-60":
+                                    timesheet.detail.data[0] &&
+                                    timesheet.detail.data[0]
+                                      .attendanceApproveId == 99
+                                }
+                              },
+                              [
+                                timesheet.allowToEdit
+                                  ? _c("div", [
                                       timesheet.detail.data[0] &&
                                       timesheet.detail.data[0]
                                         .attendanceApproveId == 99
-                                  }
-                                },
-                                [
-                                  timesheet.detail.data[0] &&
-                                  timesheet.detail.data[0]
-                                    .attendanceApproveId == 99
-                                    ? _c("div", { staticClass: "row" }, [
-                                        _c("div", { staticClass: "col-lg-6" }, [
-                                          _c("i", {
-                                            staticClass:
-                                              "fa fa-check text-success cursor",
-                                            on: {
-                                              click: function($event) {
-                                                _vm.approveTimesheet(
-                                                  timesheet.detail.data[0].id
-                                                )
-                                              }
-                                            }
-                                          })
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("div", { staticClass: "col-lg-6" }, [
-                                          _c("i", {
-                                            staticClass:
-                                              "fa fa-times text-danger cursor",
-                                            on: {
-                                              click: function($event) {
-                                                _vm.disapproveTimesheet(
-                                                  timesheet.detail.data[0].id
-                                                )
-                                              }
-                                            }
-                                          })
-                                        ])
-                                      ])
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("td", [
-                                !timesheet.editing
-                                  ? _c("i", {
-                                      staticClass: "fa fa-pencil cursor",
-                                      on: {
-                                        click: function($event) {
-                                          _vm.editTimesheet(
-                                            index,
-                                            summary.employee.data.employeeNo
-                                          )
-                                        }
-                                      }
-                                    })
-                                  : _c("div", [
-                                      timesheet.detail.data[0] &&
-                                      timesheet.detail.data[0].id
-                                        ? _c(
-                                            "span",
-                                            {
+                                        ? _c("span", [
+                                            _c("i", {
                                               staticClass:
-                                                "fs-12 text-danger cursor",
+                                                "fa fa-check text-success cursor",
                                               on: {
                                                 click: function($event) {
-                                                  _vm.doneEditTimesheet(
-                                                    index,
-                                                    summary.employee.data.id,
-                                                    summary.employee.data
-                                                      .employeeNo,
-                                                    timesheet.detail.data[0].id,
-                                                    timesheet.date
+                                                  _vm.approveTimesheet(
+                                                    timesheet.detail.data[0].id
                                                   )
                                                 }
                                               }
-                                            },
-                                            [_vm._v("DONE")]
-                                          )
-                                        : _c(
-                                            "span",
-                                            {
+                                            }),
+                                            _vm._v(
+                                              "  \n                                    "
+                                            ),
+                                            _c("i", {
                                               staticClass:
-                                                "fs-12 text-danger cursor",
+                                                "fa fa-times text-danger cursor",
                                               on: {
                                                 click: function($event) {
-                                                  _vm.doneEditTimesheet(
-                                                    index,
-                                                    summary.employee.data.id,
-                                                    summary.employee.data
-                                                      .employeeNo,
-                                                    "",
-                                                    timesheet.date
+                                                  _vm.disapproveTimesheet(
+                                                    timesheet.detail.data[0].id
                                                   )
                                                 }
                                               }
-                                            },
-                                            [_vm._v("DONE")]
-                                          )
+                                            })
+                                          ])
+                                        : _vm._e()
                                     ])
-                              ])
+                                  : _vm._e()
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.allowToEdit
+                                ? _c("div", [
+                                    !timesheet.editing
+                                      ? _c("i", {
+                                          staticClass: "fa fa-pencil cursor",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.editTimesheet(
+                                                index,
+                                                summary.employee.data.employeeNo
+                                              )
+                                            }
+                                          }
+                                        })
+                                      : _c("div", [
+                                          timesheet.detail.data[0] &&
+                                          timesheet.detail.data[0].id
+                                            ? _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "fs-12 text-danger cursor",
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.doneEditTimesheet(
+                                                        index,
+                                                        summary.employee.data
+                                                          .id,
+                                                        summary.employee.data
+                                                          .employeeNo,
+                                                        timesheet.detail.data[0]
+                                                          .id,
+                                                        timesheet.date
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("DONE")]
+                                              )
+                                            : _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "fs-12 text-danger cursor",
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.doneEditTimesheet(
+                                                        index,
+                                                        summary.employee.data
+                                                          .id,
+                                                        summary.employee.data
+                                                          .employeeNo,
+                                                        "",
+                                                        timesheet.date
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [_vm._v("DONE")]
+                                              )
+                                        ])
+                                  ])
+                                : _vm._e()
                             ])
-                          })
-                        )
-                      ]
-                    )
-                  ])
+                          ])
+                        })
+                      )
+                    ]
+                  )
                 ])
-              ]
-            )
-          ])
-        })
-      ),
-      _vm._v(" "),
-      _c("attempt-inside-summary-modal"),
-      _vm._v(" "),
-      _c("attempt-send-to-managers-modal")
-    ],
-    1
-  )
+              ])
+            ]
+          )
+        ])
+      })
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -5962,174 +4916,13 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1f6d499e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-1b7648d0", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b3a60e4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptInsideSummaryModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "modal fade stick-up",
-      attrs: {
-        id: "modal-attempt-generate-inside-summary",
-        tabindex: "-1",
-        role: "dialog",
-        "aria-hidden": "true"
-      }
-    },
-    [
-      _c("div", { staticClass: "modal-dialog" }, [
-        _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _c("form", { attrs: { role: "form" } }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v(" Select Branch Office")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control",
-                        attrs: { id: "select-branch-office" }
-                      },
-                      [
-                        _c(
-                          "option",
-                          {
-                            attrs: {
-                              value: "",
-                              disabled: "",
-                              selected: "",
-                              hidden: ""
-                            }
-                          },
-                          [_vm._v("Select")]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.branchOffices, function(branchOffice) {
-                          return _c(
-                            "option",
-                            { domProps: { value: branchOffice.id } },
-                            [_vm._v(_vm._s(branchOffice.name))]
-                          )
-                        })
-                      ],
-                      2
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-8" }),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary btn-block m-t-5",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.generateSummary()
-                      }
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Generate\n                        "
-                    )
-                  ]
-                )
-              ])
-            ])
-          ])
-        ])
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
-        },
-        [_c("i", { staticClass: "pg-close" })]
-      ),
-      _vm._v(" "),
-      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-        _vm._v("Generate Summary")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Date Start - Date End ")]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "input-daterange input-group",
-          attrs: { id: "summary-datepicker-range" }
-        },
-        [
-          _c("input", {
-            staticClass: "input-sm form-control",
-            attrs: { type: "text", name: "start", id: "generateFromDate" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-addon" }, [_vm._v("to")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "input-sm form-control",
-            attrs: { type: "text", name: "end", id: "generateToDate" }
-          })
-        ]
-      )
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2b3a60e4", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2f586835\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/MainTimesheet.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-35c4c2fb\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/MainEditTimesheet.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -6169,967 +4962,141 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-2f586835", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-35c4c2fb", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-362d35b2\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptSummaryModal.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3fd34596\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "modal fade stick-up",
-      attrs: {
-        id: "modal-attempt-generate-summary",
-        tabindex: "-1",
-        role: "dialog",
-        "aria-hidden": "true"
-      }
-    },
-    [
-      _c("div", { staticClass: "modal-dialog" }, [
-        _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _c("form", { attrs: { role: "form" } }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v(" Select Branch Office")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control",
-                        attrs: { id: "select-branch-office" }
-                      },
-                      [
-                        _c(
-                          "option",
-                          {
-                            attrs: {
-                              value: "",
-                              disabled: "",
-                              selected: "",
-                              hidden: ""
-                            }
-                          },
-                          [_vm._v("Select")]
-                        ),
-                        _vm._v(" "),
-                        _vm._l(_vm.branchOffices, function(branchOffice) {
-                          return _c(
-                            "option",
-                            { domProps: { value: branchOffice.id } },
-                            [_vm._v(_vm._s(branchOffice.name))]
-                          )
-                        })
-                      ],
-                      2
-                    )
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-md-8" }),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary btn-block m-t-5",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.generateSummary()
-                      }
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Generate\n                        "
-                    )
-                  ]
-                )
-              ])
-            ])
-          ])
-        ])
-      ])
-    ]
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
-        },
-        [_c("i", { staticClass: "pg-close" })]
-      ),
-      _vm._v(" "),
-      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-        _vm._v("Generate Summary")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("label", [_vm._v("Date Start - Date End ")]),
-      _vm._v(" "),
+  return _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
       _c(
         "div",
         {
-          staticClass: "input-daterange input-group",
-          attrs: { id: "summary-datepicker-range" }
+          staticClass:
+            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
         },
         [
-          _c("input", {
-            staticClass: "input-sm form-control",
-            attrs: { type: "text", name: "start", id: "generateFromDate" }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group-addon" }, [_vm._v("to")]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "input-sm form-control",
-            attrs: { type: "text", name: "end", id: "generateToDate" }
-          })
-        ]
-      )
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-362d35b2", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-687dbc2c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/TimesheetSortDatepicker.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("input", {
-    staticClass: "form-control",
-    attrs: {
-      id: "sortTimesheetDate",
-      type: "text",
-      name: "sortTimesheetDate",
-      required: ""
-    }
-  })
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-687dbc2c", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-8e394160\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/Index.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "row" },
-    [
-      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
-        _c("div", { staticClass: "pull-left m-r-15" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-info",
-              on: {
-                click: function($event) {
-                  _vm.attemptSummary()
-                }
-              }
-            },
-            [_vm._v("Summary")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pull-right m-r-15" }, [
-          _c("div", { staticClass: "form-group required" }, [
-            _c(
-              "div",
-              { staticClass: "input-group bootstrap-timepicker" },
-              [
-                _c("timesheet-sort-datepicker"),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "input-group-addon bg-primary text-white",
-                    on: {
-                      click: function($event) {
-                        _vm.sortTimesheet()
-                      }
-                    }
-                  },
-                  [_c("i", { staticClass: "fa fa-check" })]
-                )
-              ],
-              1
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pull-right m-r-15" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.sortShiftId,
-                    expression: "sortShiftId"
-                  }
-                ],
-                staticClass: "btn btn-outline-primary h-35 ",
-                staticStyle: { width: "100px" },
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.sortShiftId = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
+          _c("div", { staticClass: "card-block" }, [
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticClass: " h-500" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped table-hover settingDT"
                     },
-                    function($event) {
-                      _vm.sortTimesheet()
-                    }
-                  ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [_vm._v("All Shifts")]),
-                _vm._v(" "),
-                _vm._l(_vm.shifts, function(shift) {
-                  return _c("option", { domProps: { value: shift.id } }, [
-                    _vm._v(_vm._s(shift.name) + "\n                    ")
-                  ])
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pull-right m-r-15" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.sortDivisionId,
-                    expression: "sortDivisionId"
-                  }
-                ],
-                staticClass: "btn btn-outline-primary h-35 w-150",
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.sortDivisionId = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      _vm.sortTimesheet()
-                    }
-                  ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("All Division")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.divisions, function(division) {
-                  return _c("option", { domProps: { value: division.id } }, [
-                    _vm._v(_vm._s(division.name) + "\n                    ")
-                  ])
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pull-right m-r-15" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.sortBranchOfficeId,
-                    expression: "sortBranchOfficeId"
-                  }
-                ],
-                staticClass: "btn btn-outline-primary h-35 w-150",
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.sortBranchOfficeId = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      _vm.sortTimesheet()
-                    }
-                  ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("All Branch Offices")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.branchOffices, function(branchOffice) {
-                  return _c(
-                    "option",
-                    { domProps: { value: branchOffice.id } },
                     [
-                      _vm._v(
-                        _vm._s(branchOffice.name) + "\n                    "
-                      )
-                    ]
-                  )
-                })
-              ],
-              2
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "pull-right m-r-15" }, [
-          _c("div", { staticClass: "form-group" }, [
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.sortAttdApprovalId,
-                    expression: "sortAttdApprovalId"
-                  }
-                ],
-                staticClass: "btn btn-outline-primary h-35 w-150",
-                on: {
-                  change: [
-                    function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.sortAttdApprovalId = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    },
-                    function($event) {
-                      _vm.sortTimesheet()
-                    }
-                  ]
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }, [
-                  _vm._v("All Approval")
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.attdApprovals, function(attdApproval) {
-                  return _c(
-                    "option",
-                    { domProps: { value: attdApproval.id } },
-                    [
-                      _vm._v(
-                        _vm._s(attdApproval.name) + "\n                    "
-                      )
-                    ]
-                  )
-                })
-              ],
-              2
-            )
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-12 m-b-10" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-          },
-          [
-            _c("div", { staticClass: "card-block" }, [
-              _c("div", { staticClass: "scrollable" }, [
-                _c("div", { staticStyle: { height: "700px!important" } }, [
-                  _c("div", { staticClass: "table-responsive" }, [
-                    _c(
-                      "table",
-                      { staticClass: "table table-hover timesheetDT" },
-                      [
-                        _c("thead", { staticClass: "bg-master-lighter" }, [
-                          _c("tr", [
-                            _c("th", { staticClass: "text-black w-150" }, [
-                              _vm._v("Employee")
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.timesheets, function(timesheet) {
+                          return _c("tr", { staticClass: "filter-item" }, [
+                            _c("td", [_vm._v(_vm._s(timesheet.divisionName))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(_vm._s(timesheet.branchOfficeName))
                             ]),
                             _vm._v(" "),
-                            _c(
-                              "th",
-                              {
-                                staticClass: "text-black",
-                                staticStyle: { width: "100px" }
-                              },
-                              [_vm._v("Shift")]
-                            ),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "text-black" }, [
+                            _c("td", [
                               _vm._v(
-                                "Clock-In\n                                        "
-                              ),
-                              _vm.showcInPhoto
-                                ? _c("i", {
-                                    staticClass: "fa fa-eye cursor",
-                                    staticStyle: { color: "darkgrey" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.showHidecInPhoto()
-                                      }
-                                    }
-                                  })
-                                : _c("i", {
-                                    staticClass: "fa fa-eye-slash cursor",
-                                    staticStyle: { color: "darkgrey" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.showHidecInPhoto()
-                                      }
-                                    }
-                                  })
+                                _vm._s(timesheet.startDate) +
+                                  " - " +
+                                  _vm._s(timesheet.endDate)
+                              )
                             ]),
                             _vm._v(" "),
-                            _c("th", { staticClass: "text-black" }, [
+                            _c("td", [_vm._v(_vm._s(timesheet.dueDate))]),
+                            _vm._v(" "),
+                            _c("td", [
                               _vm._v(
-                                "Clock-Out\n                                        "
-                              ),
-                              _vm.showcOutPhoto
-                                ? _c("i", {
-                                    staticClass: "fa fa-eye cursor",
-                                    staticStyle: { color: "darkgrey" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.showHidecOutPhoto()
-                                      }
+                                "@ " +
+                                  _vm._s(timesheet.generatedAt) +
+                                  " by " +
+                                  _vm._s(timesheet.generatedBy)
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              timesheet.lastUpdatedAt != "" &&
+                              timesheet.lastUpdatedAt != null
+                                ? _c("span", [
+                                    _vm._v(
+                                      "@ " +
+                                        _vm._s(timesheet.lastUpdatedAt) +
+                                        " by " +
+                                        _vm._s(timesheet.lastUpdatedBy)
+                                    )
+                                  ])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.goToSummary(timesheet.id)
                                     }
-                                  })
-                                : _c("i", {
-                                    staticClass: "fa fa-eye-slash cursor",
-                                    staticStyle: { color: "darkgrey" },
-                                    on: {
-                                      click: function($event) {
-                                        _vm.showHidecOutPhoto()
-                                      }
-                                    }
-                                  })
-                            ]),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "text-black" }, [
-                              _vm._v("Approve Stats")
-                            ]),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "text-black" }, [
-                              _vm._v("Valid Stats")
-                            ]),
-                            _vm._v(" "),
-                            _c("th", { staticClass: "text-black" }, [
-                              _vm._v("Actions")
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "Summary\n                                        "
+                                  )
+                                ]
+                              )
                             ])
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "tbody",
-                          _vm._l(_vm.timesheetDatas, function(timesheet) {
-                            return _c("tr", { staticClass: "filter-item" }, [
-                              _c("td", [
-                                _c(
-                                  "p",
-                                  {
-                                    staticClass: "fs-16 bold text-black m-b-0"
-                                  },
-                                  [_vm._v(_vm._s(timesheet.employeeName))]
-                                ),
-                                _vm._v(
-                                  "\n                                        " +
-                                    _vm._s(timesheet.divisionName) +
-                                    "\n\n                                    "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                _c(
-                                  "p",
-                                  { staticClass: "m-b-0 text-black bold" },
-                                  [_vm._v(" " + _vm._s(timesheet.shiftName))]
-                                ),
-                                _vm._v(" "),
-                                _c("p", { staticClass: "m-b-0" }, [
-                                  _vm._v(
-                                    " Start: " +
-                                      _vm._s(timesheet.shiftWorkStartAt)
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("p", { staticClass: "m-b-0" }, [
-                                  _vm._v(
-                                    " End: " + _vm._s(timesheet.shiftWorkEndAt)
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.clockInPhoto && _vm.showcInPhoto
-                                  ? _c("img", {
-                                      staticClass: "img-responsive",
-                                      attrs: {
-                                        height: "120px",
-                                        id: "cInPhoto-" + timesheet.id,
-                                        src:
-                                          "/images/attendances/" +
-                                          timesheet.clockInPhoto,
-                                        alt: ""
-                                      }
-                                    })
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "clearfix" }),
-                                _vm._v(" "),
-                                timesheet.clockInTime
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-clock text-center m-t-10",
-                                        staticStyle: { width: "110px" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                            " +
-                                            _vm._s(timesheet.clockInTime) +
-                                            "\n                                        "
-                                        )
-                                      ]
-                                    )
-                                  : _c("p", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.clockOutPhoto && _vm.showcOutPhoto
-                                  ? _c("img", {
-                                      staticClass: "img-responsive",
-                                      attrs: {
-                                        height: "120px",
-                                        id: "cOutPhoto-" + timesheet.id,
-                                        src:
-                                          "/images/attendances/" +
-                                          timesheet.clockOutPhoto,
-                                        alt: ""
-                                      }
-                                    })
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "clearfix" }),
-                                _vm._v(" "),
-                                timesheet.clockOutTime
-                                  ? _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-clock text-center m-t-10",
-                                        staticStyle: { width: "110px" }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                            " +
-                                            _vm._s(timesheet.clockOutTime) +
-                                            "\n                                        "
-                                        )
-                                      ]
-                                    )
-                                  : _c("p", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.attendanceApproveName
-                                  ? _c(
-                                      "label",
-                                      {
-                                        staticClass: "label label-lg fs-14",
-                                        class: {
-                                          "label-default":
-                                            timesheet.attendanceApproveId == 99,
-                                          "label-info":
-                                            timesheet.attendanceApproveId != 99
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            timesheet.attendanceApproveName
-                                          )
-                                        )
-                                      ]
-                                    )
-                                  : _c("p", [_vm._v("-")]),
-                                _vm._v(" "),
-                                timesheet.approvedBy
-                                  ? _c("p", [
-                                      _vm._v("by: "),
-                                      _c("span", { staticClass: "bold" }, [
-                                        _vm._v(_vm._s(timesheet.approvedBy))
-                                      ])
-                                    ])
-                                  : _vm._e()
-                              ]),
-                              _vm._v(" "),
-                              _c("td", [
-                                timesheet.attendanceValidationName
-                                  ? _c(
-                                      "label",
-                                      {
-                                        staticClass: "label label-lg fs-14",
-                                        class: {
-                                          "label-danger":
-                                            timesheet.attendanceValidationId !=
-                                            1,
-                                          "label-info":
-                                            timesheet.attendanceValidationId ==
-                                            1
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                            " +
-                                            _vm._s(
-                                              timesheet.attendanceValidationName
-                                            )
-                                        )
-                                      ]
-                                    )
-                                  : _c("p", [_vm._v("-")])
-                              ]),
-                              _vm._v(" "),
-                              _c("td", { staticStyle: { width: "100px" } }, [
-                                _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-primary",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.detailTimsheet(timesheet.id)
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                            Details "
-                                    ),
-                                    _c("i", { staticClass: "fa fa-search" })
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "div",
-                                  { staticClass: "dropdown dropdown-default" },
-                                  [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass:
-                                          "btn btn-outline-info dropdown-toggle text-center m-t-10",
-                                        attrs: {
-                                          type: "button",
-                                          "data-toggle": "dropdown",
-                                          "aria-haspopup": "true",
-                                          "aria-expanded": "false"
-                                        }
-                                      },
-                                      [
-                                        timesheet.attendanceApproveId == 1
-                                          ? _c("span", [_vm._v("Approved")])
-                                          : timesheet.attendanceApproveId == 98
-                                            ? _c("span", [
-                                                _vm._v("Disapproved")
-                                              ])
-                                            : _c("span", [
-                                                _vm._v("Edit "),
-                                                _c("i", {
-                                                  staticClass: "fa fa-pencil"
-                                                })
-                                              ])
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "dropdown-menu" },
-                                      [
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "dropdown-item pointer",
-                                            on: {
-                                              click: function($event) {
-                                                _vm.approveTimesheet(
-                                                  timesheet.id
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                    Approve"
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "a",
-                                          {
-                                            staticClass:
-                                              "dropdown-item pointer",
-                                            on: {
-                                              click: function($event) {
-                                                _vm.disapproveTimesheet(
-                                                  timesheet.id
-                                                )
-                                              }
-                                            }
-                                          },
-                                          [
-                                            _vm._v(
-                                              "\n                                                    Disapprove"
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ])
-                            ])
-                          })
-                        )
-                      ]
-                    )
-                  ])
+                        })
+                      )
+                    ]
+                  )
                 ])
               ])
             ])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("attempt-summary-modal")
-    ],
-    1
-  )
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-8e394160", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d8a21c6e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptSendToManagersModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    {
-      staticClass: "modal fade stick-up",
-      attrs: {
-        id: "modal-attempt-send-to-managers",
-        tabindex: "-1",
-        role: "dialog",
-        "aria-hidden": "true"
-      }
-    },
-    [
-      _c("div", { staticClass: "modal-dialog" }, [
-        _c("div", { staticClass: "modal-content" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c("div", { staticClass: "modal-body" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-4 m-t-10 sm-m-t-10" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary btn-block m-t-20 pull-right",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.sendToManagers()
-                      }
-                    }
-                  },
-                  [
-                    _vm._v(
-                      "\n                            Send\n                        "
-                    )
-                  ]
-                )
-              ])
-            ])
           ])
-        ])
-      ])
-    ]
-  )
+        ]
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-hidden": "true"
-          }
-        },
-        [_c("i", { staticClass: "pg-close" })]
-      ),
-      _vm._v(" "),
-      _c("h5", { staticClass: "text-left dark-title p-b-5" }, [
-        _vm._v("Send to managers")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-8" }, [
-      _c("div", { staticClass: "form-group required" }, [
-        _c("label", [_vm._v("Due Date")]),
+    return _c("thead", { staticClass: "bg-master-lighter" }, [
+      _c("tr", [
+        _c("th", { staticClass: "text-black" }, [_vm._v("Division")]),
         _vm._v(" "),
-        _c("div", { staticClass: "input-group bootstrap-timepicker" }, [
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              id: "duedate",
-              type: "text",
-              name: "dueDate",
-              required: ""
-            }
-          }),
-          _vm._v(" "),
-          _c("span", { staticClass: "input-group-addon" }, [
-            _c("i", { staticClass: "fa fa-calendar" })
-          ])
-        ])
+        _c("th", { staticClass: "text-black" }, [_vm._v("Branch")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [
+          _vm._v("Start Date - End Date")
+        ]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Due Date")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Generated")]),
+        _vm._v(" "),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Last Update")]),
+        _vm._v(" "),
+        _c(
+          "th",
+          { staticClass: "text-black", staticStyle: { width: "250px" } },
+          [_vm._v("Action")]
+        )
       ])
     ])
   }
@@ -7139,7 +5106,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-d8a21c6e", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-3fd34596", module.exports)
   }
 }
 
@@ -21404,15 +19371,253 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/MainTimesheet.vue":
+/***/ "./resources/assets/js/client/helpers/api.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["g"] = get;
+/* harmony export (immutable) */ __webpack_exports__["h"] = post;
+/* unused harmony export multipartPost */
+/* harmony export (immutable) */ __webpack_exports__["a"] = del;
+/* unused harmony export interceptors */
+/* harmony export (immutable) */ __webpack_exports__["c"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["f"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceDel;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePost;
+/* unused harmony export facePutOctet */
+/* harmony export (immutable) */ __webpack_exports__["e"] = facePostOctet;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
+/**
+ * Created by kevinpurwono on 9/11/17.
+ */
+
+
+
+function get(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
+        }
+    });
+}
+
+function post(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
+        }
+    });
+}
+
+function multipartPost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
+
+// delete is reserved keyword
+function del(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
+        }
+    });
+}
+
+function interceptors(cb) {
+    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (res) {
+        return res;
+    }, function (err) {
+        cb(err);
+        return Promise.reject(err);
+    });
+}
+
+function faceGet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePut(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function faceDel(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+function facePutOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePostOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/helpers/const.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return microsoftPersonGroupId; });
+/**
+ * Created by kevinpurwono on 9/11/17.
+ */
+
+var api_path = '/v1/h/';
+var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
+var faceSubKey = 'e498335112c8402a82967303033da0a4';
+var microsoftPersonGroupId = 'gx_development';
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/helpers/utils.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = objectToFormData;
+/* harmony export (immutable) */ __webpack_exports__["a"] = makeBlob;
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+/**
+ * Created by kevinpurwono on 16/11/17.
+ */
+// export function toMulipartedForm(form, mode) {
+//     if(mode === 'edit' && typeof form.image === 'string') {
+//         const temp = JSON.parse(JSON.stringify(form))
+//         delete temp.image
+//         return temp
+//     } else {
+//         return objectToFormData(form)
+//     }
+// }
+
+function objectToFormData(obj, form, namespace) {
+    var fd = form || new FormData();
+    var formKey = void 0;
+    for (var property in obj) {
+        if (obj.hasOwnProperty(property)) {
+            if (namespace) {
+                formKey = namespace + '[' + property + ']';
+            } else {
+                formKey = property;
+            }
+            if (obj[property] instanceof Array) {
+                for (var i = 0; i < obj[property].length; i++) {
+                    objectToFormData(obj[property][i], fd, property + '[' + i + ']');
+                }
+            } else if (_typeof(obj[property]) === 'object' && !(obj[property] instanceof File)) {
+                objectToFormData(obj[property], fd, property);
+            } else {
+                fd.append(formKey, obj[property]);
+            }
+        }
+    }
+    return fd;
+}
+
+function makeBlob(dataURL) {
+    var BASE64_MARKER = ';base64,';
+    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+        var _parts = dataURL.split(',');
+        var _contentType = _parts[0].split(':')[1];
+        var _raw = decodeURIComponent(_parts[1]);
+        return new Blob([_raw], { type: _contentType });
+    }
+    var parts = dataURL.split(BASE64_MARKER);
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+
+    var uInt8Array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], { type: contentType });
+}
+
+/***/ }),
+
+/***/ "./resources/assets/js/client/manager/MainEditTimesheet.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/MainTimesheet.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/MainEditTimesheet.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2f586835\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/MainTimesheet.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-35c4c2fb\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/MainEditTimesheet.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -21429,7 +19634,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/attendance/MainTimesheet.vue"
+Component.options.__file = "resources/assets/js/client/manager/MainEditTimesheet.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -21439,9 +19644,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2f586835", Component.options)
+    hotAPI.createRecord("data-v-35c4c2fb", Component.options)
   } else {
-    hotAPI.reload("data-v-2f586835", Component.options)
+    hotAPI.reload("data-v-35c4c2fb", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -21453,219 +19658,64 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/components/timesheet/AttemptInsideSummaryModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
+/***/ "./resources/assets/js/client/manager/editTimesheet.js":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptInsideSummaryModal.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-2b3a60e4\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptInsideSummaryModal.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/attendance/components/timesheet/AttemptInsideSummaryModal.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MainEditTimesheet_vue__ = __webpack_require__("./resources/assets/js/client/manager/MainEditTimesheet.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MainEditTimesheet_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MainEditTimesheet_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_editTimesheet__ = __webpack_require__("./resources/assets/js/client/manager/router/editTimesheet.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_editTimesheet_store__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/store.js");
+/**
+ * Created by kevinpurwono on 15/11/17.
+ */
 
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-2b3a60e4", Component.options)
-  } else {
-    hotAPI.reload("data-v-2b3a60e4", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
 
-module.exports = Component.exports
 
+
+
+
+// Create a global Event Bus
+var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
+
+// Add to Vue properties by exposing a getter for $bus
+Object.defineProperties(__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype, {
+    $bus: {
+        get: function get() {
+            return EventBus;
+        }
+    }
+});
+
+var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+    el: '#vc-manager-edit-timesheet',
+    template: '<main-edit-timesheet></main-edit-timesheet>',
+    components: { MainEditTimesheet: __WEBPACK_IMPORTED_MODULE_1__MainEditTimesheet_vue___default.a },
+    router: __WEBPACK_IMPORTED_MODULE_2__router_editTimesheet__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_3__vuex_editTimesheet_store__["a" /* store */]
+});
+
+$(document).ready(function () {});
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/components/timesheet/AttemptSendToManagersModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptSendToManagersModal.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-d8a21c6e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptSendToManagersModal.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/attendance/components/timesheet/AttemptSendToManagersModal.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-d8a21c6e", Component.options)
-  } else {
-    hotAPI.reload("data-v-d8a21c6e", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/attendance/components/timesheet/AttemptSummaryModal.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptSummaryModal.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-362d35b2\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/AttemptSummaryModal.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/attendance/components/timesheet/AttemptSummaryModal.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-362d35b2", Component.options)
-  } else {
-    hotAPI.reload("data-v-362d35b2", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/attendance/components/timesheet/TimesheetSortDatepicker.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/TimesheetSortDatepicker.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-687dbc2c\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/components/timesheet/TimesheetSortDatepicker.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/attendance/components/timesheet/TimesheetSortDatepicker.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-687dbc2c", Component.options)
-  } else {
-    hotAPI.reload("data-v-687dbc2c", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/attendance/router/timesheet.js":
+/***/ "./resources/assets/js/client/manager/router/editTimesheet.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_timesheet_Index_vue__ = __webpack_require__("./resources/assets/js/client/attendance/views/timesheet/Index.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_timesheet_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_timesheet_Index_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_timesheet_DetailTimesheet_vue__ = __webpack_require__("./resources/assets/js/client/attendance/views/timesheet/DetailTimesheet.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_timesheet_DetailTimesheet_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_timesheet_DetailTimesheet_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_timesheet_SummaryTimesheet_vue__ = __webpack_require__("./resources/assets/js/client/attendance/views/timesheet/SummaryTimesheet.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__views_timesheet_SummaryTimesheet_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__views_timesheet_SummaryTimesheet_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_editTimesheet_Index_vue__ = __webpack_require__("./resources/assets/js/client/manager/views/editTimesheet/Index.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_editTimesheet_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_editTimesheet_Index_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_editTimesheet_SummaryTimesheet_vue__ = __webpack_require__("./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_editTimesheet_SummaryTimesheet_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_editTimesheet_SummaryTimesheet_vue__);
 /**
- * Created by kevinpurwono on 23/11/17.
+ * Created by kevinpurwono on 9/11/17.
  */
-
 
 
 
@@ -21675,77 +19725,23 @@ module.exports = Component.exports
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]);
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_timesheet_Index_vue___default.a }, { path: '/detail/:id/', component: __WEBPACK_IMPORTED_MODULE_3__views_timesheet_DetailTimesheet_vue___default.a, name: 'detailTimesheet' }, { path: '/summary', component: __WEBPACK_IMPORTED_MODULE_4__views_timesheet_SummaryTimesheet_vue___default.a, name: 'summaryTimesheet' }]
+    // mode: 'history',
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_editTimesheet_Index_vue___default.a }, { path: '/summary/:editTimesheetId', component: __WEBPACK_IMPORTED_MODULE_3__views_editTimesheet_SummaryTimesheet_vue___default.a, name: 'timesheetSummary' }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/timesheet.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_timesheet__ = __webpack_require__("./resources/assets/js/client/attendance/router/timesheet.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainTimesheet_vue__ = __webpack_require__("./resources/assets/js/client/attendance/MainTimesheet.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainTimesheet_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainTimesheet_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_timesheet_store__ = __webpack_require__("./resources/assets/js/client/attendance/vuex/timesheet/store.js");
-/**
- * Created by kevinpurwono on 6/12/17.
- */
-
-
-
-
-
-
-var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#vc-attendance-timesheet',
-    template: '<main-slot></main-slot>',
-    components: { MainSlot: __WEBPACK_IMPORTED_MODULE_2__MainTimesheet_vue___default.a },
-    router: __WEBPACK_IMPORTED_MODULE_1__router_timesheet__["a" /* default */],
-    store: __WEBPACK_IMPORTED_MODULE_3__vuex_timesheet_store__["a" /* store */]
-});
-
-$(document).ready(function () {
-
-    var timesheetDT = $('.timesheetDT');
-
-    timesheetDT.dataTable({
-        "sDom": "t",
-        "destroy": true,
-        "paging": true,
-        "scrollCollapse": false,
-        "ordering": false
-    });
-
-    var summaryDT = $('#summaryDT');
-
-    summaryDT.dataTable({
-        "sDom": "t",
-        "destroy": true,
-        "paging": false,
-        "scrollCollapse": false,
-        "ordering": false
-    });
-
-    $('.dataTables_empty').hide();
-});
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/attendance/views/timesheet/DetailTimesheet.vue":
+/***/ "./resources/assets/js/client/manager/views/editTimesheet/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/DetailTimesheet.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/Index.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-03f284df\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/DetailTimesheet.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3fd34596\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/Index.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -21762,7 +19758,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/attendance/views/timesheet/DetailTimesheet.vue"
+Component.options.__file = "resources/assets/js/client/manager/views/editTimesheet/Index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -21772,9 +19768,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-03f284df", Component.options)
+    hotAPI.createRecord("data-v-3fd34596", Component.options)
   } else {
-    hotAPI.reload("data-v-03f284df", Component.options)
+    hotAPI.reload("data-v-3fd34596", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -21786,15 +19782,15 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/views/timesheet/Index.vue":
+/***/ "./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/Index.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-8e394160\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/Index.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1b7648d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -21811,7 +19807,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/attendance/views/timesheet/Index.vue"
+Component.options.__file = "resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -21821,9 +19817,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-8e394160", Component.options)
+    hotAPI.createRecord("data-v-1b7648d0", Component.options)
   } else {
-    hotAPI.reload("data-v-8e394160", Component.options)
+    hotAPI.reload("data-v-1b7648d0", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -21835,56 +19831,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/views/timesheet/SummaryTimesheet.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/SummaryTimesheet.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1f6d499e\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/attendance/views/timesheet/SummaryTimesheet.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/attendance/views/timesheet/SummaryTimesheet.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1f6d499e", Component.options)
-  } else {
-    hotAPI.reload("data-v-1f6d499e", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/attendance/vuex/timesheet/modules/actions.js":
+/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/modules/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -21899,82 +19846,15 @@ module.exports = Component.exports
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    getDataOnCreate: function getDataOnCreate(_ref) {
+    getDataOnCreate: function getDataOnCreate(_ref, payload) {
         var commit = _ref.commit,
             state = _ref.state;
 
-        commit({ type: 'getDivisions', divisionId: '' });
-        commit({ type: 'getShifts', shiftId: '' });
-        commit('getBranchOffices');
-        commit({ type: 'getAttdApprovals', attdAprovalId: '' });
-
-        var currentDate = moment().format('DD/MM/YYYY');
-        if (state.sortedDate) {
-            currentDate = state.sortedDate;
-        }
-        commit({ type: 'getTimesheetData', sortDate: currentDate });
+        commit('getTimesheetList');
     },
-    getSortedData: function getSortedData(_ref2, payload) {
+    editTimesheet: function editTimesheet(_ref2, payload) {
         var commit = _ref2.commit,
             state = _ref2.state;
-
-
-        commit({
-            type: 'getTimesheetData',
-            sortDate: payload.sortDate,
-            divisionId: payload.divisionId,
-            branchOfficeId: payload.branchOfficeId,
-            shiftId: payload.shiftId,
-            attdApprovalId: payload.attdApprovalId
-        });
-
-        state.sortedDate = payload.sortDate;
-    },
-    attemptGenerateSummary: function attemptGenerateSummary(_ref3) {
-        var commit = _ref3.commit,
-            state = _ref3.state;
-
-        $('#modal-attempt-generate-summary').modal('show');
-    },
-    attemptGenerateInsideSummary: function attemptGenerateInsideSummary(_ref4) {
-        var commit = _ref4.commit,
-            state = _ref4.state;
-
-        $('#modal-attempt-generate-inside-summary').modal('show');
-    },
-    attemptSendToManagers: function attemptSendToManagers(_ref5) {
-        var commit = _ref5.commit,
-            state = _ref5.state;
-
-        $('#modal-attempt-send-to-managers').modal('show');
-    },
-    startGenerateSummary: function startGenerateSummary(_ref6, payload) {
-        var commit = _ref6.commit,
-            state = _ref6.state;
-
-
-        $('#modal-attempt-generate-summary').modal('hide');
-        $('#modal-attempt-generate-inside-summary').modal('hide');
-
-        /* Get shifts if empty*/
-        if (!state.shifts) {
-            commit({ type: 'getShifts', shiftId: '' });
-        }
-
-        state.generateFromDate = payload.fromDate;
-        state.generateToDate = payload.toDate;
-        state.generateBranchOfficeId = payload.branchOfficeId;
-
-        commit({
-            type: 'getTimesheetSummaryDataAll',
-            fromDate: payload.fromDate,
-            toDate: payload.toDate,
-            branchOfficeId: payload.branchOfficeId
-        });
-    },
-    editTimesheet: function editTimesheet(_ref7, payload) {
-        var commit = _ref7.commit,
-            state = _ref7.state;
 
         if (payload.employeeNo) {
 
@@ -21986,9 +19866,9 @@ module.exports = Component.exports
             });
         }
     },
-    cancelEditTimesheet: function cancelEditTimesheet(_ref8, payload) {
-        var commit = _ref8.commit,
-            state = _ref8.state;
+    cancelEditTimesheet: function cancelEditTimesheet(_ref3, payload) {
+        var commit = _ref3.commit,
+            state = _ref3.state;
 
         if (payload.employeeNo) {
             _.forEach(state.timesheetSummaryData, function (value, parentKey) {
@@ -21999,9 +19879,9 @@ module.exports = Component.exports
             });
         }
     },
-    saveEditTimesheet: function saveEditTimesheet(_ref9, payload) {
-        var commit = _ref9.commit,
-            state = _ref9.state;
+    saveEditTimesheet: function saveEditTimesheet(_ref4, payload) {
+        var commit = _ref4.commit,
+            state = _ref4.state;
 
 
         if (payload.employeeNo) {
@@ -22024,9 +19904,9 @@ module.exports = Component.exports
             });
         }
     },
-    createNewTimesheet: function createNewTimesheet(_ref10, payload) {
-        var commit = _ref10.commit,
-            state = _ref10.state;
+    createNewTimesheet: function createNewTimesheet(_ref5, payload) {
+        var commit = _ref5.commit,
+            state = _ref5.state;
 
 
         if (payload.employeeNo) {
@@ -22048,79 +19928,29 @@ module.exports = Component.exports
             shiftId: payload.shiftId,
             date: payload.date
         });
-    },
-    sendSummaryToManagers: function sendSummaryToManagers(_ref11, payload) {
-        var commit = _ref11.commit,
-            state = _ref11.state;
-
-
-        if (payload.dueDate != '' && state.generateFromDate != '' && state.generateToDate != '' && state.generateBranchOfficeId != '') {
-
-            var formObject = {
-                dueDate: payload.dueDate,
-                startDate: state.generateFromDate,
-                endDate: state.generateToDate,
-                branchOfficeId: state.generateBranchOfficeId
-            };
-
-            commit({
-                type: 'sendSummaryToManagers',
-                formObject: formObject
-            });
-        } else {
-
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: 'Unable to send timesheet to managers.',
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-
-            $('#modal-attempt-send-to-managers').modal('toggle');
-        }
     }
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/vuex/timesheet/modules/getters.js":
+/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/modules/getters.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /**
  * Created by kevinpurwono on 8/12/17.
  */
-/* harmony default export */ __webpack_exports__["a"] = ({
-    divisions: function divisions(state) {
-        return state.divisions;
-    },
-    shifts: function shifts(state) {
-        return state.shifts;
-    },
-    branchOffices: function branchOffices(state) {
-        return state.branchOffices;
-    },
-    attdApprovals: function attdApprovals(state) {
-        return state.attdApprovals;
-    },
-    timesheetDatas: function timesheetDatas(state) {
-        return state.timesheetsData;
-    },
-    timesheetSummaryData: function timesheetSummaryData(state) {
-        return state.timesheetSummaryData;
-    }
-});
+/* harmony default export */ __webpack_exports__["a"] = ({});
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/vuex/timesheet/modules/main.js":
+/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/modules/main.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/attendance/vuex/timesheet/modules/getters.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/attendance/vuex/timesheet/modules/mutations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/attendance/vuex/timesheet/modules/actions.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/modules/getters.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/modules/mutations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/modules/actions.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -22132,16 +19962,9 @@ module.exports = Component.exports
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        divisions: [],
-        shifts: [],
-        branchOffices: [],
-        attdApprovals: [],
-        sortedDate: '',
-        generateFromDate: '',
-        generateToDate: '',
-        generateBranchOfficeId: '',
-        timesheetsData: [],
-        timesheetSummaryData: []
+        timesheets: [],
+        timesheetSummaryData: [],
+        shifts: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -22150,7 +19973,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/vuex/timesheet/modules/mutations.js":
+/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/modules/mutations.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22158,143 +19981,25 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series__ = __webpack_require__("./node_modules/async/series.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_async_series__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
 
 
 
+
 /* harmony default export */ __webpack_exports__["a"] = ({
-    getDivisions: function getDivisions(state, payload) {
-
-        if (!payload.divisionId) {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/divisions').then(function (res) {
-                state.divisions = res.data.data;
-            });
-        } else {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/division/' + payload.divisionId).then(function (res) {
-                state.divisions = res.data.data;
-            });
-        }
-    },
-    getShifts: function getShifts(state, payload) {
-        if (!payload.shiftId) {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/shifts').then(function (res) {
-                state.shifts = res.data.data;
-            });
-        } else {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/shift/' + payload.shiftId).then(function (res) {
-                state.shifts = res.data.data;
-            });
-        }
-    },
-    getAttdApprovals: function getAttdApprovals(state, payload) {
-        if (!payload.attdApprovalId) {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/attdApprovals').then(function (res) {
-                state.attdApprovals = res.data.data;
-            });
-        } else {
-            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/attdApproval/' + payload.attdApprovalId).then(function (res) {
-                state.attdApprovals = res.data.data;
-            });
-        }
-    },
-    getBranchOffices: function getBranchOffices(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/branchOffices').then(function (res) {
-            state.branchOffices = res.data.data;
-        });
-    },
-    getTimesheetData: function getTimesheetData(state, payload) {
-        var divisionId = '';
-        var shiftId = '';
-        var branchOfficeId = '';
-        var sortDate = '';
-        var attdApprovalId = '';
-
-        if (payload.divisionId) divisionId = payload.divisionId;
-
-        if (payload.shiftId) shiftId = payload.shiftId;
-
-        if (payload.branchOfficeId) branchOfficeId = payload.branchOfficeId;
-
-        if (payload.sortDate) sortDate = payload.sortDate;
-
-        if (payload.attdApprovalId) attdApprovalId = payload.attdApprovalId;
-
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/list?sortDate=' + sortDate + '&divisionId=' + divisionId + '&shiftId=' + shiftId + '&branchOfficeId=' + branchOfficeId + '&attdApprovalId=' + attdApprovalId).then(function (res) {
-            if (res.data.data) state.timesheetsData = res.data.data;
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    approveTimesheet: function approveTimesheet(state, timesheetId) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/approve', { timesheetId: timesheetId }).then(function (res) {
+    getTimesheetList: function getTimesheetList(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'manager/timesheet/list').then(function (res) {
             if (!res.data.isFailed) {
-                var timesheet = _.find(state.timesheetsData, { id: timesheetId });
-                var timesheetIndex = _.findIndex(state.timesheetsData, timesheet);
-
-                // Update data
-                timesheet.attendanceApproveId = 1;
-                timesheet.attendanceApproveName = 'Manager Approved';
-                timesheet.approvedBy = res.data.approvedBy;
-                state.timesheetsData.splice(timesheetIndex, 1, timesheet);
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
+                //insert to array
+                state.timesheets = res.data.timesheets.data;
             }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
         });
     },
-    disapproveTimesheet: function disapproveTimesheet(state, timesheetId) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/disapprove', { timesheetId: timesheetId }).then(function (res) {
-            if (!res.data.isFailed) {
-                var timesheet = _.find(state.timesheetsData, { id: timesheetId });
-                var timesheetIndex = _.findIndex(state.timesheetsData, timesheet);
-
-                // Update data
-                timesheet.attendanceApproveId = 98;
-                timesheet.attendanceApproveName = 'Disapproved';
-                timesheet.approvedBy = res.data.approvedBy;
-                state.timesheetsData.splice(timesheetIndex, 1, timesheet);
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    getTimesheetSummaryDataAll: function getTimesheetSummaryDataAll(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate + '&branchOfficeId=' + payload.branchOfficeId).then(function (res) {
+    getTimesheetSummaryData: function getTimesheetSummaryData(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'manager/timesheet/summary?editTimesheetId=' + payload.editTimesheetId).then(function (res) {
 
             if (!res.data.isFailed) {
                 state.timesheetSummaryData = res.data.summary;
@@ -22315,6 +20020,11 @@ module.exports = Component.exports
                 timeout: 3500,
                 type: 'danger'
             }).show();
+        });
+    },
+    getShifts: function getShifts(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/shifts').then(function (res) {
+            state.shifts = res.data.data;
         });
     },
     approveTimesheetFromSummary: function approveTimesheetFromSummary(state, timesheetId) {
@@ -22489,46 +20199,12 @@ module.exports = Component.exports
                 type: 'danger'
             }).show();
         });
-    },
-    sendSummaryToManagers: function sendSummaryToManagers(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'manager/timesheet/generateAndSend', payload.formObject).then(function (res) {
-
-            if (!res.data.isFailed) {
-
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-
-            //close modal
-            $('#modal-attempt-send-to-managers').modal('toggle');
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
     }
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/attendance/vuex/timesheet/store.js":
+/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/store.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -22536,7 +20212,7 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/attendance/vuex/timesheet/modules/main.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/modules/main.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -22549,178 +20225,9 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
-        timesheet: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
+        editTimesheet: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
     }
 });
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/helpers/api.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["g"] = get;
-/* harmony export (immutable) */ __webpack_exports__["h"] = post;
-/* unused harmony export multipartPost */
-/* harmony export (immutable) */ __webpack_exports__["a"] = del;
-/* unused harmony export interceptors */
-/* harmony export (immutable) */ __webpack_exports__["c"] = faceGet;
-/* harmony export (immutable) */ __webpack_exports__["f"] = facePut;
-/* harmony export (immutable) */ __webpack_exports__["b"] = faceDel;
-/* harmony export (immutable) */ __webpack_exports__["d"] = facePost;
-/* unused harmony export facePutOctet */
-/* harmony export (immutable) */ __webpack_exports__["e"] = facePostOctet;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
-/**
- * Created by kevinpurwono on 9/11/17.
- */
-
-
-
-function get(url) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'GET',
-        url: url,
-        headers: {
-            // 'Authorization': `Bearer ${Auth.state.api_token}`
-        }
-    });
-}
-
-function post(url, payload) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'POST',
-        url: url,
-        data: payload,
-        headers: {
-            // 'Authorization': `Bearer ${Auth.state.api_token}`,
-        }
-    });
-}
-
-function multipartPost(url, payload) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'POST',
-        url: url,
-        data: payload,
-        headers: {
-            // 'Authorization': `Bearer ${Auth.state.api_token}`,
-            'Content-Type': 'multipart/form-data'
-        }
-    });
-}
-
-// delete is reserved keyword
-function del(url) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'DELETE',
-        url: url,
-        headers: {
-            // 'Authorization': `Bearer ${Auth.state.api_token}`
-        }
-    });
-}
-
-function interceptors(cb) {
-    __WEBPACK_IMPORTED_MODULE_0_axios___default.a.interceptors.response.use(function (res) {
-        return res;
-    }, function (err) {
-        cb(err);
-        return Promise.reject(err);
-    });
-}
-
-function faceGet(url, payload) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'GET',
-        url: url,
-        data: payload,
-        headers: {
-            'Content-Type': 'application/json',
-            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
-        }
-    });
-}
-
-function facePut(url, payload) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'PUT',
-        url: url,
-        data: payload,
-        headers: {
-            'Content-Type': 'application/json',
-            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
-        }
-    });
-}
-
-function faceDel(url) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'DELETE',
-        url: url,
-        headers: {
-            'Content-Type': 'application/json',
-            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
-        }
-    });
-}
-
-function facePost(url, payload) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'POST',
-        url: url,
-        data: payload,
-        headers: {
-            'Content-Type': 'application/json',
-            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
-        }
-    });
-}
-function facePutOctet(url, data) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'PUT',
-        url: url,
-        data: data,
-        headers: {
-            'Content-Type': 'application/octet-stream',
-            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
-        }
-    });
-}
-
-function facePostOctet(url, data) {
-    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
-        method: 'POST',
-        url: url,
-        data: data,
-        headers: {
-            'Content-Type': 'application/octet-stream',
-            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
-        }
-    });
-}
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/helpers/const.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return microsoftPersonGroupId; });
-/**
- * Created by kevinpurwono on 9/11/17.
- */
-
-var api_path = '/v1/h/';
-var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
-var faceSubKey = 'e498335112c8402a82967303033da0a4';
-var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
@@ -22751,10 +20258,10 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ 9:
+/***/ 40:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/attendance/timesheet.js");
+module.exports = __webpack_require__("./resources/assets/js/client/manager/editTimesheet.js");
 
 
 /***/ })

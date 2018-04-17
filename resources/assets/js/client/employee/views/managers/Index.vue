@@ -1,64 +1,5 @@
 <template>
     <div class="row">
-        <div class="col-lg-8 m-b-10">
-            <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
-                <div class="card-block">
-                    <div class="scrollable">
-                        <div class=" h-500">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover settingDT">
-                                    <thead class="bg-master-lighter">
-                                    <tr>
-                                        <th class="text-black">Name</th>
-                                        <th class="text-black">Division</th>
-                                        <th class="text-black">Active</th>
-                                        <th class="text-black">Start Date</th>
-                                        <th class="text-black">End Date</th>
-                                        <th class="text-black" style="width:250px">Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr v-for="manager in managers">
-                                        <td>{{manager.employeeName}} ({{manager.employeeNo}})</td>
-                                        <td>{{manager.divisionName}}</td>
-                                        <td>
-                                            <i class="fa fa-times text-danger" v-if="!manager.isActive"></i>
-                                            <i class="fa fa-check text-success" v-else=""></i>
-                                        </td>
-                                        <td>
-                                            <span v-if="manager.startDate!=''">{{manager.startDate}}</span>
-                                            <span v-else="">-</span>
-                                        </td>
-                                        <td>
-                                            <span v-if="manager.endDate!=''">{{manager.endDate}}</span>
-                                            <span v-else="">-</span>
-                                        </td>
-                                        <td>
-                                            <button class="btn"
-                                                    :disabled="manager.isActive==1"
-                                                    :class="{'btn-primary':!manager.isActive,'btn-disabled':manager.isActive}"
-                                                    @click="activateManager(manager.id)">Activate
-                                            </button>
-                                            <button class="btn"
-                                                    :disabled="manager.isActive==0"
-                                                    :class="{'btn-danger':manager.isActive,'btn-disabled':!manager.isActive}"
-                                                    @click="deactivateManager(manager.id)">Deactivate
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-
         <div class="col-lg-4 m-b-10">
             <div class="card no-border">
                 <div class="card-block">
@@ -143,6 +84,20 @@
 
                             </div>
                             <div class="col-lg-12">
+                                <div class="form-group  required">
+                                    <label>Branch Office</label>
+                                    <div class="form-group required">
+                                        <select v-model="formObject.branchOfficeId" class="form-control">
+                                            <option value="" disabled hidden>Select Branch Office</option>
+                                            <option :value="branchOffice.id" v-for="branchOffice in branchOffices">
+                                                {{branchOffice.name}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-12">
                                 <button class="btn btn-complete pull-right" type="button"
                                         @click="assignDivisionManager()">
                                     Assign
@@ -154,6 +109,66 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-lg-12 m-b-10">
+            <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
+                <div class="card-block">
+                    <div class="scrollable">
+                        <div class=" h-500">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover settingDT">
+                                    <thead class="bg-master-lighter">
+                                    <tr>
+                                        <th class="text-black">Name</th>
+                                        <th class="text-black">Division (Branch)</th>
+                                        <th class="text-black">Active</th>
+                                        <th class="text-black">Start Date</th>
+                                        <th class="text-black">End Date</th>
+                                        <th class="text-black" style="width:250px">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="manager in managers" class="filter-item">
+                                        <td>{{manager.employeeName}} ({{manager.employeeNo}})</td>
+                                        <td>{{manager.divisionName}} ({{manager.branchOfficeName}})</td>
+                                        <td>
+                                            <i class="fa fa-times text-danger" v-if="!manager.isActive"></i>
+                                            <i class="fa fa-check text-success" v-else=""></i>
+                                        </td>
+                                        <td>
+                                            <span v-if="manager.startDate!=''">{{manager.startDate}}</span>
+                                            <span v-else="">-</span>
+                                        </td>
+                                        <td>
+                                            <span v-if="manager.endDate!=''">{{manager.endDate}}</span>
+                                            <span v-else="">-</span>
+                                        </td>
+                                        <td>
+                                            <button class="btn"
+                                                    :disabled="manager.isActive==1"
+                                                    :class="{'btn-primary':!manager.isActive,'btn-disabled':manager.isActive}"
+                                                    @click="activateManager(manager.id)">Activate
+                                            </button>
+                                            <button class="btn"
+                                                    :disabled="manager.isActive==0"
+                                                    :class="{'btn-danger':manager.isActive,'btn-disabled':!manager.isActive}"
+                                                    @click="deactivateManager(manager.id)">Deactivate
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </template>
 <script type="text/javascript">
@@ -169,7 +184,8 @@
                 },
                 formObject: {
                     employeeId: '',
-                    divisionId: ''
+                    divisionId: '',
+                    branchOfficeId:''
                 }
             }
         },
@@ -182,6 +198,7 @@
         computed: {
             ...mapState('managers', {
                 divisions: 'divisions',
+                branchOffices:'branchOffices',
                 managers: 'managers',
                 employeeCandidates: 'employeeCandidates'
             })
@@ -190,25 +207,27 @@
             assignDivisionManager(){
                 let self = this
 
-                if (self.formObject.employeeId != '' && self.formObject.divisionId != '') {
+                if (self.formObject.employeeId != '' && self.formObject.divisionId != '' && self.formObject.branchOfficeId!='') {
 
                     //assign
                     this.$store.commit({
                         type: 'managers/assignManager',
-                        employeeId: self.formObject.employeeId,
-                        divisionId: self.formObject.divisionId
+                        formObject: self.formObject
                     })
 
-                    //reset
-                    this.removeSelectedEmployee()
-                    self.formObject = {
-                        employeeId: '',
-                        divisionId: ''
-                    }
+
 
                     //refresh
                     setTimeout(() => {
                         this.$store.commit({type: 'managers/getManagers'})
+
+                        //reset
+                        this.removeSelectedEmployee()
+                        self.formObject = {
+                            employeeId: '',
+                            divisionId: '',
+                            branchOfficeId:''
+                        }
                     }, 1200)
 
                 } else {

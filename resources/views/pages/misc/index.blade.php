@@ -10,7 +10,7 @@
 @endpush
 
 @push('child-page-controller')
-
+@include('layouts.partials.snippets._zoom_out90')
 @endpush
 
 @section('content')

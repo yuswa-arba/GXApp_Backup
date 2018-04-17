@@ -2660,6 +2660,21 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2673,7 +2688,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
             },
             formObject: {
                 employeeId: '',
-                divisionId: ''
+                divisionId: '',
+                branchOfficeId: ''
             }
         };
     },
@@ -2685,6 +2701,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('managers', {
         divisions: 'divisions',
+        branchOffices: 'branchOffices',
         managers: 'managers',
         employeeCandidates: 'employeeCandidates'
     })),
@@ -2694,24 +2711,25 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
             var self = this;
 
-            if (self.formObject.employeeId != '' && self.formObject.divisionId != '') {
+            if (self.formObject.employeeId != '' && self.formObject.divisionId != '' && self.formObject.branchOfficeId != '') {
 
                 //assign
                 this.$store.commit({
                     type: 'managers/assignManager',
-                    employeeId: self.formObject.employeeId,
-                    divisionId: self.formObject.divisionId
+                    formObject: self.formObject
                 });
 
-                //reset
-                this.removeSelectedEmployee();
-                self.formObject = {
-                    employeeId: '',
-                    divisionId: ''
-
-                    //refresh
-                };setTimeout(function () {
+                //refresh
+                setTimeout(function () {
                     _this.$store.commit({ type: 'managers/getManagers' });
+
+                    //reset
+                    _this.removeSelectedEmployee();
+                    self.formObject = {
+                        employeeId: '',
+                        divisionId: '',
+                        branchOfficeId: ''
+                    };
                 }, 1200);
             } else {
                 $('.page-container').pgNotification({
@@ -4338,123 +4356,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-8 m-b-10" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-        },
-        [
-          _c("div", { staticClass: "card-block" }, [
-            _c("div", { staticClass: "scrollable" }, [
-              _c("div", { staticClass: " h-500" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-striped table-hover settingDT"
-                    },
-                    [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.managers, function(manager) {
-                          return _c("tr", [
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(manager.employeeName) +
-                                  " (" +
-                                  _vm._s(manager.employeeNo) +
-                                  ")"
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(manager.divisionName))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              !manager.isActive
-                                ? _c("i", {
-                                    staticClass: "fa fa-times text-danger"
-                                  })
-                                : _c("i", {
-                                    staticClass: "fa fa-check text-success"
-                                  })
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              manager.startDate != ""
-                                ? _c("span", [
-                                    _vm._v(_vm._s(manager.startDate))
-                                  ])
-                                : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              manager.endDate != ""
-                                ? _c("span", [_vm._v(_vm._s(manager.endDate))])
-                                : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn",
-                                  class: {
-                                    "btn-primary": !manager.isActive,
-                                    "btn-disabled": manager.isActive
-                                  },
-                                  attrs: { disabled: manager.isActive == 1 },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.activateManager(manager.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "Activate\n                                        "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn",
-                                  class: {
-                                    "btn-danger": manager.isActive,
-                                    "btn-disabled": !manager.isActive
-                                  },
-                                  attrs: { disabled: manager.isActive == 0 },
-                                  on: {
-                                    click: function($event) {
-                                      _vm.deactivateManager(manager.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "Deactivate\n                                        "
-                                  )
-                                ]
-                              )
-                            ])
-                          ])
-                        })
-                      )
-                    ]
-                  )
-                ])
-              ])
-            ])
-          ])
-        ]
-      )
-    ]),
-    _vm._v(" "),
     _c("div", { staticClass: "col-lg-4 m-b-10" }, [
       _c("div", { staticClass: "card no-border" }, [
         _c("div", { staticClass: "card-block" }, [
@@ -4775,6 +4676,70 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-lg-12" }, [
+                _c("div", { staticClass: "form-group  required" }, [
+                  _c("label", [_vm._v("Branch Office")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group required" }, [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.formObject.branchOfficeId,
+                            expression: "formObject.branchOfficeId"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              _vm.formObject,
+                              "branchOfficeId",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      [
+                        _c(
+                          "option",
+                          { attrs: { value: "", disabled: "", hidden: "" } },
+                          [_vm._v("Select Branch Office")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.branchOffices, function(branchOffice) {
+                          return _c(
+                            "option",
+                            { domProps: { value: branchOffice.id } },
+                            [
+                              _vm._v(
+                                "\n                                            " +
+                                  _vm._s(branchOffice.name) +
+                                  "\n                                        "
+                              )
+                            ]
+                          )
+                        })
+                      ],
+                      2
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-12" }, [
                 _c(
                   "button",
                   {
@@ -4797,6 +4762,130 @@ var render = function() {
           ])
         ])
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-12 m-b-10" }, [
+      _c(
+        "div",
+        {
+          staticClass:
+            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
+        },
+        [
+          _c("div", { staticClass: "card-block" }, [
+            _c("div", { staticClass: "scrollable" }, [
+              _c("div", { staticClass: " h-500" }, [
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-striped table-hover settingDT"
+                    },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.managers, function(manager) {
+                          return _c("tr", { staticClass: "filter-item" }, [
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(manager.employeeName) +
+                                  " (" +
+                                  _vm._s(manager.employeeNo) +
+                                  ")"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _vm._v(
+                                _vm._s(manager.divisionName) +
+                                  " (" +
+                                  _vm._s(manager.branchOfficeName) +
+                                  ")"
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              !manager.isActive
+                                ? _c("i", {
+                                    staticClass: "fa fa-times text-danger"
+                                  })
+                                : _c("i", {
+                                    staticClass: "fa fa-check text-success"
+                                  })
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              manager.startDate != ""
+                                ? _c("span", [
+                                    _vm._v(_vm._s(manager.startDate))
+                                  ])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              manager.endDate != ""
+                                ? _c("span", [_vm._v(_vm._s(manager.endDate))])
+                                : _c("span", [_vm._v("-")])
+                            ]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-primary": !manager.isActive,
+                                    "btn-disabled": manager.isActive
+                                  },
+                                  attrs: { disabled: manager.isActive == 1 },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.activateManager(manager.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "Activate\n                                        "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn",
+                                  class: {
+                                    "btn-danger": manager.isActive,
+                                    "btn-disabled": !manager.isActive
+                                  },
+                                  attrs: { disabled: manager.isActive == 0 },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.deactivateManager(manager.id)
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "Deactivate\n                                        "
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        })
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ]
+      )
     ])
   ])
 }
@@ -4809,7 +4898,7 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { staticClass: "text-black" }, [_vm._v("Name")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Division")]),
+        _c("th", { staticClass: "text-black" }, [_vm._v("Division (Branch)")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Active")]),
         _vm._v(" "),
@@ -19332,6 +19421,7 @@ module.exports = Component.exports
             state = _ref.state;
 
         commit('getDivisions');
+        commit('getBranchOffices');
         commit('getManagers');
     }
 });
@@ -19369,6 +19459,7 @@ module.exports = Component.exports
     state: {
         managers: [],
         divisions: [],
+        branchOffices: [],
         employeeCandidates: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
@@ -19400,16 +19491,18 @@ module.exports = Component.exports
             state.divisions = res.data.data;
         });
     },
+    getBranchOffices: function getBranchOffices(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/branchOffices').then(function (res) {
+            state.branchOffices = res.data.data;
+        });
+    },
     getManagers: function getManagers(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/managers/list').then(function (res) {
             state.managers = res.data.managers.data;
         });
     },
     assignManager: function assignManager(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/managers/assign', {
-            employeeId: payload.employeeId,
-            divisionId: payload.divisionId
-        }).then(function (res) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/managers/assign', payload.formObject).then(function (res) {
             if (!res.data.isFailed) {
 
                 $('.page-container').pgNotification({

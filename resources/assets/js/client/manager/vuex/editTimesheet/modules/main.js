@@ -9,10 +9,9 @@ import actions from './actions'
 export default {
     namespaced: true,
     state: {
-        managers:[],
-        divisions:[],
-        branchOffices:[],
-        employeeCandidates:[]
+        timesheets: [],
+        timesheetSummaryData:[],
+        shifts:[]
     },
     getters,
     mutations,

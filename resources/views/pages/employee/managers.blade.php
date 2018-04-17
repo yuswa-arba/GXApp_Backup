@@ -7,7 +7,7 @@
 @endpush
 
 @push('child-page-controller')
-@include('layouts.partials.snippets._zoom_out90')
+@include('layouts.partials.snippets._zoom_out80')
 <script src="{{mix('js/client/employee/managers.js')}}"></script>
 
 @endpush

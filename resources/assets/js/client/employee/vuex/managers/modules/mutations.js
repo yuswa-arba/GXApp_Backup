@@ -12,6 +12,12 @@ export default{
                 state.divisions = res.data.data
             })
     },
+    getBranchOffices(state, payload){
+        get(api_path + 'component/list/branchOffices')
+            .then((res) => {
+                state.branchOffices = res.data.data
+            })
+    },
     getManagers(state, payload){
         get(api_path + 'employee/managers/list')
             .then((res) => {
@@ -19,10 +25,7 @@ export default{
             })
     },
     assignManager(state, payload){
-        post(api_path + 'employee/managers/assign',{
-            employeeId:payload.employeeId,
-            divisionId:payload.divisionId
-        })
+        post(api_path + 'employee/managers/assign', payload.formObject)
             .then((res) => {
                 if (!res.data.isFailed) {
 
@@ -161,6 +164,5 @@ export default{
                 type: 'danger'
             }).show();
         }
-
     },
 }

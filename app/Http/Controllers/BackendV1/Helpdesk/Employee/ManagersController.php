@@ -38,7 +38,8 @@ class ManagersController extends Controller
 
         $validator = Validator::make($request->all(), [
             'employeeId' => 'required',
-            'divisionId' => 'required'
+            'divisionId' => 'required',
+            'branchOfficeId' => 'required'
         ]);
 
         if ($validator->fails()) {
@@ -52,7 +53,8 @@ class ManagersController extends Controller
         $insert = DivisionManager::updateOrCreate(
             [
                 'employeeId' => $request->employeeId,
-                'divisionId' => $request->divisionId
+                'divisionId' => $request->divisionId,
+                'branchOfficeId' => $request->branchOfficeId,
             ],
             []
         );
@@ -106,7 +108,7 @@ class ManagersController extends Controller
             } else {
                 $response['isFailed'] = true;
                 $response['message'] = 'Unable to activate division manager';
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
 
 
@@ -149,7 +151,7 @@ class ManagersController extends Controller
             } else {
                 $response['isFailed'] = true;
                 $response['message'] = 'Unable to activate division manager';
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
 
 

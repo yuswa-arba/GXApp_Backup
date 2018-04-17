@@ -24,6 +24,7 @@ require(base_path($client_path . 'auth/main.php'));
 require(base_path($client_path . 'dashboard/main.php'));
 require(base_path($client_path . 'divisions/main.php'));
 require(base_path($client_path . 'employee/main.php'));
+require(base_path($client_path . 'manager/main.php'));
 require(base_path($client_path . 'settings/main.php'));
 require(base_path($client_path . 'attendance/main.php'));
 require(base_path($client_path . 'doorAccess/main.php'));
@@ -40,6 +41,7 @@ require(base_path($client_path . 'storage/main.php'));
 */
 require(base_path($backend_path . $type_helpdesk . 'setting.php'));
 require(base_path($backend_path . $type_helpdesk . 'employee.php'));
+require(base_path($backend_path . $type_helpdesk . 'manager.php'));
 require(base_path($backend_path . $type_helpdesk . 'attendance.php'));
 require(base_path($backend_path . $type_helpdesk . 'salary.php'));
 require(base_path($backend_path . $type_helpdesk . 'developer.php'));

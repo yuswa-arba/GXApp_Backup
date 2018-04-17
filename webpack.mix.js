@@ -204,6 +204,8 @@ mix.js('resources/assets/js/client/storage/requisition/cart','public/js/client/s
 mix.js('resources/assets/js/client/storage/requisition/history','public/js/client/storage/requisition');
 mix.js('resources/assets/js/client/storage/admin/approval','public/js/client/storage/admin');
 mix.js('resources/assets/js/client/storage/admin/purchaseOrder','public/js/client/storage/admin');
+mix.js('resources/assets/js/client/manager/editTimesheet','public/js/client/manager');
+
 
 
 /*

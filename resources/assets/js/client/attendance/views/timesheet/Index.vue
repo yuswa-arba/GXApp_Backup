@@ -71,140 +71,145 @@
         <div class="col-lg-12 m-b-10">
             <div class="widget-11-2 card card-bordered card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                 <div class="card-block">
-                    <div class="table-responsive">
-                        <table class="table table-hover timesheetDT">
-                            <thead class="bg-master-lighter">
-                            <tr>
-                                <th class="text-black w-150">Employee</th>
-                                <th class="text-black" style="width:100px">Shift</th>
-                                <th class="text-black">Clock-In
-                                    <i @click="showHidecInPhoto()"
-                                       class="fa fa-eye cursor"
-                                       v-if="showcInPhoto"
-                                       style="color: darkgrey"></i>
-                                    <i @click="showHidecInPhoto()"
-                                       class="fa fa-eye-slash cursor"
-                                       v-else=""
-                                       style="color: darkgrey"></i>
-                                </th>
-                                <th class="text-black">Clock-Out
-                                    <i @click="showHidecOutPhoto()"
-                                       class="fa fa-eye cursor"
-                                       v-if="showcOutPhoto"
-                                       style="color: darkgrey"></i>
-                                    <i @click="showHidecOutPhoto()"
-                                       class="fa fa-eye-slash cursor"
-                                       v-else=""
-                                       style="color: darkgrey"></i>
-                                </th>
-                                <th class="text-black">Approve Stats</th>
-                                <th class="text-black">Valid Stats</th>
-                                <th class="text-black">Actions</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr v-for="timesheet in timesheetDatas" class="filter-item">
-                                <td>
-                                    <p class="fs-16 bold text-black m-b-0">{{timesheet.employeeName}}</p>
-                                    {{timesheet.divisionName}}
+                    <div class="scrollable">
+                        <div style="height: 700px!important;">
+                            <div class="table-responsive">
+                                <table class="table table-hover timesheetDT">
+                                    <thead class="bg-master-lighter">
+                                    <tr>
+                                        <th class="text-black w-150">Employee</th>
+                                        <th class="text-black" style="width:100px">Shift</th>
+                                        <th class="text-black">Clock-In
+                                            <i @click="showHidecInPhoto()"
+                                               class="fa fa-eye cursor"
+                                               v-if="showcInPhoto"
+                                               style="color: darkgrey"></i>
+                                            <i @click="showHidecInPhoto()"
+                                               class="fa fa-eye-slash cursor"
+                                               v-else=""
+                                               style="color: darkgrey"></i>
+                                        </th>
+                                        <th class="text-black">Clock-Out
+                                            <i @click="showHidecOutPhoto()"
+                                               class="fa fa-eye cursor"
+                                               v-if="showcOutPhoto"
+                                               style="color: darkgrey"></i>
+                                            <i @click="showHidecOutPhoto()"
+                                               class="fa fa-eye-slash cursor"
+                                               v-else=""
+                                               style="color: darkgrey"></i>
+                                        </th>
+                                        <th class="text-black">Approve Stats</th>
+                                        <th class="text-black">Valid Stats</th>
+                                        <th class="text-black">Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr v-for="timesheet in timesheetDatas" class="filter-item">
+                                        <td>
+                                            <p class="fs-16 bold text-black m-b-0">{{timesheet.employeeName}}</p>
+                                            {{timesheet.divisionName}}
 
-                                </td>
-                                <td>
-                                    <p class="m-b-0 text-black bold"> {{timesheet.shiftName}}</p>
-                                    <p class="m-b-0"> Start: {{timesheet.shiftWorkStartAt}}</p>
-                                    <p class="m-b-0"> End: {{timesheet.shiftWorkEndAt}}</p>
+                                        </td>
+                                        <td>
+                                            <p class="m-b-0 text-black bold"> {{timesheet.shiftName}}</p>
+                                            <p class="m-b-0"> Start: {{timesheet.shiftWorkStartAt}}</p>
+                                            <p class="m-b-0"> End: {{timesheet.shiftWorkEndAt}}</p>
 
-                                </td>
-                                <td>
-                                    <img v-if="timesheet.clockInPhoto && showcInPhoto"
-                                         height="120px"
-                                         class="img-responsive"
-                                         :id="'cInPhoto-'+timesheet.id"
-                                         :src="'/images/attendances/'+timesheet.clockInPhoto" alt="">
-                                    <div class="clearfix"></div>
-                                    <button v-if="timesheet.clockInTime"
-                                            style="width:110px"
-                                            class="btn btn-clock text-center m-t-10">
-                                        {{timesheet.clockInTime}}
-                                    </button>
-                                    <p v-else="">-</p>
-                                </td>
-                                <td>
-                                    <img v-if="timesheet.clockOutPhoto && showcOutPhoto"
-                                         height="120px"
-                                         class="img-responsive"
-                                         :id="'cOutPhoto-'+timesheet.id"
-                                         :src="'/images/attendances/'+timesheet.clockOutPhoto" alt="">
-                                    <div class="clearfix"></div>
-                                    <button v-if="timesheet.clockOutTime"
-                                            style="width: 110px"
-                                            class="btn btn-clock text-center m-t-10">
-                                        {{timesheet.clockOutTime}}
-                                    </button>
-                                    <p v-else="">-</p>
-                                </td>
-                                <td>
-                                    <label class="label label-lg fs-14"
-                                           :class="{
+                                        </td>
+                                        <td>
+                                            <img v-if="timesheet.clockInPhoto && showcInPhoto"
+                                                 height="120px"
+                                                 class="img-responsive"
+                                                 :id="'cInPhoto-'+timesheet.id"
+                                                 :src="'/images/attendances/'+timesheet.clockInPhoto" alt="">
+                                            <div class="clearfix"></div>
+                                            <button v-if="timesheet.clockInTime"
+                                                    style="width:110px"
+                                                    class="btn btn-clock text-center m-t-10">
+                                                {{timesheet.clockInTime}}
+                                            </button>
+                                            <p v-else="">-</p>
+                                        </td>
+                                        <td>
+                                            <img v-if="timesheet.clockOutPhoto && showcOutPhoto"
+                                                 height="120px"
+                                                 class="img-responsive"
+                                                 :id="'cOutPhoto-'+timesheet.id"
+                                                 :src="'/images/attendances/'+timesheet.clockOutPhoto" alt="">
+                                            <div class="clearfix"></div>
+                                            <button v-if="timesheet.clockOutTime"
+                                                    style="width: 110px"
+                                                    class="btn btn-clock text-center m-t-10">
+                                                {{timesheet.clockOutTime}}
+                                            </button>
+                                            <p v-else="">-</p>
+                                        </td>
+                                        <td>
+                                            <label class="label label-lg fs-14"
+                                                   :class="{
                                            'label-default' : timesheet.attendanceApproveId==99,
                                            'label-info' : timesheet.attendanceApproveId!=99}"
-                                           v-if="timesheet.attendanceApproveName">{{timesheet.attendanceApproveName}}</label>
-                                    <p v-else="">-</p>
+                                                   v-if="timesheet.attendanceApproveName">{{timesheet.attendanceApproveName}}</label>
+                                            <p v-else="">-</p>
 
-                                    <p v-if="timesheet.approvedBy">by: <span
-                                            class="bold">{{timesheet.approvedBy}}</span></p>
+                                            <p v-if="timesheet.approvedBy">by: <span
+                                                    class="bold">{{timesheet.approvedBy}}</span></p>
 
 
-                                </td>
-                                <td>
-                                    <label class="label label-lg fs-14"
-                                           :class="{
+                                        </td>
+                                        <td>
+                                            <label class="label label-lg fs-14"
+                                                   :class="{
                                            'label-danger' : timesheet.attendanceValidationId!=1,
                                            'label-info' : timesheet.attendanceValidationId==1}"
-                                           v-if="timesheet.attendanceValidationName">
-                                        {{timesheet.attendanceValidationName}}</label>
-                                    <p v-else="">-</p>
-                                </td>
-                                <td style="width: 100px">
-                                    <button class="btn btn-primary"
-                                            @click="detailTimsheet(timesheet.id)">
-                                        Details <i class="fa fa-search"></i>
-                                    </button>
+                                                   v-if="timesheet.attendanceValidationName">
+                                                {{timesheet.attendanceValidationName}}</label>
+                                            <p v-else="">-</p>
+                                        </td>
+                                        <td style="width: 100px">
+                                            <button class="btn btn-primary"
+                                                    @click="detailTimsheet(timesheet.id)">
+                                                Details <i class="fa fa-search"></i>
+                                            </button>
 
-                                    <!-- Manager approval button-->
-                                    <!--<button class="btn btn-outline-info m-t-10"-->
+                                            <!-- Manager approval button-->
+                                            <!--<button class="btn btn-outline-info m-t-10"-->
                                             <!--v-if="timesheet.attendanceApproveId!=1 && timesheet.attendanceApproveId!=0"-->
                                             <!--@click="approveTimesheet(timesheet.id)"-->
-                                    <!--&gt;-->
-                                        <!--Approve <i class="fa fa-check"></i></button>-->
-                                    <!--<button class="btn btn-complete m-t-10"-->
+                                            <!--&gt;-->
+                                            <!--Approve <i class="fa fa-check"></i></button>-->
+                                            <!--<button class="btn btn-complete m-t-10"-->
                                             <!--v-else-if="timesheet.attendanceApproveId==1"-->
-                                    <!--&gt;-->
-                                        <!--Approved <i class="fa fa-check"></i></button>-->
+                                            <!--&gt;-->
+                                            <!--Approved <i class="fa fa-check"></i></button>-->
 
-                                    <!-- Manager approval button-->
-                                    <div class="dropdown dropdown-default">
-                                        <button class="btn btn-outline-info dropdown-toggle text-center m-t-10"
-                                                type="button"
-                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <span v-if="timesheet.attendanceApproveId==1">Approved</span>
-                                            <span v-else-if="timesheet.attendanceApproveId==98">Disapproved</span>
-                                            <span v-else="">Edit <i class="fa fa-pencil"></i></span>
-                                        </button>
+                                            <!-- Manager approval button-->
+                                            <div class="dropdown dropdown-default">
+                                                <button class="btn btn-outline-info dropdown-toggle text-center m-t-10"
+                                                        type="button"
+                                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <span v-if="timesheet.attendanceApproveId==1">Approved</span>
+                                                    <span v-else-if="timesheet.attendanceApproveId==98">Disapproved</span>
+                                                    <span v-else="">Edit <i class="fa fa-pencil"></i></span>
+                                                </button>
 
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item pointer" @click="approveTimesheet(timesheet.id)">
-                                                Approve</a>
-                                            <a class="dropdown-item pointer" @click="disapproveTimesheet(timesheet.id)">
-                                                Disapprove</a>
-                                        </div>
+                                                <div class="dropdown-menu">
+                                                    <a class="dropdown-item pointer" @click="approveTimesheet(timesheet.id)">
+                                                        Approve</a>
+                                                    <a class="dropdown-item pointer" @click="disapproveTimesheet(timesheet.id)">
+                                                        Disapprove</a>
+                                                </div>
 
-                                    </div>
+                                            </div>
 
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>

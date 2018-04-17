@@ -4,165 +4,19 @@
 import {get, post} from '../../../../helpers/api'
 import {api_path} from '../../../../helpers/const'
 import series from 'async/series';
+import router from 'vue-router'
 export default{
-    getDivisions(state, payload){
-
-        if (!payload.divisionId) {
-            get(api_path + 'component/list/divisions')
-                .then((res) => {
-                    state.divisions = res.data.data
-                })
-        } else {
-            get(api_path + 'component/division/' + payload.divisionId)
-                .then((res) => {
-                    state.divisions = res.data.data
-                })
-        }
-
-    },
-    getShifts(state, payload){
-        if (!payload.shiftId) {
-            get(api_path + 'component/list/shifts')
-                .then((res) => {
-                    state.shifts = res.data.data
-                })
-        } else {
-            get(api_path + 'component/shift/' + payload.shiftId)
-                .then((res) => {
-                    state.shifts = res.data.data
-                })
-        }
-    },
-    getAttdApprovals(state, payload){
-        if (!payload.attdApprovalId) {
-            get(api_path + 'component/list/attdApprovals')
-                .then((res) => {
-                    state.attdApprovals = res.data.data
-                })
-        } else {
-            get(api_path + 'component/attdApproval/' + payload.attdApprovalId)
-                .then((res) => {
-                    state.attdApprovals = res.data.data
-                })
-        }
-    },
-    getBranchOffices(state, payload){
-        get(api_path + 'component/list/branchOffices')
-            .then((res) => {
-                state.branchOffices = res.data.data
-            })
-    },
-    getTimesheetData(state, payload){
-        let divisionId = ''
-        let shiftId = ''
-        let branchOfficeId = ''
-        let sortDate = ''
-        let attdApprovalId = ''
-
-        if (payload.divisionId)
-            divisionId = payload.divisionId
-
-        if (payload.shiftId)
-            shiftId = payload.shiftId
-
-        if (payload.branchOfficeId)
-            branchOfficeId = payload.branchOfficeId
-
-        if (payload.sortDate)
-            sortDate = payload.sortDate
-
-        if (payload.attdApprovalId)
-            attdApprovalId = payload.attdApprovalId
-
-
-        get(api_path + 'attendance/timesheet/list?sortDate=' + sortDate
-            + '&divisionId=' + divisionId
-            + '&shiftId=' + shiftId
-            + '&branchOfficeId=' + branchOfficeId
-            + '&attdApprovalId=' + attdApprovalId
-        )
-            .then((res) => {
-                if (res.data.data)
-                    state.timesheetsData = res.data.data
-            })
-            .catch((err) => {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            })
-    },
-    approveTimesheet(state, timesheetId){
-        post(api_path + 'attendance/timesheet/approve', {timesheetId: timesheetId})
+    getTimesheetList(state, payload){
+        get(api_path + 'manager/timesheet/list')
             .then((res) => {
                 if (!res.data.isFailed) {
-                    let timesheet = _.find(state.timesheetsData, {id: timesheetId})
-                    let timesheetIndex = _.findIndex(state.timesheetsData, timesheet)
-
-                    // Update data
-                    timesheet.attendanceApproveId = 1
-                    timesheet.attendanceApproveName = 'Manager Approved'
-                    timesheet.approvedBy = res.data.approvedBy
-                    state.timesheetsData.splice(timesheetIndex, 1, timesheet)
-
-                } else {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: res.data.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
+                    //insert to array
+                    state.timesheets = res.data.timesheets.data
                 }
             })
-            .catch((err) => {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            })
     },
-    disapproveTimesheet(state, timesheetId){
-        post(api_path + 'attendance/timesheet/disapprove', {timesheetId: timesheetId})
-            .then((res) => {
-                if (!res.data.isFailed) {
-                    let timesheet = _.find(state.timesheetsData, {id: timesheetId})
-                    let timesheetIndex = _.findIndex(state.timesheetsData, timesheet)
-
-                    // Update data
-                    timesheet.attendanceApproveId = 98
-                    timesheet.attendanceApproveName = 'Disapproved'
-                    timesheet.approvedBy = res.data.approvedBy
-                    state.timesheetsData.splice(timesheetIndex, 1, timesheet)
-
-                } else {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: res.data.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
-            })
-            .catch((err) => {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            })
-    },
-    getTimesheetSummaryDataAll(state, payload){
-        get(api_path + 'attendance/timesheet/summary/all?' + 'fromDate=' + payload.fromDate + '&toDate=' + payload.toDate + '&branchOfficeId=' + payload.branchOfficeId)
+    getTimesheetSummaryData(state, payload){
+        get(api_path + 'manager/timesheet/summary?editTimesheetId='+payload.editTimesheetId)
             .then((res) => {
 
                 if (!res.data.isFailed) {
@@ -186,6 +40,12 @@ export default{
                     timeout: 3500,
                     type: 'danger'
                 }).show();
+            })
+    },
+    getShifts(state, payload){
+        get(api_path + 'component/list/shifts')
+            .then((res) => {
+                state.shifts = res.data.data
             })
     },
     approveTimesheetFromSummary(state, timesheetId){
@@ -374,44 +234,4 @@ export default{
                 }).show();
             })
     },
-    sendSummaryToManagers(state, payload){
-        post(api_path + 'manager/timesheet/generateAndSend', payload.formObject)
-            .then((res) => {
-
-                if (!res.data.isFailed) {
-
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: res.data.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'info'
-                    }).show();
-
-
-
-                } else {
-                    $('.page-container').pgNotification({
-                        style: 'flip',
-                        message: res.data.message,
-                        position: 'top-right',
-                        timeout: 3500,
-                        type: 'danger'
-                    }).show();
-                }
-
-                //close modal
-                $('#modal-attempt-send-to-managers').modal('toggle')
-            })
-            .catch((err) => {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: err.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            })
-    }
-
 }
