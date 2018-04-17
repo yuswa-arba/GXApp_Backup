@@ -24,8 +24,7 @@ class EditTimesheetTransformer extends TransformerAbstract
             'generatedBy'=>$editTimesheet->generatedBy,
             'dueDate'=>$editTimesheet->dueDate,
             'lastUpdatedAt'=>$editTimesheet->lastUpdatedAt,
-            'lastUpdatedBy'=>$editTimesheet->lastUpdatedBy,
-            'finishedAt'=>$editTimesheet->finishedAt,
+            'lastUpdatedBy'=>$editTimesheet->lastUpdatedBy
         ];
     }
 }
