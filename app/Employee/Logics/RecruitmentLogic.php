@@ -73,8 +73,9 @@ class RecruitmentLogic extends RecruitmentUseCase
 
             /*Save new image*/
             $filename = $this->getImageName($request->idCardPhoto, $request->nickName);
-            $request->idCardPhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
             $requestData['idCardPhoto'] = $filename; //rename
+            $request->idCardPhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
+
         }
 
         /*Handle image uploads*/
@@ -82,8 +83,9 @@ class RecruitmentLogic extends RecruitmentUseCase
 
             /*Save new image*/
             $filename = $this->getImageName($request->employeePhoto, $request->nickName);
-            $request->employeePhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
             $requestData['employeePhoto'] = $filename; // rename
+            $request->employeePhoto->move(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']), $filename);
+
 
         }
 

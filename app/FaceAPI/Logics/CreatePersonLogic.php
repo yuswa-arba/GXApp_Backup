@@ -84,18 +84,22 @@ class CreatePersonLogic extends CreatePersonUseCase
                         '/persistedFaces',
                         [
                             'headers' => ['Content-Type' => 'application/json', 'Ocp-Apim-Subscription-Key' => GlobalConfig::$MICROSOFT_FACE_API['SUB_KEY']],
-                            'json'=>['url' =>  URL::to('/').Configs::$IMAGE_PATH['EMPLOYEE_PHOTO_WITHOUT_PUBLIC'] . $request['filename']]
+                            'json'=>['url' => 'https://static.highsnobiety.com/wp-content/uploads/2017/10/25100901/jaden-smith-album-release-date-syre-01-480x320.jpg']
                         ]
                     );
 
                     if($addPersonRequest->getStatusCode()==200){
                         /* Copy photo files*/
 
+                        $addPersonResponse =  json_decode((string) $addPersonRequest->getBody(),true);
 
-                        $copyfile = File::copy(
-                            base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']) . $request['filename'],//from
-                            base_path(Configs::$IMAGE_PATH['FACES_PHOTO']) . $request['filename']//destination
-                        );
+                        if($addPersonResponse['persistedFaceId']!='' && $addPersonResponse['persistedFaceId']!=null){
+                            $copyfile = File::copy(
+                                base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']) . $request['filename'],//from
+                                base_path(Configs::$IMAGE_PATH['FACES_PHOTO']) . $addPersonResponse['persistedFaceId'] . '.png'
+                            );
+                        }
+
 
                     }
 
