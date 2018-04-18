@@ -10,6 +10,7 @@ use App\Employee\Models\EmployeeMedicalRecords;
 use App\Employee\Models\EmployeeSiblings;
 use App\Employee\Models\Employment;
 use App\Employee\Models\MasterEmployee;
+use App\FaceAPI\Logics\CreatePersonLogic;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Traits\GlobalUtils;
 use GuzzleHttp\Psr7\Request;
@@ -86,22 +87,40 @@ class RecruitmentLogic extends RecruitmentUseCase
 
         }
 
-
         //create employee
         $employee = MasterEmployee::create($requestData);
 
         //save siblings
-        if($employee->numberOfSiblings>0){
-            for($i =0;$i<$employee->numberOfSiblings;$i++){
+        if ($employee->numberOfSiblings > 0) {
+            for ($i = 0; $i < $employee->numberOfSiblings; $i++) {
 
                 EmployeeSiblings::create([
-                    'employeeId'=>$employee->id,
-                    'name'=>$request->siblingName[$i],
-                    'address'=>$request->siblingAddress[$i],
-                    'city'=>$request->siblingCity[$i]
+                    'employeeId' => $employee->id,
+                    'name' => $request->siblingName[$i],
+                    'address' => $request->siblingAddress[$i],
+                    'city' => $request->siblingCity[$i]
                 ]);
+
             }
         }
+
+        /* Register face to Microsoft Face API to be used in attendance*/
+        if (file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']) . $employee->employeePhoto)) {
+
+            try{
+                CreatePersonLogic::create(
+                    [
+                        'employeeId'=>$employee->id,
+                        'employeeFullName' => $employee->givenName . ' ' . $employee->surname,
+                        'filename' => $employee->employeePhoto
+                    ]
+                );
+            } catch (\Exception $exception){
+               Log::info($exception->getMessage());
+            }
+
+        }
+
 
         //return employee
         return $employee;

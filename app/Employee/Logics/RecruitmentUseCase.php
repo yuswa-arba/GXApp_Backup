@@ -17,7 +17,6 @@ use Illuminate\Http\Request;
 abstract class RecruitmentUseCase
 {
 
-
     public static function createEmployee(MasterEmployeeRequest $request)
     {
         return (new static)->handleNewEmployeeForm($request);

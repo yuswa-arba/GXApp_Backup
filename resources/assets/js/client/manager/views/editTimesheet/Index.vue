@@ -27,7 +27,8 @@
                                         <td><b>{{timesheet.dueDate}}</b></td>
                                         <td>@ {{timesheet.generatedAt}} by {{timesheet.generatedBy}}</td>
                                         <td>
-                                            <button class="btn btn-primary" @click="goToSummary(timesheet.id)">Summary</button>
+                                            <button class="btn btn-primary" @click="goToSummary(timesheet.id)">Summary
+                                            </button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -71,7 +72,7 @@
         methods: {
             goToSummary(timesheetId){
                 this.$router.push({name: 'timesheetSummary', params: {editTimesheetId: timesheetId}})
-            }
+            },
         },
     }
 </script>

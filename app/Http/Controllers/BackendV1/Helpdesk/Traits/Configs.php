@@ -17,7 +17,8 @@ class Configs
         'RESIGNATION_PHOTO' => 'public/images/resignation/',
         'SUPPLIERS_LOGO'=>'public/images/suppliers/logo/',
         'STORAGE_ITEM'=>'public/images/storage/items/',
-        'NPWP_PHOTO'=>'public/images/company/npwp/'
+        'NPWP_PHOTO'=>'public/images/company/npwp/',
+        'EMPLOYEE_PHOTO_WITHOUT_PUBLIC' => '/images/employee/',
     ];
     
     public static $DOWNLOAD_PATH = [

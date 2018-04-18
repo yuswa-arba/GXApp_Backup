@@ -555,20 +555,20 @@
                                             </div>
                                             <div class="row  padding-5 form-group form-group-attached disabled"
                                                  id="treatmentQuestion" style="display: none;">
-                                                <div class="form-group form-group-default required">
+                                                <div class="form-group form-group-default">
                                                     <label class="label-sm">Type of disease</label>
                                                     <input type="text" class="form-control"
                                                            name="typeOfDisease"
                                                            placeholder="Type of disease" required>
                                                 </div>
-                                                <div class="form-group form-group-default required">
+                                                <div class="form-group form-group-default">
                                                     <label class="label-sm">Since When</label>
                                                     <input type="text"
                                                            name="medicationSinceWhen"
                                                            class="form-control datepickerGet"
                                                            placeholder="dd/mm/yyyy" required>
                                                 </div>
-                                                <div class="form-group form-group-default required">
+                                                <div class="form-group form-group-default">
                                                     <label class="col-form-label-sm">Type of Drug</label>
                                                     <input type="text"
                                                            name="typeOfDrug"
@@ -593,7 +593,7 @@
                                                  style="display: none;">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Amount per day</label>
                                                             <input type="number"
                                                                    name="smokeAmountPerDay"
@@ -603,7 +603,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Since When</label>
                                                             <input type="text"
                                                                    class="form-control datepickerGet"
@@ -631,7 +631,7 @@
                                                  style="display: none;">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Amount per day</label>
                                                             <input type="number"
                                                                    value="1"
@@ -641,7 +641,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Since When</label>
                                                             <input type="text"
                                                                    class="form-control datepickerGet"
@@ -687,7 +687,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Type of Accident</label>
                                                             <input type="text"
                                                                    class="form-control"
@@ -715,7 +715,7 @@
                                                  style="display: none;">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">When</label>
                                                             <input type="text"
                                                                    name="surgeryDate"
@@ -726,7 +726,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Type of Surgery</label>
                                                             <input type="text"
                                                                    class="form-control"
@@ -755,7 +755,7 @@
                                                  style="display: none;">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">When</label>
                                                             <input type="text"
                                                                    class="form-control datepickerGet"
@@ -766,7 +766,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Type of Medication</label>
                                                             <input type="text"
                                                                    class="form-control"
@@ -789,7 +789,7 @@
                                             <div class="form-group-attached padding-5" id="accidentQuestion">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Dietary habit</label>
                                                             <input type="text"
                                                                    class="form-control"
@@ -800,7 +800,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Type of sport</label>
                                                             <input type="text"
                                                                    class="form-control"
@@ -811,7 +811,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Amount per week</label>
                                                             <input type="number"
                                                                    class="form-control"
@@ -823,7 +823,7 @@
 
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Notes etc</label>
                                                             <input placeholder="Notes etc"
                                                                    class="form-control"
@@ -841,7 +841,7 @@
                                             <div class="form-group padding-5">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <div class="form-group form-group-default required">
+                                                        <div class="form-group form-group-default ">
                                                             <label class="label-sm">Body height</label>
                                                             <input type="number" class="form-control"
                                                                    name="bodyHeight"
@@ -868,7 +868,7 @@
                                                              style="display: none;">
                                                             <div class="row">
                                                                 <div class="col-md-12">
-                                                                    <div class="form-group form-group-default required">
+                                                                    <div class="form-group form-group-default ">
                                                                         <label class="label-sm">Glasses size</label>
                                                                         <input type="text"
                                                                                placeholder="e.g. L:-2.0 , R: -1.5"
