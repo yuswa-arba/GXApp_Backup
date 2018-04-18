@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Manager;
 
 use App\Components\Models\DivisionManager;
 use App\Employee\Transformers\DivisionManagerTransformer;
+use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\Controller;
 use App\Manager\Logics\EditTimesheet\SummaryEditTimesheetLogic;
 use App\Manager\Models\EditTimesheet;
@@ -41,7 +42,7 @@ class EditTimesheetController extends Controller
         if ($manager != null) {
             $timesheets = EditTimesheet::where('divisionId', $manager->divisionId)
                 ->where('branchOfficeId', $manager->branchOfficeId)
-                ->orderBy('id','desc')
+                ->orderBy('id', 'desc')
                 ->get();
 
             $response['isFailed'] = false;
@@ -137,7 +138,27 @@ class EditTimesheetController extends Controller
                     ]
                 );
 
-                //TODO: send notification to manager
+                /* send notification to manager */
+                $divisionManager = DivisionManager::where('divisionId', $divisionId)
+                    ->where('branchOfficeId', $request->branchOfficeId)
+                    ->where('isActive', 1)
+                    ->first();
+
+                if ($divisionManager) {
+                    $managerUserId = $this->getResultWithNullChecker2Connection($divisionManager, 'employee', 'user', 'id');
+                    if ($managerUserId != null && $managerUserId != '') {
+                        /* Send push notification */
+                        app()->make('PushNotificationService')->singleNotify(array(
+                            'userID' => $managerUserId,
+                            'title' => 'Edit Timesheet',
+                            'message' => 'Attendance timesheet is available, you may edit your team attendance before the due date.',
+                            'intentType' => ConfigCodes::$FCM_INTENT_TYPE['HOME'],
+                            'viaType' => ConfigCodes::$NOTIFY_TYPE['NOTIFICATION'],
+                            'sender' => Auth::user()
+                        ));
+                    }
+                }
+
 
             }
 

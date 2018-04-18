@@ -22,8 +22,6 @@ class CreateManagerEditTimesheetTable extends Migration
             $table->string('generatedAt');
             $table->string('generatedBy');
             $table->string('dueDate');
-            $table->string('lastUpdatedAt')->nullable();
-            $table->string('lastUpdatedBy')->nullable();
             $table->timestamps();
         });
     }

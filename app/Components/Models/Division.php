@@ -14,7 +14,7 @@ class Division extends Model
 
     public function manager()
     {
-        return $this->hasOne(DivisionManager::class,'divisionId');
+        return $this->hasMany(DivisionManager::class,'divisionId');
     }
 
 }

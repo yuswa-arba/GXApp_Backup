@@ -16,7 +16,6 @@
                                         <th class="text-black">Start Date - End Date</th>
                                         <th class="text-black">Due Date</th>
                                         <th class="text-black">Generated</th>
-                                        <th class="text-black">Last Update</th>
                                         <th class="text-black" style="width:250px">Action</th>
                                     </tr>
                                     </thead>
@@ -25,15 +24,10 @@
                                         <td>{{timesheet.divisionName}}</td>
                                         <td>{{timesheet.branchOfficeName}}</td>
                                         <td>{{timesheet.startDate}} - {{timesheet.endDate}}</td>
-                                        <td>{{timesheet.dueDate}}</td>
+                                        <td><b>{{timesheet.dueDate}}</b></td>
                                         <td>@ {{timesheet.generatedAt}} by {{timesheet.generatedBy}}</td>
                                         <td>
-                                            <span v-if="timesheet.lastUpdatedAt!=''&&timesheet.lastUpdatedAt!=null">@ {{timesheet.lastUpdatedAt}} by {{timesheet.lastUpdatedBy}}</span>
-                                            <span v-else="">-</span>
-                                        </td>
-                                        <td>
-                                            <button class="btn btn-primary" @click="goToSummary(timesheet.id)">Summary
-                                            </button>
+                                            <button class="btn btn-primary" @click="goToSummary(timesheet.id)">Summary</button>
                                         </td>
                                     </tr>
                                     </tbody>

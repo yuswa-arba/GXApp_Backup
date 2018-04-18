@@ -2552,11 +2552,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -5014,7 +5009,9 @@ var render = function() {
                               )
                             ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(timesheet.dueDate))]),
+                            _c("td", [
+                              _c("b", [_vm._v(_vm._s(timesheet.dueDate))])
+                            ]),
                             _vm._v(" "),
                             _c("td", [
                               _vm._v(
@@ -5023,20 +5020,6 @@ var render = function() {
                                   " by " +
                                   _vm._s(timesheet.generatedBy)
                               )
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.lastUpdatedAt != "" &&
-                              timesheet.lastUpdatedAt != null
-                                ? _c("span", [
-                                    _vm._v(
-                                      "@ " +
-                                        _vm._s(timesheet.lastUpdatedAt) +
-                                        " by " +
-                                        _vm._s(timesheet.lastUpdatedBy)
-                                    )
-                                  ])
-                                : _c("span", [_vm._v("-")])
                             ]),
                             _vm._v(" "),
                             _c("td", [
@@ -5089,8 +5072,6 @@ var staticRenderFns = [
         _c("th", { staticClass: "text-black" }, [_vm._v("Due Date")]),
         _vm._v(" "),
         _c("th", { staticClass: "text-black" }, [_vm._v("Generated")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Last Update")]),
         _vm._v(" "),
         _c(
           "th",
