@@ -5,9 +5,9 @@
         <!-- START Login Background Pic Wrapper-->
         <div class="bg-pic">
             <!-- START Background Pic-->
-            <img src="{{asset('core/img/sea_surf_from_above.jpg')}}"
-                 data-src="{{asset('core/img/sea_surf_from_above.jpg')}}"
-                 data-src-retina="{{asset('core/img/sea_surf_from_above.jpg')}}" alt="" class="lazy">
+            <img src="{{asset('core/img/discussion.jpg')}}"
+                 data-src="{{asset('core/img/discussion.jpg')}}"
+                 data-src-retina="{{asset('core/img/discussion.jpg')}}" alt="" class="lazy">
             <!-- END Background Pic-->
             <!-- START Background Caption-->
             <div class="bg-caption pull-bottom sm-pull-bottom text-white p-l-20 m-b-20">

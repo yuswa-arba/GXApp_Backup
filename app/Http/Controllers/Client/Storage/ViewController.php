@@ -102,4 +102,19 @@ class ViewController extends Controller
     {
         return view('pages.storage.admin.purchaseOrder');
     }
+
+    public function inventoryItems()
+    {
+        return view('pages.storage.inventory.items');
+    }
+
+
+    public function entryInventory()
+    {
+        return view('pages.storage.inventory.entry');
+    }
+    public function inventoryForms()
+    {
+        return view('pages.storage.inventory.forms');
+    }
 }

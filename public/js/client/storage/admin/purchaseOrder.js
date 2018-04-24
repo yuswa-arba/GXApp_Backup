@@ -4299,6 +4299,12 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6763,114 +6769,123 @@ var render = function() {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-5" }, [
-              _c(
-                "select",
-                {
-                  directives: [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-7" }, [
+                  _c(
+                    "div",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.sortStatus,
-                      expression: "sortStatus"
-                    }
-                  ],
-                  staticClass: "btn btn-outline-primary m-l-10 h-35 pull-right",
-                  staticStyle: { width: "180px" },
-                  on: {
-                    change: [
-                      function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.sortStatus = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      },
-                      function($event) {
-                        _vm.sortPurchaseOrders()
-                      }
-                    ]
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
-                  _vm._v(" "),
-                  _vm._l(_vm.purchaseOrderStatuses, function(status) {
-                    return _c("option", { domProps: { value: status.id } }, [
-                      _vm._v(_vm._s(status.name))
-                    ])
-                  })
-                ],
-                2
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "input-group m-l-10 pull-right",
-                  staticStyle: { width: "300px" }
-                },
-                [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.searchText,
-                        expression: "searchText"
-                      }
-                    ],
-                    staticClass: "form-control text-black",
-                    staticStyle: { height: "40px" },
-                    attrs: {
-                      type: "text",
-                      placeholder:
-                        "Search PO / Approval / Supplier / Warehouse "
+                      staticClass: "input-group m-l-10 pull-right",
+                      staticStyle: { width: "300px" }
                     },
-                    domProps: { value: _vm.searchText },
-                    on: {
-                      keyup: [
-                        function($event) {
-                          _vm.emptySearchPO()
-                        },
-                        function($event) {
-                          if (
-                            !("button" in $event) &&
-                            _vm._k($event.keyCode, "enter", 13, $event.key)
-                          ) {
-                            return null
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.searchText,
+                            expression: "searchText"
                           }
-                          _vm.searchPurchaseOrder()
+                        ],
+                        staticClass: "form-control text-black",
+                        staticStyle: { height: "40px" },
+                        attrs: {
+                          type: "text",
+                          placeholder:
+                            "Search PO / Approval / Supplier / Warehouse "
+                        },
+                        domProps: { value: _vm.searchText },
+                        on: {
+                          keyup: [
+                            function($event) {
+                              _vm.emptySearchPO()
+                            },
+                            function($event) {
+                              if (
+                                !("button" in $event) &&
+                                _vm._k($event.keyCode, "enter", 13, $event.key)
+                              ) {
+                                return null
+                              }
+                              _vm.searchPurchaseOrder()
+                            }
+                          ],
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.searchText = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "input-group-addon primary cursor",
+                          on: {
+                            click: function($event) {
+                              _vm.searchPurchaseOrder()
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fa fa-search cursor" })]
+                      )
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-5" }, [
+                  _c(
+                    "select",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.sortStatus,
+                          expression: "sortStatus"
                         }
                       ],
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.searchText = $event.target.value
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      staticClass: "input-group-addon primary cursor",
+                      staticClass:
+                        "btn btn-outline-primary m-l-10 h-35 pull-right",
+                      staticStyle: { width: "180px" },
                       on: {
-                        click: function($event) {
-                          _vm.searchPurchaseOrder()
-                        }
+                        change: [
+                          function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.sortStatus = $event.target.multiple
+                              ? $$selectedVal
+                              : $$selectedVal[0]
+                          },
+                          function($event) {
+                            _vm.sortPurchaseOrders()
+                          }
+                        ]
                       }
                     },
-                    [_c("i", { staticClass: "fa fa-mouse-pointer cursor" })]
+                    [
+                      _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
+                      _vm._v(" "),
+                      _vm._l(_vm.purchaseOrderStatuses, function(status) {
+                        return _c(
+                          "option",
+                          { domProps: { value: status.id } },
+                          [_vm._v(_vm._s(status.name))]
+                        )
+                      })
+                    ],
+                    2
                   )
-                ]
-              )
+                ])
+              ])
             ])
           ]),
           _vm._v(" "),

@@ -30,6 +30,10 @@ class StorageItemDetailTransformer extends TransformerAbstract
             'statusId' => $storageItems->statusId,
             'statusName'=>$this->getResultWithNullChecker1Connection($storageItems,'itemStatus','name'),
             'photo' => $storageItems->photo,
+            'latestSellingPrice'=>$storageItems->latestSellingPrice,
+            'latestPurchasedPrice'=>$storageItems->latestPurchasedPrice,
+            'finePrice'=>$storageItems->finePrice,
+            'requiresSerialNumber'=>$storageItems->requiresSerialNumber,
             'isDeleted' => $storageItems->isDeleted,
             'editing'=>false
         ];

@@ -21,6 +21,10 @@ class StorageItemListTransformer extends TransformerAbstract
             'unitFormat' => $this->getResultWithNullChecker1Connection($storageItems, 'unitOfMeasurement', 'format'),
             'statusId' => $storageItems->statusId,
             'photo' => $storageItems->photo,
+            'latestSellingPrice'=>$storageItems->latestSellingPrice,
+            'latestPurchasedPrice'=>$storageItems->latestPurchasedPrice,
+            'finePrice'=>$storageItems->finePrice,
+            'requiresSerialNumber'=>$storageItems->requiresSerialNumber,
             'isDeleted' => $storageItems->isDeleted,
         ];
     }

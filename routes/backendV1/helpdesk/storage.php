@@ -141,5 +141,13 @@ Route::prefix('v1/h')->group(function () {
         Route::get('admin/purchaseOrder/approvalDetail','Admin\PurchaseOrderController@getApprovalDetail');
         Route::post('admin/purchaseOrder/item/track/add','Admin\PurchaseOrderController@addItemTrack');
 
+        /*
+          |--------------------------------------------------------------------------
+          | Storage Inventory
+          |--------------------------------------------------------------------------
+          */
+
+        Route::get('inventory/purchaseOrder/detail','Inventory\InsertToInventoryController@purchaseOrderInventoryDetail');
+
     });
 });

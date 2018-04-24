@@ -28,6 +28,10 @@ class CreateStorageItemsTable extends Migration
             $table->tinyInteger('allowNotification')->default(0);
             $table->integer('statusId')->default(0);
             $table->string('photo')->nullable();
+            $table->string('latestPurchasedPrice')->nullable();
+            $table->string('latestSellingPrice')->nullable();
+            $table->string('finePrice')->nullable();
+            $table->tinyInteger('requiresSerialNumber')->default(0);
             $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });

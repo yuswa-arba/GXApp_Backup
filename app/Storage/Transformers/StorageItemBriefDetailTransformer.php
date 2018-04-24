@@ -21,6 +21,10 @@ class StorageItemBriefDetailTransformer extends TransformerAbstract
             'unitFormat' => $this->getResultWithNullChecker1Connection($storageItems, 'unitOfMeasurement', 'format'),
             'statusName'=>$this->getResultWithNullChecker1Connection($storageItems,'itemStatus','name'),
             'photo' => $storageItems->photo,
+            'latestSellingPrice'=>$storageItems->latestSellingPrice,
+            'latestPurchasedPrice'=>$storageItems->latestPurchasedPrice,
+            'finePrice'=>$storageItems->finePrice,
+            'requiresSerialNumber'=>$storageItems->requiresSerialNumber,
             'isDeleted' => $storageItems->isDeleted,
             //TODO: return current stock as well
         ];

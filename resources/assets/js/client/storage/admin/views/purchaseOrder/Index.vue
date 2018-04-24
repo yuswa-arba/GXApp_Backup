@@ -15,26 +15,32 @@
                     <h4 class="text-master" v-else="">No Purchase Order Found</h4>
                 </div>
                 <div class="col-lg-5">
-                    <select class="btn btn-outline-primary m-l-10 h-35 pull-right"
-                            style="width: 180px"
-                            @change="sortPurchaseOrders()"
-                            v-model="sortStatus">
-                        <option value="">All</option>
-                        <option :value="status.id" v-for="status in purchaseOrderStatuses">{{status.name}}</option>
-                    </select>
-                    <div class="input-group m-l-10 pull-right" style="width:300px">
-                        <input type="text" style="height: 40px;"
-                               class="form-control text-black"
-                               v-model="searchText"
-                               @keyup="emptySearchPO()"
-                               @keyup.enter="searchPurchaseOrder()"
-                               placeholder="Search PO / Approval / Supplier / Warehouse ">
+                    <div class="row">
+                        <div class="col-lg-7">
+                            <div class="input-group m-l-10 pull-right" style="width:300px">
+                                <input type="text" style="height: 40px;"
+                                       class="form-control text-black"
+                                       v-model="searchText"
+                                       @keyup="emptySearchPO()"
+                                       @keyup.enter="searchPurchaseOrder()"
+                                       placeholder="Search PO / Approval / Supplier / Warehouse ">
 
-                        <span class="input-group-addon primary cursor"
-                              @click="searchPurchaseOrder()"><i
-                                class="fa fa-mouse-pointer cursor"></i></span>
+                                <span class="input-group-addon primary cursor"
+                                      @click="searchPurchaseOrder()"><i
+                                        class="fa fa-search cursor"></i></span>
+                            </div>
+
+                        </div>
+                        <div class="col-lg-5">
+                            <select class="btn btn-outline-primary m-l-10 h-35 pull-right"
+                                    style="width: 180px"
+                                    @change="sortPurchaseOrders()"
+                                    v-model="sortStatus">
+                                <option value="">All</option>
+                                <option :value="status.id" v-for="status in purchaseOrderStatuses">{{status.name}}</option>
+                            </select>
+                        </div>
                     </div>
-
 
                 </div>
             </div>

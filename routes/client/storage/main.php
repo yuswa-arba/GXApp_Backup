@@ -33,4 +33,9 @@ Route::prefix('storage')->namespace('Client\Storage')->group(function () {
         Route::get('admin/purchaseOrder','ViewController@purchaseOrder')->name('storage.admin.purchaseOrder');
     });
 
+    Route::get('inventory/entry','ViewController@entryInventory')->name('storage.inventory.entry');
+    Route::get('inventory/items','ViewController@inventoryItems')->name('storage.inventory.items');
+    Route::get('inventory/forms','ViewController@inventoryForms')->name('storage.inventory.forms');
+
+
 });
