@@ -1,14 +1,14 @@
 <template>
     <div class="container-fluid container-fixed-lg">
         <div class="row">
-            <div class="col-lg-8 m-b-25">
+            <div class="col-lg-12 m-b-25">
                 <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                     <div class="card-header">
                         <p class="card-title text-uppercase text-black" style="opacity: 1">Item Form</p>
                     </div>
                     <div class="card-block">
                         <div class="row" @keyup.enter="createItem()">
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group-attached">
                                     <div class="form-group form-group-default required">
                                         <label> Name </label>
@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-4">
                                 <div class="form-group-attached">
                                     <div class="form-group form-group-default">
                                         <label>Reminder 1</label>
@@ -70,16 +70,40 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <div class="form-group form-group-default">
-                                        <label>Photo</label>
-                                        <input name="itemPhoto" type="file" class="form-control"
-                                               @change="insertItemPhoto($event)">
-                                    </div>
-                                    <br>
-                                    <button class="btn btn-complete pull-right" type="button" @click="createItem()">
-                                        Create
-                                    </button>
+
+
                                 </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group form-group-default">
+                                    <label>Photo</label>
+                                    <input name="itemPhoto" type="file" class="form-control"
+                                           @change="insertItemPhoto($event)">
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox"
+                                               value="1"
+                                               name="requiresTesting"
+                                               id="requiresTesting"
+                                               v-model="formObject.requiresTesting">
+                                        <label for="requiresTesting">Requires Testing</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox check-success ">
+                                        <input type="checkbox"
+                                               name="requiresSN"
+                                               value="1"
+                                               id="requiresSN"
+                                               v-model="formObject.requiresSerialNumber">
+                                        <label for="requiresSN">Requires Serial Number</label>
+                                    </div>
+                                </div>
+                                <br>
+                                <button class="btn btn-complete pull-right" type="button" @click="createItem()">
+                                    Create
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -96,14 +120,17 @@
                             <div class="col-lg-6">
                                 <div class="row">
                                     <div class="col-lg-3">
-                                        <select class="btn btn-outline-primary h-35 w-100 pull-right" v-model="sortStatusId" @change="changeFilter()">
+                                        <select class="btn btn-outline-primary h-35 w-100 pull-right"
+                                                v-model="sortStatusId" @change="changeFilter()">
                                             <option value="" disabled selected hidden>Sort Status</option>
                                             <option value="">All</option>
-                                            <option :value="status.id" v-for="status in statuses">{{status.name}}</option>
+                                            <option :value="status.id" v-for="status in statuses">{{status.name}}
+                                            </option>
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="btn btn-outline-primary h-35 w-100 pull-right" v-model="sortCategoryCode" @change="changeFilter()">
+                                        <select class="btn btn-outline-primary h-35 w-100 pull-right"
+                                                v-model="sortCategoryCode" @change="changeFilter()">
                                             <option value="" disabled selected hidden>Sort Category</option>
                                             <option value="">All</option>
                                             <option :value="category.code" v-for="category in categories">
@@ -112,7 +139,8 @@
                                         </select>
                                     </div>
                                     <div class="col-lg-3">
-                                        <select class="btn btn-outline-primary h-35 w-100 pull-right" v-model="sortTypeCode" @change="changeFilter()">
+                                        <select class="btn btn-outline-primary h-35 w-100 pull-right"
+                                                v-model="sortTypeCode" @change="changeFilter()">
                                             <option value="" disabled selected hidden>Sort Type</option>
                                             <option value="">All</option>
                                             <option :value="type.code" v-for="type in types">{{type.name}}</option>
@@ -218,11 +246,13 @@
                     itemTypeCode: '',
                     categoryCode: '',
                     accountingNumber: '',
-                    reminder1: '',
-                    reminder2: '',
-                    minimumStock: '',
+                    reminder1: 1,
+                    reminder2: 1,
+                    minimumStock: 0,
                     allowNotification: '',
                     statusId: '',
+                    requiresSerialNumber: 0,
+                    requiresTesting: 0,
                     photo: '',
                 },
                 paginationMeta: {
@@ -234,8 +264,8 @@
                     total_pages: ''
                 },
                 sortStatusId: '',
-                sortCategoryCode:'',
-                sortTypeCode:''
+                sortCategoryCode: '',
+                sortTypeCode: ''
             }
         },
         created(){
@@ -315,7 +345,6 @@
                         }
                         param += 'typeCode=' + self.sortTypeCode
                     }
-
 
 
                     let nextPage = self.paginationMeta.current_page + 1
@@ -428,11 +457,13 @@
                                     itemTypeCode: '',
                                     categoryCode: '',
                                     accountingNumber: '',
-                                    reminder1: '',
-                                    reminder2: '',
-                                    minimumStock: '',
+                                    reminder1: 0,
+                                    reminder2: 0,
+                                    minimumStock: 0,
                                     allowNotification: '',
                                     statusId: '',
+                                    requiresSerialNumber: 0,
+                                    requiresTesting: 0,
                                     photo: '',
                                 }
 

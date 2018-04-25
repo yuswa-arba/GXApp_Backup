@@ -24,18 +24,13 @@ class InsertToInventoryLogic extends InsertUseCase
 
             foreach ($request->items as $item) {
 
-                Log::info($item);
-
                 //get item in storage item db
                 $storageItem = StorageItems::find($item['itemId']);
-
-                Log::info('storage item: '. $storageItem);
 
                 if ($storageItem) {
 
                     $inventoryItem = $this->createInventoryItemIfNotExist($item['itemId'], $request->branchOfficeId);
 
-                    Log::info('inventory item: '. $inventoryItem);
 
                     if ($inventoryItem) {
 

@@ -1823,6 +1823,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1845,11 +1873,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 itemTypeCode: '',
                 categoryCode: '',
                 accountingNumber: '',
-                reminder1: '',
-                reminder2: '',
-                minimumStock: '',
+                reminder1: 1,
+                reminder2: 1,
+                minimumStock: 0,
                 allowNotification: '',
                 statusId: '',
+                requiresSerialNumber: 0,
+                requiresTesting: 0,
                 photo: ''
             },
             paginationMeta: {
@@ -2041,11 +2071,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             itemTypeCode: '',
                             categoryCode: '',
                             accountingNumber: '',
-                            reminder1: '',
-                            reminder2: '',
-                            minimumStock: '',
+                            reminder1: 0,
+                            reminder2: 0,
+                            minimumStock: 0,
                             allowNotification: '',
                             statusId: '',
+                            requiresSerialNumber: 0,
+                            requiresTesting: 0,
                             photo: ''
                         };
 
@@ -2760,7 +2792,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid container-fixed-lg" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-8 m-b-25" }, [
+      _c("div", { staticClass: "col-lg-12 m-b-25" }, [
         _c(
           "div",
           {
@@ -2788,7 +2820,7 @@ var render = function() {
                   }
                 },
                 [
-                  _c("div", { staticClass: "col-lg-6" }, [
+                  _c("div", { staticClass: "col-lg-4" }, [
                     _c("div", { staticClass: "form-group-attached" }, [
                       _c(
                         "div",
@@ -3039,7 +3071,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-lg-6" }, [
+                  _c("div", { staticClass: "col-lg-4" }, [
                     _c("div", { staticClass: "form-group-attached" }, [
                       _c(
                         "div",
@@ -3248,46 +3280,167 @@ var render = function() {
                             })
                           )
                         ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "form-group form-group-default" },
-                        [
-                          _c("label", [_vm._v("Photo")]),
-                          _vm._v(" "),
-                          _c("input", {
-                            staticClass: "form-control",
-                            attrs: { name: "itemPhoto", type: "file" },
-                            on: {
-                              change: function($event) {
-                                _vm.insertItemPhoto($event)
-                              }
-                            }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("br"),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-complete pull-right",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.createItem()
-                            }
-                          }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                    Create\n                                "
-                          )
-                        ]
                       )
                     ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-lg-4" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group form-group-default" },
+                      [
+                        _c("label", [_vm._v("Photo")]),
+                        _vm._v(" "),
+                        _c("input", {
+                          staticClass: "form-control",
+                          attrs: { name: "itemPhoto", type: "file" },
+                          on: {
+                            change: function($event) {
+                              _vm.insertItemPhoto($event)
+                            }
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "checkbox check-success " }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formObject.requiresTesting,
+                              expression: "formObject.requiresTesting"
+                            }
+                          ],
+                          attrs: {
+                            type: "checkbox",
+                            value: "1",
+                            name: "requiresTesting",
+                            id: "requiresTesting"
+                          },
+                          domProps: {
+                            checked: Array.isArray(
+                              _vm.formObject.requiresTesting
+                            )
+                              ? _vm._i(_vm.formObject.requiresTesting, "1") > -1
+                              : _vm.formObject.requiresTesting
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = _vm.formObject.requiresTesting,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = "1",
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.formObject.requiresTesting = $$a.concat(
+                                      [$$v]
+                                    ))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.formObject.requiresTesting = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.$set(_vm.formObject, "requiresTesting", $$c)
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("label", { attrs: { for: "requiresTesting" } }, [
+                          _vm._v("Requires Testing")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("div", { staticClass: "checkbox check-success " }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.formObject.requiresSerialNumber,
+                              expression: "formObject.requiresSerialNumber"
+                            }
+                          ],
+                          attrs: {
+                            type: "checkbox",
+                            name: "requiresSN",
+                            value: "1",
+                            id: "requiresSN"
+                          },
+                          domProps: {
+                            checked: Array.isArray(
+                              _vm.formObject.requiresSerialNumber
+                            )
+                              ? _vm._i(
+                                  _vm.formObject.requiresSerialNumber,
+                                  "1"
+                                ) > -1
+                              : _vm.formObject.requiresSerialNumber
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = _vm.formObject.requiresSerialNumber,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = "1",
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.formObject.requiresSerialNumber = $$a.concat(
+                                      [$$v]
+                                    ))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.formObject.requiresSerialNumber = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.$set(
+                                  _vm.formObject,
+                                  "requiresSerialNumber",
+                                  $$c
+                                )
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("label", { attrs: { for: "requiresSN" } }, [
+                          _vm._v("Requires Serial Number")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-complete pull-right",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.createItem()
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Create\n                            "
+                        )
+                      ]
+                    )
                   ])
                 ]
               )
@@ -3367,7 +3520,12 @@ var render = function() {
                             return _c(
                               "option",
                               { domProps: { value: status.id } },
-                              [_vm._v(_vm._s(status.name))]
+                              [
+                                _vm._v(
+                                  _vm._s(status.name) +
+                                    "\n                                        "
+                                )
+                              ]
                             )
                           })
                         ],

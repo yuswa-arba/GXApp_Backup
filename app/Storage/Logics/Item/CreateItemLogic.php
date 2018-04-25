@@ -54,6 +54,8 @@ class CreateItemLogic extends CreateUseCase
             'allowNotification' => $request->allowNotification,
             'statusId' => $request->statusId,
             'photo'=>$filename,
+            'requiresTesting'=>$request->requiresTesting?1:0,
+            'requiresSerialNumber'=>$request->requiresSerialNumber?1:0,
             'isDeleted'=>0
         ]);
 
