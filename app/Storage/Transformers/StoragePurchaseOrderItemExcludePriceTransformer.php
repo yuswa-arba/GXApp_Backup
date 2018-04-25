@@ -21,6 +21,7 @@ class StoragePurchaseOrderItemExcludePriceTransformer extends TransformerAbstrac
             'purchaseOrderNumber'=>$this->getResultWithNullChecker1Connection($purchaseOrderItems,'purchaseOrder','purchaseOrderNumber'),
             'withRequisitionItem'=>$purchaseOrderItems->withRequisitionItem,
             'requisitionItemId'=>$purchaseOrderItems->requisitionItemId,
+            'itemId'=>$purchaseOrderItems->itemId,
             'itemName' => $this->getResultWithNullChecker1Connection($purchaseOrderItems,'item','name'),
             'itemCode' => $this->getResultWithNullChecker1Connection($purchaseOrderItems,'item','itemCode'),
             'itemPhoto' => $this->getResultWithNullChecker1Connection($purchaseOrderItems,'item','photo'),

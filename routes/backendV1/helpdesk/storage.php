@@ -29,8 +29,8 @@ Route::prefix('v1/h')->group(function () {
         Route::get('warehouse/list', 'Misc\ListController@warehouseList');
         Route::get('unit/list', 'Misc\ListController@unitList');
         Route::get('status/list', 'Misc\ListController@statusList');
-        Route::get('approvalStatus/list','Misc\ListController@approvaStatuslList');
-        Route::get('purchaseOrderStatus/list','Misc\ListController@purchaseOrderStatusList');
+        Route::get('approvalStatus/list', 'Misc\ListController@approvaStatuslList');
+        Route::get('purchaseOrderStatus/list', 'Misc\ListController@purchaseOrderStatusList');
 
         Route::post('create/itemCategory', 'Misc\CreateController@createItemCategory');
         Route::post('create/itemType', 'Misc\CreateController@createItemType');
@@ -113,11 +113,11 @@ Route::prefix('v1/h')->group(function () {
         |--------------------------------------------------------------------------
         */
 
-        Route::get('admin/approval','Admin\ApprovalController@requisitionList');
+        Route::get('admin/approval', 'Admin\ApprovalController@requisitionList');
         Route::get('admin/approval/search', 'Admin\ApprovalController@searchRequisitionList');
-        Route::post('admin/approval/requisition/approve','Admin\ApprovalController@approveRequisition');
-        Route::post('admin/approval/requisition/decline','Admin\ApprovalController@declineRequisition');
-        Route::post('admin/approval/requisition/editAndApprove','Admin\ApprovalController@editAndApproveRequisition');
+        Route::post('admin/approval/requisition/approve', 'Admin\ApprovalController@approveRequisition');
+        Route::post('admin/approval/requisition/decline', 'Admin\ApprovalController@declineRequisition');
+        Route::post('admin/approval/requisition/editAndApprove', 'Admin\ApprovalController@editAndApproveRequisition');
 
         /*
         |--------------------------------------------------------------------------
@@ -125,21 +125,21 @@ Route::prefix('v1/h')->group(function () {
         |--------------------------------------------------------------------------
         */
 
-        Route::get('admin/purchaseOrder/requisition','Admin\PurchaseOrderController@availableRequisition');
-        Route::get('admin/purchaseOrder/requisition/search','Admin\PurchaseOrderController@searchAvailableRequisition');
-        Route::get('admin/purchaseOrder/supplier','Admin\PurchaseOrderController@supplierList');
-        Route::get('admin/purchaseOrder/supplier/search','Admin\PurchaseOrderController@searchSupplier');
-        Route::get('admin/purchaseOrder/warehouse','Admin\PurchaseOrderController@warehouseList');
-        Route::get('admin/purchaseOrder/warehouse/search','Admin\PurchaseOrderController@searchWarehouse');
-        Route::get('admin/purchaseOrder/item/search','Admin\PurchaseOrderController@searchItem');
-        Route::post('admin/purchaseOrder/create','Admin\PurchaseOrderController@createPurchaseOrder');
-        Route::get('admin/purchaseOrder/list','Admin\PurchaseOrderController@purchaseOrderList');
-        Route::get('admin/purchaseOrder/search','Admin\PurchaseOrderController@searchPurchaseOrder');
-        Route::get('admin/purchaseOrder/detail','Admin\PurchaseOrderController@purchaseOrderDetail');
-        Route::post('admin/purchaseOrder/update/status','Admin\PurchaseOrderController@updatePurchaseOrder');
-        Route::get('admin/purchaseOrder/generate/pdf','Admin\PurchaseOrderController@generatePDF');
-        Route::get('admin/purchaseOrder/approvalDetail','Admin\PurchaseOrderController@getApprovalDetail');
-        Route::post('admin/purchaseOrder/item/track/add','Admin\PurchaseOrderController@addItemTrack');
+        Route::get('admin/purchaseOrder/requisition', 'Admin\PurchaseOrderController@availableRequisition');
+        Route::get('admin/purchaseOrder/requisition/search', 'Admin\PurchaseOrderController@searchAvailableRequisition');
+        Route::get('admin/purchaseOrder/supplier', 'Admin\PurchaseOrderController@supplierList');
+        Route::get('admin/purchaseOrder/supplier/search', 'Admin\PurchaseOrderController@searchSupplier');
+        Route::get('admin/purchaseOrder/warehouse', 'Admin\PurchaseOrderController@warehouseList');
+        Route::get('admin/purchaseOrder/warehouse/search', 'Admin\PurchaseOrderController@searchWarehouse');
+        Route::get('admin/purchaseOrder/item/search', 'Admin\PurchaseOrderController@searchItem');
+        Route::post('admin/purchaseOrder/create', 'Admin\PurchaseOrderController@createPurchaseOrder');
+        Route::get('admin/purchaseOrder/list', 'Admin\PurchaseOrderController@purchaseOrderList');
+        Route::get('admin/purchaseOrder/search', 'Admin\PurchaseOrderController@searchPurchaseOrder');
+        Route::get('admin/purchaseOrder/detail', 'Admin\PurchaseOrderController@purchaseOrderDetail');
+        Route::post('admin/purchaseOrder/update/status', 'Admin\PurchaseOrderController@updatePurchaseOrder');
+        Route::get('admin/purchaseOrder/generate/pdf', 'Admin\PurchaseOrderController@generatePDF');
+        Route::get('admin/purchaseOrder/approvalDetail', 'Admin\PurchaseOrderController@getApprovalDetail');
+        Route::post('admin/purchaseOrder/item/track/add', 'Admin\PurchaseOrderController@addItemTrack');
 
         /*
           |--------------------------------------------------------------------------
@@ -147,7 +147,8 @@ Route::prefix('v1/h')->group(function () {
           |--------------------------------------------------------------------------
           */
 
-        Route::get('inventory/purchaseOrder/detail','Inventory\InsertToInventoryController@purchaseOrderInventoryDetail');
+        Route::get('inventory/purchaseOrder/detail', 'Inventory\InsertToInventoryController@purchaseOrderInventoryDetail');
+        Route::post('inventory/entry', 'Inventory\InsertToInventoryController@entry');
 
     });
 });

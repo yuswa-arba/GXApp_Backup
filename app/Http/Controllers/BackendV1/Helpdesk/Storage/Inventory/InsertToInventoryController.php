@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Inventory;
 
 use App\Http\Controllers\Controller;
+use App\Storage\Logics\Inventory\InsertToInventoryLogic;
 use App\Storage\Models\StoragePurchaseOrders;
 use App\Storage\Transformers\StoragePurchaseOrderInventoryTransformer;
 use App\Traits\GlobalUtils;
@@ -72,9 +73,25 @@ class InsertToInventoryController extends Controller
 
     }
 
+    public function entry(Request $request)
+    {
+        $response = array();
 
+        $validator = Validator::make($request->all(), [
+            'storagePurchaseOrderId'=>'required',
+            'branchOfficeId'=>'required'
+        ]);
 
+        if($validator->fails()){
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response,200);
+        }
 
+        //is valid
+
+        return InsertToInventoryLogic::insert($request);
+    }
 
 
 }

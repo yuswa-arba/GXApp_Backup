@@ -94,7 +94,9 @@
                                     <p class="text-black m-b-10 fs-16">{{item.inventoryHistory}}</p>
                                 </div>
                                 <div class="col-lg-2 m-t-5">
-                                    <button class="btn btn-outline-primary">
+                                    <button class="btn btn-outline-primary"
+                                            @click="attemptInsertItemToInventory(item.itemId,index)"
+                                    >
                                         <i class="fa fa-plus"></i> Insert to Inventory
                                     </button>
                                 </div>
@@ -113,7 +115,7 @@
             </div>
 
         </div>
-
+        <insert-item-to-inventory-modal></insert-item-to-inventory-modal>
     </div>
 </template>
 
@@ -121,19 +123,30 @@
     import {get} from '../../../../helpers/api'
     import {api_path} from '../../../../helpers/const'
     import {mapGetters, mapState} from 'vuex'
+    import InsertItemToInventoryModal from '../../components/inventory/AttemptInsertToInventoryModal.vue'
     export default{
+        components: {
+            'insert-item-to-inventory-modal': InsertItemToInventoryModal
+        },
         data(){
             return {
-                purchaseOrder: {}
+
             }
         },
         created(){
 
             let self = this
 
+            this.$store.dispatch('entry/getDataOnCreate')
+
             //get PO detail
             this.getPODetail()
 
+        },
+        computed:{
+            ...mapState('entry',{
+                purchaseOrder:'currentPurchaseOrder'
+            })
         },
         methods: {
             formatPrice(amount){
@@ -141,12 +154,13 @@
             },
             getPODetail(){
                 let self = this
+                let entryVuexState = this.$store.state.entry
                 get(api_path + 'storage/inventory/purchaseOrder/detail?id=' + this.$route.params.id)
                     .then((res) => {
                         if (!res.data.isFailed) {
 
                             if (res.data.purchaseOrder.data) {
-                                self.purchaseOrder = res.data.purchaseOrder.data
+                                entryVuexState.currentPurchaseOrder = res.data.purchaseOrder.data
                             }
 
                         } else {
@@ -168,6 +182,34 @@
                             type: 'danger'
                         }).show();
                     })
+            },
+            attemptInsertItemToInventory(itemId, index){
+                let self = this
+                let entryVuexState = this.$store.state.entry
+
+                //reset default values
+                entryVuexState.selectedItemToInsert = {
+                    itemId: '',
+                    itemName: '',
+                    itemCode: '',
+                    requiresSerialNumber: 0,
+                    quantity: 1
+                }
+
+                entryVuexState.selectedPurchaseOrderId = ''
+                entryVuexState.selectedBranchOfficeId = ''
+
+                //re fetch data
+                self.getPODetail()
+
+                //give delay for 0.3 second to refetch the data first
+                setTimeout(() => {
+                    this.$store.dispatch({
+                        type: 'entry/attemptInsertItemToInventory',
+                        itemId: itemId,
+                        itemIndex: index
+                    })
+                }, 300)
             }
         }
     }

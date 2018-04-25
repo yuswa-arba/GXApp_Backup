@@ -32,6 +32,7 @@ class CreateStorageItemsTable extends Migration
             $table->string('latestSellingPrice')->nullable();
             $table->string('finePrice')->nullable();
             $table->tinyInteger('requiresSerialNumber')->default(0);
+            $table->tinyInteger('requiresTesting')->default(0);
             $table->tinyInteger('isDeleted')->default(0);
             $table->timestamps();
         });

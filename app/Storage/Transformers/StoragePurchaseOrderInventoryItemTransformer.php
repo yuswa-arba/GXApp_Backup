@@ -17,27 +17,29 @@ class StoragePurchaseOrderInventoryItemTransformer extends TransformerAbstract
     public function transform(StoragePurchaseOrderItems $purchaseOrderItems)
     {
         return [
-            'id'=>$purchaseOrderItems->id,
-            'purchaseOrderId'=>$purchaseOrderItems->purchaseOrderId,
-            'purchaseOrderNumber'=>$this->getResultWithNullChecker1Connection($purchaseOrderItems,'purchaseOrder','purchaseOrderNumber'),
-            'withRequisitionItem'=>$purchaseOrderItems->withRequisitionItem,
-            'requisitionItemId'=>$purchaseOrderItems->requisitionItemId,
-            'itemName' => $this->getResultWithNullChecker1Connection($purchaseOrderItems,'item','name'),
-            'itemCode' => $this->getResultWithNullChecker1Connection($purchaseOrderItems,'item','itemCode'),
-            'itemPhoto' => $this->getResultWithNullChecker1Connection($purchaseOrderItems,'item','photo'),
-            'itemUnit' => $this->getResultWithNullChecker2Connection($purchaseOrderItems, 'item','unitOfMeasurement', 'format'),
-            'amountPurchased'=>$purchaseOrderItems->amountPurchased,
-            'unitIdPurchased'=>$purchaseOrderItems->unitIdPurchased,
-            'unitFormatPurchased' => $this->getResultWithNullChecker1Connection($purchaseOrderItems,'unitPurchased', 'format'),
-            'hasCustomUnit'=>$purchaseOrderItems->hasCustomUnit,
-            'customUnit'=>$purchaseOrderItems->customUnit,
-            'itemTrack'=>$purchaseOrderItems->itemTrack,
-            'inventoryHistory'=>$this->getInsertedInventoryHistory($purchaseOrderItems->itemId,$purchaseOrderItems->purchaseOrderId)
+            'id' => $purchaseOrderItems->id,
+            'purchaseOrderId' => $purchaseOrderItems->purchaseOrderId,
+            'purchaseOrderNumber' => $this->getResultWithNullChecker1Connection($purchaseOrderItems, 'purchaseOrder', 'purchaseOrderNumber'),
+            'withRequisitionItem' => $purchaseOrderItems->withRequisitionItem,
+            'requisitionItemId' => $purchaseOrderItems->requisitionItemId,
+            'itemId'=>$purchaseOrderItems->itemId,
+            'itemName' => $this->getResultWithNullChecker1Connection($purchaseOrderItems, 'item', 'name'),
+            'itemCode' => $this->getResultWithNullChecker1Connection($purchaseOrderItems, 'item', 'itemCode'),
+            'itemPhoto' => $this->getResultWithNullChecker1Connection($purchaseOrderItems, 'item', 'photo'),
+            'itemUnit' => $this->getResultWithNullChecker2Connection($purchaseOrderItems, 'item', 'unitOfMeasurement', 'format'),
+            'amountPurchased' => $purchaseOrderItems->amountPurchased,
+            'unitIdPurchased' => $purchaseOrderItems->unitIdPurchased,
+            'unitFormatPurchased' => $this->getResultWithNullChecker1Connection($purchaseOrderItems, 'unitPurchased', 'format'),
+            'hasCustomUnit' => $purchaseOrderItems->hasCustomUnit,
+            'customUnit' => $purchaseOrderItems->customUnit,
+            'itemTrack' => $purchaseOrderItems->itemTrack,
+            'requiresSerialNumber' => !is_null($purchaseOrderItems->item) ? $purchaseOrderItems->item->requiresSerialNumber : 0,
+            'inventoryHistory' => $this->getInsertedInventoryHistory($purchaseOrderItems->itemId, $purchaseOrderItems->purchaseOrderId)
         ];
     }
 
     private function getInsertedInventoryHistory($itemId, $purchaseOrderId)
     {
-        return StorageEntryInventoryHistory::where('storagePurchaseOrderId',$purchaseOrderId)->where('itemId',$itemId)->sum('quantity');
+        return StorageEntryInventoryHistory::where('storagePurchaseOrderId', $purchaseOrderId)->where('itemId', $itemId)->sum('quantity');
     }
 }

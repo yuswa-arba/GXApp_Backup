@@ -13,7 +13,6 @@ class StorageActionTypeSeeder extends Seeder
     public function run()
     {
         $data = array(
-            ['name' => 'Entry'],
             ['name' => 'Moving'],
             ['name' => 'Sell'],
             ['name' => 'Use']

@@ -17,6 +17,7 @@ class CreateStorageEntryInventoryHistoryTable extends Migration
             $table->increments('id');
             $table->integer('storagePurchaseOrderId');
             $table->integer('itemId');
+            $table->string('serialNumber')->nullable();
             $table->integer('quantity');
             $table->integer('branchOfficeId');
             $table->string('insertedBy');

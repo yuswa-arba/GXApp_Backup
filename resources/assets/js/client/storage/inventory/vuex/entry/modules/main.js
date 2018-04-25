@@ -9,10 +9,10 @@ import actions from './actions'
 export default {
     namespaced: true,
     state: {
-        isSearchingPO:false,
-        purchaseOrders:[],
-        purchaseOrderStatuses:[],
-        paginationMeta:{
+        isSearchingPO: false,
+        purchaseOrders: [],
+        purchaseOrderStatuses: [],
+        paginationMeta: {
             total: '',
             count: '',
             per_page: '',
@@ -20,6 +20,18 @@ export default {
             total_pages: '',
             links: []
         },
+        currentPurchaseOrder:{},
+        selectedPurchaseOrderId:'',
+        selectedBranchOfficeId:'',
+        selectedItemToInsert: {
+            itemId: '',
+            itemName:'',
+            itemCode:'',
+            requiresSerialNumber: 0,
+            quantity: 1
+        },
+        itemsToInsert: [],
+        branchOffices:[]
     },
     getters,
     mutations,

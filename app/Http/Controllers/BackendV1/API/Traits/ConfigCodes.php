@@ -79,5 +79,11 @@ class ConfigCodes
         'POSTPONED' => 5
     ];
 
+    public static $STORAGE_ITEM_TEST_STATUS = [
+        'TESTED' => 1,
+        'UNTESTED' => 2,
+        'NO_NEED' => 3
+    ];
+
 
 }
