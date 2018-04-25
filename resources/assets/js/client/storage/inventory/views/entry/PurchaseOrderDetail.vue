@@ -184,6 +184,7 @@
                     })
             },
             attemptInsertItemToInventory(itemId, index){
+
                 let self = this
                 let entryVuexState = this.$store.state.entry
 

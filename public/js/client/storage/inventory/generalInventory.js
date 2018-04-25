@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 42);
+/******/ 	return __webpack_require__(__webpack_require__.s = 41);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2458,7 +2458,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/MainEditTimesheet.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/inventory/MainGeneralInventory.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2477,7 +2477,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     created: function created() {},
@@ -2486,20 +2486,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         goBack: function goBack() {
             $('#errors-container').addClass('hide');
             this.$router.push('/');
-        }
+        },
+        edit: function edit() {},
+        save: function save() {}
     }
 });
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/Index.vue":
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/inventory/views/generalInventory/Index.vue":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__helpers_api__ = __webpack_require__("./resources/assets/js/client/helpers/api.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_utils__ = __webpack_require__("./resources/assets/js/client/helpers/utils.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__ = __webpack_require__("./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading__);
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 //
@@ -2556,302 +2560,86 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: {
+        InfiniteLoading: __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default.a
+    },
     data: function data() {
         return {};
     },
-
-
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('editTimesheet', {
-        timesheets: 'timesheets'
-    })),
     created: function created() {
         var self = this;
-        this.$store.dispatch('editTimesheet/getDataOnCreate');
-    },
-    mounted: function mounted() {},
 
-    methods: {
-        goToSummary: function goToSummary(timesheetId) {
-            this.$router.push({ name: 'timesheetSummary', params: { editTimesheetId: timesheetId } });
-        }
-    }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: {},
-    data: function data() {
-        return {};
+        this.$store.dispatch({
+            type: 'generalInventory/getDataOnCreate'
+        });
     },
 
-    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_0_vuex__["c" /* mapState */])('editTimesheet', {
-        timesheetSummaryData: 'timesheetSummaryData',
-        shifts: 'shifts'
+    computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('generalInventory', {
+        generalInventories: 'generalInventories'
     })),
-    created: function created() {
-
-        this.$store.commit({
-            type: 'editTimesheet/getShifts'
-        });
-
-        this.$store.commit({
-            type: 'editTimesheet/getTimesheetSummaryData',
-            editTimesheetId: this.$route.params.editTimesheetId
-        });
-    },
-    mounted: function mounted() {},
-
     methods: {
-        approveTimesheet: function approveTimesheet(timesheetId) {
-            if (timesheetId) this.$store.commit('editTimesheet/approveTimesheetFromSummary', timesheetId);
-        },
-        disapproveTimesheet: function disapproveTimesheet(timesheetId) {
-            if (timesheetId) this.$store.commit('editTimesheet/disapproveTimesheetFromSummary', timesheetId);
-        },
-        editTimesheet: function editTimesheet(index, employeeNo) {
-            this.$store.dispatch({
-                type: 'editTimesheet/editTimesheet',
-                index: index,
-                employeeNo: employeeNo
-            });
-        },
-        doneEditTimesheet: function doneEditTimesheet(index, employeeId, employeeNo, timesheetId, date) {
+        infiniteHandler: function infiniteHandler($state) {
+            //getting item list data from server using vue-infinit-scroll
 
-            var cInTime = $('input[name="' + 'cInTime' + employeeNo + index + '"]').val();
-            var cOutTime = $('input[name="' + 'cOutTime' + employeeNo + index + '"]').val();
-            var selectedShift = $('select[name="' + 'selectShift' + employeeNo + index + '"]').val();
-            var cInValid = false;
-            var cOutValid = false;
+            var self = this;
 
-            /* Validate time format */
-            if (cInTime && cOutTime) {
-                if (moment(cInTime, "HH:mm", true).isValid()) {
-                    cInValid = true;
-                } else {
-                    cInValid = false;
-                    alert('Clock In time format is not valid (use 00:00 - 23:59 format)');
-                }
+            var generalInventoryVuexState = this.$store.state.generalInventory;
 
-                if (moment(cOutTime, "HH:mm", true).isValid()) {
-                    cOutValid = true;
-                } else {
-                    cOutValid = false;
-                    alert('Clock Out time format is not valid (use 00:00 - 23:59 format)');
-                }
+            if (generalInventoryVuexState.paginationMeta.current_page >= generalInventoryVuexState.paginationMeta.total_pages && generalInventoryVuexState.paginationMeta.current_page != '') {
+
+                $state.complete();
             } else {
 
-                this.$store.dispatch({
-                    type: 'editTimesheet/cancelEditTimesheet',
-                    index: index,
-                    employeeNo: employeeNo
+                var nextPage = generalInventoryVuexState.paginationMeta.current_page + 1;
+
+                //get next page
+                Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/inventory/general/list?page=' + nextPage).then(function (res) {
+                    if (!res.data.isFailed) {
+                        if (res.data.generalInventory.data) {
+
+                            //insert generalInventories
+                            var generalInventoryData = res.data.generalInventory.data;
+                            if (generalInventoryData) {
+                                generalInventoryVuexState.generalInventories = generalInventoryVuexState.generalInventories.concat(generalInventoryData);
+                            }
+
+                            //insert pagination
+                            generalInventoryVuexState.paginationMeta = res.data.generalInventory.meta.pagination;
+
+                            $state.loaded();
+
+                            if (generalInventoryVuexState.generalInventories.length === generalInventoryVuexState.paginationMeta.total) {
+                                $state.complete();
+                            }
+                        } else {
+                            $state.complete();
+                        }
+                    } else {
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                        $state.complete();
+                    }
+                }).catch(function (err) {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                    $state.complete();
                 });
-
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: 'Clock In & Clock Out cannot be empty. Edit canceled.',
-                    position: 'top-right',
-                    timeout: 0,
-                    type: 'danger'
-                }).show();
-            }
-
-            if (cInValid && cOutValid && selectedShift && employeeId && date && employeeNo) {
-
-                if (timesheetId) {
-                    this.$store.dispatch({
-                        type: 'editTimesheet/saveEditTimesheet',
-                        index: index,
-                        employeeNo: employeeNo,
-                        clockInTime: cInTime,
-                        clockOutTime: cOutTime,
-                        shiftId: selectedShift,
-                        date: date,
-                        timesheetId: timesheetId
-                    });
-                } else {
-                    this.$store.dispatch({
-                        type: 'editTimesheet/createNewTimesheet',
-                        index: index,
-                        employeeId: employeeId,
-                        employeeNo: employeeNo,
-                        clockInTime: cInTime,
-                        clockOutTime: cOutTime,
-                        shiftId: selectedShift,
-                        date: date
-                    });
-                }
             }
         }
     }
-
 });
 
 /***/ }),
@@ -4288,6 +4076,13 @@ exports.clearImmediate = clearImmediate;
 
 /***/ }),
 
+/***/ "./node_modules/vue-infinite-loading/dist/vue-infinite-loading.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():"function"==typeof define&&define.amd?define([],t):"object"==typeof exports?exports.VueInfiniteLoading=t():e.VueInfiniteLoading=t()}("undefined"!=typeof self?self:this,function(){return function(e){function t(n){if(i[n])return i[n].exports;var a=i[n]={i:n,l:!1,exports:{}};return e[n].call(a.exports,a,a.exports,t),a.l=!0,a.exports}var i={};return t.m=e,t.c=i,t.d=function(e,i,n){t.o(e,i)||Object.defineProperty(e,i,{configurable:!1,enumerable:!0,get:n})},t.n=function(e){var i=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(i,"a",i),i},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="/",t(t.s=3)}([function(e,t){function i(e,t){var i=e[1]||"",a=e[3];if(!a)return i;if(t&&"function"==typeof btoa){var r=n(a);return[i].concat(a.sources.map(function(e){return"/*# sourceURL="+a.sourceRoot+e+" */"})).concat([r]).join("\n")}return[i].join("\n")}function n(e){return"/*# sourceMappingURL=data:application/json;charset=utf-8;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(e))))+" */"}e.exports=function(e){var t=[];return t.toString=function(){return this.map(function(t){var n=i(t,e);return t[2]?"@media "+t[2]+"{"+n+"}":n}).join("")},t.i=function(e,i){"string"==typeof e&&(e=[[null,e,""]]);for(var n={},a=0;a<this.length;a++){var r=this[a][0];"number"==typeof r&&(n[r]=!0)}for(a=0;a<e.length;a++){var o=e[a];"number"==typeof o[0]&&n[o[0]]||(i&&!o[2]?o[2]=i:i&&(o[2]="("+o[2]+") and ("+i+")"),t.push(o))}},t}},function(e,t,i){function n(e){for(var t=0;t<e.length;t++){var i=e[t],n=f[i.id];if(n){n.refs++;for(var a=0;a<n.parts.length;a++)n.parts[a](i.parts[a]);for(;a<i.parts.length;a++)n.parts.push(r(i.parts[a]));n.parts.length>i.parts.length&&(n.parts.length=i.parts.length)}else{for(var o=[],a=0;a<i.parts.length;a++)o.push(r(i.parts[a]));f[i.id]={id:i.id,refs:1,parts:o}}}}function a(){var e=document.createElement("style");return e.type="text/css",c.appendChild(e),e}function r(e){var t,i,n=document.querySelector('style[data-vue-ssr-id~="'+e.id+'"]');if(n){if(m)return h;n.parentNode.removeChild(n)}if(b){var r=p++;n=u||(u=a()),t=o.bind(null,n,r,!1),i=o.bind(null,n,r,!0)}else n=a(),t=s.bind(null,n),i=function(){n.parentNode.removeChild(n)};return t(e),function(n){if(n){if(n.css===e.css&&n.media===e.media&&n.sourceMap===e.sourceMap)return;t(e=n)}else i()}}function o(e,t,i,n){var a=i?"":n.css;if(e.styleSheet)e.styleSheet.cssText=g(t,a);else{var r=document.createTextNode(a),o=e.childNodes;o[t]&&e.removeChild(o[t]),o.length?e.insertBefore(r,o[t]):e.appendChild(r)}}function s(e,t){var i=t.css,n=t.media,a=t.sourceMap;if(n&&e.setAttribute("media",n),a&&(i+="\n/*# sourceURL="+a.sources[0]+" */",i+="\n/*# sourceMappingURL=data:application/json;base64,"+btoa(unescape(encodeURIComponent(JSON.stringify(a))))+" */"),e.styleSheet)e.styleSheet.cssText=i;else{for(;e.firstChild;)e.removeChild(e.firstChild);e.appendChild(document.createTextNode(i))}}var l="undefined"!=typeof document;if("undefined"!=typeof DEBUG&&DEBUG&&!l)throw new Error("vue-style-loader cannot be used in a non-browser environment. Use { target: 'node' } in your Webpack config to indicate a server-rendering environment.");var d=i(7),f={},c=l&&(document.head||document.getElementsByTagName("head")[0]),u=null,p=0,m=!1,h=function(){},b="undefined"!=typeof navigator&&/msie [6-9]\b/.test(navigator.userAgent.toLowerCase());e.exports=function(e,t,i){m=i;var a=d(e,t);return n(a),function(t){for(var i=[],r=0;r<a.length;r++){var o=a[r],s=f[o.id];s.refs--,i.push(s)}t?(a=d(e,t),n(a)):a=[];for(var r=0;r<i.length;r++){var s=i[r];if(0===s.refs){for(var l=0;l<s.parts.length;l++)s.parts[l]();delete f[s.id]}}}};var g=function(){var e=[];return function(t,i){return e[t]=i,e.filter(Boolean).join("\n")}}()},function(e,t){e.exports=function(e,t,i,n,a,r){var o,s=e=e||{},l=typeof e.default;"object"!==l&&"function"!==l||(o=e,s=e.default);var d="function"==typeof s?s.options:s;t&&(d.render=t.render,d.staticRenderFns=t.staticRenderFns,d._compiled=!0),i&&(d.functional=!0),a&&(d._scopeId=a);var f;if(r?(f=function(e){e=e||this.$vnode&&this.$vnode.ssrContext||this.parent&&this.parent.$vnode&&this.parent.$vnode.ssrContext,e||"undefined"==typeof __VUE_SSR_CONTEXT__||(e=__VUE_SSR_CONTEXT__),n&&n.call(this,e),e&&e._registeredComponents&&e._registeredComponents.add(r)},d._ssrRegister=f):n&&(f=n),f){var c=d.functional,u=c?d.render:d.beforeCreate;c?(d._injectStyles=f,d.render=function(e,t){return f.call(t),u(e,t)}):d.beforeCreate=u?[].concat(u,f):[f]}return{esModule:o,exports:s,options:d}}},function(e,t,i){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var n=i(4);t.default=n.a,"undefined"!=typeof window&&window.Vue&&window.Vue.component("infinite-loading",n.a)},function(e,t,i){"use strict";function n(e){i(5)}var a=i(8),r=i(14),o=i(2),s=n,l=o(a.a,r.a,!1,s,"data-v-fb2c869e",null);t.a=l.exports},function(e,t,i){var n=i(6);"string"==typeof n&&(n=[[e.i,n,""]]),n.locals&&(e.exports=n.locals);i(1)("2249d7a7",n,!0)},function(e,t,i){t=e.exports=i(0)(void 0),t.push([e.i,".infinite-loading-container[data-v-fb2c869e]{clear:both;text-align:center}.infinite-loading-container[data-v-fb2c869e] [class^=loading-]{display:inline-block;margin:15px 0;width:28px;height:28px;font-size:28px;line-height:28px;border-radius:50%}.infinite-status-prompt[data-v-fb2c869e]{color:#666;font-size:14px;text-align:center;padding:10px 0}",""])},function(e,t){e.exports=function(e,t){for(var i=[],n={},a=0;a<t.length;a++){var r=t[a],o=r[0],s=r[1],l=r[2],d=r[3],f={id:e+":"+a,css:s,media:l,sourceMap:d};n[o]?n[o].parts.push(f):i.push(n[o]={id:o,parts:[f]})}return i}},function(e,t,i){"use strict";var n=i(9),a={STATE_CHANGER:["[Vue-infinite-loading warn]: emit `loaded` and `complete` event through component instance of `$refs` may cause error, so it will be deprecated soon, please use the `$state` argument instead (`$state` just the special `$event` variable):","\ntemplate:",'<infinite-loading @infinite="infiniteHandler"></infinite-loading>',"\nscript:\n...\ninfiniteHandler($state) {\n  ajax('https://www.example.com/api/news')\n    .then((res) => {\n      if (res.data.length) {\n        $state.loaded();\n      } else {\n        $state.complete();\n      }\n    });\n}\n...","","more details: https://github.com/PeachScript/vue-infinite-loading/issues/57#issuecomment-324370549"].join("\n"),INFINITE_EVENT:"[Vue-infinite-loading warn]: `:on-infinite` property will be deprecated soon, please use `@infinite` event instead."},r={INFINITE_LOOP:["[Vue-infinite-loading error]: executed the callback function more than 10 times for a short time, it looks like searched a wrong scroll wrapper that doest not has fixed height or maximum height, please check it. If you want to force to set a element as scroll wrapper ranther than automatic searching, you can do this:",'\n\x3c!-- add a special attribute for the real scroll wrapper --\x3e\n<div infinite-wrapper>\n  ...\n  \x3c!-- set force-use-infinite-wrapper to true --\x3e\n  <infinite-loading force-use-infinite-wrapper="true"></infinite-loading>\n</div>\n    ',"more details: https://github.com/PeachScript/vue-infinite-loading/issues/55#issuecomment-316934169"].join("\n")};t.a={name:"InfiniteLoading",data:function(){return{scrollParent:null,scrollHandler:null,isLoading:!1,isComplete:!1,isFirstLoad:!0,debounceTimer:null,debounceDuration:50,infiniteLoopChecked:!1,infiniteLoopTimer:null,continuousCallTimes:0}},components:{Spinner:n.a},computed:{isNoResults:{cache:!1,get:function(){var e=this.$slots["no-results"],t=e&&e[0].elm&&""===e[0].elm.textContent;return!this.isLoading&&this.isComplete&&this.isFirstLoad&&!t}},isNoMore:{cache:!1,get:function(){var e=this.$slots["no-more"],t=e&&e[0].elm&&""===e[0].elm.textContent;return!this.isLoading&&this.isComplete&&!this.isFirstLoad&&!t}}},props:{distance:{type:Number,default:100},onInfinite:Function,spinner:String,direction:{type:String,default:"bottom"},forceUseInfiniteWrapper:null},mounted:function(){var e=this;this.scrollParent=this.getScrollParent(),this.scrollHandler=function(e){this.isLoading||(clearTimeout(this.debounceTimer),e&&e.constructor===Event?this.debounceTimer=setTimeout(this.attemptLoad,this.debounceDuration):this.attemptLoad())}.bind(this),setTimeout(this.scrollHandler,1),this.scrollParent.addEventListener("scroll",this.scrollHandler),this.$on("$InfiniteLoading:loaded",function(t){e.isFirstLoad=!1,e.isLoading&&e.$nextTick(e.attemptLoad.bind(null,!0)),t&&t.target===e||console.warn(a.STATE_CHANGER)}),this.$on("$InfiniteLoading:complete",function(t){e.isLoading=!1,e.isComplete=!0,e.$nextTick(function(){e.$forceUpdate()}),e.scrollParent.removeEventListener("scroll",e.scrollHandler),t&&t.target===e||console.warn(a.STATE_CHANGER)}),this.$on("$InfiniteLoading:reset",function(){e.isLoading=!1,e.isComplete=!1,e.isFirstLoad=!0,e.scrollParent.addEventListener("scroll",e.scrollHandler),setTimeout(e.scrollHandler,1)}),this.onInfinite&&console.warn(a.INFINITE_EVENT),this.stateChanger={loaded:function(){e.$emit("$InfiniteLoading:loaded",{target:e})},complete:function(){e.$emit("$InfiniteLoading:complete",{target:e})},reset:function(){e.$emit("$InfiniteLoading:reset",{target:e})}},this.$watch("forceUseInfiniteWrapper",function(){e.scrollParent=e.getScrollParent()})},deactivated:function(){this.isLoading=!1,this.scrollParent.removeEventListener("scroll",this.scrollHandler)},activated:function(){this.scrollParent.addEventListener("scroll",this.scrollHandler)},methods:{attemptLoad:function(e){var t=this,i=this.getCurrentDistance();!this.isComplete&&i<=this.distance&&this.$el.offsetWidth+this.$el.offsetHeight>0?(this.isLoading=!0,"function"==typeof this.onInfinite?this.onInfinite.call(null,this.stateChanger):this.$emit("infinite",this.stateChanger),!e||this.forceUseInfiniteWrapper||this.infiniteLoopChecked||(this.continuousCallTimes+=1,clearTimeout(this.infiniteLoopTimer),this.infiniteLoopTimer=setTimeout(function(){t.infiniteLoopChecked=!0},1e3),this.continuousCallTimes>10&&(console.error(r.INFINITE_LOOP),this.infiniteLoopChecked=!0))):this.isLoading=!1},getCurrentDistance:function(){var e=void 0;if("top"===this.direction)e=isNaN(this.scrollParent.scrollTop)?this.scrollParent.pageYOffset:this.scrollParent.scrollTop;else{e=this.$el.getBoundingClientRect().top-(this.scrollParent===window?window.innerHeight:this.scrollParent.getBoundingClientRect().bottom)}return e},getScrollParent:function(){var e=arguments.length>0&&void 0!==arguments[0]?arguments[0]:this.$el,t=void 0;return"BODY"===e.tagName?t=window:!this.forceUseInfiniteWrapper&&["scroll","auto"].indexOf(getComputedStyle(e).overflowY)>-1?t=e:(e.hasAttribute("infinite-wrapper")||e.hasAttribute("data-infinite-wrapper"))&&(t=e),t||this.getScrollParent(e.parentNode)}},destroyed:function(){this.isComplete||this.scrollParent.removeEventListener("scroll",this.scrollHandler)}}},function(e,t,i){"use strict";function n(e){i(10)}var a=i(12),r=i(13),o=i(2),s=n,l=o(a.a,r.a,!1,s,"data-v-6e1fd88f",null);t.a=l.exports},function(e,t,i){var n=i(11);"string"==typeof n&&(n=[[e.i,n,""]]),n.locals&&(e.exports=n.locals);i(1)("29881045",n,!0)},function(e,t,i){t=e.exports=i(0)(void 0),t.push([e.i,'.loading-wave-dots[data-v-6e1fd88f]{position:relative}.loading-wave-dots[data-v-6e1fd88f] .wave-item{position:absolute;top:50%;left:50%;display:inline-block;margin-top:-4px;width:8px;height:8px;border-radius:50%;-webkit-animation:loading-wave-dots-data-v-6e1fd88f linear 2.8s infinite;animation:loading-wave-dots-data-v-6e1fd88f linear 2.8s infinite}.loading-wave-dots[data-v-6e1fd88f] .wave-item:first-child{margin-left:-36px}.loading-wave-dots[data-v-6e1fd88f] .wave-item:nth-child(2){margin-left:-20px;-webkit-animation-delay:.14s;animation-delay:.14s}.loading-wave-dots[data-v-6e1fd88f] .wave-item:nth-child(3){margin-left:-4px;-webkit-animation-delay:.28s;animation-delay:.28s}.loading-wave-dots[data-v-6e1fd88f] .wave-item:nth-child(4){margin-left:12px;-webkit-animation-delay:.42s;animation-delay:.42s}.loading-wave-dots[data-v-6e1fd88f] .wave-item:last-child{margin-left:28px;-webkit-animation-delay:.56s;animation-delay:.56s}@-webkit-keyframes loading-wave-dots-data-v-6e1fd88f{0%{-webkit-transform:translateY(0);transform:translateY(0);background:#bbb}10%{-webkit-transform:translateY(-6px);transform:translateY(-6px);background:#999}20%{-webkit-transform:translateY(0);transform:translateY(0);background:#bbb}to{-webkit-transform:translateY(0);transform:translateY(0);background:#bbb}}@keyframes loading-wave-dots-data-v-6e1fd88f{0%{-webkit-transform:translateY(0);transform:translateY(0);background:#bbb}10%{-webkit-transform:translateY(-6px);transform:translateY(-6px);background:#999}20%{-webkit-transform:translateY(0);transform:translateY(0);background:#bbb}to{-webkit-transform:translateY(0);transform:translateY(0);background:#bbb}}.loading-circles[data-v-6e1fd88f] .circle-item{width:5px;height:5px;-webkit-animation:loading-circles-data-v-6e1fd88f linear .75s infinite;animation:loading-circles-data-v-6e1fd88f linear .75s infinite}.loading-circles[data-v-6e1fd88f] .circle-item:first-child{margin-top:-14.5px;margin-left:-2.5px}.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(2){margin-top:-11.26px;margin-left:6.26px}.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(3){margin-top:-2.5px;margin-left:9.5px}.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(4){margin-top:6.26px;margin-left:6.26px}.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(5){margin-top:9.5px;margin-left:-2.5px}.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(6){margin-top:6.26px;margin-left:-11.26px}.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(7){margin-top:-2.5px;margin-left:-14.5px}.loading-circles[data-v-6e1fd88f] .circle-item:last-child{margin-top:-11.26px;margin-left:-11.26px}@-webkit-keyframes loading-circles-data-v-6e1fd88f{0%{background:#dfdfdf}90%{background:#505050}to{background:#dfdfdf}}@keyframes loading-circles-data-v-6e1fd88f{0%{background:#dfdfdf}90%{background:#505050}to{background:#dfdfdf}}.loading-bubbles[data-v-6e1fd88f] .bubble-item{background:#666;-webkit-animation:loading-bubbles-data-v-6e1fd88f linear .75s infinite;animation:loading-bubbles-data-v-6e1fd88f linear .75s infinite}.loading-bubbles[data-v-6e1fd88f] .bubble-item:first-child{margin-top:-12.5px;margin-left:-.5px}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(2){margin-top:-9.26px;margin-left:8.26px}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(3){margin-top:-.5px;margin-left:11.5px}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(4){margin-top:8.26px;margin-left:8.26px}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(5){margin-top:11.5px;margin-left:-.5px}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(6){margin-top:8.26px;margin-left:-9.26px}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(7){margin-top:-.5px;margin-left:-12.5px}.loading-bubbles[data-v-6e1fd88f] .bubble-item:last-child{margin-top:-9.26px;margin-left:-9.26px}@-webkit-keyframes loading-bubbles-data-v-6e1fd88f{0%{width:1px;height:1px;box-shadow:0 0 0 3px #666}90%{width:1px;height:1px;box-shadow:0 0 0 0 #666}to{width:1px;height:1px;box-shadow:0 0 0 3px #666}}@keyframes loading-bubbles-data-v-6e1fd88f{0%{width:1px;height:1px;box-shadow:0 0 0 3px #666}90%{width:1px;height:1px;box-shadow:0 0 0 0 #666}to{width:1px;height:1px;box-shadow:0 0 0 3px #666}}.loading-default[data-v-6e1fd88f]{position:relative;border:1px solid #999;-webkit-animation:loading-rotating-data-v-6e1fd88f ease 1.5s infinite;animation:loading-rotating-data-v-6e1fd88f ease 1.5s infinite}.loading-default[data-v-6e1fd88f]:before{content:"";position:absolute;display:block;top:0;left:50%;margin-top:-3px;margin-left:-3px;width:6px;height:6px;background-color:#999;border-radius:50%}.loading-spiral[data-v-6e1fd88f]{border:2px solid #777;border-right-color:transparent;-webkit-animation:loading-rotating-data-v-6e1fd88f linear .85s infinite;animation:loading-rotating-data-v-6e1fd88f linear .85s infinite}@-webkit-keyframes loading-rotating-data-v-6e1fd88f{0%{-webkit-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}@keyframes loading-rotating-data-v-6e1fd88f{0%{-webkit-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(1turn);transform:rotate(1turn)}}.loading-bubbles[data-v-6e1fd88f],.loading-circles[data-v-6e1fd88f]{position:relative}.loading-bubbles[data-v-6e1fd88f] .bubble-item,.loading-circles[data-v-6e1fd88f] .circle-item{position:absolute;top:50%;left:50%;display:inline-block;border-radius:50%}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(2),.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(2){-webkit-animation-delay:93ms;animation-delay:93ms}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(3),.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(3){-webkit-animation-delay:.186s;animation-delay:.186s}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(4),.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(4){-webkit-animation-delay:.279s;animation-delay:.279s}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(5),.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(5){-webkit-animation-delay:.372s;animation-delay:.372s}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(6),.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(6){-webkit-animation-delay:.465s;animation-delay:.465s}.loading-bubbles[data-v-6e1fd88f] .bubble-item:nth-child(7),.loading-circles[data-v-6e1fd88f] .circle-item:nth-child(7){-webkit-animation-delay:.558s;animation-delay:.558s}.loading-bubbles[data-v-6e1fd88f] .bubble-item:last-child,.loading-circles[data-v-6e1fd88f] .circle-item:last-child{-webkit-animation-delay:.651s;animation-delay:.651s}',""])},function(e,t,i){"use strict";var n={BUBBLES:{render:function(e){return e("span",{attrs:{class:"loading-bubbles"}},Array.apply(Array,Array(8)).map(function(){return e("span",{attrs:{class:"bubble-item"}})}))}},CIRCLES:{render:function(e){return e("span",{attrs:{class:"loading-circles"}},Array.apply(Array,Array(8)).map(function(){return e("span",{attrs:{class:"circle-item"}})}))}},DEFAULT:{render:function(e){return e("i",{attrs:{class:"loading-default"}})}},SPIRAL:{render:function(e){return e("i",{attrs:{class:"loading-spiral"}})}},WAVEDOTS:{render:function(e){return e("span",{attrs:{class:"loading-wave-dots"}},Array.apply(Array,Array(5)).map(function(){return e("span",{attrs:{class:"wave-item"}})}))}}};t.a={name:"spinner",computed:{spinnerView:function(){return n[(this.spinner||"").toUpperCase()]||n.DEFAULT}},props:{spinner:String}}},function(e,t,i){"use strict";var n=function(){var e=this,t=e.$createElement;return(e._self._c||t)(e.spinnerView,{tag:"component"})},a=[],r={render:n,staticRenderFns:a};t.a=r},function(e,t,i){"use strict";var n=function(){var e=this,t=e.$createElement,i=e._self._c||t;return i("div",{staticClass:"infinite-loading-container"},[i("div",{directives:[{name:"show",rawName:"v-show",value:e.isLoading,expression:"isLoading"}]},[e._t("spinner",[i("spinner",{attrs:{spinner:e.spinner}})])],2),e._v(" "),i("div",{directives:[{name:"show",rawName:"v-show",value:e.isNoResults,expression:"isNoResults"}],staticClass:"infinite-status-prompt"},[e._t("no-results",[e._v("No results :(")])],2),e._v(" "),i("div",{directives:[{name:"show",rawName:"v-show",value:e.isNoMore,expression:"isNoMore"}],staticClass:"infinite-status-prompt"},[e._t("no-more",[e._v("No more data :)")])],2)])},a=[],r={render:n,staticRenderFns:a};t.a=r}])});
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/component-normalizer.js":
 /***/ (function(module, exports) {
 
@@ -4398,526 +4193,7 @@ module.exports = function normalizeComponent (
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1b7648d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row row-same-height" }, [
-    _c(
-      "div",
-      { staticClass: "col-lg-12 m-b-10 m-t-10" },
-      [_vm._t("go-back-menu")],
-      2
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-lg-12 m-b-10 " },
-      _vm._l(_vm.timesheetSummaryData, function(summary) {
-        return _c("div", { staticClass: "m-b-20 filter-item" }, [
-          _c(
-            "div",
-            {
-              staticClass:
-                "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-            },
-            [
-              _c(
-                "div",
-                {
-                  staticClass: "card-block bg-primary",
-                  staticStyle: { padding: "3px 15px!important" }
-                },
-                [
-                  _c("div", { staticClass: "pull-left" }, [
-                    _c("span", { staticClass: "text-white fs-16 bold" }, [
-                      _vm._v(_vm._s(summary.employee.data.employeeName))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-white fs-16" }, [
-                      _vm._v(
-                        "(" + _vm._s(summary.employee.data.employeeNo) + ")"
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "pull-right" }, [
-                    _c("span", { staticClass: "text-white fs-14 bold" }, [
-                      _vm._v(_vm._s(summary.employee.data.divisionName))
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "text-white fs-14" }, [
-                      _vm._v(
-                        "(" +
-                          _vm._s(summary.employee.data.branchOfficeName) +
-                          ")"
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-            },
-            [
-              _c("div", { staticClass: "card-block" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-hover table-text-center",
-                      attrs: { id: "summaryDT" }
-                    },
-                    [
-                      _vm._m(0, true),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(summary.timesheet, function(timesheet, index) {
-                          return _c("tr", [
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(timesheet.date) +
-                                  " (" +
-                                  _vm._s(timesheet.day) +
-                                  ")"
-                              )
-                            ]),
-                            _vm._v(" "),
-                            timesheet.type.isHoliday
-                              ? _c("td", { staticClass: "holiday-cell" }, [
-                                  _vm._v(
-                                    _vm._s(timesheet.type.notes) +
-                                      "\n                                "
-                                  )
-                                ])
-                              : !timesheet.detail.data[0] &&
-                                !timesheet.type.isHoliday
-                                ? _c("td", { staticClass: "absence-cell" }, [
-                                    _vm._v(
-                                      "A\n                                "
-                                    )
-                                  ])
-                                : _c("td"),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.detail.data[0] && !timesheet.editing
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        timesheet.detail.data[0].clockInTime
-                                      )
-                                    )
-                                  ])
-                                : timesheet.editing &&
-                                  timesheet.detail.data[0] &&
-                                  timesheet.detail.data[0].clockInTime
-                                  ? _c("input", {
-                                      staticClass:
-                                        "form-control text-center w-80",
-                                      attrs: {
-                                        name:
-                                          "cInTime" +
-                                          summary.employee.data.employeeNo +
-                                          index
-                                      },
-                                      domProps: {
-                                        value:
-                                          timesheet.detail.data[0].clockInTime
-                                      }
-                                    })
-                                  : timesheet.editing
-                                    ? _c("input", {
-                                        staticClass:
-                                          "form-control text-center w-80",
-                                        attrs: {
-                                          name:
-                                            "cInTime" +
-                                            summary.employee.data.employeeNo +
-                                            index,
-                                          placeholder: "HH:mm"
-                                        }
-                                      })
-                                    : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.detail.data[0] && !timesheet.editing
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        timesheet.detail.data[0].clockOutTime
-                                      )
-                                    )
-                                  ])
-                                : timesheet.editing &&
-                                  timesheet.detail.data[0] &&
-                                  timesheet.detail.data[0].clockOutTime
-                                  ? _c("input", {
-                                      staticClass:
-                                        "form-control text-center w-80",
-                                      attrs: {
-                                        name:
-                                          "cOutTime" +
-                                          summary.employee.data.employeeNo +
-                                          index
-                                      },
-                                      domProps: {
-                                        value:
-                                          timesheet.detail.data[0].clockOutTime
-                                      }
-                                    })
-                                  : timesheet.editing
-                                    ? _c("input", {
-                                        staticClass:
-                                          "form-control text-center w-80",
-                                        attrs: {
-                                          name:
-                                            "cOutTime" +
-                                            summary.employee.data.employeeNo +
-                                            index,
-                                          placeholder: "HH:mm"
-                                        }
-                                      })
-                                    : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.detail.data[0]
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(timesheet.detail.data[0].workHour)
-                                    )
-                                  ])
-                                : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.detail.data[0]
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        timesheet.detail.data[0]
-                                          .minutesCheckInLate
-                                      )
-                                    )
-                                  ])
-                                : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.detail.data[0]
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        timesheet.detail.data[0]
-                                          .minutesCheckOutEarly
-                                      )
-                                    )
-                                  ])
-                                : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.detail.data[0]
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(
-                                        timesheet.detail.data[0]
-                                          .minutesCheckOutLate
-                                      )
-                                    )
-                                  ])
-                                : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.detail.data[0] && !timesheet.editing
-                                ? _c("span", [
-                                    _vm._v(
-                                      _vm._s(timesheet.detail.data[0].shiftId)
-                                    )
-                                  ])
-                                : timesheet.editing && !timesheet.detail.data[0]
-                                  ? _c(
-                                      "select",
-                                      {
-                                        staticClass: "form-control w-70",
-                                        attrs: {
-                                          name:
-                                            "selectShift" +
-                                            summary.employee.data.employeeNo +
-                                            index
-                                        }
-                                      },
-                                      _vm._l(_vm.shifts, function(shift) {
-                                        return _c(
-                                          "option",
-                                          { domProps: { value: shift.id } },
-                                          [_vm._v(_vm._s(shift.name))]
-                                        )
-                                      })
-                                    )
-                                  : timesheet.editing &&
-                                    timesheet.detail.data[0]
-                                    ? _c(
-                                        "select",
-                                        {
-                                          staticClass: "form-control w-70",
-                                          attrs: {
-                                            name:
-                                              "selectShift" +
-                                              summary.employee.data.employeeNo +
-                                              index
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "option",
-                                            {
-                                              attrs: { readonly: "" },
-                                              domProps: {
-                                                value:
-                                                  timesheet.detail.data[0]
-                                                    .shiftId
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                "\n                                            " +
-                                                  _vm._s(
-                                                    timesheet.detail.data[0]
-                                                      .shiftName
-                                                  ) +
-                                                  "\n                                        "
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _vm._l(_vm.shifts, function(shift) {
-                                            return _c(
-                                              "option",
-                                              { domProps: { value: shift.id } },
-                                              [_vm._v(_vm._s(shift.name))]
-                                            )
-                                          })
-                                        ],
-                                        2
-                                      )
-                                    : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.detail.data[0]
-                                ? _c("span", { staticClass: "fs-10" }, [
-                                    _vm._v(
-                                      _vm._s(
-                                        timesheet.detail.data[0]
-                                          .attendanceValidationName
-                                      )
-                                    )
-                                  ])
-                                : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.detail.data[0]
-                                ? _c("span", { staticClass: "fs-10" }, [
-                                    _vm._v(
-                                      _vm._s(
-                                        timesheet.detail.data[0]
-                                          .attendanceApproveName
-                                      )
-                                    )
-                                  ])
-                                : _c("span", [_vm._v("-")])
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              {
-                                class: {
-                                  "w-60":
-                                    timesheet.detail.data[0] &&
-                                    timesheet.detail.data[0]
-                                      .attendanceApproveId == 99
-                                }
-                              },
-                              [
-                                timesheet.allowToEdit
-                                  ? _c("div", [
-                                      timesheet.detail.data[0] &&
-                                      timesheet.detail.data[0]
-                                        .attendanceApproveId == 99
-                                        ? _c("span", [
-                                            _c("i", {
-                                              staticClass:
-                                                "fa fa-check text-success cursor",
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.approveTimesheet(
-                                                    timesheet.detail.data[0].id
-                                                  )
-                                                }
-                                              }
-                                            }),
-                                            _vm._v(
-                                              "  \n                                    "
-                                            ),
-                                            _c("i", {
-                                              staticClass:
-                                                "fa fa-times text-danger cursor",
-                                              on: {
-                                                click: function($event) {
-                                                  _vm.disapproveTimesheet(
-                                                    timesheet.detail.data[0].id
-                                                  )
-                                                }
-                                              }
-                                            })
-                                          ])
-                                        : _vm._e()
-                                    ])
-                                  : _vm._e()
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("td", [
-                              timesheet.allowToEdit
-                                ? _c("div", [
-                                    !timesheet.editing
-                                      ? _c("i", {
-                                          staticClass: "fa fa-pencil cursor",
-                                          on: {
-                                            click: function($event) {
-                                              _vm.editTimesheet(
-                                                index,
-                                                summary.employee.data.employeeNo
-                                              )
-                                            }
-                                          }
-                                        })
-                                      : _c("div", [
-                                          timesheet.detail.data[0] &&
-                                          timesheet.detail.data[0].id
-                                            ? _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "fs-12 text-danger cursor",
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.doneEditTimesheet(
-                                                        index,
-                                                        summary.employee.data
-                                                          .id,
-                                                        summary.employee.data
-                                                          .employeeNo,
-                                                        timesheet.detail.data[0]
-                                                          .id,
-                                                        timesheet.date
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [_vm._v("DONE")]
-                                              )
-                                            : _c(
-                                                "span",
-                                                {
-                                                  staticClass:
-                                                    "fs-12 text-danger cursor",
-                                                  on: {
-                                                    click: function($event) {
-                                                      _vm.doneEditTimesheet(
-                                                        index,
-                                                        summary.employee.data
-                                                          .id,
-                                                        summary.employee.data
-                                                          .employeeNo,
-                                                        "",
-                                                        timesheet.date
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [_vm._v("DONE")]
-                                              )
-                                        ])
-                                  ])
-                                : _vm._e()
-                            ])
-                          ])
-                        })
-                      )
-                    ]
-                  )
-                ])
-              ])
-            ]
-          )
-        ])
-      })
-    )
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
-      _c("tr", [
-        _c("th", { staticClass: "text-black w-150" }, [_vm._v("Date")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Clock In")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Clock Out")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Work Hours")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("c-In Late(min)")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("c-Out Early(min)")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("c-Out Late(min)")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Shift")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Valid")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Apprv")]),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black", staticStyle: { width: "70px" } }),
-        _vm._v(" "),
-        _c("th", { staticClass: "text-black" })
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-1b7648d0", module.exports)
-  }
-}
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-35c4c2fb\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/MainEditTimesheet.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-131e5794\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/inventory/MainGeneralInventory.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -4957,127 +4233,105 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-35c4c2fb", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-131e5794", module.exports)
   }
 }
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3fd34596\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/Index.vue":
+/***/ "./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4e7c9561\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/inventory/views/generalInventory/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10" }, [
-      _c(
-        "div",
-        {
-          staticClass:
-            "widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column"
-        },
-        [
-          _c("div", { staticClass: "card-block" }, [
-            _c("div", { staticClass: "scrollable" }, [
-              _c("div", { staticClass: " h-500" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-striped table-hover settingDT"
-                    },
-                    [
+  return _c(
+    "div",
+    { staticClass: "row" },
+    [
+      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-30 " }, [
+        _c(
+          "div",
+          { staticClass: "card card-default card-bordered border-solid-grey" },
+          [
+            _c("div", { staticClass: "card-block" }, [
+              _c("div", { staticClass: "scrollable" }, [
+                _c("div", { staticStyle: { height: "700px" } }, [
+                  _c("div", { staticClass: "talbe-responsive" }, [
+                    _c("table", { staticClass: "table table-hover" }, [
                       _vm._m(0),
                       _vm._v(" "),
                       _c(
                         "tbody",
-                        _vm._l(_vm.timesheets, function(timesheet) {
-                          return _c("tr", { staticClass: "filter-item" }, [
-                            _c("td", [_vm._v(_vm._s(timesheet.divisionName))]),
+                        _vm._l(_vm.generalInventories, function(
+                          inventory,
+                          index
+                        ) {
+                          return _c("tr", [
+                            _c("td", [_vm._v(_vm._s(parseInt(index) + 1))]),
                             _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(timesheet.branchOfficeName))
-                            ]),
+                            _c("td", [_vm._v(_vm._s(inventory.quantity))]),
                             _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                _vm._s(timesheet.startDate) +
-                                  " - " +
-                                  _vm._s(timesheet.endDate)
-                              )
-                            ]),
+                            _c("td", [_vm._v(_vm._s(inventory.unitFormat))]),
                             _vm._v(" "),
-                            _c("td", [
-                              _c("b", [_vm._v(_vm._s(timesheet.dueDate))])
-                            ]),
+                            _c("td", [_vm._v(_vm._s(inventory.minStock))]),
                             _vm._v(" "),
-                            _c("td", [
-                              _vm._v(
-                                "@ " +
-                                  _vm._s(timesheet.generatedAt) +
-                                  " by " +
-                                  _vm._s(timesheet.generatedBy)
-                              )
-                            ]),
+                            _c("td", [_vm._v(_vm._s(inventory.itemCode))]),
                             _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-primary",
-                                  on: {
-                                    click: function($event) {
-                                      _vm.goToSummary(timesheet.id)
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "Summary\n                                        "
-                                  )
-                                ]
-                              )
-                            ])
+                            _c("td", [_vm._v(_vm._s(inventory.itemName))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(inventory.itemCategory))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(inventory.priceSale))])
                           ])
                         })
                       )
-                    ]
-                  )
+                    ])
+                  ])
                 ])
               ])
             ])
-          ])
-        ]
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "infinite-loading",
+        {
+          ref: "infiniteLoading",
+          staticClass: "margin-center",
+          attrs: { spinner: "waveDots" },
+          on: { infinite: _vm.infiniteHandler }
+        },
+        [_c("span", { attrs: { slot: "no-more" }, slot: "no-more" })]
       )
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-lighter" }, [
+    return _c("thead", { staticClass: "bg-master-ligher" }, [
       _c("tr", [
-        _c("th", { staticClass: "text-black" }, [_vm._v("Division")]),
+        _c("th", [_vm._v("No.")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Branch")]),
+        _c("th", [_vm._v("Quantity")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [
-          _vm._v("Start Date - End Date")
-        ]),
+        _c("th", [_vm._v("Unit")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Due Date")]),
+        _c("th", [_vm._v("Min. Stock")]),
         _vm._v(" "),
-        _c("th", { staticClass: "text-black" }, [_vm._v("Generated")]),
+        _c("th", [_vm._v("Item Code")]),
         _vm._v(" "),
-        _c(
-          "th",
-          { staticClass: "text-black", staticStyle: { width: "250px" } },
-          [_vm._v("Action")]
-        )
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Category")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")])
       ])
     ])
   }
@@ -5087,7 +4341,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3fd34596", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-4e7c9561", module.exports)
   }
 }
 
@@ -19521,84 +18775,15 @@ var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/helpers/utils.js":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["b"] = objectToFormData;
-/* harmony export (immutable) */ __webpack_exports__["a"] = makeBlob;
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-/**
- * Created by kevinpurwono on 16/11/17.
- */
-// export function toMulipartedForm(form, mode) {
-//     if(mode === 'edit' && typeof form.image === 'string') {
-//         const temp = JSON.parse(JSON.stringify(form))
-//         delete temp.image
-//         return temp
-//     } else {
-//         return objectToFormData(form)
-//     }
-// }
-
-function objectToFormData(obj, form, namespace) {
-    var fd = form || new FormData();
-    var formKey = void 0;
-    for (var property in obj) {
-        if (obj.hasOwnProperty(property)) {
-            if (namespace) {
-                formKey = namespace + '[' + property + ']';
-            } else {
-                formKey = property;
-            }
-            if (obj[property] instanceof Array) {
-                for (var i = 0; i < obj[property].length; i++) {
-                    objectToFormData(obj[property][i], fd, property + '[' + i + ']');
-                }
-            } else if (_typeof(obj[property]) === 'object' && !(obj[property] instanceof File)) {
-                objectToFormData(obj[property], fd, property);
-            } else {
-                fd.append(formKey, obj[property]);
-            }
-        }
-    }
-    return fd;
-}
-
-function makeBlob(dataURL) {
-    var BASE64_MARKER = ';base64,';
-    if (dataURL.indexOf(BASE64_MARKER) == -1) {
-        var _parts = dataURL.split(',');
-        var _contentType = _parts[0].split(':')[1];
-        var _raw = decodeURIComponent(_parts[1]);
-        return new Blob([_raw], { type: _contentType });
-    }
-    var parts = dataURL.split(BASE64_MARKER);
-    var contentType = parts[0].split(':')[1];
-    var raw = window.atob(parts[1]);
-    var rawLength = raw.length;
-
-    var uInt8Array = new Uint8Array(rawLength);
-
-    for (var i = 0; i < rawLength; ++i) {
-        uInt8Array[i] = raw.charCodeAt(i);
-    }
-
-    return new Blob([uInt8Array], { type: contentType });
-}
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/manager/MainEditTimesheet.vue":
+/***/ "./resources/assets/js/client/storage/inventory/MainGeneralInventory.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/MainEditTimesheet.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/inventory/MainGeneralInventory.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-35c4c2fb\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/MainEditTimesheet.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-131e5794\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/inventory/MainGeneralInventory.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -19615,7 +18800,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/manager/MainEditTimesheet.vue"
+Component.options.__file = "resources/assets/js/client/storage/inventory/MainGeneralInventory.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -19625,9 +18810,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-35c4c2fb", Component.options)
+    hotAPI.createRecord("data-v-131e5794", Component.options)
   } else {
-    hotAPI.reload("data-v-35c4c2fb", Component.options)
+    hotAPI.reload("data-v-131e5794", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -19639,19 +18824,19 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/manager/editTimesheet.js":
+/***/ "./resources/assets/js/client/storage/inventory/generalInventory.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MainEditTimesheet_vue__ = __webpack_require__("./resources/assets/js/client/manager/MainEditTimesheet.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__MainEditTimesheet_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__MainEditTimesheet_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__router_editTimesheet__ = __webpack_require__("./resources/assets/js/client/manager/router/editTimesheet.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_editTimesheet_store__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/store.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__router_generalInventory__ = __webpack_require__("./resources/assets/js/client/storage/inventory/router/generalInventory.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainGeneralInventory_vue__ = __webpack_require__("./resources/assets/js/client/storage/inventory/MainGeneralInventory.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__MainGeneralInventory_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__MainGeneralInventory_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__vuex_generalInventory_store__ = __webpack_require__("./resources/assets/js/client/storage/inventory/vuex/generalInventory/store.js");
 /**
- * Created by kevinpurwono on 15/11/17.
+ * Created by kevinpurwono on 6/12/17.
  */
 
 
@@ -19659,46 +18844,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-// Create a global Event Bus
-var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
-
-// Add to Vue properties by exposing a getter for $bus
-Object.defineProperties(__WEBPACK_IMPORTED_MODULE_0_vue___default.a.prototype, {
-    $bus: {
-        get: function get() {
-            return EventBus;
-        }
-    }
-});
-
 var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-    el: '#vc-manager-edit-timesheet',
-    template: '<main-edit-timesheet></main-edit-timesheet>',
-    components: { MainEditTimesheet: __WEBPACK_IMPORTED_MODULE_1__MainEditTimesheet_vue___default.a },
-    router: __WEBPACK_IMPORTED_MODULE_2__router_editTimesheet__["a" /* default */],
-    store: __WEBPACK_IMPORTED_MODULE_3__vuex_editTimesheet_store__["a" /* store */]
+    el: '#vc-storage-inventory-general',
+    template: '<main-general-inventory></main-general-inventory>',
+    components: { MainGeneralInventory: __WEBPACK_IMPORTED_MODULE_2__MainGeneralInventory_vue___default.a },
+    router: __WEBPACK_IMPORTED_MODULE_1__router_generalInventory__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_3__vuex_generalInventory_store__["a" /* store */]
 });
 
 $(document).ready(function () {});
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/manager/router/editTimesheet.js":
+/***/ "./resources/assets/js/client/storage/inventory/router/generalInventory.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_editTimesheet_Index_vue__ = __webpack_require__("./resources/assets/js/client/manager/views/editTimesheet/Index.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_editTimesheet_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_editTimesheet_Index_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_editTimesheet_SummaryTimesheet_vue__ = __webpack_require__("./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__views_editTimesheet_SummaryTimesheet_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__views_editTimesheet_SummaryTimesheet_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_generalInventory_Index_vue__ = __webpack_require__("./resources/assets/js/client/storage/inventory/views/generalInventory/Index.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__views_generalInventory_Index_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__views_generalInventory_Index_vue__);
 /**
- * Created by kevinpurwono on 9/11/17.
+ * Created by kevinpurwono on 23/11/17.
  */
-
-
 
 
 
@@ -19707,22 +18876,22 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vue_
 
 var router = new __WEBPACK_IMPORTED_MODULE_1_vue_router__["default"]({
     // mode: 'history',
-    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_editTimesheet_Index_vue___default.a }, { path: '/summary/:editTimesheetId', component: __WEBPACK_IMPORTED_MODULE_3__views_editTimesheet_SummaryTimesheet_vue___default.a, name: 'timesheetSummary' }]
+    routes: [{ path: '/', component: __WEBPACK_IMPORTED_MODULE_2__views_generalInventory_Index_vue___default.a }]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (router);
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/manager/views/editTimesheet/Index.vue":
+/***/ "./resources/assets/js/client/storage/inventory/views/generalInventory/Index.vue":
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
 /* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/Index.vue")
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/storage/inventory/views/generalInventory/Index.vue")
 /* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-3fd34596\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/Index.vue")
+var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-4e7c9561\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/storage/inventory/views/generalInventory/Index.vue")
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -19739,7 +18908,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/assets/js/client/manager/views/editTimesheet/Index.vue"
+Component.options.__file = "resources/assets/js/client/storage/inventory/views/generalInventory/Index.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
 /* hot reload */
@@ -19749,9 +18918,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3fd34596", Component.options)
+    hotAPI.createRecord("data-v-4e7c9561", Component.options)
   } else {
-    hotAPI.reload("data-v-3fd34596", Component.options)
+    hotAPI.reload("data-v-4e7c9561", Component.options)
 ' + '  }
   module.hot.dispose(function (data) {
     disposed = true
@@ -19763,56 +18932,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue":
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
-/* script */
-var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue")
-/* template */
-var __vue_template__ = __webpack_require__("./node_modules/vue-loader/lib/template-compiler/index.js?{\"id\":\"data-v-1b7648d0\",\"hasScoped\":false,\"buble\":{\"transforms\":{}}}!./node_modules/vue-loader/lib/selector.js?type=template&index=0&bustCache!./resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue")
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/assets/js/client/manager/views/editTimesheet/SummaryTimesheet.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-1b7648d0", Component.options)
-  } else {
-    hotAPI.reload("data-v-1b7648d0", Component.options)
-' + '  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-
-/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/modules/actions.js":
+/***/ "./resources/assets/js/client/storage/inventory/vuex/generalInventory/modules/actions.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19827,94 +18947,15 @@ module.exports = Component.exports
 
 
 /* harmony default export */ __webpack_exports__["a"] = ({
-    getDataOnCreate: function getDataOnCreate(_ref, payload) {
-        var commit = _ref.commit,
-            state = _ref.state;
-
-        commit('getTimesheetList');
-    },
-    editTimesheet: function editTimesheet(_ref2, payload) {
-        var commit = _ref2.commit,
-            state = _ref2.state;
-
-        if (payload.employeeNo) {
-
-            _.forEach(state.timesheetSummaryData, function (value, parentKey) {
-                if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
-                    var timesheetNewData = state.timesheetSummaryData[parentKey];
-                    timesheetNewData.timesheet[payload.index].editing = true;
-                }
-            });
-        }
-    },
-    cancelEditTimesheet: function cancelEditTimesheet(_ref3, payload) {
-        var commit = _ref3.commit,
-            state = _ref3.state;
-
-        if (payload.employeeNo) {
-            _.forEach(state.timesheetSummaryData, function (value, parentKey) {
-                if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
-                    var timesheetNewData = state.timesheetSummaryData[parentKey];
-                    timesheetNewData.timesheet[payload.index].editing = false;
-                }
-            });
-        }
-    },
-    saveEditTimesheet: function saveEditTimesheet(_ref4, payload) {
-        var commit = _ref4.commit,
-            state = _ref4.state;
-
-
-        if (payload.employeeNo) {
-            _.forEach(state.timesheetSummaryData, function (value, parentKey) {
-                if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
-                    var timesheetNewData = state.timesheetSummaryData[parentKey];
-                    timesheetNewData.timesheet[payload.index].editing = false;
-                }
-            });
-        }
-
-        if (payload.timesheetId) {
-            commit({
-                type: 'saveTimesheet',
-                timesheetId: payload.timesheetId,
-                clockInTime: payload.clockInTime,
-                clockOutTime: payload.clockOutTime,
-                shiftId: payload.shiftId,
-                date: payload.date
-            });
-        }
-    },
-    createNewTimesheet: function createNewTimesheet(_ref5, payload) {
-        var commit = _ref5.commit,
-            state = _ref5.state;
-
-
-        if (payload.employeeNo) {
-            _.forEach(state.timesheetSummaryData, function (value, parentKey) {
-                if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
-                    var timesheetNewData = state.timesheetSummaryData[parentKey];
-                    timesheetNewData.timesheet[payload.index].editing = false;
-                }
-            });
-        }
-
-        commit({
-            type: 'createTimesheet',
-            index: payload.index,
-            employeeNo: payload.employeeNo,
-            employeeId: payload.employeeId,
-            clockInTime: payload.clockInTime,
-            clockOutTime: payload.clockOutTime,
-            shiftId: payload.shiftId,
-            date: payload.date
-        });
-    }
+  getDataOnCreate: function getDataOnCreate(_ref, payload) {
+    var commit = _ref.commit,
+        state = _ref.state;
+  }
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/modules/getters.js":
+/***/ "./resources/assets/js/client/storage/inventory/vuex/generalInventory/modules/getters.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19925,13 +18966,13 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/modules/main.js":
+/***/ "./resources/assets/js/client/storage/inventory/vuex/generalInventory/modules/main.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/modules/getters.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/modules/mutations.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/modules/actions.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__getters__ = __webpack_require__("./resources/assets/js/client/storage/inventory/vuex/generalInventory/modules/getters.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mutations__ = __webpack_require__("./resources/assets/js/client/storage/inventory/vuex/generalInventory/modules/mutations.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions__ = __webpack_require__("./resources/assets/js/client/storage/inventory/vuex/generalInventory/modules/actions.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -19943,9 +18984,15 @@ module.exports = Component.exports
 /* harmony default export */ __webpack_exports__["a"] = ({
     namespaced: true,
     state: {
-        timesheets: [],
-        timesheetSummaryData: [],
-        shifts: []
+        generalInventories: [],
+        paginationMeta: {
+            total: '',
+            count: '',
+            per_page: '',
+            current_page: '',
+            total_pages: '',
+            links: []
+        }
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -19954,7 +19001,7 @@ module.exports = Component.exports
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/modules/mutations.js":
+/***/ "./resources/assets/js/client/storage/inventory/vuex/generalInventory/modules/mutations.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -19962,230 +19009,27 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__helpers_const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series__ = __webpack_require__("./node_modules/async/series.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_async_series___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_async_series__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_vue_router__ = __webpack_require__("./node_modules/vue-router/dist/vue-router.esm.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
 
 
 
-
 /* harmony default export */ __webpack_exports__["a"] = ({
-    getTimesheetList: function getTimesheetList(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'manager/timesheet/list').then(function (res) {
+    getGeneralInventoryList: function getGeneralInventoryList(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/inventory/general/list').then(function (res) {
             if (!res.data.isFailed) {
-                //insert to array
-                state.timesheets = res.data.timesheets.data;
+                if (res.data.generalInventory.data.length > 0) {
+                    state.generalInventories = res.data.generalInventory.data;
+                }
             }
-        });
-    },
-    getTimesheetSummaryData: function getTimesheetSummaryData(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'manager/timesheet/summary?editTimesheetId=' + payload.editTimesheetId).then(function (res) {
-
-            if (!res.data.isFailed) {
-                state.timesheetSummaryData = res.data.summary;
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    getShifts: function getShifts(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'component/list/shifts').then(function (res) {
-            state.shifts = res.data.data;
-        });
-    },
-    approveTimesheetFromSummary: function approveTimesheetFromSummary(state, timesheetId) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/approve', { timesheetId: timesheetId }).then(function (res) {
-            if (!res.data.isFailed) {
-
-                /* Update timesheet sumamry data*/
-                _.forEach(state.timesheetSummaryData, function (value, parentKey) {
-                    _.forEach(value['timesheet'], function (value, medKey) {
-                        _.forEach(value['detail']['data'], function (value, key) {
-                            if (value['id'] == timesheetId) {
-                                var timesheetNewData = state.timesheetSummaryData[parentKey];
-                                timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveId = 1;
-                                timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveName = 'Manager Approved';
-                            }
-                        });
-                    });
-                });
-
-                // timesheetSumData.attendanceApproveId = 1
-                // timesheetSumData.attendanceApproveName = 'Manager Approved'
-                // state.timesheetSummaryData.splice(timesheetSumDataIndex,1,timesheetSumData)
-
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    disapproveTimesheetFromSummary: function disapproveTimesheetFromSummary(state, timesheetId) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/disapprove', { timesheetId: timesheetId }).then(function (res) {
-            if (!res.data.isFailed) {
-
-                /* Update timesheet sumamry data*/
-                _.forEach(state.timesheetSummaryData, function (value, parentKey) {
-                    _.forEach(value['timesheet'], function (value, medKey) {
-                        _.forEach(value['detail']['data'], function (value, key) {
-                            if (value['id'] == timesheetId) {
-                                var timesheetNewData = state.timesheetSummaryData[parentKey];
-                                timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveId = 98;
-                                timesheetNewData.timesheet[medKey].detail.data[0].attendanceApproveName = 'Disapproved';
-                            }
-                        });
-                    });
-                });
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    saveTimesheet: function saveTimesheet(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/update', {
-            timesheetId: payload.timesheetId,
-            clockInTime: payload.clockInTime,
-            clockOutTime: payload.clockOutTime,
-            shiftId: payload.shiftId,
-            date: payload.date
-        }).then(function (res) {
-            console.log(JSON.stringify(res.data.timesheet.data));
-            if (!res.data.isFailed) {
-
-                /* Update timesheet summary data*/
-                _.forEach(state.timesheetSummaryData, function (value, parentKey) {
-                    _.forEach(value['timesheet'], function (value, medKey) {
-                        _.forEach(value['detail']['data'], function (value, key) {
-                            if (value['id'] == payload.timesheetId) {
-                                /* Update data */
-                                state.timesheetSummaryData[parentKey].timesheet[medKey].detail.data.splice(0, 1, res.data.timesheet.data);
-                            }
-                        });
-                    });
-                });
-
-                /* Success notification */
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
-        });
-    },
-    createTimesheet: function createTimesheet(state, payload) {
-        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'attendance/timesheet/createManually', {
-            employeeId: payload.employeeId,
-            timesheetId: payload.timesheetId,
-            clockInTime: payload.clockInTime,
-            clockOutTime: payload.clockOutTime,
-            shiftId: payload.shiftId,
-            date: payload.date
-        }).then(function (res) {
-            if (!res.data.isFailed) {
-
-                /* Update timesheet summary data*/
-                _.forEach(state.timesheetSummaryData, function (value, parentKey) {
-                    if (value['employee']['data']['employeeNo'] == payload.employeeNo) {
-                        var timesheetNewData = state.timesheetSummaryData[parentKey];
-                        timesheetNewData.timesheet[payload.index].editing = false;
-                        timesheetNewData.timesheet[payload.index].detail = { data: [] };
-                        timesheetNewData.timesheet[payload.index].detail.data.push(res.data.timesheet.data);
-                    }
-                });
-
-                /* Success notification */
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'info'
-                }).show();
-            } else {
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 3500,
-                    type: 'danger'
-                }).show();
-            }
-        }).catch(function (err) {
-            $('.page-container').pgNotification({
-                style: 'flip',
-                message: err.message,
-                position: 'top-right',
-                timeout: 3500,
-                type: 'danger'
-            }).show();
         });
     }
 });
 
 /***/ }),
 
-/***/ "./resources/assets/js/client/manager/vuex/editTimesheet/store.js":
+/***/ "./resources/assets/js/client/storage/inventory/vuex/generalInventory/store.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -20193,7 +19037,7 @@ module.exports = Component.exports
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__("./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/manager/vuex/editTimesheet/modules/main.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_main__ = __webpack_require__("./resources/assets/js/client/storage/inventory/vuex/generalInventory/modules/main.js");
 /**
  * Created by kevinpurwono on 8/12/17.
  */
@@ -20206,7 +19050,7 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     modules: {
-        editTimesheet: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
+        generalInventory: __WEBPACK_IMPORTED_MODULE_2__modules_main__["a" /* default */]
     }
 });
 
@@ -20239,10 +19083,10 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
 
 /***/ }),
 
-/***/ 42:
+/***/ 41:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__("./resources/assets/js/client/manager/editTimesheet.js");
+module.exports = __webpack_require__("./resources/assets/js/client/storage/inventory/generalInventory.js");
 
 
 /***/ })

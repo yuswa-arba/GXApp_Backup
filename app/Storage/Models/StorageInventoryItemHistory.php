@@ -5,7 +5,7 @@ namespace App\Storage\Models;
 use App\Components\Models\BranchOffice;
 use Illuminate\Database\Eloquent\Model;
 
-class StorageInventoryItem extends Model
+class StorageInventoryItemHistory extends Model
 {
     protected $table = 'storageInventoryItemHistory';
     protected $guarded = ['id'];

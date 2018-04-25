@@ -29,7 +29,7 @@ class InsertToInventoryLogic extends InsertUseCase
 
                 if ($storageItem) {
 
-                    $inventoryItem = $this->createInventoryItemIfNotExist($item['itemId'], $request->branchOfficeId);
+                    $inventoryItem = $this->createInventoryItem($item['itemId'], $request->branchOfficeId);
 
 
                     if ($inventoryItem) {
@@ -65,6 +65,7 @@ class InsertToInventoryLogic extends InsertUseCase
                                 //insert to inventory entry history
                                 StorageEntryInventoryHistory::create([
                                     'storagePurchaseOrderId' => $request->storagePurchaseOrderId,
+                                    'inventoryItemId'=>$inventoryItem->id,
                                     'itemId' => $item['itemId'],
                                     'serialNumber' => $item['serialNumber'],
                                     'quantity' => $item['quantity'],
@@ -95,16 +96,14 @@ class InsertToInventoryLogic extends InsertUseCase
 
     }
 
-    private function createInventoryItemIfNotExist($itemId, $branchOfficeId)
+    private function createInventoryItem($itemId, $branchOfficeId)
     {
         Log::info('itemId:' . $itemId .' branchOfficeId:'. $branchOfficeId);
 
-        return StorageInventoryItem::updateOrCreate(
+        return StorageInventoryItem::create(
             [
                 'itemId' => $itemId,
-                'branchOfficeId' => $branchOfficeId
-            ],
-            [
+                'branchOfficeId' => $branchOfficeId,
                 'latestUpdateAt' => Carbon::now()->format('d/m/Y'),
                 'latestUpdateBy' => $this->getResultWithNullChecker1Connection(Auth::user(), 'employee', 'givenName')
             ]

@@ -205,6 +205,7 @@ mix.js('resources/assets/js/client/storage/requisition/history','public/js/clien
 mix.js('resources/assets/js/client/storage/admin/approval','public/js/client/storage/admin');
 mix.js('resources/assets/js/client/storage/admin/purchaseOrder','public/js/client/storage/admin');
 mix.js('resources/assets/js/client/storage/inventory/entry','public/js/client/storage/inventory');
+mix.js('resources/assets/js/client/storage/inventory/generalInventory','public/js/client/storage/inventory');
 mix.js('resources/assets/js/client/manager/editTimesheet','public/js/client/manager');
 
 

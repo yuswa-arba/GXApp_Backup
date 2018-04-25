@@ -1,50 +1,63 @@
 <!-- START SECONDARY SIDEBAR MENU-->
 <nav class="secondary-sidebar light">
-    <p class="menu-title">HEADER</p>
+    <p class="menu-title">INVENTORY</p>
     <ul class="main-menu">
-        <li class="active">
-            <a href="#">
-                <span class="title"><i class="pg-inbox"></i> Link One</span>
-                <span class="badge pull-right">5</span>
-            </a>
-        </li>
-        <li class="">
-            <a href="#">
-                <span class="title"><i class="pg-folder"></i> Link Two</span>
-            </a>
-            <ul class="sub-menu no-padding">
-                <li>
-                    <a href="#">
-                        <span class="title">Sub links</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="title">>Sub links</span>
-                    </a>
-                </li>
-            </ul>
-        </li>
-        <li>
-            <a href="#">
-                <span class="title"><i class="pg-sent"></i> Link Three</span>
-            </a>
-        </li>
-        <li>
+        @if(strpos(request()->route()->getName(),'storage.inventory.items.general')!==false )
+            <li class="active">
+        @else
+            <li>
+        @endif
+                <a href="{{route('storage.inventory.items.general')}}">
+                    <span class="title"><i class="fa fa-archive"></i> General Inventory</span>
+                    {{--<span class="badge pull-right">5</span>--}}
+                </a>
+            </li>
+        @if(strpos(request()->route()->getName(),'storage.inventory.items.testing')!==false)
+            <li class="active">
+        @else
+            <li>
+        @endif
+                <a href="{{route('storage.inventory.items.testing')}}">
+                    <span class="title"><i class="fa fa-archive"></i> Testing Inventory</span>
+                </a>
+            </li>
+        @if(strpos(request()->route()->getName(),'storage.inventory.items.company')!==false)
+            <li class="active">
+        @else
+            <li>
+        @endif
+                <a href="{{route('storage.inventory.items.company')}}">
+                    <span class="title"><i class="fa fa-archive"></i> Company Inventory</span>
+                </a>
+            </li>
+        @if(strpos(request()->route()->getName(),'storage.inventory.items.employee')!==false)
+            <li class="active">
+        @else
+            <li>
+        @endif
+                <a href="{{route('storage.inventory.items.employee')}}">
+                    <span class="title"><i class="fa fa-archive"></i> Employee Inventory</span>
+                </a>
+            </li>
+        @if(strpos(request()->route()->getName(),'storage.inventory.items.customer')!==false)
+            <li class="active">
+        @else
+            <li>
+        @endif
+                <a href="{{route('storage.inventory.items.customer')}}">
+                    <span class="title"><i class="fa fa-archive"></i> Customer Inventory</span>
+                </a>
+            </li>
+        @if(strpos(request()->route()->getName(),'storage.inventory.items.sales')!==false)
+            <li class="active">
+        @else
+            <li>
+        @endif
+                <a href="{{route('storage.inventory.items.sales')}}">
+                    <span class="title"><i class="fa fa-archive"></i> Sales Inventory</span>
+                </a>
+            </li>
     </ul>
-    <p class="menu-title m-t-20 all-caps">Header</p>
-    <ul class="sub-menu no-padding">
-        <li>
-            <a href="#">
-                <span class="title">Sub link</span>
-            </a>
-        </li>
-        <li>
-            <a href="#">
-                <span class="title">Sub link</span>
-                <span class="badge pull-right">5</span>
-            </a>
-        </li>
-    </ul>
+
 </nav>
 <!-- END SECONDARY SIDEBAR MENU -->

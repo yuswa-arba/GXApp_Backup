@@ -103,16 +103,42 @@ class ViewController extends Controller
         return view('pages.storage.admin.purchaseOrder');
     }
 
-    public function inventoryItems()
-    {
-        return view('pages.storage.inventory.items');
-    }
 
-
-    public function entryInventory()
+    public function entry()
     {
         return view('pages.storage.inventory.entry');
     }
+
+    public function generalInventory()
+    {
+        return view('pages.storage.inventory.generalInventory');
+    }
+
+    public function testingInventory()
+    {
+        return view('pages.storage.inventory.testingInventory');
+    }
+
+    public function companyInventory()
+    {
+        return view('pages.storage.inventory.companyInventory');
+    }
+
+    public function employeeInventory()
+    {
+        return view('pages.storage.inventory.employeeInventory');
+    }
+
+    public function customerInventory()
+    {
+        return view('pages.storage.inventory.customerInventory');
+    }
+
+    public function salesInventory()
+    {
+        return view('pages.storage.inventory.salesInventory');
+    }
+
     public function inventoryForms()
     {
         return view('pages.storage.inventory.forms');

@@ -33,8 +33,14 @@ Route::prefix('storage')->namespace('Client\Storage')->group(function () {
         Route::get('admin/purchaseOrder','ViewController@purchaseOrder')->name('storage.admin.purchaseOrder');
     });
 
-    Route::get('inventory/entry','ViewController@entryInventory')->name('storage.inventory.entry');
-    Route::get('inventory/items','ViewController@inventoryItems')->name('storage.inventory.items');
+    Route::get('inventory/entry','ViewController@entry')->name('storage.inventory.entry');
+    Route::get('inventory/items','ViewController@generalInventory')->name('storage.inventory.items');
+    Route::get('inventory/items/general','ViewController@generalInventory')->name('storage.inventory.items.general');
+    Route::get('inventory/items/testing','ViewController@testingInventory')->name('storage.inventory.items.testing');
+    Route::get('inventory/items/company','ViewController@companyInventory')->name('storage.inventory.items.company');
+    Route::get('inventory/items/employee','ViewController@employeeInventory')->name('storage.inventory.items.employee');
+    Route::get('inventory/items/customer','ViewController@customerInventory')->name('storage.inventory.items.customer');
+    Route::get('inventory/items/sales','ViewController@salesInventory')->name('storage.inventory.items.sales');
     Route::get('inventory/forms','ViewController@inventoryForms')->name('storage.inventory.forms');
 
 

@@ -21,7 +21,7 @@ class StorageItems extends Model
 
     public function itemCategory()
     {
-        return $this->belongsTo(StorageItemsCategory::class,'categoryCode');
+        return $this->belongsTo(StorageItemsCategory::class,'categoryCode','code');
     }
 
     public function itemStatus()
