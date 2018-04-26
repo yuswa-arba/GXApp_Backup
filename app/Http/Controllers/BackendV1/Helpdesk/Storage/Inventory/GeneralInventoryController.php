@@ -9,10 +9,12 @@ use App\Storage\Models\StoragePurchaseOrders;
 use App\Storage\Transformers\StorageGeneralInventoryListTransformer;
 use App\Storage\Transformers\StoragePurchaseOrderInventoryTransformer;
 use App\Traits\GlobalUtils;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
+use SimpleSoftwareIO\QrCode\BaconQrCodeGenerator;
 
 class GeneralInventoryController extends Controller
 {
@@ -37,9 +39,9 @@ class GeneralInventoryController extends Controller
         if ($employee && $employee->hasResigned != 1) {
 
 //            $generalInventory = StorageGeneralInventory::orderBy('id', 'desc')->paginate(50); //default get all
-            $generalInventory = StorageGeneralInventory::whereHas('inventoryItem',function ($query) {
-                $query->whereHas('item',function($query){
-                    $query->orderBy('name','desc');
+            $generalInventory = StorageGeneralInventory::whereHas('inventoryItem', function ($query) {
+                $query->whereHas('item', function ($query) {
+                    $query->orderBy('name', 'desc');
                 });
             })->paginate(50);
 
@@ -101,6 +103,49 @@ class GeneralInventoryController extends Controller
             $response['message'] = 'No General Inventory found';
             return response()->json($response, 200);
         }
+    }
+
+    public function generateQRCode(Request $request)
+    {
+        $qrCodeData = array();
+
+
+        if (count($request->get('id'))>0) {
+
+            $i = 0;
+
+            foreach ($request->get('id') as $itemId) {
+
+                $item = StorageGeneralInventory::find($itemId);
+
+                if ($item) {
+
+                    $id = $item->inventoryItemId;
+                    $itemName = $this->getResultWithNullChecker2Connection($item, 'inventoryItem', 'item', 'name');
+                    $serialNumber = $item->serialNumber;
+                    $salesPrice = $this->getResultWithNullChecker2Connection($item, 'inventoryItem', 'item', 'latestSellingPrice');
+
+                    $arr = ['name' => $itemName, 'SN' => $serialNumber, 'ID' => $id, 'sales_price' => $salesPrice];
+
+                    $qrCodeData[$i]['id'] = $id;
+                    $qrCodeData[$i]['name'] = $itemName;
+                    $qrCodeData[$i]['SN'] = $serialNumber;
+                    $qrCodeData[$i]['data'] = json_encode($arr);
+
+                    $i++;
+                }
+
+
+            }
+
+
+        }
+
+        $pdf = PDF::loadView('layouts.pdf.qrcode_inventory', compact('qrCodeData'))
+            ->setPaper('a4')->setOptions(['dpi' => 150, 'defaultFont' => 'sans-serif']);;
+        return $pdf->stream('test-qr-code' . '.pdf');
+
+//        return view('layouts.pdf.qrcode_inventory',compact('qrCodeData') );
     }
 
 }

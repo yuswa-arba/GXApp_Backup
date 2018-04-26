@@ -482,3 +482,8 @@ input[type='number'] {
   display: none;
 }
 
+.table > tbody > tr > td.td-small-center {
+  padding: 8px !important;
+  vertical-align: middle !important;
+}
+

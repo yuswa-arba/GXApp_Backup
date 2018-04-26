@@ -62,5 +62,22 @@ export default{
                     type: 'danger'
                 }).show();
             })
+    },
+    generateQRCode(state, payload){
+
+
+        let params = ''
+
+
+        for (let i = 0; i < state.selectedItemsIds.length; i++) {
+            params += 'id[]=' + state.selectedItemsIds[i] + '&'
+        }
+
+        //   reset
+        state.selectedItemsIds = []
+
+        window.open(api_path + 'storage/inventory/general/qrcode?' + params, '_blank')
+
+
     }
 }

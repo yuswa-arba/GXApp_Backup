@@ -2576,6 +2576,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2601,7 +2621,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
     },
 
     computed: _extends({}, Object(__WEBPACK_IMPORTED_MODULE_2_vuex__["c" /* mapState */])('generalInventory', {
-        generalInventories: 'generalInventories'
+        generalInventories: 'generalInventories',
+        selectedItemsIds: 'selectedItemsIds'
     })),
     methods: {
         infiniteHandler: function infiniteHandler($state) {
@@ -2678,6 +2699,77 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                     type: 'generalInventory/searchItems',
                     text: ''
                 });
+            }
+        },
+        toggleItemCb: function toggleItemCb(index, itemId) {
+
+            var self = this;
+            var generalInventorVuexState = this.$store.state.generalInventory;
+            var itemCb = $('#item-cb-' + index);
+
+            if (itemCb.prop('checked')) {
+
+                generalInventorVuexState.selectedItemsIds.push(itemId); //push to array
+            } else {
+
+                var itemIndex = _.findIndex(generalInventorVuexState.selectedItemsIds, function (o) {
+                    //get index of this item id
+                    return o == itemId;
+                });
+
+                generalInventorVuexState.selectedItemsIds.splice(itemIndex, 1); //remove from array
+
+                //unchecked all item cb
+                $('#all-item-cb').prop('checked', false);
+            }
+        },
+        checkAllItems: function checkAllItems() {
+
+            var self = this;
+            var generalInventoryVuexState = this.$store.state.generalInventory;
+            var totalItemIds = generalInventoryVuexState.generalInventories.length + 1; //total items
+            var allItemCb = $('#all-item-cb');
+
+            //reset the first time
+            generalInventoryVuexState.selectedItemsIds = [];
+
+            if (allItemCb.prop('checked')) {
+                // check all
+
+                for (var i = 0; i < totalItemIds; i++) {
+
+                    var cb = $('#item-cb-' + i);
+                    cb.prop('checked', true);
+
+                    if (i < totalItemIds - 1) {
+                        // do not include the last one
+                        generalInventoryVuexState.selectedItemsIds.push(generalInventoryVuexState.generalInventories[i].id);
+                    }
+                }
+            } else {
+                //uncheck all
+
+                for (var _i = 0; _i < totalItemIds; _i++) {
+                    var _cb = $('#item-cb-' + _i);
+                    _cb.prop('checked', false);
+                }
+
+                generalInventoryVuexState.selectedItemsIds = [];
+            }
+        },
+        generateQRCode: function generateQRCode() {
+
+            var generalInventoryVuexState = this.$store.state.generalInventory;
+            var totalItemIds = generalInventoryVuexState.generalInventories.length + 1; //total items
+
+            this.$store.commit({
+                type: 'generalInventory/generateQRCode'
+            });
+
+            //uncheck all
+            for (var i = 0; i < totalItemIds; i++) {
+                var cb = $('#item-cb-' + i);
+                cb.prop('checked', false);
             }
         }
     }
@@ -4291,7 +4383,27 @@ var render = function() {
     "div",
     { staticClass: "row" },
     [
-      _c("div", { staticClass: "col-lg-7 m-t-30" }),
+      _c("div", { staticClass: "col-lg-5 m-t-30" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-2 m-t-30" }, [
+        _vm.selectedItemsIds.length > 0
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-success pull-right",
+                on: {
+                  click: function($event) {
+                    _vm.generateQRCode()
+                  }
+                }
+              },
+              [
+                _vm._v("\n            Generate "),
+                _c("i", { staticClass: "fa fa-qrcode" })
+              ]
+            )
+          : _vm._e()
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-5 m-t-30" }, [
         _c(
@@ -4368,7 +4480,48 @@ var render = function() {
                 _c("div", { staticStyle: { height: "700px" } }, [
                   _c("div", { staticClass: "talbe-responsive" }, [
                     _c("table", { staticClass: "table table-hover sortable" }, [
-                      _vm._m(0),
+                      _c("thead", { staticClass: "bg-master-ligher" }, [
+                        _c("tr", [
+                          _c("th", { staticStyle: { width: "30px" } }, [
+                            _c(
+                              "div",
+                              { staticClass: "checkbox check-success " },
+                              [
+                                _c("input", {
+                                  attrs: {
+                                    type: "checkbox",
+                                    id: "all-item-cb"
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.checkAllItems()
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c("label", {
+                                  staticClass: "fs-16",
+                                  attrs: { for: "all-item-cb" }
+                                })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("No.")]),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Quantity (Unit) ")]),
+                          _vm._v(" "),
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("SN")]),
+                          _vm._v(" "),
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c("th", [_vm._v("Price")])
+                        ])
+                      ]),
                       _vm._v(" "),
                       _c(
                         "tbody",
@@ -4380,9 +4533,35 @@ var render = function() {
                             "tr",
                             { staticClass: "filter-general-item" },
                             [
-                              _c("td", [_vm._v(_vm._s(parseInt(index) + 1))]),
+                              _c("td", { staticClass: "td-small-center" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "checkbox check-success " },
+                                  [
+                                    _c("input", {
+                                      attrs: {
+                                        type: "checkbox",
+                                        id: "item-cb-" + index
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          _vm.toggleItemCb(index, inventory.id)
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("label", {
+                                      attrs: { for: "item-cb-" + index }
+                                    })
+                                  ]
+                                )
+                              ]),
                               _vm._v(" "),
-                              _c("td", [
+                              _c("td", { staticClass: "td-small-center" }, [
+                                _vm._v(_vm._s(parseInt(index) + 1))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "td-small-center" }, [
                                 _c("span", { staticClass: "text-black" }, [
                                   _vm._v(_vm._s(inventory.quantity))
                                 ]),
@@ -4393,9 +4572,11 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(inventory.minStock))]),
+                              _c("td", { staticClass: "td-small-center" }, [
+                                _vm._v(_vm._s(inventory.minStock))
+                              ]),
                               _vm._v(" "),
-                              _c("td", [
+                              _c("td", { staticClass: "td-small-center" }, [
                                 _c("span", { staticClass: "text-black" }, [
                                   _vm._v(_vm._s(inventory.itemName))
                                 ]),
@@ -4408,15 +4589,15 @@ var render = function() {
                                 )
                               ]),
                               _vm._v(" "),
-                              _c("td", [
+                              _c("td", { staticClass: "td-small-center" }, [
                                 _vm._v(_vm._s(inventory.serialNumber))
                               ]),
                               _vm._v(" "),
-                              _c("td", [
+                              _c("td", { staticClass: "td-small-center" }, [
                                 _vm._v(_vm._s(inventory.itemCategory))
                               ]),
                               _vm._v(" "),
-                              _c("td", [
+                              _c("td", { staticClass: "td-small-center" }, [
                                 _c("span", { staticClass: "text-black" }, [
                                   _vm._v(_vm._s(inventory.priceSale))
                                 ])
@@ -4453,31 +4634,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "bg-master-ligher" }, [
-      _c("tr", [
-        _c("th", [_vm._v("No.")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Quantity (Unit) ")]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v("Min. Stock   "),
-          _c("i", { staticClass: "fa fa-sort fs-16 text-black cursor" })
-        ]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v("Name (Code)   "),
-          _c("i", { staticClass: "fa fa-sort fs-16 text-black cursor" })
-        ]),
-        _vm._v(" "),
-        _c("th", [_vm._v("SN")]),
-        _vm._v(" "),
-        _c("th", [
-          _vm._v("Category   "),
-          _c("i", { staticClass: "fa fa-sort fs-16 text-black cursor" })
-        ]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Price")])
-      ])
+    return _c("th", [
+      _vm._v("Min. Stock   "),
+      _c("i", { staticClass: "fa fa-sort fs-16 text-black cursor" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _vm._v("Name (Code)   "),
+      _c("i", { staticClass: "fa fa-sort fs-16 text-black cursor" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _vm._v("Category   "),
+      _c("i", { staticClass: "fa fa-sort fs-16 text-black cursor" })
     ])
   }
 ]
@@ -19144,7 +19321,8 @@ module.exports = Component.exports
             current_page: '',
             total_pages: '',
             links: []
-        }
+        },
+        selectedItemsIds: []
     },
     getters: __WEBPACK_IMPORTED_MODULE_0__getters__["a" /* default */],
     mutations: __WEBPACK_IMPORTED_MODULE_1__mutations__["a" /* default */],
@@ -19221,6 +19399,19 @@ module.exports = Component.exports
                 type: 'danger'
             }).show();
         });
+    },
+    generateQRCode: function generateQRCode(state, payload) {
+
+        var params = '';
+
+        for (var i = 0; i < state.selectedItemsIds.length; i++) {
+            params += 'id[]=' + state.selectedItemsIds[i] + '&';
+        }
+
+        //   reset
+        state.selectedItemsIds = [];
+
+        window.open(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/inventory/general/qrcode?' + params, '_blank');
     }
 });
 

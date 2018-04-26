@@ -2686,9 +2686,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
-//
-//
-//
 
 
 
@@ -4785,27 +4782,17 @@ var render = function() {
                     _vm._l(_vm.leaveSchedules, function(leave, index) {
                       return _c("tr", { staticClass: "filter-employee" }, [
                         _c("td", [
-                          _c(
-                            "div",
-                            { staticClass: "checkbox check-success " },
-                            [
-                              _c("input", {
-                                attrs: {
-                                  type: "checkbox",
-                                  id: "leave-cb-" + index
-                                },
-                                on: {
-                                  change: function($event) {
-                                    _vm.toggleLeaveCb(index, leave.id)
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c("label", {
-                                attrs: { for: "leave-cb-" + index }
-                              })
-                            ]
-                          )
+                          _c("input", {
+                            attrs: {
+                              type: "checkbox",
+                              id: "leave-cb-" + index
+                            },
+                            on: {
+                              change: function($event) {
+                                _vm.toggleLeaveCb(index, leave.id)
+                              }
+                            }
+                          })
                         ]),
                         _vm._v(" "),
                         _c("td", [_vm._v(_vm._s(leave.id))]),

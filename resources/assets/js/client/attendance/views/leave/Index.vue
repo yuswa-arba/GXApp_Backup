@@ -99,11 +99,8 @@
                             <tbody>
                             <tr v-for="(leave,index) in leaveSchedules" class="filter-employee">
                                 <td>
-                                    <div class="checkbox check-success ">
-                                        <input type="checkbox" :id="'leave-cb-'+index"
-                                               @change="toggleLeaveCb(index,leave.id)">
-                                        <label :for="'leave-cb-'+index"></label>
-                                    </div>
+                                    <input type="checkbox" :id="'leave-cb-'+index"
+                                           @change="toggleLeaveCb(index,leave.id)">
                                 </td>
                                 <td>{{leave.id}}</td>
                                 <td><b>{{leave.employeeName}}</b> ({{leave.employeeDivisionName}})</td>

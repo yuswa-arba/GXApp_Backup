@@ -18,6 +18,7 @@ export default {
             total_pages: '',
             links: []
         },
+        selectedItemsIds:[]
     },
     getters,
     mutations,

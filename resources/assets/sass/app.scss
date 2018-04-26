@@ -500,3 +500,8 @@ input[type='number'] {
 .infinite-status-prompt{ //hide status in vue-infinite-loading
   display: none;
 }
+
+.table > tbody > tr > td.td-small-center{
+  padding: 8px!important;
+  vertical-align: middle!important;
+}

@@ -1,7 +1,14 @@
 <template>
     <div class="row">
-        <div class="col-lg-7 m-t-30">
+        <div class="col-lg-5 m-t-30">
 
+        </div>
+        <div class="col-lg-2 m-t-30">
+            <button class="btn btn-success pull-right"
+                    v-if="selectedItemsIds.length>0"
+                    @click="generateQRCode()">
+                Generate <i class="fa fa-qrcode"></i>
+            </button>
         </div>
         <div class="col-lg-5 m-t-30">
             <div class="input-group pull-right" style="width:350px">
@@ -28,6 +35,12 @@
                                 <table class="table table-hover sortable">
                                     <thead class="bg-master-ligher">
                                     <tr>
+                                        <th style="width: 30px">
+                                            <div class="checkbox check-success ">
+                                                <input type="checkbox" id="all-item-cb" @change="checkAllItems()">
+                                                <label for="all-item-cb" class="fs-16"></label>
+                                            </div>
+                                        </th>
                                         <th>No.</th>
                                         <th>Quantity (Unit) </th>
                                         <th>Min. Stock &nbsp;&nbsp;<i class="fa fa-sort fs-16 text-black cursor"></i></th>
@@ -39,16 +52,23 @@
                                     </thead>
                                     <tbody>
                                     <tr v-for="(inventory,index) in generalInventories" class="filter-general-item">
-                                        <td>{{parseInt(index)+1}}</td>
-                                        <td><span class="text-black">{{inventory.quantity}}</span>
+                                        <td class="td-small-center">
+                                            <div class="checkbox check-success ">
+                                                <input type="checkbox" :id="'item-cb-'+index"
+                                                       @change="toggleItemCb(index,inventory.id)">
+                                                <label :for="'item-cb-'+index"></label>
+                                            </div>
+                                        </td>
+                                        <td class="td-small-center">{{parseInt(index)+1}}</td>
+                                        <td class="td-small-center"><span class="text-black">{{inventory.quantity}}</span>
                                             ({{inventory.unitFormat}})
                                         </td>
-                                        <td>{{inventory.minStock}}</td>
-                                        <td><span class="text-black">{{inventory.itemName}}</span> <br>({{inventory.itemCode}})
+                                        <td class="td-small-center">{{inventory.minStock}}</td>
+                                        <td class="td-small-center"><span class="text-black">{{inventory.itemName}}</span> <br>({{inventory.itemCode}})
                                         </td>
-                                        <td>{{inventory.serialNumber}}</td>
-                                        <td>{{inventory.itemCategory}}</td>
-                                        <td><span class="text-black">{{inventory.priceSale}}</span></td>
+                                        <td class="td-small-center">{{inventory.serialNumber}}</td>
+                                        <td class="td-small-center">{{inventory.itemCategory}}</td>
+                                        <td class="td-small-center"><span class="text-black">{{inventory.priceSale}}</span></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -94,7 +114,8 @@
         },
         computed: {
             ...mapState('generalInventory', {
-                generalInventories: 'generalInventories'
+                generalInventories: 'generalInventories',
+                selectedItemsIds:'selectedItemsIds'
             })
         },
         methods: {
@@ -178,6 +199,79 @@
                     })
                 }
 
+            },
+            toggleItemCb(index, itemId){
+
+                let self = this
+                let generalInventorVuexState = this.$store.state.generalInventory
+                let itemCb = $('#item-cb-' + index)
+
+                if (itemCb.prop('checked')) {
+
+                    generalInventorVuexState.selectedItemsIds.push(itemId)//push to array
+
+                } else {
+
+                    let itemIndex = _.findIndex(generalInventorVuexState.selectedItemsIds, (o) => { //get index of this item id
+                        return o == itemId
+                    })
+
+                    generalInventorVuexState.selectedItemsIds.splice(itemIndex, 1)//remove from array
+
+                    //unchecked all item cb
+                    $('#all-item-cb').prop('checked', false)
+                    
+                }
+
+            },
+            checkAllItems(){
+
+                let self = this
+                let generalInventoryVuexState = this.$store.state.generalInventory
+                let totalItemIds = generalInventoryVuexState.generalInventories.length + 1//total items
+                let allItemCb = $('#all-item-cb')
+
+                //reset the first time
+                generalInventoryVuexState.selectedItemsIds = []
+
+                if (allItemCb.prop('checked')) { // check all
+
+                    for (let i = 0; i < totalItemIds; i++) {
+
+                        let cb = $('#item-cb-' + i)
+                        cb.prop('checked', true)
+
+                        if (i < totalItemIds - 1) { // do not include the last one
+                            generalInventoryVuexState.selectedItemsIds.push(generalInventoryVuexState.generalInventories[i].id)
+                        }
+
+                    }
+
+                } else { //uncheck all
+
+                    for (let i = 0; i < totalItemIds; i++) {
+                        let cb = $('#item-cb-' + i)
+                        cb.prop('checked', false)
+                    }
+
+                    generalInventoryVuexState.selectedItemsIds = []
+
+                }
+            },
+            generateQRCode(){
+
+                let generalInventoryVuexState = this.$store.state.generalInventory
+                let totalItemIds = generalInventoryVuexState.generalInventories.length + 1//total items
+
+                this.$store.commit({
+                    type:'generalInventory/generateQRCode'
+                })
+
+                //uncheck all
+                for (let i = 0; i < totalItemIds; i++) {
+                    let cb = $('#item-cb-' + i)
+                    cb.prop('checked', false)
+                }
             }
         }
     }
