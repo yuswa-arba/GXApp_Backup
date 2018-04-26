@@ -9,6 +9,7 @@ use App\Attendance\Console\Commands\KioskBatteryChecker;
 use App\Attendance\Console\Commands\KioskLocalStorageChecker;
 use App\Components\Console\Commands\SendHeartbeat;
 use App\Salary\Console\Commands\SalaryConfirmationChecker;
+use App\Storage\Console\Commands\LatestItemPurchasedPriceChecker;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\App;
@@ -27,7 +28,8 @@ class Kernel extends ConsoleKernel
         \App\Salary\Console\Commands\SalaryConfirmationChecker::class,
         \App\Components\Console\Commands\SendHeartbeat::class,
         \App\Attendance\Console\Commands\KioskBatteryChecker::class,
-        \App\Attendance\Console\Commands\KioskLocalStorageChecker::class
+        \App\Attendance\Console\Commands\KioskLocalStorageChecker::class,
+        \App\Storage\Console\Commands\LatestItemPurchasedPriceChecker::class
     ];
 
     /**
@@ -40,7 +42,7 @@ class Kernel extends ConsoleKernel
     {
         $this->scheduleInDayCommands($schedule);
         $this->scheduleDailyCommands($schedule);
-//        $this->scheduleOnDayCommands($schedule);
+        $this->scheduleOnDayCommands($schedule);
         $this->scheduleYearlyCommands($schedule);
     }
 
@@ -64,7 +66,7 @@ class Kernel extends ConsoleKernel
 
     protected function scheduleOnDayCommands(Schedule $schedule)
     {
-//        $schedule->command('client:mail:send-bonus-notifications')->weekdays()->at('10:00');
+        $schedule->command(LatestItemPurchasedPriceChecker::class)->sundays()->at('01:00');
     }
 
     protected function scheduleYearlyCommands(Schedule $schedule)

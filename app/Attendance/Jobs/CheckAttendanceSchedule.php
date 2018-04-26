@@ -78,9 +78,7 @@ class CheckAttendanceSchedule implements ShouldQueue
                 AttendanceSchedule::updateOrCreate(['shiftId' => $shift->id], ['allowedToBreakOut' => 0]);
             }
 
-
         }
-
 
     }
 
