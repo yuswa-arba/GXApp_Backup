@@ -1,10 +1,16 @@
 <template>
     <div class="container-fluid container-fixed-lg">
         <div class="row">
-            <div class="col-lg-12 m-b-25">
+            <div class="col-lg-12 m-b-25" v-if="!showForm">
+                <button class="btn btn-primary pull-right" @click="showItemForm()">
+                    Create Item
+                </button>
+            </div>
+            <div class="col-lg-12 m-b-25" v-if="showForm">
                 <div class="widget-11-2 card no-border card-condensed no-margin widget-loader-circle align-self-stretch d-flex flex-column">
                     <div class="card-header">
                         <p class="card-title text-uppercase text-black" style="opacity: 1">Item Form</p>
+                        <i class="fa fa-times text-danger pull-right cursor fs-16" @click="hideItemForm()"></i>
                     </div>
                     <div class="card-block">
                         <div class="row" @keyup.enter="createItem()">
@@ -150,7 +156,7 @@
 
                             </div>
                         </div>
-                        <div class="scrollable">
+                        <div class="scrollable m-t-10">
                             <div class="" style="height:700px">
                                 <div class="table-responsive">
                                     <table class="table table-hover">
@@ -203,6 +209,8 @@
                                                         UNDELETE
                                                     </span>
                                                 </div>
+
+                                                <i class="fa fa-money cursor fs-16" @click="attemptEditPrice(item.id,index)"></i>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -221,25 +229,27 @@
                 </div>
             </div>
         </div>
+        <edit-item-price-modal></edit-item-price-modal>
     </div>
 </template>
 
 <script type="text/javascript">
-    import{get, post} from '../../helpers/api'
+    import {get, post} from '../../helpers/api'
     import {api_path} from '../../helpers/const'
     import {objectToFormData} from '../../helpers/utils'
+    import {mapState} from 'vuex'
     import InfiniteLoading from 'vue-infinite-loading';
+    import EditItemPriceModal from './components/items/EditItemPriceModal.vue'
     export default{
         components: {
             InfiniteLoading,
+            'edit-item-price-modal': EditItemPriceModal
         },
         data(){
             return {
-                items: [],
-                categories: [],
-                types: [],
-                units: [],
-                statuses: [],
+                sortStatusId: '',
+                sortCategoryCode: '',
+                sortTypeCode: '',
                 formObject: {
                     name: '',
                     unitId: '',
@@ -255,69 +265,30 @@
                     requiresTesting: 0,
                     photo: '',
                 },
-                paginationMeta: {
-                    count: '',
-                    current_page: '',
-                    links: [],
-                    per_page: '',
-                    total: '',
-                    total_pages: ''
-                },
-                sortStatusId: '',
-                sortCategoryCode: '',
-                sortTypeCode: ''
+                showForm: false
             }
         },
         created(){
             let self = this
 
-            //get categories list
-            get(api_path + 'storage/itemCategory/list')
-                .then((res) => {
-                    self.categories = res.data.categories.data
-                })
-
-            //get item types list
-            get(api_path + 'storage/itemType/list')
-                .then((res) => {
-                    self.types = res.data.types.data
-                })
-
-            //get units list
-            get(api_path + 'storage/unit/list')
-                .then((res) => {
-                    self.units = res.data.units.data
-                })
-
-            //get status list
-            get(api_path + 'storage/status/list')
-                .then((res) => {
-                    self.statuses = res.data.status.data
-                })
-
-            //get item list
-            //            get(api_path + 'storage/item/list')
-            //                .then((res) => {
-            //                    if (!res.data.isFailed) {
-            //                        if (res.data.items.data) {
-            //
-            //                            //insert items
-            //                            self.items = res.data.items.data
-            //
-            //                            //insert pagination
-            //                            self.paginationMeta = res.data.items.meta.pagination
-            //
-            //                        }
-            //                    }
-            //                })
-
+            this.$store.dispatch('items/getDataOnCreate')
+        },
+        computed: {
+            ...mapState('items', {
+                items: 'items',
+                categories: 'categories',
+                types: 'types',
+                units: 'units',
+                statuses: 'statuses'
+            })
         },
         methods: {
             infiniteHandler($state) { //getting item list data from server using vue-infinit-scroll
 
                 let self = this
+                let itemsVuexState = this.$store.state.items
 
-                if (self.paginationMeta.current_page >= self.paginationMeta.total_pages && self.paginationMeta.current_page != '') {
+                if (itemsVuexState.paginationMeta.current_page >= itemsVuexState.paginationMeta.total_pages && itemsVuexState.paginationMeta.current_page != '') {
 
                     $state.complete()
 
@@ -347,7 +318,7 @@
                     }
 
 
-                    let nextPage = self.paginationMeta.current_page + 1
+                    let nextPage = itemsVuexState.paginationMeta.current_page + 1
 
                     //get next page
                     get(api_path + 'storage/item/list?' + param + '&page=' + nextPage)
@@ -358,15 +329,15 @@
                                     //insert items
                                     let itemsData = res.data.items.data
                                     if (itemsData) {
-                                        self.items = self.items.concat(itemsData)
+                                        itemsVuexState.items = itemsVuexState.items.concat(itemsData)
                                     }
 
                                     //insert pagination
-                                    self.paginationMeta = res.data.items.meta.pagination
+                                    itemsVuexState.paginationMeta = res.data.items.meta.pagination
 
                                     $state.loaded();
 
-                                    if (self.items.length === self.paginationMeta.total) {
+                                    if (itemsVuexState.items.length === itemsVuexState.paginationMeta.total) {
                                         $state.complete()
                                     }
 
@@ -400,10 +371,11 @@
             changeFilter(){ // update data by sorted data , infiniteHandler() method will be called again
 
                 let self = this
+                let itemsVuexState = this.$store.state.items
 
-                self.items = []
+                itemsVuexState.items = []
 
-                self.paginationMeta = {
+                itemsVuexState.paginationMeta = {
                     count: '',
                     current_page: '',
                     links: [],
@@ -423,7 +395,7 @@
             },
             createItem(){
                 let self = this
-
+                let itemsVuexState = this.$store.state.items
                 if (
                     self.formObject.name &&
                     self.formObject.unitId &&
@@ -447,7 +419,7 @@
 
                                 //push to array
                                 if (res.data.item.data) {
-                                    self.items.push(res.data.item.data)
+                                    itemsVuexState.items.push(res.data.item.data)
                                 }
 
                                 //reset form
@@ -507,84 +479,58 @@
                 let self = this
                 if (id) {
                     if (confirm('Are you sure to delete this item?')) {
-                        post(api_path + 'storage/delete/item', {id: id})
-                            .then((res) => {
-                                if (!res.data.isFailed) {
-
-                                    $('.page-container').pgNotification({
-                                        style: 'flip',
-                                        message: res.data.message,
-                                        position: 'top-right',
-                                        timeout: 3500,
-                                        type: 'info'
-                                    }).show();
-
-                                    self.items[index].isDeleted = 1
-
-                                } else {
-                                    $('.page-container').pgNotification({
-                                        style: 'flip',
-                                        message: res.data.message,
-                                        position: 'top-right',
-                                        timeout: 3500,
-                                        type: 'danger'
-                                    }).show();
-                                }
-                            })
-                            .catch((err) => {
-                                $('.page-container').pgNotification({
-                                    style: 'flip',
-                                    message: err.message,
-                                    position: 'top-right',
-                                    timeout: 3500,
-                                    type: 'danger'
-                                }).show();
-                            })
+                        this.$store.commit({
+                            type: 'items/deleteItem',
+                            id: id,
+                            index: index
+                        })
                     }
                 }
             },
             undoDeleteItem(id, index){
                 let self = this
+
                 if (id) {
                     if (confirm('Undo delete this item?')) {
-                        post(api_path + 'storage/undoDelete/item', {id: id})
-                            .then((res) => {
-                                if (!res.data.isFailed) {
-
-                                    $('.page-container').pgNotification({
-                                        style: 'flip',
-                                        message: res.data.message,
-                                        position: 'top-right',
-                                        timeout: 3500,
-                                        type: 'info'
-                                    }).show();
-
-                                    self.items[index].isDeleted = 0
-
-                                } else {
-                                    $('.page-container').pgNotification({
-                                        style: 'flip',
-                                        message: res.data.message,
-                                        position: 'top-right',
-                                        timeout: 3500,
-                                        type: 'danger'
-                                    }).show();
-                                }
-                            })
-                            .catch((err) => {
-                                $('.page-container').pgNotification({
-                                    style: 'flip',
-                                    message: err.message,
-                                    position: 'top-right',
-                                    timeout: 3500,
-                                    type: 'danger'
-                                }).show();
-                            })
+                        this.$store.commit({
+                            type: 'items/undoDeleteItem',
+                            id: id,
+                            index: index
+                        })
                     }
                 }
             },
             viewImage(url){
                 window.open(url, '_blank')
+            },
+            showItemForm(){
+                this.showForm = true
+            },
+            hideItemForm(){
+                this.showForm = false
+            },
+            attemptEditPrice(id, index){
+
+
+                let self = this
+                let itemVuexState = this.$store.state.items
+
+                //reset
+                itemVuexState.selectedItem = {
+                    id:'',
+                    itemIndex:'',
+                    itemName: '',
+                    itemCode: '',
+                    sellingPrice: '',
+                    purchasedPrice: '',
+                    finePrice: ''
+                }
+
+                this.$store.dispatch({
+                    type: 'items/attemptEditPrice',
+                    id: id,
+                    index: index
+                })
             }
         }
     }

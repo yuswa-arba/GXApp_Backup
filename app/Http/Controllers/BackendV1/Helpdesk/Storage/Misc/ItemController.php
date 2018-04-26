@@ -8,6 +8,7 @@ use App\Storage\Logics\Item\GetItemListLogic;
 use App\Storage\Models\StorageItems;
 use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class ItemController extends Controller
@@ -113,7 +114,49 @@ class ItemController extends Controller
 
     }
 
+    public function editItemPrice(Request $request)
+    {
 
+        $response = array();
+
+        $validator = Validator::make($request->all(), ['id' => 'required']);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $item = StorageItems::find($request->id);
+
+        if ($item) {
+
+            $item->finePrice = $request->finePrice;
+            $item->latestSellingPrice = $request->sellingPrice;
+            $item->latestPurchasedPrice = $request->purchasedPrice;
+
+            if ($item->save()) {
+
+                $response['isFailed'] = false;
+                $response['message'] = 'Success';
+                return response()->json($response, 200);
+
+            } else {
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to save item';
+                return response()->json($response, 200);
+            }
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find item';
+            return response()->json($response, 200);
+        }
+
+
+    }
 
 
 }

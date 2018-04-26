@@ -4,11 +4,13 @@
 
 import Vue from 'vue'
 import MainItems from './MainItems.vue'
+import {store} from './vuex/items/store'
 
 const app =  new Vue({
     el:'#vc-storage-misc-items',
     template:`<main-items></main-items>`,
     components:{MainItems},
+    store
 })
 
 
