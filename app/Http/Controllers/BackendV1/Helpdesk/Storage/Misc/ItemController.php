@@ -114,6 +114,43 @@ class ItemController extends Controller
 
     }
 
+    public function updateItemStatus(Request $request)
+    {
+        $response = array();
+
+        $validator =Validator::make($request->all(),[
+            'id'=>'required',
+            'statusId'=>'required'
+        ]);
+
+        if ($validator->fails()) {
+            $response['isFailed'] = true;
+            $response['message'] = 'Missing required parameters';
+            return response()->json($response, 200);
+        }
+
+        //is valid
+
+        $updateStatus = StorageItems::where('id',$request->id)->update(['statusId'=>$request->statusId]);
+
+        if ($updateStatus) {
+
+            $response['isFailed'] = false;
+            $response['message'] = 'Success';
+
+            return response()->json($response, 200);
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to update item';
+
+            return response()->json($response, 200);
+        }
+
+
+
+    }
+
     public function editItemPrice(Request $request)
     {
 

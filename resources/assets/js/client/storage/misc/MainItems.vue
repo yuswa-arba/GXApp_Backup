@@ -188,7 +188,15 @@
                                             <td>{{item.unitFormat}}</td>
                                             <td>{{item.reminder1}},{{item.reminder2}}</td>
                                             <td>{{item.minimumStock}}</td>
-                                            <td>{{item.statusName}}</td>
+                                            <td>
+                                                <select class="form-control"
+                                                        v-model="item.statusId"
+                                                        style="height: 6px"
+                                                        :id="'select-status-item-'+item.id"
+                                                        @change="updateItemStatus(item.id,index)">
+                                                    <option :value="status.id" v-for="status in statuses">{{status.name}}</option>
+                                                </select>
+                                            </td>
                                             <td>
                                                 <div v-if="item.isDeleted==0">
                                                     <i class="fa fa-times text-danger cursor fs-16"
@@ -531,6 +539,18 @@
                     id: id,
                     index: index
                 })
+            },
+            updateItemStatus(id,index){
+
+                let statusId = $('#select-status-item-'+id).val()
+
+                this.$store.commit({
+                    type:'items/updateItemStatus',
+                    index:index,
+                    id:id,
+                    statusId:statusId
+                })
+
             }
         }
     }

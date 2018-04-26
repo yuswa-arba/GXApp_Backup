@@ -147,6 +147,43 @@ export default{
                 type: 'danger'
             }).show();
         })
+    },
+    updateItemStatus(state,payload){
+        post(api_path+'storage/updateStatus/item',{
+            id:payload.id,
+            statusId:payload.statusId
+        }).then((res)=>{
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                //edit items
+                state.items[payload.index].statusId = payload.statusId
+
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch((err)=>{
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        })
     }
 
 

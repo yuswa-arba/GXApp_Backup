@@ -68,6 +68,7 @@ Route::prefix('v1/h')->group(function () {
         Route::post('create/item', 'Misc\ItemController@createItem');
         Route::post('delete/item', 'Misc\ItemController@deleteItem');
         Route::post('undoDelete/item', 'Misc\ItemController@undoDeleteItem');
+        Route::post('updateStatus/item','Misc\ItemController@updateItemStatus');
 
         /*
         |--------------------------------------------------------------------------

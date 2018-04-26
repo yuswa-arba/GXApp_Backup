@@ -2708,6 +2708,14 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2988,6 +2996,17 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 type: 'items/attemptEditPrice',
                 id: id,
                 index: index
+            });
+        },
+        updateItemStatus: function updateItemStatus(id, index) {
+
+            var statusId = $('#select-status-item-' + id).val();
+
+            this.$store.commit({
+                type: 'items/updateItemStatus',
+                index: index,
+                id: id,
+                statusId: statusId
             });
         }
     }
@@ -5684,7 +5703,66 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("td", [_vm._v(_vm._s(item.minimumStock))]),
                                   _vm._v(" "),
-                                  _c("td", [_vm._v(_vm._s(item.statusName))]),
+                                  _c("td", [
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: item.statusId,
+                                            expression: "item.statusId"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        staticStyle: { height: "6px" },
+                                        attrs: {
+                                          id: "select-status-item-" + item.id
+                                        },
+                                        on: {
+                                          change: [
+                                            function($event) {
+                                              var $$selectedVal = Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function(o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function(o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                              _vm.$set(
+                                                item,
+                                                "statusId",
+                                                $event.target.multiple
+                                                  ? $$selectedVal
+                                                  : $$selectedVal[0]
+                                              )
+                                            },
+                                            function($event) {
+                                              _vm.updateItemStatus(
+                                                item.id,
+                                                index
+                                              )
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      _vm._l(_vm.statuses, function(status) {
+                                        return _c(
+                                          "option",
+                                          { domProps: { value: status.id } },
+                                          [_vm._v(_vm._s(status.name))]
+                                        )
+                                      })
+                                    )
+                                  ]),
                                   _vm._v(" "),
                                   _c("td", [
                                     item.isDeleted == 0
@@ -18285,6 +18363,42 @@ $(document).ready(function () {
 
                 //close modal
                 $('#modal-edit-item-price').modal('toggle');
+            } else {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    updateItemStatus: function updateItemStatus(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/updateStatus/item', {
+            id: payload.id,
+            statusId: payload.statusId
+        }).then(function (res) {
+            if (!res.data.isFailed) {
+
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                //edit items
+                state.items[payload.index].statusId = payload.statusId;
             } else {
                 $('.page-container').pgNotification({
                     style: 'flip',
