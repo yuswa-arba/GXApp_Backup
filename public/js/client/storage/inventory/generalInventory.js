@@ -2556,6 +2556,26 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2567,7 +2587,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
         InfiniteLoading: __WEBPACK_IMPORTED_MODULE_3_vue_infinite_loading___default.a
     },
     data: function data() {
-        return {};
+        return {
+            searchText: '',
+            currentSortType: 0
+        };
     },
     created: function created() {
         var self = this;
@@ -2636,6 +2659,24 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                         type: 'danger'
                     }).show();
                     $state.complete();
+                });
+            }
+        },
+        searchItem: function searchItem() {
+            var self = this;
+
+            this.$store.commit({
+                type: 'generalInventory/searchItems',
+                text: self.searchText
+            });
+        },
+        emptySearchItem: function emptySearchItem() {
+
+            var self = this;
+            if (self.searchText == '') {
+                this.$store.commit({
+                    type: 'generalInventory/searchItems',
+                    text: ''
                 });
             }
         }
@@ -4250,7 +4291,74 @@ var render = function() {
     "div",
     { staticClass: "row" },
     [
-      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-30 " }, [
+      _c("div", { staticClass: "col-lg-7 m-t-30" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-5 m-t-30" }, [
+        _c(
+          "div",
+          {
+            staticClass: "input-group pull-right",
+            staticStyle: { width: "350px" }
+          },
+          [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchText,
+                  expression: "searchText"
+                }
+              ],
+              staticClass: "form-control text-black",
+              staticStyle: { height: "40px" },
+              attrs: {
+                type: "text",
+                id: "search-general-item-box",
+                placeholder: "Search Item Code / Name / Categories "
+              },
+              domProps: { value: _vm.searchText },
+              on: {
+                keyup: [
+                  function($event) {
+                    _vm.emptySearchItem()
+                  },
+                  function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key)
+                    ) {
+                      return null
+                    }
+                    _vm.searchItem()
+                  }
+                ],
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.searchText = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "input-group-addon primary cursor",
+                on: {
+                  click: function($event) {
+                    _vm.searchItem()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-search cursor" })]
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-12 m-b-10 m-t-10 " }, [
         _c(
           "div",
           { staticClass: "card card-default card-bordered border-solid-grey" },
@@ -4259,7 +4367,7 @@ var render = function() {
               _c("div", { staticClass: "scrollable" }, [
                 _c("div", { staticStyle: { height: "700px" } }, [
                   _c("div", { staticClass: "talbe-responsive" }, [
-                    _c("table", { staticClass: "table table-hover" }, [
+                    _c("table", { staticClass: "table table-hover sortable" }, [
                       _vm._m(0),
                       _vm._v(" "),
                       _c(
@@ -4268,23 +4376,53 @@ var render = function() {
                           inventory,
                           index
                         ) {
-                          return _c("tr", [
-                            _c("td", [_vm._v(_vm._s(parseInt(index) + 1))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(inventory.quantity))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(inventory.unitFormat))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(inventory.minStock))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(inventory.itemCode))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(inventory.itemName))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(inventory.itemCategory))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(inventory.priceSale))])
-                          ])
+                          return _c(
+                            "tr",
+                            { staticClass: "filter-general-item" },
+                            [
+                              _c("td", [_vm._v(_vm._s(parseInt(index) + 1))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("span", { staticClass: "text-black" }, [
+                                  _vm._v(_vm._s(inventory.quantity))
+                                ]),
+                                _vm._v(
+                                  "\n                                        (" +
+                                    _vm._s(inventory.unitFormat) +
+                                    ")\n                                    "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(inventory.minStock))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("span", { staticClass: "text-black" }, [
+                                  _vm._v(_vm._s(inventory.itemName))
+                                ]),
+                                _vm._v(" "),
+                                _c("br"),
+                                _vm._v(
+                                  "(" +
+                                    _vm._s(inventory.itemCode) +
+                                    ")\n                                    "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(inventory.serialNumber))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(inventory.itemCategory))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c("span", { staticClass: "text-black" }, [
+                                  _vm._v(_vm._s(inventory.priceSale))
+                                ])
+                              ])
+                            ]
+                          )
                         })
                       )
                     ])
@@ -4319,17 +4457,24 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", [_vm._v("No.")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Quantity")]),
+        _c("th", [_vm._v("Quantity (Unit) ")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Unit")]),
+        _c("th", [
+          _vm._v("Min. Stock   "),
+          _c("i", { staticClass: "fa fa-sort fs-16 text-black cursor" })
+        ]),
         _vm._v(" "),
-        _c("th", [_vm._v("Min. Stock")]),
+        _c("th", [
+          _vm._v("Name (Code)   "),
+          _c("i", { staticClass: "fa fa-sort fs-16 text-black cursor" })
+        ]),
         _vm._v(" "),
-        _c("th", [_vm._v("Item Code")]),
+        _c("th", [_vm._v("SN")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Category")]),
+        _c("th", [
+          _vm._v("Category   "),
+          _c("i", { staticClass: "fa fa-sort fs-16 text-black cursor" })
+        ]),
         _vm._v(" "),
         _c("th", [_vm._v("Price")])
       ])
@@ -18852,7 +18997,14 @@ var app = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     store: __WEBPACK_IMPORTED_MODULE_3__vuex_generalInventory_store__["a" /* store */]
 });
 
-$(document).ready(function () {});
+$(document).ready(function () {
+
+    // $('.filter-container').sieve({
+    //     searchInput: $('#search-general-item-box'),
+    //     itemSelector: ".filter-general-item"
+    // });
+
+});
 
 /***/ }),
 
@@ -19019,10 +19171,55 @@ module.exports = Component.exports
     getGeneralInventoryList: function getGeneralInventoryList(state, payload) {
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/inventory/general/list').then(function (res) {
             if (!res.data.isFailed) {
-                if (res.data.generalInventory.data.length > 0) {
-                    state.generalInventories = res.data.generalInventory.data;
+                if (res.data.generalInventory.data) {
+
+                    state.generalInventories = [];
+
+                    //insert generalInventory
+                    var generalInventoryData = res.data.generalInventory.data;
+                    if (generalInventoryData) {
+                        state.generalInventories = state.generalInventories.concat(generalInventoryData);
+                    }
+
+                    //insert pagination
+                    state.paginationMeta = res.data.generalInventory.meta.pagination;
                 }
             }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
+        });
+    },
+    searchItems: function searchItems(state, payload) {
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/inventory/general/search?v=' + payload.text).then(function (res) {
+            if (!res.data.isFailed) {
+                if (res.data.generalInventory.data) {
+
+                    state.generalInventories = [];
+
+                    //insert generalInventory
+                    var generalInventoryData = res.data.generalInventory.data;
+                    if (generalInventoryData) {
+                        state.generalInventories = state.generalInventories.concat(generalInventoryData);
+                    }
+
+                    //insert pagination
+                    state.paginationMeta = res.data.generalInventory.meta.pagination;
+                }
+            }
+        }).catch(function (err) {
+            $('.page-container').pgNotification({
+                style: 'flip',
+                message: err.message,
+                position: 'top-right',
+                timeout: 3500,
+                type: 'danger'
+            }).show();
         });
     }
 });

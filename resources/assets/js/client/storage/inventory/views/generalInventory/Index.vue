@@ -1,34 +1,54 @@
 <template>
     <div class="row">
-        <div class="col-lg-12 m-b-10 m-t-30 ">
+        <div class="col-lg-7 m-t-30">
+
+        </div>
+        <div class="col-lg-5 m-t-30">
+            <div class="input-group pull-right" style="width:350px">
+                <input type="text" style="height: 40px;"
+                       id="search-general-item-box"
+                       class="form-control text-black"
+                       @keyup="emptySearchItem()"
+                       @keyup.enter="searchItem()"
+                       v-model="searchText"
+                       placeholder="Search Item Code / Name / Categories ">
+
+                <span class="input-group-addon primary cursor"
+                      @click="searchItem()">
+                    <i class="fa fa-search cursor"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-lg-12 m-b-10 m-t-10 ">
             <div class="card card-default card-bordered border-solid-grey">
                 <div class="card-block">
                     <div class="scrollable">
                         <div style="height: 700px;">
                             <div class="talbe-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-hover sortable">
                                     <thead class="bg-master-ligher">
                                     <tr>
                                         <th>No.</th>
-                                        <th>Quantity</th>
-                                        <th>Unit</th>
-                                        <th>Min. Stock</th>
-                                        <th>Item Code</th>
-                                        <th>Name</th>
-                                        <th>Category</th>
+                                        <th>Quantity (Unit) </th>
+                                        <th>Min. Stock &nbsp;&nbsp;<i class="fa fa-sort fs-16 text-black cursor"></i></th>
+                                        <th>Name (Code) &nbsp;&nbsp;<i class="fa fa-sort fs-16 text-black cursor"></i></th>
+                                        <th>SN</th>
+                                        <th>Category &nbsp;&nbsp;<i class="fa fa-sort fs-16 text-black cursor"></i></th>
                                         <th>Price</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr v-for="(inventory,index) in generalInventories">
+                                    <tr v-for="(inventory,index) in generalInventories" class="filter-general-item">
                                         <td>{{parseInt(index)+1}}</td>
-                                        <td>{{inventory.quantity}}</td>
-                                        <td>{{inventory.unitFormat}}</td>
+                                        <td><span class="text-black">{{inventory.quantity}}</span>
+                                            ({{inventory.unitFormat}})
+                                        </td>
                                         <td>{{inventory.minStock}}</td>
-                                        <td>{{inventory.itemCode}}</td>
-                                        <td>{{inventory.itemName}}</td>
+                                        <td><span class="text-black">{{inventory.itemName}}</span> <br>({{inventory.itemCode}})
+                                        </td>
+                                        <td>{{inventory.serialNumber}}</td>
                                         <td>{{inventory.itemCategory}}</td>
-                                        <td>{{inventory.priceSale}}</td>
+                                        <td><span class="text-black">{{inventory.priceSale}}</span></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -59,7 +79,10 @@
             InfiniteLoading,
         },
         data(){
-            return {}
+            return {
+                searchText: '',
+                currentSortType: 0
+            }
         },
         created(){
             let self = this
@@ -70,8 +93,8 @@
 
         },
         computed: {
-            ...mapState('generalInventory',{
-                generalInventories:'generalInventories'
+            ...mapState('generalInventory', {
+                generalInventories: 'generalInventories'
             })
         },
         methods: {
@@ -135,7 +158,25 @@
                             $state.complete()
                         })
                 }
+            },
+            searchItem(){
+                let self = this
 
+                this.$store.commit({
+                    type: 'generalInventory/searchItems',
+                    text: self.searchText
+                })
+
+            },
+            emptySearchItem(){
+
+                let self = this
+                if (self.searchText == '') {
+                    this.$store.commit({
+                        type: 'generalInventory/searchItems',
+                        text: ''
+                    })
+                }
 
             }
         }

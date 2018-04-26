@@ -205,9 +205,6 @@ class PurchaseOrderController extends Controller
 
         if ($employee && $employee->hasResigned != 1) {
 
-
-            $purchaseOrders = StoragePurchaseOrders::orderBy('id', 'desc')->paginate(30); // default get all
-
             if ($request->v != '' && $request->v != null) {
 
                 $search = $request->v;
@@ -224,6 +221,8 @@ class PurchaseOrderController extends Controller
                         })->orWhere('date', 'like', '%' . $search . '%');//date
 
                 })->orderBy('id', 'desc')->paginate(30); // default get all
+            } else {
+                $purchaseOrders = StoragePurchaseOrders::orderBy('id', 'desc')->paginate(30); // default get all
             }
 
 

@@ -50,6 +50,7 @@ mix.copy([
         'resources/assets/plugins/jquery.sieve.min.js',
         'resources/assets/plugins/google-palette/palette.js',
         'resources/assets/plugins/accounting.min.js',
+        'resources/assets/plugins/sorttable.js',
     ], 'public/plugins/js/');
 
 

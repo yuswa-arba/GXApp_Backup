@@ -6,6 +6,7 @@
 
 @push('child-scripts-plugins')
 <!-- push needed plugins for this page -->
+<script src="{{asset('plugins/js/sorttable.js')}}"></script>
 @endpush
 
 @push('child-page-controller')

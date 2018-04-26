@@ -9,10 +9,58 @@ export default{
         get(api_path + 'storage/inventory/general/list')
             .then((res) => {
                 if (!res.data.isFailed) {
-                    if(res.data.generalInventory.data.length>0){
-                        state.generalInventories = res.data.generalInventory.data
+                    if (res.data.generalInventory.data) {
+
+                        state.generalInventories = []
+
+                        //insert generalInventory
+                        let generalInventoryData = res.data.generalInventory.data
+                        if (generalInventoryData) {
+                            state.generalInventories = state.generalInventories.concat(generalInventoryData)
+                        }
+
+                        //insert pagination
+                        state.paginationMeta = res.data.generalInventory.meta.pagination
                     }
                 }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
+            })
+    },
+    searchItems(state, payload){
+        get(api_path + 'storage/inventory/general/search?v=' + payload.text)
+            .then((res) => {
+                if (!res.data.isFailed) {
+                    if (res.data.generalInventory.data) {
+
+                        state.generalInventories = []
+
+                        //insert generalInventory
+                        let generalInventoryData = res.data.generalInventory.data
+                        if (generalInventoryData) {
+                            state.generalInventories = state.generalInventories.concat(generalInventoryData)
+                        }
+
+                        //insert pagination
+                        state.paginationMeta = res.data.generalInventory.meta.pagination
+                    }
+                }
+            })
+            .catch((err) => {
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: err.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'danger'
+                }).show();
             })
     }
 }

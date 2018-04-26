@@ -39,14 +39,19 @@ class UpdateLatestItemPrice implements ShouldQueue
 
         foreach ($storageItems as $storageItem){
 
-            $purchasedOrderItem = StoragePurchaseOrderItems::where('itemId',$storageItem->id)
-                ->orderBy('id','desc')->first();
+            try{
+                $purchasedOrderItem = StoragePurchaseOrderItems::where('itemId',$storageItem->id)
+                    ->orderBy('id','desc')->first();
 
-            if($purchasedOrderItem){
-                $storageItem->latestPurchasedPrice = $purchasedOrderItem->pricePurchased;
-                $storageItem->latestSellingPrice = $purchasedOrderItem->pricePurchased * 200 /100;
-                $storageItem->save();
+                if($purchasedOrderItem){
+                    $storageItem->latestPurchasedPrice = $purchasedOrderItem->pricePurchased;
+                    $storageItem->latestSellingPrice = $purchasedOrderItem->pricePurchased * 200 /100;
+                    $storageItem->save();
+                }
+            } catch (\Exception $exception){
+                //do nothing
             }
+
         }
 
 

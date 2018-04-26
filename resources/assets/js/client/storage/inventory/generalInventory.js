@@ -18,5 +18,10 @@ const app =  new Vue({
 
 $(document).ready(function(){
 
+    // $('.filter-container').sieve({
+    //     searchInput: $('#search-general-item-box'),
+    //     itemSelector: ".filter-general-item"
+    // });
+
 });
 

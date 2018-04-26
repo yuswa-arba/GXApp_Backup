@@ -152,6 +152,8 @@ Route::prefix('v1/h')->group(function () {
         Route::get('inventory/purchaseOrder/detail', 'Inventory\InsertToInventoryController@purchaseOrderInventoryDetail');
         Route::post('inventory/entry', 'Inventory\InsertToInventoryController@entry');
         Route::get('inventory/general/list','Inventory\GeneralInventoryController@getList');
+        Route::get('inventory/general/search','Inventory\GeneralInventoryController@search');
+        Route::get('inventory/general/sort','Inventory\GeneralInventoryController@sortItems');
 
     });
 });
