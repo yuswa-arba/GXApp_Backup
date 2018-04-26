@@ -63,7 +63,6 @@ class PurchaseOrderController extends Controller
         $user = Auth::user(); //user data
         $employee = $user->employee; // user's employee data
 
-
         if ($employee && $employee->hasResigned != 1) {
 
             return CreatePurchaseOrderLogic::create($request);

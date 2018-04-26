@@ -111,7 +111,19 @@ class CreatePurchaseOrderLogic extends CreateUseCase
                     ]);
 
                     if ($insert) {
-                        //do nothing
+                        // update storage item prices
+                        try{
+                            $storageItem = StorageItems::find($insert->itemId);
+                            if ($storageItem) {
+                                $storageItem->latestPurchasedPrice = $insert->pricePurchased;
+                                $storageItem->latestSellingPrice = (float)$insert->pricePurchased * 200 / 100; // selling price  = price purchased * 200%
+                                $storageItem->save();
+                            }
+                        } catch (\Exception $exception){
+                            //do nothing
+                            Log::info('exception: '. $exception);
+                        }
+
                     } else {
                         // set an error occurred to true
                         $insertItemError = true;
@@ -144,11 +156,11 @@ class CreatePurchaseOrderLogic extends CreateUseCase
                             NotifyRequestTracking::dispatch(
                                 $requisition->id, //requisition ID
                                 Auth::user(), //user sender
-                                'Your request is being processed #'.$requisition->requisitionNumber, //message
+                                'Your request is being processed #' . $requisition->requisitionNumber, //message
                                 url('storage/requisition/history') //url to click
-                                )
-                                                ->onConnection('database')
-                                                ->onQueue('broadcaster');
+                            )
+                                ->onConnection('database')
+                                ->onQueue('broadcaster');
 
                         }
                     }
