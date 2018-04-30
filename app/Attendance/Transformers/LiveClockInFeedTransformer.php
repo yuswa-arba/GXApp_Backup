@@ -46,6 +46,9 @@ class LiveClockInFeedTransformer extends TransformerAbstract
             case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL']:
                 return "Web Portal";
                 break;
+            case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_FINGERSPOT']:
+                return "Fingerspot";
+                break;
             default:
                 return "";
                 break;
@@ -64,7 +67,7 @@ class LiveClockInFeedTransformer extends TransformerAbstract
             case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL']:
                 return "Browser: " . $timesheet->clockInBrowser . '(' . $timesheet->clockInIpAddress . ')';
                 break;
-            default:
+            default:  return "";
                 break;
         }
     }
@@ -77,6 +80,7 @@ class LiveClockInFeedTransformer extends TransformerAbstract
             if ($clockInAt->gt($shiftWorkStartAt)) {
                 return true;
             }
+            return false;
         } else {
             return false;
         }

@@ -59,6 +59,7 @@ class MainController extends Controller
             $formRequest['cViaTypeId'] = $request->cViaTypeId;
             $formRequest['punchType'] = $punchType;
             $formRequest['shiftId'] = $checkAvailability['shiftId']; // get shift ID from $checkAvailability response
+            $formRequest['isOvernight'] = $checkAvailability['isOvernight'];
 
             if ($request->cViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK']) { //by kiosk
 

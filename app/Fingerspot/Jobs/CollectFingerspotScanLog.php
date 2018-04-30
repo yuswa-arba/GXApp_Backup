@@ -26,7 +26,7 @@ class CollectFingerspotScanLog implements ShouldQueue
     }
 
     /**
-     * repeat slot maker execution each year
+     * repeat slot maker execution each year8
      */
     public function handle()
     {

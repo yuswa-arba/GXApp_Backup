@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Attendance\Models\AttendanceSchedule;
+use App\Fingerspot\Model\FingerspotDevice;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -102,13 +104,60 @@ Route::prefix('testing')->group(function () {
 
     Route::get('num',function(){
 
-//        $num = 120;
-//        $leadingNum = 4;
-//        $format = "%0".$leadingNum."d";
-//        $num_padded = sprintf($format, $num);
-//        echo $num_padded; // returns 04
+        $device = FingerspotDevice::find(1);
+        if ($device) {
+            $sn = "sn=" . $device->device_sn;
+            $port = $device->server_port;
+            $url = $device->server_ip . "/user/set";
 
-        echo str_pad(23, 4, '0', STR_PAD_LEFT);
+            $temp = '[{"pin":"' . '180201007' . '","idx":"' . '0' .
+                '","alg_ver":"' . '39' . '","template":"' . '' . '"}]';
+
+            $temp =  str_replace("+", "%2B", $temp);
+
+            $param = array(
+                'sn' => $device->device_sn,
+                'PIN' => '180201007',
+                'nama' => 'Budi' . ' ' . 'abc',
+                'pwd'=>0,
+                'rfid'=>0,
+                'priv'=>0,
+            );
+
+            // add empty t
+            $param =  http_build_query($param).'&tmp='.$temp;
+
+//            $output = $this->sendRequest($url, $port, http_build_query($param));
+
+            $curl = curl_init();
+            set_time_limit(0);
+            curl_setopt_array($curl, array(
+                    CURLOPT_PORT => $port,
+                    CURLOPT_URL => "http://" . $url,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "POST",
+                    CURLOPT_POSTFIELDS => $param,
+                    CURLOPT_HTTPHEADER => array(
+                        "cache-control: no-cache",
+                        "content-type: application/x-www-form-urlencoded"
+                    ),
+                )
+            );
+            $response = curl_exec($curl);
+            $err = curl_error($curl);
+            curl_close($curl);
+
+            if ($err) {
+                $response = ("Error #:" . $err);
+            }
+
+            return $response;
+
+        }
 
     });
 

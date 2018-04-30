@@ -100,22 +100,43 @@ class AttendanceLogic extends AttendanceUseCase
 
         } else {
 
-            /* Save to where the employee clocked in else create a new one */
-            $insert = AttendanceTimesheet::updateOrCreate(
-                [
-                    'employeeId' => $formRequest['employeeId'],
-                    'clockInDate' => $formRequest['cDate'],
-                ],
-                [
-                    'clockOutDate' => $formRequest['cDate'],
-                    'shiftId' => $formRequest['shiftId'],
-                    'clockOutTime' => $formRequest['cTime'],
-                    'clockOutViaTypeId' => $formRequest['cViaTypeId'],
-                    'clockOutKioskId' => $formRequest['cKioskId'],
-                    'employeePhotoClockOut' => $formRequest['employeePhotoClockOut'],
-                    'attendanceApproveId' => $formRequest['attendanceApproveId']
-                ]
-            );
+            if($formRequest['isOvernight']){
+                /* Save to where the employee clocked in else create a new one */
+                $insert = AttendanceTimesheet::updateOrCreate(
+                    [
+                        'employeeId' => $formRequest['employeeId'],
+                        'clockInDate' => Carbon::now()->subDay()->format('d/m/Y'), //get yesterday date
+                    ],
+                    [
+                        'clockOutDate' => $formRequest['cDate'],
+                        'shiftId' => $formRequest['shiftId'],
+                        'clockOutTime' => $formRequest['cTime'],
+                        'clockOutViaTypeId' => $formRequest['cViaTypeId'],
+                        'clockOutKioskId' => $formRequest['cKioskId'],
+                        'employeePhotoClockOut' => $formRequest['employeePhotoClockOut'],
+                        'attendanceApproveId' => $formRequest['attendanceApproveId']
+                    ]
+                );
+            } else{
+                /* Save to where the employee clocked in else create a new one */
+                $insert = AttendanceTimesheet::updateOrCreate(
+                    [
+                        'employeeId' => $formRequest['employeeId'],
+                        'clockInDate' => $formRequest['cDate'],
+                    ],
+                    [
+                        'clockOutDate' => $formRequest['cDate'],
+                        'shiftId' => $formRequest['shiftId'],
+                        'clockOutTime' => $formRequest['cTime'],
+                        'clockOutViaTypeId' => $formRequest['cViaTypeId'],
+                        'clockOutKioskId' => $formRequest['cKioskId'],
+                        'employeePhotoClockOut' => $formRequest['employeePhotoClockOut'],
+                        'attendanceApproveId' => $formRequest['attendanceApproveId']
+                    ]
+                );
+            }
+
+
 
             $response = array();
             if ($insert) {
@@ -233,20 +254,20 @@ class AttendanceLogic extends AttendanceUseCase
                 $parsedFromDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->fromDate);
                 $parsedToDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->toDate);
 
-                if ($paidLeaveSchedule->isStreakPaidLeave || $paidLeaveSchedule->totalDays>0) {
+                if ($paidLeaveSchedule->isStreakPaidLeave || $paidLeaveSchedule->totalDays > 0) {
                     $today = Carbon::now();
                     if ($today->gte($parsedFromDate) && $today->lte($parsedToDate)) {
                         $isPaidLeaveExist = true;
                     }
                 } else {
-                    if($paidLeaveSchedule->fromDate==Carbon::now()->format('d/m/Y')){
+                    if ($paidLeaveSchedule->fromDate == Carbon::now()->format('d/m/Y')) {
                         $isPaidLeaveExist = true;
                     }
                 }
 
             }
 
-            if($isPaidLeaveExist){
+            if ($isPaidLeaveExist) {
                 // return error response
                 $response['isFailed'] = true;
                 $response['code'] = ResponseCodes::$ATTD_ERR_CODES['IS_YOUR_PAID_LEAVE'];
@@ -271,6 +292,7 @@ class AttendanceLogic extends AttendanceUseCase
                     $response['message'] = 'Allowed to Clock-In';
                     $response['isAllowed'] = $attdSchedule->allowedToCheckIn;
                     $response['shiftId'] = $shiftId;
+                    $response['isOvernight'] = Shifts::find($shiftId)->isOvernight;
                     return $response;
 
 
@@ -282,6 +304,8 @@ class AttendanceLogic extends AttendanceUseCase
                     $response['message'] = 'Not allowed to Clock-In yet until ' . $timeAvailable;
                     $response['isAllowed'] = $attdSchedule->allowedToCheckIn;
                     $response['shiftId'] = $shiftId;
+                    $response['isOvernight'] = Shifts::find($shiftId)->isOvernight;
+
                     return $response;
 
                 }
@@ -299,6 +323,8 @@ class AttendanceLogic extends AttendanceUseCase
                     $response['message'] = 'Allowed to Clock-Out';
                     $response['isAllowed'] = 1;
                     $response['shiftId'] = $shiftId;
+                    $response['isOvernight'] = Shifts::find($shiftId)->isOvernight;
+
                     return $response;
 
                 } else { // not allowed, check attendance schedule
@@ -310,6 +336,8 @@ class AttendanceLogic extends AttendanceUseCase
                         $response['message'] = 'Allowed to Clock-Out';
                         $response['isAllowed'] = $attdSchedule->allowedToCheckOut;
                         $response['shiftId'] = $shiftId;
+                        $response['isOvernight'] = Shifts::find($shiftId)->isOvernight;
+
                         return $response;
 
                     } else {
@@ -320,6 +348,8 @@ class AttendanceLogic extends AttendanceUseCase
                         $response['message'] = 'Not allowed to Clock-Out yet until ' . $timeAvailable;
                         $response['isAllowed'] = $attdSchedule->allowedToCheckOut;
                         $response['shiftId'] = $shiftId;
+                        $response['isOvernight'] = Shifts::find($shiftId)->isOvernight;
+
                         return $response;
 
                     }

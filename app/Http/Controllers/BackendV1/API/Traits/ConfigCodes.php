@@ -14,7 +14,8 @@ class ConfigCodes
     public static $CLOCK_VIA_TYPE_ID = [
         'BY_KIOSK' => 1,
         'BY_PERSONAL_DEVICE' => 2,
-        'BY_WEB_PORTAL' => 3
+        'BY_WEB_PORTAL' => 3,
+        'BY_FINGERSPOT'=>4
     ];
 
     public static $SUM_TYPE = [

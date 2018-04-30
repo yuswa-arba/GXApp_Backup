@@ -103,6 +103,13 @@ trait AttendanceCheckerUtil
                     if ($cOutViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL']) {
                         // TODO: Validation by this type
                     }
+
+                    if ($cInViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_FINGERSPOT']) {
+                        // TODO: Validation by this type
+                    }
+                    if ($cOutViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_FINGERSPOT']) {
+                        // TODO: Validation by this type
+                    }
                 } else {
                     $timesheet->attendanceValidationId = 12; // Clocking Not Completed
                     $isValid = 0;
@@ -203,6 +210,14 @@ trait AttendanceCheckerUtil
                 if ($cOutViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL']) {
                     // TODO: Validation by this type
                 }
+
+                if ($cInViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_FINGERSPOT']) {
+                    // TODO: Validation by this type
+                }
+                if ($cOutViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_FINGERSPOT']) {
+                    // TODO: Validation by this type
+                }
+
             } else {
                 $timesheet->attendanceValidationId = 12; // Clocking Not Completed
                 $isValid = 0;
@@ -229,6 +244,7 @@ trait AttendanceCheckerUtil
             if ($timesheet->attendanceApproveId != 1 && // Microsoft Face API
                 $timesheet->attendanceApproveId != 2 && // Manager Approved
                 $timesheet->attendanceApproveId != 3 && // Edited by Manager
+                $timesheet->attendanceApproveId != 4 && // Fingerspot
                 $timesheet->attendanceApproveId != 98   // Disapproved
             ) {
                 $timesheet->attendanceApproveId = 99; // Need Approval

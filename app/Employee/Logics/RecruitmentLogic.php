@@ -9,12 +9,15 @@ use App\Employee\Models\EmployeeDataVerification;
 use App\Employee\Models\EmployeeMedicalRecords;
 use App\Employee\Models\EmployeeSiblings;
 use App\Employee\Models\Employment;
+use App\Employee\Models\FingerspotUser;
 use App\Employee\Models\MasterEmployee;
 use App\FaceAPI\Logics\CreatePersonLogic;
+use App\Fingerspot\Model\FingerspotDevice;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Traits\GlobalUtils;
 use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Log;
+use Karlmonson\Ping\Facades\Ping;
 
 class RecruitmentLogic extends RecruitmentUseCase
 {
@@ -109,16 +112,16 @@ class RecruitmentLogic extends RecruitmentUseCase
         /* Register face to Microsoft Face API to be used in attendance*/
         if (file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']) . $employee->employeePhoto)) {
 
-            try{
+            try {
                 CreatePersonLogic::create(
                     [
-                        'employeeId'=>$employee->id,
+                        'employeeId' => $employee->id,
                         'employeeFullName' => $employee->givenName . ' ' . $employee->surname,
                         'filename' => $employee->employeePhoto
                     ]
                 );
-            } catch (\Exception $exception){
-               Log::info($exception->getMessage());
+            } catch (\Exception $exception) {
+                Log::info($exception->getMessage());
             }
 
         }
@@ -181,6 +184,7 @@ class RecruitmentLogic extends RecruitmentUseCase
         if ($employment->employee) {
 
             $this->updateEmployeeNoBasedOnBranch($employment);
+            $this->uploadEmployeeToFingerspot($employment->employee);
             $this->generateUserLogin($employment->employee);
 
             /* Return success response */
@@ -210,7 +214,7 @@ class RecruitmentLogic extends RecruitmentUseCase
         $employee = MasterEmployee::find($employment->employee->id);
 
         //format : 17021201001 = ({date of entry : yymmdd}{branch code no}{order no})
-        $employee->employeeNo = $this->convertDateDDMMYYYYtoYMD($employment->dateOfEntry)
+        $employee->employeeNo = $this->convertDateDDMMYYYYtoYM($employment->dateOfEntry)
             . $employment->branchOffice->codeNo
             . $this->zeroPrefix(count(MasterEmployee::all()), 3);
 
@@ -233,6 +237,99 @@ class RecruitmentLogic extends RecruitmentUseCase
         event(new UserGenerated($user, $firstPassword)); // trigger event to send email
 
         return $this;
+    }
+
+    private function uploadEmployeeToFingerspot($employee)
+    {
+        try {
+
+            if ($employee->employeeNo != null && $employee->employeeNo != '') {
+
+                $create = FingerspotUser::updateOrCreate(
+                    [
+                        'employeeId' => $employee->id,
+                    ],
+                    [
+                        'fingerspotUserId' => $employee->employeeNo
+                    ]
+                );
+
+                if ($create) {
+                    $device = FingerspotDevice::find(1);
+                    if ($device) {
+
+                        $health = Ping::check($device->server_ip); // check ping connection
+                        if ($health == 200) {
+
+                            $port = $device->server_port;
+                            $url = $device->server_ip . "/user/set";
+
+                            // 0  is default idx from fingerspot
+                            // 39 is default alg_ver from fingerspot
+                            $temp = '[{"pin":"' . $employee->employeeNo . '","idx":"' . '0' .
+                                '","alg_ver":"' . '39' . '","template":"' . '' . '"}]';
+
+                            $temp = str_replace("+", "%2B", $temp);
+
+                            $param = array(
+                                'sn' => $device->device_sn,
+                                'PIN' => $employee->employeeNo,
+                                'nama' => $employee->givenName . ' ' . $employee->surname,
+                                'pwd' => 0,
+                                'rfid' => 0,
+                                'priv' => 0,
+                            );
+
+                            // add empty t
+                            $param = http_build_query($param) . '&tmp=' . $temp;
+
+                            $output = $this->sendRequest($url, $port, $param);
+
+                            Log::info($output);
+                        }
+
+                    }
+
+                }
+            }
+
+
+        } catch (\Exception $exception) {
+            //do nothing
+        }
+
+        return $this;
+    }
+
+    private function sendRequest($url, $port, $parameter)
+    {
+        $curl = curl_init();
+        set_time_limit(0);
+        curl_setopt_array($curl, array(
+                CURLOPT_PORT => $port,
+                CURLOPT_URL => "http://" . $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+                CURLOPT_POSTFIELDS => $parameter,
+                CURLOPT_HTTPHEADER => array(
+                    "cache-control: no-cache",
+                    "content-type: application/x-www-form-urlencoded"
+                ),
+            )
+        );
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        curl_close($curl);
+
+        if ($err) {
+            $response = ("Error #:" . $err);
+        }
+
+        return $response;
     }
 
 

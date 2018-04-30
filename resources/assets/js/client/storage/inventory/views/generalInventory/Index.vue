@@ -1,14 +1,14 @@
 <template>
     <div class="row">
-        <div class="col-lg-5 m-t-30">
-
-        </div>
         <div class="col-lg-2 m-t-30">
-            <button class="btn btn-success pull-right"
+            <button class="btn btn-success"
                     v-if="selectedItemsIds.length>0"
                     @click="generateQRCode()">
-                Generate <i class="fa fa-qrcode"></i>
+                Generate <i class="fa fa-qrcode fs-16"></i>
             </button>
+        </div>
+        <div class="col-lg-5 m-t-30">
+
         </div>
         <div class="col-lg-5 m-t-30">
             <div class="input-group pull-right" style="width:350px">
@@ -26,6 +26,7 @@
                 </span>
             </div>
         </div>
+
         <div class="col-lg-12 m-b-10 m-t-10 ">
             <div class="card card-default card-bordered border-solid-grey">
                 <div class="card-block">
@@ -272,6 +273,9 @@
                     let cb = $('#item-cb-' + i)
                     cb.prop('checked', false)
                 }
+
+                //unchecked all item cb
+                $('#all-item-cb').prop('checked', false)
             }
         }
     }

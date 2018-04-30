@@ -14,7 +14,7 @@ class DashboardController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['permission:view attendance']);
+//        $this->middleware(['permission:view attendance']);
     }
 
     /*

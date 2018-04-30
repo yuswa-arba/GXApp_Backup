@@ -49,6 +49,13 @@ trait GlobalUtils
         return date('ymd', strtotime($date));
     }
 
+    public function convertDateDDMMYYYYtoYM($date)
+    {
+        $date = str_replace('/', '-', $date);
+        return date('ym', strtotime($date));
+    }
+
+
     public function generateDateRange($start_date, $end_date, $format)
     {
         $start_date = Carbon::createFromFormat($format, $start_date);

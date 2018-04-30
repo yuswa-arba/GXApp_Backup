@@ -21,7 +21,7 @@
             padding-top: 10px
         }
         .sn {
-            font-size: 12px;
+            font-size: 13px;
             text-align: center;
             margin-top: -10px;
         }

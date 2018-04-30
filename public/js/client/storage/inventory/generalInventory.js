@@ -2596,6 +2596,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -2771,6 +2772,9 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                 var cb = $('#item-cb-' + i);
                 cb.prop('checked', false);
             }
+
+            //unchecked all item cb
+            $('#all-item-cb').prop('checked', false);
         }
     }
 });
@@ -4383,14 +4387,12 @@ var render = function() {
     "div",
     { staticClass: "row" },
     [
-      _c("div", { staticClass: "col-lg-5 m-t-30" }),
-      _vm._v(" "),
       _c("div", { staticClass: "col-lg-2 m-t-30" }, [
         _vm.selectedItemsIds.length > 0
           ? _c(
               "button",
               {
-                staticClass: "btn btn-success pull-right",
+                staticClass: "btn btn-success",
                 on: {
                   click: function($event) {
                     _vm.generateQRCode()
@@ -4399,11 +4401,13 @@ var render = function() {
               },
               [
                 _vm._v("\n            Generate "),
-                _c("i", { staticClass: "fa fa-qrcode" })
+                _c("i", { staticClass: "fa fa-qrcode fs-16" })
               ]
             )
           : _vm._e()
       ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-5 m-t-30" }),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-5 m-t-30" }, [
         _c(
@@ -19408,7 +19412,7 @@ module.exports = Component.exports
             params += 'id[]=' + state.selectedItemsIds[i] + '&';
         }
 
-        //   reset
+        //reset
         state.selectedItemsIds = [];
 
         window.open(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'storage/inventory/general/qrcode?' + params, '_blank');

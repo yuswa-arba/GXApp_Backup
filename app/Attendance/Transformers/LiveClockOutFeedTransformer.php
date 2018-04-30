@@ -45,6 +45,9 @@ class LiveClockOutFeedTransformer extends TransformerAbstract
             case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_WEB_PORTAL']:
                 return "Web Portal";
                 break;
+            case ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_FINGERSPOT']:
+                return "Fingerspot";
+                break;
             default:
                 return "";
                 break;
@@ -64,6 +67,7 @@ class LiveClockOutFeedTransformer extends TransformerAbstract
                 return "Browser: " . $timesheet->clockOutBrowser . '(' . $timesheet->clockOutIpAddress . ')';
                 break;
             default:
+                return "";
                 break;
         }
     }
