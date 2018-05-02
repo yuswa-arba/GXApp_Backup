@@ -11,6 +11,7 @@ namespace App\Salary\Logics\Salary;
 
 
 use App\Employee\Models\MasterEmployee;
+use App\Salary\Models\PayrollSetting;
 use App\Salary\Models\SalaryCalculation;
 use App\Salary\Models\SalaryReport;
 use App\Salary\Traits\SalaryUtils;

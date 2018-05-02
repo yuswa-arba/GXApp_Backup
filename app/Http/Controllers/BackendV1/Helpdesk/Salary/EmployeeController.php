@@ -13,7 +13,9 @@ use App\Salary\Logics\BonusCut\UseBonusCutLogic;
 use App\Salary\Models\EmployeeBonusesCuts;
 use App\Salary\Models\EmployeeSalary;
 use App\Salary\Models\GeneralBonusesCuts;
+use App\Salary\Models\PayrollSetting;
 use App\Salary\Models\SalaryBonusCutType;
+use App\Salary\Traits\SalaryUtils;
 use App\Salary\Transformers\EmployeeBonusCutTransformer;
 use App\Salary\Transformers\EmployeeSalaryTransformer;
 use App\Salary\Transformers\SalaryBonusCutTransformer;
@@ -29,7 +31,7 @@ class EmployeeController extends Controller
 {
 
     use GlobalUtils;
-
+    use SalaryUtils;
     public function __construct()
     {
         $this->middleware(['permission:access salary']);
@@ -38,6 +40,9 @@ class EmployeeController extends Controller
 
     public function detail($employeeId)
     {
+        //default salary
+        $defaultBasicSalary = PayrollSetting::where('name', 'default-salary')->first()->value;
+
         if ($employeeId != null && $employeeId != '') {
             $employee = MasterEmployee::find($employeeId);
 
@@ -45,7 +50,14 @@ class EmployeeController extends Controller
                 return response()->json([
                     'message' => 'Successful',
                     'employee' => fractal($employee, new EmployeeBriefDetailTransfomer()),
-                    'salary' => fractal($employee->salary, new EmployeeSalaryTransformer()),
+                    'salary' => $employee->salary ? fractal($employee->salary, new EmployeeSalaryTransformer()) :
+                        ['data' =>
+                            [
+                                'basicSalary' => $this->getEmployeeBasicSalary($defaultBasicSalary),
+                                'insertedDate' => 'default',
+                                'insertedBy' => 'default'
+                            ]
+                        ],
                     'bonusCut' => fractal($employee->bonusCut, new EmployeeBonusCutTransformer())
                 ], 200);
 
@@ -76,8 +88,8 @@ class EmployeeController extends Controller
                 ->whereNotIn('id', $usedBonusCutByEmployee)
                 ->whereNotIn('id', $usedBonusCutInGeneral)
                 ->where(function ($query) use ($employeeDivisionId) {
-                    $query->where('isRelatedToDivision',0)->orWhere(function($query)use($employeeDivisionId){
-                        $query->where('isRelatedToDivision',1)->where('divisionId',$employeeDivisionId);// get where Division is related and same with this employee
+                    $query->where('isRelatedToDivision', 0)->orWhere(function ($query) use ($employeeDivisionId) {
+                        $query->where('isRelatedToDivision', 1)->where('divisionId', $employeeDivisionId);// get where Division is related and same with this employee
                     });
                 })
                 ->get();
@@ -120,10 +132,10 @@ class EmployeeController extends Controller
         return RemoveBonusCutLogic::remove($request, $employeeId);
     }
 
-    /* @desc Get employee salary history*/
+    /* @desc Get employee salary history */
     public function getSalaryReportHistory($employeeId)
     {
-        return  GetSalaryReportHistoryLogic::getData($employeeId);
+        return GetSalaryReportHistoryLogic::getData($employeeId);
     }
 
 }

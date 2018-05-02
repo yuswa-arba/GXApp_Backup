@@ -21,6 +21,7 @@ use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Salary\Models\GeneralBonusesCuts;
 use App\Salary\Models\GenerateSalaryReportLogs;
+use App\Salary\Models\PayrollSetting;
 use App\Salary\Models\SalaryCalculation;
 use App\Salary\Models\SalaryQueue;
 use App\Salary\Models\SalaryReport;
@@ -271,7 +272,7 @@ class GenerateSalaryLogic extends GenerateUseCase
                 // if its not day off and not employee leave schedule and not public holiday scheudle then insert date to array
                 if (!$this->isDayOffForThisSlot($slotId, $date)
                     && !$this->employeeLeaveSchedule($employeeId, $date)
-                    && !$this->isPublicHolidayForThisEmployee($employeeId,$slotId,$date)
+                    && !$this->isPublicHolidayForThisEmployee($employeeId, $slotId, $date)
                 ) {
 
                     $timesheet = AttendanceTimesheet::where('employeeId', $employeeId)
@@ -302,7 +303,8 @@ class GenerateSalaryLogic extends GenerateUseCase
 
 
             /* get employee salary*/
-            $employeeSalary = $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary');
+            $defaultBasicSalary = PayrollSetting::where('name', 'default-salary')->first()->value;
+            $employeeSalary = $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary') ? $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary') : $defaultBasicSalary;
             $employeeSalary = $this->getEmployeeBasicSalaryNoFormat($employeeSalary);
 
             /* start calculation */
@@ -427,7 +429,7 @@ class GenerateSalaryLogic extends GenerateUseCase
             $employeeSalaryReport[$i]['salarySummary']['basicSalary'] = (float)$employeeSalary;
             $employeeSalaryReport[$i]['salarySummary']['totalBonus'] = (float)$totalBonus;
             $employeeSalaryReport[$i]['salarySummary']['totalCut'] = (float)$totalCut;
-            $employeeSalaryReport[$i]['salarySummary']['salaryReceived'] = (float)$employeeSalary + (float)$totalBonus - (float)$totalCut;
+            $employeeSalaryReport[$i]['salarySummary']['salaryReceived'] = ((float)$employeeSalary + (float)$totalBonus - (float)$totalCut)>0?(float)$employeeSalary + (float)$totalBonus - (float)$totalCut:0;
 
             /* Incrementing array */
             $i++;
@@ -542,7 +544,10 @@ class GenerateSalaryLogic extends GenerateUseCase
 
 
             /* get employee salary*/
-            $employeeSalary = $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary');
+            $defaultBasicSalary = PayrollSetting::where('name', 'default-salary')->first()->value;
+            $employeeSalary = $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary') ?
+                              $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary') :
+                              $defaultBasicSalary;
             $employeeSalary = $this->getEmployeeBasicSalaryNoFormat($employeeSalary);
 
             /* start calculation */
@@ -667,7 +672,11 @@ class GenerateSalaryLogic extends GenerateUseCase
             $employeeSalaryReport[$i]['salarySummary']['basicSalary'] = $this->formatRupiahCurrency((float)$employeeSalary);
             $employeeSalaryReport[$i]['salarySummary']['totalBonus'] = $this->formatRupiahCurrency((float)$totalBonus);
             $employeeSalaryReport[$i]['salarySummary']['totalCut'] = $this->formatRupiahCurrency((float)$totalCut);
-            $employeeSalaryReport[$i]['salarySummary']['salaryReceived'] = $this->formatRupiahCurrency((float)$employeeSalary + (float)$totalBonus - (float)$totalCut);
+            $employeeSalaryReport[$i]['salarySummary']['salaryReceived'] = $this->formatRupiahCurrency(
+                ((float)$employeeSalary + (float)$totalBonus - (float)$totalCut)>0?
+                    (float)$employeeSalary + (float)$totalBonus - (float)$totalCut:
+                    0
+            );
 
             /* Incrementing array */
             $i++;
@@ -712,16 +721,16 @@ class GenerateSalaryLogic extends GenerateUseCase
     private function isDayOffForThisSlot($slotId, $date)
     {
 
-       return DayOffSchedule::where('slotId', $slotId)->where('date', $date)->count() > 0;
+        return DayOffSchedule::where('slotId', $slotId)->where('date', $date)->count() > 0;
 
     }
 
     private function isPublicHolidayForThisEmployee($employeeId, $slotId, $date)
     {
         return PublicHolidaySchedule::where('fromSlotId', $slotId)
-                                                    ->where('applyDate', $date)
-                                                    ->where('employeeId', $employeeId)
-                                                    ->count() > 0;
+                ->where('applyDate', $date)
+                ->where('employeeId', $employeeId)
+                ->count() > 0;
 
     }
 
@@ -730,8 +739,8 @@ class GenerateSalaryLogic extends GenerateUseCase
         $isPaidLeaveExist = false;
 
         $paidLeaveSchedules = EmployeeLeaveSchedule::where('employeeId', $employeeId)
-            ->where('month', Carbon::createFromFormat('d/m/Y',$date)->month)
-            ->where('year', Carbon::createFromFormat('d/m/Y',$date)->year)
+            ->where('month', Carbon::createFromFormat('d/m/Y', $date)->month)
+            ->where('year', Carbon::createFromFormat('d/m/Y', $date)->year)
             ->where('leaveApprovalId', ConfigCodes::$LEAVE_APPROVAL['APPROVED'])
             ->get();
 
@@ -740,13 +749,13 @@ class GenerateSalaryLogic extends GenerateUseCase
             $parsedFromDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->fromDate);
             $parsedToDate = Carbon::createFromFormat('d/m/Y', $paidLeaveSchedule->toDate);
 
-            if ($paidLeaveSchedule->isStreakPaidLeave || $paidLeaveSchedule->totalDays>0) {
+            if ($paidLeaveSchedule->isStreakPaidLeave || $paidLeaveSchedule->totalDays > 0) {
                 $today = Carbon::now();
                 if ($today->gte($parsedFromDate) && $today->lte($parsedToDate)) {
                     $isPaidLeaveExist = true;
                 }
             } else {
-                if($paidLeaveSchedule->fromDate==Carbon::now()->format('d/m/Y')){
+                if ($paidLeaveSchedule->fromDate == Carbon::now()->format('d/m/Y')) {
                     $isPaidLeaveExist = true;
                 }
             }
@@ -789,7 +798,7 @@ class GenerateSalaryLogic extends GenerateUseCase
             $clockOutTime = Carbon::createFromFormat('d/m/Y H:i', $timesheet->clockOutDate . ' ' . $timesheet->clockOutTime);
             $shift = Shifts::find($timesheet->shiftId);
 
-            if($shift){
+            if ($shift) {
                 $shiftWorkEndAt = Carbon::createFromFormat('d/m/Y H:i', $timesheet->clockOutDate . ' ' . $shift->workEndAt);
 
                 // if its early then return minutes early
@@ -803,8 +812,6 @@ class GenerateSalaryLogic extends GenerateUseCase
 
         return 0;
     }
-
-
 
 
 }
