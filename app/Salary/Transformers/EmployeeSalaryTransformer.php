@@ -33,5 +33,4 @@ class EmployeeSalaryTransformer extends TransformerAbstract
         ];
     }
 
-
 }

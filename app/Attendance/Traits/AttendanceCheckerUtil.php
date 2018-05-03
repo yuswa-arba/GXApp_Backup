@@ -84,8 +84,10 @@ trait AttendanceCheckerUtil
                             }
                         }
                     } else {
-                        $timesheet->attendanceValidationId = 10; // No Photo
-                        $isValid = 0;
+                        if ($cInViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK'] || $cOutViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK']) {
+                            $timesheet->attendanceValidationId = 10; // No Photo
+                            $isValid = 0;
+                        }
                     }
 
 
@@ -191,8 +193,10 @@ trait AttendanceCheckerUtil
                         }
                     }
                 } else {
-                    $timesheet->attendanceValidationId = 10; // No Photo
-                    $isValid = 0;
+                    if ($cInViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK'] || $cOutViaTypeId == ConfigCodes::$CLOCK_VIA_TYPE_ID['BY_KIOSK']) {
+                        $timesheet->attendanceValidationId = 10; // No Photo
+                        $isValid = 0;
+                    }
                 }
 
 
