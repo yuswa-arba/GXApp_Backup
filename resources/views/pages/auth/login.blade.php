@@ -59,7 +59,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 d-flex align-items-center justify-content-end">
-                            <a href="#" class="text-info small">Help? Contact Support</a>
+                            <a href="{{url('/password/reset')}}" class="text-info small">Forgot Password?</a>
                         </div>
                     </div>
                     <!-- END Form Control-->

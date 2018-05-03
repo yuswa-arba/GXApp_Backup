@@ -8,6 +8,7 @@
                 <div class="card widget-loader-bar m-b-10 bg-white">
                     <div style="padding: 50px;margin: 30px;">
                         <div class="col-md-12">
+                            <a href="/" class="pull-right">Login</a>
                             <img src="{{asset('core/img/logo.png')}}" alt="logo" data-src="{{asset('core/img/logo.png')}}"
                                  data-src-retina="{{asset('core/img/logo_2x.png')}}" width="78" height="22">
                             <p class="bold p-t-20" >Reset Password</p>
@@ -39,11 +40,14 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
+
+                                <div class="col-md-6">
                                     <button type="submit" class="btn btn-primary">
                                         Send Password Reset Link
                                     </button>
+
                                 </div>
+
                             </div>
                         </form>
                     </div>
@@ -51,6 +55,8 @@
 
             </div>
         </div>
-        <div class="col-md-3"></div>
+        <div class="col-md-3">
+
+        </div>
     </div>
 @endsection
