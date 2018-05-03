@@ -30,52 +30,54 @@ trait SalaryUtils
      */
     public static $useEncryption = false;
 
-
     public function getEmployeeBasicSalary($basicSalary)
     {
+        $defaultBasicSalary = PayrollSetting::where('name','default-salary')->first()->value;
         if (SalaryUtils::$useEncryption) {
             if ($basicSalary) {
                 try {
                     $decryptedSalary = Crypt::decryptString($basicSalary);
                     return $this->formatRupiahCurrency($decryptedSalary);
                 } catch (DecryptException $e) {
-                    //
+                    return $basicSalary;
                 }
 
 
             } else {
-                return '';
+                return $defaultBasicSalary;
             }
         } else {
             if ($basicSalary) {
                 return $this->formatRupiahCurrency($basicSalary);
 //                return $basicSalary;
             } else {
-                return '';
+                return $defaultBasicSalary;
             }
         }
     }
 
     public function getEmployeeBasicSalaryNoFormat($basicSalary)
     {
+        $defaultBasicSalary = PayrollSetting::where('name','default-salary')->first()->value;
         if (SalaryUtils::$useEncryption) {
             if ($basicSalary) {
                 try {
                     $decryptedSalary = Crypt::decryptString($basicSalary);
                     return $decryptedSalary;
                 } catch (DecryptException $e) {
-                    //
+
+                    return $basicSalary;
                 }
 
 
             } else {
-                return '';
+                return $defaultBasicSalary;
             }
         } else {
             if ($basicSalary) {
                 return $basicSalary;
             } else {
-                return '';
+                return $defaultBasicSalary;
             }
         }
     }

@@ -20,14 +20,11 @@ class EmployeeSalaryTransformer extends TransformerAbstract
 
     public function transform(EmployeeSalary $employeeSalary)
     {
-
-        $defaultBasicSalary = PayrollSetting::where('name','default-salary')->first()->value;
-
         return [
             'id' => $employeeSalary->id,
             'employeeId'=>$employeeSalary->employeeId,
-            'basicSalary'=>$this->getEmployeeBasicSalary($employeeSalary->basicSalary?$employeeSalary->basicSalary:$defaultBasicSalary),
-            'basicSalaryNoFormat'=>$this->getEmployeeBasicSalaryNoFormat($employeeSalary->basicSalary?$employeeSalary->basicSalary:$defaultBasicSalary),
+            'basicSalary'=>$this->getEmployeeBasicSalary($employeeSalary->basicSalary),
+            'basicSalaryNoFormat'=>$this->getEmployeeBasicSalaryNoFormat($employeeSalary->basicSalary),
             'insertedDate'=>$employeeSalary->insertedDate,
             'insertedBy'=>$employeeSalary->insertedBy,
         ];

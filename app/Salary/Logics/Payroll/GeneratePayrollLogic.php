@@ -22,6 +22,7 @@ use App\Salary\Transformers\SalaryReportTransformer;
 use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 
 class GeneratePayrollLogic extends GenerateUseCase
@@ -247,7 +248,13 @@ class GeneratePayrollLogic extends GenerateUseCase
             $maxConfirmationValidStage = PayrollSetting::where('name', 'max-days-confirmation-salary-valid-stage')->first()['value'];
 
             /* Check if today is in stage 1 confirmation*/
-            if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationValidStage) {
+            /* Note: Admin can only generate payrol $maxConfirmationValidStage days after the day the payroll is generated
+               to turn it off set $allowGeneratePayrollBefore to true
+            */
+
+            $allowGeneratePayrollBefore = false;
+
+            if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationValidStage || $allowGeneratePayrollBefore) {
 
                 $countConfirmedUsers = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->where('confirmationStatusId',1)->count();
 
@@ -268,7 +275,10 @@ class GeneratePayrollLogic extends GenerateUseCase
             }
 
             /* Check if today is in stage 1 confirmation*/
-            if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationStage1) {
+            /* Note: Admin can only generate payrol $maxConfirmationStage1 days after the day the payroll is generated
+             to turn it off set $allowGeneratePayrollBefore to true
+            */
+            if ($this->totalDays($generateSalaryReport->generatedDate, Carbon::now()->format('d/m/Y')) > $maxConfirmationStage1 || $allowGeneratePayrollBefore) {
 
                 $countConfirmedUsers = SalaryReport::whereIn('id', explode(' ', $generateSalaryReport->salaryReportIds))->where('confirmationStatusId',4)->count();
 

@@ -303,9 +303,7 @@ class GenerateSalaryLogic extends GenerateUseCase
 
 
             /* get employee salary*/
-            $defaultBasicSalary = PayrollSetting::where('name', 'default-salary')->first()->value;
-            $employeeSalary = $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary') ? $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary') : $defaultBasicSalary;
-            $employeeSalary = $this->getEmployeeBasicSalaryNoFormat($employeeSalary);
+            $employeeSalary = $this->getEmployeeBasicSalaryNoFormat($this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary'));
 
             /* start calculation */
             if ($employeeSalary) {
@@ -544,11 +542,7 @@ class GenerateSalaryLogic extends GenerateUseCase
 
 
             /* get employee salary*/
-            $defaultBasicSalary = PayrollSetting::where('name', 'default-salary')->first()->value;
-            $employeeSalary = $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary') ?
-                              $this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary') :
-                              $defaultBasicSalary;
-            $employeeSalary = $this->getEmployeeBasicSalaryNoFormat($employeeSalary);
+            $employeeSalary = $this->getEmployeeBasicSalaryNoFormat($this->getResultWithNullChecker1Connection($employee, 'salary', 'basicSalary'));
 
             /* start calculation */
             if ($employeeSalary) {
