@@ -48,7 +48,7 @@
                     </ul>
                 </li>
 
-                            @can('access storage setting')
+                            @can('access storage setting)
             @if(strpos(request()->route()->getName(),'storage.inventory')!==false)
                 <li class="open active">
             @else
@@ -83,7 +83,6 @@
 
                     </ul>
                 </li>
-
 
                     @if(strpos(request()->route()->getName(),'storage.admin')!==false)
                        <li class="open active">
@@ -161,7 +160,7 @@
                         </li>
                     </ul>
                 </li>
-
+                          @endcan
         </ul>
-                               @endcan
+
     </li>

@@ -5,7 +5,7 @@
                 <li class="open active">
             @else
                 <li class="">
-                    @endif
+             @endif
                     <a href="javascript:;">
                         <span class="title">Manager</span>
                         @if(request()->route()->getPrefix()=='/manager')
@@ -23,6 +23,6 @@
 
                     </ul>
                 </li>
-            @endif
-        @endif
-    @endif
+         @endif
+   @endif
+@endif
