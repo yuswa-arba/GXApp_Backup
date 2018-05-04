@@ -40,7 +40,7 @@ class SendingMessageListener implements ShouldQueue
                 'subject' => 'Sending Mail',
                 'action' => 'mail',
                 'level' => 1,
-                'description' =>  $event->message,
+                'description' => 'Sending message',
                 'causerIPAddress' => \Request::ip()
             ]);
         } catch (Exception $exception){

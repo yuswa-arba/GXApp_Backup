@@ -1859,8 +1859,13 @@ $(document).ready(function () {
     var employmentForm = $('#employmentForm');
     var formObject = {};
 
+    //buttons
+    var createEmployeeBtn = $('#createEmployeeBtn');
+    var saveMedicalRecordsBtn = $('#saveMedicalRecordsBtn');
+    var saveEmploymentBtn = $('#saveEmploymentBtn');
+
     // on click events
-    $('#createEmployeeBtn').on('click', function () {
+    createEmployeeBtn.on('click', function () {
 
         var serializeForm = personalInfoForm.serializeArray();
 
@@ -1874,7 +1879,15 @@ $(document).ready(function () {
             formObject[value.name] = value.value;
         });
 
+        //Disable button and change text
+        createEmployeeBtn.html('Submitting...');
+        createEmployeeBtn.prop('disabled', true);
+
         Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/create', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["b" /* objectToFormData */])(formObject)).then(function (res) {
+
+            //Enable button and change text
+            createEmployeeBtn.html('Create Employee');
+            createEmployeeBtn.prop('disabled', false);
 
             if (!res.data.isFailed && res.data.employeeId) {
 
@@ -1920,6 +1933,11 @@ $(document).ready(function () {
                 }
             }
         }).catch(function (err) {
+
+            //Enable button and change text
+            createEmployeeBtn.html('Create Employee');
+            createEmployeeBtn.prop('disabled', false);
+
             var errorsResponse = err.message + '</br>';
 
             _.forEach(err.response.data.errors, function (value, key) {
@@ -1936,12 +1954,21 @@ $(document).ready(function () {
         });
     });
 
-    $('#saveMedicalRecordsBtn').on('click', function () {
+    saveMedicalRecordsBtn.on('click', function () {
 
         var formData = medicalRecordsForm.serialize();
         formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
 
+        //Disable button and change text
+        saveMedicalRecordsBtn.html('Submitting...');
+        saveMedicalRecordsBtn.prop('disabled', true);
+
         Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/medicalRecords', formData).then(function (res) {
+
+            //Enable button and change text
+            saveMedicalRecordsBtn.html('Save Employee Medical Records');
+            saveMedicalRecordsBtn.prop('disabled', false);
+
             if (!res.data.isFailed) {
                 $('#errors-container').removeClass('show').addClass('hide');
 
@@ -1971,6 +1998,11 @@ $(document).ready(function () {
                 }).show();
             }
         }).catch(function (err) {
+
+            //Enable button and change text
+            saveMedicalRecordsBtn.html('Save Employee Medical Records');
+            saveMedicalRecordsBtn.prop('disabled', false);
+
             var errorsResponse = err.message + '</br>';
 
             _.forEach(err.response.data.errors, function (value, key) {
@@ -1987,12 +2019,20 @@ $(document).ready(function () {
         });
     });
 
-    $('#saveEmploymentBtn').on('click', function () {
+    saveEmploymentBtn.on('click', function () {
 
         var formData = employmentForm.serialize();
         formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
 
+        //Disable button and change text
+        saveEmploymentBtn.html('Submitting...');
+        saveEmploymentBtn.prop('disabled', true);
+
         Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/employment', formData).then(function (res) {
+
+            //Enable button and change text
+            saveEmploymentBtn.html('Save Employment & Send Verification Email');
+            saveEmploymentBtn.prop('disabled', false);
 
             if (!res.data.isFailed) {
                 $('#errors-container').removeClass('show').addClass('hide');
@@ -2018,6 +2058,10 @@ $(document).ready(function () {
                 }).show();
             }
         }).catch(function (err) {
+
+            //Enable button and change text
+            saveEmploymentBtn.html('Save Employment & Send Verification Email');
+            saveEmploymentBtn.prop('disabled', false);
 
             var errorsResponse = err.message + '</br>';
 

@@ -37,7 +37,7 @@ class SentMessageListener
                 'subject' => 'Sent Mail',
                 'action' => 'mail',
                 'level' => 1,
-                'description' =>  $event->message,
+                'description' => 'Message Sent',
                 'causerIPAddress' => \Request::ip()
             ]);
         } catch (\Exception $exception){

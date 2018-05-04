@@ -17,6 +17,7 @@ use App\Traits\GlobalUtils;
 use Carbon\Carbon;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Log;
 
 
 trait SalaryUtils
@@ -28,7 +29,7 @@ trait SalaryUtils
      * want to use encryption make sure all the data in the employeeSalary table is ENCRYPTED, if you dont want to
      * use encryption, make sure all the data in employeeSalary table is UNENCRYPTED
      */
-    public static $useEncryption = false;
+    public static $useEncryption = true;
 
     public function getEmployeeBasicSalary($basicSalary)
     {
@@ -39,6 +40,7 @@ trait SalaryUtils
                     $decryptedSalary = Crypt::decryptString($basicSalary);
                     return $this->formatRupiahCurrency($decryptedSalary);
                 } catch (DecryptException $e) {
+//                    Log::info($e->getMessage());
                     return $basicSalary;
                 }
 
@@ -65,7 +67,7 @@ trait SalaryUtils
                     $decryptedSalary = Crypt::decryptString($basicSalary);
                     return $decryptedSalary;
                 } catch (DecryptException $e) {
-
+//                    Log::info($e->getMessage());
                     return $basicSalary;
                 }
 
@@ -84,17 +86,19 @@ trait SalaryUtils
 
     public function encryptSalary($basicSalary)
     {
+        $defaultBasicSalary = PayrollSetting::where('name','default-salary')->first()->value;
+
         if (SalaryUtils::$useEncryption) {
             if ($basicSalary) {
                 return Crypt::encryptString($basicSalary);
             } else {
-                return '';
+                return $defaultBasicSalary;
             }
         } else {
             if ($basicSalary) {
                 return $basicSalary;
             } else {
-                return '';
+                return $defaultBasicSalary;
             }
         }
     }

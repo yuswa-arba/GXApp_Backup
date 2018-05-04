@@ -98,18 +98,27 @@ class UserAuthLogic extends AuthUseCase
     {
         $accessToken = Auth::guard('api')->user()->token();
 
-        DB::table('oauth_refresh_tokens')
-            ->where('access_token_id', $accessToken->id)
-            ->update(['revoked' => true]);
+        if($accessToken){
+            DB::table('oauth_refresh_tokens')
+                ->where('access_token_id', $accessToken->id)
+                ->update(['revoked' => true]);
 
-        $accessToken->revoke();
+            $accessToken->revoke();
 
-        $response = array();
-        $response['isFailed'] = false;
-        $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
-        $response['message'] = 'Success';
+            $response = array();
+            $response['isFailed'] = false;
+            $response['code'] = ResponseCodes::$SUCCEED_CODE['SUCCESS'];
+            $response['message'] = 'Success';
 
-        return response()->json($response, 200); //success response
+            return response()->json($response, 200); //success response
+        } else{
+            $response['isFailed'] = true;
+            $response['code'] = ResponseCodes::$ERR_CODE['UNKNOWN'];
+            $response['message'] = 'Unknown error';
+            return response()->json($response, 200); //error response
+        }
+
+
     }
 
     public function handleRefresh($request)
