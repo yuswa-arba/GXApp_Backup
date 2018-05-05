@@ -32,6 +32,8 @@ Route::prefix('v1/h')->group(function () {
         Route::get('detail/faceapi/{employeeId}', 'AjaxController@faceAPIDetail');
         Route::get('detail/employment/{employeeId}', 'AjaxController@employmentDetail');
         Route::get('detail/login/{employeeId}', 'AjaxController@loginDetail');
+        Route::get('detail/fingerspot/{employeeId}', 'AjaxController@fingerspotDetail');
+
         Route::get('detail/resignation/{employeeId}', 'AjaxController@resignationDetail');
 
         Route::get('edit/master/{id}', 'AjaxController@masterEmployeeEdit');
@@ -55,6 +57,9 @@ Route::prefix('v1/h')->group(function () {
         Route::post('managers/assign','ManagersController@assign');
         Route::post('managers/activate','ManagersController@activate');
         Route::post('managers/deactivate','ManagersController@deactivate');
+
+        Route::post('fingerspot/upload/{employeeId}','AjaxController@uploadFingerspotUser');
+        Route::post('fingerspot/delete/{employeeId}','AjaxController@deleteFingerspotUser');
 
     });
 

@@ -208,7 +208,7 @@ mix.js('resources/assets/js/client/storage/admin/purchaseOrder','public/js/clien
 mix.js('resources/assets/js/client/storage/inventory/entry','public/js/client/storage/inventory');
 mix.js('resources/assets/js/client/storage/inventory/generalInventory','public/js/client/storage/inventory');
 mix.js('resources/assets/js/client/manager/editTimesheet','public/js/client/manager');
-
+mix.js('resources/assets/js/client/superadmin/recruitment','public/js/client/superadmin');
 
 
 /*

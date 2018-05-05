@@ -2743,13 +2743,37 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
-            detail: []
+            detail: [],
+            fingerspotDetail: []
         };
     },
     created: function created() {
@@ -2757,6 +2781,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/login/' + this.$route.params.id).then(function (res) {
             _this.detail = res.data.detail.data;
+        });
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/fingerspot/' + this.$route.params.id).then(function (res) {
+            _this.fingerspotDetail = res.data.detail.data;
         });
     },
 
@@ -3720,6 +3748,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3727,6 +3781,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             form: {},
+            fingerspotDetail: [],
 
             //form componetns
             accessStatuses: []
@@ -3744,12 +3799,64 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             //form components
             _this.accessStatuses = _this.form.formComponents.accessStatuses;
         });
+
+        Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["g" /* get */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/detail/fingerspot/' + this.$route.params.id).then(function (res) {
+            _this.fingerspotDetail = res.data.detail.data;
+        });
     },
 
     methods: {
         save: function save() {
             delete this.form.formComponents; // remove form components during submit
             this.$bus.$emit('save:login_detail', this.form);
+        },
+        uploadFingerspotUser: function uploadFingerspotUser() {
+            var _this2 = this;
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/fingerspot/upload/' + this.$route.params.id).then(function (res) {
+                if (!res.data.isFailed) {
+                    _this2.fingerspotDetail = res.data.detail.data;
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            });
+        },
+        removeFingerspotUser: function removeFingerspotUser() {
+            var _this3 = this;
+
+            Object(__WEBPACK_IMPORTED_MODULE_0__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_1__helpers_const__["a" /* api_path */] + 'employee/fingerspot/delete/' + this.$route.params.id).then(function (res) {
+                if (!res.data.isFailed) {
+                    _this3.fingerspotDetail = [];
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+                } else {
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+            });
         }
     }
 });
@@ -5853,6 +5960,24 @@ var render = function() {
           ])
         ])
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Fingerspot User ID")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.fingerspotDetail.fingerspotUserId))])
+            ])
+          ])
+        ])
+      ])
     ])
   ])
 }
@@ -5871,6 +5996,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header " }, [
       _c("div", { staticClass: "card-title" }, [_vm._v("Login Details")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Fingerspot Details")])
     ])
   }
 ]
@@ -7397,6 +7530,51 @@ var render = function() {
           ])
         ])
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }),
+    _vm._v(" "),
+    _c("div", { staticClass: "col-lg-6" }, [
+      _c("div", { staticClass: "card card-default filter-item" }, [
+        _vm._m(2),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-block" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-lg-6 employee-details" }, [
+              _c("label", [_vm._v("Fingerspot User ID")]),
+              _vm._v(" "),
+              _c("h5", [_vm._v(_vm._s(_vm.fingerspotDetail.fingerspotUserId))])
+            ]),
+            _vm._v(" "),
+            _vm.fingerspotDetail.fingerspotUserId == null ||
+            _vm.fingerspotDetail.fingerspotUserId == ""
+              ? _c("div", { staticClass: "col-lg-6" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info",
+                      on: { click: _vm.uploadFingerspotUser }
+                    },
+                    [_vm._v("Upload")]
+                  )
+                ])
+              : _c("div", { staticClass: "col-lg-6" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          _vm.removeFingerspotUser()
+                        }
+                      }
+                    },
+                    [_vm._v("Remove")]
+                  )
+                ])
+          ])
+        ])
+      ])
     ])
   ])
 }
@@ -7415,6 +7593,14 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header " }, [
       _c("div", { staticClass: "card-title" }, [_vm._v("Login Details")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header " }, [
+      _c("div", { staticClass: "card-title" }, [_vm._v("Fingerspot Details")])
     ])
   }
 ]

@@ -37,12 +37,14 @@ require(base_path($client_path . 'salary/main.php'));
 require(base_path($client_path . 'misc/main.php'));
 require(base_path($client_path . 'profile/main.php'));
 require(base_path($client_path . 'storage/main.php'));
+require(base_path($client_path . 'superadmin/main.php'));
 
 /*
 |--------------------------------------------------------------------------
 | Init Backend routes
 |--------------------------------------------------------------------------
 */
+require(base_path($backend_path . $type_helpdesk . 'superAdmin.php'));
 require(base_path($backend_path . $type_helpdesk . 'setting.php'));
 require(base_path($backend_path . $type_helpdesk . 'employee.php'));
 require(base_path($backend_path . $type_helpdesk . 'manager.php'));

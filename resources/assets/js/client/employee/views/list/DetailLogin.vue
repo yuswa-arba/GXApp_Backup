@@ -72,6 +72,29 @@
             </div>
 
         </div>
+        <div class="col-lg-6"></div>
+        <div class="col-lg-6">
+
+            <div class="card card-default filter-item">
+                <div class="card-header ">
+                    <div class="card-title">Fingerspot Details</div>
+
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-lg-6 employee-details">
+                            <label>Fingerspot User ID</label>
+                            <h5>{{fingerspotDetail.fingerspotUserId}}</h5>
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
 
     </div>
 </template>
@@ -81,7 +104,8 @@
     export default{
         data(){
             return {
-                detail: []
+                detail: [],
+                fingerspotDetail:[]
             }
         },
         created(){
@@ -89,11 +113,18 @@
                 .then((res) => {
                     this.detail = res.data.detail.data
                 })
+
+            get(api_path + 'employee/detail/fingerspot/' + this.$route.params.id)
+                .then((res) => {
+                this.fingerspotDetail = res.data.detail.data
+        })
         },
         methods:{
             save(){
                 this.$bus.$emit('save:login_detail',this.form)
-            }
+            },
+
+
         }
     }
 </script>

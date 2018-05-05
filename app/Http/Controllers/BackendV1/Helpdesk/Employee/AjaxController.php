@@ -8,10 +8,12 @@ use App\Account\Transformers\LoginEditTransfomer;
 use App\Employee\Models\EmployeeMedicalRecords;
 use App\Employee\Models\Employment;
 use App\Employee\Models\FacePerson;
+use App\Employee\Models\FingerspotUser;
 use App\Employee\Models\MasterEmployee;
 use App\Employee\Models\Resignation;
 use App\Employee\Transformers\EmployeeDetailTransfomer;
 use App\Employee\Transformers\EmployeeEditTransfomer;
+use App\Employee\Transformers\EmployeeFingerspotTransformer;
 use App\Employee\Transformers\EmployeeMedicalRecordDetailTransfomer;
 use App\Employee\Transformers\EmployeeMedicalRecordEditTransfomer;
 use App\Employee\Transformers\EmploymentEditTransfomer;
@@ -91,9 +93,9 @@ class AjaxController extends Controller
             if ($request->hasFile('idCardPhoto') && $request->file('idCardPhoto')->isValid()) {
 
                 /*Remove previous image*/
-                if($employee->idCardPhoto!='' && $employee->idCardPhoto!=null){
-                    if(file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto)){
-                        unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']). $employee->idCardPhoto);
+                if ($employee->idCardPhoto != '' && $employee->idCardPhoto != null) {
+                    if (file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']) . $employee->idCardPhoto)) {
+                        unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']) . $employee->idCardPhoto);
                     }
                 }
 
@@ -107,9 +109,9 @@ class AjaxController extends Controller
             if ($request->hasFile('employeePhoto') && $request->file('employeePhoto')->isValid()) {
 
                 /*Remove previous image*/
-                if($employee->employeePhoto!=''&&$employee->employeePhoto!=null){
-                    if(file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto)){
-                        unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']).$employee->employeePhoto);
+                if ($employee->employeePhoto != '' && $employee->employeePhoto != null) {
+                    if (file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']) . $employee->employeePhoto)) {
+                        unlink(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']) . $employee->employeePhoto);
                     }
                 }
 
@@ -181,13 +183,13 @@ class AjaxController extends Controller
     public function saveMedicalRecordEdit(MedicalRecordsRequest $request)
     {
         $response = array();
-        $medicalRecord = EmployeeMedicalRecords::where('employeeId',$request->employeeId)->first();
+        $medicalRecord = EmployeeMedicalRecords::where('employeeId', $request->employeeId)->first();
 
-        if($medicalRecord){ //if existed
+        if ($medicalRecord) { //if existed
 
             $update = $medicalRecord->update($request->all());
 
-            if($update){
+            if ($update) {
 
                 /* Return success response */
                 $response['isFailed'] = false;
@@ -201,14 +203,14 @@ class AjaxController extends Controller
                 $response['isFailed'] = true;
                 $response['message'] = 'Unable to update medical records data';
 
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
 
         } else { // non existed create a new one
 
             $create = $medicalRecord->create($request->all());
 
-            if($create){
+            if ($create) {
 
                 /* Return success response */
                 $response['isFailed'] = false;
@@ -222,12 +224,11 @@ class AjaxController extends Controller
                 $response['isFailed'] = true;
                 $response['message'] = 'Unable to create medical records data';
 
-                return response()->json($response,200);
+                return response()->json($response, 200);
             }
         }
 
     }
-
 
 
     public function employmentDetail($employeeId)
@@ -461,10 +462,10 @@ class AjaxController extends Controller
     public function deleteFacePhoto($persistedFaceId)
     {
         $filename = $persistedFaceId . '.png'; //use png
-        $imagePath = base_path(Configs::$IMAGE_PATH['FACES_PHOTO'].$filename);
-         unlink($imagePath); //delete image
+        $imagePath = base_path(Configs::$IMAGE_PATH['FACES_PHOTO'] . $filename);
+        unlink($imagePath); //delete image
 
-        return response()->json('',200);
+        return response()->json('', 200);
 
     }
 
@@ -485,6 +486,82 @@ class AjaxController extends Controller
             }
         } else {
             return response()->json(['message' => 'Parameter ID is missing'], 200);
+        }
+    }
+
+    public function fingerspotDetail($employeeId)
+    {
+        if ($employeeId != null && $employeeId != '') {
+
+            $user = FingerspotUser::where('employeeId', $employeeId)->first();
+
+            if ($user) {
+                return response()->json([
+                    'message' => 'Successful',
+                    'detail' => fractal($user, new EmployeeFingerspotTransformer())
+                ], 200);
+
+            } else {
+                return response()->json(['message' => 'Error occured! Unable to find fingerspot data'], 200);
+            }
+        } else {
+            return response()->json(['message' => 'Parameter ID is missing'], 200);
+        }
+    }
+
+    public function uploadFingerspotUser($employeeId)
+    {
+        $employee = MasterEmployee::find($employeeId);
+
+        if ($employee) {
+
+            $insert = FingerspotUser::updateOrCreate(
+                [
+                    'employeeId' => $employee->id
+                ],
+                [
+                    'fingerspotUserId'=>$employee->employeeNo
+                ]
+            );
+
+            if($insert){
+                $response['isFailed'] = false;
+                $response['message'] = 'Success';
+                $response['detail']=  fractal($insert, new EmployeeFingerspotTransformer());
+                return response()->json($response,200);
+            } else{
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to upload';
+                return response()->json($response,200);
+            }
+
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find employee data';
+            return response()->json($response, 200);
+        }
+    }
+
+    public function deleteFingerspotUser($employeeId)
+    {
+        $employee = MasterEmployee::find($employeeId);
+        if ($employee) {
+
+            $delete = FingerspotUser::where('employeeId',$employee->id)->delete();
+
+            if($delete){
+                $response['isFailed'] = false;
+                $response['message'] = 'Success';
+                return response()->json($response,200);
+            } else{
+                $response['isFailed'] = true;
+                $response['message'] = 'Unable to delete';
+                return response()->json($response,200);
+            }
+        } else {
+            $response['isFailed'] = true;
+            $response['message'] = 'Unable to find employee data';
+            return response()->json($response, 200);
         }
     }
 }

@@ -90,6 +90,32 @@
 
         </div>
 
+        <div class="col-lg-6"></div>
+        <div class="col-lg-6">
+
+            <div class="card card-default filter-item">
+                <div class="card-header ">
+                    <div class="card-title">Fingerspot Details</div>
+
+                </div>
+                <div class="card-block">
+                    <div class="row">
+                        <div class="col-lg-6 employee-details">
+                            <label>Fingerspot User ID</label>
+                            <h5>{{fingerspotDetail.fingerspotUserId}}</h5>
+                        </div>
+                        <div class="col-lg-6" v-if="fingerspotDetail.fingerspotUserId==null||fingerspotDetail.fingerspotUserId==''">
+                            <button class="btn btn-info" @click="uploadFingerspotUser">Upload</button>
+                        </div>
+                        <div class="col-lg-6" v-else="">
+                            <button class="btn btn-danger" @click="removeFingerspotUser()">Remove</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
 </template>
 <script type="text/javascript">
@@ -99,6 +125,7 @@
         data(){
             return {
                 form:{},
+                fingerspotDetail:[],
 
                 //form componetns
                 accessStatuses:[]
@@ -115,11 +142,66 @@
                     //form components
                     this.accessStatuses = this.form.formComponents.accessStatuses
                 })
+
+            get(api_path + 'employee/detail/fingerspot/' + this.$route.params.id)
+                .then((res) => {
+                this.fingerspotDetail = res.data.detail.data
+
+                })
+
         },
         methods:{
             save(){
                 delete this.form.formComponents // remove form components during submit
                 this.$bus.$emit('save:login_detail',this.form)
+            },
+            uploadFingerspotUser(){
+                post(api_path + 'employee/fingerspot/upload/' + this.$route.params.id)
+                    .then((res) => {
+                    if(!res.data.isFailed){
+                    this.fingerspotDetail = res.data.detail.data
+                     $('.page-container').pgNotification({
+                          style: 'flip',
+                          message: res.data.message,
+                          position: 'top-right',
+                          timeout: 3500,
+                          type: 'info'
+                      }).show();
+                    } else{
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'danger'
+                    }).show();
+                }
+
+                })
+            },
+            removeFingerspotUser(){
+                post(api_path + 'employee/fingerspot/delete/' + this.$route.params.id)
+                    .then((res) => {
+                    if(!res.data.isFailed){
+                    this.fingerspotDetail =[]
+                     $('.page-container').pgNotification({
+                          style: 'flip',
+                          message: res.data.message,
+                          position: 'top-right',
+                          timeout: 3500,
+                          type: 'info'
+                      }).show();
+                    } else{
+                        $('.page-container').pgNotification({
+                            style: 'flip',
+                            message: res.data.message,
+                            position: 'top-right',
+                            timeout: 3500,
+                            type: 'danger'
+                        }).show();
+                }
+
+                })
             }
         }
     }
