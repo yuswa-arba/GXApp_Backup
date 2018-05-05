@@ -39,4 +39,4 @@
 
     </ul>
 </li>
-@endrole
+@endcan
