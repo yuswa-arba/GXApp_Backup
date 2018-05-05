@@ -20,22 +20,27 @@ use App\Employee\Transformers\EmploymentEditTransfomer;
 use App\Employee\Transformers\EmploymentTransfomer;
 use App\Employee\Transformers\FaceAPIDetailTransfomer;
 use App\Employee\Transformers\ResignationTransformer;
+use App\Fingerspot\Model\FingerspotDevice;
 use App\Http\Controllers\BackendV1\Helpdesk\Traits\Configs;
 use App\Http\Requests\Employee\EditMasterEmployeeRequest;
 use App\Http\Requests\Employee\EmploymentRequest;
 use App\Http\Requests\Employee\MasterEmployeeRequest;
 use App\Http\Requests\Employee\MedicalRecordsRequest;
+use App\Traits\FingerspotUtils;
+use App\Traits\FirebaseUtils;
 use App\Traits\GlobalUtils;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use Karlmonson\Ping\Facades\Ping;
 
 class AjaxController extends Controller
 {
 
     use GlobalUtils;
-
+    use FingerspotUtils;
 //    public function __construct()
 //    {
 //        $this->middleware(['role:admin','permission:create employee|edit employee|view employee']);
@@ -525,6 +530,46 @@ class AjaxController extends Controller
             );
 
             if($insert){
+
+                //upload to fingerspot
+                $device = FingerspotDevice::find(1);
+                if ($device) {
+
+                    $health = Ping::check($device->server_ip); // check ping connection
+                    if ($health == 200) {
+
+                        $port = $device->server_port;
+                        $url = $device->server_ip . "/user/set";
+
+                        // 0  is default idx from fingerspot
+                        // 39 is default alg_ver from fingerspot
+                        $temp = '[{"pin":"' . $employee->employeeNo . '","idx":"' . '0' .
+                            '","alg_ver":"' . '39' . '","template":"' . '' . '"}]';
+
+                        $temp = str_replace("+", "%2B", $temp);
+
+                        $param = array(
+                            'sn' => $device->device_sn,
+                            'PIN' => $employee->employeeNo,
+                            'nama' => $employee->givenName . ' ' . $employee->surname,
+                            'pwd' => 0,
+                            'rfid' => 0,
+                            'priv' => 0,
+                        );
+
+                        // add empty t
+                        $param = http_build_query($param) . '&tmp=' . $temp;
+
+                        $output = $this->sendRequestToFingerspotDevice($url, $port, $param);
+
+                        Log::info($output);
+                    }
+
+                }
+
+
+
+
                 $response['isFailed'] = false;
                 $response['message'] = 'Success';
                 $response['detail']=  fractal($insert, new EmployeeFingerspotTransformer());
