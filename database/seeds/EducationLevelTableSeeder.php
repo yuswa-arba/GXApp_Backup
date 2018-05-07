@@ -13,13 +13,14 @@ class EducationLevelTableSeeder extends Seeder
     public function run()
     {
         $data = array(
-            ['name' => 'Elementary School'],
-            ['name' => 'Junior High School'],
-            ['name' => 'Senior High School'],
-            ['name' => 'Associate\'s Degree'],
-            ['name' => 'Bachelor\'s Degree'],
-            ['name' => 'Master\'s Degree'],
-            ['name' => 'Doctorate\'s Degree'],
+            ['id' => '1', 'name' => 'Elementary School'],
+            ['id' => '2', 'name' => 'Junior High School'],
+            ['id' => '3', 'name' => 'Senior High School'],
+            ['id' => '4', 'name' => 'Associate\'s Degree'],
+            ['id' => '5', 'name' => 'Bachelor\'s Degree'],
+            ['id' => '6', 'name' => 'Master\'s Degree'],
+            ['id' => '7', 'name' => 'Doctorate\'s Degree'],
+            ['id' => '8', 'name' => 'Vocational School']
         );
 
         /* Truncate all the data before populating*/

@@ -13,11 +13,11 @@ class MaritalStatusTableSeeder extends Seeder
     public function run()
     {
         $data = array(
-            ['name' => 'Married'],
-            ['name' => 'Remarried'],
-            ['name' => 'Divorced'],
-            ['name' => 'Widowed'],
-            ['name' => 'Unmarried']
+            ['id'=>'1','name' => 'Married'],
+            ['id'=>'2','name' => 'Remarried'],
+            ['id'=>'3','name' => 'Divorced'],
+            ['id'=>'4','name' => 'Widowed'],
+            ['id'=>'5','name' => 'Unmarried']
         );
 
         /* Truncate all the data before populating*/

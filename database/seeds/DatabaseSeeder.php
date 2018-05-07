@@ -14,17 +14,42 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call([
             AccessStatusTableSeeder::class,
+            AttendanceApprovalTableSeeder::class,
+            AttendanceSettingTableSeeder::class,
+            AttendanceValidationTableSeeder::class,
             BanksTableSeeder::class,
             BranchOfficesTableSeeder::class,
+            CountriesTableSeeder::class,
+            CurrenciesTableSeeder::class,
+            DeliveryTermsTableSeeder::class,
             DivisionsTableSeeder::class,
             EducationLevelTableSeeder::class,
-            EmployeeStatusTableSeeder::class,
+            JobPositionsTableSeeder::class,
+            LeaveApprovalTableSeeder::class,
+            LeaveTypeTableSeeder::class,
             MaritalStatusTableSeeder::class,
+            NotificationGroupTypeTableSeeder::class,
+            PaymentTermsTableSeeder::class,
+            PayrollSettingTableSeeder::class,
+            PermissionTableSeeder::class,
             RecruitmentStatusTableSeeder::class,
             ReligionsTableSeeder::class,
-            JobPositionsTableSeeder::class
-//            userLevelTableSeeder::class,
-//            activityStatusTableSeeder::class
+            ReportProblemTypeTableSeeder::class,
+            RolesTableSeeder::class,
+            SalaryBonusCutTypeSeeder::class,
+            SalaryReportConfirmationStatusTableSeeder::class,
+            ShiftTableSeeder::class,
+            SlotMakerTableSeeder::class,
+            SlotTableSeeder::class,
+            StorageActionTypeSeeder::class,
+            StorageItemCategoryTableSeeder::class,
+            StorageItemStatusTableSeeder::class,
+            StorageItemTestStatusTableSeeder::class,
+            StorageItemTypesTableSeeder::class,
+            StoragePurchaseOrderStatusTableSeeder::class,
+            StorageRequisitionApprovalTableSeeder::class,
+            UnitOfMeasurementsTableSeeder::class,
+            UnitOfMeasurementTypeTableSeeder::class
         ]);
     }
 }

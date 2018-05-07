@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class StorageItemTestStatusSeeder extends Seeder
+class StorageItemTestStatusTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,9 +13,10 @@ class StorageItemTestStatusSeeder extends Seeder
     public function run()
     {
         $data = array(
-            ['name' => 'No Need'],
-            ['name' => 'Untested'],
-            ['name' => 'Tested']
+            ['id' => '1', 'name' => 'Tested'],
+            ['id' => '2', 'name' => 'Untested'],
+            ['id' => '3', 'name' => 'No Need'],
+
         );
 
         /* Truncate all the data before populating*/

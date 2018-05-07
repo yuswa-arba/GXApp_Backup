@@ -14,16 +14,16 @@ class BanksTableSeeder extends Seeder
     {
 
         $data = array(
-            ['name' => 'Bank Rakyat Indonesia (BRI)'],
-            ['name' => 'Bank Mandiri'],
-            ['name' => 'Bank Central Asia (BCA)'],
-            ['name' => 'Bank Negara Indonesia (BNI)'],
-            ['name' => 'Bank CIMB Niaga'],
-            ['name' => 'Bank Tabungan Negara (BTN)'],
-            ['name' => 'Bank Panin'],
-            ['name' => 'Bank Permata'],
-            ['name' => 'Bank International Indonesia (BII)'],
-            ['name' => 'Bank Danamon']
+            ['id'=>'1','name' => 'Bank Rakyat Indonesia (BRI)'],
+            ['id'=>'2','name' => 'Bank Mandiri'],
+            ['id'=>'3','name' => 'Bank Central Asia (BCA)'],
+            ['id'=>'4','name' => 'Bank Negara Indonesia (BNI)'],
+            ['id'=>'5','name' => 'Bank CIMB Niaga'],
+            ['id'=>'6','name' => 'Bank Tabungan Negara (BTN)'],
+            ['id'=>'7','name' => 'Bank Panin'],
+            ['id'=>'8','name' => 'Bank Permata'],
+            ['id'=>'9','name' => 'Bank International Indonesia (BII)'],
+            ['id'=>'10','name' => 'Bank Danamon']
         );
 
         /* Truncate all the data before populating*/
