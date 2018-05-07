@@ -17,10 +17,10 @@
     <div class="col-lg-4">
         <div class="input-group">
             <input type="text" id="search-box" class="form-control"
-            placeholder="Type here to search">
+                   placeholder="Type here to search">
             {{--<span class="input-group-addon primary">--}}
-                        {{--<i class="fa fa-search"></i>--}}
-                        {{--</span>--}}
+            {{--<i class="fa fa-search"></i>--}}
+            {{--</span>--}}
         </div>
     </div>
 
@@ -29,11 +29,12 @@
         <ul class="hidden-md-down notification-list no-margin hidden-sm-down b-grey b-r no-style p-l-30 p-r-20">
             <li class="p-r-10 inline">
                 <div class="dropdown">
-                   <notification-btn></notification-btn>
+                    <notification-btn></notification-btn>
                 </div>
             </li>
             <li class="p-r-10 inline">
-                <a href="{{route('misc.notification')}}" class="header-icon fa fa-comment white cursor m-b-5" style="font-size: 18px"></a>
+                <a href="{{route('misc.notification')}}" class="header-icon fa fa-comment white cursor m-b-5"
+                   style="font-size: 18px"></a>
             </li>
             <li class="p-r-10 inline">
                 <a href="#" class="header-icon pg pg-thumbs white"></a>
@@ -48,14 +49,21 @@
             <button class="profile-dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true"
                     aria-expanded="false">
               <span class="thumbnail-wrapper d32 circular inline">
-              <img src="/images/employee/{{!is_null(Auth::user()->employee) ? Auth::user()->employee->employeePhoto : ''}}" alt=""
-                   data-src="/images/employee/{{!is_null(Auth::user()->employee) ? Auth::user()->employee->employeePhoto : ''}}"
-                   data-src-retina="/images/employee/{{!is_null(Auth::user()->employee) ? Auth::user()->employee->employeePhoto : ''}}" width="32" height="32">
+              <img src="{{
+              !is_null(Auth::user()->employee)
+              ? !is_null(Auth::user()->employee->employeePhoto)
+              ?'/images/employee/'. Auth::user()->employee->employeePhoto
+              : '/core/img/profiles/avatar_small2x.jpg'
+              : '/core/img/profiles/avatar_small2x.jpg'}}"
+                   alt=""
+                   width="32" height="32">
+
               </span>
             </button>
             <div class="dropdown-menu dropdown-menu-right profile-dropdown" role="menu">
                 <a href="{{route('profile.index')}}" class="dropdown-item"><i class="fa fa-user"></i> Profile</a>
-                <a href="{{route('profile.notifications')}}" class="dropdown-item"><i class="fa fa-envelope"></i> Notifications</a>
+                <a href="{{route('profile.notifications')}}" class="dropdown-item"><i class="fa fa-envelope"></i>
+                    Notifications</a>
                 <a href="#" class="dropdown-item"><i class="pg-signals"></i> Help</a>
                 <a href="#" id="logout-btn" class="clearfix bg-master-lighter dropdown-item">
                     <span class="pull-left">Logout</span>
@@ -65,7 +73,7 @@
         </div>
         <!-- END User Info-->
         {{--<a href="#" class="header-icon pg pg-alt_menu btn-link m-l-10 sm-no-margin d-inline-block"--}}
-           {{--data-toggle="quickview" data-toggle-element="#quickview"></a>--}}
+        {{--data-toggle="quickview" data-toggle-element="#quickview"></a>--}}
 
 
         <form id="logout-form" action="{{route('logout')}}" method="post" style="display: none">

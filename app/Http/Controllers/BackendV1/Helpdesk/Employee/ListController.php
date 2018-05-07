@@ -19,14 +19,19 @@ class ListController extends Controller
 
     public function mainList()
     {
-        $employees = MasterEmployee::where('hasResigned','!=',1)->orderBy('givenName','asc')->paginate(100);
-        return fractal($employees,new EmployeeListTransfomer())->respond(200);
+        $employees = MasterEmployee::where('hasResigned', '!=', 1)
+                                    ->where('email','!=',env('SUPERADMIN_EMAIL','superadmin@gxapp.net')) //exclude superadmin
+                                     ->orderBy('givenName', 'asc')->paginate(100);
+        return fractal($employees, new EmployeeListTransfomer())->respond(200);
     }
 
     public function resignedList()
     {
-        $employees = MasterEmployee::where('hasResigned','=',1)->get()->sortBy('givenName');
-        return fractal($employees,new EmployeeListTransfomer())->respond(200);
+        $employees = MasterEmployee::where('hasResigned', '=', 1)
+                                    ->where('email','!=',env('SUPERADMIN_EMAIL','superadmin@gxapp.net')) //exclude superadmin
+                                    ->get()
+                                    ->sortBy('givenName');
+        return fractal($employees, new EmployeeListTransfomer())->respond(200);
     }
 
     public function searchEmployee($searchText)
