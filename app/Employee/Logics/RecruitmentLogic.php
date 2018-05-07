@@ -288,7 +288,7 @@ class RecruitmentLogic extends RecruitmentUseCase
 
                             $output = $this->sendRequest($url, $port, $param);
 
-                            Log::info($output);
+//                            Log::info($output);
                         }
 
                     }

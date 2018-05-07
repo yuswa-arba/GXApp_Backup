@@ -1,6 +1,7 @@
 <?php
 
 use Faker\Generator as Faker;
+use Illuminate\Support\Facades\Hash;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,13 +14,15 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
+$factory->define(\App\Account\Models\User::class, function (Faker $faker) {
     static $password;
 
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
+        'id'=>$faker->uuid,
+        'email' => env('SUPERADMIN_EMAIL','superadmin@gxapp.net'),
+        'password' => $password ?: $password = Hash::make(env('SUPERADMIN_PASSWORD','secret')),
+        'allowSuperAdminAccess'=>1,
+        'allowAdminAccess'=>1,
         'remember_token' => str_random(10),
     ];
 });
