@@ -20,7 +20,6 @@ class CreateExchangeSlotEmployeeTable extends Migration
             $table->string('employeeId2');
             $table->tinyInteger('toSlotId')->nullable();
             $table->string('fromDates');
-            $table->tinyInteger('isDayOff')->default(0);
             $table->string('toDates');
             $table->tinyInteger('slotApproveId');
             $table->string('approvedBy');

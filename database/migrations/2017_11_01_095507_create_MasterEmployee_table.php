@@ -41,11 +41,13 @@ class CreateMasterEmployeeTable extends Migration
             $table->string('fatherCity');
             $table->string('fatherPhoneNo');
             $table->tinyInteger('fatherMaritalStatusId');
+            $table->tinyInteger('fatherIsDeceased');
             $table->string('motherName');
             $table->string('motherAddress');
             $table->string('motherCity');
             $table->string('motherPhoneNo');
             $table->tinyInteger('motherMaritalStatusId');
+            $table->tinyInteger('motherIsDeceased');
             $table->tinyInteger('numberOfSiblings')->default(0);
             $table->string('siblingName')->nullable();
             $table->string('siblingAddress')->nullable();
@@ -53,9 +55,9 @@ class CreateMasterEmployeeTable extends Migration
             $table->string('siblingPhoneNo')->nullable();
             $table->tinyInteger('siblingMaritalStatusId')->nullable();
             $table->string('emergencyContact');
-            $table->string('emergencyRelationship');
             $table->string('emergencyAddress');
             $table->string('emergencyCity');
+            $table->string('emergencyRelationship');
             $table->string('emergencyPhoneNo');
             $table->string('emergencyAltPhoneNo')->nullable();
             $table->string('emergencyEmailAddress')->nullable();

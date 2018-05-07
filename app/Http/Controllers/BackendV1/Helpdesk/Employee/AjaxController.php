@@ -536,7 +536,7 @@ class AjaxController extends Controller
                 if ($device) {
 
                     $health = Ping::check($device->server_ip); // check ping connection
-                    if ($health == 200) {
+//                    if ($health == 200) {
 
                         $port = $device->server_port;
                         $url = $device->server_ip . "/user/set";
@@ -565,7 +565,7 @@ class AjaxController extends Controller
                         Log::info($output);
                     }
 
-                }
+//                }
 
 
 

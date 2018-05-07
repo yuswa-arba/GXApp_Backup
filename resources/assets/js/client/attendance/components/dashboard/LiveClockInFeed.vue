@@ -14,6 +14,8 @@
                         <div class="card-header clearfix">
                             <div class="user-pic">
                                 <img alt="Avatar" width="33" height="33"
+                                     v-if="feed.photo"
+                                     :class="{'m-r-0':!feed.photo}"
                                      :data-src-retina="'/images/attendances/'+feed.photo"
                                      :data-src="'/images/attendances/'+feed.photo"
                                      :src="'/images/attendances/'+feed.photo">

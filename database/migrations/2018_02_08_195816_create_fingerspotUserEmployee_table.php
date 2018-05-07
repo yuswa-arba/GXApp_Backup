@@ -16,7 +16,7 @@ class CreateFingerspotUserEmployeeTable extends Migration
         Schema::create('fingerspotUserEmployee', function (Blueprint $table) {
             $table->increments('id');
             $table->uuid('employeeId');
-            $table->integer('fingerspotUserId');
+            $table->string('fingerspotUserId');
             $table->timestamps();
         });
     }

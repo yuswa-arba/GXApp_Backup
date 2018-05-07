@@ -30,6 +30,6 @@ class CreateFingerspotDeviceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fingerspot_device');
+        Schema::dropIfExists('fingerspotDevice');
     }
 }

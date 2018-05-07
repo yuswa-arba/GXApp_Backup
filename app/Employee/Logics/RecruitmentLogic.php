@@ -213,10 +213,13 @@ class RecruitmentLogic extends RecruitmentUseCase
     {
         $employee = MasterEmployee::find($employment->employee->id);
 
-        //format : 17021201001 = ({date of entry : yymmdd}{branch code no}{order no})
-        $employee->employeeNo = $this->convertDateDDMMYYYYtoYM($employment->dateOfEntry)
-            . $employment->branchOffice->codeNo
-            . $this->zeroPrefix(count(MasterEmployee::all()), 3);
+        //format : 11708001 = ({branch code no}{date of entry : yymmdd}{order no})
+        //make sure format does not start with zero
+        //make sure format not more than 8
+        $employee->employeeNo =
+            $employment->branchOffice->codeNo.
+            $this->convertDateDDMMYYYYtoYM($employment->dateOfEntry) .
+            $this->zeroPrefix(count(MasterEmployee::all()), 3);
 
         $employee->save();
 
@@ -259,7 +262,7 @@ class RecruitmentLogic extends RecruitmentUseCase
                     if ($device) {
 
                         $health = Ping::check($device->server_ip); // check ping connection
-                        if ($health == 200) {
+//                        if ($health == 200) {
 
                             $port = $device->server_port;
                             $url = $device->server_ip . "/user/set";
@@ -290,7 +293,7 @@ class RecruitmentLogic extends RecruitmentUseCase
 
                     }
 
-                }
+//                }
             }
 
 
