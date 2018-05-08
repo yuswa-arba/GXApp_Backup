@@ -34,13 +34,15 @@ class NotifyRequestTracking implements ShouldQueue
     public $user;
     public $message;
     public $url;
+    public $groupTypeId;
 
-    public function __construct($requisitionId,$user,$message,$url='')
+    public function __construct($requisitionId,$user,$message,$url='',$groupTypeId='1')
     {
         $this->requisitionId = $requisitionId;
         $this->user = $user;
         $this->message = $message;
         $this->url=$url;
+        $this->groupTypeId = $groupTypeId;
     }
 
     /**
@@ -62,7 +64,7 @@ class NotifyRequestTracking implements ShouldQueue
             'url' => $this->url,
             'intentType' => ConfigCodes::$FCM_INTENT_TYPE['HOME'],
             'viaType' => ConfigCodes::$NOTIFY_TYPE['NOTIFICATION'],
-            'groupTypeId'=>4,// New requisition group type Id
+            'groupTypeId'=>$this->groupTypeId,// New requisition group type Id
             'sender' => $this->user
         ]);
 

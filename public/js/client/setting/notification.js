@@ -2660,6 +2660,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
 
 
 
@@ -2744,7 +2745,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
                 //reset form
                 self.recipientForm = {
-                    employeeId: '',
+                    employeeId: self.selectedEmployee.employeeId,
                     groupTypeId: ''
                 };
             } else {
@@ -4369,6 +4370,15 @@ var render = function() {
                           },
                           domProps: { value: _vm.searchText },
                           on: {
+                            keyup: function($event) {
+                              if (
+                                !("button" in $event) &&
+                                _vm._k($event.keyCode, "enter", 13, $event.key)
+                              ) {
+                                return null
+                              }
+                              _vm.searchEmployee()
+                            },
                             input: function($event) {
                               if ($event.target.composing) {
                                 return

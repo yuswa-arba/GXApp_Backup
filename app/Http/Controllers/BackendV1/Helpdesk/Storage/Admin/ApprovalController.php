@@ -4,6 +4,7 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Storage\Admin;
 
 use App\Http\Controllers\BackendV1\API\Traits\ConfigCodes;
 use App\Http\Controllers\Controller;
+use App\Storage\Jobs\NotifyRequestTracking;
 use App\Storage\Models\StorageRequisition;
 use App\Storage\Models\StorageRequisitionItems;
 use App\Storage\Transformers\StorageRequisitionListTransformer;
@@ -156,7 +157,20 @@ class ApprovalController extends Controller
                         StorageRequisitionItems::where('id', $item['id'])->update(['isApproved' => $item['isApproved'],'updatedBy'=>$employee->givenName,'updatedAt'=>Carbon::now()->format('d/m/Y')]);
                     }
 
-                    //TODO: Notify user that their requisition has been declined
+                    // Notify user that their requisition has been declined
+                    try{
+                        NotifyRequestTracking::dispatch(
+                            $requisition->id, //requisition ID
+                            Auth::user(), //user sender
+                            'Your request has been answered #' . $requisition->requisitionNumber, //message
+                            url('storage/requisition/history'), //url to click
+                            1 //General
+                        )
+                            ->onConnection('database')
+                            ->onQueue('broadcaster');
+                    } catch (\Exception $exception){}
+
+
 
                     $response['isFailed'] = false;
                     $response['message'] = 'Requisition has been approved successfully';
@@ -218,7 +232,18 @@ class ApprovalController extends Controller
 
                     if($updateRequisitionItems){
 
-                        //TODO: Notify user that their requisition has been declined
+                        // Notify user that their requisition has been accepted
+                        try{
+                            NotifyRequestTracking::dispatch(
+                                $requisition->id, //requisition ID
+                                Auth::user(), //user sender
+                                'Your request has been accepted #' . $requisition->requisitionNumber, //message
+                                url('storage/requisition/history'), //url to click
+                                1 //General
+                            )
+                                ->onConnection('database')
+                                ->onQueue('broadcaster');
+                        } catch (\Exception $exception){}
 
                         $response['isFailed'] = false;
                         $response['message'] = 'Requisition has been approved successfully';
@@ -289,7 +314,18 @@ class ApprovalController extends Controller
 
                     if($updateRequisitionItems){
 
-                        //TODO: Notify user that their requisition has been declined
+                        // Notify user that their requisition has been declined
+                        try{
+                            NotifyRequestTracking::dispatch(
+                                $requisition->id, //requisition ID
+                                Auth::user(), //user sender
+                                'Your request has been declined #' . $requisition->requisitionNumber, //message
+                                url('storage/requisition/history'), //url to click
+                                1 //General
+                            )
+                                ->onConnection('database')
+                                ->onQueue('broadcaster');
+                        } catch (\Exception $exception){}
 
                         $response['isFailed'] = false;
                         $response['message'] = 'Requisition has been declined successfully';

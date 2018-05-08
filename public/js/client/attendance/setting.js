@@ -31022,7 +31022,7 @@ var staticRenderFns = [
       _c("p", [
         _c("span", { staticClass: "bold" }, [_vm._v("2. First Date: ")]),
         _vm._v(
-          " Data will be generated starting from this date\n                        +total days in current year (recommend 1st of January)"
+          " Data will be generated starting from this date\n                        +total days in current year (recommend 1st of January or first holiday)"
         )
       ]),
       _vm._v(" "),

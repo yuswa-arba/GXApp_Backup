@@ -78,7 +78,7 @@ class CreatePurchaseOrderLogic extends CreateUseCase
                 'shippingVia' => $POForm['shippingVia'],
                 'shippingMark' => $POForm['shippingMark'],
                 'withTaxInvoice' => $POForm['withTaxInvoice'],
-                'npwpNumber' => CompanyNPWP::find(1)->npwpNo, //PT IMAM NPWP
+                'npwpNumber' => CompanyNPWP::find(1) ?CompanyNPWP::find(1)->npwpNo:'', //PT IMAM NPWP
                 'taxFeeAdded' => $POForm['taxFeeAdded'],
                 'taxFee' => $totalTax,
                 'shippingFeeAdded' => $POForm['shippingFeeAdded'],
@@ -157,7 +157,8 @@ class CreatePurchaseOrderLogic extends CreateUseCase
                                 $requisition->id, //requisition ID
                                 Auth::user(), //user sender
                                 'Your request is being processed #' . $requisition->requisitionNumber, //message
-                                url('storage/requisition/history') //url to click
+                                url('storage/requisition/history'), //url to click
+                                1 //General
                             )
                                 ->onConnection('database')
                                 ->onQueue('broadcaster');

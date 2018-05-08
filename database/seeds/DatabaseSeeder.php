@@ -21,9 +21,11 @@ class DatabaseSeeder extends Seeder
             BranchOfficesTableSeeder::class,
             CountriesTableSeeder::class,
             CurrenciesTableSeeder::class,
+            CompanyNPWPInformationTableSeeder::class,
             DeliveryTermsTableSeeder::class,
             DivisionsTableSeeder::class,
             EducationLevelTableSeeder::class,
+            GeneralBonusesCutsTableSeeder::class,
             JobPositionsTableSeeder::class,
             LeaveApprovalTableSeeder::class,
             LeaveTypeTableSeeder::class,
@@ -48,6 +50,7 @@ class DatabaseSeeder extends Seeder
             StorageItemTypesTableSeeder::class,
             StoragePurchaseOrderStatusTableSeeder::class,
             StorageRequisitionApprovalTableSeeder::class,
+            StorageWarehousesTableSeeder::class,
             UnitOfMeasurementsTableSeeder::class,
             UnitOfMeasurementTypeTableSeeder::class
         ]);
