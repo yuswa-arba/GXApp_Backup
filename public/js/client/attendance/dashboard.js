@@ -2534,6 +2534,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4546,17 +4548,20 @@ var render = function() {
                   [
                     _c("div", { staticClass: "card-header clearfix" }, [
                       _c("div", { staticClass: "user-pic" }, [
-                        _c("img", {
-                          attrs: {
-                            alt: "Avatar",
-                            width: "33",
-                            height: "33",
-                            "data-src-retina":
-                              "/images/attendances/" + feed.photo,
-                            "data-src": "/images/attendances/" + feed.photo,
-                            src: "/images/attendances/" + feed.photo
-                          }
-                        })
+                        feed.photo
+                          ? _c("img", {
+                              class: { "m-r-0": !feed.photo },
+                              attrs: {
+                                alt: "Avatar",
+                                width: "33",
+                                height: "33",
+                                "data-src-retina":
+                                  "/images/attendances/" + feed.photo,
+                                "data-src": "/images/attendances/" + feed.photo,
+                                src: "/images/attendances/" + feed.photo
+                              }
+                            })
+                          : _vm._e()
                       ]),
                       _vm._v(" "),
                       _c("h5", { staticClass: "fs-16 m-b-5" }, [

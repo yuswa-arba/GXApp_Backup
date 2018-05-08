@@ -4,6 +4,7 @@
 use App\Attendance\Models\AttendanceSchedule;
 use App\Fingerspot\Model\FingerspotDevice;
 use App\Mail\AccountVerification;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -108,9 +109,9 @@ Route::prefix('testing')->group(function () {
 
     Route::get('num', function () {
 
-        $employee = \App\Employee\Models\MasterEmployee::find('d4fb30a0-fc11-3e13-83e9-fa3890e0134e');
-        $message = (new AccountVerification($employee))->onConnection('database')->onQueue('emails');
-        Mail::to($employee->email)->queue($message);
+
+        $firstSundayOfTheYear = new Carbon('first sunday of January 2018');
+        echo $firstSundayOfTheYear;
 
     });
 

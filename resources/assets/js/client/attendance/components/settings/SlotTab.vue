@@ -237,7 +237,7 @@
 
                         </p>
                         <p><span class="bold">2. First Date: </span> Data will be generated starting from this date
-                            +total days in current year (recommend 1st of January)</p>
+                            +total days in current year (recommend 1st of January or first holiday)</p>
                         <p><span class="bold">3. Total Day Loop: </span> Day offs loop through the given value and add
                             day by 1.
                             <br>

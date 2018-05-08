@@ -96,18 +96,21 @@ class RecruitmentLogic extends RecruitmentUseCase
         $employee = MasterEmployee::create($requestData);
 
         //save siblings
-        if ($employee->numberOfSiblings > 0) {
-            for ($i = 0; $i < $employee->numberOfSiblings; $i++) {
+        if($employee->numberOfSiblings !=null){
+            if ($employee->numberOfSiblings > 0) {
+                for ($i = 0; $i < $employee->numberOfSiblings; $i++) {
 
-                EmployeeSiblings::create([
-                    'employeeId' => $employee->id,
-                    'name' => $request->siblingName[$i],
-                    'address' => $request->siblingAddress[$i],
-                    'city' => $request->siblingCity[$i]
-                ]);
+                    EmployeeSiblings::create([
+                        'employeeId' => $employee->id,
+                        'name' => $request->siblingName[$i],
+                        'address' => $request->siblingAddress[$i],
+                        'city' => $request->siblingCity[$i]
+                    ]);
 
+                }
             }
         }
+
 
         /* Register face to Microsoft Face API to be used in attendance*/
         if (file_exists(base_path(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO']) . $employee->employeePhoto)) {

@@ -343,6 +343,7 @@
                                        class="button button-blue"
                                        target="_blank">Download APK</a>
                                     <br>
+                                    <br>
                                     <p> Please make sure to change your password after you have successfully logged in to
                                        the application for your security.</p>
                                 </td>

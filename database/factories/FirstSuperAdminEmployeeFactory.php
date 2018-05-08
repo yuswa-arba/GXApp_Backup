@@ -19,6 +19,7 @@ $factory->define(\App\Employee\Models\MasterEmployee::class, function (Faker $fa
     return [
         'id'=>$faker->uuid,
         'phoneNo' => '0361736811',
+        'employeeNo'=>'0',
         'email' => env('SUPERADMIN_EMAIL','superadmin@gxapp.net'),
         'surname' => 'GXApp',
         'givenName' => 'superadmin',

@@ -32,7 +32,7 @@ class CreateMasterEmployeeTable extends Migration
             $table->tinyInteger('educationLevelId');
             $table->tinyInteger('maritalStatusId');
             $table->string('spousesName')->nullable();
-            $table->tinyInteger('totalChildren')->default(0);
+            $table->tinyInteger('totalChildren')->nullable()->default(0);
             $table->string('idCardNumber');
             $table->string('idCardPhoto')->nullable();
             $table->string('employeePhoto')->nullable();
@@ -48,7 +48,7 @@ class CreateMasterEmployeeTable extends Migration
             $table->string('motherPhoneNo');
             $table->tinyInteger('motherMaritalStatusId');
             $table->tinyInteger('motherIsDeceased');
-            $table->tinyInteger('numberOfSiblings')->default(0);
+            $table->tinyInteger('numberOfSiblings')->nullable()->default(0);
             $table->string('siblingName')->nullable();
             $table->string('siblingAddress')->nullable();
             $table->string('siblingCity')->nullable();

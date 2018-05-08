@@ -10,7 +10,7 @@
     "/js/client/salary/setting.js": "/js/client/salary/setting.js?id=ab9d998c3fcc3c007552",
     "/js/client/salary/report.js": "/js/client/salary/report.js?id=bd86abd93cd98321e1af",
     "/js/client/salary/queue.js": "/js/client/salary/queue.js?id=727b073276cf55875ef3",
-    "/js/client/attendance/dashboard.js": "/js/client/attendance/dashboard.js?id=f1e4f67a24c8d6f59def",
+    "/js/client/attendance/dashboard.js": "/js/client/attendance/dashboard.js?id=9cc4a61752c1ca3d60cd",
     "/js/client/storage/requisition/history.js": "/js/client/storage/requisition/history.js?id=aa61a97ef6a26cdb70c5",
     "/js/client/manager/editTimesheet.js": "/js/client/manager/editTimesheet.js?id=cfeaf61831e08b1e66cb",
     "/js/client/storage/requisition/cart.js": "/js/client/storage/requisition/cart.js?id=ef46597f181c59cd25e4",
@@ -47,7 +47,7 @@
     "/css/app.css": "/css/app.css?id=99b4db32ceb3f913780c",
     "/plugins/css/pace-theme-flash.css": "/plugins/css/pace-theme-flash.css?id=626bad52d4efb0314b65",
     "/plugins/css/bootstrap.min.css": "/plugins/css/bootstrap.min.css?id=7e923ad223e9f33e54d2",
-    "/plugins/css/jquery.scrollbar.css": "/plugins/css/jquery.scrollbar.css?id=9873d0579300540c4563",
+    "/plugins/css/jquery.scrollbar.css": "/plugins/css/jquery.scrollbar.css?id=cc169611a50b6113daf9",
     "/plugins/css/select2.min.css": "/plugins/css/select2.min.css?id=d44571114a90b9226cd6",
     "/plugins/css/switchery.min.css": "/plugins/css/switchery.min.css?id=3d5c5f2d195cad6c3658",
     "/plugins/css/datepicker3.css": "/plugins/css/datepicker3.css?id=2f93953b93fe068c6457",
@@ -82,6 +82,6 @@
     "/plugins/js/palette.js": "/plugins/js/palette.js?id=cd7be5e269d637ded1c7",
     "/plugins/js/accounting.min.js": "/plugins/js/accounting.min.js?id=b34ee54abcdda3f94566",
     "/plugins/js/sorttable.js": "/plugins/js/sorttable.js?id=ccc0fbbb8958da81e82f",
-    "/core/css/core-theme.css": "/core/css/core-theme.css?id=28900b37727b00a0479f",
+    "/core/css/core-theme.css": "/core/css/core-theme.css?id=d41ca2ec0740815da84b",
     "/core/css/theme-icons.css": "/core/css/theme-icons.css?id=432cee2764c3ccb85537"
 }
