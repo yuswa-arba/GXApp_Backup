@@ -27,14 +27,9 @@ class SyncFingerspotScanLog implements ShouldQueue
 
     }
 
-    /**
-     * repeat slot maker execution each year
-     */
     public function handle()
     {
 
     }
-
-
 
 }

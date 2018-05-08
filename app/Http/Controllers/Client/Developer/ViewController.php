@@ -24,6 +24,11 @@ class ViewController extends Controller
         return view('pages.developer.face');
     }
 
+    public function fingerspot()
+    {
+        return view('pages.developer.fingerspot');
+    }
+
     public function logs()
     {
         return view('pages.developer.logs');
@@ -33,6 +38,8 @@ class ViewController extends Controller
     {
         return view('pages.developer.queueJobs');
     }
+
+
 
     public function backup()
     {

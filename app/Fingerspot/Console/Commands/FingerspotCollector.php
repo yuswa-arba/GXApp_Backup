@@ -24,7 +24,6 @@ class FingerspotCollector extends Command
 
     public function handle()
     {
-        //php artisan queue:work --queue=repeater
-        CollectFingerspotScanLog::dispatch()->onConnection('database')->onQueue('fingerspot');
+
     }
 }

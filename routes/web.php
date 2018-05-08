@@ -1,13 +1,8 @@
 <?php
 
 
-use App\Attendance\Models\AttendanceSchedule;
-use App\Fingerspot\Model\FingerspotDevice;
-use App\Mail\AccountVerification;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 

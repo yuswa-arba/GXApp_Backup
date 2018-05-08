@@ -23,6 +23,10 @@
             <span class="icon-thumbnail">fa</span>
         </li>
         <li class="">
+            <a href="{{route('developer.fingerspot')}}">Fingerspot</a>
+            <span class="icon-thumbnail">fs</span>
+        </li>
+        <li class="">
             <a href="{{route('developer.logs')}}">Logs</a>
             <span class="icon-thumbnail">l</span>
         </li>

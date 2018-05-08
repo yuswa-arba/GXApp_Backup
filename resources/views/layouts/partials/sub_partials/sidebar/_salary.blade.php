@@ -16,7 +16,7 @@
         <ul class="sub-menu">
             <li class="">
                 <a href="{{route('salary.report')}}">Report & Generate</a>
-                <span class="icon-thumbnail">rg</span>s
+                <span class="icon-thumbnail">rg</span>
             </li>
             <li class="">
                 <a href="{{route('salary.payroll')}}">Payroll</a>

@@ -30,5 +30,9 @@ Route::prefix('v1/h')->group(function () {
         Route::get('backup/download/{file_name?}','BackupController@download');
         Route::get('backup/delete/{file_name?}','BackupController@delete')->where('file_name', '(.*)');
 
+        Route::get('fingerspot/list','FingerspotController@getList');
+        Route::post('fingerspot/submit','FingerspotController@submit');
+        Route::post('fingerspot/update','FingerspotController@update');
+
     });
 });

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('developer')->namespace('Client')->group(function () {
     Route::get('/', 'Developer\ViewController@index')->name('developer');
     Route::get('/face', 'Developer\ViewController@face')->name('developer.face');
+    Route::get('/fingerspot', 'Developer\ViewController@fingerspot')->name('developer.fingerspot');
     Route::get('/logs', 'Developer\ViewController@logs')->name('developer.logs');
     Route::get('/queueJob', 'Developer\ViewController@queueJob')->name('developer.queueJob');
     Route::get('/backup', 'Developer\ViewController@backup')->name('developer.backup');

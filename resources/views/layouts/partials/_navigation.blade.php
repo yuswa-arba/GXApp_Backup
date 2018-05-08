@@ -8,7 +8,7 @@
     <!-- END MOBILE SIDEBAR TOGGLE -->
     <div class="">
         <div class="brand inline">
-            <img src="{{asset('core/img/logo_blue.png')}}" alt="logo" data-src="{{asset('core/img/logo_blue.png')}}"
+            <img src="{{asset('core/img/logo_white.png')}}" alt="logo" data-src="{{asset('core/img/logo_white.png')}}"
                  data-src-retina="{{asset('core/img/logo_white_2x.png')}}" width="78" height="22"
                  class="m-t-5"
             >

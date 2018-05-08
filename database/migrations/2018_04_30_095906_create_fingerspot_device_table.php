@@ -18,6 +18,7 @@ class CreateFingerspotDeviceTable extends Migration
             $table->string('server_ip');
             $table->string('server_port');
             $table->string('device_sn');
+            $table->string('description')->nullable();
             $table->tinyInteger('is_activated')->default(0);
             $table->timestamps();
         });
