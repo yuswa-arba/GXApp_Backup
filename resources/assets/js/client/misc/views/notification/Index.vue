@@ -12,9 +12,9 @@
                                 <div class="col-lg-12 m-b-10">
                                     <div class="input-group">
                                         <input type="text" style="height: 40px;" class="form-control"
+                                               @keyup.enter="searchEmployee()"
                                                placeholder="Search Employee Number / Name / Surname / Nickname"
-                                               v-model="searchText"
-                                        >
+                                               v-model="searchText">
                                         <span class="input-group-addon primary" @click="searchEmployee()"><i
                                                 class="fa fa-search cursor"></i></span>
                                     </div>
@@ -91,7 +91,7 @@
                                 <select class="form-control" v-model="formObject.viaType">
                                     <option value="" disabled hidden selected>Select Via</option>
                                     <option value="notification">Push Notification</option>
-                                    <option value="sms" disabled>SMS</option> <!--currently not supported yet-->
+                                    <option value="sms">SMS</option> <!--currently not supported yet-->
                                 </select>
                             </div>
                         </div>

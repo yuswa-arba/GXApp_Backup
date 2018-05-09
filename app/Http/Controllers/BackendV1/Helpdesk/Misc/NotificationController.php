@@ -4,7 +4,8 @@ namespace App\Http\Controllers\BackendV1\Helpdesk\Misc;
 
 
 use App\Http\Controllers\Controller;
-use App\Notification\Logics\Send\CreatePersonLogic;
+
+use App\Notification\Logics\Send\SendSingleNotificationLogic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -30,7 +31,7 @@ class NotificationController extends Controller
 
         //is valid
 
-        return CreatePersonLogic::notify($request);
+        return SendSingleNotificationLogic::notify($request);
 
     }
 

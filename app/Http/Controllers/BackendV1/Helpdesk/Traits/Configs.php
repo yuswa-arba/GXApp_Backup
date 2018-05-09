@@ -25,6 +25,14 @@ class Configs
       'PAYROLL_REPORT'=>'public/downloads/payroll/'  
     ];
 
+    public static $FILE_PATH = [
+        'SMS_TO_SEND'=>'public/script/sms/'
+    ];
+
+    public static $FILES = [
+        'SMS_EXP'=>'public/script/sms.exp'
+    ];
+
     public static $PUNCH_TYPE = [
         'IN' => 'in',
         'OUT' => 'out'

@@ -1,0 +1,20 @@
+#!/usr/bin/expect -f
+spawn ssh kevin@172.16.79.205
+set timeout 3
+expect {
+        "(yes/no)" { send "yes\r";exp_continue}
+        "password"
+}
+send "kerobokan\r"
+expect "$"
+send "sudo su\r"
+expect ":"
+send "kerobokan\r"
+expect "#"
+send "echo \"[message]\" | gammu-smsd-inject TEXT [phoneNumber]\r"
+set timeout 3
+expect "$"
+send "exit\r"
+expect "#"
+send "exit\r"
+send "exit\r"

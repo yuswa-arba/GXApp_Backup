@@ -153,11 +153,16 @@ mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
  |--------------------------------------------------------------------------
  | Sounds
  |--------------------------------------------------------------------------
- |
- | Sounds
- |
  */
 mix.copyDirectory('resources/assets/sounds', 'public/sounds');
+
+/*
+ |--------------------------------------------------------------------------
+ | Scripts
+ |--------------------------------------------------------------------------
+ */
+mix.copyDirectory('resources/assets/script', 'public/script');
+
 
 
 /*

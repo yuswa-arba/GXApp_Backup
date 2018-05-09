@@ -4319,6 +4319,15 @@ var render = function() {
                           },
                           domProps: { value: _vm.searchText },
                           on: {
+                            keyup: function($event) {
+                              if (
+                                !("button" in $event) &&
+                                _vm._k($event.keyCode, "enter", 13, $event.key)
+                              ) {
+                                return null
+                              }
+                              _vm.searchEmployee()
+                            },
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
@@ -4642,9 +4651,7 @@ var render = function() {
                         _vm._v("Push Notification")
                       ]),
                       _vm._v(" "),
-                      _c("option", { attrs: { value: "sms", disabled: "" } }, [
-                        _vm._v("SMS")
-                      ])
+                      _c("option", { attrs: { value: "sms" } }, [_vm._v("SMS")])
                     ]
                   )
                 ]
