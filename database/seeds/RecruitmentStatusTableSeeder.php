@@ -13,11 +13,11 @@ class RecruitmentStatusTableSeeder extends Seeder
     public function run()
     {
         $data = array(
-            ['name' => 'Training'],
-            ['name' => 'Internship'],
-            ['name' => 'Freelance'],
-            ['name' => 'Contracted'],
-            ['name' => 'Permanent']
+            ['id'=>'1','name' => 'Training'],
+            ['id'=>'2','name' => 'Internship'],
+            ['id'=>'3','name' => 'Freelance'],
+            ['id'=>'4','name' => 'Contracted'],
+            ['id'=>'5','name' => 'Permanent']
         );
 
         /* Truncate all the data before populating*/

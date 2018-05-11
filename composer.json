@@ -6,12 +6,19 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
-        "fideloper/proxy": "~3.3",
+        "backpack/backupmanager": "1.3",
+        "barryvdh/laravel-cors": "^0.11.0",
+        "barryvdh/laravel-dompdf": "0.8.2",
+        "fideloper/proxy": "3.3",
+        "karlmonson/laravel-ping": "^1.0",
         "laravel/framework": "5.5.*",
-        "laravel/passport": "^4.0",
-        "laravel/tinker": "~1.0",
-        "spatie/laravel-fractal": "^5.2",
-        "spatie/laravel-permission": "^2.7"
+        "laravel/passport": "4.0",
+        "laravel/tinker": "1.0",
+        "predis/predis": "1.1",
+        "simplesoftwareio/simple-qrcode": "~2",
+        "spatie/laravel-backup": "5.2",
+        "spatie/laravel-fractal": "5.2",
+        "spatie/laravel-permission": "2.7"
     },
     "require-dev": {
         "filp/whoops": "~2.0",

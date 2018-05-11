@@ -50,7 +50,29 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
-            'strict' => true,
+            'strict' => false,
+            'engine' => 'InnoDB',
+            'dump' => [
+                'dump_binary_path' => '/Applications/MAMP/Library/bin/', // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+//                'exclude_tables' => [''],
+//                'add_extra_option' => '--optionname=optionvalue',
+            ]
+        ],
+
+        'fingerspot' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '127.0.0.1'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => 'tb_device',
+            'username' => 'root',
+            'password' => 'root',
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
             'engine' => 'InnoDB',
         ],
 

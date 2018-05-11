@@ -9,11 +9,6 @@ require('./bootstrap');
 
 require('./global');
 
-
-
-/* Vue Instances & Components */
-
-
-
+require('./echo/main')
 
 

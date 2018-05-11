@@ -19,21 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::prefix('setting')->namespace('Client\Settings')->middleware('auth.admin')->group(function () {
-    /*
-     |--------------------------------------------------------------------------
-     | Path Configuration
-     |--------------------------------------------------------------------------
-     */
-    $client_path = 'routes/client/';
-    $client_setting_path = $client_path.'settings/';
 
-    $backend_path = 'routes/backendV1/';
+    Route::get('passport', 'ViewController@passport')->name('setting.passport');
+    Route::get('permission', 'ViewController@permission')->name('setting.permission');
+    Route::get('notification','ViewController@notification')->name('setting.notification');
 
-    /*
-     |--------------------------------------------------------------------------
-     | Init setting routes
-     |--------------------------------------------------------------------------
-     */
-    include (base_path($client_setting_path .'permission.php'));
-    include (base_path($client_setting_path .'passport.php'));
 });

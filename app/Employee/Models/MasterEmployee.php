@@ -3,10 +3,17 @@
 namespace App\Employee\Models;
 
 use App\Account\Models\User;
+use App\Attendance\Models\AttendanceTimesheet;
+use App\Attendance\Models\EmployeeSlotSchedule;
 use App\Components\Models\Bank;
+use App\Components\Models\DivisionManager;
 use App\Components\Models\EducationLevel;
 use App\Components\Models\MaritalStatus;
 use App\Components\Models\Religion;
+use App\Salary\Models\EmployeeBonusesCuts;
+use App\Salary\Models\EmployeeSalary;
+use App\Salary\Models\SalaryCalculation;
+use App\Salary\Models\SalaryQueue;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 
@@ -29,6 +36,11 @@ class MasterEmployee extends Model
     public function user()
     {
         return $this->hasOne(User::class, 'employeeId');
+    }
+
+    public function medicalRecord()
+    {
+        return $this->hasOne(EmployeeMedicalRecords::class,'employeeId');
     }
 
     public function employment()
@@ -71,4 +83,55 @@ class MasterEmployee extends Model
         return $this->belongsTo(Bank::class, 'bankId');
     }
 
+    public function slotSchedule()
+    {
+        return $this->hasOne(EmployeeSlotSchedule::class,'employeeId');
+    }
+
+    public function facePerson()
+    {
+        return $this->hasOne(FacePerson::class,'employeeId');
+    }
+
+    public function divisionManager()
+    {
+        return $this->hasOne(DivisionManager::class,'employeeId');
+    }
+
+    public function timesheet()
+    {
+        return $this->hasMany(AttendanceTimesheet::class,'employeeId');
+    }
+
+    public function salary()
+    {
+        return $this->hasOne(EmployeeSalary::class,'employeeId');
+    }
+
+    public function bonusCut()
+    {
+        return $this->hasMany(EmployeeBonusesCuts::class,'employeeId');
+    }
+
+
+    public function salaryQueue()
+    {
+        return $this->hasMany(SalaryQueue::class,'employeeId');
+    }
+
+    public function salaryCalculation()
+    {
+        return $this->hasMany(SalaryCalculation::class,'employeeId');
+    }
+
+
+    public function fingerspotUser()
+    {
+        return $this->hasOne(FingerspotUser::class,'employeeId');
+    }
+
+    public function siblings()
+    {
+        return $this->hasMany(EmployeeSiblings::class,'employeeId');
+    }
 }

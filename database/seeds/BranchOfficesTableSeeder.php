@@ -13,10 +13,11 @@ class BranchOfficesTableSeeder extends Seeder
     public function run()
     {
         $data = array(
-            ['name' => 'Bali'],
-            ['name' => 'Malang'],
-            ['name' => 'Balikpapan'],
-            ['name' => 'Samarinda']);
+            ['id'=>'1','name' => 'Bali','codeNo'=>'1','codeName'=>'GNB'],
+            ['id'=>'2','name' => 'Malang','codeNo'=>'2','codeName'=>'GBP'],
+            ['id'=>'3','name' => 'Balikpapan','codeNo'=>'3','codeName'=>'GNM'],
+            ['id'=>'4','name' => 'Samarinda','codeNo'=>'4','codeName'=>'GSM'],
+        );
 
         /* Truncate all the data before populating*/
         if (DB::table('branchOffices')->get()->count() > 0) {

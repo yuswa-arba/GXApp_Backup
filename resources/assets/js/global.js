@@ -79,11 +79,74 @@ $(document).ready(function () {
 
     //Date picker
     // on init
-
-    $('.datepicker').datepicker({format: 'dd/mm/yyyy', todayHighlight: true});
+    $('.datepicker').datepicker({format: 'dd/mm/yyyy', todayHighlight: true, autoclose: true,});
 
     $(function ($) {
         $(".datepicker").mask("99/99/9999");
     });
+
+    $(function ($) {
+        $(".time-mask").mask("99:99");
+    });
+
+    //Tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+
+    // disable mousewheel on a input number field when in focus
+    // (to prevent Cromium browsers change the value when scrolling)
+    $('body').on('focus', 'input[type=number]', function (e) {
+        $(this).on('mousewheel.disableScroll', function (e) {
+            e.preventDefault()
+        })
+    })
+
+    $('body').on('blur', 'input[type=number]', function (e) {
+        $(this).off('mousewheel.disableScroll')
+    })
+
+
+    /**
+     * Check if user is using Chrome, use this, to alert
+     * other browser users to use Chrome for better perfomance
+     */
+
+    function isChrome() {
+        let isChromium = window.chrome,
+            winNav = window.navigator,
+            vendorName = winNav.vendor,
+            isOpera = winNav.userAgent.indexOf("OPR") > -1,
+            isIEedge = winNav.userAgent.indexOf("Edge") > -1,
+            isIOSChrome = winNav.userAgent.match("CriOS");
+
+        if (isIOSChrome) {
+            return true;
+        } else if (
+            isChromium !== null &&
+            typeof isChromium !== "undefined" &&
+            vendorName === "Google Inc." &&
+            isOpera === false &&
+            isIEedge === false
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    if (!isChrome()) {
+        $('.page-container').pgNotification({
+            style: 'flip-right',
+            message: 'GXApp currently only supports <b>Chrome</b> browser, ' +
+            '<b>it is recommended to use Chrome</b> for better performances and to avoid existing bugs on other browser. ' +
+            'We are still working on to make it compatible with other browser too.',
+            position: 'top-right',
+            timeout: 20000,
+            type: 'warning'
+        }).show();
+    }
+
+
+
+
 
 });

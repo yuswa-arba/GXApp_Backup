@@ -113,10 +113,15 @@
                                     users:</span></h4>
                             </div>
                             <div class="col-lg-12"></div>
-                            <div class="col-lg-3 sm-m-t-10">
+                            <div class="col-lg-3 sm-m-t-10" v-for="(user,index) in users">
                                 <div class="checkbox check-primary checkbox-circle">
-                                    <input type="checkbox" checked="checked" value="1" id="checkbox9">
-                                    <label for="checkbox9">Mark</label>
+                                    <input type="checkbox"
+                                           v-model="assignedUsers"
+                                           :value="user"
+                                           :id="'cbUser'+index"
+                                           @change="assignUser(permissionName,user)"
+                                    >
+                                    <label :for="'cbUser'+index">{{user.name}}</label>
                                 </div>
                             </div>
                             <div class="col-lg-12">
@@ -130,7 +135,7 @@
                                            v-model="assignedRoles"
                                            :value="role"
                                            :id="'cbrole'+role.id"
-                                           @change="assign(permissionName,role)"
+                                           @change="assignPermission(permissionName,role)"
                                     >
                                     <label :for="'cbrole'+role.id">{{role.name}}</label>
                                 </div>
@@ -167,12 +172,13 @@
                 permissions: [],
                 roles: [],
                 assignedRoles: [],
+                users:[],
                 assignedUsers: [],
             }
         },
         created(){
             let self = this;
-            get(api_path() + 'setting/permission/list')
+            get(api_path + 'setting/permission/list')
                 .then((res) => {
                     this.permissions = res.data.data;
                 })
@@ -194,13 +200,16 @@
 
                 this.permission = permission;
 
-                get(api_path() + 'setting/permission/assigned/' + permission.name)
+                get(api_path + 'setting/permission/assigned/' + permission.name)
                     .then((res) => {
                         this.permissionId = res.data.data.id;
                         this.permissionName = res.data.data.name;
                         this.roles = res.data.data.allRoles.data;
                         this.assignedRoles = res.data.data.assignedRoles.data;
-                        this.permission.roles =  this.assignedRoles; // update card list
+                        this.users = res.data.data.allUsers.data;
+                        this.assignedUsers  =res.data.data.assignedUsers.data;
+                        this.permission.roles =  this.assignedRoles;
+                        this.permission.users = this.assignedUsers;
                         $('#newRole'+permission.id).addClass('hide');// hide badge if there is any
                     });
 
@@ -211,9 +220,7 @@
                 this.role = '';
                 $('#modal-permission-detail').modal("toggle"); // close modal
             },
-            assign(permissionName, role){
-
-                /*TODO ASSIGN USER IS NOT YET CREATED*/
+            assignPermission(permissionName, role){
 
                 let assignRoleIdArr = [];
 
@@ -223,9 +230,9 @@
 
                 let data = {permissionName: permissionName, assignRoleIdArr: assignRoleIdArr};
 
-                post(api_path() + 'setting/permission/assign/by_permission', data)
+                post(api_path + 'setting/permission/assign/by_permission/role', data)
                     .then((res) => {
-                        /* TODO Create response for User too*/
+
                         this.permission.roles = res.data.assigned.data
 
                         this.$bus.$emit('assign:by_permission',role)
@@ -240,7 +247,6 @@
 
                     })
                     .catch((err) => {
-
                         $('.page-container').pgNotification({
                             style: 'flip',
                             message: err.message,
@@ -250,6 +256,43 @@
                         }).show();
 
                     })
+
+
+            },
+            assignUser(permissionName, user){
+                let assignUserIdArr = [];
+
+                _.forEach(this.assignedUsers, function (value, key) {
+                    assignUserIdArr.push(value.employeeId); // push role ID to array
+                });
+
+                let data = {permissionName: permissionName, assignUserIdArr: assignUserIdArr};
+
+                post(api_path + 'setting/permission/assign/by_permission/user', data)
+                    .then((res) => {
+
+                    this.permission.users = res.data.assigned.data
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 3500,
+                        type: 'info'
+                    }).show();
+
+                })
+            .catch((err) => {
+
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: err.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+
+                })
 
 
             }

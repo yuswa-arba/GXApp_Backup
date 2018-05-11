@@ -2,8 +2,6 @@
  * Created by kevinpurwono on 8/11/17.
  */
 
-require('../../bootstrap'); // axio, vue , vue-router, lodash, etc
-
 import Vue from 'vue';
 // import router from './router'
 
@@ -21,6 +19,7 @@ Object.defineProperties(Vue.prototype, {
 
 Vue.component('roles-card', require('./components/RolesCard.vue'));
 Vue.component('permissions-card',require('./components/PermissionCard.vue'));
+Vue.component('user-card',require('./components/UserCard.vue'));
 Vue.component('create-new-menus',require('./components/CreateNewMenus.vue'));
 
 const app = new Vue({

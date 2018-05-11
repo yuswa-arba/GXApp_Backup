@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Settings\Permission;
 
+use App\Account\Models\User;
 use App\Permission\Transformers\PermissionListTransformer;
 use App\Permission\Transformers\RoleListTransformer;
+use App\Permission\Transformers\UserListTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
@@ -12,6 +14,10 @@ use Spatie\Permission\Models\Role;
 
 class MainController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:edit setting|view setting']);
+    }
 
     public function createRole(Request $request)
     {
@@ -45,6 +51,12 @@ class MainController extends Controller
     {
         $permissions = Permission::all();
         return fractal($permissions, new PermissionListTransformer())->respond(200);
+    }
+
+    public function userList()
+    {
+        $user = User::where('employeeId','!=','')->get();
+        return fractal($user,new UserListTransformer)->respond(200);
     }
 
 }

@@ -1855,19 +1855,39 @@ $(document).ready(function () {
     // constants
     var employeeId = '';
     var personalInfoForm = $('#personalInformationForm');
+    var medicalRecordsForm = $('#medicalRecordsForm');
     var employmentForm = $('#employmentForm');
     var formObject = {};
 
+    //buttons
+    var createEmployeeBtn = $('#createEmployeeBtn');
+    var saveMedicalRecordsBtn = $('#saveMedicalRecordsBtn');
+    var saveEmploymentBtn = $('#saveEmploymentBtn');
+
     // on click events
-    $('#createEmployeeBtn').on('click', function () {
+    createEmployeeBtn.on('click', function () {
 
         var serializeForm = personalInfoForm.serializeArray();
 
         _.forEach(serializeForm, function (value, key) {
+
+            /* Previous length of employment value fix */
+            if (value.name == 'prevLengthEmployment' && value.value != '') {
+                value.value = value.value + ' ' + $('input[name="lengthEmploymentTimeFormat"]:checked').val();
+            }
+
             formObject[value.name] = value.value;
         });
 
-        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */])() + 'employee/create', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["a" /* objectToFormData */])(formObject)).then(function (res) {
+        //Disable button and change text
+        createEmployeeBtn.html('Submitting...');
+        createEmployeeBtn.prop('disabled', true);
+
+        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/create', Object(__WEBPACK_IMPORTED_MODULE_2__helpers_utils__["b" /* objectToFormData */])(formObject)).then(function (res) {
+
+            //Enable button and change text
+            createEmployeeBtn.html('Create Employee');
+            createEmployeeBtn.prop('disabled', false);
 
             if (!res.data.isFailed && res.data.employeeId) {
 
@@ -1886,22 +1906,38 @@ $(document).ready(function () {
 
                 if (employeeId) {
                     // make sure employee ID is not empty
-                    goToEmploymentTab();
+                    goToMedicalRecordsTab();
                 } else {
                     alert('Something went wrong! Employee ID is not defined');
                 }
             } else {
 
-                /* Show error notification */
-                $('.page-container').pgNotification({
-                    style: 'flip',
-                    message: res.data.message,
-                    position: 'top-right',
-                    timeout: 0,
-                    type: 'danger'
-                }).show();
+                if (res.data.message) {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: res.data.message,
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                } else {
+                    /* Show error notification */
+                    $('.page-container').pgNotification({
+                        style: 'flip',
+                        message: 'Invalid response from server',
+                        position: 'top-right',
+                        timeout: 0,
+                        type: 'danger'
+                    }).show();
+                }
             }
         }).catch(function (err) {
+
+            //Enable button and change text
+            createEmployeeBtn.html('Create Employee');
+            createEmployeeBtn.prop('disabled', false);
+
             var errorsResponse = err.message + '</br>';
 
             _.forEach(err.response.data.errors, function (value, key) {
@@ -1918,12 +1954,20 @@ $(document).ready(function () {
         });
     });
 
-    $('#saveEmploymentBtn').on('click', function () {
+    saveMedicalRecordsBtn.on('click', function () {
 
-        var formData = employmentForm.serialize();
+        var formData = medicalRecordsForm.serialize();
         formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
 
-        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["b" /* post */])(Object(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */])() + 'employee/employment', formData).then(function (res) {
+        //Disable button and change text
+        saveMedicalRecordsBtn.html('Submitting...');
+        saveMedicalRecordsBtn.prop('disabled', true);
+
+        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/medicalRecords', formData).then(function (res) {
+
+            //Enable button and change text
+            saveMedicalRecordsBtn.html('Save Employee Medical Records');
+            saveMedicalRecordsBtn.prop('disabled', false);
 
             if (!res.data.isFailed) {
                 $('#errors-container').removeClass('show').addClass('hide');
@@ -1937,7 +1981,12 @@ $(document).ready(function () {
                     type: 'info'
                 }).show();
 
-                window.location.href = '/employee/list';
+                if (employeeId) {
+                    // make sure employee ID is not empty
+                    goToEmploymentTab();
+                } else {
+                    alert('Something went wrong! Employee ID is not defined');
+                }
             } else {
                 /* Show error notification */
                 $('.page-container').pgNotification({
@@ -1949,6 +1998,70 @@ $(document).ready(function () {
                 }).show();
             }
         }).catch(function (err) {
+
+            //Enable button and change text
+            saveMedicalRecordsBtn.html('Save Employee Medical Records');
+            saveMedicalRecordsBtn.prop('disabled', false);
+
+            var errorsResponse = err.message + '</br>';
+
+            _.forEach(err.response.data.errors, function (value, key) {
+                errorsResponse += value[0] + ' ';
+            });
+
+            $('#errors-container').removeClass('hide').addClass('show');
+            $('#errors-value').html(errorsResponse);
+            errorsResponse = ''; // reset value
+            /* Scroll to top*/
+            $('html, body').animate({
+                scrollTop: $(".jumbotron").offset().top
+            }, 500);
+        });
+    });
+
+    saveEmploymentBtn.on('click', function () {
+
+        var formData = employmentForm.serialize();
+        formData = formData + '&employeeId=' + employeeId; // add employeeId PARAM
+
+        //Disable button and change text
+        saveEmploymentBtn.html('Submitting...');
+        saveEmploymentBtn.prop('disabled', true);
+
+        Object(__WEBPACK_IMPORTED_MODULE_1__helpers_api__["h" /* post */])(__WEBPACK_IMPORTED_MODULE_0__helpers_const__["a" /* api_path */] + 'employee/employment', formData).then(function (res) {
+
+            //Enable button and change text
+            saveEmploymentBtn.html('Save Employment & Send Verification Email');
+            saveEmploymentBtn.prop('disabled', false);
+
+            if (!res.data.isFailed) {
+                $('#errors-container').removeClass('show').addClass('hide');
+
+                /* Show success notification*/
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 3500,
+                    type: 'info'
+                }).show();
+
+                window.location.href = '/employee/list'; // go to list page when FINISH
+            } else {
+                /* Show error notification */
+                $('.page-container').pgNotification({
+                    style: 'flip',
+                    message: res.data.message,
+                    position: 'top-right',
+                    timeout: 0,
+                    type: 'danger'
+                }).show();
+            }
+        }).catch(function (err) {
+
+            //Enable button and change text
+            saveEmploymentBtn.html('Save Employment & Send Verification Email');
+            saveEmploymentBtn.prop('disabled', false);
 
             var errorsResponse = err.message + '</br>';
 
@@ -1981,7 +2094,163 @@ $(document).ready(function () {
         formObject.employeePhoto = e.target.files[0];
     });
 
+    /* Medical Record Tab */
+
+    $('.datepickerGet').datepicker({
+        format: 'dd/mm/yyyy',
+        autoclose: true
+    });
+
+    $('[name="hasLongTermMedication"]').click(function () {
+        var treatmentLong = $(this).val();
+
+        var outDis = '';
+
+        if (treatmentLong == false) {
+            outDis = 'none';
+        }
+
+        $('#treatmentQuestion').css({ 'display': outDis });
+    });
+
+    $('[name="isASmoker"]').click(function () {
+        var smokerVal = $(this).val();
+        var outDisSmoker = '';
+
+        if (smokerVal == false) {
+            outDisSmoker = 'none';
+        }
+
+        $('#smokerQuestion').css({ 'display': outDisSmoker });
+    });
+
+    $('[name="isADrinker"]').click(function () {
+        var drinkerVal = $(this).val();
+
+        var outDisDrinker = '';
+
+        if (drinkerVal == false) {
+            outDisDrinker = 'none';
+        }
+
+        $('#drinkerQuestion').css({ 'display': outDisDrinker });
+    });
+
+    $('[name="hadAnAccident"]').click(function () {
+        var accidentVal = $(this).val();
+
+        var outDisAccident = '';
+
+        if (accidentVal == false) {
+            outDisAccident = 'none';
+        }
+
+        $('#accidentQuestion').css({ 'display': outDisAccident });
+    });
+
+    $('[name="hadASurgery"]').click(function () {
+
+        var operationVal = $(this).val();
+
+        var outDisOperation = '';
+
+        if (operationVal == false) {
+            outDisOperation = 'none';
+        }
+
+        $('#operationQuestion').css({ 'display': outDisOperation });
+    });
+
+    $('[name="hasHospitalized"]').click(function () {
+        var hospitalizedVal = $(this).val();
+
+        var outDisHospitaled = '';
+
+        if (hospitalizedVal == false) {
+            outDisHospitaled = 'none';
+        }
+
+        $('#hospitalizedQuestion').css({ 'display': outDisHospitaled });
+    });
+
+    $('[name="wearGlasses"]').click(function () {
+
+        var glassesVal = $(this).val();
+
+        var outDisGlasses = '';
+
+        if (glassesVal == false) {
+            outDisGlasses = 'none';
+        }
+
+        $('#glassesQuestion').css({ 'display': outDisGlasses });
+    });
+
+    /* End of Mesical Record Tab */
+
+    /* Marital, Father & Mother form*/
+
+    $('[name="fatherIsDeceased"]').change(function () {
+        if ($(this).val() == 1) {
+            /* Disable forms */
+            $('#father-form').addClass('disabled-form');
+            $("#father-form :input").attr("disabled", true);
+        } else {
+            /* Enable forms */
+            $("#father-form :input").attr("disabled", false);
+            $('#father-form').removeClass('disabled-form');
+        }
+    });
+
+    $('[name="motherIsDeceased"]').change(function () {
+        if ($(this).val() == 1) {
+            /* Disable forms */
+            $('#mother-form').addClass('disabled-form');
+            $("#mother-form :input").attr("disabled", true);
+        } else {
+            /* Enable forms */
+            $("#mother-form :input").attr("disabled", false);
+            $('#mother-form').removeClass('disabled-form');
+        }
+    });
+
+    $('[name="maritalStatusId"]').change(function () {
+        if ($(this).val() == 5) {
+            // Unmarried
+            /* Disable forms */
+            $('#spouse-form').addClass('disabled-form');
+            $("#spouse-form :input").attr("disabled", true);
+        } else {
+            /* Enable forms */
+            $("#spouse-form :input").attr("disabled", false);
+            $('#spouse-form').removeClass('disabled-form');
+        }
+    });
+
+    /* End of father & mother form*/
+
+    /* Siblings form */
+
+    $('[name="numberOfSiblings"]').keyup(function () {
+
+        if ($(this).val() > 0) {
+            if ($(this).val() <= 10) {
+                addSiblingsForm($(this).val());
+            }
+        } else {
+            removeSiblingsForm();
+        }
+    });
+
+    /* End of siblings form */
+
     // functions
+
+    function goToMedicalRecordsTab() {
+        clearActiveTab();
+        $('#item-medical-records').addClass('active');
+        $('#tab-medical-records').addClass('active');
+    }
 
     function goToEmploymentTab() {
 
@@ -2000,6 +2269,25 @@ $(document).ready(function () {
         $('.tab-pane').removeClass('active');
         $('.nav-item a').removeClass('active');
     }
+
+    function addSiblingsForm(total) {
+
+        removeSiblingsForm(); //reset
+
+        var i = 0;
+        for (i; i < total; i++) {
+
+            var originalForm = '<div class="hide" id="siblingsForm' + i + '">\n                                                <br>\n                                                <div class="form-group form-group-default">\n                                                    <label>Sibling\'s Name</label>\n                                                    <input type="text" class="form-control" name="siblingName[' + i + ']" value="">\n                                                </div>\n                                                <div class="form-group form-group-default">\n                                                    <label>Sibling\'s Address</label>\n                                                    <input type="text" class="form-control" name="siblingAddress[' + i + ']"\n                                                           value="">\n                                                </div>\n                                                <div class="form-group form-group-default">\n                                                    <label>Sibling\'s City</label>\n                                                    <input type="text" class="form-control" name="siblingCity[' + i + ']"\n                                                           value="">\n                                                </div>\n                                                <div class="form-group form-group-default">\n                                                    <label>Sibling\'s Phone Number</label>\n                                                    <input type="number" min="0" class="form-control" name="siblingPhoneNo[' + i + ']"\n                                                           value="">\n                                                </div>\n                                                <br>\n                                            </div>';
+
+            $('#siblingsFormContainer').prepend(originalForm);
+
+            $('#siblingsForm' + i).removeClass('hide');
+        }
+    }
+
+    function removeSiblingsForm() {
+        $('#siblingsFormContainer').empty();
+    }
 });
 
 /***/ }),
@@ -2008,17 +2296,25 @@ $(document).ready(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = get;
-/* harmony export (immutable) */ __webpack_exports__["b"] = post;
+/* harmony export (immutable) */ __webpack_exports__["g"] = get;
+/* harmony export (immutable) */ __webpack_exports__["h"] = post;
 /* unused harmony export multipartPost */
-/* unused harmony export del */
+/* harmony export (immutable) */ __webpack_exports__["a"] = del;
 /* unused harmony export interceptors */
+/* harmony export (immutable) */ __webpack_exports__["c"] = faceGet;
+/* harmony export (immutable) */ __webpack_exports__["f"] = facePut;
+/* harmony export (immutable) */ __webpack_exports__["b"] = faceDel;
+/* harmony export (immutable) */ __webpack_exports__["d"] = facePost;
+/* unused harmony export facePutOctet */
+/* harmony export (immutable) */ __webpack_exports__["e"] = facePostOctet;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios__ = __webpack_require__("./node_modules/axios/index.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_axios__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__store_auth__ = __webpack_require__("./resources/assets/js/client/store/auth.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__const__ = __webpack_require__("./resources/assets/js/client/helpers/const.js");
 /**
  * Created by kevinpurwono on 9/11/17.
  */
+
 
 
 function get(url) {
@@ -2026,7 +2322,7 @@ function get(url) {
         method: 'GET',
         url: url,
         headers: {
-            'Authorization': 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store_auth__["a" /* default */].state.api_token
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
         }
     });
 }
@@ -2037,7 +2333,7 @@ function post(url, payload) {
         url: url,
         data: payload,
         headers: {
-            'Authorization': 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store_auth__["a" /* default */].state.api_token
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
         }
     });
 }
@@ -2048,7 +2344,7 @@ function multipartPost(url, payload) {
         url: url,
         data: payload,
         headers: {
-            'Authorization': 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store_auth__["a" /* default */].state.api_token,
+            // 'Authorization': `Bearer ${Auth.state.api_token}`,
             'Content-Type': 'multipart/form-data'
         }
     });
@@ -2060,7 +2356,7 @@ function del(url) {
         method: 'DELETE',
         url: url,
         headers: {
-            'Authorization': 'Bearer ' + __WEBPACK_IMPORTED_MODULE_1__store_auth__["a" /* default */].state.api_token
+            // 'Authorization': `Bearer ${Auth.state.api_token}`
         }
     });
 }
@@ -2074,19 +2370,94 @@ function interceptors(cb) {
     });
 }
 
+function faceGet(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'GET',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePut(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function faceDel(url) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'DELETE',
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePost(url, payload) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: payload,
+        headers: {
+            'Content-Type': 'application/json',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+function facePutOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'PUT',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
+function facePostOctet(url, data) {
+    return __WEBPACK_IMPORTED_MODULE_0_axios___default()({
+        method: 'POST',
+        url: url,
+        data: data,
+        headers: {
+            'Content-Type': 'application/octet-stream',
+            'Ocp-Apim-Subscription-Key': __WEBPACK_IMPORTED_MODULE_2__const__["c" /* faceSubKey */]
+        }
+    });
+}
+
 /***/ }),
 
 /***/ "./resources/assets/js/client/helpers/const.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = api_path;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return api_path; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return faceBaseUrl; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return faceSubKey; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return microsoftPersonGroupId; });
 /**
  * Created by kevinpurwono on 9/11/17.
  */
-function api_path() {
-  return '/v1/h/';
-}
+
+var api_path = '/v1/h/';
+var faceBaseUrl = 'https://southeastasia.api.cognitive.microsoft.com/face/v1.0/';
+var faceSubKey = 'e498335112c8402a82967303033da0a4';
+var microsoftPersonGroupId = 'gx_development';
 
 /***/ }),
 
@@ -2094,7 +2465,8 @@ function api_path() {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = objectToFormData;
+/* harmony export (immutable) */ __webpack_exports__["b"] = objectToFormData;
+/* harmony export (immutable) */ __webpack_exports__["a"] = makeBlob;
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 /**
@@ -2134,13 +2506,35 @@ function objectToFormData(obj, form, namespace) {
     return fd;
 }
 
+function makeBlob(dataURL) {
+    var BASE64_MARKER = ';base64,';
+    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+        var _parts = dataURL.split(',');
+        var _contentType = _parts[0].split(':')[1];
+        var _raw = decodeURIComponent(_parts[1]);
+        return new Blob([_raw], { type: _contentType });
+    }
+    var parts = dataURL.split(BASE64_MARKER);
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+
+    var uInt8Array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], { type: contentType });
+}
+
 /***/ }),
 
 /***/ "./resources/assets/js/client/store/auth.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = ({
+/* unused harmony default export */ var _unused_webpack_default_export = ({
 	state: {
 		api_token: null,
 		user_id: null

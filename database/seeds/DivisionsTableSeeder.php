@@ -14,15 +14,21 @@ class DivisionsTableSeeder extends Seeder
     {
 
         $data = array(
-            ['name' => 'CSO'],
-            ['name' => 'CTSO'],
-            ['name' => 'Marketing'],
-            ['name' => 'MNT Technicians'],
-            ['name' => 'FO Technicians'],
-            ['name' => 'WL Technicians'],
-            ['name' => 'Household'],
-            ['name' => 'Storage'],
-            ['name' => 'NA']
+            ['id' => '1', 'name' => 'CSO'],
+            ['id' => '2', 'name' => 'CTSO'],
+            ['id' => '3', 'name' => 'Marketing'],
+            ['id' => '4', 'name' => 'MNT Technicians'],
+            ['id' => '5', 'name' => 'FO Technicians'],
+            ['id' => '6', 'name' => 'WL Technicians'],
+            ['id' => '7', 'name' => 'Household'],
+            ['id' => '8', 'name' => 'Storage'],
+            ['id' => '9', 'name' => 'NA'],
+            ['id' => '10', 'name' => 'Secretary'],
+            ['id' => '11', 'name' => 'R&D '],
+            ['id' => '12', 'name' => 'Development'],
+            ['id' => '13', 'name' => 'Secretary'],
+            ['id' => '14', 'name' => 'Development'],
+
         );
 
         /* Truncate all the data before populating*/

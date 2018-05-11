@@ -20,24 +20,33 @@
 
 </head>
 <body class="fixed-header menu-pin menu-behind">
+<div class="content">
+    <div id="vc-internet-connection"></div>
+</div>
 
 @include('layouts.partials._sidebar')
 
 <!-- START PAGE-CONTAINER -->
 <div class="page-container">
-@include('layouts.partials._navigation')
+    <div id="nav-and-notification">
+        @include('layouts.partials._navigation')
+        @include('layouts.partials._quickview')
+    </div>
+
+
 <!-- START PAGE CONTENT WRAPPER -->
+
     <div class="page-content-wrapper">
         <!-- START PAGE CONTENT -->
-
-        @yield('content')
+    @yield('content')
+    <!-- END PAGE CONTENT -->
 
         {{--@include('layouts.partials._footer_in_page')--}}
     </div>
     <!-- END PAGE CONTENT WRAPPER -->
 </div>
+
 <!-- END PAGE CONTAINER -->
-@include('layouts.partials._quickview')
 @include('layouts.partials._overlay')
 
 @include('layouts.partials._footer')

@@ -11,6 +11,15 @@
 
 @push('child-page-controller')
 
+<script>
+    $('#notify').click(function (e) {
+        e.preventDefault()
+        $.get('/testing/broadcast')
+    })
+</script>
+
+@include('layouts.partials.snippets._notification_to_zoom_out80')
+
 @endpush
 
 @section('content')
@@ -23,8 +32,8 @@
                 <div class="inner">
                     <!-- START BREADCRUMB -->
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Barebone</a></li>
-                        <li class="breadcrumb-item active">Layout</li>
+                        <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+                        {{--<li class="breadcrumb-item active">Layout</li>--}}
                     </ol>
                     <!-- END BREADCRUMB -->
                 </div>
@@ -33,9 +42,12 @@
         <!-- END JUMBOTRON -->
         <!-- START CONTAINER FLUID -->
         <div class="container-fluid container-fixed-lg">
+            {{--<button id="notify">Notify</button>--}}
+            <div class="center-margin text-center p-t-200">
+                <h2><b>Coming Soon!</b></h2>
+                <h3> We are still not ready. Feature is currently being developed :)</h3>
+            </div>
 
-            <!-- BEGIN PlACE PAGE CONTENT HERE -->
-            <!-- END PLACE PAGE CONTENT HERE -->
         </div>
         <!-- END CONTAINER FLUID -->
     </div>

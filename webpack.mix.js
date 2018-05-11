@@ -1,6 +1,5 @@
 let mix = require('laravel-mix');
 
-
 /*
  |--------------------------------------------------------------------------
  | Theme plugins
@@ -15,10 +14,12 @@ mix.copy([
     'resources/assets/plugins/pace/pace-theme-flash.css',
     'resources/assets/plugins/bootstrap/css/bootstrap.min.css',
     'resources/assets/plugins/jquery-scrollbar/jquery.scrollbar.css',
-    'resources/assets/plugins/select2/css/select2.min.css',
+    'resources/assets/plugins/select2-4.0.5/css/select2.min.css',
     'resources/assets/plugins/switchery/css/switchery.min.css',
     'resources/assets/plugins/bootstrap-datepicker/css/datepicker3.css',
-], 'public/plugins/css/')
+    'resources/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.css',
+
+    ], 'public/plugins/css/')
     .copy([
         'resources/assets/plugins/pace/pace.min.js',
         'resources/assets/plugins/jquery/jquery-1.11.1.min.js',
@@ -33,7 +34,7 @@ mix.copy([
         'resources/assets/plugins/imagesloaded/imagesloaded.pkgd.min.js',
         'resources/assets/plugins/jquery-actual/jquery.actual.min.js',
         'resources/assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js',
-        'resources/assets/plugins/select2/js/select2.full.min.js',
+        'resources/assets/plugins/select2-4.0.5/js/select2.full.min.js',
         'resources/assets/plugins/classie/classie.js',
         'resources/assets/plugins/switchery/js/switchery.min.js',
         'resources/assets/plugins/jquery-autonumeric/autoNumeric.js',
@@ -47,7 +48,19 @@ mix.copy([
         'resources/assets/plugins/bootstrap-daterangepicker/daterangepicker.js',
         'resources/assets/plugins/bootstrap-timepicker/bootstrap-timepicker.min.js',
         'resources/assets/plugins/jquery.sieve.min.js',
+        'resources/assets/plugins/google-palette/palette.js',
+        'resources/assets/plugins/accounting.min.js',
+        'resources/assets/plugins/sorttable.js',
     ], 'public/plugins/js/');
+
+
+/*
+ |--------------------------------------------------------------------------
+ | Socket Io
+ |--------------------------------------------------------------------------
+ */
+// mix.copyDirectory('node_modules/socket.io-client', 'public/plugins/socketioclient');
+mix.copyDirectory('resources/assets/plugins/socketioclient', 'public/plugins/socketioclient');
 
 /*
  |--------------------------------------------------------------------------
@@ -75,6 +88,16 @@ mix.copyDirectory('resources/assets/plugins/feather-icons', 'public/plugins/feat
  */
 
 mix.copyDirectory('resources/assets/plugins/dropzone', 'public/plugins/dropzone');
+
+/*
+ |--------------------------------------------------------------------------
+ | Full Calendar
+ |--------------------------------------------------------------------------
+ | fullcalendar.io plugins
+ */
+
+mix.copyDirectory('resources/assets/plugins/fullcalendar', 'public/plugins/fullcalendar');
+
 
 
 /*
@@ -121,7 +144,25 @@ mix.copy('resources/assets/core/css/pages-icons.css', 'public/core/css/theme-ico
  */
 
 mix.copyDirectory('resources/assets/core/img', 'public/core/img');
+mix.copyDirectory('resources/assets/images/company', 'public/images/company');
 mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
+
+
+
+/*
+ |--------------------------------------------------------------------------
+ | Sounds
+ |--------------------------------------------------------------------------
+ */
+mix.copyDirectory('resources/assets/sounds', 'public/sounds');
+
+/*
+ |--------------------------------------------------------------------------
+ | Scripts
+ |--------------------------------------------------------------------------
+ */
+mix.copyDirectory('resources/assets/script', 'public/script');
+
 
 
 /*
@@ -132,19 +173,56 @@ mix.copyDirectory('resources/assets/core/fonts', 'public/core/fonts');
 
 mix.js('resources/assets/js/client/employee/form','public/js/client/employee');
 mix.js('resources/assets/js/client/employee/list','public/js/client/employee');
+mix.js('resources/assets/js/client/employee/resignation','public/js/client/employee');
+mix.js('resources/assets/js/client/employee/managers','public/js/client/employee');
 mix.js('resources/assets/js/client/passport/main','public/js/client/passport');
 mix.js('resources/assets/js/client/permission/main','public/js/client/permission');
-mix.js('resources/assets/js/client/testing/main','public/js/client/testing');
+mix.js('resources/assets/js/client/attendance/setting','public/js/client/attendance');
+mix.js('resources/assets/js/client/attendance/slot','public/js/client/attendance');
+mix.js('resources/assets/js/client/attendance/timesheet','public/js/client/attendance');
+mix.js('resources/assets/js/client/attendance/schedule','public/js/client/attendance');
+mix.js('resources/assets/js/client/attendance/leave','public/js/client/attendance');
+mix.js('resources/assets/js/client/attendance/dashboard','public/js/client/attendance');
+mix.js('resources/assets/js/client/doorAccess/main','public/js/client/doorAccess');
+mix.js('resources/assets/js/client/developer/face','public/js/client/developer');
+mix.js('resources/assets/js/client/developer/queueJob','public/js/client/developer');
+mix.js('resources/assets/js/client/developer/fingerspot','public/js/client/developer');
+mix.js('resources/assets/js/client/developer/test','public/js/client/developer');
+mix.js('resources/assets/js/client/salary/report','public/js/client/salary');
+mix.js('resources/assets/js/client/salary/employee','public/js/client/salary');
+mix.js('resources/assets/js/client/salary/setting','public/js/client/salary');
+mix.js('resources/assets/js/client/salary/payroll','public/js/client/salary');
+mix.js('resources/assets/js/client/salary/queue','public/js/client/salary');
+mix.js('resources/assets/js/client/misc/notification','public/js/client/misc');
+mix.js('resources/assets/js/client/components/InternetConnection.js','public/js/client/components');
+mix.js('resources/assets/js/client/profile/user','public/js/client/profile');
+mix.js('resources/assets/js/client/profile/notification','public/js/client/profile');
+mix.js('resources/assets/js/client/setting/notification','public/js/client/setting');
+mix.js('resources/assets/js/client/notification/main','public/js/client/notification');
+mix.js('resources/assets/js/client/storage/misc/items','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/itemCategories','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/itemTypes','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/shipments','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/suppliers','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/warehouses','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/misc/units','public/js/client/storage/misc');
+mix.js('resources/assets/js/client/storage/requisition/shop','public/js/client/storage/requisition');
+mix.js('resources/assets/js/client/storage/requisition/cart','public/js/client/storage/requisition');
+mix.js('resources/assets/js/client/storage/requisition/history','public/js/client/storage/requisition');
+mix.js('resources/assets/js/client/storage/admin/approval','public/js/client/storage/admin');
+mix.js('resources/assets/js/client/storage/admin/purchaseOrder','public/js/client/storage/admin');
+mix.js('resources/assets/js/client/storage/inventory/entry','public/js/client/storage/inventory');
+mix.js('resources/assets/js/client/storage/inventory/generalInventory','public/js/client/storage/inventory');
+mix.js('resources/assets/js/client/manager/editTimesheet','public/js/client/manager');
+mix.js('resources/assets/js/client/superadmin/recruitment','public/js/client/superadmin');
+
 
 /*
  |--------------------------------------------------------------------------
  | Application JS
  |--------------------------------------------------------------------------
  */
-
 mix.js('resources/assets/js/app.js', 'public/js');
 mix.sass('resources/assets/sass/app.scss', 'public/css');
-
-
 
 mix.version();

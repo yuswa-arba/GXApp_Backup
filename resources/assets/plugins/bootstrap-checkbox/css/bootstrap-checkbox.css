@@ -21,7 +21,7 @@ transition: border 0.2s linear 0s;
 .bootstrap-checkbox.checked{
 	  border:1px solid #999999;
 }
-.,.check-success,.check-primary, .check-info, .check-warning, .check-danger {
+.check-success,.check-primary, .check-info, .check-warning, .check-danger {
 	display:inline-block;
 }
 . label,.check-success label,.check-primary label, .check-info label, .check-warning label, .check-danger label {

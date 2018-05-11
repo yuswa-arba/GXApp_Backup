@@ -28,7 +28,7 @@
 
                     <p class="hint-text fade small pull-left">
                         Total : {{role.permissions.length}}
-                        / {{role.totalPermission}} </p>
+                        / {{role.totalPermission}} Permissions</p>
                     <div class="clearfix"></div>
                     <div class="progress progress-small m-b-15 m-t-10">
                         <!-- START BOOTSTRAP PROGRESS (http://getbootstrap.com/components/#progress) -->
@@ -120,15 +120,17 @@
         created(){
 
             let self = this;
-            get(api_path() + 'setting/role/list')
+            get(api_path + 'setting/role/list')
                 .then((res) => {
-                    this.roles = res.data.data;
+                    self.roles = res.data.data;
                 })
 
             this.$bus.$on('assign:by_permission', function (role) {
 
                 $('#newPermission' + role.id).removeClass('hide'); //show badge
             })
+
+
         },
         methods: {
             percent(permission, totalPermission){
@@ -138,11 +140,12 @@
                 return _.upperCase(text)
             },
             showModal(role){
+
                 let self = this;
 
                 this.role = role;
 
-                get(api_path() + 'setting/role/assigned/' + role.name)
+                get(api_path + 'setting/role/assigned/' + role.name)
                     .then((res) => {
                         this.roleId = res.data.data.id;
                         this.roleName = res.data.data.name;
@@ -151,7 +154,6 @@
                         this.role.permissions = this.assignedPermissions; // update card list
                         $('#newPermission' + role.id).addClass('hide'); // hide badge if there is any
                     });
-
 
                 $('#modal-role-detail').modal('show')
             },
@@ -168,12 +170,12 @@
 
                 let data = {roleName: roleName, assignPermissionIdArr: assignPermissionIdArr};
 
-                post(api_path() + 'setting/role/assign/by_role', data)
+                post(api_path + 'setting/role/assign/by_role', data)
                     .then((res) => {
 
                         this.role.permissions = res.data.assigned.data;
 
-                        this.$bus.$emit('assign:by_role',permission)
+                        this.$bus.$emit('assign:by_role', permission)
 
                         $('.page-container').pgNotification({
                             style: 'flip',

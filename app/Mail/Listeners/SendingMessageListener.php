@@ -2,15 +2,19 @@
 
 namespace App\Mail\Listeners;
 
+use App\Traits\GlobalUtils;
 use Exception;
 use Illuminate\Mail\Events\MessageSending;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class SendingMessageListener implements ShouldQueue
 {
     use InteractsWithQueue;
+    use GlobalUtils;
+
     /**
      * Create the event listener.
      *
@@ -24,13 +28,26 @@ class SendingMessageListener implements ShouldQueue
     /**
      * Handle the event.
      *
-     * @param  MessageSending  $event
+     * @param  MessageSending $event
      * @return void
      */
     public function handle(MessageSending $event)
     {
-        // TODO: what to do when email is sending
-//        Log::info("Message is sending: ".$event->message);
+        try{
+            app()->make('LogService')->logging([
+                'causer' => 'Undefined',
+                'via' => 'web client| api client',
+                'subject' => 'Sending Mail',
+                'action' => 'mail',
+                'level' => 1,
+                'description' => 'Sending message',
+                'causerIPAddress' => \Request::ip()
+            ]);
+        } catch (Exception $exception){
+            //do nothing
+            Log::error($exception->getMessage());
+        }
+
     }
 
 

@@ -18,9 +18,20 @@ use App\Http\Controllers\Controller;
 class ViewController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware(['permission:view employee']);
+    }
+
     public function index()
     {
         return view('pages.employee.list');
+    }
+
+    public function managers()
+    {
+        return view('pages.employee.managers');
     }
 
     public function recruitment()
@@ -40,5 +51,9 @@ class ViewController extends Controller
         );
     }
 
+    public function resignation()
+    {
+        return view('pages.employee.resignation');
+    }
 
 }

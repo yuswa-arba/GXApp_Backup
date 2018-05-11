@@ -52,7 +52,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://gxemployee.dev'),
 
     /*
     |--------------------------------------------------------------------------
@@ -170,17 +170,19 @@ return [
          */
         Laravel\Passport\PassportServiceProvider::class,
         Spatie\Permission\PermissionServiceProvider::class,
-
+        Barryvdh\DomPDF\ServiceProvider::class,
+        Karlmonson\Ping\PingServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
+        App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        \App\Providers\AccountServiceProvider::class
+
+
 
     ],
 
@@ -217,6 +219,7 @@ return [
         'Log' => Illuminate\Support\Facades\Log::class,
         'Mail' => Illuminate\Support\Facades\Mail::class,
         'Notification' => Illuminate\Support\Facades\Notification::class,
+        'Ping' => Karlmonson\Ping\Facades\Ping::class,
         'Password' => Illuminate\Support\Facades\Password::class,
         'Queue' => Illuminate\Support\Facades\Queue::class,
         'Redirect' => Illuminate\Support\Facades\Redirect::class,

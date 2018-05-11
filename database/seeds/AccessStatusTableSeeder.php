@@ -13,8 +13,8 @@ class AccessStatusTableSeeder extends Seeder
     public function run()
     {
         $data = array(
-            ['name' => 'Granted'],
-            ['name' => 'Blocked']
+            ['id'=>'1','name' => 'Granted'],
+            ['id'=>'2','name' => 'Blocked']
         );
 
         /* Truncate all the data before populating*/

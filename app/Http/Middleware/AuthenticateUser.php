@@ -29,10 +29,19 @@ class AuthenticateUser
     public function handle($request, Closure $next, $guard = null)
     {
 
+        /*Check if its guest*/
+        if (Auth::guard($guard)->guest()) {
+            if ($request->ajax()) {
+                return response('Unauthorized.', 401);
+            } else {
+                return redirect()->guest('login');
+            }
+        }
+
         /* RUN LOGIC TO GET VALUE*/
         $this->logicCase($guard);
 
-        if ($this->guest || $this->noAccess ) {
+        if ( $this->noAccess ) {
 
             if ($request->ajax() || $request->wantsJson()) {
                 return response('Unauthorized.', 401);

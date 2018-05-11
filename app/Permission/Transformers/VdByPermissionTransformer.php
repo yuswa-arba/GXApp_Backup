@@ -1,5 +1,6 @@
 <?php
 namespace App\Permission\Transformers;
+use App\Account\Models\User;
 use League\Fractal\TransformerAbstract;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -13,9 +14,10 @@ use Spatie\Permission\Models\Role;
 class VdByPermissionTransformer extends TransformerAbstract
 {
     protected $defaultIncludes=[
-//        'assignedUsers',
+        'assignedUsers',
         'assignedRoles',
-        'allRoles'
+        'allRoles',
+        'allUsers'
     ];
 
     public function transform(Permission $permission)
@@ -39,11 +41,17 @@ class VdByPermissionTransformer extends TransformerAbstract
         return $this->collection($roles,new RoleTransformer,'roles');
     }
 
+    public function includeAllUsers(Permission $permission)
+    {
+        $users =User::where('accessStatusId',1)->get();
+        return $this->collection($users,new UserTransformer,'users');
+    }
 
-//    public function includeAssignedUsers(Permission $permission)
-//    {
-//
-//    }
+    public function includeAssignedUsers(Permission $permission)
+    {
+        $users = $permission->users;
+        return $this->collection($users, new UserTransformer,'users');
+    }
 
 
 }

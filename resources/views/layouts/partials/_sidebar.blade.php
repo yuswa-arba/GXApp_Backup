@@ -17,18 +17,20 @@
     <div class="sidebar-menu">
         <!-- BEGIN SIDEBAR MENU ITEMS-->
         <ul class="menu-items">
-            @include('layouts.partials.sub_partials.sidebar._dashboard')
-            @include('layouts.partials.sub_partials.sidebar._divisions')
-            @include('layouts.partials.sub_partials.sidebar._general')
-            @include('layouts.partials.sub_partials.sidebar._attendance')
-            @include('layouts.partials.sub_partials.sidebar._payroll')
-            @include('layouts.partials.sub_partials.sidebar._employee')
-            @include('layouts.partials.sub_partials.sidebar._kspgs')
-            @include('layouts.partials.sub_partials.sidebar._transport')
-            @include('layouts.partials.sub_partials.sidebar._storage')
-            @include('layouts.partials.sub_partials.sidebar._documents')
 
+            @include('layouts.partials.sub_partials.sidebar._dashboard')
+            {{--@include('layouts.partials.sub_partials.sidebar._divisions')--}}
+            @include('layouts.partials.sub_partials.sidebar._attendance')
+            @include('layouts.partials.sub_partials.sidebar._salary')
+            @include('layouts.partials.sub_partials.sidebar._employee')
+            @include('layouts.partials.sub_partials.sidebar._managers')
+            {{--@include('layouts.partials.sub_partials.sidebar._kspgs')--}}
+            @include('layouts.partials.sub_partials.sidebar._storage')
+            {{--@include('layouts.partials.sub_partials.sidebar._transport')--}}
+            {{--@include('layouts.partials.sub_partials.sidebar._documents')--}}
+            {{--@include('layouts.partials.sub_partials.sidebar._door-access')--}}
             @include('layouts.partials.sub_partials.sidebar._settings')
+            @include('layouts.partials.sub_partials.sidebar._misc')
             @include('layouts.partials.sub_partials.sidebar._developer')
 
         </ul>

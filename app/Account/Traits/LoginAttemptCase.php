@@ -9,11 +9,14 @@
 namespace App\Account\Traits;
 
 
+use App\Traits\GlobalUtils;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 trait  LoginAttemptCase
 {
+
+    use GlobalUtils;
 
     /* Default value */
     public $guest = true;
@@ -24,7 +27,6 @@ trait  LoginAttemptCase
 
     public function logicCase($guard)
     {
-        $this->guest = Auth::guard($guard)->guest();
         if (!empty(Auth::guard($guard)) && !empty(Auth::guard($guard)->user())) {
 
             $this->noAccess = !Auth::guard($guard)->user()->accessStatusId;
@@ -32,6 +34,27 @@ trait  LoginAttemptCase
             $this->adminAccess = Auth::guard($guard)->user()->allowAdminAccess;
 
             $this->superAdminAccess = Auth::guard($guard)->user()->allowSuperAdminAccess;
+        }
+
+        try{
+            // Check if this user is set to specific employee
+            // and check if this employee has resigned or not
+            // if yes, set to no access
+            $employee = Auth::guard($guard)->user()->employee;
+            if($employee!=null){
+
+                if($employee->hasResigned){
+                    $this->noAccess = true;
+
+                    $this->adminAccess = false;
+
+                    $this->superAdminAccess = false;
+                }
+
+            }
+
+        } catch (\Exception $exception){
+            //do nothing
         }
     }
 

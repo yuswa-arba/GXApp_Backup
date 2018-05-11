@@ -15,12 +15,11 @@
                         </button>
 
                         <div class="dropdown-menu">
-                            <a class="dropdown-item pointer" @click="viewMasterDetail()">
-                                Master</a>
-                            <a class="dropdown-item pointer" @click="viewEmploymentDetail()">
-                                Employment</a>
-                            <a class="dropdown-item pointer" @click="viewLoginDetail()">
-                                Login Details
+                            <a class="dropdown-item pointer" @click="viewMasterDetail()">Master</a>
+                            <a class="dropdown-item pointer" @click="viewEmploymentDetail()">Employment</a>
+                            <a class="dropdown-item pointer" @click="viewMedicalRecordsDetail()">Medical Records</a>
+                            <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">Face API</a>
+                            <a class="dropdown-item pointer" @click="viewLoginDetail()">Login Details
                             </a>
                         </div>
 
@@ -32,6 +31,35 @@
                 </button>
             </div>
 
+            <div slot="go-back-and-view-menu-without-edit">
+                <button class="btn btn-outline-primary m-r-15 m-b-10 pull-left"
+                        @click="goBack()"><i class="pg-arrow_left"></i>
+                    Go Back
+                </button>
+                <div class="pull-left m-r-15 m-b-10">
+                    <div class="dropdown dropdown-default">
+                        <button class="btn btn-primary all-caps dropdown-toggle text-center" type="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            View
+                        </button>
+
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item pointer" @click="viewMasterDetail()">Master</a>
+                            <a class="dropdown-item pointer" @click="viewEmploymentDetail()">Employment</a>
+                            <a class="dropdown-item pointer" @click="viewMedicalRecordsDetail()">Medical Records</a>
+                            <a class="dropdown-item pointer" @click="viewFaceAPIDetail()">Face API</a>
+                            <a class="dropdown-item pointer" @click="viewLoginDetail()">Login Details
+                            </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
             <div slot="cancel-menu">
                 <button class="btn btn-outline-danger m-r-15 m-b-10 pull-left"
                         @click="cancel()"><i class="pg-close"></i>
@@ -40,18 +68,23 @@
             </div>
 
         </router-view>
-
     </div>
 </template>
 <script type="text/javascript">
     import {get, post} from '../helpers/api'
     import {api_path} from '../helpers/const'
+    import {objectToFormData} from '../helpers/utils'
+
     export default{
         created(){
             let self = this;
 
             this.$bus.$on('save:master_detail',function(form){
                 self.save(form,'master')
+            })
+
+            this.$bus.$on('save:medical_records_detail', function (form) {
+                self.save(form, "medicalRecords")
             })
 
             this.$bus.$on('save:employment_detail', function (form) {
@@ -69,6 +102,10 @@
                 $('#errors-container').addClass('hide');
                 this.$router.push({name: 'detailMaster', params: {id: this.$route.params.id}})
             },
+            viewMedicalRecordsDetail(){
+                $('#errors-container').addClass('hide');
+                this.$router.push({name: 'detailMedicalRecords', params: {id: this.$route.params.id}})
+            },
             viewEmploymentDetail(){
                 $('#errors-container').addClass('hide');
                 this.$router.push({name: 'detailEmployment', params: {id: this.$route.params.id}})
@@ -76,6 +113,10 @@
             viewLoginDetail(){
                 $('#errors-container').addClass('hide');
                 this.$router.push({name: 'detailLogin', params: {id: this.$route.params.id}})
+            },
+            viewFaceAPIDetail(){
+                $('#errors-container').addClass('hide');
+                this.$router.push({name: 'detailFaceAPI', params: {id: this.$route.params.id}})
             },
             goBack(){
                 $('#errors-container').addClass('hide');
@@ -85,6 +126,9 @@
                 switch (this.$route.name) {
                     case 'detailMaster':
                         this.$router.push({name: 'editMaster', params: {id: this.$route.params.id}})
+                        break;
+                    case 'detailMedicalRecords':
+                        this.$router.push({name: 'editMedicalRecords', params: {id: this.$route.params.id}})
                         break;
                     case 'detailEmployment':
                         this.$router.push({name: 'editEmployment', params: {id: this.$route.params.id}})
@@ -101,6 +145,9 @@
                     case 'master':
                         this.saveMaster(form)
                         break;
+                    case 'medicalRecords':
+                        this.saveMedicalRecords(form)
+                        break;
                     case 'employment':
                         this.saveEmployment(form)
                         break;
@@ -116,6 +163,9 @@
                     case 'editMaster':
                         this.viewMasterDetail()
                         break;
+                    case 'editMedicalRecords':
+                        this.viewMedicalRecordsDetail()
+                        break;
                     case 'editEmployment':
                         this.viewEmploymentDetail()
                         break;
@@ -128,9 +178,12 @@
             },
             saveMaster(form){
                 let self = this;
-                post(api_path() + 'employee/edit/master', form)
+                post(api_path + 'employee/edit/master', objectToFormData(form))
                     .then((res) => {
                         if (!res.data.isFailed) {
+
+                            // remove errors alert
+                            $('#errors-container').addClass('hide');
 
                             /* Show success notification*/
                             $('.page-container').pgNotification({
@@ -174,11 +227,65 @@
 
                     })
             },
-            saveEmployment(form){
+            saveMedicalRecords(form){
                 let self = this;
-                post(api_path() + 'employee/edit/employment', form)
+                post(api_path + 'employee/edit/medicalRecords', form)
                     .then((res) => {
                         if (!res.data.isFailed) {
+
+                            // remove errors alert
+                            $('#errors-container').addClass('hide');
+
+                            /* Show success notification*/
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 3500,
+                                type: 'info'
+                            }).show();
+
+                            //redirect
+                            self.$router.push({name: 'detailMedicalRecords', params: {id: self.$route.params.id}})
+
+                        }
+                        else {
+                            /* Show error notification */
+                            $('.page-container').pgNotification({
+                                style: 'flip',
+                                message: res.data.message,
+                                position: 'top-right',
+                                timeout: 0,
+                                type: 'danger'
+                            }).show();
+
+                        }
+                    })
+                    .catch((err) => {
+                        let errorsResponse = err.message + '</br>';
+
+                        _.forEach(err.response.data.errors, function (value, key) {
+                            errorsResponse += value[0] + ' ';
+                        })
+
+                        $('#errors-container').removeClass('hide').addClass('show')
+                        $('#errors-value').html(errorsResponse)
+                        errorsResponse = '' // reset value
+                        /* Scroll to top*/
+                        $('html, body').animate({
+                            scrollTop: $(".jumbotron").offset().top
+                        }, 500);
+
+                    })
+            },
+            saveEmployment(form){
+                let self = this;
+                post(api_path + 'employee/edit/employment', form)
+                    .then((res) => {
+                        if (!res.data.isFailed) {
+
+                            // remove errors alert
+                            $('#errors-container').addClass('hide');
 
                             /* Show success notification*/
                             $('.page-container').pgNotification({
@@ -224,9 +331,12 @@
             },
             saveLogin(form){
                 let self = this;
-                post(api_path() + 'employee/edit/login', form)
+                post(api_path + 'employee/edit/login', form)
                     .then((res) => {
                         if (!res.data.isFailed) {
+
+                            // remove errors alert
+                            $('#errors-container').addClass('hide');
 
                             /* Show success notification*/
                             $('.page-container').pgNotification({

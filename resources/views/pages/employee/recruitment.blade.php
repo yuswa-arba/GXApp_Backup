@@ -12,11 +12,10 @@
 <script src="{{mix('plugins/js/autoNumeric.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.bootstrap.wizard.min.js')}}" type="text/javascript"></script>
 <script src="{{mix('plugins/js/jquery.validate.min.js')}}" type="text/javascript"></script>
-
-
 @endpush
 
 @push('child-page-controller')
+@include('layouts.partials.snippets._notification_to_zoom_out80')
 <script src="{{mix('js/client/employee/form.js')}}"></script>
 @endpush
 
@@ -41,7 +40,7 @@
         <!-- START CONTAINER FLUID -->
         <div class="container-fluid container-fixed-lg">
             <!-- BEGIN PlACE PAGE CONTENT HERE -->
-            <div id="rootwizard" class="m-t-50">
+            <div id="rootwizard" class="">
                 <!-- Nav tabs -->
                 <ul class="nav nav-tabs nav-tabs-linetriangle nav-tabs-separator nav-stack-sm no-click" role="tablist"
                     data-init-reponsive-tabs="dropdownfx">
@@ -49,6 +48,11 @@
                         <a class="active"
                            id="item-personal-info"
                            data-toggle="tab" href="#" role="tab"><i class="fa fa-user tab-icon"></i> <span>Personal Information</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class=""
+                           id="item-medical-records"
+                           data-toggle="tab" href="#" role="tab"><i class="fa fa-user-md tab-icon"></i> <span>Medical Records</span></a>
                     </li>
                     <li class="nav-item">
                         <a class=""
@@ -67,6 +71,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane slide-left padding-20 sm-no-padding active" id="tab-personal-info">
+                        <!-- Start of Personal Tab -->
                         <form class="" role="form" id="personalInformationForm" enctype="multipart/form-data"
                               autocomplete="off">
                             <div class="row ">
@@ -102,11 +107,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="form-group form-group-default form-group-default-select2 required">
+                                                    <div class="form-group form-group-default required">
                                                         <label class="">Gender</label>
-                                                        <select class="full-width"
-                                                                data-placeholder="Select Country"
-                                                                data-init-plugin="select2"
+                                                        <select class="form-control"
                                                                 name="gender"
                                                         >
                                                             <option value="Male">Male</option>
@@ -128,13 +131,12 @@
                                                        value="{{old('hometown')}}" required>
                                             </div>
 
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default required">
                                                 <label class="">Education Level</label>
-                                                <select class="full-width" data-placeholder="Select Education Level"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="educationLevelId"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Education</option>
                                                     @foreach($educationLevels as $edcLevel)
                                                         <option value="{{$edcLevel->id}}">{{$edcLevel->name}}</option>
                                                     @endforeach
@@ -142,13 +144,12 @@
                                             </div>
 
 
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Religion</label>
-                                                <select class="full-width" data-placeholder="Select Religion"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="religionId"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Religion</option>
                                                     @foreach($religions as $religion)
                                                         <option value="{{$religion->id}}">{{$religion->name}}</option>
                                                     @endforeach
@@ -170,12 +171,12 @@
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>Phone Number</label>
-                                                <input type="number" class="form-control" name="phoneNo"
+                                                <input type="number" min="0" class="form-control" name="phoneNo"
                                                        value="{{old('phoneNo')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
                                                 <label>E-mail Address<span
-                                                            class="help fs-10">(Company e-mail address)</span></label>
+                                                            class="help fs-10">(Active e-mail address)</span></label>
                                                 <input type="email" class="form-control" name="email"
                                                        value="{{old('email')}}" required>
                                             </div>
@@ -188,139 +189,171 @@
                                         <br>
                                         <p class="form-title">Marriage</p>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Marital Status"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="maritalStatusId"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Status</option>
                                                     @foreach($maritalStatuses as $maritalStatus)
                                                         <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Spouse's Name</label>
-                                                <input type="text" class="form-control" name="spousesName"
-                                                       value="{{old('spousesName')}}">
+                                            <div id="spouse-form">
+                                                <div class="form-group form-group-default">
+                                                    <label>Spouse's Name</label>
+                                                    <input type="text" class="form-control" name="spousesName"
+                                                           value="{{old('spousesName')}}">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Number of Children</label>
+                                                    <input type="number" min="0" class="form-control"
+                                                           name="totalChildren"
+                                                           value="{{old('totalChildren')}}">
+                                                </div>
                                             </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Number of Children</label>
-                                                <input type="number" class="form-control" name="totalChildren"
-                                                       value="{{old('totalChildren')}}">
-                                            </div>
+
 
                                         </div>
                                         <br>
                                         <p class="form-title">Family</p>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default required">
-                                                <label>Father's Name</label>
-                                                <input type="text" class="form-control" name="fatherName"
-                                                       value="{{old('fatherName')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Father's Address</label>
-                                                <input type="text" class="form-control" name="fatherAddress"
-                                                       value="{{old('fatherAddress')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Father's City</label>
-                                                <input type="text" class="form-control" name="fatherCity"
-                                                       value="{{old('fatherCity')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Father's Phone Number</label>
-                                                <input type="number" class="form-control" name="fatherPhoneNo"
-                                                       value="{{old('fatherPhoneNo')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
-                                                <label class="">Father's Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Marital Status"
-                                                        data-init-plugin="select2"
-                                                        name="fatherMaritalStatusId"
+                                            <div class="form-group form-group-default  required">
+                                                <label class="">Father is deceased?</label>
+                                                <select class="form-control"
+                                                        name="fatherIsDeceased"
                                                         required>
                                                     <option value="" disabled selected></option>
-                                                    @foreach($maritalStatuses as $maritalStatus)
-                                                        <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
-                                                    @endforeach
+                                                    <option value="0">No</option>
+                                                    <option value="1">Yes</option>
                                                 </select>
                                             </div>
+                                            <div id="father-form">
+                                                <div class="form-group form-group-default required">
+                                                    <label>Father's Name</label>
+                                                    <input type="text" class="form-control" name="fatherName"
+                                                           value="{{old('fatherName')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Father's Address</label>
+                                                    <input type="text" class="form-control" name="fatherAddress"
+                                                           value="{{old('fatherAddress')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Father's City</label>
+                                                    <input type="text" class="form-control" name="fatherCity"
+                                                           value="{{old('fatherCity')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Father's Phone Number</label>
+                                                    <input type="number" min="0" class="form-control"
+                                                           name="fatherPhoneNo"
+                                                           value="{{old('fatherPhoneNo')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default  required">
+                                                    <label class="">Father's Marital Status</label>
+                                                    <select class="form-control"
+                                                            name="fatherMaritalStatusId"
+                                                            required>
+                                                        <option value="" disabled selected hidden>Select Status</option>
+                                                        @foreach($maritalStatuses as $maritalStatus)
+                                                            <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
                                         </div>
                                         <br>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default required">
-                                                <label>Mother's Name</label>
-                                                <input type="text" class="form-control" name="motherName"
-                                                       value="{{old('motherName')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Mother's Address</label>
-                                                <input type="text" class="form-control" name="motherAddress"
-                                                       value="{{old('motherAddress')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Mother's City</label>
-                                                <input type="text" class="form-control" name="motherCity"
-                                                       value="{{old('motherCity')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default required">
-                                                <label>Mother's Phone Number</label>
-                                                <input type="number" class="form-control" name="motherPhoneNo"
-                                                       value="{{old('motherPhoneNo')}}" required>
-                                            </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
-                                                <label class="">Mother's Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Marital Status"
-                                                        data-init-plugin="select2"
-                                                        name="motherMaritalStatusId"
+                                            <div class="form-group form-group-default  required">
+                                                <label class="">Mother is deceased?</label>
+                                                <select class="form-control"
+                                                        name="motherIsDeceased"
                                                         required>
-                                                    <option disabled selected></option>
-                                                    @foreach($maritalStatuses as $maritalStatus)
-                                                        <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
-                                                    @endforeach
+                                                    <option value="" disabled selected></option>
+                                                    <option value="0">No</option>
+                                                    <option value="1">Yes</option>
                                                 </select>
                                             </div>
+                                            <div id="mother-form">
+                                                <div class="form-group form-group-default required">
+                                                    <label>Mother's Name</label>
+                                                    <input type="text" class="form-control" name="motherName"
+                                                           value="{{old('motherName')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Mother's Address</label>
+                                                    <input type="text" class="form-control" name="motherAddress"
+                                                           value="{{old('motherAddress')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Mother's City</label>
+                                                    <input type="text" class="form-control" name="motherCity"
+                                                           value="{{old('motherCity')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default required">
+                                                    <label>Mother's Phone Number</label>
+                                                    <input type="number" min="0" class="form-control"
+                                                           name="motherPhoneNo"
+                                                           value="{{old('motherPhoneNo')}}" required>
+                                                </div>
+                                                <div class="form-group form-group-default  required">
+                                                    <label class="">Mother's Marital Status</label>
+                                                    <select class="form-control"
+                                                            name="motherMaritalStatusId"
+                                                            required>
+                                                        <option value="" disabled selected hidden>Select Status</option>
+                                                        @foreach($maritalStatuses as $maritalStatus)
+                                                            <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                         <br>
+                                        <div class="form-group form-group-default">
+                                            <label>Number of Siblings</label>
+                                            <input type="number" min="0" maxlength="1" max="10"
+                                                   placeholder="(max: 10)"
+                                                   class="form-control" name="numberOfSiblings"
+                                                   value="{{old('numberOfSiblings')}}">
+                                        </div>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default">
-                                                <label>Number of Siblings</label>
-                                                <input type="number" class="form-control" name="siblingPhoneNo"
-                                                       value="{{old('siblingPhoneNo')}}">
+                                            <div class="hide" id="siblingsForm">
+                                                <br>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's Name</label>
+                                                    <input type="text" class="form-control" name="siblingName[]"
+                                                           value="{{old('siblingName')}}">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's Address</label>
+                                                    <input type="text" class="form-control" name="siblingAddress[]"
+                                                           value="{{old('siblingAddress')}}">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's City</label>
+                                                    <input type="text" class="form-control" name="siblingCity[]"
+                                                           value="{{old('siblingCity')}}">
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label>Sibling's Phone Number</label>
+                                                    <input type="number" min="0" class="form-control"
+                                                           name="siblingPhoneNo[]"
+                                                           value="{{old('siblingPhoneNo')}}">
+                                                </div>
+                                                <br>
                                             </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Sibling's Name</label>
-                                                <input type="text" class="form-control" name="siblingName"
-                                                       value="{{old('siblingName')}}">
+
+                                            <div id="siblingsFormContainer">
+
                                             </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Sibling's Address</label>
-                                                <input type="text" class="form-control" name="siblingAddress"
-                                                       value="{{old('siblingAddress')}}">
-                                            </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Sibling's City</label>
-                                                <input type="text" class="form-control" name="siblingCity"
-                                                       value="{{old('siblingCity')}}">
-                                            </div>
-                                            <div class="form-group form-group-default">
-                                                <label>Sibling's Phone Number</label>
-                                                <input type="number" class="form-control" name="siblingPhoneNo"
-                                                       value="{{old('siblingPhoneNo')}}">
-                                            </div>
-                                            <div class="form-group form-group-default form-group-default-select2">
-                                                <label class="">Sibling's Marital Status</label>
-                                                <select class="full-width" data-placeholder="Select Marital Status"
-                                                        data-init-plugin="select2"
-                                                        name="siblingMaritalStatusId">
-                                                    <option value="" disabled selected></option>
-                                                    @foreach($maritalStatuses as $maritalStatus)
-                                                        <option value="{{$maritalStatus->id}}">{{$maritalStatus->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+
                                         </div>
                                         <br>
                                     </div>
@@ -332,7 +365,8 @@
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default required">
                                                 <label>ID Card Number</label>
-                                                <input type="text" class="form-control" name="idCardNumber"
+                                                <input type="number" min="0" maxlength="16" class="form-control"
+                                                       name="idCardNumber"
                                                        value="{{old('idCardNumber')}}" required>
                                             </div>
                                             <div class="form-group form-group-default required">
@@ -348,7 +382,7 @@
                                         <p class="form-title">Contact Photo</p>
                                         <div class="form-group-attached">
                                             <div class="form-group form-group-default required">
-                                                <label>Contact Photo</label>
+                                                <label>Contact Photo <span class="help fs-10">(Best Display : 158px x 158px)</span></label>
                                                 <input type="file" name="employeePhoto" id="employeePhoto"
                                                        value="" required/>
                                             </div>
@@ -361,13 +395,13 @@
                                                 <input type="text" class="form-control" name="emergencyContact"
                                                        value="{{old('emergencyContact')}}" required>
                                             </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Relationship</label>
-                                                <select class="full-width" data-placeholder="Select Relationship"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="emergencyRelationship"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Relationship
+                                                    </option>
                                                     <option value="Family">Family</option>
                                                     <option value="Friend">Friend</option>
                                                 </select>
@@ -386,7 +420,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-default required">
                                                         <label>Phone Number</label>
-                                                        <input type="number" class="form-control"
+                                                        <input type="number" min="0" class="form-control"
                                                                name="emergencyPhoneNo"
                                                                value="{{old('emergencyPhoneNo')}}" required>
                                                     </div>
@@ -394,7 +428,7 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-default ">
                                                         <label>Alt. Phone Number</label>
-                                                        <input type="number" class="form-control"
+                                                        <input type="number" min="0" class="form-control"
                                                                name="emergencyAltPhoneNo"
                                                                value="{{old('emergencyAltPhoneNo')}}">
                                                     </div>
@@ -403,19 +437,18 @@
                                             <div class="form-group form-group-default  ">
                                                 <label>E-mail Address</label>
                                                 <input type="email" class="form-control" name="emergencyEmailAddress"
-                                                       value="{{old('emergencyEmailAddress')}}" >
+                                                       value="{{old('emergencyEmailAddress')}}">
                                             </div>
                                         </div>
                                         <br>
                                         <p class="form-title">Bank Information</p>
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default form-group-default-select2">
+                                            <div class="form-group form-group-default ">
                                                 <label class="">Bank</label>
-                                                <select class="full-width" data-placeholder="Select Bank"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="bankId"
                                                         required>
-                                                    <option value="" disabled selected></option>
+                                                    <option value="" disabled selected hidden>Select Bank</option>
                                                     @foreach($banks as $bank)
                                                         <option value="{{$bank->id}}">{{$bank->name}}</option>
                                                     @endforeach
@@ -428,7 +461,7 @@
                                             </div>
                                             <div class="form-group form-group-default ">
                                                 <label>Bank Account Number</label>
-                                                <input type="number" class="form-control" name="bankAccNo"
+                                                <input type="number" min="0" class="form-control" name="bankAccNo"
                                                        value="{{old('bankAccNo')}}">
                                             </div>
                                             <div class="form-group form-group-default ">
@@ -457,7 +490,8 @@
                                             </div>
                                             <div class="form-group form-group-default ">
                                                 <label>Company Phone Number</label>
-                                                <input type="number" class="form-control" name="prevCompanyPhoneNo"
+                                                <input type="number" min="0" class="form-control"
+                                                       name="prevCompanyPhoneNo"
                                                        value="{{old('prevCompanyPhoneNo')}}">
                                             </div>
                                             <div class="row">
@@ -471,10 +505,19 @@
                                                 <div class="col-md-6">
                                                     <div class="form-group form-group-default ">
                                                         <label>Length of Employment</label>
-                                                        <input type="text" class="form-control"
+                                                        <input type="radio" name="lengthEmploymentTimeFormat"
+                                                               value="years" checked> Year(s)
+                                                        <input type="radio" name="lengthEmploymentTimeFormat"
+                                                               value="months"> Month(s)
+                                                        <br>
+                                                        <input type="number" class="form-control"
+                                                               placeholder="1"
+                                                               min="0"
                                                                name="prevLengthEmployment"
                                                                value="{{old('prevLengthEmployment')}}">
+
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -483,16 +526,383 @@
 
                                     </div>
                                     <button class="btn btn-outline-primary btn-block" id="createEmployeeBtn"
-                                            type="button">Create
-                                        Employee &
-                                        Go to Employment
+                                            type="button">Create Employee
                                     </button>
                                 </div>
                             </div>
                         </form>
-                    </div>
+                    </div> <!-- End of Personal Tab -->
 
-                    <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab-employment">
+                    <div class="tab-pane slide-left padding-20 sm-no-padding" id="tab-medical-records">
+                        <!-- Start of Medical Records Tab -->
+                        <form class="" role="form" id="medicalRecordsForm" autocomplete="off">
+                            <div class="row">
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Long term medication</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="hasLongTermMedication"
+                                                           id="treatment-on">
+                                                    <label for="treatment-on">Yes</label>
+                                                    <input type="radio" value="0" name="hasLongTermMedication"
+                                                           checked="checked" id="treatment-off">
+                                                    <label for="treatment-off">No</label>
+                                                </div>
+                                            </div>
+                                            <div class="row  padding-5 form-group form-group-attached disabled"
+                                                 id="treatmentQuestion" style="display: none;">
+                                                <div class="form-group form-group-default">
+                                                    <label class="label-sm">Type of disease</label>
+                                                    <input type="text" class="form-control"
+                                                           name="typeOfDisease"
+                                                           placeholder="Type of disease" required>
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label class="label-sm">Since When</label>
+                                                    <input type="text"
+                                                           name="medicationSinceWhen"
+                                                           class="form-control datepickerGet"
+                                                           placeholder="dd/mm/yyyy" required>
+                                                </div>
+                                                <div class="form-group form-group-default">
+                                                    <label class="col-form-label-sm">Type of Drug</label>
+                                                    <input type="text"
+                                                           name="typeOfDrug"
+                                                           class="form-control" placeholder="Type of drug"
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Are you a smoker?</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="isASmoker" id="smoker-on">
+                                                    <label for="smoker-on">Yes</label>
+                                                    <input type="radio" value="0" name="isASmoker" checked="checked"
+                                                           id="smoker-off">
+                                                    <label for="smoker-off">No</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-attached padding-5" id="smokerQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Amount per day</label>
+                                                            <input type="number"
+                                                                   name="smokeAmountPerDay"
+                                                                   value="1"
+                                                                   class="form-control"
+                                                                   placeholder="Amount">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Since When</label>
+                                                            <input type="text"
+                                                                   class="form-control datepickerGet"
+                                                                   name="smokingSinceWhen"
+                                                                   placeholder="dd/mm/yyyy">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Are you a drinker?</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="isADrinker" id="drinker-on">
+                                                    <label for="drinker-on">Yes</label>
+                                                    <input type="radio" value="0" name="isADrinker" checked="checked"
+                                                           id="drinker-off">
+                                                    <label for="drinker-off">No</label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group-attached padding-5" id="drinkerQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Amount per day</label>
+                                                            <input type="number"
+                                                                   value="1"
+                                                                   class="form-control"
+                                                                   name="drinkAmountPerDay"
+                                                                   placeholder="Amount">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Since When</label>
+                                                            <input type="text"
+                                                                   class="form-control datepickerGet"
+                                                                   name="drinkingSinceWhen"
+                                                                   placeholder="dd/mm/yyyy">
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <hr/>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Had an Accident</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="hadAnAccident" id="accident-on">
+                                                    <label for="accident-on">Yes</label>
+                                                    <input type="radio" value="0" name="hadAnAccident" checked="checked"
+                                                           id="accident-off">
+                                                    <label for="accident-off">No</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-attached padding-5" id="accidentQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default required">
+                                                            <label class="label-sm">When</label>
+                                                            <input type="text"
+                                                                   name="accidentDate"
+                                                                   class="form-control datepickerGet"
+                                                                   placeholder="dd/mm/yyyy">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Type of Accident</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="typeOfAccident"
+                                                                   placeholder="Type of Accident">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Surgery</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="hadASurgery" id="operation-on">
+                                                    <label for="operation-on">Yes</label>
+                                                    <input type="radio" value="0" name="hadASurgery" checked="checked"
+                                                           id="operation-off">
+                                                    <label for="operation-off">No</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-attached padding-5" id="operationQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">When</label>
+                                                            <input type="text"
+                                                                   name="surgeryDate"
+                                                                   class="form-control datepickerGet"
+                                                                   placeholder="dd/mm/yyyy">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Type of Surgery</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="typeOfSurgery"
+                                                                   placeholder="Type of Surgery">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="">
+                                                <p>Hospitalized</p>
+                                                <div class="radio radio-success">
+                                                    <input type="radio" value="1" name="hasHospitalized"
+                                                           id="hospitalized-on">
+                                                    <label for="hospitalized-on">Yes</label>
+                                                    <input type="radio" value="0" name="hasHospitalized"
+                                                           checked="checked" id="hospitalized-off">
+                                                    <label for="hospitalized-off">No</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group-attached padding-5" id="hospitalizedQuestion"
+                                                 style="display: none;">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">When</label>
+                                                            <input type="text"
+                                                                   class="form-control datepickerGet"
+                                                                   name="dateHospitalized"
+                                                                   placeholder="dd/mm/yyyy">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Type of Medication</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="typeOfMedication"
+                                                                   placeholder="Type of Medication">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr/>
+                                </div>
+
+                                <div class="col-md-12 col-sm-12 col-xs-12">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <p>Special Habits</p>
+
+                                            <div class="form-group-attached padding-5" id="accidentQuestion">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Dietary habit</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="dietaryHabit"
+                                                                   placeholder="Dietary habit">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Type of sport</label>
+                                                            <input type="text"
+                                                                   class="form-control"
+                                                                   name="typeOfSport"
+                                                                   placeholder="Type of sport">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Amount per week</label>
+                                                            <input type="number"
+                                                                   class="form-control"
+                                                                   name="sportAmountPerWeek"
+                                                                   placeholder="Sports routine per week">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Notes etc</label>
+                                                            <input placeholder="Notes etc"
+                                                                   class="form-control"
+                                                                   name="extraNotes">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <p>Physical Information</p>
+
+                                            <div class="form-group padding-5">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div class="form-group form-group-default ">
+                                                            <label class="label-sm">Body height</label>
+                                                            <input type="number" class="form-control"
+                                                                   name="bodyHeight"
+                                                                   placeholder="Height body">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-mg-12">
+                                                        <p>Do you wear glasses</p>
+                                                        <div class="radio radio-success">
+                                                            <input type="radio" value="1" name="wearGlasses"
+                                                                   id="glasses-on">
+                                                            <label for="glasses-on">Yes</label>
+                                                            <input type="radio" value="0" name="wearGlasses"
+                                                                   checked="checked"
+                                                                   id="glasses-off">
+                                                            <label for="glasses-off">No</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group padding-5" id="glassesQuestion"
+                                                             style="display: none;">
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group form-group-default ">
+                                                                        <label class="label-sm">Glasses size</label>
+                                                                        <input type="text"
+                                                                               placeholder="e.g. L:-2.0 , R: -1.5"
+                                                                               name="glassesSize"
+                                                                               class="form-control">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <button style="margin-top: 55px;"
+                                                                class="btn btn-outline-primary btn-block"
+                                                                id="saveMedicalRecordsBtn"
+                                                                type="button">Save Employee Medical Records
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>  <!-- End of Medical Records Tab -->
+
+                    <div class="tab-pane slide-left padding-20 sm-no-padding " id="tab-employment">
+                        <!-- Start of Employment Tab -->
                         <div class="row row-same-height">
                             <div class="col-md-7 b-r b-dashed b-grey ">
                                 <div class="padding-30 sm-padding-5">
@@ -502,10 +912,9 @@
                                     <form role="form" id="employmentForm">
 
                                         <div class="form-group-attached">
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Job Position</label>
-                                                <select class="full-width" data-placeholder="Select Job Position"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="jobPositionId"
                                                         required>
                                                     <option value="" disabled selected></option>
@@ -514,10 +923,9 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Division</label>
-                                                <select class="full-width" data-placeholder="Select Division"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="divisionId"
                                                         required
                                                 >
@@ -527,10 +935,9 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Office Branch</label>
-                                                <select class="full-width" data-placeholder="Select Branch Office"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="branchOfficeId"
                                                         required>
                                                     <option value="" disabled selected></option>
@@ -539,10 +946,9 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="form-group form-group-default form-group-default-select2 required">
+                                            <div class="form-group form-group-default  required">
                                                 <label class="">Recruitment Status</label>
-                                                <select class="full-width" data-placeholder="Select Recruitment Status"
-                                                        data-init-plugin="select2"
+                                                <select class="form-control"
                                                         name="recruitmentStatusId"
                                                         required
                                                 >
@@ -594,7 +1000,7 @@
 
                             </div>
                         </div>
-                    </div>
+                    </div> <!-- End of Employment Tab -->
                 </div>
             </div>
             <!-- END PLACE PAGE CONTENT HERE -->

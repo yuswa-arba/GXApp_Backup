@@ -2,17 +2,27 @@
 
 namespace App\Http\Controllers\BackendV1\Helpdesk\Settings\Permission;
 
+use App\Account\Models\User;
 use App\Permission\Transformers\PermissionTransformer;
 use App\Permission\Transformers\RoleTransformer;
+use App\Permission\Transformers\UserTransformer;
 use App\Permission\Transformers\VdByPermissionTransformer;
 use App\Permission\Transformers\VdByRoleTransformer;
+use App\Permission\Transformers\VdByUserTransformer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class AjaxController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['permission:edit setting|view setting']);
+    }
+
     public function vdByPermission($permissionName)
     {
         if ($permissionName == "" || $permissionName == null) {
@@ -21,18 +31,17 @@ class AjaxController extends Controller
 
         $permission = Permission::findByName($permissionName);
 
-        return fractal($permission, new VdByPermissionTransformer())->includeAllRoles()->includeAssignedRoles()->respond(200);
+        return fractal($permission, new VdByPermissionTransformer())->includeAllRoles()->includeAssignedRoles()->includeAllUsers()->includeAssignedUsers()->respond(200);
 
     }
 
 
-    public function assignByPermission(Request $request)
+    public function assignByPermissionToRole(Request $request)
     {
         $request->validate(['permissionName' => 'required']);
 
         $permissionName = $request->permissionName;
         $assignRoleIdArr = $request->assignRoleIdArr;
-        $assignUserArr = $request->assignUserArr;
 
         if ($assignRoleIdArr != null && $assignRoleIdArr != '') {
             /* Assign permission to Roles */
@@ -61,15 +70,68 @@ class AjaxController extends Controller
             }
         }
 
-        /* TODO : assign and revoke by USERS */
-
 
         return response([
             'message' => 'Assign permission successful',
             'assigned' => fractal(Role::whereIn('id',$assignRoleIdArr)->get(),new RoleTransformer())
-
         ],200);
     }
+
+    public function assignByPermissionToUser(Request $request)
+    {
+
+        Log::info($request);
+
+        $request->validate(['permissionName' => 'required']);
+
+        $permissionName = $request->permissionName;
+        $assignUserIdArr = $request->assignUserIdArr;
+
+        if ($assignUserIdArr != null && $assignUserIdArr != '') {
+
+
+            /* Revoke all*/
+            $users = User::all();
+            foreach ($users as $user) {
+                $user->revokePermissionTo($permissionName);
+            }
+
+            /* Assign permission to User */
+            $assignUsers = User::whereIn('employeeId', $assignUserIdArr)->get();
+
+            foreach ($assignUsers as $assignUser) {
+
+//                if (!$assignUser->hasPermissionTo($permissionName)) {
+//                    $assignUser->givePermissionTo($permissionName);
+//                }
+
+                $assignUser->givePermissionTo($permissionName);
+
+
+            }
+
+            /* Revoke permission from Users*/
+            $revokeUsers = User::whereNotIn('employeeId', $assignUserIdArr)->get();
+            foreach ($revokeUsers as $revokeUser) {
+                $revokeUser->revokePermissionTo($permissionName);
+            }
+
+        } else {
+
+            /* If assign roles are empty then revoke all*/
+            $users = User::all();
+            foreach ($users as $user) {
+                $user->revokePermissionTo($permissionName);
+            }
+        }
+
+
+        return response([
+            'message' => 'Assign permission successful',
+            'assigned' => fractal(User::whereIn('employeeId',$assignUserIdArr)->get(),new UserTransformer())
+            ],200);
+    }
+
 
 
     public function vdByRole($roleName)
@@ -112,6 +174,7 @@ class AjaxController extends Controller
             foreach ($revokePermissions as $revokePermission) {
                 $role->revokePermissionTo($revokePermission->name);
             }
+
         } else {
 
             $role->syncPermissions(); // revoke all permission
@@ -121,6 +184,57 @@ class AjaxController extends Controller
             'message' => 'Assign permission successful',
             'assigned' => fractal(Permission::whereIn('id',$assignPermissionIdArr)->get(),new PermissionTransformer())
         ], 200);
+    }
+
+
+    public function vdByUser($employeeId)
+    {
+        if ($employeeId == "" || $employeeId == null) {
+            return response()->json(['message' => 'parameter employeeId is empty or null'], 500);
+        }
+
+        $user = User::where('employeeId',$employeeId)->first();
+        return fractal($user, new VdByUserTransformer())->includeAllRoles()->includeAssignedRoles()->respond(200);
+    }
+
+    public function assignByUser(Request $request)
+    {
+        $request->validate(['employeeId' => 'required']);
+
+        $user = User::where('employeeId',$request->employeeId)->first();
+
+        $assignRoleIdArr = $request->assignRoleIdArr;
+
+        if ($user == null) {
+            return response(['message' => 'User is empty'], 500);
+        }
+
+        if ($assignRoleIdArr != null && $assignRoleIdArr != '') {
+
+            /* Assign roles for this user */
+            $assignRoles = Role::whereIn('id', $assignRoleIdArr)->get();
+            foreach ($assignRoles as $assignRole) {
+                if (!$user->hasRole($assignRole->name)) {
+                    $user->assignRole($assignRole->name);
+                }
+            }
+
+            /* Revoke roles from this user*/
+            $revokeRoles = Role::whereNotIn('id', $assignRoleIdArr)->get();
+            foreach ($revokeRoles as $revokeRole) {
+                $user->removeRole($revokeRole->name);
+            }
+
+        } else {
+
+            $user->syncRoles(); // revoke all roles
+        }
+
+        return response([
+            'message' => 'Assign role successful',
+            'assigned' => fractal(Role::whereIn('id',$assignRoleIdArr)->get(),new RoleTransformer())
+        ], 200);
+
     }
 
 

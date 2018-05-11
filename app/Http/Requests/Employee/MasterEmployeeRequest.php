@@ -29,8 +29,8 @@ class MasterEmployeeRequest extends FormRequest
         return [
             'phoneNo' => 'required|unique:MasterEmployee',
             'email' => 'required|unique:MasterEmployee',
-            'employeePhoto' => 'max:2048',
-            'idCardPhoto' => 'max:2048',
+//            'employeePhoto' => 'max:2048',
+//            'idCardPhoto' => 'max:2048',
             'surname' => 'required',
             'givenName' => 'required',
             'nickName' => 'required',
@@ -41,16 +41,18 @@ class MasterEmployeeRequest extends FormRequest
             'educationLevelId' => 'required',
             'religionId' => 'required',
             'maritalStatusId' => 'required',
-            'fatherName' => 'required',
-            'fatherPhoneNo' => 'required',
-            'fatherAddress' => 'required',
-            'fatherCity' => 'required',
-            'fatherMaritalStatusId' => 'required',
-            'motherName' => 'required',
-            'motherPhoneNo' => 'required',
-            'motherAddress' => 'required',
-            'motherCity' => 'required',
-            'motherMaritalStatusId' => 'required',
+            'fatherIsDeceased'=>'required',
+            'motherIsDeceased'=>'required',
+//            'fatherName' => 'required',
+//            'fatherPhoneNo' => 'required',
+//            'fatherAddress' => 'required',
+//            'fatherCity' => 'required',
+//            'fatherMaritalStatusId' => 'required',
+//            'motherName' => 'required',
+//            'motherPhoneNo' => 'required',
+//            'motherAddress' => 'required',
+//            'motherCity' => 'required',
+//            'motherMaritalStatusId' => 'required',
             'idCardNumber' => 'required',
             'address' => 'required',
             'emergencyContact' => 'required',
@@ -59,10 +61,7 @@ class MasterEmployeeRequest extends FormRequest
             'emergencyAddress' => 'required',
             'emergencyCity' => 'required',
 
-
-
         ];
-
-
     }
+
 }
