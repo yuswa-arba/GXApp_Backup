@@ -9,7 +9,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-
 /* v1/h = version 1 Helpdesk API */
 Route::prefix('v1/h')->group(function () {
 //    Route::prefix('attendance')->namespace('BackendV1\Helpdesk\Attendance')->middleware('auth.admin')->group(function (){
@@ -69,6 +68,5 @@ Route::prefix('v1/h')->group(function () {
         Route::post('pubHoliday/apply','PublicHolidayController@apply')->name('v1.attendance.pubHoliday.apply');
 
     });
-
 
 });

@@ -22,10 +22,8 @@ class ScheduleController extends Controller
         $response['message'] = 'Success';
         $response['schedule'] = fractal(Shifts::all(),new AttendanceScheduleTransformer());
 
-
         return response()->json($response,200);
     }
-
 
     public function checkSchedule()
     {

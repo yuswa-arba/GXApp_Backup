@@ -77,14 +77,13 @@ class CreatePersonLogic extends CreatePersonUseCase
 
                 if ($getPersonDetailResponse['personId'] != null && $getPersonDetailResponse['personId'] != '') {
 
-
                     /* Add Person Face*/
                     $addPersonRequest = $guzzle->request('POST', GlobalConfig::$MICROSOFT_FACE_API['BASE_URL'] .
                         'persongroups/' . GlobalConfig::$MICROSOFT_FACE_API['PERSON_GROUP_ID'] . '/persons/' . $getPersonDetailResponse['personId'] .
                         '/persistedFaces',
                         [
                             'headers' => ['Content-Type' => 'application/json', 'Ocp-Apim-Subscription-Key' => GlobalConfig::$MICROSOFT_FACE_API['SUB_KEY']],
-                            'json'=>['url' => 'https://static.highsnobiety.com/wp-content/uploads/2017/10/25100901/jaden-smith-album-release-date-syre-01-480x320.jpg']
+                            'json'=>['url' => url(Configs::$IMAGE_PATH['EMPLOYEE_PHOTO_WITHOUT_PUBLIC']. MasterEmployee::find( $request['employeeId'])->employeePhoto) ]
                         ]
                     );
 
@@ -99,8 +98,6 @@ class CreatePersonLogic extends CreatePersonUseCase
                                 base_path(Configs::$IMAGE_PATH['FACES_PHOTO']) . $addPersonResponse['persistedFaceId'] . '.png'
                             );
                         }
-
-
                     }
 
                     /* Train Person Group*/
